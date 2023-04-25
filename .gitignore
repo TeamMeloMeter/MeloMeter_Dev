@@ -1,0 +1,6 @@
+# private 폴더 제외
+private/
+
+# CocoaPods 관련 파일 제외
+Podfile.lock
+Pods/
