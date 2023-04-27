@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
     
-    // 네이버 지도 API 연결
+    // 네이버 지도 초기화
     NMFAuthManager.shared().clientId = "hvbbggzdp6"
     
     // 파이어베이스 연결
