@@ -15,6 +15,9 @@
 		52697B7F29EEB7B3002BDD04 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52697B7D29EEB7B3002BDD04 /* LaunchScreen.storyboard */; };
 		52F2083629FBA2FC0043BCA4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52F2083529FBA2FC0043BCA4 /* GoogleService-Info.plist */; };
 		52F2083829FBAFEE0043BCA4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52F2083729FBAFEE0043BCA4 /* Main.storyboard */; };
+		52F2083A29FBB31D0043BCA4 /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083929FBB31D0043BCA4 /* MyProfileViewController.swift */; };
+		52F2083C29FBB3490043BCA4 /* MyProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */; };
+		52F2083E29FBB37D0043BCA4 /* MyProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083D29FBB37D0043BCA4 /* MyProfileTableViewCell.swift */; };
 		B61B0F4B29F7A44700E25EEF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B61B0F4A29F7A44700E25EEF /* FirebaseAnalytics */; };
 		B61B0F4D29F7A44700E25EEF /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = B61B0F4C29F7A44700E25EEF /* FirebaseAppCheck */; };
 		B61B0F4F29F7A44700E25EEF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B61B0F4E29F7A44700E25EEF /* FirebaseAuth */; };
@@ -35,6 +38,9 @@
 		52697B8029EEB7B3002BDD04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52F2083529FBA2FC0043BCA4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		52F2083729FBAFEE0043BCA4 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		52F2083929FBB31D0043BCA4 /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
+		52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileModel.swift; sourceTree = "<group>"; };
+		52F2083D29FBB37D0043BCA4 /* MyProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileTableViewCell.swift; sourceTree = "<group>"; };
 		6F172644C2184ED18F3C3ACA /* Pods-MeloMeter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.debug.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.debug.xcconfig"; sourceTree = "<group>"; };
 		80E724853E983EBFAE15A81F /* Pods-MeloMeter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.release.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.release.xcconfig"; sourceTree = "<group>"; };
 		B61B0F5A29F7A5F500E25EEF /* MeloMeter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeloMeter.entitlements; sourceTree = "<group>"; };
@@ -91,6 +97,9 @@
 				52F2083729FBAFEE0043BCA4 /* Main.storyboard */,
 				52697B8029EEB7B3002BDD04 /* Info.plist */,
 				52F2083529FBA2FC0043BCA4 /* GoogleService-Info.plist */,
+				52F2083929FBB31D0043BCA4 /* MyProfileViewController.swift */,
+				52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */,
+				52F2083D29FBB37D0043BCA4 /* MyProfileTableViewCell.swift */,
 			);
 			path = MeloMeter;
 			sourceTree = "<group>";
@@ -242,7 +251,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				52697B7729EEB7B2002BDD04 /* ViewController.swift in Sources */,
+				52F2083E29FBB37D0043BCA4 /* MyProfileTableViewCell.swift in Sources */,
 				52697B7329EEB7B2002BDD04 /* AppDelegate.swift in Sources */,
+				52F2083A29FBB31D0043BCA4 /* MyProfileViewController.swift in Sources */,
+				52F2083C29FBB3490043BCA4 /* MyProfileModel.swift in Sources */,
 				52697B7529EEB7B2002BDD04 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
