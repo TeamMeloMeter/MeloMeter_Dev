@@ -45,7 +45,8 @@ class MyProfileViewController: UIViewController, UITableViewDataSource, UITableV
         if indexPath.row == totalRows - 1 {
             cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: cell.bounds.size.width)
         } else {
-            cell.separatorInset = UIEdgeInsets.zero
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         }
+        
     }
 }
