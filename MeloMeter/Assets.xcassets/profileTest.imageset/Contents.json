@@ -1,17 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "Image.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Image@2x.png",
+      "filename" : "Mask group 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Image@3x.png",
+      "filename" : "Mask group.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -13,11 +13,22 @@
 		52697B7729EEB7B2002BDD04 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697B7629EEB7B2002BDD04 /* ViewController.swift */; };
 		52697B7C29EEB7B3002BDD04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52697B7B29EEB7B3002BDD04 /* Assets.xcassets */; };
 		52697B7F29EEB7B3002BDD04 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52697B7D29EEB7B3002BDD04 /* LaunchScreen.storyboard */; };
+		52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6E8229FEBC0200E43D39 /* FontManager.swift */; };
+		52CE6E9729FEBDAF00E43D39 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E8E29FEBD6600E43D39 /* Pretendard-Black.otf */; };
+		52CE6E9829FEBDB200E43D39 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E9329FEBD6700E43D39 /* Pretendard-Bold.otf */; };
+		52CE6E9929FEBDB600E43D39 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E9029FEBD6600E43D39 /* Pretendard-ExtraBold.otf */; };
+		52CE6E9A29FEBDB800E43D39 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E8F29FEBD6600E43D39 /* Pretendard-ExtraLight.otf */; };
+		52CE6E9B29FEBDBA00E43D39 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E9529FEBD6700E43D39 /* Pretendard-Light.otf */; };
+		52CE6E9C29FEBDBD00E43D39 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E9129FEBD6600E43D39 /* Pretendard-Medium.otf */; };
+		52CE6E9D29FEBDC000E43D39 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E9429FEBD6700E43D39 /* Pretendard-Regular.otf */; };
+		52CE6E9E29FEBDC300E43D39 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E9629FEBD6700E43D39 /* Pretendard-SemiBold.otf */; };
+		52CE6E9F29FEBDC500E43D39 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E9229FEBD6600E43D39 /* Pretendard-Thin.otf */; };
 		52F2083629FBA2FC0043BCA4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52F2083529FBA2FC0043BCA4 /* GoogleService-Info.plist */; };
-		52F2083829FBAFEE0043BCA4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52F2083729FBAFEE0043BCA4 /* Main.storyboard */; };
 		52F2083A29FBB31D0043BCA4 /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083929FBB31D0043BCA4 /* MyProfileViewController.swift */; };
 		52F2083C29FBB3490043BCA4 /* MyProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */; };
 		52F2083E29FBB37D0043BCA4 /* MyProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083D29FBB37D0043BCA4 /* MyProfileTableViewCell.swift */; };
+		52F2084029FBFF280043BCA4 /* DdayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083F29FBFF280043BCA4 /* DdayViewController.swift */; };
+		52F2084229FD63F40043BCA4 /* MyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2084129FD63F40043BCA4 /* MyProfileView.swift */; };
 		B61B0F4B29F7A44700E25EEF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B61B0F4A29F7A44700E25EEF /* FirebaseAnalytics */; };
 		B61B0F4D29F7A44700E25EEF /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = B61B0F4C29F7A44700E25EEF /* FirebaseAppCheck */; };
 		B61B0F4F29F7A44700E25EEF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B61B0F4E29F7A44700E25EEF /* FirebaseAuth */; };
@@ -36,11 +47,22 @@
 		52697B7B29EEB7B3002BDD04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52697B7E29EEB7B3002BDD04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52697B8029EEB7B3002BDD04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		52CE6E8229FEBC0200E43D39 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
+		52CE6E8E29FEBD6600E43D39 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
+		52CE6E8F29FEBD6600E43D39 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		52CE6E9029FEBD6600E43D39 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		52CE6E9129FEBD6600E43D39 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		52CE6E9229FEBD6600E43D39 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		52CE6E9329FEBD6700E43D39 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		52CE6E9429FEBD6700E43D39 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		52CE6E9529FEBD6700E43D39 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
+		52CE6E9629FEBD6700E43D39 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		52F2083529FBA2FC0043BCA4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
-		52F2083729FBAFEE0043BCA4 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		52F2083929FBB31D0043BCA4 /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
 		52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileModel.swift; sourceTree = "<group>"; };
 		52F2083D29FBB37D0043BCA4 /* MyProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileTableViewCell.swift; sourceTree = "<group>"; };
+		52F2083F29FBFF280043BCA4 /* DdayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayViewController.swift; sourceTree = "<group>"; };
+		52F2084129FD63F40043BCA4 /* MyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileView.swift; sourceTree = "<group>"; };
 		6F172644C2184ED18F3C3ACA /* Pods-MeloMeter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.debug.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.debug.xcconfig"; sourceTree = "<group>"; };
 		80E724853E983EBFAE15A81F /* Pods-MeloMeter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.release.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.release.xcconfig"; sourceTree = "<group>"; };
 		B61B0F5A29F7A5F500E25EEF /* MeloMeter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeloMeter.entitlements; sourceTree = "<group>"; };
@@ -92,16 +114,59 @@
 				52697B7229EEB7B2002BDD04 /* AppDelegate.swift */,
 				52697B7429EEB7B2002BDD04 /* SceneDelegate.swift */,
 				52697B7629EEB7B2002BDD04 /* ViewController.swift */,
+				52F2084329FD64100043BCA4 /* Model */,
+				52F2084429FD64190043BCA4 /* View */,
+				52F2084529FD641E0043BCA4 /* Controller */,
 				52697B7B29EEB7B3002BDD04 /* Assets.xcassets */,
 				52697B7D29EEB7B3002BDD04 /* LaunchScreen.storyboard */,
-				52F2083729FBAFEE0043BCA4 /* Main.storyboard */,
 				52697B8029EEB7B3002BDD04 /* Info.plist */,
 				52F2083529FBA2FC0043BCA4 /* GoogleService-Info.plist */,
-				52F2083929FBB31D0043BCA4 /* MyProfileViewController.swift */,
-				52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */,
-				52F2083D29FBB37D0043BCA4 /* MyProfileTableViewCell.swift */,
+				52CE6E8D29FEBD5700E43D39 /* Font */,
 			);
 			path = MeloMeter;
+			sourceTree = "<group>";
+		};
+		52CE6E8D29FEBD5700E43D39 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				52CE6E8E29FEBD6600E43D39 /* Pretendard-Black.otf */,
+				52CE6E9329FEBD6700E43D39 /* Pretendard-Bold.otf */,
+				52CE6E9029FEBD6600E43D39 /* Pretendard-ExtraBold.otf */,
+				52CE6E8F29FEBD6600E43D39 /* Pretendard-ExtraLight.otf */,
+				52CE6E9529FEBD6700E43D39 /* Pretendard-Light.otf */,
+				52CE6E9129FEBD6600E43D39 /* Pretendard-Medium.otf */,
+				52CE6E9429FEBD6700E43D39 /* Pretendard-Regular.otf */,
+				52CE6E9629FEBD6700E43D39 /* Pretendard-SemiBold.otf */,
+				52CE6E9229FEBD6600E43D39 /* Pretendard-Thin.otf */,
+				52CE6E8229FEBC0200E43D39 /* FontManager.swift */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		52F2084329FD64100043BCA4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		52F2084429FD64190043BCA4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				52F2084129FD63F40043BCA4 /* MyProfileView.swift */,
+				52F2083D29FBB37D0043BCA4 /* MyProfileTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		52F2084529FD641E0043BCA4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				52F2083929FBB31D0043BCA4 /* MyProfileViewController.swift */,
+				52F2083F29FBFF280043BCA4 /* DdayViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		D44F96227B251CC47229DC2A /* Frameworks */ = {
@@ -194,10 +259,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52CE6E9E29FEBDC300E43D39 /* Pretendard-SemiBold.otf in Resources */,
+				52CE6E9A29FEBDB800E43D39 /* Pretendard-ExtraLight.otf in Resources */,
+				52CE6E9B29FEBDBA00E43D39 /* Pretendard-Light.otf in Resources */,
+				52CE6E9F29FEBDC500E43D39 /* Pretendard-Thin.otf in Resources */,
 				52697B7F29EEB7B3002BDD04 /* LaunchScreen.storyboard in Resources */,
+				52CE6E9829FEBDB200E43D39 /* Pretendard-Bold.otf in Resources */,
+				52CE6E9929FEBDB600E43D39 /* Pretendard-ExtraBold.otf in Resources */,
 				52697B7C29EEB7B3002BDD04 /* Assets.xcassets in Resources */,
+				52CE6E9729FEBDAF00E43D39 /* Pretendard-Black.otf in Resources */,
+				52CE6E9D29FEBDC000E43D39 /* Pretendard-Regular.otf in Resources */,
 				52F2083629FBA2FC0043BCA4 /* GoogleService-Info.plist in Resources */,
-				52F2083829FBAFEE0043BCA4 /* Main.storyboard in Resources */,
+				52CE6E9C29FEBDBD00E43D39 /* Pretendard-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,12 +323,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52F2084229FD63F40043BCA4 /* MyProfileView.swift in Sources */,
 				52697B7729EEB7B2002BDD04 /* ViewController.swift in Sources */,
 				52F2083E29FBB37D0043BCA4 /* MyProfileTableViewCell.swift in Sources */,
 				52697B7329EEB7B2002BDD04 /* AppDelegate.swift in Sources */,
+				52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */,
 				52F2083A29FBB31D0043BCA4 /* MyProfileViewController.swift in Sources */,
 				52F2083C29FBB3490043BCA4 /* MyProfileModel.swift in Sources */,
 				52697B7529EEB7B2002BDD04 /* SceneDelegate.swift in Sources */,
+				52F2084029FBFF280043BCA4 /* DdayViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,8 +483,7 @@
 				INFOPLIST_KEY_NSLocationUsageDescription = "위치 정보를 수집하기 위해 권한이 필요합니다. 위치 정보는 커플 위치 공유 기능을 이용하는데 필요하며, 더욱 정확한 위치 정보를 제공할 수 있습니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIStatusBarHidden = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -449,8 +524,7 @@
 				INFOPLIST_KEY_NSLocationUsageDescription = "위치 정보를 수집하기 위해 권한이 필요합니다. 위치 정보는 커플 위치 공유 기능을 이용하는데 필요하며, 더욱 정확한 위치 정보를 제공할 수 있습니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIStatusBarHidden = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
