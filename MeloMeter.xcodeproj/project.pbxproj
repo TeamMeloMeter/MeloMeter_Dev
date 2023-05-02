@@ -23,6 +23,8 @@
 		52CE6E9D29FEBDC000E43D39 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E9429FEBD6700E43D39 /* Pretendard-Regular.otf */; };
 		52CE6E9E29FEBDC300E43D39 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E9629FEBD6700E43D39 /* Pretendard-SemiBold.otf */; };
 		52CE6E9F29FEBDC500E43D39 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E9229FEBD6600E43D39 /* Pretendard-Thin.otf */; };
+		52CE6EA12A01875C00E43D39 /* alarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA02A01875C00E43D39 /* alarmViewController.swift */; };
+		52CE6EA32A0187BB00E43D39 /* AlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA22A0187BB00E43D39 /* AlarmView.swift */; };
 		52F2083629FBA2FC0043BCA4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52F2083529FBA2FC0043BCA4 /* GoogleService-Info.plist */; };
 		52F2083A29FBB31D0043BCA4 /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083929FBB31D0043BCA4 /* MyProfileViewController.swift */; };
 		52F2083C29FBB3490043BCA4 /* MyProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */; };
@@ -57,6 +59,8 @@
 		52CE6E9429FEBD6700E43D39 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		52CE6E9529FEBD6700E43D39 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		52CE6E9629FEBD6700E43D39 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		52CE6EA02A01875C00E43D39 /* alarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = alarmViewController.swift; sourceTree = "<group>"; };
+		52CE6EA22A0187BB00E43D39 /* AlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmView.swift; sourceTree = "<group>"; };
 		52F2083529FBA2FC0043BCA4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		52F2083929FBB31D0043BCA4 /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
 		52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileModel.swift; sourceTree = "<group>"; };
@@ -156,6 +160,7 @@
 			children = (
 				52F2084129FD63F40043BCA4 /* MyProfileView.swift */,
 				52F2083D29FBB37D0043BCA4 /* MyProfileTableViewCell.swift */,
+				52CE6EA22A0187BB00E43D39 /* AlarmView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -165,6 +170,7 @@
 			children = (
 				52F2083929FBB31D0043BCA4 /* MyProfileViewController.swift */,
 				52F2083F29FBFF280043BCA4 /* DdayViewController.swift */,
+				52CE6EA02A01875C00E43D39 /* alarmViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -329,6 +335,8 @@
 				52697B7329EEB7B2002BDD04 /* AppDelegate.swift in Sources */,
 				52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */,
 				52F2083A29FBB31D0043BCA4 /* MyProfileViewController.swift in Sources */,
+				52CE6EA12A01875C00E43D39 /* alarmViewController.swift in Sources */,
+				52CE6EA32A0187BB00E43D39 /* AlarmView.swift in Sources */,
 				52F2083C29FBB3490043BCA4 /* MyProfileModel.swift in Sources */,
 				52697B7529EEB7B2002BDD04 /* SceneDelegate.swift in Sources */,
 				52F2084029FBFF280043BCA4 /* DdayViewController.swift in Sources */,
