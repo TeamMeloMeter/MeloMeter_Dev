@@ -116,7 +116,7 @@ class MyProfileView: UIView {
         return imageView
     }()
     //기념일
-    private lazy var dDayView: UIView = {
+    lazy var dDayView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.clipsToBounds = true
@@ -155,7 +155,7 @@ class MyProfileView: UIView {
         return imageView
     }()
     //백문백답
-    private lazy var hundredQnAView: UIView = {
+    lazy var hundredQnAView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.clipsToBounds = true
@@ -232,7 +232,7 @@ class MyProfileView: UIView {
         return imageView
     }()
     
-    private lazy var noticeStackView: UIStackView = {
+    lazy var noticeStackView: UIStackView = {
         let stview = UIStackView(arrangedSubviews: [noticeImageView, noticeTextLabel, noticeArrowImageView])
         stview.backgroundColor = .white
         stview.axis = .horizontal
@@ -269,7 +269,7 @@ class MyProfileView: UIView {
         return imageView
     }()
     
-    private lazy var qnAStackView: UIStackView = {
+    lazy var qnAStackView: UIStackView = {
         let stview = UIStackView(arrangedSubviews: [qnAImageView, qnALabel, qnAArrowImageView])
         stview.backgroundColor = .white
         stview.axis = .horizontal
@@ -306,7 +306,7 @@ class MyProfileView: UIView {
         return imageView
     }()
     
-    private lazy var infoStackView: UIStackView = {
+    lazy var infoStackView: UIStackView = {
         let stview = UIStackView(arrangedSubviews: [infoImageView, infoLabel, infoArrowImageView])
         stview.backgroundColor = .white
         stview.axis = .horizontal

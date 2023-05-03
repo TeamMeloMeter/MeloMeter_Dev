@@ -21,10 +21,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.windowScene = windowScene
         window?.makeKeyAndVisible()
+        let tabBarController = TabBarController()
         
-        let rootViewController = MyProfileViewController()
-        let myProfileNavigationController = UINavigationController(rootViewController: rootViewController)
-        window?.rootViewController = myProfileNavigationController
+        window?.rootViewController = tabBarController
+//        let rootViewController = MyProfileViewController()
+//        let myProfileNavigationController = UINavigationController(rootViewController: rootViewController)
+//        window?.rootViewController = myProfileNavigationController
         
     }
 
