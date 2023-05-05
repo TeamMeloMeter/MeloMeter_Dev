@@ -49,10 +49,6 @@ class TabBarController: UITabBarController {
         tabFrame.origin.y = self.view.frame.size.height - 83
         self.tabBar.frame = tabFrame
         
-        
-        if let tabBar = tabBarController?.tabBar {
-            UITabBar.clearShadow()
-        }
         mainVC.tabBarItem = UITabBarItem(title: "", image: mapIconResized, tag: 0)
         chatVC.tabBarItem = UITabBarItem(title: "", image: chatIconResized, tag: 1)
         myProfileNav.tabBarItem = UITabBarItem(title: "", image: myPageIconResized, tag: 2)

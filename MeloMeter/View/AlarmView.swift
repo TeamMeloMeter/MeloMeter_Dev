@@ -10,7 +10,7 @@ import UIKit
 // 알림페이지 UI View
 class AlarmView: UIView {
     
-   
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()

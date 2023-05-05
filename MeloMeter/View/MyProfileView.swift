@@ -10,6 +10,13 @@ import UIKit
 // 마이페이지 UI View
 class MyProfileView: UIView {
     
+    //네비게이션바
+    let backButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "back"), for: .normal)
+        button.tintColor = .green
+        return button
+    }()
     
     //마이페이지 상단 배경 뷰
      lazy var topView: UIView = {
@@ -331,7 +338,6 @@ class MyProfileView: UIView {
         let stview = UIStackView(arrangedSubviews: [noticeStackView, lineView1, qnAStackView, lineView2, infoStackView])
         stview.backgroundColor = .white
         stview.axis = .vertical
-        //stview.distribution = .fillEqually
         stview.spacing = 16
         return stview
     }()
@@ -356,6 +362,7 @@ class MyProfileView: UIView {
     }
     
     private func setConstraints() {
+        
         topViewConstraint()
         nameLabelConstraint()
         phoneNumLabelConstraint()
@@ -373,6 +380,16 @@ class MyProfileView: UIView {
         bottomStackViewConstraints()
     }
     
+//    private func backButtonConstraint() {
+//        backButton.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            backButton.leadingAnchor.constraint(equalTo: superview.leadingAnchor, constant: 8),
+//            backButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
+//            backButton.widthAnchor.constraint(equalToConstant: 24),
+//            backButton.heightAnchor.constraint(equalToConstant: 24)
+//           
+//        ])
+//    }
     
     private func topViewConstraint() {
         topView.translatesAutoresizingMaskIntoConstraints = false
