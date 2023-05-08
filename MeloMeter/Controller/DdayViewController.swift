@@ -53,7 +53,9 @@ class DdayViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //기념일 추가 버튼이벤트
     @objc func plusButtonTapped() {
-        
+        let vc = AddDdayViewController()
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: true, completion: nil)
     }
     //뒤로가기 버튼이벤트
     @objc func backButtonTapped() {

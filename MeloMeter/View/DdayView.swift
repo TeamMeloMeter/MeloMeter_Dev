@@ -76,7 +76,7 @@ class DdayView: UIView {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(DdayTableViewCell.self, forCellReuseIdentifier: "DdayTableViewCell")
-        tableView.backgroundColor = .blue
+        tableView.backgroundColor = .white
         tableView.rowHeight = 77
         return tableView
     }()
