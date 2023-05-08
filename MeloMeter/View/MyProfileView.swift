@@ -250,7 +250,7 @@ class MyProfileView: UIView {
     //QnA 이미지
     let qnAImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "qnAIcon")
+        imageView.image = UIImage(named: "qAIcon")
         imageView.contentMode = .left
         imageView.layer.borderColor = UIColor.clear.cgColor
         imageView.frame.size = CGSize(width: 24, height: 24)

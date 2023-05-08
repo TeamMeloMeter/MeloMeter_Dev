@@ -55,23 +55,35 @@ class MyProfileViewController: UIViewController {
         myProfileView.alarmView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alarmViewTapped)))
         myProfileView.dDayView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dDayViewTapped)))
         myProfileView.hundredQnAView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.hundredQnAViewTapped)))
+        myProfileView.noticeStackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.noticeViewTapped)))
+        
     }
     
+    //알림 화면으로
     @objc func alarmViewTapped() {
         let alarmViewController = AlarmViewController()
         alarmViewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(alarmViewController, animated: true)
     }
+    //기념일 화면으로
     @objc func dDayViewTapped() {
         let dDayViewController = DdayViewController()
         dDayViewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(dDayViewController, animated: true)
         
     }
+    
+    //백문백답 화면으로 - 임시
     @objc func hundredQnAViewTapped() {
         let alarmViewController = AlarmViewController()
         alarmViewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(alarmViewController, animated: true)
     }
-
+    
+    // 공지사항 화면으로
+    @objc func noticeViewTapped() {
+        let noticeViewController = NoticeViewController()
+        noticeViewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(noticeViewController, animated: true)
+    }
 }

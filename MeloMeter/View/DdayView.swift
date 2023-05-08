@@ -74,10 +74,11 @@ class DdayView: UIView {
     // 기념일 리스트 tableView
     let dDayTableView: UITableView = {
         let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(DdayTableViewCell.self, forCellReuseIdentifier: "DdayTableViewCell")
         tableView.backgroundColor = .white
         tableView.rowHeight = 77
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+
         return tableView
     }()
     
