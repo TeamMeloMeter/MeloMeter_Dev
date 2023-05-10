@@ -10,7 +10,7 @@ import UIKit
 // 기념일페이지 UI View
 class DdayView: UIView {
     
-    //마이페이지 상단 배경 뷰
+    //상단 배경 뷰
      lazy var topView: UIView = {
          let view = UIView()
          view.backgroundColor = #colorLiteral(red: 0.9764705882, green: 0.9764705882, blue: 0.9764705882, alpha: 1)

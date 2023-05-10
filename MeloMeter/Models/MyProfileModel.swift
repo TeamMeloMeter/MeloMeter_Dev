@@ -9,8 +9,6 @@ import UIKit
 
 // 마이페이지의 데이터 모델
 class MyProfileModel {
-    static let tableViewImg = ["noticeIcon", "qnaIcon", "infoIcon"]
-    static let tableViewLabel = ["공지사항", "자주묻는 질문", "정보"]
     
     var name: String
     var phoneNum: String

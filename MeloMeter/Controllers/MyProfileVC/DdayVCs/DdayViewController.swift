@@ -18,11 +18,14 @@ class DdayViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         dDayView.dDayTableView.delegate = self
         dDayView.dDayTableView.dataSource = self
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationBarCustom()
     }
+    
     
     //기념일 리스트 tableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

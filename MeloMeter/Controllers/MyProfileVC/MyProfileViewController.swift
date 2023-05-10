@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MyProfileViewController: UIViewController {
+class MyProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     
     let myProfileView = MyProfileView()
     
@@ -19,7 +19,7 @@ class MyProfileViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpBarButton()
+        
         setAlarmViewTouch()
         myProfileView.nameLabel.text = myProfileModel.name
         myProfileView.phoneNumLabel.text = myProfileModel.phoneNum
@@ -29,10 +29,13 @@ class MyProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         navigationController?.navigationBar.isHidden = true
+        setUpBarButton()
     }
     //네비게이션바 커스텀
     func setUpBarButton() {
-        
+        //스와이프 뒤로가기
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+
         //타이틀 속성 조정 - 폰트, 배경
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
@@ -52,13 +55,21 @@ class MyProfileViewController: UIViewController {
         myProfileView.infoStackView.isUserInteractionEnabled = true
         
         //제스쳐 추가
+        myProfileView.profileEditButton.addTarget(self, action: #selector(editProfileBtnTapped), for: .touchUpInside)
         myProfileView.alarmView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alarmViewTapped)))
         myProfileView.dDayView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dDayViewTapped)))
         myProfileView.hundredQnAView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.hundredQnAViewTapped)))
         myProfileView.noticeStackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.noticeViewTapped)))
+        myProfileView.qnAStackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.qnAViewTapped)))
         
     }
     
+    //프로필편집 화면으로
+    @objc func editProfileBtnTapped(){
+        let editProfileVC = EditProfileViewController()
+        editProfileVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(editProfileVC, animated: true)
+    }
     //알림 화면으로
     @objc func alarmViewTapped() {
         let alarmViewController = AlarmViewController()
@@ -85,5 +96,12 @@ class MyProfileViewController: UIViewController {
         let noticeViewController = NoticeViewController()
         noticeViewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(noticeViewController, animated: true)
+    }
+    
+    // 자주묻는 질문 화면으로
+    @objc func qnAViewTapped() {
+        let qnAViewController = QnAViewController()
+        qnAViewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(qnAViewController, animated: true)
     }
 }

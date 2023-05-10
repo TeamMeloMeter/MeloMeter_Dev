@@ -36,6 +36,22 @@
 		52F00FF82A0936FD0014FC01 /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FF72A0936FD0014FC01 /* NoticeView.swift */; };
 		52F00FFA2A0938480014FC01 /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FF92A0938480014FC01 /* NoticeViewController.swift */; };
 		52F00FFC2A093A410014FC01 /* NoticeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FFB2A093A410014FC01 /* NoticeTableViewCell.swift */; };
+		52F00FFE2A094B450014FC01 /* QnAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FFD2A094B450014FC01 /* QnAView.swift */; };
+		52F010002A094B550014FC01 /* QnAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FFF2A094B550014FC01 /* QnAViewController.swift */; };
+		52F010082A097D120014FC01 /* AlarmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010072A097D120014FC01 /* AlarmTableViewCell.swift */; };
+		52F0100B2A0A493C0014FC01 /* QnATableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0100A2A0A493C0014FC01 /* QnATableViewCell.swift */; };
+		52F0100D2A0A4FD20014FC01 /* AnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0100C2A0A4FD20014FC01 /* AnswerView.swift */; };
+		52F0100F2A0A55470014FC01 /* AnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0100E2A0A55470014FC01 /* AnswerViewController.swift */; };
+		52F010112A0AACEC0014FC01 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010102A0AACEC0014FC01 /* EditProfileView.swift */; };
+		52F010142A0AAD380014FC01 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010132A0AAD380014FC01 /* EditProfileViewController.swift */; };
+		52F010162A0AAE900014FC01 /* CameraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010152A0AAE900014FC01 /* CameraModel.swift */; };
+		52F010182A0AAF820014FC01 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010172A0AAF820014FC01 /* CameraViewController.swift */; };
+		52F0101C2A0ACDD20014FC01 /* EditNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0101B2A0ACDD20014FC01 /* EditNameView.swift */; };
+		52F0101E2A0ACE190014FC01 /* EditNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0101D2A0ACE190014FC01 /* EditNameViewController.swift */; };
+		52F010202A0ADB680014FC01 /* EditStatusMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0101F2A0ADB680014FC01 /* EditStatusMessageView.swift */; };
+		52F010222A0ADD500014FC01 /* EditStatusMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010212A0ADD500014FC01 /* EditStatusMessageVC.swift */; };
+		52F010242A0B77ED0014FC01 /* EditBirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010232A0B77ED0014FC01 /* EditBirthViewController.swift */; };
+		52F010262A0B79270014FC01 /* EditBirthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010252A0B79270014FC01 /* EditBirthView.swift */; };
 		52F2083A29FBB31D0043BCA4 /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083929FBB31D0043BCA4 /* MyProfileViewController.swift */; };
 		52F2083C29FBB3490043BCA4 /* MyProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */; };
 		52F2084029FBFF280043BCA4 /* DdayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083F29FBFF280043BCA4 /* DdayViewController.swift */; };
@@ -81,6 +97,22 @@
 		52F00FF72A0936FD0014FC01 /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
 		52F00FF92A0938480014FC01 /* NoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewController.swift; sourceTree = "<group>"; };
 		52F00FFB2A093A410014FC01 /* NoticeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeTableViewCell.swift; sourceTree = "<group>"; };
+		52F00FFD2A094B450014FC01 /* QnAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QnAView.swift; sourceTree = "<group>"; };
+		52F00FFF2A094B550014FC01 /* QnAViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QnAViewController.swift; sourceTree = "<group>"; };
+		52F010072A097D120014FC01 /* AlarmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmTableViewCell.swift; sourceTree = "<group>"; };
+		52F0100A2A0A493C0014FC01 /* QnATableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QnATableViewCell.swift; sourceTree = "<group>"; };
+		52F0100C2A0A4FD20014FC01 /* AnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerView.swift; sourceTree = "<group>"; };
+		52F0100E2A0A55470014FC01 /* AnswerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerViewController.swift; sourceTree = "<group>"; };
+		52F010102A0AACEC0014FC01 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		52F010132A0AAD380014FC01 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		52F010152A0AAE900014FC01 /* CameraModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModel.swift; sourceTree = "<group>"; };
+		52F010172A0AAF820014FC01 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		52F0101B2A0ACDD20014FC01 /* EditNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameView.swift; sourceTree = "<group>"; };
+		52F0101D2A0ACE190014FC01 /* EditNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameViewController.swift; sourceTree = "<group>"; };
+		52F0101F2A0ADB680014FC01 /* EditStatusMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStatusMessageView.swift; sourceTree = "<group>"; };
+		52F010212A0ADD500014FC01 /* EditStatusMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStatusMessageVC.swift; sourceTree = "<group>"; };
+		52F010232A0B77ED0014FC01 /* EditBirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBirthViewController.swift; sourceTree = "<group>"; };
+		52F010252A0B79270014FC01 /* EditBirthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBirthView.swift; sourceTree = "<group>"; };
 		52F2083929FBB31D0043BCA4 /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
 		52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileModel.swift; sourceTree = "<group>"; };
 		52F2083F29FBFF280043BCA4 /* DdayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayViewController.swift; sourceTree = "<group>"; };
@@ -136,9 +168,9 @@
 				52697B7229EEB7B2002BDD04 /* AppDelegate.swift */,
 				52697B7429EEB7B2002BDD04 /* SceneDelegate.swift */,
 				52697B7629EEB7B2002BDD04 /* ViewController.swift */,
-				52F2084329FD64100043BCA4 /* Model */,
-				52F2084429FD64190043BCA4 /* View */,
-				52F2084529FD641E0043BCA4 /* Controller */,
+				52F2084329FD64100043BCA4 /* Models */,
+				52F2084429FD64190043BCA4 /* Views */,
+				52F2084529FD641E0043BCA4 /* Controllers */,
 				52697B7B29EEB7B3002BDD04 /* Assets.xcassets */,
 				52697B7D29EEB7B3002BDD04 /* LaunchScreen.storyboard */,
 				52697B8029EEB7B3002BDD04 /* Info.plist */,
@@ -165,41 +197,137 @@
 			path = Font;
 			sourceTree = "<group>";
 		};
-		52F2084329FD64100043BCA4 /* Model */ = {
+		52F010012A097B020014FC01 /* MyProfileViews */ = {
 			isa = PBXGroup;
 			children = (
-				52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */,
+				52F2084129FD63F40043BCA4 /* MyProfileView.swift */,
+				52F010192A0ACD420014FC01 /* EditProfileViews */,
+				52F010062A097CEE0014FC01 /* AlarmViews */,
+				52F010022A097B2C0014FC01 /* DdayViews */,
+				52F010032A097B4E0014FC01 /* NoticeViews */,
+				52F010092A0A49150014FC01 /* QnAViews */,
 			);
-			path = Model;
+			path = MyProfileViews;
 			sourceTree = "<group>";
 		};
-		52F2084429FD64190043BCA4 /* View */ = {
+		52F010022A097B2C0014FC01 /* DdayViews */ = {
 			isa = PBXGroup;
 			children = (
-				52CE6EA82A02573200E43D39 /* MainView.swift */,
-				52F2084129FD63F40043BCA4 /* MyProfileView.swift */,
-				52CE6EA22A0187BB00E43D39 /* AlarmView.swift */,
 				52CE6EA42A0245E300E43D39 /* DdayView.swift */,
 				52CE6EAC2A02C0B800E43D39 /* DdayTableViewCell.swift */,
 				52F00FF32A09308E0014FC01 /* AddDdayView.swift */,
+			);
+			path = DdayViews;
+			sourceTree = "<group>";
+		};
+		52F010032A097B4E0014FC01 /* NoticeViews */ = {
+			isa = PBXGroup;
+			children = (
 				52F00FF72A0936FD0014FC01 /* NoticeView.swift */,
 				52F00FFB2A093A410014FC01 /* NoticeTableViewCell.swift */,
 			);
-			path = View;
+			path = NoticeViews;
 			sourceTree = "<group>";
 		};
-		52F2084529FD641E0043BCA4 /* Controller */ = {
+		52F010042A097B930014FC01 /* MyProfileVC */ = {
+			isa = PBXGroup;
+			children = (
+				52F2083929FBB31D0043BCA4 /* MyProfileViewController.swift */,
+				52CE6EA02A01875C00E43D39 /* AlarmViewController.swift */,
+				52F010052A097BC40014FC01 /* DdayVCs */,
+				52F010122A0AACFC0014FC01 /* QnAVCs */,
+				52F00FF92A0938480014FC01 /* NoticeViewController.swift */,
+				52F0101A2A0ACD6E0014FC01 /* EditProfileVCs */,
+			);
+			path = MyProfileVC;
+			sourceTree = "<group>";
+		};
+		52F010052A097BC40014FC01 /* DdayVCs */ = {
+			isa = PBXGroup;
+			children = (
+				52F2083F29FBFF280043BCA4 /* DdayViewController.swift */,
+				52F00FF52A0930FF0014FC01 /* AddDdayViewController.swift */,
+			);
+			path = DdayVCs;
+			sourceTree = "<group>";
+		};
+		52F010062A097CEE0014FC01 /* AlarmViews */ = {
+			isa = PBXGroup;
+			children = (
+				52CE6EA22A0187BB00E43D39 /* AlarmView.swift */,
+				52F010072A097D120014FC01 /* AlarmTableViewCell.swift */,
+			);
+			path = AlarmViews;
+			sourceTree = "<group>";
+		};
+		52F010092A0A49150014FC01 /* QnAViews */ = {
+			isa = PBXGroup;
+			children = (
+				52F00FFD2A094B450014FC01 /* QnAView.swift */,
+				52F0100A2A0A493C0014FC01 /* QnATableViewCell.swift */,
+				52F0100C2A0A4FD20014FC01 /* AnswerView.swift */,
+			);
+			path = QnAViews;
+			sourceTree = "<group>";
+		};
+		52F010122A0AACFC0014FC01 /* QnAVCs */ = {
+			isa = PBXGroup;
+			children = (
+				52F00FFF2A094B550014FC01 /* QnAViewController.swift */,
+				52F0100E2A0A55470014FC01 /* AnswerViewController.swift */,
+			);
+			path = QnAVCs;
+			sourceTree = "<group>";
+		};
+		52F010192A0ACD420014FC01 /* EditProfileViews */ = {
+			isa = PBXGroup;
+			children = (
+				52F010102A0AACEC0014FC01 /* EditProfileView.swift */,
+				52F0101B2A0ACDD20014FC01 /* EditNameView.swift */,
+				52F0101F2A0ADB680014FC01 /* EditStatusMessageView.swift */,
+				52F010252A0B79270014FC01 /* EditBirthView.swift */,
+			);
+			path = EditProfileViews;
+			sourceTree = "<group>";
+		};
+		52F0101A2A0ACD6E0014FC01 /* EditProfileVCs */ = {
+			isa = PBXGroup;
+			children = (
+				52F010132A0AAD380014FC01 /* EditProfileViewController.swift */,
+				52F0101D2A0ACE190014FC01 /* EditNameViewController.swift */,
+				52F010212A0ADD500014FC01 /* EditStatusMessageVC.swift */,
+				52F010232A0B77ED0014FC01 /* EditBirthViewController.swift */,
+				52F010172A0AAF820014FC01 /* CameraViewController.swift */,
+			);
+			path = EditProfileVCs;
+			sourceTree = "<group>";
+		};
+		52F2084329FD64100043BCA4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */,
+				52F010152A0AAE900014FC01 /* CameraModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		52F2084429FD64190043BCA4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				52CE6EA82A02573200E43D39 /* MainView.swift */,
+				52F010012A097B020014FC01 /* MyProfileViews */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		52F2084529FD641E0043BCA4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				52CE6EAA2A0260FA00E43D39 /* TabBarController.swift */,
 				52CE6EA62A02571E00E43D39 /* MainViewController.swift */,
-				52F2083929FBB31D0043BCA4 /* MyProfileViewController.swift */,
-				52CE6EA02A01875C00E43D39 /* AlarmViewController.swift */,
-				52F2083F29FBFF280043BCA4 /* DdayViewController.swift */,
-				52F00FF52A0930FF0014FC01 /* AddDdayViewController.swift */,
-				52F00FF92A0938480014FC01 /* NoticeViewController.swift */,
+				52F010042A097B930014FC01 /* MyProfileVC */,
 			);
-			path = Controller;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		D44F96227B251CC47229DC2A /* Frameworks */ = {
@@ -363,18 +491,34 @@
 				52CE6EA52A0245E300E43D39 /* DdayView.swift in Sources */,
 				52697B7329EEB7B2002BDD04 /* AppDelegate.swift in Sources */,
 				52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */,
+				52F0100D2A0A4FD20014FC01 /* AnswerView.swift in Sources */,
+				52F010222A0ADD500014FC01 /* EditStatusMessageVC.swift in Sources */,
+				52F010002A094B550014FC01 /* QnAViewController.swift in Sources */,
+				52F010112A0AACEC0014FC01 /* EditProfileView.swift in Sources */,
 				52F2083A29FBB31D0043BCA4 /* MyProfileViewController.swift in Sources */,
+				52F010182A0AAF820014FC01 /* CameraViewController.swift in Sources */,
+				52F0100F2A0A55470014FC01 /* AnswerViewController.swift in Sources */,
 				52CE6EA92A02573200E43D39 /* MainView.swift in Sources */,
 				52CE6EA12A01875C00E43D39 /* AlarmViewController.swift in Sources */,
+				52F010262A0B79270014FC01 /* EditBirthView.swift in Sources */,
 				52F00FF62A0930FF0014FC01 /* AddDdayViewController.swift in Sources */,
+				52F0100B2A0A493C0014FC01 /* QnATableViewCell.swift in Sources */,
 				52CE6EA72A02571E00E43D39 /* MainViewController.swift in Sources */,
 				52F00FF82A0936FD0014FC01 /* NoticeView.swift in Sources */,
+				52F010082A097D120014FC01 /* AlarmTableViewCell.swift in Sources */,
 				52F00FFC2A093A410014FC01 /* NoticeTableViewCell.swift in Sources */,
+				52F010142A0AAD380014FC01 /* EditProfileViewController.swift in Sources */,
 				52CE6EA32A0187BB00E43D39 /* AlarmView.swift in Sources */,
+				52F010242A0B77ED0014FC01 /* EditBirthViewController.swift in Sources */,
+				52F0101C2A0ACDD20014FC01 /* EditNameView.swift in Sources */,
+				52F00FFE2A094B450014FC01 /* QnAView.swift in Sources */,
 				52F2083C29FBB3490043BCA4 /* MyProfileModel.swift in Sources */,
 				52CE6EAB2A0260FA00E43D39 /* TabBarController.swift in Sources */,
 				52F00FFA2A0938480014FC01 /* NoticeViewController.swift in Sources */,
+				52F010202A0ADB680014FC01 /* EditStatusMessageView.swift in Sources */,
 				52697B7529EEB7B2002BDD04 /* SceneDelegate.swift in Sources */,
+				52F0101E2A0ACE190014FC01 /* EditNameViewController.swift in Sources */,
+				52F010162A0AAE900014FC01 /* CameraModel.swift in Sources */,
 				52F2084029FBFF280043BCA4 /* DdayViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
