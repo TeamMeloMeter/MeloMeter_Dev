@@ -29,8 +29,8 @@ class AddDdayView: UIView {
     // 반투명 배경
     private let dimmedView: UIView = {
         let view = UIView()
-        view.backgroundColor = .darkGray
-        view.alpha = 0.6
+        view.backgroundColor = .black
+        view.alpha = 0.5
         return view
     }()
     

@@ -24,9 +24,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBarController = TabBarController()
         
         window?.rootViewController = tabBarController
-//        let rootViewController = MyProfileViewController()
-//        let myProfileNavigationController = UINavigationController(rootViewController: rootViewController)
-//        window?.rootViewController = myProfileNavigationController
         
     }
 

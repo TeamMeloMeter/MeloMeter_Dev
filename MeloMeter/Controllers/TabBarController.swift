@@ -12,7 +12,7 @@ class TabBarController: UITabBarController {
     let titles = ["", "", ""]
     //탭바 기본 아이콘
     let defaultImages = [UIImage(named: "chatIcon"), UIImage(named: "mapIcon"), UIImage(named: "myPageIcon")]
-    let mainVC = MainViewController()
+    let mapVC = MapViewController()
     let chatVC = AlarmViewController() // 채팅뷰 임시
     let myProfileVC = MyProfileViewController()
     
@@ -21,25 +21,8 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let mapIcon = UIImage(named: "mapIcon")?.withRenderingMode(.alwaysOriginal)
-        let chatIcon = UIImage(named: "chatIcon")?.withRenderingMode(.alwaysOriginal)
-        let myPageIcon = UIImage(named: "myPageIcon")?.withRenderingMode(.alwaysOriginal)
-        //아이콘 사이즈 조정
-        let newSize = CGSize(width: 24, height: 24)
-        let renderer = UIGraphicsImageRenderer(size: newSize)
-        
-        let mapIconResized = renderer.image { context in
-            mapIcon?.draw(in: CGRect(origin: .zero, size: newSize))
-        }
-        let chatIconResized = renderer.image { context in
-            chatIcon?.draw(in: CGRect(origin: .zero, size: newSize))
-        }
-        let myPageIconResized = renderer.image { context in
-            myPageIcon?.draw(in: CGRect(origin: .zero, size: newSize))
-        }
-        
         /// 탭바에 네비게이션 컨트롤러 추가
-        //let mainNav = UINavigationController(rootViewController: mainVC)
+        let mapNav = UINavigationController(rootViewController: mapVC)
         //let chatNav = UINavigationController(rootViewController: chatVC)
         let myProfileNav = UINavigationController(rootViewController: myProfileVC)
         
@@ -48,11 +31,10 @@ class TabBarController: UITabBarController {
         tabFrame.size.height = 83
         tabFrame.origin.y = self.view.frame.size.height - 83
         self.tabBar.frame = tabFrame
-        
-        mainVC.tabBarItem = UITabBarItem(title: "", image: mapIconResized, tag: 0)
-        chatVC.tabBarItem = UITabBarItem(title: "", image: chatIconResized, tag: 1)
-        myProfileNav.tabBarItem = UITabBarItem(title: "", image: myPageIconResized, tag: 2)
-        
+        mapNav.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "mapIcon"), selectedImage: UIImage(named: "mapIconSelect"))
+        chatVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "chatIcon"), selectedImage: UIImage(named: "chatIconSelect"))
+        myProfileNav.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "myPageIcon"), selectedImage: UIImage(named: "myPageIconSelect"))
+
         let appearance = UITabBarAppearance()
         let tabBar = UITabBar()
         appearance.backgroundColor = .white
@@ -61,7 +43,7 @@ class TabBarController: UITabBarController {
       
         UITabBar.appearance().scrollEdgeAppearance = appearance
         
-        viewControllers = [chatVC, mainVC, myProfileNav]
+        viewControllers = [chatVC, mapNav, myProfileNav]
         
         selectedIndex = 1
     }

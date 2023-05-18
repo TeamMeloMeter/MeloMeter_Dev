@@ -10,9 +10,9 @@
 		45307ED7030327D357C85252 /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5A8595AED1BC03C3846C34F /* Pods_MeloMeter.framework */; };
 		52697B7329EEB7B2002BDD04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697B7229EEB7B2002BDD04 /* AppDelegate.swift */; };
 		52697B7529EEB7B2002BDD04 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697B7429EEB7B2002BDD04 /* SceneDelegate.swift */; };
-		52697B7729EEB7B2002BDD04 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697B7629EEB7B2002BDD04 /* ViewController.swift */; };
 		52697B7C29EEB7B3002BDD04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52697B7B29EEB7B3002BDD04 /* Assets.xcassets */; };
 		52697B7F29EEB7B3002BDD04 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52697B7D29EEB7B3002BDD04 /* LaunchScreen.storyboard */; };
+		52845B1C2A0FC9DF003A87F8 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52845B1B2A0FC9DF003A87F8 /* LocationModel.swift */; };
 		52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6E8229FEBC0200E43D39 /* FontManager.swift */; };
 		52CE6E9729FEBDAF00E43D39 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E8E29FEBD6600E43D39 /* Pretendard-Black.otf */; };
 		52CE6E9829FEBDB200E43D39 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E9329FEBD6700E43D39 /* Pretendard-Bold.otf */; };
@@ -26,8 +26,8 @@
 		52CE6EA12A01875C00E43D39 /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA02A01875C00E43D39 /* AlarmViewController.swift */; };
 		52CE6EA32A0187BB00E43D39 /* AlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA22A0187BB00E43D39 /* AlarmView.swift */; };
 		52CE6EA52A0245E300E43D39 /* DdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA42A0245E300E43D39 /* DdayView.swift */; };
-		52CE6EA72A02571E00E43D39 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA62A02571E00E43D39 /* MainViewController.swift */; };
-		52CE6EA92A02573200E43D39 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA82A02573200E43D39 /* MainView.swift */; };
+		52CE6EA72A02571E00E43D39 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA62A02571E00E43D39 /* MapViewController.swift */; };
+		52CE6EA92A02573200E43D39 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA82A02573200E43D39 /* MapView.swift */; };
 		52CE6EAB2A0260FA00E43D39 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EAA2A0260FA00E43D39 /* TabBarController.swift */; };
 		52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EAC2A02C0B800E43D39 /* DdayTableViewCell.swift */; };
 		52F00FEE2A0928320014FC01 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52F00FED2A0928320014FC01 /* GoogleService-Info.plist */; };
@@ -70,10 +70,10 @@
 		52697B6F29EEB7B2002BDD04 /* MeloMeter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeloMeter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52697B7229EEB7B2002BDD04 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52697B7429EEB7B2002BDD04 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		52697B7629EEB7B2002BDD04 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		52697B7B29EEB7B3002BDD04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52697B7E29EEB7B3002BDD04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52697B8029EEB7B3002BDD04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		52845B1B2A0FC9DF003A87F8 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		52CE6E8229FEBC0200E43D39 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		52CE6E8E29FEBD6600E43D39 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
 		52CE6E8F29FEBD6600E43D39 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
@@ -87,9 +87,9 @@
 		52CE6EA02A01875C00E43D39 /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
 		52CE6EA22A0187BB00E43D39 /* AlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmView.swift; sourceTree = "<group>"; };
 		52CE6EA42A0245E300E43D39 /* DdayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayView.swift; sourceTree = "<group>"; };
-		52CE6EA62A02571E00E43D39 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		52CE6EA82A02573200E43D39 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		52CE6EAA2A0260FA00E43D39 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		52CE6EA62A02571E00E43D39 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		52CE6EA82A02573200E43D39 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		52CE6EAA2A0260FA00E43D39 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		52CE6EAC2A02C0B800E43D39 /* DdayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayTableViewCell.swift; sourceTree = "<group>"; };
 		52F00FED2A0928320014FC01 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		52F00FF32A09308E0014FC01 /* AddDdayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDdayView.swift; sourceTree = "<group>"; };
@@ -167,7 +167,6 @@
 				B61B0F5A29F7A5F500E25EEF /* MeloMeter.entitlements */,
 				52697B7229EEB7B2002BDD04 /* AppDelegate.swift */,
 				52697B7429EEB7B2002BDD04 /* SceneDelegate.swift */,
-				52697B7629EEB7B2002BDD04 /* ViewController.swift */,
 				52F2084329FD64100043BCA4 /* Models */,
 				52F2084429FD64190043BCA4 /* Views */,
 				52F2084529FD641E0043BCA4 /* Controllers */,
@@ -307,6 +306,7 @@
 			children = (
 				52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */,
 				52F010152A0AAE900014FC01 /* CameraModel.swift */,
+				52845B1B2A0FC9DF003A87F8 /* LocationModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -314,7 +314,7 @@
 		52F2084429FD64190043BCA4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				52CE6EA82A02573200E43D39 /* MainView.swift */,
+				52CE6EA82A02573200E43D39 /* MapView.swift */,
 				52F010012A097B020014FC01 /* MyProfileViews */,
 			);
 			path = Views;
@@ -324,7 +324,7 @@
 			isa = PBXGroup;
 			children = (
 				52CE6EAA2A0260FA00E43D39 /* TabBarController.swift */,
-				52CE6EA62A02571E00E43D39 /* MainViewController.swift */,
+				52CE6EA62A02571E00E43D39 /* MapViewController.swift */,
 				52F010042A097B930014FC01 /* MyProfileVC */,
 			);
 			path = Controllers;
@@ -487,7 +487,7 @@
 				52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */,
 				52F2084229FD63F40043BCA4 /* MyProfileView.swift in Sources */,
 				52F00FF42A09308E0014FC01 /* AddDdayView.swift in Sources */,
-				52697B7729EEB7B2002BDD04 /* ViewController.swift in Sources */,
+				52845B1C2A0FC9DF003A87F8 /* LocationModel.swift in Sources */,
 				52CE6EA52A0245E300E43D39 /* DdayView.swift in Sources */,
 				52697B7329EEB7B2002BDD04 /* AppDelegate.swift in Sources */,
 				52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */,
@@ -498,12 +498,12 @@
 				52F2083A29FBB31D0043BCA4 /* MyProfileViewController.swift in Sources */,
 				52F010182A0AAF820014FC01 /* CameraViewController.swift in Sources */,
 				52F0100F2A0A55470014FC01 /* AnswerViewController.swift in Sources */,
-				52CE6EA92A02573200E43D39 /* MainView.swift in Sources */,
+				52CE6EA92A02573200E43D39 /* MapView.swift in Sources */,
 				52CE6EA12A01875C00E43D39 /* AlarmViewController.swift in Sources */,
 				52F010262A0B79270014FC01 /* EditBirthView.swift in Sources */,
 				52F00FF62A0930FF0014FC01 /* AddDdayViewController.swift in Sources */,
 				52F0100B2A0A493C0014FC01 /* QnATableViewCell.swift in Sources */,
-				52CE6EA72A02571E00E43D39 /* MainViewController.swift in Sources */,
+				52CE6EA72A02571E00E43D39 /* MapViewController.swift in Sources */,
 				52F00FF82A0936FD0014FC01 /* NoticeView.swift in Sources */,
 				52F010082A097D120014FC01 /* AlarmTableViewCell.swift in Sources */,
 				52F00FFC2A093A410014FC01 /* NoticeTableViewCell.swift in Sources */,

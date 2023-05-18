@@ -19,7 +19,6 @@ class EditNameViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         editNameView.nameTextField.delegate = self
-        editNameView.nameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -32,11 +31,20 @@ class EditNameViewController: UIViewController, UITextFieldDelegate {
         editNameView.nameTextField.becomeFirstResponder()
     }
 
-    // This function will be called when the text in the text field changes
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        navigationItem.rightBarButtonItem?.isEnabled = true
+    //텍스트 변경 시 이벤트
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        navigationItem.rightBarButtonItem?.isEnabled = true //등록버튼 활성화
+        
+        guard let currentText = textField.text else { return true }
+        
+        let newLength = currentText.count + string.count - range.length
+        if newLength > 10 {
+            return false
+        }
+        editNameView.nameTextCountLabel.text = "\(newLength)/10"
+        
+        return true
     }
-    
     // 뷰 터치 시 inputView 내림
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         editNameView.topView.endEditing(true)

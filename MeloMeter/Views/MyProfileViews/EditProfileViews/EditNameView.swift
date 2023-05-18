@@ -13,6 +13,7 @@ class EditNameView: UIView {
         view.backgroundColor = #colorLiteral(red: 0.9764705882, green: 0.9764705882, blue: 0.9764705882, alpha: 1)
         view.addSubview(exLabel)
         view.addSubview(nameTextField)
+        view.addSubview(nameTextCountLabel)
         return view
     }()
     
@@ -36,8 +37,16 @@ class EditNameView: UIView {
         
         tv.keyboardType = .default
         tv.tintColor = .black
-        
+        tv.addLeftPadding()
         return tv
+    }()
+    
+    var nameTextCountLabel: UILabel = {
+        let label = UILabel()
+        label.text = "0/10"
+        label.font = FontManager.shared.medium(ofSize: 13)
+        label.textColor = #colorLiteral(red: 0.5215686275, green: 0.5215686275, blue: 0.5215686275, alpha: 1)
+        return label
     }()
     
     override init(frame: CGRect) {
@@ -78,14 +87,19 @@ class EditNameView: UIView {
     private func nameTFViewConstraint() {
         exLabel.translatesAutoresizingMaskIntoConstraints = false
         nameTextField.translatesAutoresizingMaskIntoConstraints = false
+        nameTextCountLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             exLabel.leadingAnchor.constraint(equalTo: topView.leadingAnchor, constant: 16),
             exLabel.topAnchor.constraint(equalTo: topView.topAnchor, constant: 40),
             
             nameTextField.leadingAnchor.constraint(equalTo: topView.leadingAnchor, constant: 16),
+            nameTextField.trailingAnchor.constraint(equalTo: topView.trailingAnchor, constant: -16),
             nameTextField.topAnchor.constraint(equalTo: exLabel.bottomAnchor, constant: 17),
-            nameTextField.heightAnchor.constraint(equalToConstant: 49)
+            nameTextField.heightAnchor.constraint(equalToConstant: 50),
+            
+            nameTextCountLabel.trailingAnchor.constraint(equalTo: topView.trailingAnchor, constant: -16),
+            nameTextCountLabel.topAnchor.constraint(equalTo: topView.topAnchor, constant: 40),
 
         ])
     }
