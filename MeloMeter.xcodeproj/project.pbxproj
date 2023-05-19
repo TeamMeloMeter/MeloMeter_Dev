@@ -56,6 +56,13 @@
 		52F2083C29FBB3490043BCA4 /* MyProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */; };
 		52F2084029FBFF280043BCA4 /* DdayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083F29FBFF280043BCA4 /* DdayViewController.swift */; };
 		52F2084229FD63F40043BCA4 /* MyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2084129FD63F40043BCA4 /* MyProfileView.swift */; };
+		52F3052E2A163B5B00112A04 /* ColorAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F3052D2A163B5B00112A04 /* ColorAssets.swift */; };
+		52F305302A168CE900112A04 /* DisconnectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F3052F2A168CE900112A04 /* DisconnectVC.swift */; };
+		52F305322A168D6000112A04 /* DisconnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305312A168D6000112A04 /* DisconnectView.swift */; };
+		52F305342A16B7AE00112A04 /* RecoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305332A16B7AE00112A04 /* RecoveryView.swift */; };
+		52F305362A16B7F500112A04 /* RecoveryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305352A16B7F400112A04 /* RecoveryVC.swift */; };
+		52F305382A16BF2A00112A04 /* WithdrawalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305372A16BF2A00112A04 /* WithdrawalView.swift */; };
+		52F3053A2A16BF4700112A04 /* WithdrawalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305392A16BF4700112A04 /* WithdrawalVC.swift */; };
 		B61B0F4B29F7A44700E25EEF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B61B0F4A29F7A44700E25EEF /* FirebaseAnalytics */; };
 		B61B0F4D29F7A44700E25EEF /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = B61B0F4C29F7A44700E25EEF /* FirebaseAppCheck */; };
 		B61B0F4F29F7A44700E25EEF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B61B0F4E29F7A44700E25EEF /* FirebaseAuth */; };
@@ -117,6 +124,13 @@
 		52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileModel.swift; sourceTree = "<group>"; };
 		52F2083F29FBFF280043BCA4 /* DdayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayViewController.swift; sourceTree = "<group>"; };
 		52F2084129FD63F40043BCA4 /* MyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileView.swift; sourceTree = "<group>"; };
+		52F3052D2A163B5B00112A04 /* ColorAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAssets.swift; sourceTree = "<group>"; };
+		52F3052F2A168CE900112A04 /* DisconnectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectVC.swift; sourceTree = "<group>"; };
+		52F305312A168D6000112A04 /* DisconnectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectView.swift; sourceTree = "<group>"; };
+		52F305332A16B7AE00112A04 /* RecoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryView.swift; sourceTree = "<group>"; };
+		52F305352A16B7F400112A04 /* RecoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryVC.swift; sourceTree = "<group>"; };
+		52F305372A16BF2A00112A04 /* WithdrawalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalView.swift; sourceTree = "<group>"; };
+		52F305392A16BF4700112A04 /* WithdrawalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalVC.swift; sourceTree = "<group>"; };
 		6F172644C2184ED18F3C3ACA /* Pods-MeloMeter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.debug.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.debug.xcconfig"; sourceTree = "<group>"; };
 		80E724853E983EBFAE15A81F /* Pods-MeloMeter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.release.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.release.xcconfig"; sourceTree = "<group>"; };
 		B61B0F5A29F7A5F500E25EEF /* MeloMeter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeloMeter.entitlements; sourceTree = "<group>"; };
@@ -285,6 +299,9 @@
 				52F0101B2A0ACDD20014FC01 /* EditNameView.swift */,
 				52F0101F2A0ADB680014FC01 /* EditStatusMessageView.swift */,
 				52F010252A0B79270014FC01 /* EditBirthView.swift */,
+				52F305312A168D6000112A04 /* DisconnectView.swift */,
+				52F305332A16B7AE00112A04 /* RecoveryView.swift */,
+				52F305372A16BF2A00112A04 /* WithdrawalView.swift */,
 			);
 			path = EditProfileViews;
 			sourceTree = "<group>";
@@ -297,6 +314,9 @@
 				52F010212A0ADD500014FC01 /* EditStatusMessageVC.swift */,
 				52F010232A0B77ED0014FC01 /* EditBirthViewController.swift */,
 				52F010172A0AAF820014FC01 /* CameraViewController.swift */,
+				52F3052F2A168CE900112A04 /* DisconnectVC.swift */,
+				52F305352A16B7F400112A04 /* RecoveryVC.swift */,
+				52F305392A16BF4700112A04 /* WithdrawalVC.swift */,
 			);
 			path = EditProfileVCs;
 			sourceTree = "<group>";
@@ -316,6 +336,7 @@
 			children = (
 				52CE6EA82A02573200E43D39 /* MapView.swift */,
 				52F010012A097B020014FC01 /* MyProfileViews */,
+				52F3052D2A163B5B00112A04 /* ColorAssets.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -488,6 +509,7 @@
 				52F2084229FD63F40043BCA4 /* MyProfileView.swift in Sources */,
 				52F00FF42A09308E0014FC01 /* AddDdayView.swift in Sources */,
 				52845B1C2A0FC9DF003A87F8 /* LocationModel.swift in Sources */,
+				52F305302A168CE900112A04 /* DisconnectVC.swift in Sources */,
 				52CE6EA52A0245E300E43D39 /* DdayView.swift in Sources */,
 				52697B7329EEB7B2002BDD04 /* AppDelegate.swift in Sources */,
 				52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */,
@@ -497,19 +519,25 @@
 				52F010112A0AACEC0014FC01 /* EditProfileView.swift in Sources */,
 				52F2083A29FBB31D0043BCA4 /* MyProfileViewController.swift in Sources */,
 				52F010182A0AAF820014FC01 /* CameraViewController.swift in Sources */,
+				52F305322A168D6000112A04 /* DisconnectView.swift in Sources */,
+				52F305342A16B7AE00112A04 /* RecoveryView.swift in Sources */,
 				52F0100F2A0A55470014FC01 /* AnswerViewController.swift in Sources */,
 				52CE6EA92A02573200E43D39 /* MapView.swift in Sources */,
 				52CE6EA12A01875C00E43D39 /* AlarmViewController.swift in Sources */,
 				52F010262A0B79270014FC01 /* EditBirthView.swift in Sources */,
 				52F00FF62A0930FF0014FC01 /* AddDdayViewController.swift in Sources */,
 				52F0100B2A0A493C0014FC01 /* QnATableViewCell.swift in Sources */,
+				52F305362A16B7F500112A04 /* RecoveryVC.swift in Sources */,
+				52F3052E2A163B5B00112A04 /* ColorAssets.swift in Sources */,
 				52CE6EA72A02571E00E43D39 /* MapViewController.swift in Sources */,
 				52F00FF82A0936FD0014FC01 /* NoticeView.swift in Sources */,
 				52F010082A097D120014FC01 /* AlarmTableViewCell.swift in Sources */,
 				52F00FFC2A093A410014FC01 /* NoticeTableViewCell.swift in Sources */,
 				52F010142A0AAD380014FC01 /* EditProfileViewController.swift in Sources */,
 				52CE6EA32A0187BB00E43D39 /* AlarmView.swift in Sources */,
+				52F3053A2A16BF4700112A04 /* WithdrawalVC.swift in Sources */,
 				52F010242A0B77ED0014FC01 /* EditBirthViewController.swift in Sources */,
+				52F305382A16BF2A00112A04 /* WithdrawalView.swift in Sources */,
 				52F0101C2A0ACDD20014FC01 /* EditNameView.swift in Sources */,
 				52F00FFE2A094B450014FC01 /* QnAView.swift in Sources */,
 				52F2083C29FBB3490043BCA4 /* MyProfileModel.swift in Sources */,

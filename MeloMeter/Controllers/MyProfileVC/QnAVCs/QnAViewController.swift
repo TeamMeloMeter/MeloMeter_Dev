@@ -31,11 +31,12 @@ class QnAViewController: UIViewController, UITableViewDataSource, UITableViewDel
         navigationBarCustom()
     }
     @objc func radioBtnTapped(_ sender: UIButton) {
-        radioBtnArray.forEach { $0.isSelected = false; $0.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9725490196, alpha: 1) }
+        radioBtnArray.forEach { $0.isSelected = false; $0.backgroundColor = .gray5
+            $0.titleLabel?.font = FontManager.shared.medium(ofSize: 14)}
+        
         sender.isSelected = true
-        sender.setTitleColor(.white, for: .selected)
         sender.titleLabel?.font = FontManager.shared.semiBold(ofSize: 14)
-        sender.backgroundColor = #colorLiteral(red: 0.6392156863, green: 0.6392156863, blue: 0.6392156863, alpha: 1)
+        sender.backgroundColor = .primary1
     }
     
     //셀 개수

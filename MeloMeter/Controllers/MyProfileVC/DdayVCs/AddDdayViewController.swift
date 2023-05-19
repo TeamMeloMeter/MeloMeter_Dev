@@ -20,8 +20,7 @@ class AddDdayViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         addDdayView.titleTextView.delegate = self
         addDdayView.dateTextField.delegate = self
-        addDdayView.saveButton.isEnabled = false
-        addDdayView.saveButton.alpha = 0.5
+       
 
         addDdayView.xButton.addTarget(self, action: #selector(xButtonTapped), for: .touchUpInside)
         
@@ -71,14 +70,14 @@ extension AddDdayViewController: UITextViewDelegate {
         //text 변경 시 placeholder 숨김
         addDdayView.textPlaceHolderLabel.isHidden = !textView.text.isEmpty
         //입력 글자 수 label 표시
-        addDdayView.textCountLabel.text = "\(addDdayView.titleTextView.text.count)/20"
+        addDdayView.textCountLabel.text = "\(addDdayView.titleTextView.text.count)/10"
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // 현재 텍스트 길이와 입력하려는 텍스트 길이의 합이 최대 길이를 초과하면 false 반환
         let currentText = textView.text ?? ""
         let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
-        return newText.count <= 20
+        return newText.count <= 10
     }
     
 }

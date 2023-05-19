@@ -10,7 +10,7 @@ import UIKit
 class EditBirthView: UIView {
     lazy var topView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.9764705882, green: 0.9764705882, blue: 0.9764705882, alpha: 1)
+        view.backgroundColor = .white
         view.addSubview(exLabel)
         view.addSubview(birthTextField)
         return view
@@ -20,24 +20,25 @@ class EditBirthView: UIView {
         let label = UILabel()
         label.text = "생일"
         label.font = FontManager.shared.medium(ofSize: 14)
-        label.textColor = #colorLiteral(red: 0.5215686275, green: 0.5215686275, blue: 0.5215686275, alpha: 1)
+        label.textColor = .gray2
         return label
     }()
     
     lazy var birthTextField: UITextField = {
         let tv = UITextField()
         
-        tv.backgroundColor = .white
-        tv.textColor = .black
+        tv.backgroundColor = .gray5
+        tv.textColor = .gray1
         tv.font = FontManager.shared.medium(ofSize: 16)
         tv.autocorrectionType = .no // 자동수정 X
         tv.spellCheckingType = .no // 맞춤법 체크 X
         tv.keyboardType = .default
-        tv.tintColor = .black
+        tv.tintColor = .gray1
         tv.inputView = datePicker
         tv.becomeFirstResponder()
         tv.addLeftPadding()
-    
+        tv.layer.cornerRadius = 8
+        tv.layer.masksToBounds = false
         return tv
     }()
     

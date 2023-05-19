@@ -9,32 +9,27 @@ import UIKit
 
 class QnAView: UIView {
    
-    private let topView: UIView = {
-        let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
-        return view
-    }()
     
     let radioBtn: UIButton = {
         let button = UIButton()
         button.setTitle("가입/인증", for: .normal)
-        button.setTitleColor(#colorLiteral(red: 0.4588235294, green: 0.4509803922, blue: 0.4509803922, alpha: 1), for: .normal)
+        button.setTitleColor(.gray2, for: .normal)
         button.titleLabel?.font = FontManager.shared.medium(ofSize: 14)
         button.clipsToBounds = true
         button.layer.cornerRadius = 20
         button.isSelected = true
         button.setTitleColor(.white, for: .selected)
-        button.titleLabel?.font = FontManager.shared.semiBold(ofSize: 14)
-        button.backgroundColor = #colorLiteral(red: 0.6392156863, green: 0.6392156863, blue: 0.6392156863, alpha: 1)
+        button.backgroundColor = .primary1
         return button
     }()
     
     let radioBtn1: UIButton = {
         let button = UIButton()
         button.setTitle("아이디/비밀번호 분실", for: .normal)
-        button.setTitleColor(#colorLiteral(red: 0.4588235294, green: 0.4509803922, blue: 0.4509803922, alpha: 1), for: .normal)
+        button.setTitleColor(.gray2, for: .normal)
         button.titleLabel?.font = FontManager.shared.medium(ofSize: 14)
-        button.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9725490196, alpha: 1)
+        button.setTitleColor(.white, for: .selected)
+        button.backgroundColor = .gray5
         button.clipsToBounds = true
         button.layer.cornerRadius = 20
         
@@ -44,9 +39,10 @@ class QnAView: UIView {
     let radioBtn2: UIButton = {
         let button = UIButton()
         button.setTitle("변경/탈퇴", for: .normal)
-        button.setTitleColor(#colorLiteral(red: 0.4588235294, green: 0.4509803922, blue: 0.4509803922, alpha: 1), for: .normal)
+        button.setTitleColor(.gray2, for: .normal)
         button.titleLabel?.font = FontManager.shared.medium(ofSize: 14)
-        button.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9725490196, alpha: 1)
+        button.setTitleColor(.white, for: .selected)
+        button.backgroundColor = .gray5
         button.clipsToBounds = true
         button.layer.cornerRadius = 20
         
@@ -56,9 +52,10 @@ class QnAView: UIView {
     let radioBtn3: UIButton = {
         let button = UIButton()
         button.setTitle("위치기반", for: .normal)
-        button.setTitleColor(#colorLiteral(red: 0.4588235294, green: 0.4509803922, blue: 0.4509803922, alpha: 1), for: .normal)
+        button.setTitleColor(.gray2, for: .normal)
         button.titleLabel?.font = FontManager.shared.medium(ofSize: 14)
-        button.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9725490196, alpha: 1)
+        button.setTitleColor(.white, for: .selected)
+        button.backgroundColor = .gray5
         button.clipsToBounds = true
         button.layer.cornerRadius = 20
         
@@ -68,9 +65,10 @@ class QnAView: UIView {
     let radioBtn4: UIButton = {
         let button = UIButton()
         button.setTitle("연결/재연결", for: .normal)
-        button.setTitleColor(#colorLiteral(red: 0.4588235294, green: 0.4509803922, blue: 0.4509803922, alpha: 1), for: .normal)
+        button.setTitleColor(.gray2, for: .normal)
         button.titleLabel?.font = FontManager.shared.medium(ofSize: 14)
-        button.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9725490196, alpha: 1)
+        button.setTitleColor(.white, for: .selected)
+        button.backgroundColor = .gray5
         button.clipsToBounds = true
         button.layer.cornerRadius = 20
         
@@ -80,9 +78,10 @@ class QnAView: UIView {
     let radioBtn5: UIButton = {
         let button = UIButton()
         button.setTitle("백업/복구", for: .normal)
-        button.setTitleColor(#colorLiteral(red: 0.4588235294, green: 0.4509803922, blue: 0.4509803922, alpha: 1), for: .normal)
+        button.setTitleColor(.gray2, for: .normal)
         button.titleLabel?.font = FontManager.shared.medium(ofSize: 14)
-        button.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9725490196, alpha: 1)
+        button.setTitleColor(.white, for: .selected)
+        button.backgroundColor = .gray5
         button.clipsToBounds = true
         button.layer.cornerRadius = 20
         
@@ -117,24 +116,12 @@ class QnAView: UIView {
     }
     
     func addViews() {
-        [topView, radioBtn, radioBtn1, radioBtn2, radioBtn3, radioBtn4, radioBtn5, qnATableView].forEach { addSubview($0) }
+        [radioBtn, radioBtn1, radioBtn2, radioBtn3, radioBtn4, radioBtn5, qnATableView].forEach { addSubview($0) }
     }
     
     private func setConstraints() {
-        topViewConstraint()
         radioConstraint()
         qnATableViewConstraint()
-    }
-    
-    private func topViewConstraint() {
-        topView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            topView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            topView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            topView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            topView.heightAnchor.constraint(equalToConstant: 104)
-           
-        ])
     }
     
     private func radioConstraint() {
@@ -147,17 +134,17 @@ class QnAView: UIView {
 
         NSLayoutConstraint.activate([
             radioBtn.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            radioBtn.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 32),
+            radioBtn.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 26),
             radioBtn.widthAnchor.constraint(equalToConstant: 86),
             radioBtn.heightAnchor.constraint(equalToConstant: 37),
            
             radioBtn1.leadingAnchor.constraint(equalTo: radioBtn.trailingAnchor, constant: 8),
-            radioBtn1.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 32),
+            radioBtn1.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 26),
             radioBtn1.widthAnchor.constraint(equalToConstant: 150),
             radioBtn1.heightAnchor.constraint(equalToConstant: 37),
             
             radioBtn2.leadingAnchor.constraint(equalTo: radioBtn1.trailingAnchor, constant: 8),
-            radioBtn2.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 32),
+            radioBtn2.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 26),
             radioBtn2.widthAnchor.constraint(equalToConstant: 86),
             radioBtn2.heightAnchor.constraint(equalToConstant: 37),
             

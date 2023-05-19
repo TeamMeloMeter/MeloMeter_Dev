@@ -9,21 +9,6 @@ import UIKit
 
 class EditProfileView: UIView {
     
-    lazy var topView: UIView = {
-        let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.9764705882, green: 0.9764705882, blue: 0.9764705882, alpha: 1)
-        
-        view.addSubview(profileImageView)
-        view.addSubview(cameraButton)
-        view.addSubview(nameLabel)
-        view.addSubview(nameView)
-        view.addSubview(stateMessageLabel)
-        view.addSubview(stateMessageView)
-        view.addSubview(birthGenderView)
-        view.addSubview(bottomView)
-        return view
-    }()
-    
     let profileImageView: UIImageView = {
             let imageView = UIImageView()
             imageView.image = UIImage(named: "profileTest")
@@ -43,13 +28,13 @@ class EditProfileView: UIView {
         let label = UILabel()
         label.text = "이름"
         label.font = FontManager.shared.medium(ofSize: 14)
-        label.textColor = #colorLiteral(red: 0.5215686275, green: 0.5215686275, blue: 0.5215686275, alpha: 1)
+        label.textColor = .gray2
         return label
     }()
     
     lazy var nameView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .gray5
         view.layer.cornerRadius = 8
         view.clipsToBounds = true
         view.addSubview(userNameLabel)
@@ -60,7 +45,7 @@ class EditProfileView: UIView {
         let label = UILabel()
         label.text = "김소희"
         label.font = FontManager.shared.medium(ofSize: 14)
-        label.textColor = .black
+        label.textColor = .gray1
         return label
     }()
     
@@ -68,13 +53,13 @@ class EditProfileView: UIView {
         let label = UILabel()
         label.text = "상태메세지"
         label.font = FontManager.shared.medium(ofSize: 14)
-        label.textColor = #colorLiteral(red: 0.5215686275, green: 0.5215686275, blue: 0.5215686275, alpha: 1)
+        label.textColor = .gray2
         return label
     }()
     
     lazy var stateMessageView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .gray5
         view.layer.cornerRadius = 8
         view.clipsToBounds = true
         view.addSubview(userStateMessageLabel)
@@ -85,13 +70,13 @@ class EditProfileView: UIView {
         let label = UILabel()
         label.text = "오늘은 기분좋은 날:)"
         label.font = FontManager.shared.medium(ofSize: 14)
-        label.textColor = .black
+        label.textColor = .gray1
         return label
     }()
     
     lazy var birthGenderView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .gray5
         view.layer.cornerRadius = 8
         view.clipsToBounds = true
         view.addSubview(birthLabel)
@@ -106,7 +91,7 @@ class EditProfileView: UIView {
         let label = UILabel()
         label.text = "생일"
         label.font = FontManager.shared.medium(ofSize: 14)
-        label.textColor = .black
+        label.textColor = .gray1
         return label
     }()
     
@@ -114,14 +99,14 @@ class EditProfileView: UIView {
         let label = UILabel()
         label.text = "1998.03.10"
         label.font = FontManager.shared.medium(ofSize: 14)
-        label.textColor = .black
+        label.textColor = .gray1
         label.textAlignment = .right
         return label
     }()
     
     private let lineView1: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.8797428012, green: 0.8797428012, blue: 0.8797428012, alpha: 1)
+        view.backgroundColor = .gray4
         return view
     }()
     
@@ -129,7 +114,7 @@ class EditProfileView: UIView {
         let label = UILabel()
         label.text = "성별"
         label.font = FontManager.shared.medium(ofSize: 14)
-        label.textColor = .black
+        label.textColor = .gray1
         return label
     }()
     
@@ -137,14 +122,14 @@ class EditProfileView: UIView {
         let label = UILabel()
         label.text = "남"
         label.font = FontManager.shared.medium(ofSize: 14)
-        label.textColor = .black
+        label.textColor = .gray1
         label.textAlignment = .right
         return label
     }()
     
     lazy var bottomView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .gray5
         view.layer.cornerRadius = 8
         view.clipsToBounds = true
         view.addSubview(disconnectLabel)
@@ -159,25 +144,25 @@ class EditProfileView: UIView {
         let label = UILabel()
         label.text = "상대방과 연결 끊기"
         label.font = FontManager.shared.medium(ofSize: 14)
-        label.textColor = .black
+        label.textColor = .gray1
         return label
     }()
     private let lineView2: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.8797428012, green: 0.8797428012, blue: 0.8797428012, alpha: 1)
+        view.backgroundColor = .gray4
         return view
     }()
     let logoutLabel: UILabel = {
         let label = UILabel()
         label.text = "로그아웃"
         label.font = FontManager.shared.medium(ofSize: 14)
-        label.textColor = .black
+        label.textColor = .gray1
         return label
     }()
     
     private let lineView3: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.8797428012, green: 0.8797428012, blue: 0.8797428012, alpha: 1)
+        view.backgroundColor = .gray4
         return view
     }()
     
@@ -185,7 +170,7 @@ class EditProfileView: UIView {
         let label = UILabel()
         label.text = "회원탈퇴"
         label.font = FontManager.shared.medium(ofSize: 14)
-        label.textColor = .black
+        label.textColor = .gray1
         return label
     }()
     
@@ -202,11 +187,11 @@ class EditProfileView: UIView {
     }
     
     func addViews() {
-        [topView].forEach { addSubview($0) }
+        [profileImageView, cameraButton, nameLabel, nameView, stateMessageLabel, stateMessageView,
+         birthGenderView, bottomView].forEach { addSubview($0) }
     }
     
     private func setConstraints() {
-        topViewConstraint()
         profileImageViewConstraint()
         cameraButtonConstraint()
         nameStateMessageConstraint()
@@ -217,16 +202,6 @@ class EditProfileView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func topViewConstraint() {
-        topView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            topView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            topView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            topView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            topView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-
-        ])
-    }
     private func profileImageViewConstraint() {
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -242,8 +217,8 @@ class EditProfileView: UIView {
         NSLayoutConstraint.activate([
             cameraButton.topAnchor.constraint(equalTo: profileImageView.topAnchor, constant: 84),
             cameraButton.leadingAnchor.constraint(equalTo: profileImageView.leadingAnchor, constant: 91),
-            cameraButton.widthAnchor.constraint(equalToConstant: 35),
-            cameraButton.heightAnchor.constraint(equalToConstant: 35)
+            cameraButton.widthAnchor.constraint(equalToConstant: 34),
+            cameraButton.heightAnchor.constraint(equalToConstant: 34)
         ])
     }
     
@@ -256,10 +231,10 @@ class EditProfileView: UIView {
         userStateMessageLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            nameLabel.leadingAnchor.constraint(equalTo: topView.leadingAnchor, constant: 16),
-            nameLabel.topAnchor.constraint(equalTo: topView.topAnchor, constant: 185),
+            nameLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            nameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 185),
             
-            nameView.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
+            nameView.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
             nameView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 17),
             nameView.widthAnchor.constraint(equalToConstant: 343),
             nameView.heightAnchor.constraint(equalToConstant: 46),
@@ -267,10 +242,10 @@ class EditProfileView: UIView {
             userNameLabel.leadingAnchor.constraint(equalTo: nameView.leadingAnchor, constant: 11),
             userNameLabel.centerYAnchor.constraint(equalTo: nameView.centerYAnchor),
             
-            stateMessageLabel.leadingAnchor.constraint(equalTo: topView.leadingAnchor, constant: 16),
+            stateMessageLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
             stateMessageLabel.topAnchor.constraint(equalTo: nameView.bottomAnchor, constant: 22),
             
-            stateMessageView.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
+            stateMessageView.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
             stateMessageView.topAnchor.constraint(equalTo: stateMessageLabel.bottomAnchor, constant: 17),
             stateMessageView.widthAnchor.constraint(equalToConstant: 343),
             stateMessageView.heightAnchor.constraint(equalToConstant: 46),
@@ -289,7 +264,7 @@ class EditProfileView: UIView {
         userGenderLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            birthGenderView.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
+            birthGenderView.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
             birthGenderView.topAnchor.constraint(equalTo: stateMessageView.bottomAnchor, constant: 36),
             birthGenderView.widthAnchor.constraint(equalToConstant: 343),
             birthGenderView.heightAnchor.constraint(equalToConstant: 88),
@@ -326,7 +301,7 @@ class EditProfileView: UIView {
         withdrawalLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            bottomView.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
+            bottomView.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
             bottomView.topAnchor.constraint(equalTo: birthGenderView.bottomAnchor, constant: 36),
             bottomView.widthAnchor.constraint(equalToConstant: 343),
             bottomView.heightAnchor.constraint(equalToConstant: 132),

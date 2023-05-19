@@ -37,15 +37,16 @@ class AddDdayView: UIView {
     //창닫기버튼
     let xButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "xmark"), for: .normal)
-        button.tintColor = .black
+        button.setImage(UIImage(named: "xmark"), for: .normal)
+        button.contentHorizontalAlignment = .center
+        button.contentVerticalAlignment = .center
         return button
     }()
     
     //상단 타이틀 label
     private let topLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .gray1
         label.text = "새로운 일정 추가"
         label.font = FontManager.shared.semiBold(ofSize: 18)
         return label
@@ -54,7 +55,7 @@ class AddDdayView: UIView {
     // "제목" label
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = #colorLiteral(red: 0.5924944878, green: 0.5924944878, blue: 0.5924944878, alpha: 1)
+        label.textColor = .gray2
         label.text = "제목"
         label.font = FontManager.shared.medium(ofSize: 14)
         return label
@@ -63,22 +64,22 @@ class AddDdayView: UIView {
     // 제목 입력
     var titleTextView: UITextView = {
         let tv = UITextView()
-        tv.backgroundColor = .white
-        tv.textColor = .black
+        tv.backgroundColor = .gray5
+        tv.textColor = .gray1
         tv.font = FontManager.shared.medium(ofSize: 16)
         tv.autocorrectionType = .no // 자동수정 X
         tv.spellCheckingType = .no // 맞춤법 체크 X
         tv.keyboardType = .default
         tv.becomeFirstResponder()
         tv.textContainerInset = UIEdgeInsets(top: 16, left: 9, bottom: 15, right: 15)
-        tv.tintColor = .black
+        tv.tintColor = .gray1
         return tv
     }()
     
     //텍스트뷰 플레이스홀더 label
     let textPlaceHolderLabel: UILabel = {
         let label = UILabel()
-        label.textColor = #colorLiteral(red: 0.8509803922, green: 0.8509803922, blue: 0.8509803922, alpha: 1)
+        label.textColor = .gray3
         label.text = "어떤 이벤트인가요?"
         label.font = FontManager.shared.medium(ofSize: 16)
         return label
@@ -86,9 +87,9 @@ class AddDdayView: UIView {
     
     var textCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "0/20"
+        label.text = "0/10"
         label.font = FontManager.shared.medium(ofSize: 12)
-        label.textColor = #colorLiteral(red: 0.5215686275, green: 0.5215686275, blue: 0.5215686275, alpha: 1)
+        label.textColor = .gray2
         return label
     }()
     
@@ -97,16 +98,16 @@ class AddDdayView: UIView {
         let tv = UITextField()
         // 플레이스홀더에 표시할 속성
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: #colorLiteral(red: 0.8509803922, green: 0.8509803922, blue: 0.8509803922, alpha: 1),
+            .foregroundColor: UIColor.gray3,
             .font: FontManager.shared.medium(ofSize: 16)
         ]
-        tv.backgroundColor = .white
-        tv.textColor = .black
+        tv.backgroundColor = .gray5
+        tv.textColor = .gray1
         tv.font = FontManager.shared.medium(ofSize: 16)
         tv.autocorrectionType = .no // 자동수정 X
         tv.spellCheckingType = .no // 맞춤법 체크 X
         tv.attributedPlaceholder = NSAttributedString(string: "날짜를 선택해주세요", attributes: attributes)
-        tv.tintColor = .black
+        tv.tintColor = .gray1
         tv.inputView = datePicker
         tv.inputAccessoryView = dateInputView
         tv.addLeftPadding()
@@ -124,9 +125,11 @@ class AddDdayView: UIView {
     // 저장버튼
     let saveButton: UIButton = {
         let button = UIButton()
-        button.setTitle("저장", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = #colorLiteral(red: 0.6642268896, green: 0.6642268896, blue: 0.6642268896, alpha: 1)
+        button.backgroundColor = .white
+        button.setTitle("다음", for: .normal)
+        button.setTitleColor(.gray1, for: .normal)
+        button.isEnabled = false
+        button.alpha = 0.5
         return button
     }()
     
@@ -143,7 +146,7 @@ class AddDdayView: UIView {
     
     private let dateTitleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = #colorLiteral(red: 0.5924944878, green: 0.5924944878, blue: 0.5924944878, alpha: 1)
+        label.textColor = .gray2
         label.text = "날짜"
         label.font = FontManager.shared.medium(ofSize: 14)
         return label
@@ -206,10 +209,10 @@ class AddDdayView: UIView {
     private func xButtonConstraints() {
         xButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            xButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            xButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 34),
-            xButton.widthAnchor.constraint(equalToConstant: 24),
-            xButton.heightAnchor.constraint(equalToConstant: 24)
+            xButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -6),
+            xButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 24),
+            xButton.widthAnchor.constraint(equalToConstant: 48),
+            xButton.heightAnchor.constraint(equalToConstant: 48)
 
         ])
     }

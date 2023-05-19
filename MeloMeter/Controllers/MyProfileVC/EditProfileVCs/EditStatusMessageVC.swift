@@ -36,10 +36,10 @@ class EditStatusMessageVC: UIViewController, UITextFieldDelegate {
         guard let currentText = textField.text else { return true }
         
         let newLength = currentText.count + string.count - range.length
-        if newLength > 20 {
+        if newLength > 10 {
             return false
         }
-        editStatusMessageView.statusTextCountLabel.text = "\(newLength)/20"
+        editStatusMessageView.statusTextCountLabel.text = "\(newLength)/10"
         
         return true
     }

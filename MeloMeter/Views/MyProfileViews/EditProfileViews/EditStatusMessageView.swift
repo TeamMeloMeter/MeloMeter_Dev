@@ -21,7 +21,7 @@ class EditStatusMessageView: UIView {
         let label = UILabel()
         label.text = "오늘의 기분을 표현해보세요."
         label.font = FontManager.shared.medium(ofSize: 14)
-        label.textColor = #colorLiteral(red: 0.5215686275, green: 0.5215686275, blue: 0.5215686275, alpha: 1)
+        label.textColor = .gray2
         return label
     }()
     
@@ -29,28 +29,29 @@ class EditStatusMessageView: UIView {
         let tv = UITextField()
         // 플레이스홀더에 표시할 속성
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: #colorLiteral(red: 0.8509803922, green: 0.8509803922, blue: 0.8509803922, alpha: 1),
+            .foregroundColor: UIColor.gray3,
             .font: FontManager.shared.medium(ofSize: 16)
         ]
         tv.attributedPlaceholder = NSAttributedString(string: "원하는 말을 적어보세요!", attributes: attributes)
-        tv.backgroundColor = .white
-        tv.textColor = .black
+        tv.backgroundColor = .gray5
+        tv.textColor = .gray1
         tv.font = FontManager.shared.medium(ofSize: 16)
         tv.autocorrectionType = .no // 자동수정 X
         tv.spellCheckingType = .no // 맞춤법 체크 X
         tv.keyboardType = .default
-        tv.tintColor = .black
+        tv.tintColor = .gray1
         tv.addLeftPadding()
-
+        tv.layer.cornerRadius = 8
+        tv.layer.masksToBounds = false
         return tv
     }()
     
     
     var statusTextCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "0/20"
+        label.text = "0/10"
         label.font = FontManager.shared.medium(ofSize: 13)
-        label.textColor = #colorLiteral(red: 0.5215686275, green: 0.5215686275, blue: 0.5215686275, alpha: 1)
+        label.textColor = .gray2
         return label
     }()
     

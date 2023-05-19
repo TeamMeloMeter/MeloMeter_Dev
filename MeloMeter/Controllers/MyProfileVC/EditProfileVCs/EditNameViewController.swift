@@ -47,7 +47,7 @@ class EditNameViewController: UIViewController, UITextFieldDelegate {
     }
     // 뷰 터치 시 inputView 내림
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        editNameView.topView.endEditing(true)
+        editNameView.endEditing(true)
     }
     
     //이름편집 네비게이션바 설정

@@ -21,7 +21,7 @@ class NoticeTableViewCell: UITableViewCell {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "안내"
-        label.textColor = #colorLiteral(red: 0.5215686275, green: 0.5215686275, blue: 0.5215686275, alpha: 1)
+        label.textColor = .gray2
         label.font = FontManager.shared.medium(ofSize: 14)
         return label
     }()
@@ -38,7 +38,7 @@ class NoticeTableViewCell: UITableViewCell {
     let noticeDateLabel: UILabel = {
         let label = UILabel()
         label.text = "2023년 05월 04일"
-        label.textColor = #colorLiteral(red: 0.5215686275, green: 0.5215686275, blue: 0.5215686275, alpha: 1)
+        label.textColor = .gray2
         label.font = FontManager.shared.medium(ofSize: 14)
         return label
     }()

@@ -11,25 +11,38 @@ import UIKit
 class MyProfileView: UIView {
     
     
+
     //마이페이지 상단 배경 뷰
-     lazy var topView: UIView = {
-        let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.9764705882, green: 0.9764705882, blue: 0.9764705882, alpha: 1)
-        view.addSubview(nameLabel)
-        view.addSubview(phoneNumLabel)
-        view.addSubview(stateMessageView)
-        view.addSubview(stateMessageLabel)
+    lazy var topView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "topView")
         view.addSubview(profileImageView)
-        view.addSubview(profileEditButton)
-        view.addSubview(topStackView)
-        
+
         return view
     }()
+    
+    
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        setupGradient()
+//    }
+//    //그라데이션 컬러 설정 -
+//    private func setupGradient() {
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = topView.bounds
+//
+//        gradientLayer.colors = [#colorLiteral(red: 1, green: 0.8549019608, blue: 0.3490196078, alpha: 0.26), #colorLiteral(red: 0.9843137255, green: 0.3607843137, blue: 0.9960784314, alpha: 0.6)].map { $0.cgColor }
+//        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.1)
+//        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
+//
+//        topView.layer.insertSublayer(gradientLayer, at: 0)
+//
+//    }
     
     // 사용자 이름
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .gray1
         label.font = FontManager.shared.semiBold(ofSize: 20)
         return label
     }()
@@ -38,14 +51,14 @@ class MyProfileView: UIView {
     let phoneNumLabel: UILabel = {
         let label = UILabel()
         label.font = FontManager.shared.medium(ofSize: 12)
-        label.textColor = .black
+        label.textColor = .gray1
         return label
     }()
     
     // 상태메시지 View
     private lazy var stateMessageView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.9098039216, green: 0.9098039216, blue: 0.9098039216, alpha: 1)
+        view.backgroundColor = .white
         view.clipsToBounds = true
         view.layer.cornerRadius = 15
         return view
@@ -54,7 +67,7 @@ class MyProfileView: UIView {
     let stateMessageLabel: UILabel = {
         let label = UILabel()
         label.font = FontManager.shared.medium(ofSize: 14)
-        label.textColor = .black
+        label.textColor = .gray1
         label.textAlignment = .center
         return label
     }()
@@ -94,7 +107,7 @@ class MyProfileView: UIView {
     
     let alarmTitleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = #colorLiteral(red: 0.5215686275, green: 0.5215686275, blue: 0.5215686275, alpha: 1)
+        label.textColor = .gray2
         label.font = FontManager.shared.medium(ofSize: 13)
         label.text = "D-7"
         return label
@@ -102,7 +115,7 @@ class MyProfileView: UIView {
     
     let alarmSubtitleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .gray1
         label.font = FontManager.shared.medium(ofSize: 14)
         label.text = "00님의 생일까지 7일이 남았어요"
         return label
@@ -133,7 +146,7 @@ class MyProfileView: UIView {
     
     let dDayTitleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = #colorLiteral(red: 0.5215686275, green: 0.5215686275, blue: 0.5215686275, alpha: 1)
+        label.textColor = .gray2
         label.font = FontManager.shared.medium(ofSize: 13)
         label.text = "00 & 00"
         return label
@@ -141,7 +154,7 @@ class MyProfileView: UIView {
     
     let dDaySubtitleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .gray1
         label.font = FontManager.shared.medium(ofSize: 14)
         label.text = "1234일째 함께하는 중"
         return label
@@ -172,7 +185,7 @@ class MyProfileView: UIView {
     
     let hundredQnATitleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = #colorLiteral(red: 0.5215686275, green: 0.5215686275, blue: 0.5215686275, alpha: 1)
+        label.textColor = .gray2
         label.font = FontManager.shared.medium(ofSize: 13)
         label.text = "백문백답"
         return label
@@ -180,7 +193,7 @@ class MyProfileView: UIView {
     
     let hundredQnASubtitleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .gray1
         label.font = FontManager.shared.medium(ofSize: 14)
         label.text = "1234번째 백문백답 완료!"
         return label
@@ -188,7 +201,7 @@ class MyProfileView: UIView {
     
     let hundredQnAImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "heartIcon")
+        imageView.image = UIImage(named: "hundredQA")
         imageView.contentMode = .scaleAspectFit
         imageView.layer.borderColor = UIColor.clear.cgColor
         return imageView
@@ -216,7 +229,7 @@ class MyProfileView: UIView {
     
     let noticeTextLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .gray1
         label.font = FontManager.shared.medium(ofSize: 16)
         label.text = "공지사항"
         return label
@@ -253,7 +266,7 @@ class MyProfileView: UIView {
     
     let qnALabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .gray1
         label.font = FontManager.shared.medium(ofSize: 16)
         label.text = "자주묻는 질문"
         return label
@@ -290,7 +303,7 @@ class MyProfileView: UIView {
     
     let infoLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .gray1
         label.font = FontManager.shared.medium(ofSize: 16)
         label.text = "정보"
         return label
@@ -316,13 +329,13 @@ class MyProfileView: UIView {
     
     let lineView1: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.8797428012, green: 0.8797428012, blue: 0.8797428012, alpha: 1)
+        view.backgroundColor = .gray45
         return view
     }()
     
     let lineView2: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.8797428012, green: 0.8797428012, blue: 0.8797428012, alpha: 1)
+        view.backgroundColor = .gray45
         return view
     }()
     
@@ -331,7 +344,6 @@ class MyProfileView: UIView {
         let stview = UIStackView(arrangedSubviews: [noticeStackView, lineView1, qnAStackView, lineView2, infoStackView])
         stview.backgroundColor = .white
         stview.axis = .vertical
-        //stview.distribution = .fillEqually
         stview.spacing = 16
         return stview
     }()
@@ -349,10 +361,13 @@ class MyProfileView: UIView {
     
     func setup() {
         backgroundColor = .white
+    
     }
     
     func addViews() {
-        [topView, bottomStackView].forEach { addSubview($0) }
+        [topView, nameLabel, phoneNumLabel, stateMessageView, stateMessageLabel, profileEditButton, topStackView,
+         bottomStackView].forEach { addSubview($0) }
+    
     }
     
     private func setConstraints() {

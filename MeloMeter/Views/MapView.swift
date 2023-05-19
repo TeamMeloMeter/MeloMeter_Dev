@@ -68,7 +68,7 @@ class MapView: UIView {
     let dDayButton: UIButton = {
         let button = UIButton()
         button.setTitle("D-55", for: .normal)
-        button.setTitleColor(#colorLiteral(red: 0.2605186105, green: 0.2605186105, blue: 0.2605186105, alpha: 1), for: .normal)
+        button.setTitleColor(UIColor.gray1, for: .normal)
         button.titleLabel?.font = FontManager.shared.regular(ofSize: 18)
         button.backgroundColor = .white
         button.clipsToBounds = true

@@ -10,7 +10,7 @@ import NMapsMap
 import CoreLocation
 
 //메인 지도 화면
-class MapViewController: UIViewController, CLLocationManagerDelegate{
+class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureRecognizerDelegate{
 
     let mainView = MapView()
     let infoWindow = NMFInfoWindow()
@@ -24,7 +24,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate{
         super.viewDidLoad()
         setMapViewTouch()
         setLocation()
-        
+        setUpBarButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -131,6 +131,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate{
             cameraUpdate.animation = .easeIn
             mainView.naverMapView.moveCamera(cameraUpdate)
         }
+    }
+    //네비게이션바 커스텀
+    func setUpBarButton() {
+        //스와이프 뒤로가기
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+
+        //타이틀 속성 조정 - 폰트, 배경
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: FontManager.shared.medium(ofSize: 18)]
+        
+        navigationController?.navigationBar.standardAppearance = appearance
     }
     
 }

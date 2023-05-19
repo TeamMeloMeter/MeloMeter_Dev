@@ -70,6 +70,9 @@ class EditProfileViewController: UIViewController {
         editProfileView.stateMessageView.isUserInteractionEnabled = true
         editProfileView.birthDateLabel.isUserInteractionEnabled = true
         editProfileView.userGenderLabel.isUserInteractionEnabled = true
+        editProfileView.disconnectLabel.isUserInteractionEnabled = true
+        editProfileView.logoutLabel.isUserInteractionEnabled = true
+        editProfileView.withdrawalLabel.isUserInteractionEnabled = true
 
         //제스쳐 추가
         editProfileView.cameraButton.addTarget(self, action: #selector(showPhotoAlert), for: .touchUpInside)
@@ -77,6 +80,9 @@ class EditProfileViewController: UIViewController {
         editProfileView.stateMessageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.statusViewTapped)))
         editProfileView.birthDateLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.birthDateLabelTapped)))
         editProfileView.userGenderLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showGenderAlert)))
+        editProfileView.disconnectLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(disconnectLabelTapped)))
+        editProfileView.logoutLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showLogoutAlert)))
+        editProfileView.withdrawalLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(withdrawalLabelTapped)))
 
     }
     //사진 편집 alert 표시
@@ -110,6 +116,44 @@ class EditProfileViewController: UIViewController {
         self.present(genderAlert, animated: true, completion: nil)
     }
     
+    
+    //연결끊기 화면으로
+    @objc func disconnectLabelTapped() {
+        let VC = DisconnectVC()
+        VC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(VC, animated: true)
+    }
+    
+    //로그아웃 alert
+    @objc func showLogoutAlert() {
+        let alertController = UIAlertController(title: "로그아웃", message: "로그아웃 하시겠습니까? 추후 같은 아이디로\n로그인하면 상대방과 연결을 다시 진행할 수 있\n습니다.", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        let logoutAction = UIAlertAction(title: "로그아웃", style: .destructive) { _ in
+            // 로그아웃 처리 로직을 여기에 작성
+            // 예: 세션 종료, 사용자 정보 초기화 등
+            self.logout()
+        }
+        alertController.addAction(logoutAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+
+    func logout() {
+        // 로그아웃 처리 로직을 여기에 작성
+        // 예: 세션 종료, 사용자 정보 초기화 등
+        
+        // 로그아웃 완료 후 필요한 동작 수행
+        // 예: 홈 화면으로 이동, 로그인 화면 표시 등
+    }
+    
+    @objc func withdrawalLabelTapped() {
+        let VC = WithdrawalVC()
+        VC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(VC, animated: true)
+    }
     private func navigationBarCustom() {
         navigationController?.navigationBar.isHidden = false
         navigationItem.title = "프로필 편집"
