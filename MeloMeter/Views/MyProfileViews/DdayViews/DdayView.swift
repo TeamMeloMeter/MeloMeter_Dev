@@ -19,7 +19,7 @@ class DdayView: UIView {
          view.layer.applyShadow(color: #colorLiteral(red: 0.7137254902, green: 0.7137254902, blue: 0.7137254902, alpha: 1), alpha: 0.25, x: 3, y: 2, blur: 10)
          view.addSubview(dDayImageView)
          view.addSubview(nomalLabel)
-         view.addSubview(currentDateLabel)
+         view.addSubview(countDateLabel)
          view.addSubview(startDateLabel)
          
          return view
@@ -37,7 +37,7 @@ class DdayView: UIView {
    
     
     // 우리 함께한지 label
-    let nomalLabel: UILabel = {
+    private let nomalLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray1
         label.text = "우리 함께한지"
@@ -45,9 +45,9 @@ class DdayView: UIView {
         return label
     }()
     // 현재 D+ 날짜 label
-    let currentDateLabel: UILabel = {
+    let countDateLabel: UILabel = {
         let label = UILabel()
-        label.text = "1593일째"
+        label.text = "0일째"
         label.textColor = #colorLiteral(red: 1, green: 0.2941176471, blue: 0.7411764706, alpha: 1)
         label.font = FontManager.shared.semiBold(ofSize: 32)
         return label
@@ -56,7 +56,7 @@ class DdayView: UIView {
     let startDateLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray1
-        label.text = "첫 만남 2023.05.04"
+        label.text = "첫 만남 0000.00.00"
         label.font = FontManager.shared.medium(ofSize: 16)
         return label
     }()
@@ -122,7 +122,7 @@ class DdayView: UIView {
     
     private func labelConstraint() {
         nomalLabel.translatesAutoresizingMaskIntoConstraints = false
-        currentDateLabel.translatesAutoresizingMaskIntoConstraints = false
+        countDateLabel.translatesAutoresizingMaskIntoConstraints = false
         startDateLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             nomalLabel.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
@@ -130,11 +130,11 @@ class DdayView: UIView {
             nomalLabel.widthAnchor.constraint(equalToConstant: 87),
             nomalLabel.heightAnchor.constraint(equalToConstant: 19),
             
-            currentDateLabel.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
-            currentDateLabel.topAnchor.constraint(equalTo: nomalLabel.bottomAnchor, constant: 6),
+            countDateLabel.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
+            countDateLabel.topAnchor.constraint(equalTo: nomalLabel.bottomAnchor, constant: 6),
             
             startDateLabel.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
-            startDateLabel.topAnchor.constraint(equalTo: currentDateLabel.bottomAnchor, constant: 16),
+            startDateLabel.topAnchor.constraint(equalTo: countDateLabel.bottomAnchor, constant: 16),
             
             
         ])

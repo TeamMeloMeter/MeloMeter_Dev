@@ -10,6 +10,7 @@ import UIKit
 class AddDdayViewController: UIViewController, UITextFieldDelegate {
     
     let addDdayView = AddDdayView()
+    private let dateFormatter = DateFormatter()
     
     override func loadView() {
         
@@ -38,7 +39,7 @@ class AddDdayViewController: UIViewController, UITextFieldDelegate {
     
     //데이트피커 날짜 변경 시 실행
     @objc func dateChanged(datePicker: UIDatePicker) {
-        let dateFormatter = DateFormatter()
+        
         dateFormatter.dateFormat = "yyyy년 MM월 dd일"
         addDdayView.dateTextField.text = dateFormatter.string(from: datePicker.date)
         addDdayView.saveButton.isEnabled = true
@@ -54,6 +55,9 @@ class AddDdayViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func saveButtonTapped() {
+        guard let addAni = addDdayView.titleTextView.text else { return }
+        guard let addDate = addDdayView.dateTextField.text else { return }
+        Model.shared.addDdayArray.append([addAni, addDate])
         self.dismiss(animated: true, completion: nil)
     }
     

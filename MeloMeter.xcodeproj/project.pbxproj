@@ -12,7 +12,7 @@
 		52697B7529EEB7B2002BDD04 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697B7429EEB7B2002BDD04 /* SceneDelegate.swift */; };
 		52697B7C29EEB7B3002BDD04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52697B7B29EEB7B3002BDD04 /* Assets.xcassets */; };
 		52697B7F29EEB7B3002BDD04 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52697B7D29EEB7B3002BDD04 /* LaunchScreen.storyboard */; };
-		52845B1C2A0FC9DF003A87F8 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52845B1B2A0FC9DF003A87F8 /* LocationModel.swift */; };
+		52845B1C2A0FC9DF003A87F8 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52845B1B2A0FC9DF003A87F8 /* Model.swift */; };
 		52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6E8229FEBC0200E43D39 /* FontManager.swift */; };
 		52CE6E9729FEBDAF00E43D39 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E8E29FEBD6600E43D39 /* Pretendard-Black.otf */; };
 		52CE6E9829FEBDB200E43D39 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E9329FEBD6700E43D39 /* Pretendard-Bold.otf */; };
@@ -80,7 +80,7 @@
 		52697B7B29EEB7B3002BDD04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52697B7E29EEB7B3002BDD04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52697B8029EEB7B3002BDD04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		52845B1B2A0FC9DF003A87F8 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
+		52845B1B2A0FC9DF003A87F8 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		52CE6E8229FEBC0200E43D39 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		52CE6E8E29FEBD6600E43D39 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
 		52CE6E8F29FEBD6600E43D39 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
@@ -326,7 +326,7 @@
 			children = (
 				52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */,
 				52F010152A0AAE900014FC01 /* CameraModel.swift */,
-				52845B1B2A0FC9DF003A87F8 /* LocationModel.swift */,
+				52845B1B2A0FC9DF003A87F8 /* Model.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -508,7 +508,7 @@
 				52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */,
 				52F2084229FD63F40043BCA4 /* MyProfileView.swift in Sources */,
 				52F00FF42A09308E0014FC01 /* AddDdayView.swift in Sources */,
-				52845B1C2A0FC9DF003A87F8 /* LocationModel.swift in Sources */,
+				52845B1C2A0FC9DF003A87F8 /* Model.swift in Sources */,
 				52F305302A168CE900112A04 /* DisconnectVC.swift in Sources */,
 				52CE6EA52A0245E300E43D39 /* DdayView.swift in Sources */,
 				52697B7329EEB7B2002BDD04 /* AppDelegate.swift in Sources */,
