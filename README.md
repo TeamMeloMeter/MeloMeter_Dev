@@ -1,4 +1,4 @@
-# MeloMeter App(iOS 15.0)
+# MeloMeter App(*iOS 15.0)
 # 멜로미터 - 커플 위치 공유 서비스
 
 
