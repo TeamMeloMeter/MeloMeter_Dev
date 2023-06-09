@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     // Override point for customization after application launch.
     
     // 네이버 지도 초기화
-    NMFAuthManager.shared().clientId = "hvbbggzdp6"
+    NMFAuthManager.shared().clientId = "qf06vqg44t"
     
     // 파이어베이스 연결
     FirebaseApp.configure()

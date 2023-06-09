@@ -13,16 +13,16 @@
 		52697B7C29EEB7B3002BDD04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52697B7B29EEB7B3002BDD04 /* Assets.xcassets */; };
 		52697B7F29EEB7B3002BDD04 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52697B7D29EEB7B3002BDD04 /* LaunchScreen.storyboard */; };
 		52845B1C2A0FC9DF003A87F8 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52845B1B2A0FC9DF003A87F8 /* Model.swift */; };
+		528CAF7A2A31C7D10069AC09 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 528CAF712A31C7D10069AC09 /* Pretendard-ExtraLight.otf */; };
+		528CAF7B2A31C7D10069AC09 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 528CAF722A31C7D10069AC09 /* Pretendard-Medium.otf */; };
+		528CAF7C2A31C7D10069AC09 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 528CAF732A31C7D10069AC09 /* Pretendard-Black.otf */; };
+		528CAF7D2A31C7D10069AC09 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 528CAF742A31C7D10069AC09 /* Pretendard-SemiBold.otf */; };
+		528CAF7E2A31C7D10069AC09 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 528CAF752A31C7D10069AC09 /* Pretendard-Light.otf */; };
+		528CAF7F2A31C7D10069AC09 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 528CAF762A31C7D10069AC09 /* Pretendard-Thin.otf */; };
+		528CAF802A31C7D10069AC09 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 528CAF772A31C7D10069AC09 /* Pretendard-Bold.otf */; };
+		528CAF812A31C7D10069AC09 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 528CAF782A31C7D10069AC09 /* Pretendard-ExtraBold.otf */; };
+		528CAF822A31C7D10069AC09 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 528CAF792A31C7D10069AC09 /* Pretendard-Regular.otf */; };
 		52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6E8229FEBC0200E43D39 /* FontManager.swift */; };
-		52CE6E9729FEBDAF00E43D39 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E8E29FEBD6600E43D39 /* Pretendard-Black.otf */; };
-		52CE6E9829FEBDB200E43D39 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E9329FEBD6700E43D39 /* Pretendard-Bold.otf */; };
-		52CE6E9929FEBDB600E43D39 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E9029FEBD6600E43D39 /* Pretendard-ExtraBold.otf */; };
-		52CE6E9A29FEBDB800E43D39 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E8F29FEBD6600E43D39 /* Pretendard-ExtraLight.otf */; };
-		52CE6E9B29FEBDBA00E43D39 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E9529FEBD6700E43D39 /* Pretendard-Light.otf */; };
-		52CE6E9C29FEBDBD00E43D39 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E9129FEBD6600E43D39 /* Pretendard-Medium.otf */; };
-		52CE6E9D29FEBDC000E43D39 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E9429FEBD6700E43D39 /* Pretendard-Regular.otf */; };
-		52CE6E9E29FEBDC300E43D39 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E9629FEBD6700E43D39 /* Pretendard-SemiBold.otf */; };
-		52CE6E9F29FEBDC500E43D39 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52CE6E9229FEBD6600E43D39 /* Pretendard-Thin.otf */; };
 		52CE6EA12A01875C00E43D39 /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA02A01875C00E43D39 /* AlarmViewController.swift */; };
 		52CE6EA32A0187BB00E43D39 /* AlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA22A0187BB00E43D39 /* AlarmView.swift */; };
 		52CE6EA52A0245E300E43D39 /* DdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA42A0245E300E43D39 /* DdayView.swift */; };
@@ -81,16 +81,16 @@
 		52697B7E29EEB7B3002BDD04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52697B8029EEB7B3002BDD04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52845B1B2A0FC9DF003A87F8 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		528CAF712A31C7D10069AC09 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-ExtraLight.otf"; path = "../../../../2023Project/디자인가이드(1)/public/static/Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		528CAF722A31C7D10069AC09 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Medium.otf"; path = "../../../../2023Project/디자인가이드(1)/public/static/Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		528CAF732A31C7D10069AC09 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Black.otf"; path = "../../../../2023Project/디자인가이드(1)/public/static/Pretendard-Black.otf"; sourceTree = "<group>"; };
+		528CAF742A31C7D10069AC09 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-SemiBold.otf"; path = "../../../../2023Project/디자인가이드(1)/public/static/Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		528CAF752A31C7D10069AC09 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Light.otf"; path = "../../../../2023Project/디자인가이드(1)/public/static/Pretendard-Light.otf"; sourceTree = "<group>"; };
+		528CAF762A31C7D10069AC09 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Thin.otf"; path = "../../../../2023Project/디자인가이드(1)/public/static/Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		528CAF772A31C7D10069AC09 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Bold.otf"; path = "../../../../2023Project/디자인가이드(1)/public/static/Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		528CAF782A31C7D10069AC09 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-ExtraBold.otf"; path = "../../../../2023Project/디자인가이드(1)/public/static/Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		528CAF792A31C7D10069AC09 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Regular.otf"; path = "../../../../2023Project/디자인가이드(1)/public/static/Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		52CE6E8229FEBC0200E43D39 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
-		52CE6E8E29FEBD6600E43D39 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
-		52CE6E8F29FEBD6600E43D39 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
-		52CE6E9029FEBD6600E43D39 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
-		52CE6E9129FEBD6600E43D39 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
-		52CE6E9229FEBD6600E43D39 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
-		52CE6E9329FEBD6700E43D39 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
-		52CE6E9429FEBD6700E43D39 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
-		52CE6E9529FEBD6700E43D39 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
-		52CE6E9629FEBD6700E43D39 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		52CE6EA02A01875C00E43D39 /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
 		52CE6EA22A0187BB00E43D39 /* AlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmView.swift; sourceTree = "<group>"; };
 		52CE6EA42A0245E300E43D39 /* DdayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayView.swift; sourceTree = "<group>"; };
@@ -196,15 +196,15 @@
 		52CE6E8D29FEBD5700E43D39 /* Font */ = {
 			isa = PBXGroup;
 			children = (
-				52CE6E8E29FEBD6600E43D39 /* Pretendard-Black.otf */,
-				52CE6E9329FEBD6700E43D39 /* Pretendard-Bold.otf */,
-				52CE6E9029FEBD6600E43D39 /* Pretendard-ExtraBold.otf */,
-				52CE6E8F29FEBD6600E43D39 /* Pretendard-ExtraLight.otf */,
-				52CE6E9529FEBD6700E43D39 /* Pretendard-Light.otf */,
-				52CE6E9129FEBD6600E43D39 /* Pretendard-Medium.otf */,
-				52CE6E9429FEBD6700E43D39 /* Pretendard-Regular.otf */,
-				52CE6E9629FEBD6700E43D39 /* Pretendard-SemiBold.otf */,
-				52CE6E9229FEBD6600E43D39 /* Pretendard-Thin.otf */,
+				528CAF732A31C7D10069AC09 /* Pretendard-Black.otf */,
+				528CAF772A31C7D10069AC09 /* Pretendard-Bold.otf */,
+				528CAF782A31C7D10069AC09 /* Pretendard-ExtraBold.otf */,
+				528CAF712A31C7D10069AC09 /* Pretendard-ExtraLight.otf */,
+				528CAF752A31C7D10069AC09 /* Pretendard-Light.otf */,
+				528CAF722A31C7D10069AC09 /* Pretendard-Medium.otf */,
+				528CAF792A31C7D10069AC09 /* Pretendard-Regular.otf */,
+				528CAF742A31C7D10069AC09 /* Pretendard-SemiBold.otf */,
+				528CAF762A31C7D10069AC09 /* Pretendard-Thin.otf */,
 				52CE6E8229FEBC0200E43D39 /* FontManager.swift */,
 			);
 			path = Font;
@@ -441,18 +441,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52CE6E9E29FEBDC300E43D39 /* Pretendard-SemiBold.otf in Resources */,
-				52CE6E9A29FEBDB800E43D39 /* Pretendard-ExtraLight.otf in Resources */,
-				52CE6E9B29FEBDBA00E43D39 /* Pretendard-Light.otf in Resources */,
-				52CE6E9F29FEBDC500E43D39 /* Pretendard-Thin.otf in Resources */,
 				52697B7F29EEB7B3002BDD04 /* LaunchScreen.storyboard in Resources */,
+				528CAF822A31C7D10069AC09 /* Pretendard-Regular.otf in Resources */,
+				528CAF802A31C7D10069AC09 /* Pretendard-Bold.otf in Resources */,
+				528CAF7E2A31C7D10069AC09 /* Pretendard-Light.otf in Resources */,
+				528CAF7B2A31C7D10069AC09 /* Pretendard-Medium.otf in Resources */,
+				528CAF7F2A31C7D10069AC09 /* Pretendard-Thin.otf in Resources */,
+				528CAF7D2A31C7D10069AC09 /* Pretendard-SemiBold.otf in Resources */,
+				528CAF812A31C7D10069AC09 /* Pretendard-ExtraBold.otf in Resources */,
 				52F00FEE2A0928320014FC01 /* GoogleService-Info.plist in Resources */,
-				52CE6E9829FEBDB200E43D39 /* Pretendard-Bold.otf in Resources */,
-				52CE6E9929FEBDB600E43D39 /* Pretendard-ExtraBold.otf in Resources */,
+				528CAF7A2A31C7D10069AC09 /* Pretendard-ExtraLight.otf in Resources */,
+				528CAF7C2A31C7D10069AC09 /* Pretendard-Black.otf in Resources */,
 				52697B7C29EEB7B3002BDD04 /* Assets.xcassets in Resources */,
-				52CE6E9729FEBDAF00E43D39 /* Pretendard-Black.otf in Resources */,
-				52CE6E9D29FEBDC000E43D39 /* Pretendard-Regular.otf in Resources */,
-				52CE6E9C29FEBDBD00E43D39 /* Pretendard-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -686,11 +686,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MeloMeter/MeloMeter.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HL89CPH3NA;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = CH496725K5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MeloMeter/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "멜로미터";
@@ -707,10 +708,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.teamMeloMeter.MeloMeter;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.teamMeloMeter.-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "melometer-development";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Dev_MeloMeter;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -727,11 +728,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MeloMeter/MeloMeter.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HL89CPH3NA;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = CH496725K5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MeloMeter/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "멜로미터";
@@ -748,10 +750,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.teamMeloMeter.MeloMeter;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.teamMeloMeter.-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "melometer-development";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Dev_MeloMeter;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
