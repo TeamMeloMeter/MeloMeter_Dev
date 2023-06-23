@@ -20,3 +20,15 @@ extension UIColor {
     static let point1 = UIColor(#colorLiteral(red: 1, green: 0.8549019608, blue: 0.3490196078, alpha: 1))
 
 }
+//그라데이션 색상 배경 view
+extension UIView {
+    func setGradientBackground(colors: [UIColor]) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = bounds
+        gradientLayer.colors = colors.map { $0.cgColor }
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
+        
+        layer.insertSublayer(gradientLayer, at: 0)
+    }
+}

@@ -21,11 +21,7 @@ class AddDdayViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         addDdayView.titleTextView.delegate = self
         addDdayView.dateTextField.delegate = self
-       
-
         addDdayView.xButton.addTarget(self, action: #selector(xButtonTapped), for: .touchUpInside)
-        
-        
     }
     
     // 뷰 터치 시 inputView 내림

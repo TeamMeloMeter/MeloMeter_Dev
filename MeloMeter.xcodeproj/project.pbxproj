@@ -12,6 +12,10 @@
 		52697B7529EEB7B2002BDD04 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697B7429EEB7B2002BDD04 /* SceneDelegate.swift */; };
 		52697B7C29EEB7B3002BDD04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52697B7B29EEB7B3002BDD04 /* Assets.xcassets */; };
 		52697B7F29EEB7B3002BDD04 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52697B7D29EEB7B3002BDD04 /* LaunchScreen.storyboard */; };
+		5270EC042A445077007FF444 /* StartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5270EC032A445077007FF444 /* StartVC.swift */; };
+		5270EC062A4450C2007FF444 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5270EC052A4450C2007FF444 /* StartView.swift */; };
+		5270EC092A446123007FF444 /* PhoneCertifiedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5270EC082A446123007FF444 /* PhoneCertifiedView.swift */; };
+		5270EC0C2A44614A007FF444 /* PhoneCertifiedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5270EC0B2A44614A007FF444 /* PhoneCertifiedVC.swift */; };
 		52845B1C2A0FC9DF003A87F8 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52845B1B2A0FC9DF003A87F8 /* Model.swift */; };
 		528CAF7A2A31C7D10069AC09 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 528CAF712A31C7D10069AC09 /* Pretendard-ExtraLight.otf */; };
 		528CAF7B2A31C7D10069AC09 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 528CAF722A31C7D10069AC09 /* Pretendard-Medium.otf */; };
@@ -80,6 +84,10 @@
 		52697B7B29EEB7B3002BDD04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52697B7E29EEB7B3002BDD04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52697B8029EEB7B3002BDD04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5270EC032A445077007FF444 /* StartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartVC.swift; sourceTree = "<group>"; };
+		5270EC052A4450C2007FF444 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
+		5270EC082A446123007FF444 /* PhoneCertifiedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCertifiedView.swift; sourceTree = "<group>"; };
+		5270EC0B2A44614A007FF444 /* PhoneCertifiedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCertifiedVC.swift; sourceTree = "<group>"; };
 		52845B1B2A0FC9DF003A87F8 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		528CAF712A31C7D10069AC09 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-ExtraLight.otf"; path = "../../../../2023Project/디자인가이드(1)/public/static/Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
 		528CAF722A31C7D10069AC09 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Medium.otf"; path = "../../../../2023Project/디자인가이드(1)/public/static/Pretendard-Medium.otf"; sourceTree = "<group>"; };
@@ -191,6 +199,22 @@
 				52CE6E8D29FEBD5700E43D39 /* Font */,
 			);
 			path = MeloMeter;
+			sourceTree = "<group>";
+		};
+		5270EC072A4460DC007FF444 /* LogInViews */ = {
+			isa = PBXGroup;
+			children = (
+				5270EC082A446123007FF444 /* PhoneCertifiedView.swift */,
+			);
+			path = LogInViews;
+			sourceTree = "<group>";
+		};
+		5270EC0A2A44612B007FF444 /* LogInVCs */ = {
+			isa = PBXGroup;
+			children = (
+				5270EC0B2A44614A007FF444 /* PhoneCertifiedVC.swift */,
+			);
+			path = LogInVCs;
 			sourceTree = "<group>";
 		};
 		52CE6E8D29FEBD5700E43D39 /* Font */ = {
@@ -334,6 +358,8 @@
 		52F2084429FD64190043BCA4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5270EC052A4450C2007FF444 /* StartView.swift */,
+				5270EC072A4460DC007FF444 /* LogInViews */,
 				52CE6EA82A02573200E43D39 /* MapView.swift */,
 				52F010012A097B020014FC01 /* MyProfileViews */,
 				52F3052D2A163B5B00112A04 /* ColorAssets.swift */,
@@ -344,6 +370,8 @@
 		52F2084529FD641E0043BCA4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				5270EC032A445077007FF444 /* StartVC.swift */,
+				5270EC0A2A44612B007FF444 /* LogInVCs */,
 				52CE6EAA2A0260FA00E43D39 /* TabBarController.swift */,
 				52CE6EA62A02571E00E43D39 /* MapViewController.swift */,
 				52F010042A097B930014FC01 /* MyProfileVC */,
@@ -524,6 +552,7 @@
 				52F0100F2A0A55470014FC01 /* AnswerViewController.swift in Sources */,
 				52CE6EA92A02573200E43D39 /* MapView.swift in Sources */,
 				52CE6EA12A01875C00E43D39 /* AlarmViewController.swift in Sources */,
+				5270EC042A445077007FF444 /* StartVC.swift in Sources */,
 				52F010262A0B79270014FC01 /* EditBirthView.swift in Sources */,
 				52F00FF62A0930FF0014FC01 /* AddDdayViewController.swift in Sources */,
 				52F0100B2A0A493C0014FC01 /* QnATableViewCell.swift in Sources */,
@@ -539,7 +568,10 @@
 				52F010242A0B77ED0014FC01 /* EditBirthViewController.swift in Sources */,
 				52F305382A16BF2A00112A04 /* WithdrawalView.swift in Sources */,
 				52F0101C2A0ACDD20014FC01 /* EditNameView.swift in Sources */,
+				5270EC092A446123007FF444 /* PhoneCertifiedView.swift in Sources */,
 				52F00FFE2A094B450014FC01 /* QnAView.swift in Sources */,
+				5270EC0C2A44614A007FF444 /* PhoneCertifiedVC.swift in Sources */,
+				5270EC062A4450C2007FF444 /* StartView.swift in Sources */,
 				52F2083C29FBB3490043BCA4 /* MyProfileModel.swift in Sources */,
 				52CE6EAB2A0260FA00E43D39 /* TabBarController.swift in Sources */,
 				52F00FFA2A0938480014FC01 /* NoticeViewController.swift in Sources */,

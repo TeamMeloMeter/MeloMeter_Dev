@@ -21,24 +21,6 @@ class MyProfileView: UIView {
         return view
     }()
     
-    
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        setupGradient()
-//    }
-//    //그라데이션 컬러 설정 -
-//    private func setupGradient() {
-//        let gradientLayer = CAGradientLayer()
-//        gradientLayer.frame = topView.bounds
-//
-//        gradientLayer.colors = [#colorLiteral(red: 1, green: 0.8549019608, blue: 0.3490196078, alpha: 0.26), #colorLiteral(red: 0.9843137255, green: 0.3607843137, blue: 0.9960784314, alpha: 0.6)].map { $0.cgColor }
-//        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.1)
-//        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
-//
-//        topView.layer.insertSublayer(gradientLayer, at: 0)
-//
-//    }
-    
     // 사용자 이름
     let nameLabel: UILabel = {
         let label = UILabel()
