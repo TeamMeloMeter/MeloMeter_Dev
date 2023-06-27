@@ -9,26 +9,33 @@ import UIKit
 import NMapsMap
 import Firebase
 import UserNotifications
-
+import FirebaseAppCheck
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
     
-    // 네이버 지도 초기화
-    NMFAuthManager.shared().clientId = "qf06vqg44t"
-    
-    // 파이어베이스 연결
-    FirebaseApp.configure()
-    
-    // FCM 등록
-    Messaging.messaging().delegate = self
-    Messaging.messaging().isAutoInitEnabled = true
-    
-    return true
+      // 네이버 지도 초기화
+      NMFAuthManager.shared().clientId = "qf06vqg44t"
+//      let providerFactory = AppCheckDebugProviderFactory()
+//      AppCheck.setAppCheckProviderFactory(providerFactory)
+      
+      // 파이어베이스 알림 설정, 연동
+      FirebaseApp.configure()
+      Messaging.messaging().delegate = self
+      Messaging.messaging().isAutoInitEnabled = true
+      UNUserNotificationCenter.current().delegate = self
+      let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+      UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { granted, _ in
+          if granted {
+              print("알림 등록이 완료되었습니다.")
+          }
+      }
+      application.registerForRemoteNotifications()
+      return true
   }
-  
+    
   func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {}
   
   func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {

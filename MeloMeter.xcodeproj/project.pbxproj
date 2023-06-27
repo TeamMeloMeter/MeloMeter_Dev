@@ -16,6 +16,11 @@
 		5270EC062A4450C2007FF444 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5270EC052A4450C2007FF444 /* StartView.swift */; };
 		5270EC092A446123007FF444 /* PhoneCertifiedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5270EC082A446123007FF444 /* PhoneCertifiedView.swift */; };
 		5270EC0C2A44614A007FF444 /* PhoneCertifiedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5270EC0B2A44614A007FF444 /* PhoneCertifiedVC.swift */; };
+		5270EC0E2A460208007FF444 /* AuthNumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5270EC0D2A460208007FF444 /* AuthNumView.swift */; };
+		5270EC102A460354007FF444 /* AuthNumVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5270EC0F2A460354007FF444 /* AuthNumVC.swift */; };
+		5270EC122A4954D9007FF444 /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5270EC112A4954D9007FF444 /* AuthModel.swift */; };
+		5270EC1B2A49E3B2007FF444 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5270EC1A2A49E3B2007FF444 /* GoogleService-Info.plist */; };
+		5270EC1D2A49E9C5007FF444 /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 5270EC1C2A49E9C5007FF444 /* FirebaseInAppMessaging-Beta */; };
 		52845B1C2A0FC9DF003A87F8 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52845B1B2A0FC9DF003A87F8 /* Model.swift */; };
 		528CAF7A2A31C7D10069AC09 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 528CAF712A31C7D10069AC09 /* Pretendard-ExtraLight.otf */; };
 		528CAF7B2A31C7D10069AC09 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 528CAF722A31C7D10069AC09 /* Pretendard-Medium.otf */; };
@@ -34,7 +39,8 @@
 		52CE6EA92A02573200E43D39 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA82A02573200E43D39 /* MapView.swift */; };
 		52CE6EAB2A0260FA00E43D39 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EAA2A0260FA00E43D39 /* TabBarController.swift */; };
 		52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EAC2A02C0B800E43D39 /* DdayTableViewCell.swift */; };
-		52F00FEE2A0928320014FC01 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52F00FED2A0928320014FC01 /* GoogleService-Info.plist */; };
+		52E0CDEE2A4B08FA00E4A182 /* CoupleConnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0CDED2A4B08F900E4A182 /* CoupleConnectView.swift */; };
+		52E0CDF02A4B091600E4A182 /* CoupleConnectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0CDEF2A4B091600E4A182 /* CoupleConnectVC.swift */; };
 		52F00FF42A09308E0014FC01 /* AddDdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FF32A09308E0014FC01 /* AddDdayView.swift */; };
 		52F00FF62A0930FF0014FC01 /* AddDdayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FF52A0930FF0014FC01 /* AddDdayViewController.swift */; };
 		52F00FF82A0936FD0014FC01 /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FF72A0936FD0014FC01 /* NoticeView.swift */; };
@@ -88,6 +94,10 @@
 		5270EC052A4450C2007FF444 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		5270EC082A446123007FF444 /* PhoneCertifiedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCertifiedView.swift; sourceTree = "<group>"; };
 		5270EC0B2A44614A007FF444 /* PhoneCertifiedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCertifiedVC.swift; sourceTree = "<group>"; };
+		5270EC0D2A460208007FF444 /* AuthNumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNumView.swift; sourceTree = "<group>"; };
+		5270EC0F2A460354007FF444 /* AuthNumVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNumVC.swift; sourceTree = "<group>"; };
+		5270EC112A4954D9007FF444 /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
+		5270EC1A2A49E3B2007FF444 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		52845B1B2A0FC9DF003A87F8 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		528CAF712A31C7D10069AC09 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-ExtraLight.otf"; path = "../../../../2023Project/디자인가이드(1)/public/static/Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
 		528CAF722A31C7D10069AC09 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Medium.otf"; path = "../../../../2023Project/디자인가이드(1)/public/static/Pretendard-Medium.otf"; sourceTree = "<group>"; };
@@ -106,7 +116,8 @@
 		52CE6EA82A02573200E43D39 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		52CE6EAA2A0260FA00E43D39 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		52CE6EAC2A02C0B800E43D39 /* DdayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayTableViewCell.swift; sourceTree = "<group>"; };
-		52F00FED2A0928320014FC01 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		52E0CDED2A4B08F900E4A182 /* CoupleConnectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleConnectView.swift; sourceTree = "<group>"; };
+		52E0CDEF2A4B091600E4A182 /* CoupleConnectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleConnectVC.swift; sourceTree = "<group>"; };
 		52F00FF32A09308E0014FC01 /* AddDdayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDdayView.swift; sourceTree = "<group>"; };
 		52F00FF52A0930FF0014FC01 /* AddDdayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDdayViewController.swift; sourceTree = "<group>"; };
 		52F00FF72A0936FD0014FC01 /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
@@ -159,6 +170,7 @@
 				B61B0F4B29F7A44700E25EEF /* FirebaseAnalytics in Frameworks */,
 				B61B0F5529F7A44700E25EEF /* FirebaseFirestore in Frameworks */,
 				45307ED7030327D357C85252 /* Pods_MeloMeter.framework in Frameworks */,
+				5270EC1D2A49E9C5007FF444 /* FirebaseInAppMessaging-Beta in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,7 +207,7 @@
 				52697B7B29EEB7B3002BDD04 /* Assets.xcassets */,
 				52697B7D29EEB7B3002BDD04 /* LaunchScreen.storyboard */,
 				52697B8029EEB7B3002BDD04 /* Info.plist */,
-				52F00FED2A0928320014FC01 /* GoogleService-Info.plist */,
+				5270EC1A2A49E3B2007FF444 /* GoogleService-Info.plist */,
 				52CE6E8D29FEBD5700E43D39 /* Font */,
 			);
 			path = MeloMeter;
@@ -205,6 +217,8 @@
 			isa = PBXGroup;
 			children = (
 				5270EC082A446123007FF444 /* PhoneCertifiedView.swift */,
+				5270EC0D2A460208007FF444 /* AuthNumView.swift */,
+				52E0CDED2A4B08F900E4A182 /* CoupleConnectView.swift */,
 			);
 			path = LogInViews;
 			sourceTree = "<group>";
@@ -213,6 +227,8 @@
 			isa = PBXGroup;
 			children = (
 				5270EC0B2A44614A007FF444 /* PhoneCertifiedVC.swift */,
+				5270EC0F2A460354007FF444 /* AuthNumVC.swift */,
+				52E0CDEF2A4B091600E4A182 /* CoupleConnectVC.swift */,
 			);
 			path = LogInVCs;
 			sourceTree = "<group>";
@@ -351,6 +367,7 @@
 				52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */,
 				52F010152A0AAE900014FC01 /* CameraModel.swift */,
 				52845B1B2A0FC9DF003A87F8 /* Model.swift */,
+				5270EC112A4954D9007FF444 /* AuthModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -408,6 +425,7 @@
 				52697B6C29EEB7B2002BDD04 /* Frameworks */,
 				52697B6D29EEB7B2002BDD04 /* Resources */,
 				62D803FBD07926643E6AEA64 /* [CP] Embed Pods Frameworks */,
+				5270EC192A49D0AA007FF444 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -423,6 +441,7 @@
 				B61B0F5429F7A44700E25EEF /* FirebaseFirestore */,
 				B61B0F5629F7A44700E25EEF /* FirebaseFunctions */,
 				B61B0F5829F7A44700E25EEF /* FirebaseMessaging */,
+				5270EC1C2A49E9C5007FF444 /* FirebaseInAppMessaging-Beta */,
 			);
 			productName = MeloMeter;
 			productReference = 52697B6F29EEB7B2002BDD04 /* MeloMeter.app */;
@@ -474,10 +493,10 @@
 				528CAF802A31C7D10069AC09 /* Pretendard-Bold.otf in Resources */,
 				528CAF7E2A31C7D10069AC09 /* Pretendard-Light.otf in Resources */,
 				528CAF7B2A31C7D10069AC09 /* Pretendard-Medium.otf in Resources */,
+				5270EC1B2A49E3B2007FF444 /* GoogleService-Info.plist in Resources */,
 				528CAF7F2A31C7D10069AC09 /* Pretendard-Thin.otf in Resources */,
 				528CAF7D2A31C7D10069AC09 /* Pretendard-SemiBold.otf in Resources */,
 				528CAF812A31C7D10069AC09 /* Pretendard-ExtraBold.otf in Resources */,
-				52F00FEE2A0928320014FC01 /* GoogleService-Info.plist in Resources */,
 				528CAF7A2A31C7D10069AC09 /* Pretendard-ExtraLight.otf in Resources */,
 				528CAF7C2A31C7D10069AC09 /* Pretendard-Black.otf in Resources */,
 				52697B7C29EEB7B3002BDD04 /* Assets.xcassets in Resources */,
@@ -487,6 +506,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5270EC192A49D0AA007FF444 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${MeloMeter}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$/Users/ohhyunnteak/Documents/멜로미터프로젝트/MeloMeter_Dev1/MeloMeter",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
 		62D803FBD07926643E6AEA64 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -536,12 +574,14 @@
 				52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */,
 				52F2084229FD63F40043BCA4 /* MyProfileView.swift in Sources */,
 				52F00FF42A09308E0014FC01 /* AddDdayView.swift in Sources */,
+				52E0CDF02A4B091600E4A182 /* CoupleConnectVC.swift in Sources */,
 				52845B1C2A0FC9DF003A87F8 /* Model.swift in Sources */,
 				52F305302A168CE900112A04 /* DisconnectVC.swift in Sources */,
 				52CE6EA52A0245E300E43D39 /* DdayView.swift in Sources */,
 				52697B7329EEB7B2002BDD04 /* AppDelegate.swift in Sources */,
 				52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */,
 				52F0100D2A0A4FD20014FC01 /* AnswerView.swift in Sources */,
+				5270EC0E2A460208007FF444 /* AuthNumView.swift in Sources */,
 				52F010222A0ADD500014FC01 /* EditStatusMessageVC.swift in Sources */,
 				52F010002A094B550014FC01 /* QnAViewController.swift in Sources */,
 				52F010112A0AACEC0014FC01 /* EditProfileView.swift in Sources */,
@@ -561,12 +601,14 @@
 				52CE6EA72A02571E00E43D39 /* MapViewController.swift in Sources */,
 				52F00FF82A0936FD0014FC01 /* NoticeView.swift in Sources */,
 				52F010082A097D120014FC01 /* AlarmTableViewCell.swift in Sources */,
+				5270EC122A4954D9007FF444 /* AuthModel.swift in Sources */,
 				52F00FFC2A093A410014FC01 /* NoticeTableViewCell.swift in Sources */,
 				52F010142A0AAD380014FC01 /* EditProfileViewController.swift in Sources */,
 				52CE6EA32A0187BB00E43D39 /* AlarmView.swift in Sources */,
 				52F3053A2A16BF4700112A04 /* WithdrawalVC.swift in Sources */,
 				52F010242A0B77ED0014FC01 /* EditBirthViewController.swift in Sources */,
 				52F305382A16BF2A00112A04 /* WithdrawalView.swift in Sources */,
+				5270EC102A460354007FF444 /* AuthNumVC.swift in Sources */,
 				52F0101C2A0ACDD20014FC01 /* EditNameView.swift in Sources */,
 				5270EC092A446123007FF444 /* PhoneCertifiedView.swift in Sources */,
 				52F00FFE2A094B450014FC01 /* QnAView.swift in Sources */,
@@ -578,6 +620,7 @@
 				52F010202A0ADB680014FC01 /* EditStatusMessageView.swift in Sources */,
 				52697B7529EEB7B2002BDD04 /* SceneDelegate.swift in Sources */,
 				52F0101E2A0ACE190014FC01 /* EditNameViewController.swift in Sources */,
+				52E0CDEE2A4B08FA00E4A182 /* CoupleConnectView.swift in Sources */,
 				52F010162A0AAE900014FC01 /* CameraModel.swift in Sources */,
 				52F2084029FBFF280043BCA4 /* DdayViewController.swift in Sources */,
 			);
@@ -630,7 +673,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -830,6 +873,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5270EC1C2A49E9C5007FF444 /* FirebaseInAppMessaging-Beta */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B61B0F4929F7A44700E25EEF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseInAppMessaging-Beta";
+		};
 		B61B0F4A29F7A44700E25EEF /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B61B0F4929F7A44700E25EEF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

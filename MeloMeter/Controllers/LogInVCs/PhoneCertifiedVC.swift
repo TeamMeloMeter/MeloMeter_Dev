@@ -7,14 +7,16 @@
 
 import UIKit
 import AnyFormatKit //번호 입력 형식 라이브러리
+import Firebase
+import FirebaseAppCheck
 //전화번호 인증
 class PhoneCertifiedVC: UIViewController, UITextFieldDelegate {
     
     let phoneCertifiedView = PhoneCertifiedView()
     
+    
     override func loadView() {
         view = phoneCertifiedView
-        
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +28,10 @@ class PhoneCertifiedVC: UIViewController, UITextFieldDelegate {
         super.viewWillAppear(true)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        phoneCertifiedView.phoneNumTF.becomeFirstResponder()
+    }
     // x버튼 입력한 번호 지우기
     @objc func cancelBtnTapped() {
         phoneCertifiedView.phoneNumTF.text = ""
@@ -89,8 +95,18 @@ class PhoneCertifiedVC: UIViewController, UITextFieldDelegate {
         phoneCertifiedView.lineView.backgroundColor = .gray2
     }
 
-    //다음버튼 터치이벤트
+    //다음버튼 터치이벤트: 전화번호 인증 요청 전송
     @objc func nextBtnTapped() {
+        if let number = phoneCertifiedView.phoneNumTF.text?.components(separatedBy: "-").joined() {
+            Auth.auth().settings?.isAppVerificationDisabledForTesting = true // 테스트모드
+            //Analytics.setAnalyticsCollectionEnabled(true)
+            let authModel = AuthModel()
+            authModel.phoneNum = "+82 \(number)"
+            authModel.sendNumber()
+        }
         
+        let authNumVC = AuthNumVC()
+        authNumVC.modalPresentationStyle = .fullScreen
+        self.present(authNumVC, animated: true, completion: nil)
     }
 }
