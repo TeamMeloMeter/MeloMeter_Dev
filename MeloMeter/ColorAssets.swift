@@ -7,7 +7,7 @@
 
 import UIKit
 
-//Color 모음
+// MARK: Color Assets
 extension UIColor {
     static let gray1 = UIColor(#colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1))
     static let gray2 = UIColor(#colorLiteral(red: 0.5215686275, green: 0.5215686275, blue: 0.5215686275, alpha: 1))
@@ -20,7 +20,8 @@ extension UIColor {
     static let point1 = UIColor(#colorLiteral(red: 1, green: 0.8549019608, blue: 0.3490196078, alpha: 1))
 
 }
-//그라데이션 색상 배경 view
+
+// MARK: 그라데이션 배경 View
 extension UIView {
     func setGradientBackground(colors: [UIColor]) {
         let gradientLayer = CAGradientLayer()

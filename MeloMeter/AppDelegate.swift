@@ -10,57 +10,55 @@ import NMapsMap
 import Firebase
 import UserNotifications
 import FirebaseAppCheck
-@main
-class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
-  
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    // Override point for customization after application launch.
-    
-      // 네이버 지도 초기화
-      NMFAuthManager.shared().clientId = "qf06vqg44t"
 //      let providerFactory = AppCheckDebugProviderFactory()
 //      AppCheck.setAppCheckProviderFactory(providerFactory)
-      
-      // 파이어베이스 알림 설정, 연동
-      FirebaseApp.configure()
-      Messaging.messaging().delegate = self
-      Messaging.messaging().isAutoInitEnabled = true
-      UNUserNotificationCenter.current().delegate = self
-      let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-      UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { granted, _ in
-          if granted {
-              print("알림 등록이 완료되었습니다.")
-          }
-      }
-      application.registerForRemoteNotifications()
-      return true
-  }
+
+@main
+class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
     
-  func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {}
-  
-  func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-    // APNS Device Token 받은 후 서버에 전송하거나, FCM Token과 연결할 수 있음
-    Messaging.messaging().apnsToken = deviceToken
-  }
-  
-  // APNS 등록 실패 시 호출
-  func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-    print("APNS 등록 실패: \(error.localizedDescription)")
-  }
-  
-  // MARK: UISceneSession Lifecycle
-  
-  func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-    // Called when a new scene session is being created.
-    // Use this method to select a configuration to create the new scene with.
-    return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-  }
-  
-  func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-    // Called when the user discards a scene session.
-    // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-    // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
-  }
-  
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Override point for customization after application launch.
+        // 네이버 지도 초기화
+        NMFAuthManager.shared().clientId = "qf06vqg44t"
+        // 파이어베이스 연동, 알림설정
+        FirebaseApp.configure()
+        Messaging.messaging().delegate = self
+        Messaging.messaging().isAutoInitEnabled = true
+        UNUserNotificationCenter.current().delegate = self
+        application.registerForRemoteNotifications()
+        
+        
+        
+        return true
+    }
+    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {}
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        // APNS Device Token 받은 후 서버에 전송하거나, FCM Token과 연결할 수 있음
+        Messaging.messaging().apnsToken = deviceToken
+        
+    }
+    
+    // APNS 등록 실패 시 호출
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("APNS 등록 실패: \(error.localizedDescription)")
+    }
+    
+    // MARK: UISceneSession Lifecycle
+    
+    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+        // Called when a new scene session is being created.
+        // Use this method to select a configuration to create the new scene with.
+        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+    }
+    
+    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
+        // Called when the user discards a scene session.
+        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
+        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+    }
+    
+    
 }
 

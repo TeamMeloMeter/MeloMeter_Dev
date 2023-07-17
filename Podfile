@@ -8,5 +8,6 @@ target 'MeloMeter' do
   # Pods for MeloMeter
   pod 'NMapsMap'
   pod 'AnyFormatKit'
-
+  pod 'RxSwift'
+  pod 'RxCocoa'
 end
