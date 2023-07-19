@@ -10,8 +10,6 @@ import NMapsMap
 import Firebase
 import UserNotifications
 import FirebaseAppCheck
-//      let providerFactory = AppCheckDebugProviderFactory()
-//      AppCheck.setAppCheckProviderFactory(providerFactory)
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
