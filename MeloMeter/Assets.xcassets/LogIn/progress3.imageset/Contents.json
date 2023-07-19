@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "UI 프로그레스_03 1.png",
+      "filename" : "progress3.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "UI 프로그레스_03.png",
+      "filename" : "progress3_2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "UI 프로그레스_03 2.png",
+      "filename" : "progress3_3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
