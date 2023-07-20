@@ -74,16 +74,17 @@ final class CoupleCombineVC: UIViewController {
         
         viewModel.inviteCodeTimer()
         viewModel.timerString
+            // .bind(to:  <= 바인딩 된 객체값을 우측값에 대입
             .bind(to: self.user1Label.rx.text)
             .disposed(by: disposeBag)
         viewModel.timerDisposed
             .subscribe(onNext: { result in
                 if result {
-                    self.user1Label.text = "00:00:00"
-                    AlertManager.shared.showCustomAlert(title: "코드 유효시간 만료", message: "코드를 다시 입력해주세요", customView: self.customView, constraints: self.alertCustomViewConstraints)
-                        .subscribe(onSuccess: {
-                            self.user1Label.text = ""
-                        }).disposed(by: self.disposeBag)
+//                    self.user1Label.text = "00:00:00"
+//                    AlertManager.shared.showCustomAlert(title: "코드 유효시간 만료", message: "코드를 다시 입력해주세요", customView: self.customView, constraints: self.alertCustomViewConstraints)
+//                        .subscribe(onSuccess: {
+//                            self.user1Label.text = ""
+//                        }).disposed(by: self.disposeBag)
                 }
             }).disposed(by: disposeBag)
     }
