@@ -73,6 +73,7 @@ final class CoupleCombineVC: UIViewController {
         
         viewModel.inviteCodeTimer()
         viewModel.timerString
+            // .bind(to:  <= 바인딩 된 객체값을 우측값에 대입
             .bind(to: self.user1Label.rx.text)
             .disposed(by: disposeBag)
         viewModel.timerDisposed
