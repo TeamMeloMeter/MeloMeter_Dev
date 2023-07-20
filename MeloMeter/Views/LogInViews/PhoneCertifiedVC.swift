@@ -16,6 +16,8 @@ final class PhoneCertifiedVC: UIViewController {
     
     private let viewModel: LogInVM
     let disposeBag = DisposeBag()
+    let progressDialog:ProgressDialogView = ProgressDialogView()
+    let tapGesture = UITapGestureRecognizer()
     
     init(viewModel: LogInVM) {
         self.viewModel = viewModel
@@ -43,11 +45,27 @@ final class PhoneCertifiedVC: UIViewController {
         phoneNumTF.becomeFirstResponder()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        hideProgressDialog()
+    }
+    
     // MARK: - Binding
     func setBindings() {
+        view.addGestureRecognizer(tapGesture)
+        
+        tapGesture.rx.event
+            .subscribe(onNext: { [weak self] _ in
+                self?.view.endEditing(true)
+            })
+            .disposed(by: disposeBag)
+        
         nextBtn.rx.tap
             .subscribe(onNext: { [weak self] in
                 guard let self = self else{ return }
+                self.view.endEditing(true)
+                self.view.addSubview(progressDialog)
+                showProgressDialog()
                 self.viewModel.phoneNumberInput.onNext(self.phoneNumTF.text)
             })
             .disposed(by: disposeBag)
@@ -55,12 +73,12 @@ final class PhoneCertifiedVC: UIViewController {
         viewModel.sendNumRequest.subscribe(onNext: { [weak self] result in
             guard let self = self else{ return }
             if result == false {
-                AlertManager.shared.showNomalAlert(title: "잘못된 전화번호", message: "올바른 번호를 입력해주세요!")
-                    .subscribe(onSuccess: {
-                        self.phoneNumTF.text = ""
-                        self.lineColorChangedF()
-                        self.nextBtnEnabledF()
-                    }).disposed(by: disposeBag)
+//                AlertManager.shared.showNomalAlert(title: "잘못된 전화번호", message: "올바른 번호를 입력해주세요!")
+//                    .subscribe(onSuccess: {
+//                        self.phoneNumTF.text = ""
+//                        self.lineColorChangedF()
+//                        self.nextBtnEnabledF()
+//                    }).disposed(by: disposeBag)
             }
         }).disposed(by: disposeBag)
         
@@ -69,6 +87,13 @@ final class PhoneCertifiedVC: UIViewController {
                 guard let self = self else{ return }
                 cancelBtnTapped()
             }).disposed(by: disposeBag)
+    }
+    
+    func showProgressDialog() {
+        self.progressDialog.show()
+    }
+    func hideProgressDialog() {
+        self.progressDialog.hide()
     }
     
     // MARK: - Event

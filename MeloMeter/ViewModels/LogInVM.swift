@@ -39,10 +39,10 @@ class LogInVM {
         
         //전화번호 입력 -> 인증 요청 -> 응답
         phoneNumberInput.subscribe(onNext: { [weak self] text in
+            coordinator.showAuthNumVC()
             guard let self = self else{ return }
             self.logInService.sendNumberService(text: text)
                 .subscribe(onSuccess: {
-                    coordinator.showAuthNumVC()
                 }, onFailure: { error in
                     self.sendNumRequest.onNext(false)
                 }).disposed(by: disposeBag)
@@ -89,7 +89,6 @@ class LogInVM {
     
     func verificationCodeTimer() {
         let countdownDuration = 299
-        
         timerSubscription = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
             .take(countdownDuration)
             .subscribe(onNext: { secondsElapsed in
@@ -97,6 +96,7 @@ class LogInVM {
                 let remainingSeconds = countdownDuration - secondsElapsed
                 let minutes = remainingSeconds / 60
                 let seconds = remainingSeconds % 60
+                print("dlxotjd",String(format: "%02d:%02d", minutes, seconds))
                 self.timerString.onNext(String(format: "%02d:%02d", minutes, seconds))
             }, onCompleted: {
                 self.timerDisposed.onNext(true)
@@ -105,7 +105,6 @@ class LogInVM {
     
     func inviteCodeTimer() {
         let countdownDuration = 5
-        
         timerSubscription = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
             .take(countdownDuration)
             .subscribe(onNext: { secondsElapsed in
@@ -115,11 +114,9 @@ class LogInVM {
                 let minutes = (remainingSeconds % 3600) / 60
                 let seconds = (remainingSeconds % 3600) % 60
                 self.timerString.onNext(String(format: "내 초대코드(%02d:%02d:%02d)", hours, minutes, seconds))
-                
             }, onCompleted: {
                 self.timerDisposed.onNext(true)
             })
-           
     }
     
     func stopTimer() {

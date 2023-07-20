@@ -49,8 +49,7 @@ final class CoupleCombineVC: UIViewController {
         viewModel.startCoupleConnectVC.onNext(true)
         viewModel.startCoupleConnectVC.onCompleted()
         viewModel.startCoupleConnectVC.disposed(by: disposeBag)
-        
-        //내 코드 라벨 바인딩
+      
         viewModel.myCode
             .bind(to: self.myCodeLabel.rx.text)
             .disposed(by: disposeBag)
@@ -65,10 +64,10 @@ final class CoupleCombineVC: UIViewController {
             .subscribe(onNext: {[weak self] result in
                 guard let self = self else{ return }
                 if result == false {
-                    AlertManager.shared.showNomalAlert(title: "연결 실패", message: "커플코드를 확인해주세요")
-                        .subscribe(onSuccess: {
-                            self.codeTF.text = ""
-                        }).disposed(by: self.disposeBag)
+//                    AlertManager.shared.showNomalAlert(title: "연결 실패", message: "커플코드를 확인해주세요")
+//                        .subscribe(onSuccess: {
+//                            self.codeTF.text = ""
+//                        }).disposed(by: self.disposeBag)
                 }
             }).disposed(by: disposeBag)
         
@@ -80,11 +79,11 @@ final class CoupleCombineVC: UIViewController {
         viewModel.timerDisposed
             .subscribe(onNext: { result in
                 if result {
-//                    self.user1Label.text = "00:00:00"
-//                    AlertManager.shared.showCustomAlert(title: "코드 유효시간 만료", message: "코드를 다시 입력해주세요", customView: self.customView, constraints: self.alertCustomViewConstraints)
-//                        .subscribe(onSuccess: {
-//                            self.user1Label.text = ""
-//                        }).disposed(by: self.disposeBag)
+                    AlertManager(viewController: self)
+                        .setTitle("00:00:00")
+                        .setMessage("24시간 초대 코드가 만료되었습니다\n재발급 된 상대방의 코드를\n다시 입력해주세요")
+                        .addActionConfirm("확인")
+                        .show()
                 }
             }).disposed(by: disposeBag)
     }
@@ -127,7 +126,7 @@ final class CoupleCombineVC: UIViewController {
     
     let user1Label: UILabel = {
         let label = UILabel()
-        label.text = ""
+        label.text = "내 초대코드(23:59:59)"
         label.textColor = .gray1
         label.font = FontManager.shared.semiBold(ofSize: 14)
         return label

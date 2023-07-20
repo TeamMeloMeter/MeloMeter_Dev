@@ -16,6 +16,8 @@ final class AuthNumVC: UIViewController {
  
     let viewModel: LogInVM
     let disposeBag = DisposeBag()
+    let progressDialog: ProgressDialogView = ProgressDialogView()
+    let tapGesture = UITapGestureRecognizer()
     
     init(viewModel: LogInVM) {
         self.viewModel = viewModel
@@ -43,13 +45,25 @@ final class AuthNumVC: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         viewModel.stopTimer() // 타이머 해제
+        hideProgressDialog()
     }
     
     // MARK: - Binding
     func setBindings() {
+        view.addGestureRecognizer(tapGesture)
+        
+        tapGesture.rx.event
+            .subscribe(onNext: { [weak self] _ in
+                self?.view.endEditing(true)
+            })
+            .disposed(by: disposeBag)
+        
         nextBtn.rx.tap
             .subscribe(onNext: { [weak self] in
                 guard let self = self else{ return }
+                self.view.endEditing(true)
+                self.view.addSubview(progressDialog)
+                showProgressDialog()
                 self.viewModel.verificationCode.onNext(self.authNumTF.text)
             })
             .disposed(by: disposeBag)
@@ -57,11 +71,11 @@ final class AuthNumVC: UIViewController {
         viewModel.logInRequest.subscribe(onNext: { [weak self] result in
             guard let self = self else{ return }
             if result == false {
-                AlertManager.shared.showNomalAlert(title: "인증 실패", message: "다시 입력해주세요")
-                    .subscribe(onSuccess: {
-                        self.authNumTF.text = ""
-                        self.dismiss(animated: true)
-                    }).disposed(by: disposeBag)
+//                AlertManager.shared.showNomalAlert(title: "인증 실패", message: "다시 입력해주세요")
+//                    .subscribe(onSuccess: {
+//                        self.authNumTF.text = ""
+//                        self.dismiss(animated: true)
+//                    }).disposed(by: disposeBag)
             }
         }).disposed(by: disposeBag)
         
@@ -81,15 +95,21 @@ final class AuthNumVC: UIViewController {
             .subscribe(onNext: { result in
                 if result {
                     self.timeLabel.text = "00:00"
-                    AlertManager.shared.showNomalAlert(title: "시간 초과", message: "인증을 다시 시도해주세요")
-                        .subscribe(onSuccess: {
-                        }).disposed(by: self.disposeBag)
+//                    AlertManager.shared.showNomalAlert(title: "시간 초과", message: "인증을 다시 시도해주세요")
+//                        .subscribe(onSuccess: {
+//                        }).disposed(by: self.disposeBag)
                 }
             }).disposed(by: disposeBag)
     }
     
+    // MARK: - Event
+    func showProgressDialog() {
+        self.progressDialog.show()
+    }
+    func hideProgressDialog() {
+        self.progressDialog.hide()
+    }
     
-
     // MARK: - configure
     private func configure() {
         view.backgroundColor = .white
