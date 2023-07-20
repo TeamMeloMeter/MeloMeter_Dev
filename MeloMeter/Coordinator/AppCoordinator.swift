@@ -30,14 +30,10 @@ final class AppCoordinator: Coordinator {
 extension AppCoordinator {
     
     func showStartVC() {
-        print("111")
         let startVC = StartVC(viewModel: StartVM(coordinator: self))
-        print("222")
         navigationController.setNavigationBarHidden(true, animated: false)
-        print("333")
         navigationController.pushViewController(startVC, animated: false)
     }
-    
     func connectLogInFlow() {
         self.navigationController.viewControllers.removeAll()
         let logInCoordinator = LogInCoordinator(self.navigationController)
@@ -45,7 +41,7 @@ extension AppCoordinator {
         logInCoordinator.start()
         self.childCoordinators.append(logInCoordinator)
     }
-//
+
 //    func connectTabBarFlow() {
 //        self.navigationController.popToRootViewController(animated: true)
 //        let tabBarCoordinator = TabBarCoordinator(self.navigationController)

@@ -23,7 +23,7 @@ class StartVM {
         startBtnTab
             .subscribe(onNext: { result in
                 if result {
-                    coordinator.connectLogInFlow()
+                    coordinator.didFinish(childCoordinator: coordinator)
                 }
             }).disposed(by: disposeBag)
     }
