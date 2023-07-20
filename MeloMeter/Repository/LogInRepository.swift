@@ -31,7 +31,6 @@ class LogInRepository {
                         single(.failure(error))
                         return
                     }
-                    
                     if let id = verificationID {
                         if id.isEmpty {
                             single(.success(.validationFailed))
@@ -58,7 +57,6 @@ class LogInRepository {
                 withVerificationID: verificationID,
                 verificationCode: code
             )
-            
             Auth.auth().signIn(with: credential) { authResult, error in
                 if let error = error {
                     single(.failure(error))
@@ -88,9 +86,7 @@ class LogInRepository {
                     phoneNumber = number
                 })
                 .disposed(by: disposeBag)
-
             let createdAt = Date()
-            //UUID().uuidString 자동생성 코드
             let inviteCode = createdAt.toString(type: Date.Format.timeStamp).filter{ $0.isNumber }.map{ String($0) }.suffix(8).joined()
             
             let dto = LogInDTO(uid: uid,
@@ -108,7 +104,6 @@ class LogInRepository {
             })
             .disposed(by: disposeBag)
     
-            
             return Disposables.create()
         }
     }
@@ -123,7 +118,6 @@ class LogInRepository {
                     .map{ $0.toObject(LogInDTO.self)?.toModel() }
             }
     }
-
 
 
     //커플 등록 로직
