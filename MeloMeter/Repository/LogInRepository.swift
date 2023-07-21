@@ -87,8 +87,7 @@ class LogInRepository {
                 })
                 .disposed(by: disposeBag)
             let createdAt = Date()
-            let inviteCode = createdAt.toString(type: Date.Format.timeStamp).filter{ $0.isNumber }.map{ String($0) }.suffix(8).joined()
-            
+            let inviteCode = "\(phoneNumber.suffix(4) + createdAt.toString(type: Date.Format.timeStamp).filter{ $0.isNumber }.map{ String($0) }.suffix(4).joined())"
             let dto = LogInDTO(uid: uid,
                                phoneNumber: phoneNumber,
                                createdAt: createdAt.toString(type: Date.Format.timeStamp),
