@@ -10,7 +10,7 @@ import RxSwift
 
 struct AddAction {
   var text: String?
-    var action: (() -> Void)?
+  var action: (() -> Void)?
 }
 // MARK: - Alert 싱글톤 클래스
 class AlertManager {
@@ -40,7 +40,7 @@ class AlertManager {
     }
     
     @discardableResult
-    func show() -> Self {
+    func showCustomAlert() -> Self {
         alertViewController.modalPresentationStyle = .overFullScreen
         alertViewController.modalTransitionStyle = .crossDissolve
         
@@ -50,5 +50,19 @@ class AlertManager {
         
         baseViewController.present(alertViewController, animated: true)
         return self
+    }
+    
+    func showNomalAlert(title: String, message: String) -> Single<Void> {
+        return Single.create { single in
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+                single(.success(()))
+            }
+            alertController.addAction(okAction)
+            self.baseViewController.present(alertController, animated: true, completion: nil)
+            return Disposables.create {
+                alertController.dismiss(animated: true, completion: nil)
+            }
+        }
     }
 }
