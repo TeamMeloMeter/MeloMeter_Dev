@@ -32,18 +32,6 @@ public final class DefaultFirebaseService: FireStoreService {
         self.database = firestore
     }
     
-//    public func getCurrentUser(field: String) -> Single<String?> {
-//        return Single.create { single in
-//            if field == "UID" {
-//                guard let uid = Auth.auth().currentUser?.uid else { single(.success(nil)); return Disposables.create() }
-//                single(.success(uid))
-//            }else if field == "PhoneNumber" {
-//                guard let phoneNumber = Auth.auth().currentUser?.phoneNumber else { single(.success(nil)); return Disposables.create() }
-//                single(.success(phoneNumber))
-//            }
-//            return Disposables.create()
-//        }
-//    }
     public func getCurrentUser() -> Single<User> {
         return Single.create { single in
             guard let currentUser = Auth.auth().currentUser else{ return Disposables.create()}
