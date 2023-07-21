@@ -18,12 +18,14 @@ class LogInVM {
     let disposeBag = DisposeBag()
     private var timerSubscription: Disposable? // 타이머 해제할 Disposable
     weak var coordinator: LogInCoordinator?
-    
+    var phoneNumber: String?
     // MARK: - Input
     var phoneNumberInput = PublishSubject<String?>()
     var verificationCode = PublishSubject<String?>()
-    var startCoupleConnectVC = PublishSubject<Bool>()
+    var startCoupleConnectVC = PublishSubject<Void>()
     var inviteCodeInput = PublishSubject<String?>()
+    var alertBtnTapped = PublishSubject<Void>()
+    var resendBtnTapped = PublishSubject<Void>()
     
     // MARK: - Output
     var sendNumRequest = PublishSubject<Bool>()
@@ -38,19 +40,19 @@ class LogInVM {
         self.coordinator = coordinator
         
         //전화번호 입력 -> 인증 요청 -> 응답
-        phoneNumberInput.subscribe(onNext: { [weak self] text in
-            coordinator.showAuthNumVC()
+        phoneNumberInput.bind(onNext: { [weak self] text in
             guard let self = self else{ return }
+            self.phoneNumber = text
             self.logInService.sendNumberService(text: text)
                 .subscribe(onSuccess: {
+                    coordinator.showAuthNumVC(phoneNumber: text)
                 }, onFailure: { error in
                     self.sendNumRequest.onNext(false)
                 }).disposed(by: disposeBag)
         }).disposed(by: disposeBag)
         
-        
         //인증번호 입력 -> 로그인 요청 -> 응답
-        verificationCode.subscribe(onNext: { [weak self] text in
+        verificationCode.bind(onNext: { [weak self] text in
             guard let self = self else{ return }
             self.logInService.inputVerificationCodeService(code: text)
                 .subscribe(onSuccess: {
@@ -60,22 +62,24 @@ class LogInVM {
                 }).disposed(by: disposeBag)
         }).disposed(by: disposeBag)
         
-        
-        //내 커플코드 받아오기
-        startCoupleConnectVC.subscribe(onNext: { [weak self] result in
-            guard let self = self else{ return }
-            self.logInService.getUserLoginInfo()
-                .subscribe(onSuccess: { logInModel in
-                    let inviteCode = "\(logInModel.inviteCode.prefix(4)) \(logInModel.inviteCode.suffix(4))"
-                    self.myCode.onNext(inviteCode)
+        //인증번호 재발급
+        resendBtnTapped.subscribe(onNext: {
+            self.logInService.sendNumberService(text: self.phoneNumber)
+                .subscribe(onSuccess: {
+                    self.stopTimer()
+                    self.verificationCodeTimer()
                 }, onFailure: { error in
-                    self.myCode.onError(error)
-                }).disposed(by: disposeBag)
+                    self.sendNumRequest.onNext(false)
+                }).disposed(by: self.disposeBag)
+        }).disposed(by: self.disposeBag)
+        
+        //뷰 시작시 내 초대코드 받아오기
+        startCoupleConnectVC.subscribe(onNext: {
+            self.getInviteCode()
         }).disposed(by: disposeBag)
         
-        
         //초대코드 입력 -> 커플연결
-        inviteCodeInput.subscribe(onNext: { [weak self] text in
+        inviteCodeInput.bind(onNext: { [weak self] text in
             guard let self = self else{ return }
             self.logInService.combineCoupleService(text)
                 .subscribe(onSuccess: {
@@ -85,8 +89,33 @@ class LogInVM {
                 }).disposed(by: disposeBag)
         }).disposed(by: disposeBag)
         
+        //인증번호 시간초과 alert 버튼 이벤트
+        alertBtnTapped.subscribe(onNext: {
+            coordinator.popViewController()
+        }).disposed(by: disposeBag)
     }
     
+    //초대코드 재발급 후 가져오기
+    func inviteCodeRequest() {
+        self.logInService.inviteCodeRequest()
+            .subscribe(onSuccess: { logInModel in
+                let inviteCode = "\(logInModel.inviteCode.prefix(4)) \(logInModel.inviteCode.suffix(4))"
+                self.myCode.onNext(inviteCode)
+            }, onFailure: { error in
+                self.myCode.onError(error)
+            }).disposed(by: disposeBag)
+    }
+    
+    //초대코드 요청
+    func getInviteCode() {
+        self.logInService.getUserLoginInfo()
+            .subscribe(onSuccess: { logInModel in
+                let inviteCode = "\(logInModel.inviteCode.prefix(4)) \(logInModel.inviteCode.suffix(4))"
+                self.myCode.onNext(inviteCode)
+            }, onFailure: { error in
+                self.myCode.onError(error)
+            }).disposed(by: disposeBag)
+    }
     func verificationCodeTimer() {
         let countdownDuration = 299
         timerSubscription = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
@@ -96,7 +125,6 @@ class LogInVM {
                 let remainingSeconds = countdownDuration - secondsElapsed
                 let minutes = remainingSeconds / 60
                 let seconds = remainingSeconds % 60
-                print("dlxotjd",String(format: "%02d:%02d", minutes, seconds))
                 self.timerString.onNext(String(format: "%02d:%02d", minutes, seconds))
             }, onCompleted: {
                 self.timerDisposed.onNext(true)
@@ -104,7 +132,7 @@ class LogInVM {
     }
     
     func inviteCodeTimer() {
-        let countdownDuration = 5
+        let countdownDuration = 86399
         timerSubscription = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
             .take(countdownDuration)
             .subscribe(onNext: { secondsElapsed in
@@ -115,6 +143,7 @@ class LogInVM {
                 let seconds = (remainingSeconds % 3600) % 60
                 self.timerString.onNext(String(format: "내 초대코드(%02d:%02d:%02d)", hours, minutes, seconds))
             }, onCompleted: {
+                self.inviteCodeRequest()
                 self.timerDisposed.onNext(true)
             })
     }

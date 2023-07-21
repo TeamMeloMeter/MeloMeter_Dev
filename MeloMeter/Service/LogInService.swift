@@ -69,7 +69,18 @@ class LogInService {
             return Disposables.create()
         }
     }
-    
+    // 초대코드 발급 요청
+    func inviteCodeRequest() -> Single<LogInModel> {
+        return logInRepository.userInFirestore()
+            .flatMap({ _ -> Single<LogInModel> in
+                return self.logInRepository.getUserLoginInfo()
+                    .map{ logInModel -> LogInModel in
+                        guard let model = logInModel else{ return LogInModel(uid: "", phoneNumber: "", createdAt: Date(), inviteCode: "")}
+                        return model
+                    }
+            })
+         
+    }
     //내 정보 요청 서비스
     func getUserLoginInfo() -> Single<LogInModel> {
         return logInRepository.getUserLoginInfo()

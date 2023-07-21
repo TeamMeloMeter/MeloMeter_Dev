@@ -24,9 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         Messaging.messaging().isAutoInitEnabled = true
         UNUserNotificationCenter.current().delegate = self
         application.registerForRemoteNotifications()
-        
-        
-        
+
         return true
     }
     

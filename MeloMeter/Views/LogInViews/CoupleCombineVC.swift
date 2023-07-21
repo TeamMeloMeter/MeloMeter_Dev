@@ -29,7 +29,7 @@ final class CoupleCombineVC: UIViewController {
         super.viewDidLoad()
         configure()
         setAutoLayout()
-        binding()
+        setBindings()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -45,8 +45,8 @@ final class CoupleCombineVC: UIViewController {
     }
     
     // MARK: - Binding
-    func binding() {
-        viewModel.startCoupleConnectVC.onNext(true)
+    func setBindings() {
+        viewModel.startCoupleConnectVC.onNext(())
         viewModel.startCoupleConnectVC.onCompleted()
         viewModel.startCoupleConnectVC.disposed(by: disposeBag)
       
@@ -55,19 +55,16 @@ final class CoupleCombineVC: UIViewController {
             .disposed(by: disposeBag)
         
         nextBtn.rx.tap
-            .subscribe(onNext: { [weak self] in
+            .bind(onNext: { [weak self] in
                 self?.viewModel.inviteCodeInput.onNext(self?.codeTF.text)
             })
             .disposed(by: disposeBag)
         
         viewModel.combineRequest
-            .subscribe(onNext: {[weak self] result in
+            .bind(onNext: {[weak self] result in
                 guard let self = self else{ return }
                 if result == false {
-//                    AlertManager.shared.showNomalAlert(title: "연결 실패", message: "커플코드를 확인해주세요")
-//                        .subscribe(onSuccess: {
-//                            self.codeTF.text = ""
-//                        }).disposed(by: self.disposeBag)
+                    combineError()
                 }
             }).disposed(by: disposeBag)
         
@@ -77,17 +74,30 @@ final class CoupleCombineVC: UIViewController {
             .bind(to: self.user1Label.rx.text)
             .disposed(by: disposeBag)
         viewModel.timerDisposed
-            .subscribe(onNext: { result in
+            .bind(onNext: { result in
                 if result {
-                    AlertManager(viewController: self)
-                        .setTitle("00:00:00")
-                        .setMessage("24시간 초대 코드가 만료되었습니다\n재발급 된 상대방의 코드를\n다시 입력해주세요")
-                        .addActionConfirm("확인")
-                        .show()
+                    self.timeOut()
                 }
             }).disposed(by: disposeBag)
     }
     
+    //MARK: Event
+    func combineError() {
+        AlertManager(viewController: self)
+            .setTitle("잘못된 코드")
+            .setMessage("초대코드가 일치하지 않습니다\n 올바른 상대방의 초대코드를\n 입력해주세요")
+            .addActionConfirm("확인")
+            .showCustomAlert()
+    }
+    func timeOut() {
+        AlertManager(viewController: self)
+            .setTitle("00:00:00")
+            .setMessage("24시간 초대 코드가 만료되었습니다\n재발급 된 상대방의 코드를\n다시 입력해주세요")
+            .addActionConfirm("확인", action: {self.viewModel.inviteCodeTimer()})
+            .showCustomAlert()
+        self.codeTF.text = ""
+        nextBtnEnabledF()
+    }
     
     
     // MARK: - configure
@@ -226,34 +236,6 @@ final class CoupleCombineVC: UIViewController {
         return button
     }()
     
-    // MARK: - Alert CustomView
-    lazy var customView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        view.addSubview(timeLabel)
-        view.addSubview(exLabel)
-        return view
-    }()
-    
-    let timeLabel: UILabel = {
-        let label = UILabel()
-        label.text = "00:00:00"
-        label.textColor = .gray1
-        label.font = FontManager.shared.semiBold(ofSize: 26)
-        return label
-    }()
-    
-    let exLabel: UILabel = {
-        let label = UILabel()
-        label.text = """
-                            24시간 초대 코드가 만료되었습니다\
-                            재발급 된 상대방의 코드를\
-                            다시 입력해주세요
-                            """
-        label.textColor = .gray1
-        label.font = FontManager.shared.medium(ofSize: 14)
-        return label
-    }()
     
     // MARK: - 오토레이아웃
     private func setAutoLayout() {
@@ -263,7 +245,6 @@ final class CoupleCombineVC: UIViewController {
         user2Constraints()
         contactConstraints()
         nextInputViewConstraints()
-        
     }
     
     private func progressConstraints() {
@@ -353,25 +334,6 @@ final class CoupleCombineVC: UIViewController {
         ])
     }
     
-    private func alertCustomViewConstraints() {
-        customView.translatesAutoresizingMaskIntoConstraints = false
-        timeLabel.translatesAutoresizingMaskIntoConstraints = false
-        exLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            customView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-            customView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            customView.widthAnchor.constraint(equalToConstant: 280),
-            customView.heightAnchor.constraint(equalToConstant: 303),
-            
-            timeLabel.topAnchor.constraint(equalTo: customView.topAnchor, constant: 74),
-            timeLabel.centerXAnchor.constraint(equalTo: customView.centerXAnchor),
-            
-            exLabel.topAnchor.constraint(equalTo: timeLabel.topAnchor, constant: 29),
-            exLabel.centerXAnchor.constraint(equalTo: customView.centerXAnchor),
-            
-        ])
-    }
 }
 
 // MARK: - 텍스트필드 델리게이트
@@ -405,6 +367,7 @@ extension CoupleCombineVC: UITextFieldDelegate {
         nextBtn.alpha = 1.0
         nextBtn.layer.applyShadow(color: .primary1, alpha: 0.4, x: 4, y: 0, blur: 10)
     }
+    
     //연결 버튼 비활성화
     private func nextBtnEnabledF() {
         nextBtn.isEnabled = false

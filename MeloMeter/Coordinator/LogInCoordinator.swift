@@ -11,7 +11,6 @@ final class LogInCoordinator: Coordinator {
     var delegate: CoordinatorDelegate?
     
     var navigationController: UINavigationController
-
     var childCoordinators: [Coordinator]
 
     init(_ navigationController: UINavigationController) {
@@ -33,8 +32,10 @@ extension LogInCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
-    func showAuthNumVC() {
-        let viewController = AuthNumVC(viewModel: LogInVM(coordinator: self))
+    func showAuthNumVC(phoneNumber: String?) {
+        let viewModel = LogInVM(coordinator: self)
+        viewModel.phoneNumber = phoneNumber
+        let viewController = AuthNumVC(viewModel: viewModel)
         
         self.navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
