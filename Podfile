@@ -10,4 +10,5 @@ target 'MeloMeter' do
   pod 'AnyFormatKit'
   pod 'RxSwift'
   pod 'RxCocoa'
+  pod 'KakaoSDK'
 end
