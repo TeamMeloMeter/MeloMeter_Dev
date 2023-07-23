@@ -343,7 +343,6 @@
 				5271D42F2A605B0900FC7606 /* Encodable+.swift */,
 				5271D4312A606D0B00FC7606 /* Dictionary+.swift */,
 				527547EF2A69103200313EFC /* ProgressDialogView.swift */,
-				5290BF942A6D95F400D734EE /* TestGit.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -368,6 +367,7 @@
 		52CE6E8D29FEBD5700E43D39 /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				5290BF942A6D95F400D734EE /* TestGit.swift */,
 				52CE6E8229FEBC0200E43D39 /* FontManager.swift */,
 				527547DB2A683E1900313EFC /* Pretendard-Black.otf */,
 				527547E02A683E1900313EFC /* Pretendard-Bold.otf */,
