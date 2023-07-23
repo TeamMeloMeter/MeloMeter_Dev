@@ -269,7 +269,7 @@ final class CoupleCombineVC: UIViewController {
     private func progressConstraints() {
         progressImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            progressImage.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 167),
+            progressImage.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             progressImage.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 68),
             progressImage.widthAnchor.constraint(equalToConstant: 42),
             progressImage.heightAnchor.constraint(equalToConstant: 5)
