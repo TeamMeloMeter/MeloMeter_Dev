@@ -38,8 +38,9 @@ class CustomAlertVC: UIViewController {
         label.lineBreakMode = .byWordWrapping
         label.font = FontManager.shared.medium(ofSize: 14)
         label.textAlignment = .center
+        label.textColor = .gray1
         label.text = message
-        let attributedString = NSMutableAttributedString(string: label.text!)
+        let attributedString = NSMutableAttributedString(string: label.text ?? "")
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 8
         paragraphStyle.alignment = .center
@@ -56,7 +57,7 @@ class CustomAlertVC: UIViewController {
     
     private lazy var confirmButton = {
         let button = UIButton()
-        button.setTitleColor(.label, for: .normal)
+        button.setTitleColor(UIColor.gray1, for: .normal)
         button.titleLabel?.font = FontManager.shared.semiBold(ofSize: 14)
         button.setTitle(addActionConfirm?.text, for: .normal)
         button.addTarget(self, action: #selector(pressed), for: .touchUpInside)

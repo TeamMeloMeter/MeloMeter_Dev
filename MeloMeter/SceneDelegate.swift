@@ -14,7 +14,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        
         let navigationController = UINavigationController()
         appCoordinator = AppCoordinator(navigationController)
         
@@ -23,7 +22,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.backgroundColor = .white
         appCoordinator?.start()
         
-        
+    }
+    //카카오톡 링크를 통해 앱 진입 시
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else { return }
+        if let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+            let queryItems = components.queryItems ?? []
+            for queryItem in queryItems {
+                if queryItem.name == "appBtnTapped", let value = queryItem.value {
+                    appCoordinator?.connectLogInFlow(value)
+                }
+            }
+        }
     }
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

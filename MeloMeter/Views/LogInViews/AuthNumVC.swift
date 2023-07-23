@@ -53,13 +53,13 @@ final class AuthNumVC: UIViewController {
         view.addGestureRecognizer(tapGesture)
         
         tapGesture.rx.event
-            .subscribe(onNext: { [weak self] _ in
+            .bind(onNext: { [weak self] _ in
                 self?.view.endEditing(true)
             })
             .disposed(by: disposeBag)
         
         nextBtn.rx.tap
-            .subscribe(onNext: { [weak self] in
+            .bind(onNext: { [weak self] in
                 guard let self = self else{ return }
                 self.view.endEditing(true)
                 self.view.addSubview(progressDialog)
@@ -68,14 +68,23 @@ final class AuthNumVC: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        viewModel.logInRequest.subscribe(onNext: { [weak self] result in
+        resendBtn.rx.tap
+            .bind(onNext: { [weak self] in
+                guard let self = self else{ return }
+                self.viewModel.resendBtnTapped.onNext(())
+            }).disposed(by: disposeBag)
+        
+        viewModel.logInRequest.bind(onNext: { [weak self] result in
             guard let self = self else{ return }
             if result == false {
-//                AlertManager.shared.showNomalAlert(title: "인증 실패", message: "다시 입력해주세요")
-//                    .subscribe(onSuccess: {
-//                        self.authNumTF.text = ""
-//                        self.dismiss(animated: true)
-//                    }).disposed(by: disposeBag)
+                hideProgressDialog()
+                AlertManager(viewController: self)
+                .showNomalAlert(title: "인증실패", message: "인증번호가 일치하지 않습니다")
+                .subscribe(onSuccess: {
+                    self.authNumTF.text = ""
+                    self.cancelBtn.isHidden = true
+                    self.authNumTF.becomeFirstResponder()
+                }).disposed(by: disposeBag)
             }
         }).disposed(by: disposeBag)
         
@@ -92,12 +101,14 @@ final class AuthNumVC: UIViewController {
             .bind(to: self.timeLabel.rx.text)
             .disposed(by: disposeBag)
         viewModel.timerDisposed
-            .subscribe(onNext: { result in
+            .bind(onNext: { result in
                 if result {
-                    self.timeLabel.text = "00:00"
-//                    AlertManager.shared.showNomalAlert(title: "시간 초과", message: "인증을 다시 시도해주세요")
-//                        .subscribe(onSuccess: {
-//                        }).disposed(by: self.disposeBag)
+                    //알럿 버튼 클릭 시 뷰모델에 전달해서 폰번호 입력 화면으로 전환하기
+                    AlertManager(viewController: self)
+                        .showNomalAlert(title: "인증번호 만료", message: "다시 시도해주세요")
+                        .subscribe(onSuccess: {
+                            self.viewModel.alertBtnTapped.onNext(())
+                        }).disposed(by: self.disposeBag)
                 }
             }).disposed(by: disposeBag)
     }
@@ -114,7 +125,7 @@ final class AuthNumVC: UIViewController {
     private func configure() {
         view.backgroundColor = .white
         authNumTF.delegate = self
-        [progressImage, titleLabel, authNumTF, lineView, exLabel, cancelBtn, timeLabel, retransBtn].forEach { view.addSubview($0) }
+        [progressImage, titleLabel, authNumTF, lineView, exLabel, cancelBtn, timeLabel, resendBtn].forEach { view.addSubview($0) }
     }
     
     // MARK: - UI
@@ -200,7 +211,7 @@ final class AuthNumVC: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(named: "cancel"), for: .normal)
         button.backgroundColor = .white
-        //button.isHidden = true
+        button.isHidden = true
         return button
     }()
     
@@ -214,7 +225,7 @@ final class AuthNumVC: UIViewController {
     }()
     
     //재전송 버튼
-    let retransBtn: UIButton = {
+    let resendBtn: UIButton = {
         let button = UIButton()
         button.setTitle("재전송 받기", for: .normal)
         button.setTitleColor(.gray1, for: .normal)
@@ -276,7 +287,7 @@ final class AuthNumVC: UIViewController {
     private func exLabelConstraints() {
         exLabel.translatesAutoresizingMaskIntoConstraints = false
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
-        retransBtn.translatesAutoresizingMaskIntoConstraints = false
+        resendBtn.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             exLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
@@ -285,10 +296,10 @@ final class AuthNumVC: UIViewController {
             timeLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
             timeLabel.topAnchor.constraint(equalTo: exLabel.bottomAnchor, constant: 11),
 
-            retransBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -256),
-            retransBtn.topAnchor.constraint(equalTo: exLabel.bottomAnchor, constant: 10),
-            retransBtn.widthAnchor.constraint(equalToConstant: 64),
-            retransBtn.heightAnchor.constraint(equalToConstant: 20)
+            resendBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -253),
+            resendBtn.topAnchor.constraint(equalTo: exLabel.bottomAnchor, constant: 10),
+            resendBtn.widthAnchor.constraint(equalToConstant: 64),
+            resendBtn.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
     private func nextInputViewConstraints() {

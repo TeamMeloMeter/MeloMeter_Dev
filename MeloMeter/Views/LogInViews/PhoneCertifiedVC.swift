@@ -14,7 +14,7 @@ import RxCocoa
 // MARK: - 전화번호입력
 final class PhoneCertifiedVC: UIViewController {
     
-    private let viewModel: LogInVM
+    let viewModel: LogInVM
     let disposeBag = DisposeBag()
     let progressDialog:ProgressDialogView = ProgressDialogView()
     let tapGesture = UITapGestureRecognizer()
@@ -73,12 +73,14 @@ final class PhoneCertifiedVC: UIViewController {
         viewModel.sendNumRequest.subscribe(onNext: { [weak self] result in
             guard let self = self else{ return }
             if result == false {
-//                AlertManager.shared.showNomalAlert(title: "잘못된 전화번호", message: "올바른 번호를 입력해주세요!")
-//                    .subscribe(onSuccess: {
-//                        self.phoneNumTF.text = ""
-//                        self.lineColorChangedF()
-//                        self.nextBtnEnabledF()
-//                    }).disposed(by: disposeBag)
+                AlertManager(viewController: self)
+                    .showNomalAlert(title: "다시 입력해주세요", message: "올바르지 않은 전화번호")
+                    .subscribe(onSuccess: {
+                        self.phoneNumTF.text = ""
+                        self.cancelBtn.isHidden = true
+                        self.nextBtnEnabledF()
+                        self.lineColorChangedF()
+                    }).disposed(by: disposeBag)
             }
         }).disposed(by: disposeBag)
         

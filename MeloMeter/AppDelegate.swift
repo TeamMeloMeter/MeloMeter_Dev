@@ -10,6 +10,7 @@ import NMapsMap
 import Firebase
 import UserNotifications
 import FirebaseAppCheck
+import KakaoSDKCommon
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
@@ -18,15 +19,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         // Override point for customization after application launch.
         // 네이버 지도 초기화
         NMFAuthManager.shared().clientId = "qf06vqg44t"
+        //KakaoSDK
+        KakaoSDK.initSDK(appKey: "63ff1c816c3c2dd940969416c8e2ce35")
         // 파이어베이스 연동, 알림설정
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         Messaging.messaging().isAutoInitEnabled = true
         UNUserNotificationCenter.current().delegate = self
         application.registerForRemoteNotifications()
-        
-        
-        
+
         return true
     }
     

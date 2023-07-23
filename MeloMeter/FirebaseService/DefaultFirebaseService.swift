@@ -7,6 +7,7 @@
 
 import Foundation
 import Firebase
+import FirebaseFirestore
 import RxSwift
 
 public enum FireStoreError: Error, LocalizedError {
@@ -32,18 +33,6 @@ public final class DefaultFirebaseService: FireStoreService {
         self.database = firestore
     }
     
-//    public func getCurrentUser(field: String) -> Single<String?> {
-//        return Single.create { single in
-//            if field == "UID" {
-//                guard let uid = Auth.auth().currentUser?.uid else { single(.success(nil)); return Disposables.create() }
-//                single(.success(uid))
-//            }else if field == "PhoneNumber" {
-//                guard let phoneNumber = Auth.auth().currentUser?.phoneNumber else { single(.success(nil)); return Disposables.create() }
-//                single(.success(phoneNumber))
-//            }
-//            return Disposables.create()
-//        }
-//    }
     public func getCurrentUser() -> Single<User> {
         return Single.create { single in
             guard let currentUser = Auth.auth().currentUser else{ return Disposables.create()}
@@ -103,12 +92,13 @@ public final class DefaultFirebaseService: FireStoreService {
                 newDocument = self.database.collection(collection.name)
                     .document(document)
             }
-            
+            let documentID = newDocument.documentID
             newDocument.setData(values) { error in
                 if let error = error { single(.failure(error)) }
                 single(.success(()))
             }
-            
+            if document == "" { UserDefaults.standard.set("\(documentID)", forKey: "coupleDocumentID") }
+
             return Disposables.create()
         }
     }
