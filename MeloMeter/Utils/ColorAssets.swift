@@ -21,7 +21,7 @@ extension UIColor {
 
 }
 
-// MARK: 그라데이션 배경 View
+// MARK: 그라데이션 배경
 extension UIView {
     func setGradientBackground(colors: [UIColor]) {
         let gradientLayer = CAGradientLayer()
