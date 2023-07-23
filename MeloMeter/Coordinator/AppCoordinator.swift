@@ -30,7 +30,7 @@ final class AppCoordinator: Coordinator {
 extension AppCoordinator {
     
     func showStartVC() {
-        let startVC = ProfileInsertVC(viewModel: ProfileInsertVM(coordinator: self))
+        let startVC = StartVC(viewModel: StartVM(coordinator: self))
         navigationController.setNavigationBarHidden(true, animated: false)
         navigationController.pushViewController(startVC, animated: false)
     }

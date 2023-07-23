@@ -9,10 +9,10 @@ import UIKit
 
 class ProfileInsertVM {
     
-    weak var coordinator: AppCoordinator?
+    weak var coordinator: LogInCoordinator?
     
     // MARK: - Init
-    init(coordinator: AppCoordinator) {
+    init(coordinator: LogInCoordinator) {
         self.coordinator = coordinator
     }
     

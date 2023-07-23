@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		214750FD2A6D99E80088C3DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 214750FC2A6D99E70088C3DE /* GoogleService-Info.plist */; };
+		214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */; };
 		45307ED7030327D357C85252 /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5A8595AED1BC03C3846C34F /* Pods_MeloMeter.framework */; };
 		524138282A62E7E8002AADA6 /* CoupleCombineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524138272A62E7E8002AADA6 /* CoupleCombineModel.swift */; };
 		5241382A2A62EB95002AADA6 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524138292A62EB95002AADA6 /* Coordinator.swift */; };
@@ -50,7 +52,6 @@
 		527547EB2A683E1900313EFC /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 527547E22A683E1900313EFC /* Pretendard-SemiBold.otf */; };
 		527547EE2A68FC9000313EFC /* CustomAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527547ED2A68FC9000313EFC /* CustomAlertVC.swift */; };
 		527547F02A69103200313EFC /* ProgressDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527547EF2A69103200313EFC /* ProgressDialogView.swift */; };
-		527547F22A69251100313EFC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 527547F12A69251100313EFC /* GoogleService-Info.plist */; };
 		527547F42A6D23E400313EFC /* KakaoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527547F32A6D23E400313EFC /* KakaoService.swift */; };
 		52845B1C2A0FC9DF003A87F8 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52845B1B2A0FC9DF003A87F8 /* Model.swift */; };
 		5290BF832A6D3AC000D734EE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 5290BF822A6D3AC000D734EE /* FirebaseAuth */; };
@@ -105,6 +106,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		214750FC2A6D99E70088C3DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardStatusDetector.swift; sourceTree = "<group>"; };
 		524138272A62E7E8002AADA6 /* CoupleCombineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleCombineModel.swift; sourceTree = "<group>"; };
 		524138292A62EB95002AADA6 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		5241382B2A62F240002AADA6 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
@@ -149,7 +152,6 @@
 		527547E22A683E1900313EFC /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-SemiBold.otf"; path = "MeloMeter/Font/Pretendard-SemiBold.otf"; sourceTree = SOURCE_ROOT; };
 		527547ED2A68FC9000313EFC /* CustomAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertVC.swift; sourceTree = "<group>"; };
 		527547EF2A69103200313EFC /* ProgressDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDialogView.swift; sourceTree = "<group>"; };
-		527547F12A69251100313EFC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		527547F32A6D23E400313EFC /* KakaoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoService.swift; sourceTree = "<group>"; };
 		52845B1B2A0FC9DF003A87F8 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		5290BF962A6D983A00D734EE /* ColorAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAssets.swift; sourceTree = "<group>"; };
@@ -278,7 +280,7 @@
 				52CE6E8D29FEBD5700E43D39 /* Font */,
 				52697B7D29EEB7B3002BDD04 /* LaunchScreen.storyboard */,
 				52697B8029EEB7B3002BDD04 /* Info.plist */,
-				527547F12A69251100313EFC /* GoogleService-Info.plist */,
+				214750FC2A6D99E70088C3DE /* GoogleService-Info.plist */,
 			);
 			path = MeloMeter;
 			sourceTree = "<group>";
@@ -341,6 +343,7 @@
 				5271D4312A606D0B00FC7606 /* Dictionary+.swift */,
 				527547EF2A69103200313EFC /* ProgressDialogView.swift */,
 				5290BF962A6D983A00D734EE /* ColorAssets.swift */,
+				214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -597,7 +600,7 @@
 				527547E52A683E1900313EFC /* Pretendard-ExtraLight.otf in Resources */,
 				527547EB2A683E1900313EFC /* Pretendard-SemiBold.otf in Resources */,
 				527547E82A683E1900313EFC /* Pretendard-ExtraBold.otf in Resources */,
-				527547F22A69251100313EFC /* GoogleService-Info.plist in Resources */,
+				214750FD2A6D99E80088C3DE /* GoogleService-Info.plist in Resources */,
 				52697B7F29EEB7B3002BDD04 /* LaunchScreen.storyboard in Resources */,
 				527547E32A683E1900313EFC /* Pretendard-Light.otf in Resources */,
 				527547E72A683E1900313EFC /* Pretendard-Regular.otf in Resources */,
@@ -696,6 +699,7 @@
 				52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */,
 				52F2084229FD63F40043BCA4 /* MyProfileView.swift in Sources */,
 				52F00FF42A09308E0014FC01 /* AddDdayView.swift in Sources */,
+				214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */,
 				524138282A62E7E8002AADA6 /* CoupleCombineModel.swift in Sources */,
 				52E0CDF02A4B091600E4A182 /* CoupleCombineVC.swift in Sources */,
 				5241382C2A62F240002AADA6 /* AppCoordinator.swift in Sources */,
