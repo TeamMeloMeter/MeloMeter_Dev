@@ -73,7 +73,7 @@ extension LogInCoordinator {
     }
     
     func showProfileInsertVC() {
-        let viewController = ProfileInsertVC(viewModel: LogInVM(coordinator: self))
+        let viewController = ProfileInsertVC(viewModel: ProfileInsertVM(coordinator: self))
         
         self.navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
