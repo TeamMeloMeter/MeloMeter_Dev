@@ -8,13 +8,19 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import AnyFormatKit
 
 final class ProfileInsertVC: UIViewController {
     
-    private let viewModel: LogInVM
+    private let viewModel: ProfileInsertVM
     let disposeBag = DisposeBag()
+    let tapGesture = UITapGestureRecognizer()
+    var activeTextField: UITextField? = nil
     
-    init(viewModel: LogInVM) {
+    //키보드 알림 등록 객체 생성
+    let keyboardDetector = KeyboardStatusDetector()
+    
+    init(viewModel: ProfileInsertVM) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -27,6 +33,7 @@ final class ProfileInsertVC: UIViewController {
         super.viewDidLoad()
         configure()
         setAutoLayout()
+        setBindings()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -35,17 +42,98 @@ final class ProfileInsertVC: UIViewController {
         super.viewDidAppear(true)
     }
     
+    // MARK: - Binding
+    func setBindings() {
+        view.addGestureRecognizer(tapGesture)
+        
+        tapGesture.rx.event
+            .subscribe(onNext: { [weak self] _ in
+                self?.view.endEditing(true)
+            })
+            .disposed(by: disposeBag)
+        
+        //키보드 show/hide 감지
+        keyboardDetector.keyboardStatusSubject
+            .subscribe(onNext: { [weak self] isKeyboardShown in
+                self?.handleKeyboardStatusChange(isKeyboardShown)
+            }).disposed(by: disposeBag)
+    }
+    // MARK: - Event
+    func handleKeyboardStatusChange(_ isKeyboardShown: [Any]) {
+        if isKeyboardShown[0] as? Bool ?? false {
+            UIView.animate(
+                withDuration: 0.3
+                , animations: {
+                    self.insertSubViwes.transform = CGAffineTransform(translationX: 0, y: (isKeyboardShown[1] as? CGFloat ?? 0) * -1 + 212)
+                })
+            self.titleLabel.isHidden = true
+        } else {
+            self.insertSubViwes.transform = .identity
+            self.titleLabel.isHidden = false
+        }
+    }
+    
+    //다음 버튼 활성화
+    private func nextBtnEnabledT() {
+        nextBtn.isEnabled = true
+        nextBtn.alpha = 1.0
+        nextBtn.layer.applyShadow(color: .primary1, alpha: 0.4, x: 4, y: 0, blur: 10)
+    }
+    
+    //다음 버튼 비활성화
+    private func nextBtnEnabledF() {
+        nextBtn.isEnabled = false
+        nextBtn.alpha = 0.5
+        nextBtn.layer.applyShadow(color: #colorLiteral(red: 0.9341433644, green: 0.9341433644, blue: 0.9341433644, alpha: 1), alpha: 0.4, x: 4, y: 0, blur: 10)
+    }
+    
+    //그라데이션 뷰 적용
+    private func lineColorChangedT( _ lineView: UIView ) {
+        lineView.setGradientBackground(colors: [.primary1, .white])
+    }
+    
+    //그라데이션 뷰 삭제
+    private func lineColorChangedF( _ lineView: UIView ) {
+        //layer에서 그라데이션뷰를 찾아 제거
+        lineView.layer.sublayers?.forEach { layer in
+            if layer is CAGradientLayer {
+                layer.removeFromSuperlayer()
+            }
+        }
+        lineView.backgroundColor = .gray2
+    }
     
     // MARK: - configure
     func configure() {
         view.backgroundColor = .white
         nameTF.delegate = self
-        [progressImage, titleLabel, nameLabel, nameTF, lineView1,
-         birthLabel, birthTF, lineView2,
-         firstDayLabel, firstDayTF, lineView3, exLabel].forEach { view.addSubview($0) }
+        birthTF.delegate = self
+        firstDayTF.delegate = self
+        
+        [insertSubViwes, progressImage].forEach { view.addSubview($0) }
     }
     
     // MARK: - UI
+    //서브 뷰 생성
+    // lazy : 지연
+    lazy var insertSubViwes: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.addSubview(titleLabel)
+        view.addSubview(nameLabel)
+        view.addSubview(nameTF)
+        view.addSubview(birthLabel)
+        view.addSubview(birthTF)
+        view.addSubview(firstDayLabel)
+        view.addSubview(firstDayTF)
+        view.addSubview(exLabel)
+        view.addSubview(lineView1)
+        view.addSubview(lineView2)
+        view.addSubview(lineView3)
+        
+        return view
+    }()
+    
     private let progressImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "progress4")
@@ -94,6 +182,9 @@ final class ProfileInsertVC: UIViewController {
         tv.keyboardType = .default
         tv.tintColor = .gray1
         
+        // 텍스트필드 구별을 위한 태그 달기
+        tv.tag = 0
+        
         tv.inputAccessoryView = nextInputView //다음버튼 추가
         return tv
     }()
@@ -119,8 +210,11 @@ final class ProfileInsertVC: UIViewController {
         ]
         let attributedPlaceholder = NSAttributedString(string: "만 14세 이상 입력이 가능합니다", attributes: attributes)
         tv.attributedPlaceholder = attributedPlaceholder
-        tv.keyboardType = .default
+        tv.keyboardType = .numberPad
         tv.tintColor = .gray1
+        
+        // 텍스트필드 구별을 위한 태그 달기
+        tv.tag = 1
         
         tv.inputAccessoryView = nextInputView //다음버튼 추가
         return tv
@@ -147,8 +241,12 @@ final class ProfileInsertVC: UIViewController {
         ]
         let attributedPlaceholder = NSAttributedString(string: "처음 만난 날을 입력해주세요", attributes: attributes)
         tv.attributedPlaceholder = attributedPlaceholder
-        //tv.keyboardType = .default
+        tv.keyboardType = .numberPad
         tv.tintColor = .gray1
+        
+        // 텍스트필드 구별을 위한 태그 달기
+        tv.tag = 2
+        
         tv.inputAccessoryView = nextInputView //다음버튼 추가
         return tv
     }()
@@ -207,6 +305,26 @@ final class ProfileInsertVC: UIViewController {
         titleLabelConstraint()
         textFieldsConstraint()
         nextInputViewConstraints()
+        insertSubViewsConstraint()
+    }
+    
+    private func insertSubViewsConstraint() {
+        insertSubViwes.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            //좌
+            insertSubViwes.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            //우
+            insertSubViwes.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            //상
+            insertSubViwes.topAnchor.constraint(equalTo: self.view.topAnchor),
+            //하
+            insertSubViwes.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -212)
+            
+//            //넓이
+//            insertSubViwes.widthAnchor.constraint(equalToConstant: 42),
+//            //높이
+//            insertSubViwes.heightAnchor.constraint(equalToConstant: 5)
+        ])
     }
     
     private func progressConstraint() {
@@ -216,7 +334,6 @@ final class ProfileInsertVC: UIViewController {
             progressImage.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 68),
             progressImage.widthAnchor.constraint(equalToConstant: 42),
             progressImage.heightAnchor.constraint(equalToConstant: 5)
-            
         ])
     }
     
@@ -302,21 +419,113 @@ final class ProfileInsertVC: UIViewController {
 
 // MARK: - 텍스트필드 델리게이트
 extension ProfileInsertVC: UITextFieldDelegate {
-    //텍스트필드 입력 시작
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        titleLabel.isHidden = true
-        adjustViewLayout(true)
-    }
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        adjustViewLayout(false)
-        titleLabel.isHidden = false
-    }
-    private func adjustViewLayout(_ raised: Bool) {
-        if raised {
-            nameLabel.topAnchor.constraint(equalTo: progressImage.topAnchor, constant: 46).isActive = true
-        } else {
-            nameLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 55).isActive = true
+    
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        activeTextField = textField
+//
+//        if textField.tag == 1 {
+//
+//        } else if textField.tag == 2 {
+//
+//        } else if textField.tag == 3 {
+//
+//        }
+//    }
+//
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        activeTextField = textField
+//
+//        if activeTextField == textField {
+//            activeTextField = nil
+//        }
+//    }
+    
+    //번호 입력 포멧, 길이 제한
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        cancelBtn.isHidden = false
+        guard let text = textField.text else {
+            return false
         }
-        view.layoutIfNeeded()
+        let characterSet = CharacterSet(charactersIn: string)
+        
+        let nowLineView : UIView
+        var checkTextField : [Bool] = Array(repeating: false, count: 3)
+        //여기서부터 하는데 지금 맨위에 이름입력칸만 이상해... 이거수정하고 그다음에 함수화 해서 코드 길이 줄여
+        if textField.tag == 0 {
+            print("또로로롤")
+            
+            nowLineView = self.lineView1
+            
+            let newLength = text.count + string.count - range.length
+            
+            if newLength == 0 {
+                lineColorChangedF(nowLineView)
+                checkTextField[textField.tag] = false
+                return true
+            }else if newLength > 0 && text.count < 10 {
+                lineColorChangedT(nowLineView)
+                checkTextField[textField.tag] = true
+                return true
+            }else{
+                lineColorChangedF(nowLineView)
+                checkTextField[textField.tag] = false
+//                return false
+            }
+            
+        } else if textField.tag == 1 {
+            //숫자만 입력받기
+            if CharacterSet.decimalDigits.isSuperset(of: characterSet) == false {
+                return false
+            }
+            
+            let formatter = DefaultTextInputFormatter(textPattern: "####-##-##")
+            let result = formatter.formatInput(currentText: text, range: range, replacementString: string)
+            textField.text = result.formattedText
+            
+            nowLineView = self.lineView2
+            if result.formattedText.count == 10 { //생년월일 전부 입력 시
+                lineColorChangedT(nowLineView)
+                checkTextField[textField.tag] = true
+            }else {
+                lineColorChangedF(nowLineView)
+                checkTextField[textField.tag] = false
+            }
+            
+            //커서 포지션 next
+            let position = textField.position(from: textField.beginningOfDocument, offset: result.caretBeginOffset)!
+            textField.selectedTextRange = textField.textRange(from: position, to: position) // 커서 위치 변경해주기
+            
+        } else if textField.tag == 2 {
+            //숫자만 입력받기
+            if CharacterSet.decimalDigits.isSuperset(of: characterSet) == false {
+                return false
+            }
+            
+            let formatter = DefaultTextInputFormatter(textPattern: "####-##-##")
+            let result = formatter.formatInput(currentText: text, range: range, replacementString: string)
+            textField.text = result.formattedText
+            
+            nowLineView = self.lineView3
+            if result.formattedText.count == 10 { //처음만난날 전부 입력 시
+                lineColorChangedT(nowLineView)
+                checkTextField[textField.tag] = true
+            }else {
+                lineColorChangedF(nowLineView)
+                checkTextField[textField.tag] = false
+            }
+            
+            //커서 포지션 next
+            let position = textField.position(from: textField.beginningOfDocument, offset: result.caretBeginOffset)!
+            textField.selectedTextRange = textField.textRange(from: position, to: position) // 커서 위치 변경해주기
+        }
+        
+        if checkTextField == [true, true, true]{
+            nextBtnEnabledT() //다음 버튼 활성화
+        }else {
+            nextBtnEnabledF() //아니면 비활성화
+        }
+        
+        return false
     }
+    
 }
