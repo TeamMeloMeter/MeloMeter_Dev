@@ -2,7 +2,7 @@
 //  ColorAssets.swift
 //  MeloMeter
 //
-//  Created by 오현택 on 2023/05/18.
+//  Created by 오현택 on 2023/07/24.
 //
 
 import UIKit
@@ -21,7 +21,7 @@ extension UIColor {
 
 }
 
-// MARK: 그라데이션 배경
+// MARK: 그라데이션 배경 View
 extension UIView {
     func setGradientBackground(colors: [UIColor]) {
         let gradientLayer = CAGradientLayer()
@@ -29,6 +29,7 @@ extension UIView {
         gradientLayer.colors = colors.map { $0.cgColor }
         gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
         gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
+        
         layer.insertSublayer(gradientLayer, at: 0)
     }
 }

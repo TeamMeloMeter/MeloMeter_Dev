@@ -62,7 +62,7 @@
 		5290BF8F2A6D3AFA00D734EE /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 5290BF8E2A6D3AFA00D734EE /* FirebaseMessaging */; };
 		5290BF912A6D3AFA00D734EE /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 5290BF902A6D3AFA00D734EE /* FirebaseRemoteConfig */; };
 		5290BF932A6D3AFA00D734EE /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 5290BF922A6D3AFA00D734EE /* FirebaseStorage */; };
-		5290BF952A6D95F400D734EE /* TestGit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5290BF942A6D95F400D734EE /* TestGit.swift */; };
+		5290BF972A6D983A00D734EE /* ColorAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5290BF962A6D983A00D734EE /* ColorAssets.swift */; };
 		52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6E8229FEBC0200E43D39 /* FontManager.swift */; };
 		52CE6EA12A01875C00E43D39 /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA02A01875C00E43D39 /* AlarmViewController.swift */; };
 		52CE6EA32A0187BB00E43D39 /* AlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA22A0187BB00E43D39 /* AlarmView.swift */; };
@@ -96,7 +96,6 @@
 		52F2083C29FBB3490043BCA4 /* MyProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */; };
 		52F2084029FBFF280043BCA4 /* DdayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083F29FBFF280043BCA4 /* DdayViewController.swift */; };
 		52F2084229FD63F40043BCA4 /* MyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2084129FD63F40043BCA4 /* MyProfileView.swift */; };
-		52F3052E2A163B5B00112A04 /* ColorAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F3052D2A163B5B00112A04 /* ColorAssets.swift */; };
 		52F305302A168CE900112A04 /* DisconnectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F3052F2A168CE900112A04 /* DisconnectVC.swift */; };
 		52F305322A168D6000112A04 /* DisconnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305312A168D6000112A04 /* DisconnectView.swift */; };
 		52F305342A16B7AE00112A04 /* RecoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305332A16B7AE00112A04 /* RecoveryView.swift */; };
@@ -153,7 +152,7 @@
 		527547F12A69251100313EFC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		527547F32A6D23E400313EFC /* KakaoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoService.swift; sourceTree = "<group>"; };
 		52845B1B2A0FC9DF003A87F8 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		5290BF942A6D95F400D734EE /* TestGit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestGit.swift; sourceTree = "<group>"; };
+		5290BF962A6D983A00D734EE /* ColorAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAssets.swift; sourceTree = "<group>"; };
 		52CE6E8229FEBC0200E43D39 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		52CE6EA02A01875C00E43D39 /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
 		52CE6EA22A0187BB00E43D39 /* AlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmView.swift; sourceTree = "<group>"; };
@@ -187,7 +186,6 @@
 		52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileModel.swift; sourceTree = "<group>"; };
 		52F2083F29FBFF280043BCA4 /* DdayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayViewController.swift; sourceTree = "<group>"; };
 		52F2084129FD63F40043BCA4 /* MyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileView.swift; sourceTree = "<group>"; };
-		52F3052D2A163B5B00112A04 /* ColorAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAssets.swift; sourceTree = "<group>"; };
 		52F3052F2A168CE900112A04 /* DisconnectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectVC.swift; sourceTree = "<group>"; };
 		52F305312A168D6000112A04 /* DisconnectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectView.swift; sourceTree = "<group>"; };
 		52F305332A16B7AE00112A04 /* RecoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryView.swift; sourceTree = "<group>"; };
@@ -277,7 +275,6 @@
 				52F2084429FD64190043BCA4 /* Views */,
 				5271D4282A5FCFEF00FC7606 /* Utils */,
 				52697B7B29EEB7B3002BDD04 /* Assets.xcassets */,
-				52F3052D2A163B5B00112A04 /* ColorAssets.swift */,
 				52CE6E8D29FEBD5700E43D39 /* Font */,
 				52697B7D29EEB7B3002BDD04 /* LaunchScreen.storyboard */,
 				52697B8029EEB7B3002BDD04 /* Info.plist */,
@@ -343,6 +340,7 @@
 				5271D42F2A605B0900FC7606 /* Encodable+.swift */,
 				5271D4312A606D0B00FC7606 /* Dictionary+.swift */,
 				527547EF2A69103200313EFC /* ProgressDialogView.swift */,
+				5290BF962A6D983A00D734EE /* ColorAssets.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -367,7 +365,6 @@
 		52CE6E8D29FEBD5700E43D39 /* Font */ = {
 			isa = PBXGroup;
 			children = (
-				5290BF942A6D95F400D734EE /* TestGit.swift */,
 				52CE6E8229FEBC0200E43D39 /* FontManager.swift */,
 				527547DB2A683E1900313EFC /* Pretendard-Black.otf */,
 				527547E02A683E1900313EFC /* Pretendard-Bold.otf */,
@@ -711,7 +708,6 @@
 				52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */,
 				5271D40B2A544A2D00FC7606 /* LogInVM.swift in Sources */,
 				52F0100D2A0A4FD20014FC01 /* AnswerView.swift in Sources */,
-				5290BF952A6D95F400D734EE /* TestGit.swift in Sources */,
 				52F010222A0ADD500014FC01 /* EditStatusMessageVC.swift in Sources */,
 				5271D4342A60BF5300FC7606 /* CoupleCombineDTO.swift in Sources */,
 				52F010002A094B550014FC01 /* QnAViewController.swift in Sources */,
@@ -729,10 +725,10 @@
 				52CE6EA12A01875C00E43D39 /* AlarmViewController.swift in Sources */,
 				5270EC042A445077007FF444 /* StartVC.swift in Sources */,
 				52F010262A0B79270014FC01 /* EditBirthView.swift in Sources */,
+				5290BF972A6D983A00D734EE /* ColorAssets.swift in Sources */,
 				52F00FF62A0930FF0014FC01 /* AddDdayViewController.swift in Sources */,
 				52F0100B2A0A493C0014FC01 /* QnATableViewCell.swift in Sources */,
 				52F305362A16B7F500112A04 /* RecoveryVC.swift in Sources */,
-				52F3052E2A163B5B00112A04 /* ColorAssets.swift in Sources */,
 				52CE6EA72A02571E00E43D39 /* MapViewController.swift in Sources */,
 				52F00FF82A0936FD0014FC01 /* NoticeView.swift in Sources */,
 				5271D4192A58429000FC7606 /* FireStoreCollection.swift in Sources */,

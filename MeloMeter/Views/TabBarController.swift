@@ -14,7 +14,7 @@ class TabBarController: UITabBarController {
     let defaultImages = [UIImage(named: "chatIcon"), UIImage(named: "mapIcon"), UIImage(named: "myPageIcon")]
     let mapVC = MapViewController()
     let chatVC = AlarmViewController() // 채팅뷰 임시
-    let myProfileVC = MyProfileViewController()
+    //let myProfileVC = MyProfileVC(viewModel: Lo)
     
     
     //let views = [AlarmViewController(), MainViewController(), MyProfileViewController()]
@@ -24,7 +24,7 @@ class TabBarController: UITabBarController {
         /// 탭바에 네비게이션 컨트롤러 추가
         let mapNav = UINavigationController(rootViewController: mapVC)
         //let chatNav = UINavigationController(rootViewController: chatVC)
-        let myProfileNav = UINavigationController(rootViewController: myProfileVC)
+        //let myProfileNav = UINavigationController(rootViewController: myProfileVC)
         
         //탭바 프레임
         var tabFrame = self.tabBar.frame
@@ -33,7 +33,7 @@ class TabBarController: UITabBarController {
         self.tabBar.frame = tabFrame
         mapNav.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "mapIcon"), selectedImage: UIImage(named: "mapIconSelect"))
         chatVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "chatIcon"), selectedImage: UIImage(named: "chatIconSelect"))
-        myProfileNav.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "myPageIcon"), selectedImage: UIImage(named: "myPageIconSelect"))
+        //myProfileNav.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "myPageIcon"), selectedImage: UIImage(named: "myPageIconSelect"))
 
         let appearance = UITabBarAppearance()
         let tabBar = UITabBar()
@@ -43,7 +43,7 @@ class TabBarController: UITabBarController {
       
         UITabBar.appearance().scrollEdgeAppearance = appearance
         
-        viewControllers = [chatVC, mapNav, myProfileNav]
+        //viewControllers = [chatVC, mapNav, myProfileNav]
         
         selectedIndex = 1
     }
