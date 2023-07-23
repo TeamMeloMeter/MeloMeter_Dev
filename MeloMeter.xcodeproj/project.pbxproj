@@ -275,6 +275,7 @@
 				52F2084429FD64190043BCA4 /* Views */,
 				5271D4282A5FCFEF00FC7606 /* Utils */,
 				52697B7B29EEB7B3002BDD04 /* Assets.xcassets */,
+				52F3052D2A163B5B00112A04 /* ColorAssets.swift */,
 				52CE6E8D29FEBD5700E43D39 /* Font */,
 				52697B7D29EEB7B3002BDD04 /* LaunchScreen.storyboard */,
 				52697B8029EEB7B3002BDD04 /* Info.plist */,
@@ -340,7 +341,6 @@
 				5271D42F2A605B0900FC7606 /* Encodable+.swift */,
 				5271D4312A606D0B00FC7606 /* Dictionary+.swift */,
 				527547EF2A69103200313EFC /* ProgressDialogView.swift */,
-				52F3052D2A163B5B00112A04 /* ColorAssets.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
