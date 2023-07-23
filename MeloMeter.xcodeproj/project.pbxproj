@@ -62,6 +62,7 @@
 		5290BF8F2A6D3AFA00D734EE /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 5290BF8E2A6D3AFA00D734EE /* FirebaseMessaging */; };
 		5290BF912A6D3AFA00D734EE /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 5290BF902A6D3AFA00D734EE /* FirebaseRemoteConfig */; };
 		5290BF932A6D3AFA00D734EE /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 5290BF922A6D3AFA00D734EE /* FirebaseStorage */; };
+		5290BF952A6D95F400D734EE /* TestGit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5290BF942A6D95F400D734EE /* TestGit.swift */; };
 		52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6E8229FEBC0200E43D39 /* FontManager.swift */; };
 		52CE6EA12A01875C00E43D39 /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA02A01875C00E43D39 /* AlarmViewController.swift */; };
 		52CE6EA32A0187BB00E43D39 /* AlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA22A0187BB00E43D39 /* AlarmView.swift */; };
@@ -152,6 +153,7 @@
 		527547F12A69251100313EFC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		527547F32A6D23E400313EFC /* KakaoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoService.swift; sourceTree = "<group>"; };
 		52845B1B2A0FC9DF003A87F8 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		5290BF942A6D95F400D734EE /* TestGit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestGit.swift; sourceTree = "<group>"; };
 		52CE6E8229FEBC0200E43D39 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		52CE6EA02A01875C00E43D39 /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
 		52CE6EA22A0187BB00E43D39 /* AlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmView.swift; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 				5271D42F2A605B0900FC7606 /* Encodable+.swift */,
 				5271D4312A606D0B00FC7606 /* Dictionary+.swift */,
 				527547EF2A69103200313EFC /* ProgressDialogView.swift */,
+				5290BF942A6D95F400D734EE /* TestGit.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -708,6 +711,7 @@
 				52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */,
 				5271D40B2A544A2D00FC7606 /* LogInVM.swift in Sources */,
 				52F0100D2A0A4FD20014FC01 /* AnswerView.swift in Sources */,
+				5290BF952A6D95F400D734EE /* TestGit.swift in Sources */,
 				52F010222A0ADD500014FC01 /* EditStatusMessageVC.swift in Sources */,
 				5271D4342A60BF5300FC7606 /* CoupleCombineDTO.swift in Sources */,
 				52F010002A094B550014FC01 /* QnAViewController.swift in Sources */,
