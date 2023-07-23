@@ -52,16 +52,13 @@ class LogInService {
     }
     
     //로그인 요청 서비스
-    func inputVerificationCodeService(code: String?) -> Single<Void> {
-        return Single<Void>.create { [weak self] single in
+    func inputVerificationCodeService(code: String?) -> Single<String> {
+        return Single.create { [weak self] single in
             guard let self = self else{ return Disposables.create() }
             self.logInRepository.inputVerificationCode(verificationCode: code)
-                .subscribe(onSuccess: { result in
-                    if result == .authenticated {
-                        single(.success(()))
-                    }else {
-                        single(.failure(LogInServiceError.logInDenied))
-                    }
+                .subscribe(onSuccess: { inviteCode in
+                    let code = "\(inviteCode.prefix(4)) \(inviteCode.suffix(4))"
+                    single(.success(code))
                 }, onFailure: { error in
                     single(.failure(error))
                 }).disposed(by: disposeBag)

@@ -22,7 +22,6 @@ class LogInVM {
     // MARK: - Input
     var phoneNumberInput = PublishSubject<String?>()
     var verificationCode = PublishSubject<String?>()
-    var startCoupleConnectVC = PublishSubject<Void>()
     var inviteCodeInput = PublishSubject<String?>()
     var alertBtnTapped = PublishSubject<Void>()
     var resendBtnTapped = PublishSubject<Void>()
@@ -55,8 +54,8 @@ class LogInVM {
         verificationCode.bind(onNext: { [weak self] text in
             guard let self = self else{ return }
             self.logInService.inputVerificationCodeService(code: text)
-                .subscribe(onSuccess: {
-                    coordinator.showCoupleComvineVC()
+                .subscribe(onSuccess: { inviteCode in
+                    coordinator.showCoupleComvineVC(inviteCode: inviteCode)
                 }, onFailure: { error in
                     self.logInRequest.onNext(false)
                 }).disposed(by: disposeBag)
@@ -72,11 +71,6 @@ class LogInVM {
                     self.sendNumRequest.onNext(false)
                 }).disposed(by: self.disposeBag)
         }).disposed(by: self.disposeBag)
-        
-        //뷰 시작시 내 초대코드 받아오기
-        startCoupleConnectVC.subscribe(onNext: {
-            self.getInviteCode()
-        }).disposed(by: disposeBag)
         
         //초대코드 입력 -> 커플연결
         inviteCodeInput.bind(onNext: { [weak self] text in
@@ -105,17 +99,7 @@ class LogInVM {
                 self.myCode.onError(error)
             }).disposed(by: disposeBag)
     }
-    
-    //초대코드 요청
-    func getInviteCode() {
-        self.logInService.getUserLoginInfo()
-            .subscribe(onSuccess: { logInModel in
-                let inviteCode = "\(logInModel.inviteCode.prefix(4)) \(logInModel.inviteCode.suffix(4))"
-                self.myCode.onNext(inviteCode)
-            }, onFailure: { error in
-                self.myCode.onError(error)
-            }).disposed(by: disposeBag)
-    }
+
     func verificationCodeTimer() {
         let countdownDuration = 299
         timerSubscription = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
@@ -151,6 +135,10 @@ class LogInVM {
     func stopTimer() {
         timerSubscription?.dispose()
         timerSubscription = nil
+    }
+    
+    func shareKakao(inviteCode: String) {
+        KakaoService.shared.shareWithKakaoTalk(inviteCode: inviteCode)
     }
 
 }

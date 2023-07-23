@@ -13,7 +13,6 @@ final class AppCoordinator: Coordinator {
     weak var delegate: CoordinatorDelegate?
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
-    
     // MARK: - Initializers
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -24,6 +23,7 @@ final class AppCoordinator: Coordinator {
     func start() {
         showStartVC()
     }
+    
 }
 
 // MARK: - connectFlow Methods
@@ -34,10 +34,11 @@ extension AppCoordinator {
         navigationController.setNavigationBarHidden(true, animated: false)
         navigationController.pushViewController(startVC, animated: false)
     }
-    func connectLogInFlow() {
+    func connectLogInFlow(_ inviteCode: String? = nil) {
         self.navigationController.viewControllers.removeAll()
         let logInCoordinator = LogInCoordinator(self.navigationController)
         logInCoordinator.delegate = self
+        logInCoordinator.inviteCode2 = inviteCode
         logInCoordinator.start()
         self.childCoordinators.append(logInCoordinator)
     }

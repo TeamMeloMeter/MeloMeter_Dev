@@ -9,16 +9,20 @@ import UIKit
 import RxCocoa
 import RxSwift
 import AnyFormatKit //입력 형식 라이브러리
-
+import Firebase
 // MARK: - 커플 등록
 final class CoupleCombineVC: UIViewController {
    
     private let viewModel: LogInVM
     let disposeBag = DisposeBag()
     
-    init(viewModel: LogInVM) {
+    init(viewModel: LogInVM, inviteCode: String, inviteCode2: String? = nil) {
         self.viewModel = viewModel
+        self.myCodeLabel.text = inviteCode
         super.init(nibName: nil, bundle: nil)
+        if let code2 = inviteCode2 {
+            self.codeTF.text = code2
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -36,8 +40,8 @@ final class CoupleCombineVC: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        lineView1.setGradientBackground(colors: [.primary1, .white])
         codeTF.becomeFirstResponder()
+        lineView1.setGradientBackground(colors: [.primary1, .white])
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -46,10 +50,6 @@ final class CoupleCombineVC: UIViewController {
     
     // MARK: - Binding
     func setBindings() {
-        viewModel.startCoupleConnectVC.onNext(())
-        viewModel.startCoupleConnectVC.onCompleted()
-        viewModel.startCoupleConnectVC.disposed(by: disposeBag)
-      
         viewModel.myCode
             .bind(to: self.myCodeLabel.rx.text)
             .disposed(by: disposeBag)
@@ -113,6 +113,7 @@ final class CoupleCombineVC: UIViewController {
         [progressImage, titleLabel, user1Label, myCodeLabel, shareBtn, lineView1,
         user2Label, codeTF, lineView2,
          questLabel, contactBtn].forEach { view.addSubview($0) }
+        
     }
     
     // MARK: - UI
@@ -157,10 +158,7 @@ final class CoupleCombineVC: UIViewController {
         return label
     }()
     
-    lazy var lineView1: UIView = {
-        let view = UIView()
-        return view
-    }()
+    let lineView1: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 343, height: 1.5))
     
     let shareBtn: UIButton = {
         let button = UIButton()
@@ -291,9 +289,7 @@ final class CoupleCombineVC: UIViewController {
             shareBtn.heightAnchor.constraint(equalToConstant: 32),
             
             lineView1.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            lineView1.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
             lineView1.topAnchor.constraint(equalTo: shareBtn.bottomAnchor, constant: 12),
-            lineView1.heightAnchor.constraint(equalToConstant: 1.5),
         ])
     }
     
@@ -312,7 +308,7 @@ final class CoupleCombineVC: UIViewController {
             lineView2.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
             lineView2.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
             lineView2.topAnchor.constraint(equalTo: codeTF.bottomAnchor, constant: 10),
-            lineView2.heightAnchor.constraint(equalToConstant: 1.5),
+            lineView2.heightAnchor.constraint(equalToConstant: 1),
         ])
     }
     private func contactConstraints() {

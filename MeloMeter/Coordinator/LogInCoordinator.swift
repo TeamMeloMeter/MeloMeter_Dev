@@ -6,20 +6,44 @@
 //
 
 import UIKit
-
+import Firebase
 final class LogInCoordinator: Coordinator {
     var delegate: CoordinatorDelegate?
     
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
-
+    var inviteCode2: String?
+    
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
         self.childCoordinators = []
     }
-
+    
     func start() {
-        showPhoneCertifiedVC()
+        if isLoggedIn() {
+            if let _ = UserDefaults.standard.string(forKey: "coupleDocumentID") {
+                showProfileInsertVC()
+            }else {
+                if let inviteCode = UserDefaults.standard.string(forKey: "inviteCode") {
+                    let code = "\(inviteCode.prefix(4)) \(inviteCode.suffix(4))"
+                    if let code2 = inviteCode2 {
+                        showCoupleComvineVC(inviteCode: code, inviteCode2: code2)
+                    }else {
+                        showCoupleComvineVC(inviteCode: code)
+                    }
+                }
+            }
+        }else {
+            showPhoneCertifiedVC()
+        }
+    }
+    
+    private func isLoggedIn() -> Bool {
+        if Auth.auth().currentUser != nil {
+            return true
+        } else {
+            return false
+        }
     }
 }
 
@@ -41,9 +65,9 @@ extension LogInCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
-    func showCoupleComvineVC() {
-        let viewController = CoupleCombineVC(viewModel: LogInVM(coordinator: self))
-        
+    func showCoupleComvineVC(inviteCode: String, inviteCode2: String? = nil) {
+        let viewController = CoupleCombineVC(viewModel: LogInVM(coordinator: self), inviteCode: inviteCode, inviteCode2: inviteCode2)
+
         self.navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
     }

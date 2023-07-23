@@ -8,11 +8,10 @@
 import Foundation
 import Firebase
 import RxSwift
-
+import FirebaseFirestore
 class LogInRepository {
     
     let defaultFirebaseService = DefaultFirebaseService()
-    //var defaultFirebaseService: DefaultFirebaseService! // 의존성 주입 방식으로 생성자 만들어서 변경하기 !
     
     var userInfoModel = UserInfoModel()
     var logInStatus: LogInStatus = .none
@@ -48,7 +47,7 @@ class LogInRepository {
     }
     
     //인증번호 입력 -> 로그인
-    func inputVerificationCode(verificationCode: String?) -> Single<LogInStatus> {
+    func inputVerificationCode(verificationCode: String?) -> Single<String> {
         return Single.create { [weak self] single in
             guard let self = self else { return Disposables.create() }
             guard let code = verificationCode else { return Disposables.create() }
@@ -61,10 +60,10 @@ class LogInRepository {
                 if let error = error {
                     single(.failure(error))
                 }else {
-                    self.userInFirestore().subscribe(onSuccess: {
-                        single(.success(.authenticated))
+                    self.userInFirestore().subscribe(onSuccess: { inviteCode in
+                        single(.success(inviteCode))
                     }, onFailure: { error in
-                        single(.success(.loginDenied))
+                        single(.failure(error))
                     }).disposed(by: self.disposeBag)
                 }
             }
@@ -74,7 +73,7 @@ class LogInRepository {
     }
 
     //로그인된 사용자의 uid, phoneNumber 받아서 storeUserInFirestore 호출
-    func userInFirestore() -> Single<Void> {
+    func userInFirestore() -> Single<String> {
         return Single.create { [weak self] single in
             guard let self = self else{ return Disposables.create() }
             var uid = ""
@@ -97,7 +96,8 @@ class LogInRepository {
                                                        document: dto.uid,
                                                        values: values)
             .subscribe(onSuccess: {
-                single(.success(()))
+                single(.success(inviteCode))
+                UserDefaults.standard.set("\(inviteCode)", forKey: "inviteCode")
             }, onFailure: { error in
                 single(.failure(error))
             })
@@ -141,6 +141,7 @@ class LogInRepository {
                                                 createdAt: date)
                             
                             guard let values = dto.asDictionary else{ return Single.just(()) }
+                            
                             return self.defaultFirebaseService.createDocument(collection: .Couples, document: "", values: values)
                         }
                 }

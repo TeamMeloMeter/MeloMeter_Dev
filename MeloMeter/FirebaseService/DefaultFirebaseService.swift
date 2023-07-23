@@ -7,6 +7,7 @@
 
 import Foundation
 import Firebase
+import FirebaseFirestore
 import RxSwift
 
 public enum FireStoreError: Error, LocalizedError {
@@ -91,12 +92,13 @@ public final class DefaultFirebaseService: FireStoreService {
                 newDocument = self.database.collection(collection.name)
                     .document(document)
             }
-            
+            let documentID = newDocument.documentID
             newDocument.setData(values) { error in
                 if let error = error { single(.failure(error)) }
                 single(.success(()))
             }
-            
+            if document == "" { UserDefaults.standard.set("\(documentID)", forKey: "coupleDocumentID") }
+
             return Disposables.create()
         }
     }

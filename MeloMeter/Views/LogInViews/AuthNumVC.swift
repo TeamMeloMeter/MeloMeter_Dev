@@ -296,7 +296,7 @@ final class AuthNumVC: UIViewController {
             timeLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
             timeLabel.topAnchor.constraint(equalTo: exLabel.bottomAnchor, constant: 11),
 
-            resendBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -250),
+            resendBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -253),
             resendBtn.topAnchor.constraint(equalTo: exLabel.bottomAnchor, constant: 10),
             resendBtn.widthAnchor.constraint(equalToConstant: 64),
             resendBtn.heightAnchor.constraint(equalToConstant: 20)
