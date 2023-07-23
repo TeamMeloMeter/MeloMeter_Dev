@@ -39,9 +39,9 @@ final class LogInCoordinator: Coordinator {
     }
     
     private func isLoggedIn() -> Bool {
-        if Auth.auth().currentUser != nil {
+        if let _ = UserDefaults.standard.string(forKey: "verificationID") {
             return true
-        } else {
+        }else {
             return false
         }
     }

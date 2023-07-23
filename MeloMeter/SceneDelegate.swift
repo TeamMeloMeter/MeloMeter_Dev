@@ -27,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let url = URLContexts.first?.url else { return }
         if let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
-            var queryItems = components.queryItems ?? []
+            let queryItems = components.queryItems ?? []
             for queryItem in queryItems {
                 if queryItem.name == "appBtnTapped", let value = queryItem.value {
                     appCoordinator?.connectLogInFlow(value)
