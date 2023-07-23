@@ -8,8 +8,13 @@
 import UIKit
 
 class ProfileInsertVM {
-    let coupleInfoModel = CoupleInfoModel()
-    //coupleInfoModel.getName()
+    
+    weak var coordinator: AppCoordinator?
+    
+    // MARK: - Init
+    init(coordinator: AppCoordinator) {
+        self.coordinator = coordinator
+    }
     
 }
 
