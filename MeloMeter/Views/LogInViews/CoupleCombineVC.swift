@@ -42,7 +42,6 @@ final class CoupleCombineVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         codeTF.becomeFirstResponder()
-        lineView1.setGradientBackground(colors: [.primary1, .white])
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -264,6 +263,7 @@ final class CoupleCombineVC: UIViewController {
         user2Constraints()
         contactConstraints()
         nextInputViewConstraints()
+        lineView1.setGradientBackground(colors: [.primary1, .white])
     }
     
     private func progressConstraints() {
