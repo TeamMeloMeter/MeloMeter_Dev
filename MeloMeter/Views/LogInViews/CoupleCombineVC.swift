@@ -79,6 +79,12 @@ final class CoupleCombineVC: UIViewController {
                     self.timeOut()
                 }
             }).disposed(by: disposeBag)
+        
+        shareBtn.rx.tap
+            .subscribe(onNext: {
+                guard let inviteCode = self.myCodeLabel.text else{ return }
+                self.viewModel.shareKakao(inviteCode: inviteCode)
+            }).disposed(by: disposeBag)
     }
     
     //MARK: Event
