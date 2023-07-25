@@ -93,7 +93,7 @@ public final class DefaultFirebaseService: FireStoreService {
                     .document(document)
             }
             let documentID = newDocument.documentID
-            newDocument.setData(values) { error in
+            newDocument.setData(values, merge: true) { error in
                 if let error = error { single(.failure(error)) }
                 single(.success(()))
             }

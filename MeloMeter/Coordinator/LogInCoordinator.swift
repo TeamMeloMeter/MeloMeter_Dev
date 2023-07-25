@@ -78,5 +78,12 @@ extension LogInCoordinator {
         self.navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
     }
+    
+    func showPermissionVC1() {
+        let viewController = PermissionVC(viewModel: PermissionVM(coordinator: self))
+        
+        self.navigationController.setNavigationBarHidden(true, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
 
 }

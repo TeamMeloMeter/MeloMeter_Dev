@@ -15,6 +15,11 @@ final class ProfileInsertVC: UIViewController {
     private let viewModel: ProfileInsertVM
     let disposeBag = DisposeBag()
     let tapGesture = UITapGestureRecognizer()
+    let progressDialog: ProgressDialogView = ProgressDialogView()
+    
+    //텍스트필드 유효입력 확인
+    var checkTextField : [Bool] = Array(repeating: false, count: 3)
+    
     var activeTextField: UITextField? = nil
     
     //키보드 알림 등록 객체 생성
@@ -46,6 +51,34 @@ final class ProfileInsertVC: UIViewController {
     func setBindings() {
         view.addGestureRecognizer(tapGesture)
         
+        //다음버튼 터치이벤트
+        nextBtn.rx.tap
+            .bind(onNext: { [weak self] in
+                guard let self = self else{ return }
+                self.view.endEditing(true)
+                self.view.addSubview(progressDialog)
+                showProgressDialog()
+                self.viewModel.checkFormat(info: [self.nameTF.text, self.birthTF.text, self.firstDayTF.text])
+                    .subscribe(onSuccess: { check in
+                        if check {
+                            self.viewModel.userInput.onNext([self.nameTF.text, self.birthTF.text, self.firstDayTF.text])
+                        }else {
+                            self.dateFormatError()
+                        }
+                    }).disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
+        
+        //유저정보 데이터베이스 삽입 확인
+        viewModel.sendProfileInsertRequest
+            .bind(onNext: {[weak self] result in
+                guard let self = self else{ return }
+                if result == false {
+                    insertError()
+                }
+            }).disposed(by: disposeBag)
+        
+        //화면터치 이벤트
         tapGesture.rx.event
             .subscribe(onNext: { [weak self] _ in
                 self?.view.endEditing(true)
@@ -101,6 +134,31 @@ final class ProfileInsertVC: UIViewController {
             }
         }
         lineView.backgroundColor = .gray2
+    }
+    
+    //오류 알럿
+    func dateFormatError() {
+        AlertManager(viewController: self)
+            .setTitle("잘못된 날짜형식")
+            .setMessage("날짜형식이 일치하지 않습니다\n 올바른 형식의 날짜를\n 입력해주세요")
+            .addActionConfirm("확인")
+            .showCustomAlert()
+        hideProgressDialog()
+    }
+    func insertError() {
+        AlertManager(viewController: self)
+            .setTitle("통신실패")
+            .setMessage("서버와 통신에 실패했습니다\n 잠시후 다시\n 시도해주세요")
+            .addActionConfirm("확인")
+            .showCustomAlert()
+        hideProgressDialog()
+    }
+    
+    func showProgressDialog() {
+        self.progressDialog.show()
+    }
+    func hideProgressDialog() {
+        self.progressDialog.hide()
     }
     
     // MARK: - configure
@@ -449,27 +507,26 @@ extension ProfileInsertVC: UITextFieldDelegate {
         let characterSet = CharacterSet(charactersIn: string)
         
         let nowLineView : UIView
-        var checkTextField : [Bool] = Array(repeating: false, count: 3)
-        //여기서부터 하는데 지금 맨위에 이름입력칸만 이상해... 이거수정하고 그다음에 함수화 해서 코드 길이 줄여
         if textField.tag == 0 {
-            print("또로로롤")
-            
             nowLineView = self.lineView1
             
-            let newLength = text.count + string.count - range.length
+            guard let currentText = textField.text else {
+                lineColorChangedF(nowLineView)
+                return true
+            }
+            let newLength = currentText.count + string.count - range.length
             
-            if newLength == 0 {
+            
+            if newLength == 0{
                 lineColorChangedF(nowLineView)
                 checkTextField[textField.tag] = false
                 return true
-            }else if newLength > 0 && text.count < 10 {
+            }else if newLength <= 10 {
                 lineColorChangedT(nowLineView)
                 checkTextField[textField.tag] = true
                 return true
             }else{
-                lineColorChangedF(nowLineView)
-                checkTextField[textField.tag] = false
-//                return false
+                checkTextField[textField.tag] = true
             }
             
         } else if textField.tag == 1 {
