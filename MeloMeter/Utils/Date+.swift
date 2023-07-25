@@ -11,6 +11,7 @@ extension Date {
     
     enum Format: String {
         case yearToDay = "yyyy.MM.dd"
+        case yearToDayHipen = "yyyy-MM-dd"
         case yearToSecond = "yyyy-MM-dd HH:mm:ss"
         case timeStamp = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         case hourAndMinute = "HH:mm"
@@ -35,13 +36,13 @@ extension Date {
         return formatter.string(from: self)
     }
 
-    func stringToDate(dateString: String, type: Format) -> Date? {
+    static func stringToDate(dateString: String, type: Format) -> Date? {
         let formatter = DateFormatter()
         formatter.dateFormat = type.rawValue
         return formatter.date(from: dateString)
     }
     
-    func stringToDate(dateString: String, format: String) -> Date? {
+    static func stringToDate(dateString: String, format: String) -> Date? {
         let formatter = DateFormatter()
         formatter.dateFormat = format
         return formatter.date(from: dateString)

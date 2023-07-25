@@ -6,9 +6,7 @@
 //
 
 import UIKit
-import Firebase
 import RxSwift
-import RxCocoa
 
 // MARK: - LoginViewModel
 class LogInVM {
@@ -77,9 +75,7 @@ class LogInVM {
             guard let self = self else{ return }
             self.logInService.combineCoupleService(text)
                 .subscribe(onSuccess: {
-                    // 나중에 곢ㄲ꼬꼮꼬ㅗㄲ꼬꼬꼮꼮!!!!! 다시 되돌려놔
-                    //이거는 처음에 오래걸리는 그거 없앨라구
-//                    coordinator.showProfileInsertVC()
+                    coordinator.showProfileInsertVC()
                 }, onFailure: { error in
                     self.combineRequest.onNext(false)
                 }).disposed(by: disposeBag)

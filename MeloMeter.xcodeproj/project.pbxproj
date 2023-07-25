@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2108F0412A6EC1F0002EED7A /* ProfileInsertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108F0402A6EC1F0002EED7A /* ProfileInsertService.swift */; };
+		2108F0432A6EC292002EED7A /* ProfileInsertRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108F0422A6EC291002EED7A /* ProfileInsertRepository.swift */; };
+		2108F0472A6EC48B002EED7A /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108F0462A6EC48B002EED7A /* UserDTO.swift */; };
+		2108F0492A6EC565002EED7A /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108F0482A6EC565002EED7A /* UserModel.swift */; };
+		2108F04B2A702A77002EED7A /* PermissionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108F04A2A702A77002EED7A /* PermissionVM.swift */; };
 		214750FD2A6D99E80088C3DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 214750FC2A6D99E70088C3DE /* GoogleService-Info.plist */; };
 		214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */; };
 		45307ED7030327D357C85252 /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5A8595AED1BC03C3846C34F /* Pods_MeloMeter.framework */; };
@@ -106,6 +111,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2108F0402A6EC1F0002EED7A /* ProfileInsertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInsertService.swift; sourceTree = "<group>"; };
+		2108F0422A6EC291002EED7A /* ProfileInsertRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInsertRepository.swift; sourceTree = "<group>"; };
+		2108F0462A6EC48B002EED7A /* UserDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
+		2108F0482A6EC565002EED7A /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		2108F04A2A702A77002EED7A /* PermissionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionVM.swift; sourceTree = "<group>"; };
 		214750FC2A6D99E70088C3DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardStatusDetector.swift; sourceTree = "<group>"; };
 		524138272A62E7E8002AADA6 /* CoupleCombineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleCombineModel.swift; sourceTree = "<group>"; };
@@ -237,6 +247,8 @@
 				5271D4142A55C9DD00FC7606 /* LogInModel.swift */,
 				5271D4332A60BF5300FC7606 /* CoupleCombineDTO.swift */,
 				524138272A62E7E8002AADA6 /* CoupleCombineModel.swift */,
+				2108F0462A6EC48B002EED7A /* UserDTO.swift */,
+				2108F0482A6EC565002EED7A /* UserModel.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -308,6 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				5271D41E2A5887E500FC7606 /* LogInRepository.swift */,
+				2108F0422A6EC291002EED7A /* ProfileInsertRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -316,6 +329,7 @@
 			isa = PBXGroup;
 			children = (
 				5271D4122A55BF1B00FC7606 /* LogInService.swift */,
+				2108F0402A6EC1F0002EED7A /* ProfileInsertService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -498,6 +512,7 @@
 				5241382F2A62F943002AADA6 /* StartVM.swift */,
 				5271D40A2A544A2D00FC7606 /* LogInVM.swift */,
 				5271D4032A51D33F00FC7606 /* ProfileInsertVM.swift */,
+				2108F04A2A702A77002EED7A /* PermissionVM.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -701,6 +716,7 @@
 				52F00FF42A09308E0014FC01 /* AddDdayView.swift in Sources */,
 				214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */,
 				524138282A62E7E8002AADA6 /* CoupleCombineModel.swift in Sources */,
+				2108F0412A6EC1F0002EED7A /* ProfileInsertService.swift in Sources */,
 				52E0CDF02A4B091600E4A182 /* CoupleCombineVC.swift in Sources */,
 				5241382C2A62F240002AADA6 /* AppCoordinator.swift in Sources */,
 				524138302A62F943002AADA6 /* StartVM.swift in Sources */,
@@ -708,10 +724,12 @@
 				52845B1C2A0FC9DF003A87F8 /* Model.swift in Sources */,
 				52F305302A168CE900112A04 /* DisconnectVC.swift in Sources */,
 				52CE6EA52A0245E300E43D39 /* DdayView.swift in Sources */,
+				2108F04B2A702A77002EED7A /* PermissionVM.swift in Sources */,
 				52697B7329EEB7B2002BDD04 /* AppDelegate.swift in Sources */,
 				52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */,
 				5271D40B2A544A2D00FC7606 /* LogInVM.swift in Sources */,
 				52F0100D2A0A4FD20014FC01 /* AnswerView.swift in Sources */,
+				2108F0432A6EC292002EED7A /* ProfileInsertRepository.swift in Sources */,
 				52F010222A0ADD500014FC01 /* EditStatusMessageVC.swift in Sources */,
 				5271D4342A60BF5300FC7606 /* CoupleCombineDTO.swift in Sources */,
 				52F010002A094B550014FC01 /* QnAViewController.swift in Sources */,
@@ -740,6 +758,7 @@
 				5271D42E2A604BF400FC7606 /* Date+.swift in Sources */,
 				52F010082A097D120014FC01 /* AlarmTableViewCell.swift in Sources */,
 				5270EC122A4954D9007FF444 /* UserInfoModel.swift in Sources */,
+				2108F0472A6EC48B002EED7A /* UserDTO.swift in Sources */,
 				527547F02A69103200313EFC /* ProgressDialogView.swift in Sources */,
 				52F00FFC2A093A410014FC01 /* NoticeTableViewCell.swift in Sources */,
 				5241382E2A62F2ED002AADA6 /* LogInCoordinator.swift in Sources */,
@@ -762,6 +781,7 @@
 				52F2083C29FBB3490043BCA4 /* MyProfileModel.swift in Sources */,
 				52CE6EAB2A0260FA00E43D39 /* TabBarController.swift in Sources */,
 				52F00FFA2A0938480014FC01 /* NoticeViewController.swift in Sources */,
+				2108F0492A6EC565002EED7A /* UserModel.swift in Sources */,
 				5271D4322A606D0B00FC7606 /* Dictionary+.swift in Sources */,
 				52F010202A0ADB680014FC01 /* EditStatusMessageView.swift in Sources */,
 				52697B7529EEB7B2002BDD04 /* SceneDelegate.swift in Sources */,

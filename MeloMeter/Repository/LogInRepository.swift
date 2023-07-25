@@ -98,6 +98,8 @@ class LogInRepository {
             .subscribe(onSuccess: {
                 single(.success(inviteCode))
                 UserDefaults.standard.set("\(inviteCode)", forKey: "inviteCode")
+                UserDefaults.standard.set("\(uid)", forKey: "uid")
+                UserDefaults.standard.set("\(phoneNumber)", forKey: "phoneNumber")
             }, onFailure: { error in
                 single(.failure(error))
             })
