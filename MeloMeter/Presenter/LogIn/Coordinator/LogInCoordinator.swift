@@ -48,14 +48,21 @@ final class LogInCoordinator: Coordinator {
 extension LogInCoordinator {
     
     func showPhoneCertifiedVC() {
-        let viewController = PhoneCertifiedVC(viewModel: LogInVM(coordinator: self))
+        let viewController = PhoneCertifiedVC(
+            viewModel: LogInVM(
+                coordinator: self,
+                logInUseCase: LogInUseCase(logInRepository: LogInRepository()))
+        )
         
         self.navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
     func showAuthNumVC(phoneNumber: String?) {
-        let viewModel = LogInVM(coordinator: self)
+        let viewModel = LogInVM(
+            coordinator: self,
+            logInUseCase: LogInUseCase(logInRepository: LogInRepository())
+        )
         viewModel.phoneNumber = phoneNumber
         let viewController = AuthNumVC(viewModel: viewModel)
         
@@ -64,14 +71,24 @@ extension LogInCoordinator {
     }
     
     func showCoupleComvineVC(inviteCode: String, inviteCode2: String? = nil) {
-        let viewController = CoupleCombineVC(viewModel: LogInVM(coordinator: self), inviteCode: inviteCode, inviteCode2: inviteCode2)
+        let viewController = CoupleCombineVC(
+            viewModel: LogInVM(
+                coordinator: self,
+                logInUseCase: LogInUseCase(logInRepository: LogInRepository())
+            ),
+            inviteCode: inviteCode,
+            inviteCode2: inviteCode2)
 
         self.navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
     func showProfileInsertVC() {
-        let viewController = ProfileInsertVC(viewModel: ProfileInsertVM(coordinator: self))
+        let viewController = ProfileInsertVC(
+            viewModel: ProfileInsertVM(
+                coordinator: self,
+                profileInsertUseCase: ProfileInsertUseCase(profileInsertRepository: ProfileInsertRepository()))
+        )
         
         self.navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)

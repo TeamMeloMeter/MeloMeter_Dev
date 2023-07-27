@@ -11,7 +11,7 @@ import RxSwift
 // MARK: - LoginViewModel
 class ProfileInsertVM {
     
-    let profileInsertService = ProfileInsertService()
+    let profileInsertUseCase: ProfileInsertUseCase
     let disposeBag = DisposeBag()
     weak var coordinator: LogInCoordinator?
     
@@ -22,13 +22,14 @@ class ProfileInsertVM {
     var sendProfileInsertRequest = PublishSubject<Bool>()
     
     // MARK: - Init
-    init(coordinator: LogInCoordinator) {
+    init(coordinator: LogInCoordinator, profileInsertUseCase: ProfileInsertUseCase) {
         self.coordinator = coordinator
+        self.profileInsertUseCase = profileInsertUseCase
         
         //nameInput값 변경 감지
         userInput.bind(onNext: { [weak self] info in
             guard let self = self else{ return }
-            self.profileInsertService.insertUserInfoService(userInfo: info)
+            self.profileInsertUseCase.insertUserInfoService(userInfo: info)
                 .subscribe(onSuccess: {
                     coordinator.showPermissionVC1()
                 }, onFailure: { error in

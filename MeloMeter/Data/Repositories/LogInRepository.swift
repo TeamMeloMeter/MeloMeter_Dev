@@ -20,6 +20,7 @@ class LogInRepository: LogInRepositoryP {
         self.firebaseService = DefaultFirebaseService()
         self.userInfoModel = UserInfoModel()
     }
+    
     //전화번호 전송, 인증ID 저장
     func sendNumber(phoneNumber: String?) -> Single<LogInStatus> {
         return Single.create { [weak self] single in
@@ -82,7 +83,7 @@ class LogInRepository: LogInRepositoryP {
             guard let self = self else{ return Disposables.create() }
             var uid = ""
             var phoneNumber = ""
-            self.defaultFirebaseService.getCurrentUser()
+            self.firebaseService.getCurrentUser()
                 .subscribe(onSuccess: { user in
                     uid = user.uid
                     guard let number = user.phoneNumber else{ return }
@@ -96,7 +97,7 @@ class LogInRepository: LogInRepositoryP {
                                createdAt: createdAt.toString(type: Date.Format.timeStamp),
                                inviteCode: inviteCode)
             guard let values = dto.asDictionary else { return Disposables.create() }
-            self.defaultFirebaseService.createDocument(collection: .Users,
+            self.firebaseService.createDocument(collection: .Users,
                                                        document: dto.uid,
                                                        values: values)
             .subscribe(onSuccess: {
@@ -117,10 +118,10 @@ class LogInRepository: LogInRepositoryP {
     
     // 내 usersCollection 문서 get
     func getUserLoginInfo() -> Single<LogInModel?> {
-        return defaultFirebaseService.getCurrentUser()
+        return firebaseService.getCurrentUser()
             .flatMap { user -> Single<LogInModel?> in
                 let documentID = user.uid
-                return self.defaultFirebaseService.getDocument(collection: .Users, document: documentID)
+                return self.firebaseService.getDocument(collection: .Users, document: documentID)
                     .map{ $0.toObject(LogInDTO.self)?.toModel() }
             }
     }
@@ -133,9 +134,9 @@ class LogInRepository: LogInRepositoryP {
             
             let date = Date().toString(type: .timeStamp)
             let inviteCode = code.components(separatedBy: " ").joined()
-            defaultFirebaseService.getCurrentUser()
+            firebaseService.getCurrentUser()
                 .flatMap{ user -> Single<Void> in
-                    return self.defaultFirebaseService.getDocument(collection: .Users, field: "inviteCode", values: [inviteCode])
+                    return self.firebaseService.getDocument(collection: .Users, field: "inviteCode", values: [inviteCode])
                         .flatMap{ data -> Single<Void> in
                             guard !data.isEmpty else{
                                 single(.failure(CombineError.falure)); return Single.just(())}
@@ -149,7 +150,7 @@ class LogInRepository: LogInRepositoryP {
                             
                             guard let values = dto.asDictionary else{ return Single.just(()) }
                             
-                            return self.defaultFirebaseService.createDocument(collection: .Couples, document: "", values: values)
+                            return self.firebaseService.createDocument(collection: .Couples, document: "", values: values)
                         }
                 }
                 .subscribe(onSuccess: {
