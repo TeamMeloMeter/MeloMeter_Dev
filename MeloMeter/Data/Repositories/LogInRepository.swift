@@ -141,7 +141,7 @@ class LogInRepository: LogInRepositoryP {
                             guard !data.isEmpty else{
                                 single(.failure(CombineError.falure)); return Single.just(())}
                             guard let phoneNumber1 = user.phoneNumber, let uid2 = data.last?["uid"] as? String, let phoneNumber2 = data.last?["phoneNumber"] as? String else{ return Single.just(()) }
-                            
+                            UserDefaults.standard.set("\(uid2)", forKey: "uid2")
                             let dto = CoupleCombineDTO(uid1: user.uid,
                                                 phoneNumber1: phoneNumber1,
                                                 uid2: uid2,

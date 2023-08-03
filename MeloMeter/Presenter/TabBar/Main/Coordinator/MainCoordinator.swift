@@ -27,11 +27,23 @@ final class MainCoordinator: Coordinator {
 extension MainCoordinator {
     
     func showMapVC() {
-        let viewController = MapViewController(viewModel: MapVM(coordinator: self))
+        let viewController = MapVC(viewModel: MapVM(
+            coordinator: self,
+            mainUseCase: MainUseCase(
+                locationService: DefaultLocationService()
+                )
+            )
+        )
         
         self.navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
     }
    
+//    func showPermissionVC2() {
+//        let viewController = Permission2VC(viewModel: PermissionVM(coordinator: LogInCoordinator(UINavigationController())))
+//        
+//        self.navigationController.setNavigationBarHidden(true, animated: false)
+//        self.navigationController.pushViewController(viewController, animated: true)
+//    }
 
 }
