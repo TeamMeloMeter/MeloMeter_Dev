@@ -11,7 +11,7 @@ import RxSwift
 
 class PermissionVC: UIViewController {
     
-    private let viewModel: PermissionVM
+    private let viewModel: PermissionVM?
     let disposeBag = DisposeBag()
     
     init(viewModel: PermissionVM) {
@@ -32,17 +32,16 @@ class PermissionVC: UIViewController {
     
     // MARK: Binding
     func setBindings() {
-        startBtn.rx.tap
-            .subscribe(onNext: {[weak self] in
-                guard let self = self else{ return }
-                self.viewModel.startBtnTapped1.onNext(())
-            }).disposed(by: disposeBag)
+        let input = PermissionVM.Input1(
+            startBtnTapped1: self.startBtn.rx.tap.asObservable()
+        )
+        
+        self.viewModel?.transform1(input: input, disposeBag: self.disposeBag)
     }
     
     // MARK: - configure
     func configure() {
         view.backgroundColor = .white
-       
         [background, titleLabel, exLabel, subLabel, startBtn].forEach { view.addSubview($0) }
     }
     

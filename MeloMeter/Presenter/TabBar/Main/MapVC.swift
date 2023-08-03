@@ -7,18 +7,19 @@
 
 import UIKit
 import NMapsMap
-import CoreLocation
 import RxCocoa
 import RxSwift
+import CoreLocation
 
 //메인 지도 화면
-class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureRecognizerDelegate{
+class MapVC: UIViewController, UIGestureRecognizerDelegate{
 
-    let infoWindow = NMFInfoWindow()
-    private let viewModel: MapVM
+    let infoWindow1 = NMFInfoWindow()
+    let infoWindow2 = NMFInfoWindow()
+    
+    private var viewModel: MapVM?
     let disposeBag = DisposeBag()
-    private var locationManager: CLLocationManager?
-
+    
     init(viewModel: MapVM) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -30,117 +31,104 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setMapViewTouch()
-        setLocation()
-        setUpBarButton()
         configure()
         setAutoLayout()
+        setBindings()
+        setUpBarButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = true
         setMarker()
     }
     
+    // MARK: Binding
+    func setBindings() {
+        let input = MapVM.Input(
+            viewDidApearEvent: self.rx.methodInvoked(#selector(viewDidAppear(_:)))
+                .map({ _ in })
+                .asObservable(),
+            dDayBtnTapEvent: self.dDayButton.rx.tap.asObservable(),
+            alarmBtnTapEvent: self.alarmButton.rx.tap.asObservable()
+
+        )
+            
+        guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else { return }
+        
+        output.authorizationAlertShouldShow
+            .asDriver(onErrorJustReturn: false)
+            .drive(onNext: { [weak self] shouldShowAlert in
+                guard let self = self else{ return }
+                if shouldShowAlert {
+                    AlertManager(viewController: self)
+                        .setLocationAlert()
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        output.currentLocation
+            .asDriver(onErrorJustReturn: CLLocation(latitude: 37.541, longitude: 126.986))
+            .drive(onNext: { [weak self] current in
+                self?.updateMyMarker(current)
+            })
+            .disposed(by: disposeBag)
+        
+        output.currentLocation
+            .take(4)
+            .asDriver(onErrorJustReturn: CLLocation(latitude: 37.541, longitude: 126.986))
+            .drive(onNext: { [weak self] current in
+                self?.updateCamera(current)
+            })
+            .disposed(by: disposeBag)
+        
+        output.currentOtherLocation
+            .asDriver(onErrorJustReturn: CLLocation(latitude: 37.541, longitude: 126.986))
+            .drive(onNext: { [weak self] current in
+                self?.updateOtherMarker(current)
+            })
+            .disposed(by: disposeBag)
+        
+        currentLocationButton.rx.tap
+            .subscribe(onNext: {[weak self] _ in
+                output.currentLocation
+                    .take(1)
+                    .asDriver(onErrorJustReturn: CLLocation(latitude: 37.541, longitude: 126.986))
+                    .drive(onNext: { [weak self] current in
+                        self?.updateCamera(current)
+                    })
+                    .dispose()
+            })
+            .disposed(by: disposeBag)
+        
+    }
+
+    // MARK: Map
+    func updateMyMarker(_ location: CLLocation) {
+        myMarker.position = NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
+        myMarker.mapView = naverMapView
+        infoWindow1.open(with: myMarker)
+    }
+    
+    func updateOtherMarker(_ location: CLLocation) {
+        otherMarker.position = NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
+        otherMarker.mapView = naverMapView
+        infoWindow2.open(with: otherMarker)
+    }
+    
+    func updateCamera(_ location: CLLocation) {
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude))
+        cameraUpdate.animation = .easeIn
+        naverMapView.moveCamera(cameraUpdate)
+    }
+
     // MARK: Configure
     func configure() {
         view.backgroundColor = .white
         [naverMapView, alarmButton, dDayButton, currentLocationButton].forEach { view.addSubview($0) }
     }
     
-    // MARK: Location
-    func setLocation() {
-        self.locationManager?.delegate = self // 델리게이트 넣어줌
-        self.locationManager?.desiredAccuracy = kCLLocationAccuracyBest // 거리 정확도 설정
-        self.locationManager?.requestAlwaysAuthorization() // 위치 권한 설정 값을 받아옵니다
-        self.locationManager?.startUpdatingLocation() // 위치 업데이트 시작
-        
-        if let myLocation = locationManager?.location?.coordinate {
-            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: myLocation.latitude, lng: myLocation.longitude))
-            cameraUpdate.animation = .easeIn
-            naverMapView.moveCamera(cameraUpdate)
-        }
-    }
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedAlways {
-            print("[ViewController > locationManager() : 위치 사용 권한 항상 허용]")
-        }
-        if status == .authorizedWhenInUse {
-            self.locationManager?.requestAlwaysAuthorization()
-            print("[ViewController > locationManager() : 위치 사용 권한 앱 사용 시 허용]")
-        }
-        if status == .denied {
-            self.locationManager?.requestAlwaysAuthorization()
-            print("[ViewController > locationManager() : 위치 사용 권한 거부]")
-        }
-        if status == .restricted || status == .notDetermined {
-            self.locationManager?.requestAlwaysAuthorization()
-            print("[ViewController > locationManager() : 위치 사용 권한 대기 상태]")
-        }
-    }
-    
-    // [위치 정보 지속적 업데이트]
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-            // [위치 정보가 nil 이 아닌 경우]
-            print("[ > didUpdateLocations() : 위치 정보 확인 실시]")
-            print("[위도 : \(location.coordinate.latitude)]")
-            print("[경도 : \(location.coordinate.longitude)]")
-            
-            //내 위치 마커 표시, 정보창 표시
-            myMarker.position = NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
-            myMarker.mapView = naverMapView
-            infoWindow.open(with: myMarker)
-            
-        }
-    }
-    
-    
-    // [위도, 경도 받아오기 에러가 발생한 경우]
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("")
-        print("===============================")
-        print("[ViewController > didFailWithError() : 위치 정보 확인 에러]")
-        print("[error : \(error)]")
-        print("[localizedDescription : \(error.localizedDescription)]")
-        print("===============================")
-        print("")
-    }
-
     // MARK: Event
-    // 뷰 요소 터치이벤트
-    func setMapViewTouch() {
-        
-        alarmButton.addTarget(self, action: #selector(alarmBtnTapped), for: .touchUpInside)
-        currentLocationButton.addTarget(self, action: #selector(currentLocationTapped), for: .touchUpInside)
-        dDayButton.addTarget(self, action: #selector(dDayBtnTapped), for: .touchUpInside)
-        
-    }
     
-    //알림 화면으로
-    @objc func alarmBtnTapped(){
-        let VC = AlarmViewController()
-        VC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(VC, animated: true)
-        
-    }
-    
-    //기념일 화면으로
-    @objc func dDayBtnTapped(){
-        let VC = DdayViewController()
-        VC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(VC, animated: true)
-    }
-    
-    //현재 위치로 카메라 이동
-    @objc func currentLocationTapped(){
-        if let myLocation = locationManager?.location?.coordinate {
-            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: myLocation.latitude, lng: myLocation.longitude))
-            cameraUpdate.animation = .easeIn
-            naverMapView.moveCamera(cameraUpdate)
-        }
-    }
     
     // MARK: navigationBar
     func setUpBarButton() {
@@ -160,9 +148,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     /// 마커 아이콘, 상태메세지 정보창 설정
     func setMarker() {
         myMarker.iconImage = NMFOverlayImage(image: myMarkerIcon)
-        let dataSource = CustomInfoViewDataSource(customView: myInfoWindowLabel)
-        infoWindow.dataSource = dataSource
-
+        let dataSource1 = CustomInfoViewDataSource(customView: myInfoWindowLabel)
+        infoWindow1.dataSource = dataSource1
+        
+        otherMarker.iconImage = NMFOverlayImage(image: otherMarkerIcon)
+        let dataSource2 = CustomInfoViewDataSource(customView: otherInfoWindowLabel)
+        infoWindow2.dataSource = dataSource2
     }
     
     lazy var naverMapView: NMFMapView = {
@@ -182,7 +173,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     }()
     
     let myMarkerIcon: UIImage = {
-        let image1 = UIImage(named: "myMarkerBorder")
+        let image1 = UIImage(named: "myMarkerborder")
         let image2 = UIImage(named: "myMarkerDot")
         let image3 = UIImage(named: "profileTest")
         
@@ -213,6 +204,52 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         label.font = FontManager.shared.regular(ofSize: 16)
         label.backgroundColor = .white
         label.layer.borderColor = #colorLiteral(red: 0.9843137255, green: 0.3607843137, blue: 0.9960784314, alpha: 1)
+        label.layer.borderWidth = 1.0
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 20
+        return label
+    }()
+    
+    //상대방 마커
+    var otherMarker: NMFMarker = {
+        let marker = NMFMarker()
+        marker.width = CGFloat(NMF_MARKER_SIZE_AUTO)
+        marker.height = CGFloat(NMF_MARKER_SIZE_AUTO)
+        return marker
+    }()
+    
+    let otherMarkerIcon: UIImage = {
+        let image1 = UIImage(named: "otherMarkerborder")
+        let image2 = UIImage(named: "otherMarkerDot")
+        let image3 = UIImage(named: "profileTest")
+        
+        let imageSize = CGSize(width: 80, height: 107)
+        
+        UIGraphicsBeginImageContextWithOptions(imageSize, false, 0.0)
+        
+        image1?.draw(in: CGRect(x: 0, y: 0, width: 80, height: 90))
+        image2?.draw(in: CGRect(x: 31, y: 89, width: 18, height: 18))
+        image3?.draw(in: CGRect(x: 7, y: 7, width: 66, height: 66))
+        
+        let compositeImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
+        
+        if let image = compositeImage {
+            return image
+        }
+        return UIImage(named: "otherMarkerDot")!
+    
+    }()
+    
+    let otherInfoWindowLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 141, height: 43))
+        label.text = "오늘 기분 별로:("
+        label.textColor = .black
+        label.textAlignment = .center
+        label.font = FontManager.shared.regular(ofSize: 16)
+        label.backgroundColor = .white
+        label.layer.borderColor = #colorLiteral(red: 1, green: 0.8549019608, blue: 0.3490196078, alpha: 1)
         label.layer.borderWidth = 1.0
         label.clipsToBounds = true
         label.layer.cornerRadius = 20
@@ -256,11 +293,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     
     // MARK: 오토레이아웃
     private func setAutoLayout() {
-        mapViewConstraint()
-        mapViewElementConstraint()
+        mapViewConstraints()
+        mapViewElementConstraints()
     }
     
-    private func mapViewConstraint() {
+    private func mapViewConstraints() {
         naverMapView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             naverMapView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -270,7 +307,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         ])
     }
     
-    private func mapViewElementConstraint() {
+    private func mapViewElementConstraints() {
         dDayButton.translatesAutoresizingMaskIntoConstraints = false
         alarmButton.translatesAutoresizingMaskIntoConstraints = false
         currentLocationButton.translatesAutoresizingMaskIntoConstraints = false
@@ -294,7 +331,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     }
     
 }
-
 
 // MARK: Custom Marker InfoView
 class CustomInfoViewDataSource: NSObject, NMFOverlayImageDataSource {

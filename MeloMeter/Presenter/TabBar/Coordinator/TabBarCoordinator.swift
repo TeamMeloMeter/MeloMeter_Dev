@@ -64,12 +64,10 @@ extension TabBarCoordinator {
             self.connectMainFlow(to: tabNavigationController)
 //        case .chat:
 //            self.connectChatFlow(to: tabNavigationController)
-//        case .reservation:
-//            self.connectReservationFlow(to: tabNavigationController)
 //        case .myPage:
 //            self.connectMyPageFlow(to: tabNavigationController)
         default:
-            print("우아")
+            print("탭바코디네이터")
         }
     }
     

@@ -95,14 +95,22 @@ extension LogInCoordinator {
     }
     
     func showPermissionVC1() {
-        let viewController = PermissionVC(viewModel: PermissionVM(coordinator: self))
+        let viewController = PermissionVC(
+            viewModel: PermissionVM(
+                coordinator: self,
+                mainUseCase: MainUseCase(locationService: DefaultLocationService()))
+        )
         
         self.navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
     func showPermissionVC2() {
-        let viewController = Permission2VC(viewModel: PermissionVM(coordinator: self))
+        let viewController = Permission2VC(
+            viewModel: PermissionVM(
+                coordinator: self,
+                mainUseCase: MainUseCase(locationService: DefaultLocationService()))
+        )
         
         self.navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)

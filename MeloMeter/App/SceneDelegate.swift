@@ -59,10 +59,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        let locationManager = CLLocationManager()
-        locationManager.allowsBackgroundLocationUpdates = true
-        locationManager.requestAlwaysAuthorization()
-        locationManager.startUpdatingLocation()
+//        let locationManager = CLLocationManager()
+//        locationManager.allowsBackgroundLocationUpdates = true
+//        locationManager.requestAlwaysAuthorization()
+//        locationManager.startUpdatingLocation()
     }
 
 

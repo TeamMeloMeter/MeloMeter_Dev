@@ -103,10 +103,6 @@ public final class DefaultFirebaseService: FireStoreService {
         }
     }
 
-    
-    
-    
-    
     public func getDocument(collection: FireStoreCollection) -> Single<[FirebaseData]> {
         return Single.create { [weak self] single in
             guard let self else { return Disposables.create() }
@@ -126,7 +122,28 @@ public final class DefaultFirebaseService: FireStoreService {
             return Disposables.create()
         }
     }
-  
     
     
+}
+
+public extension DefaultFirebaseService {
+    func observer(collection: FireStoreCollection, document: String) -> Observable<FirebaseData> {
+        return Observable<FirebaseData>.create { [weak self] observable in
+            guard let self else { return Disposables.create() }
+            
+            self.database.collection(collection.name)
+                .document(document)
+                .addSnapshotListener { snapshot, error in
+                    if let error = error { observable.onError(error) }
+                    
+                    guard let snapshot = snapshot, let data = snapshot.data() else {
+                        observable.onError(FireStoreError.unknown)
+                        return
+                    }
+                    
+                    observable.onNext(data)
+                }
+            return Disposables.create()
+        }
+    }
 }

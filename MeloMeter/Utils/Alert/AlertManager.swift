@@ -85,4 +85,31 @@ class AlertManager {
         }
         
     }
+    func setLocationAlert() {
+        let authAlertController: UIAlertController
+        authAlertController = UIAlertController(
+            title: "위치정보 권한 요청",
+            message: """
+                    상대방과의 위치공유를 위해서 위치정보 권한을
+                    '항상 허용'으로 설정해주세요!
+                    앱을 사용하지 않을 때에도
+                    위치 정보가 수집됩니다.
+                    """,
+            preferredStyle: .alert
+        )
+        
+        let getAuthAction: UIAlertAction
+        getAuthAction = UIAlertAction(
+            title: "항상 허용 설정하기",
+            style: .default,
+            handler: { _ in
+                if let appSettings = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
+                }
+            }
+        )
+        
+        authAlertController.addAction(getAuthAction)
+        self.baseViewController.present(authAlertController, animated: true, completion: nil)
+    }
 }

@@ -13,10 +13,9 @@ import UserNotifications
 import FirebaseMessaging
 class Permission2VC: UIViewController {
     
-    private let viewModel: PermissionVM
+    private let viewModel: PermissionVM?
     let disposeBag = DisposeBag()
-    private var locationManager: CLLocationManager?
-
+    
     init(viewModel: PermissionVM) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -35,22 +34,20 @@ class Permission2VC: UIViewController {
     
     // MARK: Binding
     func setBindings() {
-        startBtn.rx.tap
-            .subscribe(onNext: {
-                self.viewModel.startBtnTapped2.onNext(())
-            }).disposed(by: disposeBag)
+        let input = PermissionVM.Input2(
+            viewDidApearEvent: self.rx.methodInvoked(#selector(viewDidAppear(_:)))
+                .map({ _ in })
+                .asObservable(),
+            startBtnTapped2: self.startBtn.rx.tap.asObservable()
+        )
+        
+        guard let output = self.viewModel?.transform2(input: input, disposeBag: self.disposeBag) else { return }
     }
     
     // MARK: - configure
     func configure() {
         view.backgroundColor = .white
         [background, titleLabel, exLabel, subLabel, startBtn].forEach { view.addSubview($0) }
-        locationManager = CLLocationManager()
-        locationManager?.delegate = self
-        locationManager?.allowsBackgroundLocationUpdates = true
-        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-        self.requestLocationAuthorization()
-        //self.requestNotificationAuthorization() // 알림 권한 요청
     }
     
     // MARK: - UI
@@ -146,56 +143,3 @@ class Permission2VC: UIViewController {
     }
 }
 
-// MARK: - Notification
-extension Permission2VC : UNUserNotificationCenterDelegate {
-    
-    func requestNotificationAuthorization() {
-        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter.current().requestAuthorization(
-            options: authOptions,
-            completionHandler: { _, _ in }
-        )
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler([[.banner, .badge, .sound]])
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        completionHandler()
-    }
-}
-
-// MARK: - CoreLocation
-extension Permission2VC: CLLocationManagerDelegate {
-    
-    func requestLocationAuthorization() {
-        locationManager?.requestWhenInUseAuthorization()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        
-        switch status {
-        case .notDetermined, .authorized:
-            print("notDetermined")
-            locationManager?.requestWhenInUseAuthorization()
-        case .denied, .restricted:
-            print("denied")
-            //시스템 설정으로 유도하기
-            AlertManager(viewController: self)
-                .showRequestLocationServiceAlert()
-                .subscribe(onSuccess: { result in
-                    if result {
-                        if let appSetting = URL(string: UIApplication.openSettingsURLString) {
-                            UIApplication.shared.open(appSetting)
-                        }
-                    }
-                }).disposed(by: disposeBag)
-        case .authorizedWhenInUse, .authorizedAlways:
-            print("authorizedWhenInUse")
-            locationManager?.startUpdatingLocation()
-        @unknown default:
-            fatalError()
-        }
-    }
-}
