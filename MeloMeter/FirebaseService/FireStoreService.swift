@@ -13,11 +13,12 @@ public protocol FireStoreService {
     
     typealias FirebaseData = [String: Any]
     
-    func getDocument(collection: FireStoreCollection) -> Single<[FirebaseData]>
     func getCurrentUser() -> Single<User> //로그인된 사용자 정보 get
     func getDocument(collection: FireStoreCollection, document: String) -> Single<FirebaseData>
     func getDocument(collection: FireStoreCollection, field: String, values: [Any]) -> Single<[FirebaseData]> //필드:값 일치 문서 찾기
     func createDocument(collection: FireStoreCollection, document: String, values: FirebaseData) -> Single<Void> //FireStore 추가
+    func observer(collection: FireStoreCollection, document: String) -> Observable<FirebaseData>
+    
     
 //    func getDocument(collection: FireStoreCollection, document: String) -> Single<FirebaseData>
 //    func getDocument(collection: FireStoreCollection, field: String, condition: [String]) -> Single<[FirebaseData]>
@@ -27,7 +28,7 @@ public protocol FireStoreService {
 //    func createDocument(documents: [String], values: FirebaseData) -> Single<Void>
 //    func updateDocument(collection: FireStoreCollection, document: String, values: FirebaseData) -> Single<Void>
 //    func deleteDocument(collection: FireStoreCollection, document: String) -> Single<Void>
-//    func observer(collection: FireStoreCollection, document: String) -> Observable<FirebaseData>
+    
 //    func observer(documents: [String]) -> Observable<FirebaseData>
 //
 //    // MARK: - Added

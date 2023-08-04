@@ -57,7 +57,7 @@ public final class DefaultFirebaseService: FireStoreService {
         }
     }
     
-    public func getDocument(collection: FireStoreCollection, field: String, values: [Any]) -> Single<[FirebaseData]> {// [String: Any]
+    public func getDocument(collection: FireStoreCollection, field: String, values: [Any]) -> Single<[FirebaseData]> {
         return Single.create { [weak self] single in
                     guard let self else { return Disposables.create() }
                     
@@ -102,26 +102,6 @@ public final class DefaultFirebaseService: FireStoreService {
             return Disposables.create()
         }
     }
-
-    public func getDocument(collection: FireStoreCollection) -> Single<[FirebaseData]> {
-        return Single.create { [weak self] single in
-            guard let self else { return Disposables.create() }
-            
-            self.database.collection(collection.name)
-                .getDocuments { snapshot, error in
-                    if let error = error { single(.failure(error)) }
-                    
-                    guard let snapshot = snapshot else {
-                        single(.failure(FireStoreError.unknown))
-                        return
-                    }
-                    
-                    let data = snapshot.documents.map { $0.data() }
-                    single(.success(data))
-                }
-            return Disposables.create()
-        }
-    }
     
     
 }
@@ -134,6 +114,7 @@ public extension DefaultFirebaseService {
             self.database.collection(collection.name)
                 .document(document)
                 .addSnapshotListener { snapshot, error in
+                    //print("파베 옵저버: ", snapshot) // MARK: 상대 위치 가져올때 에러 - 원인: UserDefaults 대신 파베에서 검색해서 uid2 가져오기 *
                     if let error = error { observable.onError(error) }
                     
                     guard let snapshot = snapshot, let data = snapshot.data() else {

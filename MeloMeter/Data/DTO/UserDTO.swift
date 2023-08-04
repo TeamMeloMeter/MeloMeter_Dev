@@ -15,7 +15,7 @@ struct UserDTO: Codable {
     let name: String
     let birth: String
     let firstDay: String
-    
+    let stateMessage: String?
     
     // MARK: - Methods
     func toModel() -> UserModel {
@@ -24,7 +24,8 @@ struct UserDTO: Codable {
             phoneNumber: phoneNumber,
             name: name,
             birth: Date.fromStringOrNow(birth),
-            firstDay: Date.fromStringOrNow(firstDay)
+            firstDay: Date.fromStringOrNow(firstDay),
+            stateMessage: stateMessage ?? "상태메세지를 변경해보세요!"
         )
     }
 }

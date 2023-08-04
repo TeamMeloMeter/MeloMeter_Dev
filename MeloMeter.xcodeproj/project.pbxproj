@@ -27,6 +27,9 @@
 		5230B27A2A7790A300781623 /* DefaultLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2792A7790A300781623 /* DefaultLocationService.swift */; };
 		5230B27C2A77926A00781623 /* MainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B27B2A77926A00781623 /* MainUseCase.swift */; };
 		5230B2802A7C20D400781623 /* BackgroundTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B27F2A7C20D400781623 /* BackgroundTaskManager.swift */; };
+		5230B2822A7CFF6F00781623 /* MyProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2812A7CFF6F00781623 /* MyProfileCoordinator.swift */; };
+		5230B2842A7D029200781623 /* MyProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2832A7D029200781623 /* MyProfileUseCase.swift */; };
+		5230B2862A7D048400781623 /* MyProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2852A7D048400781623 /* MyProfileVM.swift */; };
 		524138282A62E7E8002AADA6 /* CoupleCombineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524138272A62E7E8002AADA6 /* CoupleCombineModel.swift */; };
 		5241382A2A62EB95002AADA6 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524138292A62EB95002AADA6 /* Coordinator.swift */; };
 		5241382C2A62F240002AADA6 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5241382B2A62F240002AADA6 /* AppCoordinator.swift */; };
@@ -36,6 +39,8 @@
 		52697B7529EEB7B2002BDD04 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697B7429EEB7B2002BDD04 /* SceneDelegate.swift */; };
 		52697B7C29EEB7B3002BDD04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52697B7B29EEB7B3002BDD04 /* Assets.xcassets */; };
 		52697B7F29EEB7B3002BDD04 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52697B7D29EEB7B3002BDD04 /* LaunchScreen.storyboard */; };
+		526EB85E2A7D5992005B1940 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526EB85D2A7D5992005B1940 /* UserRepository.swift */; };
+		526EB8602A7D59A4005B1940 /* UserRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526EB85F2A7D59A4005B1940 /* UserRepositoryP.swift */; };
 		5270EC042A445077007FF444 /* StartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5270EC032A445077007FF444 /* StartVC.swift */; };
 		5270EC0C2A44614A007FF444 /* PhoneCertifiedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5270EC0B2A44614A007FF444 /* PhoneCertifiedVC.swift */; };
 		5270EC102A460354007FF444 /* AuthNumVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5270EC0F2A460354007FF444 /* AuthNumVC.swift */; };
@@ -110,7 +115,6 @@
 		52F2083A29FBB31D0043BCA4 /* MyProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083929FBB31D0043BCA4 /* MyProfileVC.swift */; };
 		52F2083C29FBB3490043BCA4 /* MyProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */; };
 		52F2084029FBFF280043BCA4 /* DdayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083F29FBFF280043BCA4 /* DdayViewController.swift */; };
-		52F2084229FD63F40043BCA4 /* MyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2084129FD63F40043BCA4 /* MyProfileView.swift */; };
 		52F305302A168CE900112A04 /* DisconnectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F3052F2A168CE900112A04 /* DisconnectVC.swift */; };
 		52F305322A168D6000112A04 /* DisconnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305312A168D6000112A04 /* DisconnectView.swift */; };
 		52F305342A16B7AE00112A04 /* RecoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305332A16B7AE00112A04 /* RecoveryView.swift */; };
@@ -139,6 +143,9 @@
 		5230B2792A7790A300781623 /* DefaultLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLocationService.swift; sourceTree = "<group>"; };
 		5230B27B2A77926A00781623 /* MainUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUseCase.swift; sourceTree = "<group>"; };
 		5230B27F2A7C20D400781623 /* BackgroundTaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTaskManager.swift; sourceTree = "<group>"; };
+		5230B2812A7CFF6F00781623 /* MyProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileCoordinator.swift; sourceTree = "<group>"; };
+		5230B2832A7D029200781623 /* MyProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileUseCase.swift; sourceTree = "<group>"; };
+		5230B2852A7D048400781623 /* MyProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileVM.swift; sourceTree = "<group>"; };
 		524138272A62E7E8002AADA6 /* CoupleCombineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleCombineModel.swift; sourceTree = "<group>"; };
 		524138292A62EB95002AADA6 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		5241382B2A62F240002AADA6 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
@@ -149,6 +156,8 @@
 		52697B7429EEB7B2002BDD04 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		52697B7B29EEB7B3002BDD04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52697B7E29EEB7B3002BDD04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		526EB85D2A7D5992005B1940 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		526EB85F2A7D59A4005B1940 /* UserRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryP.swift; sourceTree = "<group>"; };
 		5270EC032A445077007FF444 /* StartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartVC.swift; sourceTree = "<group>"; };
 		5270EC0B2A44614A007FF444 /* PhoneCertifiedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCertifiedVC.swift; sourceTree = "<group>"; };
 		5270EC0F2A460354007FF444 /* AuthNumVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNumVC.swift; sourceTree = "<group>"; };
@@ -215,7 +224,6 @@
 		52F2083929FBB31D0043BCA4 /* MyProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileVC.swift; sourceTree = "<group>"; };
 		52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileModel.swift; sourceTree = "<group>"; };
 		52F2083F29FBFF280043BCA4 /* DdayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayViewController.swift; sourceTree = "<group>"; };
-		52F2084129FD63F40043BCA4 /* MyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileView.swift; sourceTree = "<group>"; };
 		52F3052F2A168CE900112A04 /* DisconnectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectVC.swift; sourceTree = "<group>"; };
 		52F305312A168D6000112A04 /* DisconnectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectView.swift; sourceTree = "<group>"; };
 		52F305332A16B7AE00112A04 /* RecoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryView.swift; sourceTree = "<group>"; };
@@ -349,7 +357,7 @@
 		5230B2582A727D1100781623 /* MyProfile */ = {
 			isa = PBXGroup;
 			children = (
-				52F2084129FD63F40043BCA4 /* MyProfileView.swift */,
+				5230B2852A7D048400781623 /* MyProfileVM.swift */,
 				52F2083929FBB31D0043BCA4 /* MyProfileVC.swift */,
 			);
 			path = MyProfile;
@@ -358,6 +366,7 @@
 		5230B2592A727D1C00781623 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
+				5230B2812A7CFF6F00781623 /* MyProfileCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -451,6 +460,7 @@
 			children = (
 				5271D41E2A5887E500FC7606 /* LogInRepository.swift */,
 				2108F0422A6EC291002EED7A /* ProfileInsertRepository.swift */,
+				526EB85D2A7D5992005B1940 /* UserRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -523,6 +533,7 @@
 			children = (
 				5290BFB32A7270DF00D734EE /* LogInRepositoryP.swift */,
 				5290BFB62A72726200D734EE /* ProfileInsertRepositoryP.swift */,
+				526EB85F2A7D59A4005B1940 /* UserRepositoryP.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -533,6 +544,7 @@
 				5271D4122A55BF1B00FC7606 /* LogInUseCase.swift */,
 				2108F0402A6EC1F0002EED7A /* ProfileInsertUseCase.swift */,
 				5230B27B2A77926A00781623 /* MainUseCase.swift */,
+				5230B2832A7D029200781623 /* MyProfileUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -867,7 +879,6 @@
 			files = (
 				5271D4172A5841E500FC7606 /* FireStoreService.swift in Sources */,
 				52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */,
-				52F2084229FD63F40043BCA4 /* MyProfileView.swift in Sources */,
 				52F00FF42A09308E0014FC01 /* AddDdayView.swift in Sources */,
 				214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */,
 				524138282A62E7E8002AADA6 /* CoupleCombineModel.swift in Sources */,
@@ -886,6 +897,7 @@
 				52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */,
 				5271D40B2A544A2D00FC7606 /* LogInVM.swift in Sources */,
 				5230B2802A7C20D400781623 /* BackgroundTaskManager.swift in Sources */,
+				5230B2842A7D029200781623 /* MyProfileUseCase.swift in Sources */,
 				52F0100D2A0A4FD20014FC01 /* AnswerView.swift in Sources */,
 				2108F0432A6EC292002EED7A /* ProfileInsertRepository.swift in Sources */,
 				52F010222A0ADD500014FC01 /* EditStatusMessageVC.swift in Sources */,
@@ -913,6 +925,7 @@
 				52F305362A16B7F500112A04 /* RecoveryVC.swift in Sources */,
 				52CE6EA72A02571E00E43D39 /* MapVC.swift in Sources */,
 				52F00FF82A0936FD0014FC01 /* NoticeView.swift in Sources */,
+				5230B2862A7D048400781623 /* MyProfileVM.swift in Sources */,
 				5290BFB72A72726200D734EE /* ProfileInsertRepositoryP.swift in Sources */,
 				5271D4192A58429000FC7606 /* FireStoreCollection.swift in Sources */,
 				527547EE2A68FC9000313EFC /* CustomAlertVC.swift in Sources */,
@@ -924,6 +937,7 @@
 				2108F0472A6EC48B002EED7A /* UserDTO.swift in Sources */,
 				527547F02A69103200313EFC /* ProgressDialogView.swift in Sources */,
 				52F00FFC2A093A410014FC01 /* NoticeTableViewCell.swift in Sources */,
+				526EB8602A7D59A4005B1940 /* UserRepositoryP.swift in Sources */,
 				5241382E2A62F2ED002AADA6 /* LogInCoordinator.swift in Sources */,
 				5271D40F2A5576E500FC7606 /* PermissionVC.swift in Sources */,
 				52F010142A0AAD380014FC01 /* EditProfileViewController.swift in Sources */,
@@ -943,7 +957,9 @@
 				5271D4062A51DBDD00FC7606 /* ProfileInsertVC.swift in Sources */,
 				5271D4302A605B0900FC7606 /* Encodable+.swift in Sources */,
 				5270EC0C2A44614A007FF444 /* PhoneCertifiedVC.swift in Sources */,
+				5230B2822A7CFF6F00781623 /* MyProfileCoordinator.swift in Sources */,
 				52F2083C29FBB3490043BCA4 /* MyProfileModel.swift in Sources */,
+				526EB85E2A7D5992005B1940 /* UserRepository.swift in Sources */,
 				52F00FFA2A0938480014FC01 /* NoticeViewController.swift in Sources */,
 				2108F0492A6EC565002EED7A /* UserModel.swift in Sources */,
 				5271D4322A606D0B00FC7606 /* Dictionary+.swift in Sources */,

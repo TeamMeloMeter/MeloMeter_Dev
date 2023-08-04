@@ -11,7 +11,6 @@ final class MainCoordinator: Coordinator {
     
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
-    var inviteCode2: String?
     
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
