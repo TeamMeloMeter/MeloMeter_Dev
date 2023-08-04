@@ -11,14 +11,12 @@ import RxSwift
 
 class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
     
-    private let viewModel: LogInVM
+    private let viewModel: MyProfileVM?
     let disposeBag = DisposeBag()
     
-    init(viewModel: LogInVM) {
+    init(viewModel: MyProfileVM) {
         self.viewModel = viewModel
-   
         super.init(nibName: nil, bundle: nil)
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -40,6 +38,32 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: Binding
     func setBindings() {
+        let input = MyProfileVM.Input(
+            viewDidApearEvent: self.rx.methodInvoked(#selector(viewDidAppear(_:)))
+                .map({ _ in })
+                .asObservable()
+        )
+            
+        guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else { return }
+        
+        output.userName
+            .asDriver(onErrorJustReturn: "이름")
+            .drive(onNext: { [weak self] name in
+                self?.nameLabel.text = name
+            })
+            .disposed(by: disposeBag)
+        output.userPhoneNumber
+            .asDriver(onErrorJustReturn: "+82 010-????-????")
+            .drive(onNext: { [weak self] number in
+                self?.phoneNumLabel.text = number
+            })
+            .disposed(by: disposeBag)
+        output.stateMessage
+            .asDriver(onErrorJustReturn: "상태메세지를 변경해보세요!")
+            .drive(onNext: { [weak self] message in
+                self?.stateMessageLabel.text = message
+            })
+            .disposed(by: disposeBag)
         
     }
     
@@ -63,67 +87,8 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
         navigationController?.navigationBar.standardAppearance = appearance
     }
     
-    // 뷰 터치 설정
-    func setAlarmViewTouch() {
-//        //터치 가능하도록 설정
-//        myProfileView.alarmView.isUserInteractionEnabled = true
-//        myProfileView.dDayView.isUserInteractionEnabled = true
-//        myProfileView.hundredQnAView.isUserInteractionEnabled = true
-//        myProfileView.noticeStackView.isUserInteractionEnabled = true
-//        myProfileView.qnAStackView.isUserInteractionEnabled = true
-//        myProfileView.infoStackView.isUserInteractionEnabled = true
-//
-//        //제스쳐 추가
-//        myProfileView.profileEditButton.addTarget(self, action: #selector(editProfileBtnTapped), for: .touchUpInside)
-//        myProfileView.alarmView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alarmViewTapped)))
-//        myProfileView.dDayView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dDayViewTapped)))
-//        myProfileView.hundredQnAView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.hundredQnAViewTapped)))
-//        myProfileView.noticeStackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.noticeViewTapped)))
-//        myProfileView.qnAStackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.qnAViewTapped)))
-        
-    }
-    
     // MARK: Event
-    //프로필편집 화면으로
-    @objc func editProfileBtnTapped(){
-        let editProfileVC = EditProfileViewController()
-        editProfileVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(editProfileVC, animated: true)
-    }
-    //알림 화면으로
-    @objc func alarmViewTapped() {
-        let alarmViewController = AlarmViewController()
-        alarmViewController.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(alarmViewController, animated: true)
-    }
-    //기념일 화면으로
-    @objc func dDayViewTapped() {
-        let dDayViewController = DdayViewController()
-        dDayViewController.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(dDayViewController, animated: true)
-        
-    }
-    
-    //백문백답 화면으로 - 임시
-    @objc func hundredQnAViewTapped() {
-        let alarmViewController = AlarmViewController()
-        alarmViewController.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(alarmViewController, animated: true)
-    }
-    
-    // 공지사항 화면으로
-    @objc func noticeViewTapped() {
-        let noticeViewController = NoticeViewController()
-        noticeViewController.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(noticeViewController, animated: true)
-    }
-    
-    // 자주묻는 질문 화면으로
-    @objc func qnAViewTapped() {
-        let qnAViewController = QnAViewController()
-        qnAViewController.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(qnAViewController, animated: true)
-    }
+
     
     // MARK: UI
     //마이페이지 상단 배경 뷰
@@ -468,9 +433,9 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
     private func topViewConstraints() {
         topView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            topView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
-            topView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
-            topView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            topView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            topView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+            topView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             topView.heightAnchor.constraint(equalToConstant: 444)
            
         ])
@@ -481,7 +446,7 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
         NSLayoutConstraint.activate([
             nameLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 25),
             nameLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -298),
-            nameLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 47),
+            nameLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 47),
             nameLabel.widthAnchor.constraint(equalToConstant: 52),
             nameLabel.heightAnchor.constraint(equalToConstant: 28)
         ])
@@ -492,7 +457,7 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
         NSLayoutConstraint.activate([
             phoneNumLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 25),
             phoneNumLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -239),
-            phoneNumLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 70),
+            phoneNumLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 70),
             phoneNumLabel.widthAnchor.constraint(equalToConstant: 111),
             phoneNumLabel.heightAnchor.constraint(equalToConstant: 28)
         ])
@@ -502,7 +467,7 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
         NSLayoutConstraint.activate([
             stateMessageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 25),
             stateMessageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -202),
-            stateMessageView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 106),
+            stateMessageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 106),
             stateMessageView.widthAnchor.constraint(equalToConstant: 110),
             stateMessageView.heightAnchor.constraint(equalToConstant: 28)
            
@@ -513,14 +478,9 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
         stateMessageLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            stateMessageLabel.leadingAnchor.constraint(equalTo: stateMessageView.leadingAnchor, constant: 0),
-            stateMessageLabel.trailingAnchor.constraint(equalTo: stateMessageView.trailingAnchor, constant: 0),
+            stateMessageLabel.centerXAnchor.constraint(equalTo: stateMessageView.centerXAnchor),
             stateMessageLabel.topAnchor.constraint(equalTo: stateMessageView.topAnchor),
             stateMessageLabel.bottomAnchor.constraint(equalTo: stateMessageView.bottomAnchor),
-            stateMessageLabel.widthAnchor.constraint(equalToConstant: 120),
-            stateMessageLabel.heightAnchor.constraint(equalToConstant: 28)
-            
-            
         ])
     }
     

@@ -64,8 +64,8 @@ extension TabBarCoordinator {
             self.connectMainFlow(to: tabNavigationController)
 //        case .chat:
 //            self.connectChatFlow(to: tabNavigationController)
-//        case .myPage:
-//            self.connectMyPageFlow(to: tabNavigationController)
+        case .myPage:
+            self.connectMyProfileFlow(to: tabNavigationController)
         default:
             print("탭바코디네이터")
         }
@@ -76,6 +76,13 @@ extension TabBarCoordinator {
         mainCoordinator.start()
         childCoordinators.append(mainCoordinator)
     }
+    
+    func connectMyProfileFlow(to tabNavigationController: UINavigationController) {
+        let myProfileCoordinator = MyProfileCoordinator(tabNavigationController)
+        myProfileCoordinator.start()
+        childCoordinators.append(myProfileCoordinator)
+    }
+    
 }
 
 extension TabBarCoordinator: CoordinatorDelegate {
