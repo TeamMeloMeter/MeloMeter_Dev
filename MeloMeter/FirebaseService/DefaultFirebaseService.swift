@@ -35,11 +35,12 @@ public final class DefaultFirebaseService: FireStoreService {
     
     public func getCurrentUser() -> Single<User> {
         return Single.create { single in
-            guard let currentUser = Auth.auth().currentUser else{ return Disposables.create()}
+            guard let currentUser = Auth.auth().currentUser else{single(.failure(FireStoreError.unknown)); return Disposables.create()}
             single(.success(currentUser))
             return Disposables.create()
         }
     }
+    
     public func getDocument(collection: FireStoreCollection, document: String) -> Single<FirebaseData> {
         return Single<FirebaseData>.create { [weak self] single in
             guard let self else { return Disposables.create() }
@@ -88,21 +89,33 @@ public final class DefaultFirebaseService: FireStoreService {
             if document == "" { //문서ID 자동생성
                 newDocument = self.database.collection(collection.name)
                     .document()
+                UserDefaults.standard.set(newDocument.documentID, forKey: "coupleDocumentID")
             }else { //문서ID 지정생성
                 newDocument = self.database.collection(collection.name)
                     .document(document)
             }
-            let documentID = newDocument.documentID
             newDocument.setData(values, merge: true) { error in
                 if let error = error { single(.failure(error)) }
                 single(.success(()))
             }
-            if document == "" { UserDefaults.standard.set("\(documentID)", forKey: "coupleDocumentID") }
 
             return Disposables.create()
         }
     }
     
+    public func updateDocument(collection: FireStoreCollection, document: String, values: FirebaseData) -> Single<Void> {
+        return Single.create { [weak self] single in
+            guard let self else { return Disposables.create() }
+            
+            self.database.collection(collection.name)
+                .document(document)
+                .updateData(values) { error in
+                    if let error = error { single(.failure(error)) }
+                    single(.success(()))
+                }
+            return Disposables.create()
+        }
+    }
     
 }
 
@@ -127,4 +140,12 @@ public extension DefaultFirebaseService {
             return Disposables.create()
         }
     }
+    
+    func setAccessLevel(_ level: String) -> Single<Void> {
+        return self.getCurrentUser()
+            .flatMap({ user -> Single<Void> in
+                return self.updateDocument(collection: .Users, document: user.uid, values: ["accessLevel": level])
+            })
+    }
+    
 }

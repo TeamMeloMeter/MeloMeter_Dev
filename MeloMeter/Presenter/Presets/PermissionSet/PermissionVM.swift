@@ -10,7 +10,7 @@ import RxSwift
 
 class PermissionVM {
 
-    weak var coordinator: LogInCoordinator?
+    weak var coordinator: PresetCoordinator?
     private let disposeBag = DisposeBag()
     private var mainUseCase: MainUseCase
     
@@ -27,7 +27,7 @@ class PermissionVM {
         
     }
     
-    init(coordinator: LogInCoordinator, mainUseCase: MainUseCase) {
+    init(coordinator: PresetCoordinator, mainUseCase: MainUseCase) {
         
         self.coordinator = coordinator
         self.mainUseCase = mainUseCase

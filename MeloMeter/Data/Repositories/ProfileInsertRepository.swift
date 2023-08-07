@@ -16,19 +16,38 @@ class ProfileInsertRepository: ProfileInsertRepositoryP {
     let disposeBag = DisposeBag()
     
     // 사용자 정보 데이터베이스 저장
-    func insertUserInfo(user: UserModel) -> Single<Void> {
+    func insertUserInfo(user: UserModel, dDay: DdayModel) -> Single<Void> {
         return Single.create { [weak self] single in
             guard let self = self else { return Disposables.create() }
+            var coupleDocumentID = ""
             //모델객체 -> DTO객체
             let userDTO = user.toProfileInsertDTO()
-            let userDic = [""]
-            guard let values = userDTO.asDictionary else { return Disposables.create() }
-            self.defaultFirebaseService.createDocument(collection: .Users,
+            let dDayDTO = dDay.toDTO()
+            guard let userValues = userDTO.asDictionary, let coupleValues = dDayDTO.asDictionary else { return Disposables.create() }
+            
+            if let coupleID = UserDefaults.standard.string(forKey: "coupleDocumentID") {
+                coupleDocumentID = coupleID
+            }else {
+                self.defaultFirebaseService.getDocument(collection: .Users, document: userDTO.uid)
+                    .subscribe(onSuccess: { userInfo in
+                        guard let coupleID = userInfo["coupleDocumentID"] as? String else{ single(.failure(FireStoreError.unknown)); return }
+                        coupleDocumentID = coupleID
+                    })
+                    .disposed(by: disposeBag)
+            }
+            let couplesUpdate = self.defaultFirebaseService.updateDocument(collection: .Couples,
+                                                                           document: coupleDocumentID,
+                                                                           values: coupleValues)
+            let usersUpdate = self.defaultFirebaseService.createDocument(collection: .Users,
                                                        document: userDTO.uid,
-                                                       values: values)
-            .subscribe(onSuccess: {
-                UserDefaults.standard.set(3, forKey: "logInLevel")
-                single(.success(()) )
+                                                       values: userValues)
+            Single.zip(couplesUpdate, usersUpdate)
+            .subscribe(onSuccess: { _,_ in
+                self.defaultFirebaseService.setAccessLevel("Complete")
+                    .subscribe(onSuccess: {
+                        single(.success(()) )
+                    })
+                    .disposed(by: self.disposeBag)
             }, onFailure: { error in
                 single(.failure(error))
             })

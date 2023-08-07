@@ -17,7 +17,7 @@ class MyProfileVM {
 
     struct Input {
         let viewDidApearEvent: Observable<Void>
-        
+        let dDayViewTapEvent: Observable<Void>
     }
     
     struct Output {
@@ -50,6 +50,13 @@ class MyProfileVM {
                         }
                     })
                     .disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
+        
+        input.dDayViewTapEvent
+            .subscribe(onNext: {[weak self] _ in
+                guard let self = self else{ return }
+                self.coordinator?.showDdayVC()
             })
             .disposed(by: disposeBag)
         

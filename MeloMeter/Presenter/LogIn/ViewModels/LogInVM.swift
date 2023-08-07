@@ -76,7 +76,7 @@ class LogInVM {
             guard let self = self else{ return }
             self.logInUseCase.combineCoupleService(text)
                 .subscribe(onSuccess: {
-                    coordinator.showProfileInsertVC()
+                    coordinator.finish()
                 }, onFailure: { error in
                     self.combineRequest.onNext(false)
                 }).disposed(by: disposeBag)

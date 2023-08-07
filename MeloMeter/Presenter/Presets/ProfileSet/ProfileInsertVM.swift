@@ -13,7 +13,7 @@ class ProfileInsertVM {
     
     let profileInsertUseCase: ProfileInsertUseCase
     let disposeBag = DisposeBag()
-    weak var coordinator: LogInCoordinator?
+    weak var coordinator: PresetCoordinator?
     
     // MARK: - Input
     var userInput = PublishSubject<[String?]>()
@@ -22,7 +22,7 @@ class ProfileInsertVM {
     var sendProfileInsertRequest = PublishSubject<Bool>()
     
     // MARK: - Init
-    init(coordinator: LogInCoordinator, profileInsertUseCase: ProfileInsertUseCase) {
+    init(coordinator: PresetCoordinator, profileInsertUseCase: ProfileInsertUseCase) {
         self.coordinator = coordinator
         self.profileInsertUseCase = profileInsertUseCase
         

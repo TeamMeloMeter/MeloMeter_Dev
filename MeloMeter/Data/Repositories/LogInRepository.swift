@@ -27,7 +27,6 @@ class LogInRepository: LogInRepositoryP {
             guard let self = self else { return Disposables.create() }
             guard let number = phoneNumber else { return Disposables.create() }
             self.userInfoModel.phoneNumber = "+82 \(number.components(separatedBy: "-").joined())"
-            UserDefaults.standard.set(0, forKey: "logInLevel")
 
             PhoneAuthProvider.provider()
                 .verifyPhoneNumber(self.userInfoModel.phoneNumber ?? "", uiDelegate: nil) { (verificationID, error) in
@@ -66,7 +65,11 @@ class LogInRepository: LogInRepositoryP {
                     single(.failure(error))
                 }else {
                     self.userInFirestore().subscribe(onSuccess: { inviteCode in
-                        single(.success(inviteCode))
+                        self.firebaseService.setAccessLevel("Authenticated")
+                            .subscribe(onSuccess: {
+                                single(.success(inviteCode))
+                            })
+                            .disposed(by: self.disposeBag)
                     }, onFailure: { error in
                         single(.failure(error))
                     }).disposed(by: self.disposeBag)
@@ -102,7 +105,6 @@ class LogInRepository: LogInRepositoryP {
                                                        values: values)
             .subscribe(onSuccess: {
                 single(.success(inviteCode))
-                UserDefaults.standard.set(1, forKey: "logInLevel")
                 UserDefaults.standard.set("\(inviteCode)", forKey: "inviteCode")
                 UserDefaults.standard.set("\(uid)", forKey: "uid")
                 UserDefaults.standard.set("\(phoneNumber)", forKey: "phoneNumber")
@@ -138,24 +140,33 @@ class LogInRepository: LogInRepositoryP {
                 .flatMap{ user -> Single<Void> in
                     return self.firebaseService.getDocument(collection: .Users, field: "inviteCode", values: [inviteCode])
                         .flatMap{ data -> Single<Void> in
-                            guard !data.isEmpty else{
-                                single(.failure(CombineError.falure)); return Single.just(())}
-                            guard let phoneNumber1 = user.phoneNumber, let uid2 = data.last?["uid"] as? String, let phoneNumber2 = data.last?["phoneNumber"] as? String else{ return Single.just(()) }
+                            guard !data.isEmpty else{ return Single.just(()) }
+                            guard let uid2 = data.last?["uid"] as? String else{ return Single.just(()) }
                             UserDefaults.standard.set("\(uid2)", forKey: "uid2")
-                            let dto = CoupleCombineDTO(uid1: user.uid,
-                                                phoneNumber1: phoneNumber1,
-                                                uid2: uid2,
-                                                phoneNumber2: phoneNumber2,
-                                                createdAt: date)
+                            let updateMyDB = self.firebaseService.updateDocument(collection: .Users, document: user.uid, values: ["otherUid": uid2])
+                            let updateOtherDB = self.firebaseService.updateDocument(collection: .Users, document: uid2, values: ["otherUid": user.uid])
                             
-                            guard let values = dto.asDictionary else{ return Single.just(()) }
+                            return Single.zip(updateMyDB, updateOtherDB)
+                                .flatMap({ _,_ -> Single<Void> in
+                                    return self.firebaseService.createDocument(collection: .Couples, document: "", values: ["createdAt" : date])
+                                })
                             
-                            return self.firebaseService.createDocument(collection: .Couples, document: "", values: values)
                         }
                 }
                 .subscribe(onSuccess: {
-                    UserDefaults.standard.set(2, forKey: "logInLevel")
-                    single(.success(()))
+                    guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return }
+                    guard let uid2 = UserDefaults.standard.string(forKey: "uid2") else{ return }
+                    guard let coupleDocumentID = UserDefaults.standard.string(forKey: "coupleDocumentID") else{ return }
+                    let update1 = self.firebaseService.updateDocument(collection: .Users, document: uid, values: ["coupleID" : coupleDocumentID])
+                    let update2 = self.firebaseService.updateDocument(collection: .Users, document: uid2, values: ["coupleID" : coupleDocumentID])
+                    let updateAccessLevel = self.firebaseService.setAccessLevel("CoupleCombined")
+                    let updateOtherAccessLevel = self.firebaseService.updateDocument(collection: .Users, document: uid2, values: ["accessLevel" : "CoupleCombined"])
+                    
+                    Single.zip(update1, update2, updateAccessLevel, updateOtherAccessLevel)
+                        .subscribe(onSuccess: { _, _, _, _ in
+                            single(.success(()))
+                        })
+                        .disposed(by: self.disposeBag)
                 }, onFailure: { error in
                     single(.failure(error))
                 })
@@ -163,4 +174,6 @@ class LogInRepository: LogInRepositoryP {
             return Disposables.create()
         }
     }
+    
+    
 }

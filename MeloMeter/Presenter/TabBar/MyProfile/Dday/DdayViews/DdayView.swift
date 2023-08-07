@@ -11,20 +11,20 @@ import UIKit
 class DdayView: UIView {
     
     //상단 배경 뷰
-     lazy var topView: UIView = {
-         let view = UIView()
-         view.backgroundColor = .white
-         view.layer.cornerRadius = 8
-         view.layer.masksToBounds = false
-         view.layer.applyShadow(color: #colorLiteral(red: 0.7137254902, green: 0.7137254902, blue: 0.7137254902, alpha: 1), alpha: 0.25, x: 3, y: 2, blur: 10)
-         view.addSubview(dDayImageView)
-         view.addSubview(nomalLabel)
-         view.addSubview(countDateLabel)
-         view.addSubview(startDateLabel)
-         
-         return view
-     }()
-   
+    lazy var topView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 8
+        view.layer.masksToBounds = false
+        view.layer.applyShadow(color: #colorLiteral(red: 0.7137254902, green: 0.7137254902, blue: 0.7137254902, alpha: 1), alpha: 0.25, x: 3, y: 2, blur: 10)
+        view.addSubview(dDayImageView)
+        view.addSubview(nomalLabel)
+        view.addSubview(countDateLabel)
+        view.addSubview(startDateLabel)
+        
+        return view
+    }()
+    
     //로고 이미지
     let dDayImageView: UIImageView = {
         let imageView = UIImageView()
@@ -34,7 +34,7 @@ class DdayView: UIView {
         return imageView
     }()
     
-   
+    
     
     // 우리 함께한지 label
     private let nomalLabel: UILabel = {
@@ -67,7 +67,7 @@ class DdayView: UIView {
         tableView.backgroundColor = .white
         tableView.rowHeight = 80
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-
+        
         return tableView
     }()
     
@@ -105,7 +105,7 @@ class DdayView: UIView {
             topView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             topView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 9),
             topView.heightAnchor.constraint(equalToConstant: 340)
-           
+            
         ])
     }
     
@@ -118,7 +118,7 @@ class DdayView: UIView {
             dDayImageView.heightAnchor.constraint(equalToConstant: 147)
         ])
     }
- 
+    
     
     private func labelConstraint() {
         nomalLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -142,7 +142,7 @@ class DdayView: UIView {
     
     private func dDayTableViewConstraint() {
         dDayTableView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             dDayTableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             dDayTableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),

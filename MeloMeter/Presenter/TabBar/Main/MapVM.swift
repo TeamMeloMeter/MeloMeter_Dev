@@ -43,6 +43,7 @@ class MapVM {
                 self?.mainUseCase.checkAuthorization()
                 self?.mainUseCase.requestLocation()
                 self?.mainUseCase.requestOtherLocation()
+                self?.mainUseCase.locationStart()
             })
             .disposed(by: disposeBag)
         
@@ -55,7 +56,7 @@ class MapVM {
             .disposed(by: disposeBag)
         
         self.mainUseCase.authorizationStatus
-            .map({ $0 == .halfallowed || $0 == .disallowed })
+            .map({ $0 == .halfallowed || $0 == .disallowed || $0 == .notDetermined})
             .bind(to: output.authorizationAlertShouldShow)
             .disposed(by: disposeBag)
         

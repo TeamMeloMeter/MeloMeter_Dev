@@ -13,6 +13,7 @@ class MyProfileUseCase {
     private let userRepository: UserRepository
     private var disposeBag: DisposeBag
     private let uid: String
+    
     required init(userRepository: UserRepository) {
         self.userRepository = userRepository
         self.disposeBag = DisposeBag()

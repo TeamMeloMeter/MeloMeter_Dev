@@ -14,6 +14,11 @@
 		2108F04B2A702A77002EED7A /* PermissionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108F04A2A702A77002EED7A /* PermissionVM.swift */; };
 		214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */; };
 		45307ED7030327D357C85252 /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5A8595AED1BC03C3846C34F /* Pods_MeloMeter.framework */; };
+		521D41E52A7FFAD200E5CCDA /* DdayVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41E42A7FFAD200E5CCDA /* DdayVM.swift */; };
+		521D41E72A7FFD5F00E5CCDA /* DdayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */; };
+		521D41EC2A801D1200E5CCDA /* DdayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41EB2A801D1200E5CCDA /* DdayModel.swift */; };
+		521D41EE2A801D5700E5CCDA /* DdayDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41ED2A801D5700E5CCDA /* DdayDTO.swift */; };
+		521D41F42A814FFA00E5CCDA /* PresetCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41F32A814FFA00E5CCDA /* PresetCoordinator.swift */; };
 		5230B2652A72859200781623 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25C2A72859100781623 /* Pretendard-Light.otf */; };
 		5230B2662A72859200781623 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25D2A72859100781623 /* Pretendard-Medium.otf */; };
 		5230B2672A72859200781623 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25E2A72859100781623 /* Pretendard-Thin.otf */; };
@@ -30,7 +35,6 @@
 		5230B2822A7CFF6F00781623 /* MyProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2812A7CFF6F00781623 /* MyProfileCoordinator.swift */; };
 		5230B2842A7D029200781623 /* MyProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2832A7D029200781623 /* MyProfileUseCase.swift */; };
 		5230B2862A7D048400781623 /* MyProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2852A7D048400781623 /* MyProfileVM.swift */; };
-		524138282A62E7E8002AADA6 /* CoupleCombineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524138272A62E7E8002AADA6 /* CoupleCombineModel.swift */; };
 		5241382A2A62EB95002AADA6 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524138292A62EB95002AADA6 /* Coordinator.swift */; };
 		5241382C2A62F240002AADA6 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5241382B2A62F240002AADA6 /* AppCoordinator.swift */; };
 		5241382E2A62F2ED002AADA6 /* LogInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5241382D2A62F2ED002AADA6 /* LogInCoordinator.swift */; };
@@ -62,7 +66,6 @@
 		5271D42E2A604BF400FC7606 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271D42D2A604BF400FC7606 /* Date+.swift */; };
 		5271D4302A605B0900FC7606 /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271D42F2A605B0900FC7606 /* Encodable+.swift */; };
 		5271D4322A606D0B00FC7606 /* Dictionary+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271D4312A606D0B00FC7606 /* Dictionary+.swift */; };
-		5271D4342A60BF5300FC7606 /* CoupleCombineDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271D4332A60BF5300FC7606 /* CoupleCombineDTO.swift */; };
 		527547EE2A68FC9000313EFC /* CustomAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527547ED2A68FC9000313EFC /* CustomAlertVC.swift */; };
 		527547F02A69103200313EFC /* ProgressDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527547EF2A69103200313EFC /* ProgressDialogView.swift */; };
 		527547F42A6D23E400313EFC /* KakaoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527547F32A6D23E400313EFC /* KakaoService.swift */; };
@@ -114,7 +117,7 @@
 		52F010262A0B79270014FC01 /* EditBirthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010252A0B79270014FC01 /* EditBirthView.swift */; };
 		52F2083A29FBB31D0043BCA4 /* MyProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083929FBB31D0043BCA4 /* MyProfileVC.swift */; };
 		52F2083C29FBB3490043BCA4 /* MyProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */; };
-		52F2084029FBFF280043BCA4 /* DdayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083F29FBFF280043BCA4 /* DdayViewController.swift */; };
+		52F2084029FBFF280043BCA4 /* DdayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083F29FBFF280043BCA4 /* DdayVC.swift */; };
 		52F305302A168CE900112A04 /* DisconnectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F3052F2A168CE900112A04 /* DisconnectVC.swift */; };
 		52F305322A168D6000112A04 /* DisconnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305312A168D6000112A04 /* DisconnectView.swift */; };
 		52F305342A16B7AE00112A04 /* RecoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305332A16B7AE00112A04 /* RecoveryView.swift */; };
@@ -130,6 +133,11 @@
 		2108F0482A6EC565002EED7A /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		2108F04A2A702A77002EED7A /* PermissionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionVM.swift; sourceTree = "<group>"; };
 		214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardStatusDetector.swift; sourceTree = "<group>"; };
+		521D41E42A7FFAD200E5CCDA /* DdayVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayVM.swift; sourceTree = "<group>"; };
+		521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayUseCase.swift; sourceTree = "<group>"; };
+		521D41EB2A801D1200E5CCDA /* DdayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayModel.swift; sourceTree = "<group>"; };
+		521D41ED2A801D5700E5CCDA /* DdayDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayDTO.swift; sourceTree = "<group>"; };
+		521D41F32A814FFA00E5CCDA /* PresetCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetCoordinator.swift; sourceTree = "<group>"; };
 		5230B25C2A72859100781623 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		5230B25D2A72859100781623 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		5230B25E2A72859100781623 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
@@ -146,7 +154,6 @@
 		5230B2812A7CFF6F00781623 /* MyProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileCoordinator.swift; sourceTree = "<group>"; };
 		5230B2832A7D029200781623 /* MyProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileUseCase.swift; sourceTree = "<group>"; };
 		5230B2852A7D048400781623 /* MyProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileVM.swift; sourceTree = "<group>"; };
-		524138272A62E7E8002AADA6 /* CoupleCombineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleCombineModel.swift; sourceTree = "<group>"; };
 		524138292A62EB95002AADA6 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		5241382B2A62F240002AADA6 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		5241382D2A62F2ED002AADA6 /* LogInCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInCoordinator.swift; sourceTree = "<group>"; };
@@ -179,7 +186,6 @@
 		5271D42D2A604BF400FC7606 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		5271D42F2A605B0900FC7606 /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
 		5271D4312A606D0B00FC7606 /* Dictionary+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+.swift"; sourceTree = "<group>"; };
-		5271D4332A60BF5300FC7606 /* CoupleCombineDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleCombineDTO.swift; sourceTree = "<group>"; };
 		527547ED2A68FC9000313EFC /* CustomAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertVC.swift; sourceTree = "<group>"; };
 		527547EF2A69103200313EFC /* ProgressDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDialogView.swift; sourceTree = "<group>"; };
 		527547F32A6D23E400313EFC /* KakaoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoService.swift; sourceTree = "<group>"; };
@@ -223,7 +229,7 @@
 		52F010252A0B79270014FC01 /* EditBirthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBirthView.swift; sourceTree = "<group>"; };
 		52F2083929FBB31D0043BCA4 /* MyProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileVC.swift; sourceTree = "<group>"; };
 		52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileModel.swift; sourceTree = "<group>"; };
-		52F2083F29FBFF280043BCA4 /* DdayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayViewController.swift; sourceTree = "<group>"; };
+		52F2083F29FBFF280043BCA4 /* DdayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayVC.swift; sourceTree = "<group>"; };
 		52F3052F2A168CE900112A04 /* DisconnectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectVC.swift; sourceTree = "<group>"; };
 		52F305312A168D6000112A04 /* DisconnectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectView.swift; sourceTree = "<group>"; };
 		52F305332A16B7AE00112A04 /* RecoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryView.swift; sourceTree = "<group>"; };
@@ -257,6 +263,69 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		521D41E82A7FFD6300E5CCDA /* MyProfile */ = {
+			isa = PBXGroup;
+			children = (
+				5230B2832A7D029200781623 /* MyProfileUseCase.swift */,
+				521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */,
+			);
+			path = MyProfile;
+			sourceTree = "<group>";
+		};
+		521D41E92A7FFD7000E5CCDA /* LogIn */ = {
+			isa = PBXGroup;
+			children = (
+				5271D4122A55BF1B00FC7606 /* LogInUseCase.swift */,
+				2108F0402A6EC1F0002EED7A /* ProfileInsertUseCase.swift */,
+			);
+			path = LogIn;
+			sourceTree = "<group>";
+		};
+		521D41EA2A7FFD7C00E5CCDA /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				5230B27B2A77926A00781623 /* MainUseCase.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		521D41EF2A814E8400E5CCDA /* Presets */ = {
+			isa = PBXGroup;
+			children = (
+				521D41F02A814EEC00E5CCDA /* Coordinator */,
+				521D41F12A814EF800E5CCDA /* ProfileSet */,
+				521D41F22A814FC800E5CCDA /* PermissionSet */,
+			);
+			path = Presets;
+			sourceTree = "<group>";
+		};
+		521D41F02A814EEC00E5CCDA /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				521D41F32A814FFA00E5CCDA /* PresetCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		521D41F12A814EF800E5CCDA /* ProfileSet */ = {
+			isa = PBXGroup;
+			children = (
+				5271D4032A51D33F00FC7606 /* ProfileInsertVM.swift */,
+				5271D4052A51DBDD00FC7606 /* ProfileInsertVC.swift */,
+			);
+			path = ProfileSet;
+			sourceTree = "<group>";
+		};
+		521D41F22A814FC800E5CCDA /* PermissionSet */ = {
+			isa = PBXGroup;
+			children = (
+				2108F04A2A702A77002EED7A /* PermissionVM.swift */,
+				5271D40E2A5576E500FC7606 /* PermissionVC.swift */,
+				5271D4102A5580F200FC7606 /* Permission2VC.swift */,
+			);
+			path = PermissionSet;
+			sourceTree = "<group>";
+		};
 		5230B24E2A727A3100781623 /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -311,8 +380,6 @@
 			isa = PBXGroup;
 			children = (
 				5271D40A2A544A2D00FC7606 /* LogInVM.swift */,
-				5271D4032A51D33F00FC7606 /* ProfileInsertVM.swift */,
-				2108F04A2A702A77002EED7A /* PermissionVM.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -349,6 +416,7 @@
 		5230B2572A727CA100781623 /* Dday */ = {
 			isa = PBXGroup;
 			children = (
+				521D41E42A7FFAD200E5CCDA /* DdayVM.swift */,
 				52F010022A097B2C0014FC01 /* DdayViews */,
 			);
 			path = Dday;
@@ -481,9 +549,6 @@
 				5270EC0B2A44614A007FF444 /* PhoneCertifiedVC.swift */,
 				5270EC0F2A460354007FF444 /* AuthNumVC.swift */,
 				52E0CDEF2A4B091600E4A182 /* CoupleCombineVC.swift */,
-				5271D4052A51DBDD00FC7606 /* ProfileInsertVC.swift */,
-				5271D40E2A5576E500FC7606 /* PermissionVC.swift */,
-				5271D4102A5580F200FC7606 /* Permission2VC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -522,8 +587,8 @@
 			isa = PBXGroup;
 			children = (
 				5271D42B2A60484300FC7606 /* LogInDTO.swift */,
-				5271D4332A60BF5300FC7606 /* CoupleCombineDTO.swift */,
 				2108F0462A6EC48B002EED7A /* UserDTO.swift */,
+				521D41ED2A801D5700E5CCDA /* DdayDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -541,10 +606,9 @@
 		5290BFB52A72712800D734EE /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				5271D4122A55BF1B00FC7606 /* LogInUseCase.swift */,
-				2108F0402A6EC1F0002EED7A /* ProfileInsertUseCase.swift */,
-				5230B27B2A77926A00781623 /* MainUseCase.swift */,
-				5230B2832A7D029200781623 /* MyProfileUseCase.swift */,
+				521D41E92A7FFD7000E5CCDA /* LogIn */,
+				521D41EA2A7FFD7C00E5CCDA /* Main */,
+				521D41E82A7FFD6300E5CCDA /* MyProfile */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -555,6 +619,7 @@
 				524138292A62EB95002AADA6 /* Coordinator.swift */,
 				5290BFB92A72794000D734EE /* Start */,
 				5290BFBA2A72796A00D734EE /* LogIn */,
+				521D41EF2A814E8400E5CCDA /* Presets */,
 				5230B24E2A727A3100781623 /* TabBar */,
 			);
 			path = Presenter;
@@ -601,7 +666,7 @@
 			children = (
 				52CE6EA42A0245E300E43D39 /* DdayView.swift */,
 				52CE6EAC2A02C0B800E43D39 /* DdayTableViewCell.swift */,
-				52F2083F29FBFF280043BCA4 /* DdayViewController.swift */,
+				52F2083F29FBFF280043BCA4 /* DdayVC.swift */,
 				52F00FF32A09308E0014FC01 /* AddDdayView.swift */,
 				52F00FF52A0930FF0014FC01 /* AddDdayViewController.swift */,
 			);
@@ -674,8 +739,8 @@
 			isa = PBXGroup;
 			children = (
 				5271D4142A55C9DD00FC7606 /* LogInModel.swift */,
-				524138272A62E7E8002AADA6 /* CoupleCombineModel.swift */,
 				2108F0482A6EC565002EED7A /* UserModel.swift */,
+				521D41EB2A801D1200E5CCDA /* DdayModel.swift */,
 				52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */,
 				52845B1B2A0FC9DF003A87F8 /* Model.swift */,
 				5271D4072A51E27F00FC7606 /* CoupleInfoModel.swift */,
@@ -881,7 +946,7 @@
 				52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */,
 				52F00FF42A09308E0014FC01 /* AddDdayView.swift in Sources */,
 				214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */,
-				524138282A62E7E8002AADA6 /* CoupleCombineModel.swift in Sources */,
+				521D41E72A7FFD5F00E5CCDA /* DdayUseCase.swift in Sources */,
 				5230B27A2A7790A300781623 /* DefaultLocationService.swift in Sources */,
 				2108F0412A6EC1F0002EED7A /* ProfileInsertUseCase.swift in Sources */,
 				52E0CDF02A4B091600E4A182 /* CoupleCombineVC.swift in Sources */,
@@ -892,6 +957,7 @@
 				52845B1C2A0FC9DF003A87F8 /* Model.swift in Sources */,
 				52F305302A168CE900112A04 /* DisconnectVC.swift in Sources */,
 				52CE6EA52A0245E300E43D39 /* DdayView.swift in Sources */,
+				521D41EC2A801D1200E5CCDA /* DdayModel.swift in Sources */,
 				2108F04B2A702A77002EED7A /* PermissionVM.swift in Sources */,
 				52697B7329EEB7B2002BDD04 /* AppDelegate.swift in Sources */,
 				52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */,
@@ -901,7 +967,7 @@
 				52F0100D2A0A4FD20014FC01 /* AnswerView.swift in Sources */,
 				2108F0432A6EC292002EED7A /* ProfileInsertRepository.swift in Sources */,
 				52F010222A0ADD500014FC01 /* EditStatusMessageVC.swift in Sources */,
-				5271D4342A60BF5300FC7606 /* CoupleCombineDTO.swift in Sources */,
+				521D41F42A814FFA00E5CCDA /* PresetCoordinator.swift in Sources */,
 				52F010002A094B550014FC01 /* QnAViewController.swift in Sources */,
 				52F010112A0AACEC0014FC01 /* EditProfileView.swift in Sources */,
 				52F2083A29FBB31D0043BCA4 /* MyProfileVC.swift in Sources */,
@@ -963,12 +1029,14 @@
 				52F00FFA2A0938480014FC01 /* NoticeViewController.swift in Sources */,
 				2108F0492A6EC565002EED7A /* UserModel.swift in Sources */,
 				5271D4322A606D0B00FC7606 /* Dictionary+.swift in Sources */,
+				521D41E52A7FFAD200E5CCDA /* DdayVM.swift in Sources */,
+				521D41EE2A801D5700E5CCDA /* DdayDTO.swift in Sources */,
 				52F010202A0ADB680014FC01 /* EditStatusMessageView.swift in Sources */,
 				52697B7529EEB7B2002BDD04 /* SceneDelegate.swift in Sources */,
 				52F0101E2A0ACE190014FC01 /* EditNameViewController.swift in Sources */,
 				5271D4082A51E27F00FC7606 /* CoupleInfoModel.swift in Sources */,
 				5271D4152A55C9DD00FC7606 /* LogInModel.swift in Sources */,
-				52F2084029FBFF280043BCA4 /* DdayViewController.swift in Sources */,
+				52F2084029FBFF280043BCA4 /* DdayVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

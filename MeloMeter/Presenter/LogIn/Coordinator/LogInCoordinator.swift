@@ -12,6 +12,7 @@ final class LogInCoordinator: Coordinator {
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
     var inviteCode2: String?
+    var isLogin: Bool = false
     
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -19,12 +20,9 @@ final class LogInCoordinator: Coordinator {
     }
     
     func start() {
-        guard let logInLevel = UserDefaults.standard.string(forKey: "logInLevel") else{ showPhoneCertifiedVC(); return }// 스플래시뷰 만들면 스타트뷰를 예외처리로 넣기
-        
-        switch logInLevel {
-        case "0":
+        if !isLogin {
             showPhoneCertifiedVC()
-        case "1":
+        }else {
             if let inviteCode = UserDefaults.standard.string(forKey: "inviteCode") {
                 let code = "\(inviteCode.prefix(4)) \(inviteCode.suffix(4))"
                 if let code2 = inviteCode2 {
@@ -33,12 +31,6 @@ final class LogInCoordinator: Coordinator {
                     showCoupleComvineVC(inviteCode: code)
                 }
             }
-        case "2":
-            showProfileInsertVC()
-        case "3":
-            showPermissionVC1()
-        default:
-            showPhoneCertifiedVC()
         }
 
     }
@@ -83,37 +75,5 @@ extension LogInCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
-    func showProfileInsertVC() {
-        let viewController = ProfileInsertVC(
-            viewModel: ProfileInsertVM(
-                coordinator: self,
-                profileInsertUseCase: ProfileInsertUseCase(profileInsertRepository: ProfileInsertRepository()))
-        )
-        
-        self.navigationController.setNavigationBarHidden(true, animated: false)
-        self.navigationController.pushViewController(viewController, animated: true)
-    }
-    
-    func showPermissionVC1() {
-        let viewController = PermissionVC(
-            viewModel: PermissionVM(
-                coordinator: self,
-                mainUseCase: MainUseCase(locationService: DefaultLocationService()))
-        )
-        
-        self.navigationController.setNavigationBarHidden(true, animated: false)
-        self.navigationController.pushViewController(viewController, animated: true)
-    }
-    
-    func showPermissionVC2() {
-        let viewController = Permission2VC(
-            viewModel: PermissionVM(
-                coordinator: self,
-                mainUseCase: MainUseCase(locationService: DefaultLocationService()))
-        )
-        
-        self.navigationController.setNavigationBarHidden(true, animated: false)
-        self.navigationController.pushViewController(viewController, animated: true)
-    }
 
 }
