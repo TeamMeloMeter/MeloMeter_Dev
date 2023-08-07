@@ -78,6 +78,7 @@ class MainUseCase {
                     guard let geopoint = firebaseData["location"] as? GeoPoint else { return nil }
                     return CLLocation(latitude: geopoint.latitude, longitude: geopoint.longitude)
                 }
+                .asDriver(onErrorJustReturn: CLLocation(latitude: 0, longitude: 0))
                 .asObservable()
                 .bind(to: self.updatedOtherLocation)
                 .disposed(by: disposeBag)
