@@ -60,6 +60,7 @@ class MainUseCase {
                 @unknown default:
                     self?.authorizationStatus.onNext(nil)
                 }
+                
             })
             .disposed(by: self.disposeBag)
     }

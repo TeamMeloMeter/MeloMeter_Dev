@@ -29,10 +29,10 @@ class ProfileInsertUseCase {
                 guard let firstDayD = Date.stringToDate(dateString: firstDay, type: .yearToDayHipen) else { return Disposables.create() }
                 
                 //데이터를 담은 모델 객체 생성
-                let userModel = UserModel(name: name, birth: birthD, firstDay: firstDayD)
-                
+                let userModel = UserModel(name: name, birth: birthD)
+                let ddayModel = DdayModel(firstDay: firstDayD, anniversaries: [birthD])
                 //레파지토리로 넘기기
-                profileInsertRepository.insertUserInfo(user: userModel)
+                profileInsertRepository.insertUserInfo(user: userModel, dDay: ddayModel)
                     .subscribe(onSuccess: {
                         //데이터베이스 입력성공
                         single(.success(()))

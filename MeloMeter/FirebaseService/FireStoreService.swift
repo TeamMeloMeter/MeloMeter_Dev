@@ -17,9 +17,10 @@ public protocol FireStoreService {
     func getDocument(collection: FireStoreCollection, document: String) -> Single<FirebaseData>
     func getDocument(collection: FireStoreCollection, field: String, values: [Any]) -> Single<[FirebaseData]> //필드:값 일치 문서 찾기
     func createDocument(collection: FireStoreCollection, document: String, values: FirebaseData) -> Single<Void> //FireStore 추가
+    func updateDocument(collection: FireStoreCollection, document: String, values: FirebaseData) -> Single<Void>
     func observer(collection: FireStoreCollection, document: String) -> Observable<FirebaseData>
     
-    
+    func setAccessLevel(_ level: String) -> Single<Void>
 //    func getDocument(collection: FireStoreCollection, document: String) -> Single<FirebaseData>
 //    func getDocument(collection: FireStoreCollection, field: String, condition: [String]) -> Single<[FirebaseData]>
 //    func getDocument(collection: FireStoreCollection, field: String, in values: [Any]) -> Single<[FirebaseData]>

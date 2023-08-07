@@ -9,10 +9,11 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
+class MyProfileVC: UIViewController {
     
     private let viewModel: MyProfileVM?
     let disposeBag = DisposeBag()
+    let tapDdayGesture = UITapGestureRecognizer()
     
     init(viewModel: MyProfileVM) {
         self.viewModel = viewModel
@@ -32,14 +33,18 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        navigationController?.navigationBar.isHidden = true
-        setUpBarButton()
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     // MARK: Binding
     func setBindings() {
+        self.dDayView.addGestureRecognizer(tapDdayGesture)
+        
         let input = MyProfileVM.Input(
             viewDidApearEvent: self.rx.methodInvoked(#selector(viewDidAppear(_:)))
+                .map({ _ in })
+                .asObservable(),
+            dDayViewTapEvent: tapDdayGesture.rx.event
                 .map({ _ in })
                 .asObservable()
         )
@@ -74,18 +79,7 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
          bottomStackView].forEach { view.addSubview($0) }
     }
     
-    //네비게이션바 커스텀
-    func setUpBarButton() {
-        //스와이프 뒤로가기
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
-        //타이틀 속성 조정 - 폰트, 배경
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: FontManager.shared.medium(ofSize: 18)]
-        
-        navigationController?.navigationBar.standardAppearance = appearance
-    }
     
     // MARK: Event
 
