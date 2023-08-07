@@ -43,7 +43,11 @@ extension LogInCoordinator {
         let viewController = PhoneCertifiedVC(
             viewModel: LogInVM(
                 coordinator: self,
-                logInUseCase: LogInUseCase(logInRepository: LogInRepository()))
+                logInUseCase: LogInUseCase(logInRepository: LogInRepository(),
+                                           userRepository: UserRepository(firebaseService: DefaultFirebaseService()
+                                                                         )
+                                          )
+            )
         )
         
         self.navigationController.setNavigationBarHidden(true, animated: false)
@@ -53,7 +57,10 @@ extension LogInCoordinator {
     func showAuthNumVC(phoneNumber: String?) {
         let viewModel = LogInVM(
             coordinator: self,
-            logInUseCase: LogInUseCase(logInRepository: LogInRepository())
+            logInUseCase: LogInUseCase(logInRepository: LogInRepository(),
+                                       userRepository: UserRepository(firebaseService: DefaultFirebaseService()
+                                                                     )
+                                      )
         )
         viewModel.phoneNumber = phoneNumber
         let viewController = AuthNumVC(viewModel: viewModel)
@@ -66,7 +73,9 @@ extension LogInCoordinator {
         let viewController = CoupleCombineVC(
             viewModel: LogInVM(
                 coordinator: self,
-                logInUseCase: LogInUseCase(logInRepository: LogInRepository())
+                logInUseCase: LogInUseCase(logInRepository: LogInRepository(),
+                                           userRepository: UserRepository(firebaseService: DefaultFirebaseService())
+                                          )
             ),
             inviteCode: inviteCode,
             inviteCode2: inviteCode2)
