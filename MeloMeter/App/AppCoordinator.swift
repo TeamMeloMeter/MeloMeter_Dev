@@ -95,7 +95,7 @@ extension AppCoordinator {
     }
     
     func connectTabBarFlow() {
-        self.navigationController.viewControllers.removeAll()
+        self.navigationController.popToRootViewController(animated: true)
         let tabBarCoordinator = TabBarCoordinator(self.navigationController)
         tabBarCoordinator.delegate = self
         tabBarCoordinator.start()
@@ -109,6 +109,7 @@ extension AppCoordinator {
 extension AppCoordinator: CoordinatorDelegate {
     
     func didFinish(childCoordinator: Coordinator) {
+        self.navigationController.popToRootViewController(animated: true)
         if childCoordinator is LogInCoordinator {
             self.connectPresetFlow()
         }else if childCoordinator is PresetCoordinator {

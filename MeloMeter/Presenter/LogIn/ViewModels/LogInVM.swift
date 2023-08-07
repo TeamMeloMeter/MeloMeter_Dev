@@ -7,7 +7,7 @@
 
 import UIKit
 import RxSwift
-
+import RxRelay
 // MARK: - LoginViewModel
 class LogInVM {
     
@@ -17,12 +17,14 @@ class LogInVM {
     private var timerSubscription: Disposable? // 타이머 해제할 Disposable
     weak var coordinator: LogInCoordinator?
     var phoneNumber: String?
+    
     // MARK: - Input
     var phoneNumberInput = PublishSubject<String?>()
     var verificationCode = PublishSubject<String?>()
     var inviteCodeInput = PublishSubject<String?>()
     var alertBtnTapped = PublishSubject<Void>()
     var resendBtnTapped = PublishSubject<Void>()
+    var coupleCombineViewDidLoadEvent = PublishSubject<Void>()
     
     // MARK: - Output
     var sendNumRequest = PublishSubject<Bool>()
@@ -70,6 +72,19 @@ class LogInVM {
                     self.sendNumRequest.onNext(false)
                 }).disposed(by: self.disposeBag)
         }).disposed(by: self.disposeBag)
+        
+        coupleCombineViewDidLoadEvent
+            .subscribe(onNext: {
+                self.logInUseCase.combineCheckObserver()
+                self.logInUseCase.isCombined
+                    .subscribe(onNext: { isCombined in
+                        if isCombined {
+                            coordinator.finish()
+                        }
+                    })
+                    .disposed(by: self.disposeBag)
+            })
+            .disposed(by: disposeBag)
         
         //초대코드 입력 -> 커플연결
         inviteCodeInput.bind(onNext: { [weak self] text in

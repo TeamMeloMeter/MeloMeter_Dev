@@ -51,6 +51,11 @@ final class CoupleCombineVC: UIViewController {
     
     // MARK: - Binding
     func setBindings() {
+        self.rx.methodInvoked(#selector(viewDidAppear(_:)))
+            .map({ _ in })
+            .bind(to: self.viewModel.coupleCombineViewDidLoadEvent)
+            .disposed(by: disposeBag)
+        
         viewModel.myCode
             .bind(to: self.myCodeLabel.rx.text)
             .disposed(by: disposeBag)

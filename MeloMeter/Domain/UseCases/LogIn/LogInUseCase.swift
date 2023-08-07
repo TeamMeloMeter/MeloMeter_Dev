@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import RxSwift
+import RxRelay
 
 enum LogInServiceError: Error {
     case sendNumberFailure
@@ -20,10 +21,14 @@ class LogInUseCase {
     // MARK: - Property
     private let logInRepository: LogInRepository
     private let disposeBag = DisposeBag()
+    private let userRepository: UserRepository
+    var isCombined: PublishRelay<Bool>
     
     // MARK: Initializers
-    init(logInRepository: LogInRepository) {
+    init(logInRepository: LogInRepository, userRepository: UserRepository) {
         self.logInRepository = logInRepository
+        self.userRepository = userRepository
+        self.isCombined = PublishRelay()
     }
     
     // MARK: - Methods
@@ -98,5 +103,11 @@ class LogInUseCase {
         }
     }
     
+    func combineCheckObserver() {
+        self.userRepository.userInfoObserver()
+        self.userRepository.combineCheck
+            .bind(to: self.isCombined)
+            .disposed(by: disposeBag)
+    }
     
 }
