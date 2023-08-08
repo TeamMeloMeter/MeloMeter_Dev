@@ -77,6 +77,12 @@ extension TabBarCoordinator {
         childCoordinators.append(mainCoordinator)
     }
     
+    func connectChatFlow(to tabNavigationController: UINavigationController) {
+        let chatCoordinator = ChatCoordinator(tabNavigationController)
+        chatCoordinator.start()
+        //자식 뷰
+//        childCoordinators.append(mainCoordinator)
+    }
     func connectMyProfileFlow(to tabNavigationController: UINavigationController) {
         let myProfileCoordinator = MyProfileCoordinator(tabNavigationController)
         myProfileCoordinator.start()
