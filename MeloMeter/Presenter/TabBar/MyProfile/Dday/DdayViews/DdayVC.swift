@@ -8,6 +8,7 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import RxRelay
 
 // 기념일 화면 뷰컨트롤러
 class DdayVC: UIViewController {
@@ -40,14 +41,15 @@ class DdayVC: UIViewController {
         changeCell()
         setTopViewData()
         dDayTableView.reloadData()
-        print("뷰윌어페어에서 ??  ㅡㅡ>>>> \(Model.shared.dataDdayTableView.count)\n")
-        print("기념일 추가 배열 있니 ㅡㅡㅡㅡ \(Model.shared.addDdayArray)")
 
     }
     
     func setBindings() {
         
         let input = DdayVM.Input(
+            viewWillApearEvent: self.rx.methodInvoked(#selector(viewWillAppear(_:)))
+                .map({ _ in })
+                .asObservable(),
             backBtnTapEvent: self.backBarButton.rx.tap
                 .map({ _ in })
                 .asObservable(),
@@ -57,6 +59,13 @@ class DdayVC: UIViewController {
         )
         
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else { return }
+        
+        output.firstDay
+            .asDriver(onErrorJustReturn: "날짜를 불러오지 못했어요")
+            .drive(onNext: {[weak self] day in
+                self?.startDateLabel.text = day
+            })
+            .disposed(by: disposeBag)
         
     }
     

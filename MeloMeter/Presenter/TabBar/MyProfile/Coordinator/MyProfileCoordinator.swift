@@ -47,7 +47,7 @@ extension MyProfileCoordinator {
    
     func showDdayVC() {
         let viewController = DdayVC(viewModel: DdayVM(coordinator: self,
-                                                      dDayUseCase: DdayUseCase()))
+                                                      dDayUseCase: DdayUseCase(dDayRepository: DdayRepository(firebaseService: DefaultFirebaseService()))))
         
         viewController.hidesBottomBarWhenPushed = true
         self.navigationController.setNavigationBarHidden(false, animated: false)
