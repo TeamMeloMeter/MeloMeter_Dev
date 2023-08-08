@@ -19,6 +19,8 @@
 		521D41EC2A801D1200E5CCDA /* DdayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41EB2A801D1200E5CCDA /* DdayModel.swift */; };
 		521D41EE2A801D5700E5CCDA /* DdayDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41ED2A801D5700E5CCDA /* DdayDTO.swift */; };
 		521D41F42A814FFA00E5CCDA /* PresetCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41F32A814FFA00E5CCDA /* PresetCoordinator.swift */; };
+		521D41F62A81C71F00E5CCDA /* DdayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41F52A81C71F00E5CCDA /* DdayRepository.swift */; };
+		521D41F82A81C75100E5CCDA /* DdayRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41F72A81C75100E5CCDA /* DdayRepositoryP.swift */; };
 		5230B2652A72859200781623 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25C2A72859100781623 /* Pretendard-Light.otf */; };
 		5230B2662A72859200781623 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25D2A72859100781623 /* Pretendard-Medium.otf */; };
 		5230B2672A72859200781623 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25E2A72859100781623 /* Pretendard-Thin.otf */; };
@@ -138,6 +140,8 @@
 		521D41EB2A801D1200E5CCDA /* DdayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayModel.swift; sourceTree = "<group>"; };
 		521D41ED2A801D5700E5CCDA /* DdayDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayDTO.swift; sourceTree = "<group>"; };
 		521D41F32A814FFA00E5CCDA /* PresetCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetCoordinator.swift; sourceTree = "<group>"; };
+		521D41F52A81C71F00E5CCDA /* DdayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayRepository.swift; sourceTree = "<group>"; };
+		521D41F72A81C75100E5CCDA /* DdayRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayRepositoryP.swift; sourceTree = "<group>"; };
 		5230B25C2A72859100781623 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		5230B25D2A72859100781623 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		5230B25E2A72859100781623 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
@@ -529,6 +533,7 @@
 				5271D41E2A5887E500FC7606 /* LogInRepository.swift */,
 				2108F0422A6EC291002EED7A /* ProfileInsertRepository.swift */,
 				526EB85D2A7D5992005B1940 /* UserRepository.swift */,
+				521D41F52A81C71F00E5CCDA /* DdayRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -599,6 +604,7 @@
 				5290BFB32A7270DF00D734EE /* LogInRepositoryP.swift */,
 				5290BFB62A72726200D734EE /* ProfileInsertRepositoryP.swift */,
 				526EB85F2A7D59A4005B1940 /* UserRepositoryP.swift */,
+				521D41F72A81C75100E5CCDA /* DdayRepositoryP.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -952,6 +958,7 @@
 				52E0CDF02A4B091600E4A182 /* CoupleCombineVC.swift in Sources */,
 				5290BFB02A71F9A600D734EE /* TabBarPageCase.swift in Sources */,
 				5241382C2A62F240002AADA6 /* AppCoordinator.swift in Sources */,
+				521D41F82A81C75100E5CCDA /* DdayRepositoryP.swift in Sources */,
 				524138302A62F943002AADA6 /* StartVM.swift in Sources */,
 				527547F42A6D23E400313EFC /* KakaoService.swift in Sources */,
 				52845B1C2A0FC9DF003A87F8 /* Model.swift in Sources */,
@@ -991,6 +998,7 @@
 				52F305362A16B7F500112A04 /* RecoveryVC.swift in Sources */,
 				52CE6EA72A02571E00E43D39 /* MapVC.swift in Sources */,
 				52F00FF82A0936FD0014FC01 /* NoticeView.swift in Sources */,
+				521D41F62A81C71F00E5CCDA /* DdayRepository.swift in Sources */,
 				5230B2862A7D048400781623 /* MyProfileVM.swift in Sources */,
 				5290BFB72A72726200D734EE /* ProfileInsertRepositoryP.swift in Sources */,
 				5271D4192A58429000FC7606 /* FireStoreCollection.swift in Sources */,

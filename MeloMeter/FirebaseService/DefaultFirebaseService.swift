@@ -127,7 +127,6 @@ public extension DefaultFirebaseService {
             self.database.collection(collection.name)
                 .document(document)
                 .addSnapshotListener { snapshot, error in
-                    //print("파베 옵저버: ", snapshot) // MARK: 상대 위치 가져올때 에러 - 원인: UserDefaults 대신 파베에서 검색해서 uid2 가져오기 *
                     if let error = error { observable.onError(error) }
                     
                     guard let snapshot = snapshot, let data = snapshot.data() else {

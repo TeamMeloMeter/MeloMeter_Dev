@@ -16,8 +16,8 @@ struct DdayDTO: Codable {
     // MARK: - Methods
     func toModel() -> DdayModel {
         return DdayModel(
-            firstDay: Date.fromStringOrNow(firstDay),
-            anniversaries: anniversaries.map({ Date.fromStringOrNow($0) })
+            firstDay: Date.stringToDate(dateString: firstDay, type: .yearToDay) ?? Date(),
+            anniversaries: anniversaries.map({ Date.stringToDate(dateString: $0, type: .yearToDay) ?? Date() })
         )
     }
 }

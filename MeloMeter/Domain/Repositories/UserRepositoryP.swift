@@ -10,4 +10,5 @@ import RxSwift
 
 protocol UserRepositoryP {
     func getUserInfo(_ uid: String) -> Observable<UserDTO>
+    func userInfoObserver()
 }
