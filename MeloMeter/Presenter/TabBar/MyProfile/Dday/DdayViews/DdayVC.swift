@@ -25,8 +25,8 @@ class DdayVC: UIViewController {
     // MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-//        dDayTableView.delegate = self
-//        dDayTableView.dataSource = self
+        dDayTableView.delegate = self
+        dDayTableView.dataSource = self
         configure()
         setAutoLayout()
         setBindings()
@@ -237,25 +237,25 @@ class DdayVC: UIViewController {
     }
 }
 
-//extension DdayVC: UITableViewDataSource, UITableViewDelegate {
-//    // 기념일 리스트 세팅
-//    func setDataDdayList() {
-//        // 기념일 날짜 계산하는 함수 호출
-//    }
+extension DdayVC: UITableViewDataSource, UITableViewDelegate {
+    // 기념일 리스트 세팅
+    func setDataDdayList() {
+        // 기념일 날짜 계산하는 함수 호출
+    }
     //기념일 리스트 tableView
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return Model.shared.dataDdayTableView.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        guard let cell = tableView.dequeueReusableCell(withIdentifier: "DdayTableViewCell", for: indexPath) as? DdayTableViewCell else { return UITableViewCell() }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "DdayTableViewCell", for: indexPath) as? DdayTableViewCell else { return UITableViewCell() }
 //        let target = Model.shared.dataDdayTableView[indexPath.row]
 //        cell.titleLabel.text = target.aniName
 //        cell.dateLabel.text = target.aniDate
 //        cell.remainingDaysLabel.text = target.countDdays
-//        cell.selectionStyle = .none //셀 선택 색상 없애기
-//
-//        //이전 셀들의 라벨 텍스트 색상 변경
+        cell.selectionStyle = .none //셀 선택 색상 없애기
+
+        //이전 셀들의 라벨 텍스트 색상 변경
 //        if let anniversaryDate = dateFormat.date(from: target.aniDate) {
 //            let comparisonResult = Calendar.current.compare(anniversaryDate, to: Date(), toGranularity: .day)
 //
@@ -274,13 +274,13 @@ class DdayVC: UIViewController {
 //            cell.dateLabel.textColor = .gray2
 //            cell.remainingDaysLabel.textColor = .gray2
 //        }
-//        return cell
-//    }
-//
-//    //첫번째 셀 변경
-//    func changeCell() {
+        return cell
+    }
+
+    //첫번째 셀 변경
+    func changeCell() {
 //        let indexPath = IndexPath(row: Model.shared.cellIndex, section: 0)
 //        dDayTableView.scrollToRow(at: indexPath, at: .top, animated: true)
-//
-//    }
-//}
+
+    }
+}
