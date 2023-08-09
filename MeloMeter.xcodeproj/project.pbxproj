@@ -93,7 +93,6 @@
 		52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6E8229FEBC0200E43D39 /* FontManager.swift */; };
 		52CE6EA12A01875C00E43D39 /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA02A01875C00E43D39 /* AlarmViewController.swift */; };
 		52CE6EA32A0187BB00E43D39 /* AlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA22A0187BB00E43D39 /* AlarmView.swift */; };
-		52CE6EA52A0245E300E43D39 /* DdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA42A0245E300E43D39 /* DdayView.swift */; };
 		52CE6EA72A02571E00E43D39 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA62A02571E00E43D39 /* MapVC.swift */; };
 		52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EAC2A02C0B800E43D39 /* DdayTableViewCell.swift */; };
 		52E0CDF02A4B091600E4A182 /* CoupleCombineVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0CDEF2A4B091600E4A182 /* CoupleCombineVC.swift */; };
@@ -207,7 +206,6 @@
 		52CE6E8229FEBC0200E43D39 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		52CE6EA02A01875C00E43D39 /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
 		52CE6EA22A0187BB00E43D39 /* AlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmView.swift; sourceTree = "<group>"; };
-		52CE6EA42A0245E300E43D39 /* DdayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayView.swift; sourceTree = "<group>"; };
 		52CE6EA62A02571E00E43D39 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		52CE6EAC2A02C0B800E43D39 /* DdayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayTableViewCell.swift; sourceTree = "<group>"; };
 		52E0CDEF2A4B091600E4A182 /* CoupleCombineVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleCombineVC.swift; sourceTree = "<group>"; };
@@ -280,7 +278,6 @@
 			isa = PBXGroup;
 			children = (
 				5271D4122A55BF1B00FC7606 /* LogInUseCase.swift */,
-				2108F0402A6EC1F0002EED7A /* ProfileInsertUseCase.swift */,
 			);
 			path = LogIn;
 			sourceTree = "<group>";
@@ -328,6 +325,14 @@
 				5271D4102A5580F200FC7606 /* Permission2VC.swift */,
 			);
 			path = PermissionSet;
+			sourceTree = "<group>";
+		};
+		521D41F92A83D5C100E5CCDA /* Presets */ = {
+			isa = PBXGroup;
+			children = (
+				2108F0402A6EC1F0002EED7A /* ProfileInsertUseCase.swift */,
+			);
+			path = Presets;
 			sourceTree = "<group>";
 		};
 		5230B24E2A727A3100781623 /* TabBar */ = {
@@ -605,6 +610,7 @@
 			isa = PBXGroup;
 			children = (
 				521D41E92A7FFD7000E5CCDA /* LogIn */,
+				521D41F92A83D5C100E5CCDA /* Presets */,
 				521D41EA2A7FFD7C00E5CCDA /* Main */,
 				521D41E82A7FFD6300E5CCDA /* MyProfile */,
 			);
@@ -662,7 +668,6 @@
 		52F010022A097B2C0014FC01 /* DdayViews */ = {
 			isa = PBXGroup;
 			children = (
-				52CE6EA42A0245E300E43D39 /* DdayView.swift */,
 				52CE6EAC2A02C0B800E43D39 /* DdayTableViewCell.swift */,
 				52F2083F29FBFF280043BCA4 /* DdayVC.swift */,
 				52F00FF32A09308E0014FC01 /* AddDdayView.swift */,
@@ -955,7 +960,6 @@
 				527547F42A6D23E400313EFC /* KakaoService.swift in Sources */,
 				52845B1C2A0FC9DF003A87F8 /* Model.swift in Sources */,
 				52F305302A168CE900112A04 /* DisconnectVC.swift in Sources */,
-				52CE6EA52A0245E300E43D39 /* DdayView.swift in Sources */,
 				521D41EC2A801D1200E5CCDA /* CoupleModel.swift in Sources */,
 				2108F04B2A702A77002EED7A /* PermissionVM.swift in Sources */,
 				52697B7329EEB7B2002BDD04 /* AppDelegate.swift in Sources */,
