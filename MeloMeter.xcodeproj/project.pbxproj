@@ -14,6 +14,20 @@
 		2108F04B2A702A77002EED7A /* PermissionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108F04A2A702A77002EED7A /* PermissionVM.swift */; };
 		214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */; };
 		2185C4B42A83EEC400F99795 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2185C4B32A83EEC400F99795 /* GoogleService-Info.plist */; };
+		2185C4CE2A83F13B00F99795 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4B72A83F13B00F99795 /* ChatVC.swift */; };
+		2185C4CF2A83F13B00F99795 /* ChatCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4B82A83F13B00F99795 /* ChatCoordinator.swift */; };
+		2185C4D02A83F13B00F99795 /* ChatVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4B92A83F13B00F99795 /* ChatVM.swift */; };
+		2185C4D12A83F13B00F99795 /* SettingUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4BC2A83F13B00F99795 /* SettingUserDefaults.swift */; };
+		2185C4D22A83F13B00F99795 /* BasicAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4BE2A83F13B00F99795 /* BasicAudioController.swift */; };
+		2185C4D52A83F13B00F99795 /* Lorem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4C32A83F13B00F99795 /* Lorem.swift */; };
+		2185C4D62A83F13B00F99795 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4C42A83F13B00F99795 /* SampleData.swift */; };
+		2185C4D72A83F13B00F99795 /* MockMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4C62A83F13B00F99795 /* MockMessage.swift */; };
+		2185C4D82A83F13B00F99795 /* CustomTextLayoutSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4C72A83F13B00F99795 /* CustomTextLayoutSizeCalculator.swift */; };
+		2185C4D92A83F13B00F99795 /* MockUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4C82A83F13B00F99795 /* MockUser.swift */; };
+		2185C4DA2A83F13B00F99795 /* CustomLayoutSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4C92A83F13B00F99795 /* CustomLayoutSizeCalculator.swift */; };
+		2185C4DB2A83F13B00F99795 /* MockSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4CA2A83F13B00F99795 /* MockSocket.swift */; };
+		2185C4DC2A83F13B00F99795 /* DisplayChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4CB2A83F13B00F99795 /* DisplayChatVC.swift */; };
+		2185C4E12A83F31900F99795 /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2185C4E02A83F31900F99795 /* MessageKit */; };
 		45307ED7030327D357C85252 /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5A8595AED1BC03C3846C34F /* Pods_MeloMeter.framework */; };
 		521D41E52A7FFAD200E5CCDA /* DdayVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41E42A7FFAD200E5CCDA /* DdayVM.swift */; };
 		521D41E72A7FFD5F00E5CCDA /* DdayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */; };
@@ -135,6 +149,19 @@
 		2108F04A2A702A77002EED7A /* PermissionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionVM.swift; sourceTree = "<group>"; };
 		214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardStatusDetector.swift; sourceTree = "<group>"; };
 		2185C4B32A83EEC400F99795 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2185C4B72A83F13B00F99795 /* ChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
+		2185C4B82A83F13B00F99795 /* ChatCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatCoordinator.swift; sourceTree = "<group>"; };
+		2185C4B92A83F13B00F99795 /* ChatVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVM.swift; sourceTree = "<group>"; };
+		2185C4BC2A83F13B00F99795 /* SettingUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingUserDefaults.swift; sourceTree = "<group>"; };
+		2185C4BE2A83F13B00F99795 /* BasicAudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicAudioController.swift; sourceTree = "<group>"; };
+		2185C4C32A83F13B00F99795 /* Lorem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lorem.swift; sourceTree = "<group>"; };
+		2185C4C42A83F13B00F99795 /* SampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
+		2185C4C62A83F13B00F99795 /* MockMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMessage.swift; sourceTree = "<group>"; };
+		2185C4C72A83F13B00F99795 /* CustomTextLayoutSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextLayoutSizeCalculator.swift; sourceTree = "<group>"; };
+		2185C4C82A83F13B00F99795 /* MockUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockUser.swift; sourceTree = "<group>"; };
+		2185C4C92A83F13B00F99795 /* CustomLayoutSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLayoutSizeCalculator.swift; sourceTree = "<group>"; };
+		2185C4CA2A83F13B00F99795 /* MockSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSocket.swift; sourceTree = "<group>"; };
+		2185C4CB2A83F13B00F99795 /* DisplayChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayChatVC.swift; sourceTree = "<group>"; };
 		521D41E42A7FFAD200E5CCDA /* DdayVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayVM.swift; sourceTree = "<group>"; };
 		521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayUseCase.swift; sourceTree = "<group>"; };
 		521D41EB2A801D1200E5CCDA /* CoupleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleModel.swift; sourceTree = "<group>"; };
@@ -252,6 +279,7 @@
 				5290BF912A6D3AFA00D734EE /* FirebaseRemoteConfig in Frameworks */,
 				5290BF8F2A6D3AFA00D734EE /* FirebaseMessaging in Frameworks */,
 				5290BF892A6D3AFA00D734EE /* FirebaseDatabase in Frameworks */,
+				2185C4E12A83F31900F99795 /* MessageKit in Frameworks */,
 				5290BF932A6D3AFA00D734EE /* FirebaseStorage in Frameworks */,
 				5290BF872A6D3AFA00D734EE /* FirebaseAppCheck in Frameworks */,
 				45307ED7030327D357C85252 /* Pods_MeloMeter.framework in Frameworks */,
@@ -265,6 +293,74 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2185C4B52A83F13B00F99795 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				2185C4B62A83F13B00F99795 /* Coordinator */,
+				2185C4BA2A83F13B00F99795 /* MessageKit */,
+				2185C4CB2A83F13B00F99795 /* DisplayChatVC.swift */,
+				2185C4B72A83F13B00F99795 /* ChatVC.swift */,
+				2185C4B92A83F13B00F99795 /* ChatVM.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		2185C4B62A83F13B00F99795 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				2185C4B82A83F13B00F99795 /* ChatCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		2185C4BA2A83F13B00F99795 /* MessageKit */ = {
+			isa = PBXGroup;
+			children = (
+				2185C4C52A83F13B00F99795 /* Models */,
+				2185C4BB2A83F13B00F99795 /* Extensions */,
+				2185C4BD2A83F13B00F99795 /* Audio */,
+				2185C4C22A83F13B00F99795 /* DataGeneration */,
+			);
+			path = MessageKit;
+			sourceTree = "<group>";
+		};
+		2185C4BB2A83F13B00F99795 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2185C4BC2A83F13B00F99795 /* SettingUserDefaults.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2185C4BD2A83F13B00F99795 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				2185C4BE2A83F13B00F99795 /* BasicAudioController.swift */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		2185C4C22A83F13B00F99795 /* DataGeneration */ = {
+			isa = PBXGroup;
+			children = (
+				2185C4C32A83F13B00F99795 /* Lorem.swift */,
+				2185C4C42A83F13B00F99795 /* SampleData.swift */,
+			);
+			path = DataGeneration;
+			sourceTree = "<group>";
+		};
+		2185C4C52A83F13B00F99795 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2185C4C62A83F13B00F99795 /* MockMessage.swift */,
+				2185C4C72A83F13B00F99795 /* CustomTextLayoutSizeCalculator.swift */,
+				2185C4C82A83F13B00F99795 /* MockUser.swift */,
+				2185C4C92A83F13B00F99795 /* CustomLayoutSizeCalculator.swift */,
+				2185C4CA2A83F13B00F99795 /* MockSocket.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		521D41E82A7FFD6300E5CCDA /* MyProfile */ = {
 			isa = PBXGroup;
 			children = (
@@ -341,6 +437,7 @@
 				5230B2502A727A9300781623 /* Coordinator */,
 				5230B2512A727AAC00781623 /* Main */,
 				5230B2552A727C5000781623 /* MyProfile */,
+				2185C4B52A83F13B00F99795 /* Chat */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -799,6 +896,7 @@
 				5290BF8E2A6D3AFA00D734EE /* FirebaseMessaging */,
 				5290BF902A6D3AFA00D734EE /* FirebaseRemoteConfig */,
 				5290BF922A6D3AFA00D734EE /* FirebaseStorage */,
+				2185C4E02A83F31900F99795 /* MessageKit */,
 			);
 			productName = MeloMeter;
 			productReference = 52697B6F29EEB7B2002BDD04 /* MeloMeter.app */;
@@ -830,6 +928,7 @@
 			mainGroup = 52697B6629EEB7B2002BDD04;
 			packageReferences = (
 				B61B0F4929F7A44700E25EEF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				2185C4DF2A83F31900F99795 /* XCRemoteSwiftPackageReference "MessageKit" */,
 			);
 			productRefGroup = 52697B7029EEB7B2002BDD04 /* Products */;
 			projectDirPath = "";
@@ -948,12 +1047,14 @@
 				5271D4172A5841E500FC7606 /* FireStoreService.swift in Sources */,
 				52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */,
 				52F00FF42A09308E0014FC01 /* AddDdayView.swift in Sources */,
+				2185C4DA2A83F13B00F99795 /* CustomLayoutSizeCalculator.swift in Sources */,
 				214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */,
 				521D41E72A7FFD5F00E5CCDA /* DdayUseCase.swift in Sources */,
 				5230B27A2A7790A300781623 /* DefaultLocationService.swift in Sources */,
 				2108F0412A6EC1F0002EED7A /* ProfileInsertUseCase.swift in Sources */,
 				52E0CDF02A4B091600E4A182 /* CoupleCombineVC.swift in Sources */,
 				5290BFB02A71F9A600D734EE /* TabBarPageCase.swift in Sources */,
+				2185C4D02A83F13B00F99795 /* ChatVM.swift in Sources */,
 				5241382C2A62F240002AADA6 /* AppCoordinator.swift in Sources */,
 				521D41F82A81C75100E5CCDA /* CoupleRepositoryP.swift in Sources */,
 				524138302A62F943002AADA6 /* StartVM.swift in Sources */,
@@ -967,16 +1068,20 @@
 				5271D40B2A544A2D00FC7606 /* LogInVM.swift in Sources */,
 				5230B2802A7C20D400781623 /* BackgroundTaskManager.swift in Sources */,
 				5230B2842A7D029200781623 /* MyProfileUseCase.swift in Sources */,
+				2185C4DB2A83F13B00F99795 /* MockSocket.swift in Sources */,
 				52F0100D2A0A4FD20014FC01 /* AnswerView.swift in Sources */,
 				2108F0432A6EC292002EED7A /* ProfileInsertRepository.swift in Sources */,
 				52F010222A0ADD500014FC01 /* EditStatusMessageVC.swift in Sources */,
 				521D41F42A814FFA00E5CCDA /* PresetCoordinator.swift in Sources */,
 				52F010002A094B550014FC01 /* QnAViewController.swift in Sources */,
 				52F010112A0AACEC0014FC01 /* EditProfileView.swift in Sources */,
+				2185C4D12A83F13B00F99795 /* SettingUserDefaults.swift in Sources */,
 				52F2083A29FBB31D0043BCA4 /* MyProfileVC.swift in Sources */,
 				52F010182A0AAF820014FC01 /* CameraViewController.swift in Sources */,
 				52F305322A168D6000112A04 /* DisconnectView.swift in Sources */,
+				2185C4D92A83F13B00F99795 /* MockUser.swift in Sources */,
 				5230B27C2A77926A00781623 /* MainUseCase.swift in Sources */,
+				2185C4DC2A83F13B00F99795 /* DisplayChatVC.swift in Sources */,
 				5271D4112A5580F200FC7606 /* Permission2VC.swift in Sources */,
 				52F305342A16B7AE00112A04 /* RecoveryView.swift in Sources */,
 				5271D41C2A58435A00FC7606 /* DefaultFirebaseService.swift in Sources */,
@@ -985,14 +1090,19 @@
 				5271D42A2A5FD02900FC7606 /* AlertManager.swift in Sources */,
 				52CE6EA12A01875C00E43D39 /* AlarmViewController.swift in Sources */,
 				5290BFAC2A70F46C00D734EE /* MainCoordinator.swift in Sources */,
+				2185C4D72A83F13B00F99795 /* MockMessage.swift in Sources */,
+				2185C4D62A83F13B00F99795 /* SampleData.swift in Sources */,
 				5270EC042A445077007FF444 /* StartVC.swift in Sources */,
 				52F010262A0B79270014FC01 /* EditBirthView.swift in Sources */,
 				5290BF972A6D983A00D734EE /* ColorAssets.swift in Sources */,
 				52F00FF62A0930FF0014FC01 /* AddDdayViewController.swift in Sources */,
+				2185C4CF2A83F13B00F99795 /* ChatCoordinator.swift in Sources */,
+				2185C4D82A83F13B00F99795 /* CustomTextLayoutSizeCalculator.swift in Sources */,
 				52F0100B2A0A493C0014FC01 /* QnATableViewCell.swift in Sources */,
 				5290BFB42A7270DF00D734EE /* LogInRepositoryP.swift in Sources */,
 				52F305362A16B7F500112A04 /* RecoveryVC.swift in Sources */,
 				52CE6EA72A02571E00E43D39 /* MapVC.swift in Sources */,
+				2185C4D52A83F13B00F99795 /* Lorem.swift in Sources */,
 				52F00FF82A0936FD0014FC01 /* NoticeView.swift in Sources */,
 				521D41F62A81C71F00E5CCDA /* CoupleRepository.swift in Sources */,
 				5230B2862A7D048400781623 /* MyProfileVM.swift in Sources */,
@@ -1003,6 +1113,7 @@
 				5271D42E2A604BF400FC7606 /* Date+.swift in Sources */,
 				52F010082A097D120014FC01 /* AlarmTableViewCell.swift in Sources */,
 				5270EC122A4954D9007FF444 /* UserInfoModel.swift in Sources */,
+				2185C4D22A83F13B00F99795 /* BasicAudioController.swift in Sources */,
 				5290BFAE2A71F8FB00D734EE /* TabBarPageType.swift in Sources */,
 				2108F0472A6EC48B002EED7A /* UserDTO.swift in Sources */,
 				527547F02A69103200313EFC /* ProgressDialogView.swift in Sources */,
@@ -1010,6 +1121,7 @@
 				526EB8602A7D59A4005B1940 /* UserRepositoryP.swift in Sources */,
 				5241382E2A62F2ED002AADA6 /* LogInCoordinator.swift in Sources */,
 				5271D40F2A5576E500FC7606 /* PermissionVC.swift in Sources */,
+				2185C4CE2A83F13B00F99795 /* ChatVC.swift in Sources */,
 				52F010142A0AAD380014FC01 /* EditProfileViewController.swift in Sources */,
 				52CE6EA32A0187BB00E43D39 /* AlarmView.swift in Sources */,
 				5290BFA82A70F35E00D734EE /* MapVM.swift in Sources */,
@@ -1282,6 +1394,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2185C4DF2A83F31900F99795 /* XCRemoteSwiftPackageReference "MessageKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MessageKit/MessageKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		B61B0F4929F7A44700E25EEF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -1293,6 +1413,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2185C4E02A83F31900F99795 /* MessageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2185C4DF2A83F31900F99795 /* XCRemoteSwiftPackageReference "MessageKit" */;
+			productName = MessageKit;
+		};
 		5290BF822A6D3AC000D734EE /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B61B0F4929F7A44700E25EEF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
