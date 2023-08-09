@@ -24,39 +24,48 @@ extension Date {
     // MARK: Methods
     func toString(type: Format) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = type.rawValue
         formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone(abbreviation: "KST")
+        formatter.dateFormat = type.rawValue
+        
         return formatter.string(from: self)
     }
     
     func toString(format: String) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = format
         formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone(abbreviation: "KST")
+        formatter.dateFormat = format
+
         return formatter.string(from: self)
     }
 
     static func stringToDate(dateString: String, type: Format) -> Date? {
         let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone(abbreviation: "KST")
         formatter.dateFormat = type.rawValue
+
         return formatter.date(from: dateString)
     }
     
     static func stringToDate(dateString: String, format: String) -> Date? {
         let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone(abbreviation: "KST")
         formatter.dateFormat = format
+
         return formatter.date(from: dateString)
     }
 }
 
 extension Date {
     
-    static func fromStringOrNow(_ string: String, ofFormat format: Format = .timeStamp) -> Date {
+    static func fromStringOrNow(_ string: String,_ type: Format) -> Date {
         let formatter = DateFormatter()
-        
-        formatter.dateFormat = format.rawValue
         formatter.locale = Locale(identifier: "ko_KR")
-        
+        formatter.timeZone = TimeZone(abbreviation: "KST")
+        formatter.dateFormat = type.rawValue
         if formatter.date(from: string) == nil {
         }
         

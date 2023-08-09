@@ -22,7 +22,8 @@ class DdayVM {
     }
     
     struct Output {
-        var firstDay: BehaviorRelay<String> = BehaviorRelay(value: "2023.00.00")
+        var firstDay: BehaviorRelay<String> = BehaviorRelay(value: "20??.??.??")
+        var sinceFirstDay: BehaviorRelay<String> = BehaviorRelay(value: "1일")
     }
     
     
@@ -47,6 +48,14 @@ class DdayVM {
             }
             .asObservable()
             .bind(to: output.firstDay)
+            .disposed(by: disposeBag)
+        
+        self.dDayUseCase.firstDay
+            .map{ day -> String in
+                return self.dDayUseCase.sinceDday(from: day)
+            }
+            .asObservable()
+            .bind(to: output.sinceFirstDay)
             .disposed(by: disposeBag)
         
         input.backBtnTapEvent

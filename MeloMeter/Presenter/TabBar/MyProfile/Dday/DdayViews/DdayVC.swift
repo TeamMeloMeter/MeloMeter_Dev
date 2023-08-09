@@ -25,11 +25,8 @@ class DdayVC: UIViewController {
     // MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        dDayTableView.delegate = self
-        dDayTableView.dataSource = self
-        if Model.shared.dataDdayTableView.isEmpty {
-            setDataDdayList()
-        }
+//        dDayTableView.delegate = self
+//        dDayTableView.dataSource = self
         configure()
         setAutoLayout()
         setBindings()
@@ -37,10 +34,6 @@ class DdayVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Model.shared.focusCell()
-        changeCell()
-        setTopViewData()
-        dDayTableView.reloadData()
 
     }
     
@@ -61,22 +54,24 @@ class DdayVC: UIViewController {
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else { return }
         
         output.firstDay
-            .asDriver(onErrorJustReturn: "날짜를 불러오지 못했어요")
-            .drive(onNext: {[weak self] day in
-                self?.startDateLabel.text = day
+            .asDriver(onErrorJustReturn: "2023.00.00")
+            .drive(onNext: {[weak self] text in
+                self?.startDateLabel.text = text
             })
             .disposed(by: disposeBag)
         
+        output.sinceFirstDay
+            .asDriver(onErrorJustReturn: "1일")
+            .drive(onNext: {[weak self] text in
+                self?.countDateLabel.text = text
+            })
+            .disposed(by: disposeBag)
     }
     
     func dismissModalViewController() {
         dismiss(animated: true) {
             // 모달 뷰 컨트롤러가 dismiss된 후에 호출할 메서드를 호출
             self.viewWillAppear(true)// 원하는 메서드 호출
-          
-
-            // 또는 다른 메서드 호출
-            // self.myMethod()
         }
     }
     
@@ -113,12 +108,6 @@ class DdayVC: UIViewController {
         return button
     }()
     
-    //상단 라벨 세팅
-    func setTopViewData() {
-        dateFormat.dateFormat = "yyyy.MM.dd"
-        startDateLabel.text = "첫 만남 \(dateFormat.string(from: Model.shared.startDate ?? Date()))"
-        countDateLabel.text = "\(abs(Model.shared.pmDday(from: Model.shared.startDate ?? Date()))+1)일째"
-    }
     
     // MARK: UI
     
@@ -157,7 +146,7 @@ class DdayVC: UIViewController {
     // 현재 D+ 날짜 label
     let countDateLabel: UILabel = {
         let label = UILabel()
-        label.text = "0일째"
+        label.text = ""
         label.textColor = .primary1
         label.font = FontManager.shared.semiBold(ofSize: 32)
         return label
@@ -166,7 +155,7 @@ class DdayVC: UIViewController {
     let startDateLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray1
-        label.text = "첫 만남 0000.00.00"
+        label.text = ""
         label.font = FontManager.shared.medium(ofSize: 16)
         return label
     }()
@@ -248,51 +237,50 @@ class DdayVC: UIViewController {
     }
 }
 
-extension DdayVC: UITableViewDataSource, UITableViewDelegate {
-    // 기념일 리스트 세팅
-    func setDataDdayList() {
-        Model.shared.startDay()
-        Model.shared.calculateDays()
-    }
+//extension DdayVC: UITableViewDataSource, UITableViewDelegate {
+//    // 기념일 리스트 세팅
+//    func setDataDdayList() {
+//        // 기념일 날짜 계산하는 함수 호출
+//    }
     //기념일 리스트 tableView
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Model.shared.dataDdayTableView.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "DdayTableViewCell", for: indexPath) as? DdayTableViewCell else { return UITableViewCell() }
-        let target = Model.shared.dataDdayTableView[indexPath.row]
-        cell.titleLabel.text = target.aniName
-        cell.dateLabel.text = target.aniDate
-        cell.remainingDaysLabel.text = target.countDdays
-        cell.selectionStyle = .none //셀 선택 색상 없애기
-        
-        //이전 셀들의 라벨 텍스트 색상 변경
-        if let anniversaryDate = dateFormat.date(from: target.aniDate) {
-            let comparisonResult = Calendar.current.compare(anniversaryDate, to: Date(), toGranularity: .day)
-            
-            if comparisonResult == .orderedAscending { // 오늘 이전의 날짜
-                cell.titleLabel.textColor = .gray3
-                cell.dateLabel.textColor = .gray4
-                cell.remainingDaysLabel.textColor = .gray3
-            } else { // 오늘 이후의 날짜
-                cell.titleLabel.textColor = .gray1
-                cell.dateLabel.textColor = .gray2
-                cell.remainingDaysLabel.textColor = .gray1
-            }
-        } else {
-            // 기념일 날짜가 없는 경우 기본 색상 지정
-            cell.titleLabel.textColor = .gray2
-            cell.dateLabel.textColor = .gray2
-            cell.remainingDaysLabel.textColor = .gray2
-        }
-        return cell
-    }
-    
-    //첫번째 셀 변경
-    func changeCell() {
-        let indexPath = IndexPath(row: Model.shared.cellIndex, section: 0)
-        dDayTableView.scrollToRow(at: indexPath, at: .top, animated: true)
-         
-    }
-}
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return Model.shared.dataDdayTableView.count
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        guard let cell = tableView.dequeueReusableCell(withIdentifier: "DdayTableViewCell", for: indexPath) as? DdayTableViewCell else { return UITableViewCell() }
+//        let target = Model.shared.dataDdayTableView[indexPath.row]
+//        cell.titleLabel.text = target.aniName
+//        cell.dateLabel.text = target.aniDate
+//        cell.remainingDaysLabel.text = target.countDdays
+//        cell.selectionStyle = .none //셀 선택 색상 없애기
+//
+//        //이전 셀들의 라벨 텍스트 색상 변경
+//        if let anniversaryDate = dateFormat.date(from: target.aniDate) {
+//            let comparisonResult = Calendar.current.compare(anniversaryDate, to: Date(), toGranularity: .day)
+//
+//            if comparisonResult == .orderedAscending { // 오늘 이전의 날짜
+//                cell.titleLabel.textColor = .gray3
+//                cell.dateLabel.textColor = .gray4
+//                cell.remainingDaysLabel.textColor = .gray3
+//            } else { // 오늘 이후의 날짜
+//                cell.titleLabel.textColor = .gray1
+//                cell.dateLabel.textColor = .gray2
+//                cell.remainingDaysLabel.textColor = .gray1
+//            }
+//        } else {
+//            // 기념일 날짜가 없는 경우 기본 색상 지정
+//            cell.titleLabel.textColor = .gray2
+//            cell.dateLabel.textColor = .gray2
+//            cell.remainingDaysLabel.textColor = .gray2
+//        }
+//        return cell
+//    }
+//
+//    //첫번째 셀 변경
+//    func changeCell() {
+//        let indexPath = IndexPath(row: Model.shared.cellIndex, section: 0)
+//        dDayTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+//
+//    }
+//}
