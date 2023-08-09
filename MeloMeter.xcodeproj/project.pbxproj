@@ -13,6 +13,7 @@
 		2108F0492A6EC565002EED7A /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108F0482A6EC565002EED7A /* UserModel.swift */; };
 		2108F04B2A702A77002EED7A /* PermissionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108F04A2A702A77002EED7A /* PermissionVM.swift */; };
 		214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */; };
+		2185C4B42A83EEC400F99795 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2185C4B32A83EEC400F99795 /* GoogleService-Info.plist */; };
 		45307ED7030327D357C85252 /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5A8595AED1BC03C3846C34F /* Pods_MeloMeter.framework */; };
 		521D41E52A7FFAD200E5CCDA /* DdayVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41E42A7FFAD200E5CCDA /* DdayVM.swift */; };
 		521D41E72A7FFD5F00E5CCDA /* DdayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */; };
@@ -82,7 +83,6 @@
 		5290BF912A6D3AFA00D734EE /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 5290BF902A6D3AFA00D734EE /* FirebaseRemoteConfig */; };
 		5290BF932A6D3AFA00D734EE /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 5290BF922A6D3AFA00D734EE /* FirebaseStorage */; };
 		5290BF972A6D983A00D734EE /* ColorAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5290BF962A6D983A00D734EE /* ColorAssets.swift */; };
-		5290BFA62A703AFD00D734EE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5290BFA52A703AFD00D734EE /* GoogleService-Info.plist */; };
 		5290BFA82A70F35E00D734EE /* MapVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5290BFA72A70F35E00D734EE /* MapVM.swift */; };
 		5290BFAA2A70F3B700D734EE /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5290BFA92A70F3B700D734EE /* TabBarCoordinator.swift */; };
 		5290BFAC2A70F46C00D734EE /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5290BFAB2A70F46C00D734EE /* MainCoordinator.swift */; };
@@ -135,6 +135,7 @@
 		2108F0482A6EC565002EED7A /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		2108F04A2A702A77002EED7A /* PermissionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionVM.swift; sourceTree = "<group>"; };
 		214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardStatusDetector.swift; sourceTree = "<group>"; };
+		2185C4B32A83EEC400F99795 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		521D41E42A7FFAD200E5CCDA /* DdayVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayVM.swift; sourceTree = "<group>"; };
 		521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayUseCase.swift; sourceTree = "<group>"; };
 		521D41EB2A801D1200E5CCDA /* CoupleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleModel.swift; sourceTree = "<group>"; };
@@ -196,7 +197,6 @@
 		52845B1B2A0FC9DF003A87F8 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		5290BF962A6D983A00D734EE /* ColorAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAssets.swift; sourceTree = "<group>"; };
 		5290BFA22A703A1500D734EE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5290BFA52A703AFD00D734EE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5290BFA72A70F35E00D734EE /* MapVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVM.swift; sourceTree = "<group>"; };
 		5290BFA92A70F3B700D734EE /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		5290BFAB2A70F46C00D734EE /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
@@ -336,7 +336,6 @@
 				5230B2502A727A9300781623 /* Coordinator */,
 				5230B2512A727AAC00781623 /* Main */,
 				5230B2552A727C5000781623 /* MyProfile */,
-				5230B2542A727C2A00781623 /* Chat */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -386,13 +385,6 @@
 				5271D40A2A544A2D00FC7606 /* LogInVM.swift */,
 			);
 			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		5230B2542A727C2A00781623 /* Chat */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Chat;
 			sourceTree = "<group>";
 		};
 		5230B2552A727C5000781623 /* MyProfile */ = {
@@ -512,7 +504,7 @@
 				5290BFB82A72792A00D734EE /* Presenter */,
 				5271D4282A5FCFEF00FC7606 /* Utils */,
 				5290BFA22A703A1500D734EE /* Info.plist */,
-				5290BFA52A703AFD00D734EE /* GoogleService-Info.plist */,
+				2185C4B32A83EEC400F99795 /* GoogleService-Info.plist */,
 			);
 			path = MeloMeter;
 			sourceTree = "<group>";
@@ -850,10 +842,10 @@
 			files = (
 				5230B2652A72859200781623 /* Pretendard-Light.otf in Resources */,
 				5230B2692A72859200781623 /* Pretendard-Black.otf in Resources */,
-				5290BFA62A703AFD00D734EE /* GoogleService-Info.plist in Resources */,
 				5230B26B2A72859200781623 /* Pretendard-ExtraBold.otf in Resources */,
 				5230B26D2A72859200781623 /* Pretendard-Regular.otf in Resources */,
 				5230B2682A72859200781623 /* Pretendard-ExtraLight.otf in Resources */,
+				2185C4B42A83EEC400F99795 /* GoogleService-Info.plist in Resources */,
 				5230B26C2A72859200781623 /* Pretendard-SemiBold.otf in Resources */,
 				5230B26A2A72859200781623 /* Pretendard-Bold.otf in Resources */,
 				5230B2672A72859200781623 /* Pretendard-Thin.otf in Resources */,
