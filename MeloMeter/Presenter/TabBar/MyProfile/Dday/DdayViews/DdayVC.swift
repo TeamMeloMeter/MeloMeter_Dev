@@ -13,9 +13,9 @@ import RxRelay
 // 기념일 화면 뷰컨트롤러
 class DdayVC: UIViewController {
 
-    private let dateFormat = DateFormatter()
     private let viewModel: DdayVM?
     let disposeBag = DisposeBag()
+    var dDayCell: [DdayCell] = []
     
     init(viewModel: DdayVM) {
         self.viewModel = viewModel
@@ -54,16 +54,24 @@ class DdayVC: UIViewController {
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else { return }
         
         output.firstDay
-            .asDriver(onErrorJustReturn: "2023.00.00")
+            .asDriver(onErrorJustReturn: "")
             .drive(onNext: {[weak self] text in
                 self?.startDateLabel.text = text
             })
             .disposed(by: disposeBag)
         
         output.sinceFirstDay
-            .asDriver(onErrorJustReturn: "1일")
+            .asDriver(onErrorJustReturn: "")
             .drive(onNext: {[weak self] text in
                 self?.countDateLabel.text = text
+            })
+            .disposed(by: disposeBag)
+        
+        output.dDayCellData
+            .asDriver(onErrorJustReturn: [])
+            .drive(onNext: {[weak self] dataArray in
+                self?.dDayCell = dataArray
+                self?.dDayTableView.reloadData()
             })
             .disposed(by: disposeBag)
     }
@@ -78,8 +86,8 @@ class DdayVC: UIViewController {
     // MARK: Configure
     func configure() {
         view.backgroundColor = .white
-        [topView, dDayTableView].forEach { view.addSubview($0) }
         setNavigationBar()
+        [topView, dDayTableView].forEach { view.addSubview($0) }
     }
     
     // MARK: NavigationBar
@@ -238,21 +246,18 @@ class DdayVC: UIViewController {
 }
 
 extension DdayVC: UITableViewDataSource, UITableViewDelegate {
-    // 기념일 리스트 세팅
-    func setDataDdayList() {
-        // 기념일 날짜 계산하는 함수 호출
-    }
+
     //기념일 리스트 tableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return self.dDayCell.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "DdayTableViewCell", for: indexPath) as? DdayTableViewCell else { return UITableViewCell() }
-//        let target = Model.shared.dataDdayTableView[indexPath.row]
-//        cell.titleLabel.text = target.aniName
-//        cell.dateLabel.text = target.aniDate
-//        cell.remainingDaysLabel.text = target.countDdays
+        let target = self.dDayCell[indexPath.row]
+        cell.titleLabel.text = target.dateName
+        cell.dateLabel.text = target.date
+        cell.remainingDaysLabel.text = target.countDdays
         cell.selectionStyle = .none //셀 선택 색상 없애기
 
         //이전 셀들의 라벨 텍스트 색상 변경

@@ -11,7 +11,7 @@ class DdayTableViewCell: UITableViewCell {
 
     var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
+        label.text = "??"
         label.textColor = .gray1
         label.font = FontManager.shared.semiBold(ofSize: 16)
         return label
