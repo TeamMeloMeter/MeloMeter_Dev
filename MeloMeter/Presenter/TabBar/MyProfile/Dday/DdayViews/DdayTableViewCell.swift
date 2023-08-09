@@ -11,7 +11,7 @@ class DdayTableViewCell: UITableViewCell {
 
     var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "기념일 이름"
+        label.text = ""
         label.textColor = .gray1
         label.font = FontManager.shared.semiBold(ofSize: 16)
         return label
@@ -19,7 +19,7 @@ class DdayTableViewCell: UITableViewCell {
     
     let dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "20xx.xx.xx"
+        label.text = ""
         label.textColor = .gray2
         label.font = FontManager.shared.medium(ofSize: 12)
         return label
@@ -27,7 +27,7 @@ class DdayTableViewCell: UITableViewCell {
     
     let remainingDaysLabel: UILabel = {
         let label = UILabel()
-        label.text = "xx일 남음"
+        label.text = ""
         label.textColor = .gray1
         label.font = FontManager.shared.medium(ofSize: 14)
         return label
