@@ -11,6 +11,4 @@ target 'MeloMeter' do
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'KakaoSDK'
-  pod 'Kingfisher', '~> 5.0'
-
 end
