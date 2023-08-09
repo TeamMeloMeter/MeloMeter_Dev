@@ -10,6 +10,12 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
+struct DdayCell {
+    var dateName: String
+    var date: String
+    var countDdays: String
+}
+
 class DdayVM {
 
     weak var coordinator: MyProfileCoordinator?
@@ -24,6 +30,7 @@ class DdayVM {
     struct Output {
         var firstDay: BehaviorRelay<String> = BehaviorRelay(value: "20??.??.??")
         var sinceFirstDay: BehaviorRelay<String> = BehaviorRelay(value: "1일")
+        var dDayCellData: BehaviorRelay<[DdayCell]> = BehaviorRelay(value: [])
     }
     
     
@@ -39,6 +46,7 @@ class DdayVM {
             .subscribe(onNext: {[weak self] _ in
                 guard let self = self else{ return }
                 self.dDayUseCase.getFirstDay()
+                self.dDayUseCase.createAnniArray()
             })
             .disposed(by: disposeBag)
         
@@ -52,10 +60,18 @@ class DdayVM {
         
         self.dDayUseCase.firstDay
             .map{ day -> String in
-                return self.dDayUseCase.sinceDday(from: day)
+                return "\(abs(self.dDayUseCase.sinceDday(from: day)))일"
             }
             .asObservable()
             .bind(to: output.sinceFirstDay)
+            .disposed(by: disposeBag)
+        
+        self.dDayUseCase.dDayCellArray
+            .map{ data -> [DdayCell] in
+                return data.map{ DdayCell(dateName: $0.dateName, date: $0.date.toString(type: .yearToDay), countDdays: $0.countDdays)}
+            }
+            .asObservable()
+            .bind(to: output.dDayCellData)
             .disposed(by: disposeBag)
         
         input.backBtnTapEvent

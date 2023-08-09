@@ -36,7 +36,7 @@ struct UserModel: Equatable, Hashable {
             uid: UserDefaults.standard.string(forKey: "uid") ?? "",
             phoneNumber: UserDefaults.standard.string(forKey: "phoneNumber") ?? "",
             name: name ?? "",
-            birth: birth?.toString(type: .yearAndMonthAndDate) ?? "",
+            birth: birth?.toString(type: .yearToDay) ?? "",
             stateMessage: stateMessage ?? "상태메세지를 변경해보세요!"
         )
     }

@@ -30,26 +30,20 @@ class DdayUseCase {
         self.coupleRepository.getCoupleModel()
             .subscribe(onSuccess: { data in
                 if let day = data?.firstDay {
-                    self.createAnniArray(day)
                     self.firstDay.accept(day)
                 }
             })
             .disposed(by: disposeBag)
     }
     
-    
-    
-    func sinceDday(from date: Date) -> String {
-        let result = calendar.dateComponents([.day], from: date, to: Date()).day ?? 0
-        return result < 0 ? "\(abs(result))일 지남" : "\(result + 1)일"
-    }
-    
     func sinceDday(from date: Date) -> Int {
-        let result = calendar.dateComponents([.day], from: date, to: Date()).day ?? 0
-        return result < 0 ? abs(result) : (result + 1)
+        let currentDate = Date.fromStringOrNow(Date().toString(type: .yearToDay), .yearToDay)
+        let result = calendar.dateComponents([.day], from: currentDate, to: date).day ?? 0
+
+        return result
     }
     
-    func createAnniArray(_ firstDay: Date) {
+    func createAnniArray() {
         self.coupleRepository.getCoupleModel()
             .subscribe(onSuccess: { data in
                 if let dataArray = data?.anniversaries, let firstDay = data?.firstDay {
@@ -61,46 +55,61 @@ class DdayUseCase {
     
     func createDdayList(_ dataArray: [DdayCellData],_ firstDay: Date) -> [DdayCellData] {
         var resultArray: [DdayCellData] = []
-        var cnt = 1 //몇주년 인지 구분
         var countDday = ""
-//        //시작날짜 없을 경우 분기처리
-//        guard let dateStart = startDate else {
-//            dataDdayTableView.append(DdayCellData(aniName: "연애 시작 날짜를 입력해주세요!", countDdays: "", aniDate: "0000.00.00"))
-//            return
-//        }
-        
-        resultArray.append(DdayCellData(dateName: "첫 만남🫣", date: firstDay, countDdays: sinceDday(from: firstDay)))
-        print("유케: ",resultArray)
-        for i in 1...100 {
+        let firstDayCount = sinceDday(from: firstDay) == 0 ? "오늘✋" : "\(abs(sinceDday(from: firstDay)))일 지남"
+        resultArray.append(DdayCellData(dateName: "첫 만남🫣", date: firstDay, countDdays: firstDayCount))
+        for i in 1...10 {
             //시작일부터 100일 단위 기념일 날짜
-            guard let ani = calendar.date(byAdding: .day, value: (i * 100) - 1, to: firstDay) else{return resultArray}
+            guard let ani = calendar.date(byAdding: .day, value: (i * 100), to: firstDay) else{return resultArray}
+            if sinceDday(from: ani) > 0 {
+                countDday = "\(sinceDday(from: ani))일 남음"
+            }else if sinceDday(from: ani) == 0 {
+                countDday = "오늘🎉"
+            }else {
+                countDday = "\(abs(sinceDday(from: ani)))일 지남"
+            }
+            resultArray.append(DdayCellData(dateName: "\(i * 100)일", date: ani, countDdays: countDday))
+        }
+        
+        for i in 1...10 {
             //년 단위 기념일 날짜
-            guard let yearAni = calendar.date(byAdding: .year, value: cnt, to: firstDay) else{return resultArray}
-
-            //100일 단위 기념일의 날짜와 년 단위 날짜 차이
-            if let aniDay = calendar.dateComponents([.day], from: ani, to: yearAni).day {
-                //지난 기념일 판단
-                if sinceDday(from: ani) > 0 {
-                    countDday = "\(sinceDday(from: ani))일 남음"
-                }else if sinceDday(from: ani) == 0 {
-                    countDday = "당일"
+            guard let yearAni = calendar.date(byAdding: .year, value: i, to: firstDay) else{ return resultArray }
+    
+            if sinceDday(from: yearAni) > 0 {
+                countDday = "\(sinceDday(from: yearAni))일 남음"
+            }else if sinceDday(from: yearAni) == 0 {
+                countDday = "오늘🎊"
+            }else {
+                countDday = "\(abs(sinceDday(from: yearAni)))일 지남"
+            }
+            resultArray.append(DdayCellData(dateName: "\(i)주년",
+                                            date: yearAni,
+                                            countDdays: countDday)
+            )
+            
+        }
+        var addAni = Date()
+        for data in dataArray {
+            if data.dateName.contains("생일") {
+                addAni = calendar.date(byAdding: .year, value: 20, to: data.date) ?? Date()
+            }else {
+                addAni = data.date
+            }
+            for i in 1...10 {
+                guard let yearAni = calendar.date(byAdding: .year, value: i, to: addAni) else{ return resultArray }
+                if sinceDday(from: yearAni) > 0 {
+                    countDday = "\(sinceDday(from: yearAni))일 남음"
+                }else if sinceDday(from: yearAni) == 0 {
+                    countDday = "오늘🎉"
                 }else {
-                    countDday = "\(abs(sinceDday(from: ani)))일 지남"
+                    countDday = "\(abs(sinceDday(from: yearAni)))일 지남"
                 }
-                if aniDay > 0 {
-                    resultArray.append(DdayCellData(dateName: "\(i * 100)일", date: ani, countDdays: countDday))
-                }else if let aniYear = calendar.dateComponents([.year], from: firstDay, to: yearAni).year{
-                    cnt += 1
-                    resultArray.append(DdayCellData(dateName: "\(aniYear)주년",
-                                                    date: yearAni,
-                                                    countDdays: countDday)
-                                       )
-                    resultArray.append(DdayCellData(dateName: "\(i * 100)일", date: ani, countDdays: countDday))
-
-                }
+                resultArray.append(DdayCellData(dateName: data.dateName, date: yearAni, countDdays: countDday))
             }
         }
-        return resultArray
+        
+        
+        return resultArray.sorted(by: { $0.date < $1.date })
     }
     
 }
