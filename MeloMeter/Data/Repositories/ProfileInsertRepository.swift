@@ -23,6 +23,7 @@ class ProfileInsertRepository: ProfileInsertRepositoryP {
             //모델객체 -> DTO객체
             let userDTO = user.toProfileInsertDTO()
             let dDayDTO = dDay.toDTO() // [이름] [날짜]
+            UserDefaults.standard.set(userDTO.name, forKey: "userName")
             guard let userValues = userDTO.asDictionary, var coupleValues = dDayDTO.asDictionary else { return Disposables.create() }
             coupleValues["anniName"] = FieldValue.arrayUnion(coupleValues["anniName"] as! [Any])
             coupleValues["anniDate"] = FieldValue.arrayUnion(coupleValues["anniDate"] as! [Any])
