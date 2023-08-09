@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 
-protocol DdayRepositoryP {
+protocol CoupleRepositoryP {
+    func getCoupleModel() -> Single<CoupleModel?>
     
 }

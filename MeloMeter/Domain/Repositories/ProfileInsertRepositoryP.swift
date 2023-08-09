@@ -9,5 +9,5 @@ import Foundation
 import RxSwift
 
 protocol ProfileInsertRepositoryP {
-    func insertUserInfo(user: UserModel, dDay: DdayModel) -> Single<Void>
+    func insertUserInfo(user: UserModel, dDay: CoupleModel) -> Single<Void>
 }

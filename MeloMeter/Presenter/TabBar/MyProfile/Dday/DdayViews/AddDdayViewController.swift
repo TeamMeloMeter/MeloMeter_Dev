@@ -53,7 +53,7 @@ class AddDdayViewController: UIViewController, UITextFieldDelegate {
     @objc func saveButtonTapped() {
         guard let addAni = addDdayView.titleTextView.text else { return }
         guard let addDate = addDdayView.dateTextField.text else { return }
-        Model.shared.addDdayArray.append([addAni, addDate])
+        //Model.shared.addDdayArray.append([addAni, addDate])
         self.dismiss(animated: true, completion: nil)
     }
     

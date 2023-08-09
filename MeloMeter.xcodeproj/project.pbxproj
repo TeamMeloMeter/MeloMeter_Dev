@@ -16,11 +16,11 @@
 		45307ED7030327D357C85252 /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5A8595AED1BC03C3846C34F /* Pods_MeloMeter.framework */; };
 		521D41E52A7FFAD200E5CCDA /* DdayVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41E42A7FFAD200E5CCDA /* DdayVM.swift */; };
 		521D41E72A7FFD5F00E5CCDA /* DdayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */; };
-		521D41EC2A801D1200E5CCDA /* DdayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41EB2A801D1200E5CCDA /* DdayModel.swift */; };
-		521D41EE2A801D5700E5CCDA /* DdayDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41ED2A801D5700E5CCDA /* DdayDTO.swift */; };
+		521D41EC2A801D1200E5CCDA /* CoupleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41EB2A801D1200E5CCDA /* CoupleModel.swift */; };
+		521D41EE2A801D5700E5CCDA /* CoupleDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41ED2A801D5700E5CCDA /* CoupleDTO.swift */; };
 		521D41F42A814FFA00E5CCDA /* PresetCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41F32A814FFA00E5CCDA /* PresetCoordinator.swift */; };
-		521D41F62A81C71F00E5CCDA /* DdayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41F52A81C71F00E5CCDA /* DdayRepository.swift */; };
-		521D41F82A81C75100E5CCDA /* DdayRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41F72A81C75100E5CCDA /* DdayRepositoryP.swift */; };
+		521D41F62A81C71F00E5CCDA /* CoupleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41F52A81C71F00E5CCDA /* CoupleRepository.swift */; };
+		521D41F82A81C75100E5CCDA /* CoupleRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41F72A81C75100E5CCDA /* CoupleRepositoryP.swift */; };
 		5230B2652A72859200781623 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25C2A72859100781623 /* Pretendard-Light.otf */; };
 		5230B2662A72859200781623 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25D2A72859100781623 /* Pretendard-Medium.otf */; };
 		5230B2672A72859200781623 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25E2A72859100781623 /* Pretendard-Thin.otf */; };
@@ -137,11 +137,11 @@
 		214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardStatusDetector.swift; sourceTree = "<group>"; };
 		521D41E42A7FFAD200E5CCDA /* DdayVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayVM.swift; sourceTree = "<group>"; };
 		521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayUseCase.swift; sourceTree = "<group>"; };
-		521D41EB2A801D1200E5CCDA /* DdayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayModel.swift; sourceTree = "<group>"; };
-		521D41ED2A801D5700E5CCDA /* DdayDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayDTO.swift; sourceTree = "<group>"; };
+		521D41EB2A801D1200E5CCDA /* CoupleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleModel.swift; sourceTree = "<group>"; };
+		521D41ED2A801D5700E5CCDA /* CoupleDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleDTO.swift; sourceTree = "<group>"; };
 		521D41F32A814FFA00E5CCDA /* PresetCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetCoordinator.swift; sourceTree = "<group>"; };
-		521D41F52A81C71F00E5CCDA /* DdayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayRepository.swift; sourceTree = "<group>"; };
-		521D41F72A81C75100E5CCDA /* DdayRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayRepositoryP.swift; sourceTree = "<group>"; };
+		521D41F52A81C71F00E5CCDA /* CoupleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleRepository.swift; sourceTree = "<group>"; };
+		521D41F72A81C75100E5CCDA /* CoupleRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleRepositoryP.swift; sourceTree = "<group>"; };
 		5230B25C2A72859100781623 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		5230B25D2A72859100781623 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		5230B25E2A72859100781623 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
@@ -533,7 +533,7 @@
 				5271D41E2A5887E500FC7606 /* LogInRepository.swift */,
 				2108F0422A6EC291002EED7A /* ProfileInsertRepository.swift */,
 				526EB85D2A7D5992005B1940 /* UserRepository.swift */,
-				521D41F52A81C71F00E5CCDA /* DdayRepository.swift */,
+				521D41F52A81C71F00E5CCDA /* CoupleRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -593,7 +593,7 @@
 			children = (
 				5271D42B2A60484300FC7606 /* LogInDTO.swift */,
 				2108F0462A6EC48B002EED7A /* UserDTO.swift */,
-				521D41ED2A801D5700E5CCDA /* DdayDTO.swift */,
+				521D41ED2A801D5700E5CCDA /* CoupleDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -604,7 +604,7 @@
 				5290BFB32A7270DF00D734EE /* LogInRepositoryP.swift */,
 				5290BFB62A72726200D734EE /* ProfileInsertRepositoryP.swift */,
 				526EB85F2A7D59A4005B1940 /* UserRepositoryP.swift */,
-				521D41F72A81C75100E5CCDA /* DdayRepositoryP.swift */,
+				521D41F72A81C75100E5CCDA /* CoupleRepositoryP.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -746,7 +746,7 @@
 			children = (
 				5271D4142A55C9DD00FC7606 /* LogInModel.swift */,
 				2108F0482A6EC565002EED7A /* UserModel.swift */,
-				521D41EB2A801D1200E5CCDA /* DdayModel.swift */,
+				521D41EB2A801D1200E5CCDA /* CoupleModel.swift */,
 				52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */,
 				52845B1B2A0FC9DF003A87F8 /* Model.swift */,
 				5271D4072A51E27F00FC7606 /* CoupleInfoModel.swift */,
@@ -958,13 +958,13 @@
 				52E0CDF02A4B091600E4A182 /* CoupleCombineVC.swift in Sources */,
 				5290BFB02A71F9A600D734EE /* TabBarPageCase.swift in Sources */,
 				5241382C2A62F240002AADA6 /* AppCoordinator.swift in Sources */,
-				521D41F82A81C75100E5CCDA /* DdayRepositoryP.swift in Sources */,
+				521D41F82A81C75100E5CCDA /* CoupleRepositoryP.swift in Sources */,
 				524138302A62F943002AADA6 /* StartVM.swift in Sources */,
 				527547F42A6D23E400313EFC /* KakaoService.swift in Sources */,
 				52845B1C2A0FC9DF003A87F8 /* Model.swift in Sources */,
 				52F305302A168CE900112A04 /* DisconnectVC.swift in Sources */,
 				52CE6EA52A0245E300E43D39 /* DdayView.swift in Sources */,
-				521D41EC2A801D1200E5CCDA /* DdayModel.swift in Sources */,
+				521D41EC2A801D1200E5CCDA /* CoupleModel.swift in Sources */,
 				2108F04B2A702A77002EED7A /* PermissionVM.swift in Sources */,
 				52697B7329EEB7B2002BDD04 /* AppDelegate.swift in Sources */,
 				52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */,
@@ -998,7 +998,7 @@
 				52F305362A16B7F500112A04 /* RecoveryVC.swift in Sources */,
 				52CE6EA72A02571E00E43D39 /* MapVC.swift in Sources */,
 				52F00FF82A0936FD0014FC01 /* NoticeView.swift in Sources */,
-				521D41F62A81C71F00E5CCDA /* DdayRepository.swift in Sources */,
+				521D41F62A81C71F00E5CCDA /* CoupleRepository.swift in Sources */,
 				5230B2862A7D048400781623 /* MyProfileVM.swift in Sources */,
 				5290BFB72A72726200D734EE /* ProfileInsertRepositoryP.swift in Sources */,
 				5271D4192A58429000FC7606 /* FireStoreCollection.swift in Sources */,
@@ -1038,7 +1038,7 @@
 				2108F0492A6EC565002EED7A /* UserModel.swift in Sources */,
 				5271D4322A606D0B00FC7606 /* Dictionary+.swift in Sources */,
 				521D41E52A7FFAD200E5CCDA /* DdayVM.swift in Sources */,
-				521D41EE2A801D5700E5CCDA /* DdayDTO.swift in Sources */,
+				521D41EE2A801D5700E5CCDA /* CoupleDTO.swift in Sources */,
 				52F010202A0ADB680014FC01 /* EditStatusMessageView.swift in Sources */,
 				52697B7529EEB7B2002BDD04 /* SceneDelegate.swift in Sources */,
 				52F0101E2A0ACE190014FC01 /* EditNameViewController.swift in Sources */,

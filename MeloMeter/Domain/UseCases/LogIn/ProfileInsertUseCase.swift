@@ -30,7 +30,7 @@ class ProfileInsertUseCase {
                 
                 //데이터를 담은 모델 객체 생성
                 let userModel = UserModel(name: name, birth: birthD)
-                let ddayModel = DdayModel(firstDay: firstDayD, anniversaries: [birthD])
+                let ddayModel = CoupleModel(firstDay: firstDayD, anniversaries: [DdayCellData(dateName: "\(name) 생일", date: birthD, countDdays: "")])
                 //레파지토리로 넘기기
                 profileInsertRepository.insertUserInfo(user: userModel, dDay: ddayModel)
                     .subscribe(onSuccess: {

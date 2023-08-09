@@ -20,7 +20,7 @@ struct LogInDTO: Codable {
         return LogInModel(
             uid: uid,
             phoneNumber: phoneNumber,
-            createdAt: Date.fromStringOrNow(createdAt),
+            createdAt: Date.fromStringOrNow(createdAt, .timeStamp),
             inviteCode: inviteCode
         )
     }
