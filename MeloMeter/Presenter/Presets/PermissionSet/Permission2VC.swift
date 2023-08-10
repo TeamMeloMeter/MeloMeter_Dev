@@ -41,7 +41,7 @@ class Permission2VC: UIViewController {
             startBtnTapped2: self.startBtn.rx.tap.asObservable()
         )
         
-        guard let output = self.viewModel?.transform2(input: input, disposeBag: self.disposeBag) else { return }
+        self.viewModel?.transform2(input: input, disposeBag: self.disposeBag)
     }
     
     // MARK: - configure
