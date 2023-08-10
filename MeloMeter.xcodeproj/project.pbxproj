@@ -36,6 +36,7 @@
 		521D41F62A81C71F00E5CCDA /* CoupleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41F52A81C71F00E5CCDA /* CoupleRepository.swift */; };
 		521D41F82A81C75100E5CCDA /* CoupleRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41F72A81C75100E5CCDA /* CoupleRepositoryP.swift */; };
 		521D41FB2A83F88300E5CCDA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 521D41FA2A83F88300E5CCDA /* GoogleService-Info.plist */; };
+		521D41FD2A843EB100E5CCDA /* TextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41FC2A843EB100E5CCDA /* TextField+.swift */; };
 		5230B2652A72859200781623 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25C2A72859100781623 /* Pretendard-Light.otf */; };
 		5230B2662A72859200781623 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25D2A72859100781623 /* Pretendard-Medium.otf */; };
 		5230B2672A72859200781623 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25E2A72859100781623 /* Pretendard-Thin.otf */; };
@@ -110,8 +111,7 @@
 		52CE6EA72A02571E00E43D39 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA62A02571E00E43D39 /* MapVC.swift */; };
 		52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EAC2A02C0B800E43D39 /* DdayTableViewCell.swift */; };
 		52E0CDF02A4B091600E4A182 /* CoupleCombineVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0CDEF2A4B091600E4A182 /* CoupleCombineVC.swift */; };
-		52F00FF42A09308E0014FC01 /* AddDdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FF32A09308E0014FC01 /* AddDdayView.swift */; };
-		52F00FF62A0930FF0014FC01 /* AddDdayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FF52A0930FF0014FC01 /* AddDdayViewController.swift */; };
+		52F00FF62A0930FF0014FC01 /* AddDdayModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FF52A0930FF0014FC01 /* AddDdayModal.swift */; };
 		52F00FF82A0936FD0014FC01 /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FF72A0936FD0014FC01 /* NoticeView.swift */; };
 		52F00FFA2A0938480014FC01 /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FF92A0938480014FC01 /* NoticeViewController.swift */; };
 		52F00FFC2A093A410014FC01 /* NoticeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FFB2A093A410014FC01 /* NoticeTableViewCell.swift */; };
@@ -169,6 +169,7 @@
 		521D41F52A81C71F00E5CCDA /* CoupleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleRepository.swift; sourceTree = "<group>"; };
 		521D41F72A81C75100E5CCDA /* CoupleRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleRepositoryP.swift; sourceTree = "<group>"; };
 		521D41FA2A83F88300E5CCDA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		521D41FC2A843EB100E5CCDA /* TextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextField+.swift"; sourceTree = "<group>"; };
 		5230B25C2A72859100781623 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		5230B25D2A72859100781623 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		5230B25E2A72859100781623 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
@@ -236,8 +237,7 @@
 		52CE6EA62A02571E00E43D39 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		52CE6EAC2A02C0B800E43D39 /* DdayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayTableViewCell.swift; sourceTree = "<group>"; };
 		52E0CDEF2A4B091600E4A182 /* CoupleCombineVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleCombineVC.swift; sourceTree = "<group>"; };
-		52F00FF32A09308E0014FC01 /* AddDdayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDdayView.swift; sourceTree = "<group>"; };
-		52F00FF52A0930FF0014FC01 /* AddDdayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDdayViewController.swift; sourceTree = "<group>"; };
+		52F00FF52A0930FF0014FC01 /* AddDdayModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDdayModal.swift; sourceTree = "<group>"; };
 		52F00FF72A0936FD0014FC01 /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
 		52F00FF92A0938480014FC01 /* NoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewController.swift; sourceTree = "<group>"; };
 		52F00FFB2A093A410014FC01 /* NoticeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeTableViewCell.swift; sourceTree = "<group>"; };
@@ -661,6 +661,7 @@
 				5271D4312A606D0B00FC7606 /* Dictionary+.swift */,
 				527547EF2A69103200313EFC /* ProgressDialogView.swift */,
 				214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */,
+				521D41FC2A843EB100E5CCDA /* TextField+.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -767,8 +768,7 @@
 			children = (
 				52CE6EAC2A02C0B800E43D39 /* DdayTableViewCell.swift */,
 				52F2083F29FBFF280043BCA4 /* DdayVC.swift */,
-				52F00FF32A09308E0014FC01 /* AddDdayView.swift */,
-				52F00FF52A0930FF0014FC01 /* AddDdayViewController.swift */,
+				52F00FF52A0930FF0014FC01 /* AddDdayModal.swift */,
 			);
 			path = DdayViews;
 			sourceTree = "<group>";
@@ -1046,11 +1046,11 @@
 			files = (
 				5271D4172A5841E500FC7606 /* FireStoreService.swift in Sources */,
 				52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */,
-				52F00FF42A09308E0014FC01 /* AddDdayView.swift in Sources */,
 				2185C4DA2A83F13B00F99795 /* CustomLayoutSizeCalculator.swift in Sources */,
 				214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */,
 				521D41E72A7FFD5F00E5CCDA /* DdayUseCase.swift in Sources */,
 				5230B27A2A7790A300781623 /* DefaultLocationService.swift in Sources */,
+				521D41FD2A843EB100E5CCDA /* TextField+.swift in Sources */,
 				2108F0412A6EC1F0002EED7A /* ProfileInsertUseCase.swift in Sources */,
 				52E0CDF02A4B091600E4A182 /* CoupleCombineVC.swift in Sources */,
 				5290BFB02A71F9A600D734EE /* TabBarPageCase.swift in Sources */,
@@ -1095,7 +1095,7 @@
 				5270EC042A445077007FF444 /* StartVC.swift in Sources */,
 				52F010262A0B79270014FC01 /* EditBirthView.swift in Sources */,
 				5290BF972A6D983A00D734EE /* ColorAssets.swift in Sources */,
-				52F00FF62A0930FF0014FC01 /* AddDdayViewController.swift in Sources */,
+				52F00FF62A0930FF0014FC01 /* AddDdayModal.swift in Sources */,
 				2185C4CF2A83F13B00F99795 /* ChatCoordinator.swift in Sources */,
 				2185C4D82A83F13B00F99795 /* CustomTextLayoutSizeCalculator.swift in Sources */,
 				52F0100B2A0A493C0014FC01 /* QnATableViewCell.swift in Sources */,

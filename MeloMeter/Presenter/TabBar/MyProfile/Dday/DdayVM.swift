@@ -28,11 +28,16 @@ class DdayVM {
     }
     
     struct Output {
-        var firstDay: BehaviorRelay<String> = BehaviorRelay(value: "20??.??.??")
-        var sinceFirstDay: BehaviorRelay<String> = BehaviorRelay(value: "1일")
+        var firstDay: BehaviorRelay<String> = BehaviorRelay(value: "")
+        var sinceFirstDay: BehaviorRelay<String> = BehaviorRelay(value: "")
         var dDayCellData: BehaviorRelay<[DdayCell]> = BehaviorRelay(value: [])
+        var cellIndexPath: PublishSubject<IndexPath> = PublishSubject()
     }
     
+    struct AddDdayInput {
+        let xBtnTapEvent: Observable<Void>
+        let addDday: Observable<[String]>
+    }
     
     init(coordinator: MyProfileCoordinator, dDayUseCase: DdayUseCase) {
         self.coordinator = coordinator
@@ -45,8 +50,8 @@ class DdayVM {
         input.viewWillApearEvent
             .subscribe(onNext: {[weak self] _ in
                 guard let self = self else{ return }
+                self.dDayUseCase.coupleObserverExcute()
                 self.dDayUseCase.getFirstDay()
-                self.dDayUseCase.createAnniArray()
             })
             .disposed(by: disposeBag)
         
@@ -68,10 +73,25 @@ class DdayVM {
         
         self.dDayUseCase.dDayCellArray
             .map{ data -> [DdayCell] in
-                return data.map{ DdayCell(dateName: $0.dateName, date: $0.date.toString(type: .yearToDay), countDdays: $0.countDdays)}
+                let result = data.map{ DdayCell(dateName: $0.dateName,
+                                                date: $0.date.toString(type: .yearToDay),
+                                                countDdays: $0.countDdays)
+                }
+                self.focusCell(result)
+                    .asObservable()
+                    .bind(to: output.cellIndexPath)
+                    .disposed(by: disposeBag)
+                return result
             }
             .asObservable()
             .bind(to: output.dDayCellData)
+            .disposed(by: disposeBag)
+        
+        input.addDdayBtnTapEvent
+            .subscribe(onNext: {[weak self] _ in
+                guard let self = self else{ return }
+                self.coordinator?.showAddDdayVC(viewModel: self)
+            })
             .disposed(by: disposeBag)
         
         input.backBtnTapEvent
@@ -83,6 +103,43 @@ class DdayVM {
         
         
         return output
+    }
+    
+    func focusCell(_ cellData: [DdayCell]) -> Single<IndexPath> {
+        return Single.create{ single in
+            var indexPath = IndexPath(row: 0, section: 0)
+            guard let index = cellData.enumerated().min(by: {
+                abs(Date.fromStringOrNow($0.element.date, .yearToDay).timeIntervalSinceNow) < abs(Date.fromStringOrNow($1.element.date, .yearToDay).timeIntervalSinceNow)
+            })?.offset else {
+                single(.success(indexPath))
+                return Disposables.create()
+            }
+            
+            indexPath = IndexPath(row: index, section: 0)
+            single(.success(indexPath))
+            return Disposables.create()
+        }
+        
+    }
+    
+    func addDdayBinding(input: AddDdayInput, disposeBag: DisposeBag) {
+        
+        input.xBtnTapEvent
+            .subscribe(onNext: {[weak self] _ in
+                self?.coordinator?.dismissViewController()
+            })
+            .disposed(by: disposeBag)
+        
+        input.addDday
+            .subscribe(onNext: {[weak self] addDday in
+                guard !addDday.isEmpty else{ return }
+                self?.dDayUseCase.addDday(add: addDday)
+                    .subscribe(onSuccess: {
+                        self?.coordinator?.dismissViewController()
+                    })
+                    .disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
     }
     
 }
