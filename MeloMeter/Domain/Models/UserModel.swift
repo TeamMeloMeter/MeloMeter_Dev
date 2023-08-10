@@ -15,19 +15,25 @@ struct UserModel: Equatable, Hashable {
     var name: String?
     var birth: Date?
     var stateMessage: String?
+    var gender: String?
     
-    init(uid: String?, phoneNumber: String?, name: String?, birth: Date?, stateMessage: String?) {
+    init(uid: String?, phoneNumber: String?, name: String?, birth: Date?, stateMessage: String?, gender: String?) {
         self.uid = uid
         self.phoneNumber = phoneNumber
         self.name = name
         self.birth = birth
         self.stateMessage = stateMessage
+        self.gender = gender
     }
     
     init(name: String?, birth: Date?) {
-        self.init(uid: nil, phoneNumber: nil, name: name, birth: birth, stateMessage: nil)
+        self.init(uid: nil, phoneNumber: nil, name: name, birth: birth, stateMessage: nil, gender: nil)
         self.name = name
         self.birth = birth
+    }
+    
+    init(name: String?, stateMessage: String?, birth: Date?, gender: String?) {
+        self.init(uid: nil, phoneNumber: nil, name: name, birth: birth, stateMessage: stateMessage, gender: gender)
     }
     
     // MARK: - Methods
@@ -37,7 +43,8 @@ struct UserModel: Equatable, Hashable {
             phoneNumber: UserDefaults.standard.string(forKey: "phoneNumber") ?? "",
             name: name ?? "",
             birth: birth?.toString(type: .yearToDay) ?? "",
-            stateMessage: stateMessage ?? "상태메세지를 변경해보세요!"
+            stateMessage: stateMessage,
+            gender: gender
         )
     }
 }

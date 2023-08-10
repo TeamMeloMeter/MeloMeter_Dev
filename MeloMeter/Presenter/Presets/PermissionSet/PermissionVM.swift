@@ -22,11 +22,7 @@ class PermissionVM {
         let viewDidApearEvent: Observable<Void>
         let startBtnTapped2: Observable<Void>
     }
-    
-    struct Output {
-        
-    }
-    
+
     init(coordinator: PresetCoordinator, mainUseCase: MainUseCase) {
         
         self.coordinator = coordinator
@@ -42,8 +38,7 @@ class PermissionVM {
             .disposed(by: disposeBag)
     }
     
-    func transform2(input: Input2, disposeBag: DisposeBag) -> Output {
-        let output = Output()
+    func transform2(input: Input2, disposeBag: DisposeBag) {
         
         input.viewDidApearEvent
             .subscribe(onNext: { [weak self] _ in
@@ -57,7 +52,5 @@ class PermissionVM {
             })
             .disposed(by: disposeBag)
     
-      
-        return output
     }
 }

@@ -99,7 +99,6 @@ class DdayVC: UIViewController {
     
     // MARK: NavigationBar
     private func setNavigationBar() {
-        navigationController?.navigationBar.isHidden = false
         navigationItem.title = "기념일"
         navigationItem.rightBarButtonItem = addDdayBarButton
         navigationItem.rightBarButtonItem?.tintColor = .black
