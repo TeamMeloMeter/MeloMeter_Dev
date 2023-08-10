@@ -9,6 +9,7 @@ import Foundation
 import RxSwift
 
 protocol CoupleRepositoryP {
-    func getCoupleModel() -> Single<CoupleModel?>
-    
+    func getCoupleID() -> Single<String>
+    func couplesObserver()
+    func setAnniversaries(data: [String]) -> Single<Void>
 }

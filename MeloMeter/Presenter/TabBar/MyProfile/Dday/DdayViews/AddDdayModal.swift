@@ -1,15 +1,111 @@
 //
-//  AddDdayView.swift
+//  AddDdayViewController.swift
 //  MeloMeter
 //
 //  Created by 오현택 on 2023/05/08.
 //
 
 import UIKit
-// 기념일 추가 뷰
-class AddDdayView: UIView {
+import RxSwift
+import RxCocoa
+
+class AddDdayModal: UIViewController, UITextFieldDelegate {
     
-    // 표시 modal
+    var viewModel: DdayVM?
+    private let disposeBag = DisposeBag()
+    private let tapGesture = UITapGestureRecognizer()
+    let progressDialog: ProgressDialogView = ProgressDialogView()
+    
+    init(viewModel: DdayVM) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.titleTextView.delegate = self
+        self.dateTextField.delegate = self
+        configure()
+        setAutoLayout()
+        setBindings()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.hideProgressDialog()
+    }
+    // MARK: Bindings
+    func setBindings() {
+        view.addGestureRecognizer(tapGesture)
+        tapGesture.rx.event
+            .subscribe(onNext: { [weak self] _ in
+                self?.view.endEditing(true)
+            })
+            .disposed(by: disposeBag)
+        
+        let input = DdayVM.AddDdayInput(
+            xBtnTapEvent: xButton.rx.tap
+                .map({ _ in })
+                .asObservable(),
+            addDday: saveButton.rx.tap
+                .map({ _ in
+                    self.showProgressDialog()
+                    self.dateTextField.endEditing(true)
+                    if let title = self.titleTextView.text, let date = self.dateTextField.text {
+                        guard title != "" && date != "" else{
+                            self.inputError()
+                            return []
+                        }
+                        self.hideProgressDialog()
+                        return [title, date]
+                    }
+                    return []
+                })
+                .asObservable()
+        )
+        
+        self.viewModel?.addDdayBinding(input: input, disposeBag: self.disposeBag)
+        
+        self.dateTextField.rx.controlEvent(.editingDidBegin)
+            .map({ _ in })
+            .subscribe(onNext: {[weak self] _ in
+                guard let self = self else{ return }
+                self.saveButton.isEnabled = true
+                self.saveButton.alpha = 1.0
+                self.saveButton.layer.applyShadow(color: .primary1, alpha: 0.4, x: 4, y: 0, blur: 10)
+                self.datePicker.rx.date
+                    .map{ date in
+                        return date.toString(type: .yearAndMonthAndDate)
+                    }
+                    .bind(to: self.dateTextField.rx.text)
+                    .disposed(by: self.disposeBag)
+            })
+            .disposed(by: disposeBag)
+    }
+
+    // MARK: Event
+    
+    func inputError() {
+        AlertManager(viewController: self)
+            .setTitle("추가 실패")
+            .setMessage("제목과 날짜를\n모두 입력해주세요!")
+            .addActionConfirm("확인",
+                              action: { self.titleTextView.becomeFirstResponder() }
+            )
+            .showCustomAlert()
+        hideProgressDialog()
+    }
+    
+    func showProgressDialog() {
+        self.view.addSubview(self.progressDialog)
+        self.progressDialog.show()
+    }
+    func hideProgressDialog() {
+        self.progressDialog.hide()
+    }
+    
+    
+    // MARK: UI
     lazy var containerView: UIView = {
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 0.9813271165, green: 0.9813271165, blue: 0.9813271165, alpha: 1)
@@ -152,29 +248,18 @@ class AddDdayView: UIView {
         return label
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-        addViews()
-        dateInputViewConstraints()
-        setConstraints()
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup() {
-     
-        backgroundColor = .clear
-        
+    
+    func configure() {
+        view.backgroundColor = .clear
+        [dimmedView, containerView].forEach { view.addSubview($0) }
     }
     
-    func addViews() {
-        [dimmedView, containerView].forEach { addSubview($0) }
-    }
-    
-    private func setConstraints() {
+    // MARK: 오토레이아웃
+    private func setAutoLayout() {
         dimmedViewConstraints()
         containerViewConstraints()
         topLabelConstraints()
@@ -182,16 +267,17 @@ class AddDdayView: UIView {
         titleLabelConstraints()
         titleTextViewConstraints()
         dateViewConstraints()
+        dateInputViewConstraints()
     }
     
     private func dimmedViewConstraints() {
         dimmedView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            dimmedView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            dimmedView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            dimmedView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            dimmedView.topAnchor.constraint(equalTo: topAnchor)
+            dimmedView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            dimmedView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            dimmedView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            dimmedView.topAnchor.constraint(equalTo: self.view.topAnchor)
         ])
     }
     
@@ -199,9 +285,9 @@ class AddDdayView: UIView {
         containerView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            containerView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            containerView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             containerView.heightAnchor.constraint(equalToConstant: 616)
         ])
     }
@@ -241,7 +327,7 @@ class AddDdayView: UIView {
         textCountLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            titleTextView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            titleTextView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             titleTextView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 125),
             titleTextView.widthAnchor.constraint(equalToConstant: 343),
             titleTextView.heightAnchor.constraint(equalToConstant: 50),
@@ -260,7 +346,7 @@ class AddDdayView: UIView {
         
 
         NSLayoutConstraint.activate([
-            dateTextField.centerXAnchor.constraint(equalTo: centerXAnchor),
+            dateTextField.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             dateTextField.topAnchor.constraint(equalTo: titleTextView.bottomAnchor, constant: 61),
             dateTextField.widthAnchor.constraint(equalToConstant: 343),
             dateTextField.heightAnchor.constraint(equalToConstant: 50),
@@ -269,8 +355,7 @@ class AddDdayView: UIView {
 
         ])
     }
-    
-    
+
     func dateInputViewConstraints() {
         saveButton.translatesAutoresizingMaskIntoConstraints = false
 
@@ -284,11 +369,20 @@ class AddDdayView: UIView {
     }
 }
 
-//텍스트 입력 좌측 패딩 13
-extension UITextField {
-    func addLeftPadding() {
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 13, height: self.frame.height))
-        self.leftView = paddingView
-        self.leftViewMode = ViewMode.always
+extension AddDdayModal: UITextViewDelegate {
+    
+    func textViewDidChange(_ textView: UITextView) {
+        //text 변경 시 placeholder 숨김
+        self.textPlaceHolderLabel.isHidden = !textView.text.isEmpty
+        //입력 글자 수 label 표시
+        self.textCountLabel.text = "\(self.titleTextView.text.count)/10"
     }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        // 현재 텍스트 길이와 입력하려는 텍스트 길이의 합이 최대 길이를 초과하면 false 반환
+        let currentText = textView.text ?? ""
+        let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
+        return newText.count <= 10
+    }
+    
 }

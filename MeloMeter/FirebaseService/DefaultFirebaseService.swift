@@ -106,7 +106,6 @@ public final class DefaultFirebaseService: FireStoreService {
     public func updateDocument(collection: FireStoreCollection, document: String, values: FirebaseData) -> Single<Void> {
         return Single.create { [weak self] single in
             guard let self else { return Disposables.create() }
-            
             self.database.collection(collection.name)
                 .document(document)
                 .updateData(values) { error in
@@ -133,7 +132,6 @@ public extension DefaultFirebaseService {
                         observable.onError(FireStoreError.unknown)
                         return
                     }
-                    
                     observable.onNext(data)
                 }
             return Disposables.create()

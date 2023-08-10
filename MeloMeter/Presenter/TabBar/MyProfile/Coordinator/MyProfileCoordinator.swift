@@ -53,6 +53,12 @@ extension MyProfileCoordinator {
         self.navigationController.setNavigationBarHidden(false, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
     }
+    
+    func showAddDdayVC(viewModel: DdayVM) {
+        let viewController = AddDdayModal(viewModel: viewModel)
+        viewController.modalPresentationStyle = .custom
+        self.navigationController.present(viewController, animated: true, completion: nil)
+    }
 
 }
 

@@ -29,6 +29,7 @@ struct CoupleModel {
     init(firstDay: Date, anniversaries: [DdayCellData]) {
         self.init(firstDay: firstDay, anniversaries: anniversaries, coupleCreatedAt: nil)
     }
+
     
     // MARK: - Methods
     func toDTO() -> CoupleDTO {

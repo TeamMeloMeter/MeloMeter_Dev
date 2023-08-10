@@ -26,12 +26,12 @@ class DdayUseCase {
         self.disposeBag = DisposeBag()
     }
     
+    
     func getFirstDay() {
-        self.coupleRepository.getCoupleModel()
-            .subscribe(onSuccess: { data in
-                if let day = data?.firstDay {
-                    self.firstDay.accept(day)
-                }
+        self.coupleRepository.coupleModel
+            .take(1)
+            .subscribe(onNext: { data in
+                self.firstDay.accept(data.firstDay)
             })
             .disposed(by: disposeBag)
     }
@@ -43,13 +43,15 @@ class DdayUseCase {
         return result
     }
     
-    func createAnniArray() {
-        self.coupleRepository.getCoupleModel()
-            .subscribe(onSuccess: { data in
-                if let dataArray = data?.anniversaries, let firstDay = data?.firstDay {
-                    self.dDayCellArray.accept(self.createDdayList(dataArray, firstDay))
-                }
-            })
+    func coupleObserverExcute() {
+        self.coupleRepository.couplesObserver()
+        self.coupleRepository.coupleModel
+            .map{ data in
+                let dataArray = data.anniversaries, firstDay = data.firstDay
+                return self.createDdayList(dataArray, firstDay)
+            }
+            .asObservable()
+            .bind(to: self.dDayCellArray)
             .disposed(by: disposeBag)
     }
     
@@ -92,24 +94,39 @@ class DdayUseCase {
         for data in dataArray {
             if data.dateName.contains("생일") {
                 addAni = calendar.date(byAdding: .year, value: 20, to: data.date) ?? Date()
+                for i in 1...10 {
+                    guard let yearAni = calendar.date(byAdding: .year, value: i, to: addAni) else{ return resultArray }
+                    if sinceDday(from: yearAni) > 0 {
+                        countDday = "\(sinceDday(from: yearAni))일 남음"
+                    }else if sinceDday(from: yearAni) == 0 {
+                        countDday = "오늘🎉"
+                    }else {
+                        countDday = "\(abs(sinceDday(from: yearAni)))일 지남"
+                    }
+                    resultArray.append(DdayCellData(dateName: data.dateName, date: yearAni, countDdays: countDday))
+                }
             }else {
                 addAni = data.date
-            }
-            for i in 1...10 {
-                guard let yearAni = calendar.date(byAdding: .year, value: i, to: addAni) else{ return resultArray }
-                if sinceDday(from: yearAni) > 0 {
-                    countDday = "\(sinceDday(from: yearAni))일 남음"
-                }else if sinceDday(from: yearAni) == 0 {
+                if sinceDday(from: addAni) > 0 {
+                    countDday = "\(sinceDday(from: addAni))일 남음"
+                }else if sinceDday(from: addAni) == 0 {
                     countDday = "오늘🎉"
                 }else {
-                    countDday = "\(abs(sinceDday(from: yearAni)))일 지남"
+                    countDday = "\(abs(sinceDday(from: addAni)))일 지남"
                 }
-                resultArray.append(DdayCellData(dateName: data.dateName, date: yearAni, countDdays: countDday))
+                resultArray.append(DdayCellData(dateName: data.dateName, date: addAni, countDdays: countDday))
             }
+            
         }
         
         
         return resultArray.sorted(by: { $0.date < $1.date })
+    }
+    
+    func addDday(add: [String]) -> Single<Void> {
+        var data = add
+        data[1] = Date.fromStringOrNow(add[1], .yearAndMonthAndDate).toString(type: .yearToDay)
+        return self.coupleRepository.setAnniversaries(data: data)
     }
     
 }
