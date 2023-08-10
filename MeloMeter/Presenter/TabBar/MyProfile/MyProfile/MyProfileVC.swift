@@ -41,10 +41,13 @@ class MyProfileVC: UIViewController {
         self.dDayView.addGestureRecognizer(tapDdayGesture)
         
         let input = MyProfileVM.Input(
-            viewDidApearEvent: self.rx.methodInvoked(#selector(viewDidAppear(_:)))
+            viewWillApearEvent: self.rx.methodInvoked(#selector(viewWillAppear(_:)))
                 .map({ _ in })
                 .asObservable(),
             dDayViewTapEvent: tapDdayGesture.rx.event
+                .map({ _ in })
+                .asObservable(),
+            editProfileBtnTapEvent: self.profileEditButton.rx.tap
                 .map({ _ in })
                 .asObservable()
         )
