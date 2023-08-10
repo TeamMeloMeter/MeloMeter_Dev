@@ -48,7 +48,6 @@ class EditProfileVC: UIViewController {
         
         output.userName
             .bind(onNext: {[weak self] name in
-                print("이름",name)
                 self?.userNameLabel.text = name
             })
             .disposed(by: disposeBag)
@@ -197,7 +196,7 @@ class EditProfileVC: UIViewController {
     
     let userNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "김소희"
+        label.text = ""
         label.font = FontManager.shared.medium(ofSize: 14)
         label.textColor = .gray1
         return label
@@ -222,7 +221,7 @@ class EditProfileVC: UIViewController {
     
     let userStateMessageLabel: UILabel = {
         let label = UILabel()
-        label.text = "오늘은 기분좋은 날:)"
+        label.text = ""
         label.font = FontManager.shared.medium(ofSize: 14)
         label.textColor = .gray1
         return label
@@ -251,7 +250,7 @@ class EditProfileVC: UIViewController {
     
     let birthDateLabel: UILabel = {
         let label = UILabel()
-        label.text = "1998.03.10"
+        label.text = ""
         label.font = FontManager.shared.medium(ofSize: 14)
         label.textColor = .gray1
         label.textAlignment = .right
@@ -383,7 +382,7 @@ class EditProfileVC: UIViewController {
         userStateMessageLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            nameLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            nameLabel.leadingAnchor.constraint(equalTo: nameView.leadingAnchor),
             nameLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 185),
             
             nameView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
@@ -394,7 +393,7 @@ class EditProfileVC: UIViewController {
             userNameLabel.leadingAnchor.constraint(equalTo: nameView.leadingAnchor, constant: 11),
             userNameLabel.centerYAnchor.constraint(equalTo: nameView.centerYAnchor),
             
-            stateMessageLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            stateMessageLabel.leadingAnchor.constraint(equalTo: nameView.leadingAnchor),
             stateMessageLabel.topAnchor.constraint(equalTo: nameView.bottomAnchor, constant: 22),
             
             stateMessageView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),

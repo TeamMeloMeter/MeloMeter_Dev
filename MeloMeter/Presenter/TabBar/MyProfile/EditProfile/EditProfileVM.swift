@@ -44,7 +44,6 @@ class EditProfileVM {
         
         self.editProfileUseCase.userData
             .bind(onNext: { userData in
-                print("user:",userData)
                 output.userName.onNext(userData.name ?? "이름")
                 output.stateMessage.onNext(userData.stateMessage ?? "상태메세지를 변경해보세요!")
                 output.birth.onNext(userData.birth?.toString(type: .yearToDay) ?? "")

@@ -23,7 +23,7 @@ struct UserDTO: Codable {
             phoneNumber: phoneNumber,
             name: name,
             birth: Date.fromStringOrNow(birth, .yearToDay),
-            stateMessage: stateMessage ?? "",
+            stateMessage: stateMessage ?? "상태메세지를 변경해보세요!",
             gender: gender ?? "남"
         )
     }
