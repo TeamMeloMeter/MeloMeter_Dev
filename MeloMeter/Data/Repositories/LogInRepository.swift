@@ -12,13 +12,13 @@ import FirebaseFirestore
 class LogInRepository: LogInRepositoryP {
     
     private let firebaseService: FireStoreService
-    private var userInfoModel: UserInfoModel
+    private var userModel: UserModel
     private var logInStatus: LogInStatus = .none
     private let disposeBag = DisposeBag()
     
-    init() {
-        self.firebaseService = DefaultFirebaseService()
-        self.userInfoModel = UserInfoModel()
+    init(firebaseService: FireStoreService) {
+        self.firebaseService = firebaseService
+        self.userModel = UserModel(name: nil, birth: nil)
     }
     
     //전화번호 전송, 인증ID 저장
@@ -26,10 +26,10 @@ class LogInRepository: LogInRepositoryP {
         return Single.create { [weak self] single in
             guard let self = self else { return Disposables.create() }
             guard let number = phoneNumber else { return Disposables.create() }
-            self.userInfoModel.phoneNumber = "+82 \(number.components(separatedBy: "-").joined())"
+            self.userModel.phoneNumber = "+82 \(number.components(separatedBy: "-").joined())"
 
             PhoneAuthProvider.provider()
-                .verifyPhoneNumber(self.userInfoModel.phoneNumber ?? "", uiDelegate: nil) { (verificationID, error) in
+                .verifyPhoneNumber(self.userModel.phoneNumber ?? "", uiDelegate: nil) { (verificationID, error) in
                     if let error = error {
                         single(.failure(error))
                         return
