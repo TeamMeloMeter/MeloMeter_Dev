@@ -63,4 +63,32 @@ class DetailEditVM {
         return output
     }
     
+    func stateMessageTransform(input: Input, disposeBag: DisposeBag) -> Output {
+        let output = Output()
+        
+        input.backBtnTapEvent
+            .subscribe(onNext: {[weak self] _ in
+                guard let self = self else{ return }
+                self.coordinator?.popViewController()
+            })
+            .disposed(by: disposeBag)
+        
+        input.changedStateMessage?
+            .subscribe(onNext: { stateMessage in
+                if stateMessage.isEmpty {
+                    output.inputError.onNext(true)
+                }else {
+                    output.inputError.onNext(false)
+                    self.editProfileUseCase.editInfo(field: .stateMessage, value: stateMessage)
+                        .subscribe(onSuccess: {
+                            self.coordinator?.popViewController()
+                        })
+                        .disposed(by: disposeBag)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        return output
+    }
+    
 }

@@ -34,7 +34,7 @@ class EditProfileVM {
     
     struct DetailData {
         var userName = ""
-        var stateMessage: String?
+        var stateMessage = ""
         var birth = ""
     }
     
@@ -77,6 +77,15 @@ class EditProfileVM {
             .subscribe(onNext: {[weak self] _ in
                 guard let self = self else{ return }
                 self.coordinator?.showEditNameVC(name: detailData.userName)
+            })
+            .disposed(by: disposeBag)
+        
+        input.stateMessageTapEvent
+            .subscribe(onNext: {[weak self] _ in
+                guard let self = self else{ return }
+                self.coordinator?.showEditStateMessageVC(
+                    stateMessage: detailData.stateMessage == "상태메세지를 변경해보세요!" ? "" : detailData.stateMessage
+                )
             })
             .disposed(by: disposeBag)
         

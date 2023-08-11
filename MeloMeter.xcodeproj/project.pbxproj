@@ -125,8 +125,7 @@
 		52F010142A0AAD380014FC01 /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010132A0AAD380014FC01 /* EditProfileVC.swift */; };
 		52F010182A0AAF820014FC01 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010172A0AAF820014FC01 /* CameraViewController.swift */; };
 		52F0101E2A0ACE190014FC01 /* EditNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0101D2A0ACE190014FC01 /* EditNameVC.swift */; };
-		52F010202A0ADB680014FC01 /* EditStatusMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0101F2A0ADB680014FC01 /* EditStatusMessageView.swift */; };
-		52F010222A0ADD500014FC01 /* EditStatusMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010212A0ADD500014FC01 /* EditStatusMessageVC.swift */; };
+		52F010222A0ADD500014FC01 /* EditStateMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010212A0ADD500014FC01 /* EditStateMessageVC.swift */; };
 		52F010242A0B77ED0014FC01 /* EditBirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010232A0B77ED0014FC01 /* EditBirthViewController.swift */; };
 		52F010262A0B79270014FC01 /* EditBirthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010252A0B79270014FC01 /* EditBirthView.swift */; };
 		52F2083A29FBB31D0043BCA4 /* MyProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083929FBB31D0043BCA4 /* MyProfileVC.swift */; };
@@ -250,8 +249,7 @@
 		52F010132A0AAD380014FC01 /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
 		52F010172A0AAF820014FC01 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		52F0101D2A0ACE190014FC01 /* EditNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameVC.swift; sourceTree = "<group>"; };
-		52F0101F2A0ADB680014FC01 /* EditStatusMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStatusMessageView.swift; sourceTree = "<group>"; };
-		52F010212A0ADD500014FC01 /* EditStatusMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStatusMessageVC.swift; sourceTree = "<group>"; };
+		52F010212A0ADD500014FC01 /* EditStateMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStateMessageVC.swift; sourceTree = "<group>"; };
 		52F010232A0B77ED0014FC01 /* EditBirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBirthViewController.swift; sourceTree = "<group>"; };
 		52F010252A0B79270014FC01 /* EditBirthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBirthView.swift; sourceTree = "<group>"; };
 		52F2083929FBB31D0043BCA4 /* MyProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileVC.swift; sourceTree = "<group>"; };
@@ -441,8 +439,7 @@
 		521D42072A85CC7900E5CCDA /* StateMessage */ = {
 			isa = PBXGroup;
 			children = (
-				52F0101F2A0ADB680014FC01 /* EditStatusMessageView.swift */,
-				52F010212A0ADD500014FC01 /* EditStatusMessageVC.swift */,
+				52F010212A0ADD500014FC01 /* EditStateMessageVC.swift */,
 			);
 			path = StateMessage;
 			sourceTree = "<group>";
@@ -1091,7 +1088,7 @@
 				2185C4DB2A83F13B00F99795 /* MockSocket.swift in Sources */,
 				52F0100D2A0A4FD20014FC01 /* AnswerView.swift in Sources */,
 				2108F0432A6EC292002EED7A /* ProfileInsertRepository.swift in Sources */,
-				52F010222A0ADD500014FC01 /* EditStatusMessageVC.swift in Sources */,
+				52F010222A0ADD500014FC01 /* EditStateMessageVC.swift in Sources */,
 				521D41F42A814FFA00E5CCDA /* PresetCoordinator.swift in Sources */,
 				52F010002A094B550014FC01 /* QnAViewController.swift in Sources */,
 				2185C4D12A83F13B00F99795 /* SettingUserDefaults.swift in Sources */,
@@ -1168,7 +1165,6 @@
 				5271D4322A606D0B00FC7606 /* Dictionary+.swift in Sources */,
 				521D41E52A7FFAD200E5CCDA /* DdayVM.swift in Sources */,
 				521D41EE2A801D5700E5CCDA /* CoupleDTO.swift in Sources */,
-				52F010202A0ADB680014FC01 /* EditStatusMessageView.swift in Sources */,
 				52697B7529EEB7B2002BDD04 /* SceneDelegate.swift in Sources */,
 				52F0101E2A0ACE190014FC01 /* EditNameVC.swift in Sources */,
 				5271D4152A55C9DD00FC7606 /* LogInModel.swift in Sources */,

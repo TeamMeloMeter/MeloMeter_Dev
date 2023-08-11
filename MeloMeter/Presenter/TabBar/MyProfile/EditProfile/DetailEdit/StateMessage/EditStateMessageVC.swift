@@ -1,5 +1,5 @@
 //
-//  EditNameViewController.swift
+//  EditStatusMessageVC.swift
 //  MeloMeter
 //
 //  Created by 오현택 on 2023/05/10.
@@ -7,9 +7,9 @@
 
 import UIKit
 import RxSwift
-import RxCocoa
+import RxGesture
 
-class EditNameVC: UIViewController {
+class EditStateMessageVC: UIViewController {
     
     private let viewModel: DetailEditVM?
     private let disposeBag = DisposeBag()
@@ -21,7 +21,7 @@ class EditNameVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.nameTextField.delegate = self
+        self.statusTextField.delegate = self
         configure()
         setAutoLayout()
         setBindings()
@@ -29,12 +29,12 @@ class EditNameVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         setNavigationBar()
-        self.nameTextField.text = self.viewModel?.name
+        self.statusTextField.text = self.viewModel?.stateMessage
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.nameTextField.becomeFirstResponder()
+        self.statusTextField.becomeFirstResponder()
     }
     
     // MARK: Bindings
@@ -52,15 +52,15 @@ class EditNameVC: UIViewController {
             backBtnTapEvent: self.backBarButton.rx.tap
                 .map({ _ in })
                 .asObservable(),
-            changedName: self.completeButton.rx.tap
+            changedName: nil,
+            changedStateMessage: self.completeButton.rx.tap
                 .map{ _ in
-                    return self.nameTextField.text ?? ""
+                    return self.statusTextField.text ?? ""
                 },
-            changedStateMessage: nil,
             changedBirth: nil
         )
         
-        guard let output = self.viewModel?.nameTransform(input: input, disposeBag: self.disposeBag) else{ return }
+        guard let output = self.viewModel?.stateMessageTransform(input: input, disposeBag: self.disposeBag) else{ return }
         
         output.inputError
             .subscribe(onNext: {[weak self] isError in
@@ -72,25 +72,25 @@ class EditNameVC: UIViewController {
         
     }
     
-    //MARK: Configure
-    func configure() {
-        view.backgroundColor = .white
-        [exLabel, nameTextField, nameTextCountLabel].forEach { view.addSubview($0) }
-    }
-    
     // MARK: Event
     func showInputErrorAlert() {
         AlertManager(viewController: self)
-            .showNomalAlert(title: "편집 실패", message: "이름을 다시 입력해주세요!")
+            .showNomalAlert(title: "편집 실패", message: "상태메세지를 다시 입력해주세요!")
             .subscribe(onSuccess: {
-                self.nameTextField.becomeFirstResponder()
+                self.statusTextField.becomeFirstResponder()
             })
             .disposed(by: disposeBag)
+    }
+ 
+    // MARK: Configure
+    func configure() {
+        view.backgroundColor = .white
+        [exLabel, statusTextField, statusTextCountLabel].forEach { view.addSubview($0) }
     }
     
     // MARK: NavigationBar
     private func setNavigationBar() {
-        navigationItem.title = "이름"
+        navigationItem.title = "상태메세지"
         navigationItem.rightBarButtonItem = completeButton
         navigationItem.rightBarButtonItem?.tintColor = .black
         navigationItem.leftBarButtonItem = backBarButton
@@ -113,35 +113,37 @@ class EditNameVC: UIViewController {
         return button
     }()
     
-    // MARK: UI
-    let exLabel: UILabel = {
+    private let exLabel: UILabel = {
         let label = UILabel()
-        label.text = "상대방에게 표시되는 이름이에요."
+        label.text = "오늘의 기분을 표현해보세요."
         label.font = FontManager.shared.medium(ofSize: 14)
         label.textColor = .gray2
         return label
     }()
     
-    lazy var nameTextField: UITextField = {
+    lazy var statusTextField: UITextField = {
         let tv = UITextField()
-        
-        tv.text = ""
+        // 플레이스홀더에 표시할 속성
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.gray3,
+            .font: FontManager.shared.medium(ofSize: 16)
+        ]
+        tv.attributedPlaceholder = NSAttributedString(string: "원하는 말을 적어보세요!", attributes: attributes)
         tv.backgroundColor = .gray5
         tv.textColor = .gray1
         tv.font = FontManager.shared.medium(ofSize: 16)
         tv.autocorrectionType = .no // 자동수정 X
         tv.spellCheckingType = .no // 맞춤법 체크 X
-        
         tv.keyboardType = .default
         tv.tintColor = .gray1
         tv.addLeftPadding()
-        
         tv.layer.cornerRadius = 8
         tv.layer.masksToBounds = false
         return tv
     }()
     
-    var nameTextCountLabel: UILabel = {
+    
+    var statusTextCountLabel: UILabel = {
         let label = UILabel()
         label.text = "0/10"
         label.font = FontManager.shared.medium(ofSize: 13)
@@ -155,33 +157,30 @@ class EditNameVC: UIViewController {
     
     // MARK: 오토레이아웃
     private func setAutoLayout() {
-        nameTFViewConstraints()
+        statusViewConstraints()
     }
-    
-    
-    private func nameTFViewConstraints() {
+    private func statusViewConstraints() {
         exLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameTextField.translatesAutoresizingMaskIntoConstraints = false
-        nameTextCountLabel.translatesAutoresizingMaskIntoConstraints = false
+        statusTextField.translatesAutoresizingMaskIntoConstraints = false
+        statusTextCountLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            exLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            exLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
             exLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 40),
             
-            nameTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            nameTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            nameTextField.topAnchor.constraint(equalTo: exLabel.bottomAnchor, constant: 17),
-            nameTextField.heightAnchor.constraint(equalToConstant: 50),
-            
-            nameTextCountLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            nameTextCountLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 40),
-
+            statusTextField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+            statusTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            statusTextField.topAnchor.constraint(equalTo: exLabel.bottomAnchor, constant: 17),
+            statusTextField.heightAnchor.constraint(equalToConstant: 50),
+          
+            statusTextCountLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            statusTextCountLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 40)
         ])
     }
 }
 
 // MARK: TextFieldDelegate
-extension EditNameVC: UITextFieldDelegate {
+extension EditStateMessageVC: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         navigationItem.rightBarButtonItem?.isEnabled = true //등록버튼 활성화
         
@@ -191,7 +190,7 @@ extension EditNameVC: UITextFieldDelegate {
         if newLength > 10 {
             return false
         }
-        self.nameTextCountLabel.text = "\(newLength)/10"
+        self.statusTextCountLabel.text = "\(newLength)/10"
         
         return true
     }

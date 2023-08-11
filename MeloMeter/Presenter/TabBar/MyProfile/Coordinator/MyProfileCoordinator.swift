@@ -76,7 +76,7 @@ extension MyProfileCoordinator {
     }
     
     func showEditNameVC(name: String) {
-        var viewModel = DetailEditVM(coordinator: self,
+        let viewModel = DetailEditVM(coordinator: self,
                               editProfileUseCase: EditProfileUseCase(
                                           userRepository: UserRepository(
                                               firebaseService: DefaultFirebaseService()
@@ -86,6 +86,23 @@ extension MyProfileCoordinator {
         viewModel.name = name
         
         let viewController = EditNameVC(viewModel: viewModel)
+        
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showEditStateMessageVC(stateMessage: String) {
+        let viewModel = DetailEditVM(coordinator: self,
+                              editProfileUseCase: EditProfileUseCase(
+                                          userRepository: UserRepository(
+                                              firebaseService: DefaultFirebaseService()
+                                          )
+                                      )
+                              )
+        viewModel.stateMessage = stateMessage
+        
+        let viewController = EditStateMessageVC(viewModel: viewModel)
         
         viewController.hidesBottomBarWhenPushed = true
         self.navigationController.setNavigationBarHidden(false, animated: false)
