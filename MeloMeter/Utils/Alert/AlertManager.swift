@@ -112,4 +112,25 @@ class AlertManager {
         authAlertController.addAction(getAuthAction)
         self.baseViewController.present(authAlertController, animated: true, completion: nil)
     }
+    
+    func showGenderAlert() -> Single<GenderType> {
+        return Single.create { single in
+            let alertController = UIAlertController(title: "성별", message: nil, preferredStyle: .actionSheet)
+            let male = UIAlertAction(title: "남성", style: .default) { action in
+                single(.success(.male))
+            }
+            let female = UIAlertAction(title: "여성", style: .default) { action in
+                single(.success(.female))
+            }
+            let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+            alertController.addAction(male)
+            alertController.addAction(female)
+            alertController.addAction(cancel)
+            self.baseViewController.present(alertController, animated: true, completion: nil)
+            return Disposables.create {
+                alertController.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+    
 }

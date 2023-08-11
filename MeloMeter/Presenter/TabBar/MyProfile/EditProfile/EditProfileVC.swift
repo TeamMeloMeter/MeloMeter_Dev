@@ -8,15 +8,14 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxGesture
 
 class EditProfileVC: UIViewController {
     
     private var photoAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-    private var genderAlert = UIAlertController(title: "성별", message: nil, preferredStyle: .actionSheet)
     
     private let viewModel: EditProfileVM?
     private let disposeBag = DisposeBag()
-    let tapDdayGesture = UITapGestureRecognizer()
     
     init(viewModel: EditProfileVM) {
         self.viewModel = viewModel
@@ -35,13 +34,30 @@ class EditProfileVC: UIViewController {
     }
     
     func setBindings() {
+        
         let input = EditProfileVM.Input(
             viewWillApearEvent: self.rx.methodInvoked(#selector(viewWillAppear(_:)))
                 .map({ _ in })
                 .asObservable(),
             backBtnTapEvent: self.backBarButton.rx.tap
                 .map({ _ in })
-                .asObservable()
+                .asObservable(),
+            nameTapEvent: self.nameView.rx.tapGesture().when(.ended)
+                .map({ _ in })
+                .asObservable(),
+            stateMessageTapEvent: self.stateMessageView.rx.tapGesture().when(.ended)
+                .map({ _ in })
+                .asObservable(),
+            birthTapEvent: self.birthDateLabel.rx.tapGesture().when(.ended)
+                .map({ _ in })
+                .asObservable(),
+            newGender: self.userGenderLabel.rx.tapGesture()
+                .when(.ended)
+                .flatMap{[weak self] _ -> Single<GenderType> in
+                    guard let self = self else{ return Single.just(GenderType.cancel) }
+                    return AlertManager(viewController: self)
+                        .showGenderAlert()
+                }
         )
         
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else{ return }
@@ -64,11 +80,11 @@ class EditProfileVC: UIViewController {
             })
             .disposed(by: disposeBag)
         
-//        output.gender
-//            .bind(onNext: {[weak self] gender in
-//                self?.userNameLabel.text = gender
-//            })
-//            .disposed(by: disposeBag)
+        output.gender
+            .bind(onNext: {[weak self] gender in
+                self?.userGenderLabel.text = gender
+            })
+            .disposed(by: disposeBag)
         
     }
     
@@ -90,21 +106,7 @@ class EditProfileVC: UIViewController {
         photoAlert.addAction(cancel)
     }
     
-    //성별 편집 alert 생성
-    func createGenderAlert() {
-        
-        let male = UIAlertAction(title: "남성", style: .default) { action in
-            self.userGenderLabel.text = "남"
-        }
-        let female = UIAlertAction(title: "여성", style: .default) { action in
-            self.userGenderLabel.text = "여"
-        }
-        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        
-        genderAlert.addAction(male)
-        genderAlert.addAction(female)
-        genderAlert.addAction(cancel)
-    }
+  
     
 //    //사진 편집 alert 표시
 //    @objc func showPhotoAlert() {
@@ -273,7 +275,7 @@ class EditProfileVC: UIViewController {
     
     let userGenderLabel: UILabel = {
         let label = UILabel()
-        label.text = "남"
+        label.text = ""
         label.font = FontManager.shared.medium(ofSize: 14)
         label.textColor = .gray1
         label.textAlignment = .right
@@ -327,7 +329,7 @@ class EditProfileVC: UIViewController {
         return label
     }()
 
-
+    // MARK: Configure
     func configure() {
         view.backgroundColor = .white
         [profileImageView,

@@ -7,15 +7,16 @@
 
 import UIKit
 import RxSwift
+import RxRelay
 
 class EditProfileUseCase {
     private let userRepository: UserRepository
     private var disposeBag: DisposeBag
-    var userData: PublishSubject<UserModel>
+    var userData: PublishRelay<UserModel>
     
     required init(userRepository: UserRepository) {
         self.userRepository = userRepository
-        self.userData = PublishSubject()
+        self.userData = PublishRelay()
         self.disposeBag = DisposeBag()
     }
  
@@ -23,8 +24,12 @@ class EditProfileUseCase {
         guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return }
         self.userRepository.getUserInfo(uid)
             .map{ $0.toModel() }
-            .asDriver(onErrorJustReturn: UserModel(name: "", birth: Date()))
-            .drive(self.userData)
+            .bind(to: self.userData)
             .disposed(by: disposeBag)
     }
+    
+    func editInfo(field: EditUserInfo, value: String) -> Single<Void> {
+        return self.userRepository.updateUserInfo(value: [field.rawValue: value])
+    }
+    
 }

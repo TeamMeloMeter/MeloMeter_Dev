@@ -29,7 +29,7 @@ class UserRepository: UserRepositoryP {
             .asObservable()
     }
     
-    func userInfoObserver() {
+    func userAccessLevelObserver() {
         
         self.firebaseService.getCurrentUser()
             .subscribe(onSuccess: { user in
@@ -48,6 +48,13 @@ class UserRepository: UserRepositoryP {
             })
             .disposed(by: self.disposeBag)
         
+    }
+    
+    func updateUserInfo(value: [String: String]) -> Single<Void> {
+        guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return Single.just(())}
+        return self.firebaseService.updateDocument(collection: .Users,
+                                                   document: uid,
+                                                   values: value.asDictionary ?? [:])
     }
 
 }
