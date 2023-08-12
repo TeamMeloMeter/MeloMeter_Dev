@@ -53,6 +53,77 @@ extension MyProfileCoordinator {
         self.navigationController.setNavigationBarHidden(false, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
     }
+    
+    func showAddDdayVC(viewModel: DdayVM) {
+        let viewController = AddDdayModal(viewModel: viewModel)
+        viewController.modalPresentationStyle = .custom
+        self.navigationController.present(viewController, animated: true, completion: nil)
+    }
 
+    func showEditProfileVC() {
+        let viewController = EditProfileVC(viewModel: EditProfileVM(
+            coordinator: self,
+            editProfileUseCase: EditProfileUseCase(
+                        userRepository: UserRepository(
+                            firebaseService: DefaultFirebaseService()
+                        )
+                    )
+            )
+        )
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showEditNameVC(name: String) {
+        let viewModel = DetailEditVM(coordinator: self,
+                              editProfileUseCase: EditProfileUseCase(
+                                          userRepository: UserRepository(
+                                              firebaseService: DefaultFirebaseService()
+                                          )
+                                      )
+                              )
+        viewModel.name = name
+        
+        let viewController = EditNameVC(viewModel: viewModel)
+        
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showEditStateMessageVC(stateMessage: String) {
+        let viewModel = DetailEditVM(coordinator: self,
+                              editProfileUseCase: EditProfileUseCase(
+                                          userRepository: UserRepository(
+                                              firebaseService: DefaultFirebaseService()
+                                          )
+                                      )
+                              )
+        viewModel.stateMessage = stateMessage
+        
+        let viewController = EditStateMessageVC(viewModel: viewModel)
+        
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showEditBirthVC(birth: String) {
+        let viewModel = DetailEditVM(coordinator: self,
+                              editProfileUseCase: EditProfileUseCase(
+                                          userRepository: UserRepository(
+                                              firebaseService: DefaultFirebaseService()
+                                          )
+                                      )
+                              )
+        viewModel.birth = birth
+        
+        let viewController = EditBirthVC(viewModel: viewModel)
+        
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
 }
 

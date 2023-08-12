@@ -36,6 +36,11 @@
 		521D41F42A814FFA00E5CCDA /* PresetCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41F32A814FFA00E5CCDA /* PresetCoordinator.swift */; };
 		521D41F62A81C71F00E5CCDA /* CoupleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41F52A81C71F00E5CCDA /* CoupleRepository.swift */; };
 		521D41F82A81C75100E5CCDA /* CoupleRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41F72A81C75100E5CCDA /* CoupleRepositoryP.swift */; };
+		521D41FB2A83F88300E5CCDA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 521D41FA2A83F88300E5CCDA /* GoogleService-Info.plist */; };
+		521D41FD2A843EB100E5CCDA /* TextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41FC2A843EB100E5CCDA /* TextField+.swift */; };
+		521D42022A8551E900E5CCDA /* EditProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D42012A8551E900E5CCDA /* EditProfileVM.swift */; };
+		521D42052A8552E300E5CCDA /* EditProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D42042A8552E300E5CCDA /* EditProfileUseCase.swift */; };
+		521D420A2A85CCEE00E5CCDA /* DetailEditVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D42092A85CCEE00E5CCDA /* DetailEditVM.swift */; };
 		5230B2652A72859200781623 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25C2A72859100781623 /* Pretendard-Light.otf */; };
 		5230B2662A72859200781623 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25D2A72859100781623 /* Pretendard-Medium.otf */; };
 		5230B2672A72859200781623 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25E2A72859100781623 /* Pretendard-Thin.otf */; };
@@ -68,7 +73,6 @@
 		5270EC122A4954D9007FF444 /* UserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5270EC112A4954D9007FF444 /* UserInfoModel.swift */; };
 		5271D4042A51D33F00FC7606 /* ProfileInsertVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271D4032A51D33F00FC7606 /* ProfileInsertVM.swift */; };
 		5271D4062A51DBDD00FC7606 /* ProfileInsertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271D4052A51DBDD00FC7606 /* ProfileInsertVC.swift */; };
-		5271D4082A51E27F00FC7606 /* CoupleInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271D4072A51E27F00FC7606 /* CoupleInfoModel.swift */; };
 		5271D40B2A544A2D00FC7606 /* LogInVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271D40A2A544A2D00FC7606 /* LogInVM.swift */; };
 		5271D40F2A5576E500FC7606 /* PermissionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271D40E2A5576E500FC7606 /* PermissionVC.swift */; };
 		5271D4112A5580F200FC7606 /* Permission2VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271D4102A5580F200FC7606 /* Permission2VC.swift */; };
@@ -86,7 +90,6 @@
 		527547EE2A68FC9000313EFC /* CustomAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527547ED2A68FC9000313EFC /* CustomAlertVC.swift */; };
 		527547F02A69103200313EFC /* ProgressDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527547EF2A69103200313EFC /* ProgressDialogView.swift */; };
 		527547F42A6D23E400313EFC /* KakaoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527547F32A6D23E400313EFC /* KakaoService.swift */; };
-		52845B1C2A0FC9DF003A87F8 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52845B1B2A0FC9DF003A87F8 /* Model.swift */; };
 		5290BF832A6D3AC000D734EE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 5290BF822A6D3AC000D734EE /* FirebaseAuth */; };
 		5290BF852A6D3AFA00D734EE /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5290BF842A6D3AFA00D734EE /* FirebaseAnalytics */; };
 		5290BF872A6D3AFA00D734EE /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 5290BF862A6D3AFA00D734EE /* FirebaseAppCheck */; };
@@ -110,8 +113,7 @@
 		52CE6EA72A02571E00E43D39 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA62A02571E00E43D39 /* MapVC.swift */; };
 		52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EAC2A02C0B800E43D39 /* DdayTableViewCell.swift */; };
 		52E0CDF02A4B091600E4A182 /* CoupleCombineVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0CDEF2A4B091600E4A182 /* CoupleCombineVC.swift */; };
-		52F00FF42A09308E0014FC01 /* AddDdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FF32A09308E0014FC01 /* AddDdayView.swift */; };
-		52F00FF62A0930FF0014FC01 /* AddDdayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FF52A0930FF0014FC01 /* AddDdayViewController.swift */; };
+		52F00FF62A0930FF0014FC01 /* AddDdayModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FF52A0930FF0014FC01 /* AddDdayModal.swift */; };
 		52F00FF82A0936FD0014FC01 /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FF72A0936FD0014FC01 /* NoticeView.swift */; };
 		52F00FFA2A0938480014FC01 /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FF92A0938480014FC01 /* NoticeViewController.swift */; };
 		52F00FFC2A093A410014FC01 /* NoticeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FFB2A093A410014FC01 /* NoticeTableViewCell.swift */; };
@@ -121,14 +123,11 @@
 		52F0100B2A0A493C0014FC01 /* QnATableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0100A2A0A493C0014FC01 /* QnATableViewCell.swift */; };
 		52F0100D2A0A4FD20014FC01 /* AnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0100C2A0A4FD20014FC01 /* AnswerView.swift */; };
 		52F0100F2A0A55470014FC01 /* AnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0100E2A0A55470014FC01 /* AnswerViewController.swift */; };
-		52F010112A0AACEC0014FC01 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010102A0AACEC0014FC01 /* EditProfileView.swift */; };
-		52F010142A0AAD380014FC01 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010132A0AAD380014FC01 /* EditProfileViewController.swift */; };
+		52F010142A0AAD380014FC01 /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010132A0AAD380014FC01 /* EditProfileVC.swift */; };
 		52F010182A0AAF820014FC01 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010172A0AAF820014FC01 /* CameraViewController.swift */; };
-		52F0101C2A0ACDD20014FC01 /* EditNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0101B2A0ACDD20014FC01 /* EditNameView.swift */; };
-		52F0101E2A0ACE190014FC01 /* EditNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0101D2A0ACE190014FC01 /* EditNameViewController.swift */; };
-		52F010202A0ADB680014FC01 /* EditStatusMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0101F2A0ADB680014FC01 /* EditStatusMessageView.swift */; };
-		52F010222A0ADD500014FC01 /* EditStatusMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010212A0ADD500014FC01 /* EditStatusMessageVC.swift */; };
-		52F010242A0B77ED0014FC01 /* EditBirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010232A0B77ED0014FC01 /* EditBirthViewController.swift */; };
+		52F0101E2A0ACE190014FC01 /* EditNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0101D2A0ACE190014FC01 /* EditNameVC.swift */; };
+		52F010222A0ADD500014FC01 /* EditStateMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010212A0ADD500014FC01 /* EditStateMessageVC.swift */; };
+		52F010242A0B77ED0014FC01 /* EditBirthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010232A0B77ED0014FC01 /* EditBirthVC.swift */; };
 		52F010262A0B79270014FC01 /* EditBirthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010252A0B79270014FC01 /* EditBirthView.swift */; };
 		52F2083A29FBB31D0043BCA4 /* MyProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083929FBB31D0043BCA4 /* MyProfileVC.swift */; };
 		52F2083C29FBB3490043BCA4 /* MyProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */; };
@@ -169,6 +168,11 @@
 		521D41F32A814FFA00E5CCDA /* PresetCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetCoordinator.swift; sourceTree = "<group>"; };
 		521D41F52A81C71F00E5CCDA /* CoupleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleRepository.swift; sourceTree = "<group>"; };
 		521D41F72A81C75100E5CCDA /* CoupleRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleRepositoryP.swift; sourceTree = "<group>"; };
+		521D41FA2A83F88300E5CCDA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		521D41FC2A843EB100E5CCDA /* TextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextField+.swift"; sourceTree = "<group>"; };
+		521D42012A8551E900E5CCDA /* EditProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVM.swift; sourceTree = "<group>"; };
+		521D42042A8552E300E5CCDA /* EditProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileUseCase.swift; sourceTree = "<group>"; };
+		521D42092A85CCEE00E5CCDA /* DetailEditVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditVM.swift; sourceTree = "<group>"; };
 		5230B25C2A72859100781623 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		5230B25D2A72859100781623 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		5230B25E2A72859100781623 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
@@ -202,7 +206,6 @@
 		5270EC112A4954D9007FF444 /* UserInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModel.swift; sourceTree = "<group>"; };
 		5271D4032A51D33F00FC7606 /* ProfileInsertVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInsertVM.swift; sourceTree = "<group>"; };
 		5271D4052A51DBDD00FC7606 /* ProfileInsertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInsertVC.swift; sourceTree = "<group>"; };
-		5271D4072A51E27F00FC7606 /* CoupleInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleInfoModel.swift; sourceTree = "<group>"; };
 		5271D40A2A544A2D00FC7606 /* LogInVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInVM.swift; sourceTree = "<group>"; };
 		5271D40E2A5576E500FC7606 /* PermissionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionVC.swift; sourceTree = "<group>"; };
 		5271D4102A5580F200FC7606 /* Permission2VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Permission2VC.swift; sourceTree = "<group>"; };
@@ -220,7 +223,6 @@
 		527547ED2A68FC9000313EFC /* CustomAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertVC.swift; sourceTree = "<group>"; };
 		527547EF2A69103200313EFC /* ProgressDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDialogView.swift; sourceTree = "<group>"; };
 		527547F32A6D23E400313EFC /* KakaoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoService.swift; sourceTree = "<group>"; };
-		52845B1B2A0FC9DF003A87F8 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		5290BF962A6D983A00D734EE /* ColorAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAssets.swift; sourceTree = "<group>"; };
 		5290BFA22A703A1500D734EE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5290BFA72A70F35E00D734EE /* MapVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVM.swift; sourceTree = "<group>"; };
@@ -236,8 +238,7 @@
 		52CE6EA62A02571E00E43D39 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		52CE6EAC2A02C0B800E43D39 /* DdayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayTableViewCell.swift; sourceTree = "<group>"; };
 		52E0CDEF2A4B091600E4A182 /* CoupleCombineVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleCombineVC.swift; sourceTree = "<group>"; };
-		52F00FF32A09308E0014FC01 /* AddDdayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDdayView.swift; sourceTree = "<group>"; };
-		52F00FF52A0930FF0014FC01 /* AddDdayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDdayViewController.swift; sourceTree = "<group>"; };
+		52F00FF52A0930FF0014FC01 /* AddDdayModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDdayModal.swift; sourceTree = "<group>"; };
 		52F00FF72A0936FD0014FC01 /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
 		52F00FF92A0938480014FC01 /* NoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewController.swift; sourceTree = "<group>"; };
 		52F00FFB2A093A410014FC01 /* NoticeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeTableViewCell.swift; sourceTree = "<group>"; };
@@ -247,14 +248,11 @@
 		52F0100A2A0A493C0014FC01 /* QnATableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QnATableViewCell.swift; sourceTree = "<group>"; };
 		52F0100C2A0A4FD20014FC01 /* AnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerView.swift; sourceTree = "<group>"; };
 		52F0100E2A0A55470014FC01 /* AnswerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerViewController.swift; sourceTree = "<group>"; };
-		52F010102A0AACEC0014FC01 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
-		52F010132A0AAD380014FC01 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		52F010132A0AAD380014FC01 /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
 		52F010172A0AAF820014FC01 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
-		52F0101B2A0ACDD20014FC01 /* EditNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameView.swift; sourceTree = "<group>"; };
-		52F0101D2A0ACE190014FC01 /* EditNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameViewController.swift; sourceTree = "<group>"; };
-		52F0101F2A0ADB680014FC01 /* EditStatusMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStatusMessageView.swift; sourceTree = "<group>"; };
-		52F010212A0ADD500014FC01 /* EditStatusMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStatusMessageVC.swift; sourceTree = "<group>"; };
-		52F010232A0B77ED0014FC01 /* EditBirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBirthViewController.swift; sourceTree = "<group>"; };
+		52F0101D2A0ACE190014FC01 /* EditNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameVC.swift; sourceTree = "<group>"; };
+		52F010212A0ADD500014FC01 /* EditStateMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStateMessageVC.swift; sourceTree = "<group>"; };
+		52F010232A0B77ED0014FC01 /* EditBirthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBirthVC.swift; sourceTree = "<group>"; };
 		52F010252A0B79270014FC01 /* EditBirthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBirthView.swift; sourceTree = "<group>"; };
 		52F2083929FBB31D0043BCA4 /* MyProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileVC.swift; sourceTree = "<group>"; };
 		52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileModel.swift; sourceTree = "<group>"; };
@@ -366,6 +364,7 @@
 			children = (
 				5230B2832A7D029200781623 /* MyProfileUseCase.swift */,
 				521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */,
+				521D42042A8552E300E5CCDA /* EditProfileUseCase.swift */,
 			);
 			path = MyProfile;
 			sourceTree = "<group>";
@@ -429,6 +428,31 @@
 				2108F0402A6EC1F0002EED7A /* ProfileInsertUseCase.swift */,
 			);
 			path = Presets;
+			sourceTree = "<group>";
+		};
+		521D42062A85CC7200E5CCDA /* Name */ = {
+			isa = PBXGroup;
+			children = (
+				52F0101D2A0ACE190014FC01 /* EditNameVC.swift */,
+			);
+			path = Name;
+			sourceTree = "<group>";
+		};
+		521D42072A85CC7900E5CCDA /* StateMessage */ = {
+			isa = PBXGroup;
+			children = (
+				52F010212A0ADD500014FC01 /* EditStateMessageVC.swift */,
+			);
+			path = StateMessage;
+			sourceTree = "<group>";
+		};
+		521D42082A85CC8600E5CCDA /* Birth */ = {
+			isa = PBXGroup;
+			children = (
+				52F010252A0B79270014FC01 /* EditBirthView.swift */,
+				52F010232A0B77ED0014FC01 /* EditBirthVC.swift */,
+			);
+			path = Birth;
 			sourceTree = "<group>";
 		};
 		5230B24E2A727A3100781623 /* TabBar */ = {
@@ -661,6 +685,7 @@
 				5271D4312A606D0B00FC7606 /* Dictionary+.swift */,
 				527547EF2A69103200313EFC /* ProgressDialogView.swift */,
 				214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */,
+				521D41FC2A843EB100E5CCDA /* TextField+.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -767,8 +792,7 @@
 			children = (
 				52CE6EAC2A02C0B800E43D39 /* DdayTableViewCell.swift */,
 				52F2083F29FBFF280043BCA4 /* DdayVC.swift */,
-				52F00FF32A09308E0014FC01 /* AddDdayView.swift */,
-				52F00FF52A0930FF0014FC01 /* AddDdayViewController.swift */,
+				52F00FF52A0930FF0014FC01 /* AddDdayModal.swift */,
 			);
 			path = DdayViews;
 			sourceTree = "<group>";
@@ -808,31 +832,29 @@
 		52F010192A0ACD420014FC01 /* EditProfile */ = {
 			isa = PBXGroup;
 			children = (
-				52F010102A0AACEC0014FC01 /* EditProfileView.swift */,
-				52F0101B2A0ACDD20014FC01 /* EditNameView.swift */,
-				52F0101F2A0ADB680014FC01 /* EditStatusMessageView.swift */,
-				52F010252A0B79270014FC01 /* EditBirthView.swift */,
 				52F305312A168D6000112A04 /* DisconnectView.swift */,
 				52F305332A16B7AE00112A04 /* RecoveryView.swift */,
 				52F305372A16BF2A00112A04 /* WithdrawalView.swift */,
-				52F0101A2A0ACD6E0014FC01 /* EditProfileVCs */,
+				52F0101A2A0ACD6E0014FC01 /* DetailEdit */,
+				521D42012A8551E900E5CCDA /* EditProfileVM.swift */,
+				52F010132A0AAD380014FC01 /* EditProfileVC.swift */,
 			);
 			path = EditProfile;
 			sourceTree = "<group>";
 		};
-		52F0101A2A0ACD6E0014FC01 /* EditProfileVCs */ = {
+		52F0101A2A0ACD6E0014FC01 /* DetailEdit */ = {
 			isa = PBXGroup;
 			children = (
-				52F010132A0AAD380014FC01 /* EditProfileViewController.swift */,
-				52F0101D2A0ACE190014FC01 /* EditNameViewController.swift */,
-				52F010212A0ADD500014FC01 /* EditStatusMessageVC.swift */,
-				52F010232A0B77ED0014FC01 /* EditBirthViewController.swift */,
+				521D42092A85CCEE00E5CCDA /* DetailEditVM.swift */,
+				521D42062A85CC7200E5CCDA /* Name */,
+				521D42072A85CC7900E5CCDA /* StateMessage */,
+				521D42082A85CC8600E5CCDA /* Birth */,
 				52F010172A0AAF820014FC01 /* CameraViewController.swift */,
 				52F3052F2A168CE900112A04 /* DisconnectVC.swift */,
 				52F305352A16B7F400112A04 /* RecoveryVC.swift */,
 				52F305392A16BF4700112A04 /* WithdrawalVC.swift */,
 			);
-			path = EditProfileVCs;
+			path = DetailEdit;
 			sourceTree = "<group>";
 		};
 		52F2084329FD64100043BCA4 /* Models */ = {
@@ -842,8 +864,6 @@
 				2108F0482A6EC565002EED7A /* UserModel.swift */,
 				521D41EB2A801D1200E5CCDA /* CoupleModel.swift */,
 				52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */,
-				52845B1B2A0FC9DF003A87F8 /* Model.swift */,
-				5271D4072A51E27F00FC7606 /* CoupleInfoModel.swift */,
 				5270EC112A4954D9007FF444 /* UserInfoModel.swift */,
 			);
 			path = Models;
@@ -1046,11 +1066,11 @@
 			files = (
 				5271D4172A5841E500FC7606 /* FireStoreService.swift in Sources */,
 				52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */,
-				52F00FF42A09308E0014FC01 /* AddDdayView.swift in Sources */,
 				2185C4DA2A83F13B00F99795 /* CustomLayoutSizeCalculator.swift in Sources */,
 				214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */,
 				521D41E72A7FFD5F00E5CCDA /* DdayUseCase.swift in Sources */,
 				5230B27A2A7790A300781623 /* DefaultLocationService.swift in Sources */,
+				521D41FD2A843EB100E5CCDA /* TextField+.swift in Sources */,
 				2108F0412A6EC1F0002EED7A /* ProfileInsertUseCase.swift in Sources */,
 				52E0CDF02A4B091600E4A182 /* CoupleCombineVC.swift in Sources */,
 				5290BFB02A71F9A600D734EE /* TabBarPageCase.swift in Sources */,
@@ -1059,7 +1079,6 @@
 				521D41F82A81C75100E5CCDA /* CoupleRepositoryP.swift in Sources */,
 				524138302A62F943002AADA6 /* StartVM.swift in Sources */,
 				527547F42A6D23E400313EFC /* KakaoService.swift in Sources */,
-				52845B1C2A0FC9DF003A87F8 /* Model.swift in Sources */,
 				52F305302A168CE900112A04 /* DisconnectVC.swift in Sources */,
 				521D41EC2A801D1200E5CCDA /* CoupleModel.swift in Sources */,
 				2108F04B2A702A77002EED7A /* PermissionVM.swift in Sources */,
@@ -1071,10 +1090,9 @@
 				2185C4DB2A83F13B00F99795 /* MockSocket.swift in Sources */,
 				52F0100D2A0A4FD20014FC01 /* AnswerView.swift in Sources */,
 				2108F0432A6EC292002EED7A /* ProfileInsertRepository.swift in Sources */,
-				52F010222A0ADD500014FC01 /* EditStatusMessageVC.swift in Sources */,
+				52F010222A0ADD500014FC01 /* EditStateMessageVC.swift in Sources */,
 				521D41F42A814FFA00E5CCDA /* PresetCoordinator.swift in Sources */,
 				52F010002A094B550014FC01 /* QnAViewController.swift in Sources */,
-				52F010112A0AACEC0014FC01 /* EditProfileView.swift in Sources */,
 				2185C4D12A83F13B00F99795 /* SettingUserDefaults.swift in Sources */,
 				52F2083A29FBB31D0043BCA4 /* MyProfileVC.swift in Sources */,
 				52F010182A0AAF820014FC01 /* CameraViewController.swift in Sources */,
@@ -1094,8 +1112,9 @@
 				2185C4D62A83F13B00F99795 /* SampleData.swift in Sources */,
 				5270EC042A445077007FF444 /* StartVC.swift in Sources */,
 				52F010262A0B79270014FC01 /* EditBirthView.swift in Sources */,
+				521D42052A8552E300E5CCDA /* EditProfileUseCase.swift in Sources */,
 				5290BF972A6D983A00D734EE /* ColorAssets.swift in Sources */,
-				52F00FF62A0930FF0014FC01 /* AddDdayViewController.swift in Sources */,
+				52F00FF62A0930FF0014FC01 /* AddDdayModal.swift in Sources */,
 				2185C4CF2A83F13B00F99795 /* ChatCoordinator.swift in Sources */,
 				2185C4D82A83F13B00F99795 /* CustomTextLayoutSizeCalculator.swift in Sources */,
 				52F0100B2A0A493C0014FC01 /* QnATableViewCell.swift in Sources */,
@@ -1114,6 +1133,7 @@
 				52F010082A097D120014FC01 /* AlarmTableViewCell.swift in Sources */,
 				5270EC122A4954D9007FF444 /* UserInfoModel.swift in Sources */,
 				2185C4D22A83F13B00F99795 /* BasicAudioController.swift in Sources */,
+				521D420A2A85CCEE00E5CCDA /* DetailEditVM.swift in Sources */,
 				5290BFAE2A71F8FB00D734EE /* TabBarPageType.swift in Sources */,
 				2108F0472A6EC48B002EED7A /* UserDTO.swift in Sources */,
 				527547F02A69103200313EFC /* ProgressDialogView.swift in Sources */,
@@ -1122,7 +1142,8 @@
 				5241382E2A62F2ED002AADA6 /* LogInCoordinator.swift in Sources */,
 				5271D40F2A5576E500FC7606 /* PermissionVC.swift in Sources */,
 				2185C4CE2A83F13B00F99795 /* ChatVC.swift in Sources */,
-				52F010142A0AAD380014FC01 /* EditProfileViewController.swift in Sources */,
+				521D42022A8551E900E5CCDA /* EditProfileVM.swift in Sources */,
+				52F010142A0AAD380014FC01 /* EditProfileVC.swift in Sources */,
 				52CE6EA32A0187BB00E43D39 /* AlarmView.swift in Sources */,
 				5290BFA82A70F35E00D734EE /* MapVM.swift in Sources */,
 				5241382A2A62EB95002AADA6 /* Coordinator.swift in Sources */,
@@ -1131,10 +1152,9 @@
 				5290BFAA2A70F3B700D734EE /* TabBarCoordinator.swift in Sources */,
 				52F3053A2A16BF4700112A04 /* WithdrawalVC.swift in Sources */,
 				5271D42C2A60484300FC7606 /* LogInDTO.swift in Sources */,
-				52F010242A0B77ED0014FC01 /* EditBirthViewController.swift in Sources */,
+				52F010242A0B77ED0014FC01 /* EditBirthVC.swift in Sources */,
 				52F305382A16BF2A00112A04 /* WithdrawalView.swift in Sources */,
 				5270EC102A460354007FF444 /* AuthNumVC.swift in Sources */,
-				52F0101C2A0ACDD20014FC01 /* EditNameView.swift in Sources */,
 				52F00FFE2A094B450014FC01 /* QnAView.swift in Sources */,
 				5271D4062A51DBDD00FC7606 /* ProfileInsertVC.swift in Sources */,
 				5271D4302A605B0900FC7606 /* Encodable+.swift in Sources */,
@@ -1147,10 +1167,8 @@
 				5271D4322A606D0B00FC7606 /* Dictionary+.swift in Sources */,
 				521D41E52A7FFAD200E5CCDA /* DdayVM.swift in Sources */,
 				521D41EE2A801D5700E5CCDA /* CoupleDTO.swift in Sources */,
-				52F010202A0ADB680014FC01 /* EditStatusMessageView.swift in Sources */,
 				52697B7529EEB7B2002BDD04 /* SceneDelegate.swift in Sources */,
-				52F0101E2A0ACE190014FC01 /* EditNameViewController.swift in Sources */,
-				5271D4082A51E27F00FC7606 /* CoupleInfoModel.swift in Sources */,
+				52F0101E2A0ACE190014FC01 /* EditNameVC.swift in Sources */,
 				5271D4152A55C9DD00FC7606 /* LogInModel.swift in Sources */,
 				52F2084029FBFF280043BCA4 /* DdayVC.swift in Sources */,
 			);

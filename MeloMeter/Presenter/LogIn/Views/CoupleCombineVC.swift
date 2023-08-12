@@ -17,12 +17,12 @@ final class CoupleCombineVC: UIViewController {
     let disposeBag = DisposeBag()
     let progressDialog: ProgressDialogView = ProgressDialogView()
     
-    init(viewModel: LogInVM, inviteCode: String, inviteCode2: String? = nil) {
+    init(viewModel: LogInVM, inviteCode: String, otherInviteCode: String? = nil) {
         self.viewModel = viewModel
         self.myCodeLabel.text = inviteCode
         super.init(nibName: nil, bundle: nil)
-        if let code2 = inviteCode2 {
-            self.codeTF.text = code2
+        if let code = otherInviteCode {
+            self.codeTF.text = code
         }
     }
     

@@ -23,7 +23,6 @@ class MapVM {
     }
     
     struct Output {
-        let showDdayVC: PublishRelay<Bool> = PublishRelay()
         let authorizationAlertShouldShow = BehaviorRelay<Bool>(value: false)
         let currentLocation: BehaviorRelay<CLLocation> = BehaviorRelay(value: CLLocation(latitude: 37.541, longitude: 126.986))
         let currentOtherLocation: BehaviorRelay<CLLocation> = BehaviorRelay(value: CLLocation(latitude: 37.541, longitude: 126.986))

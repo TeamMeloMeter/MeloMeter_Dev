@@ -16,8 +16,9 @@ class MyProfileVM {
     private var myProfileUseCase: MyProfileUseCase
 
     struct Input {
-        let viewDidApearEvent: Observable<Void>
+        let viewWillApearEvent: Observable<Void>
         let dDayViewTapEvent: Observable<Void>
+        let editProfileBtnTapEvent: Observable<Void>
     }
     
     struct Output {
@@ -34,7 +35,7 @@ class MyProfileVM {
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output()
-        input.viewDidApearEvent
+        input.viewWillApearEvent
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else{ return }
                 self.myProfileUseCase.getUserInfo()
@@ -57,6 +58,13 @@ class MyProfileVM {
             .subscribe(onNext: {[weak self] _ in
                 guard let self = self else{ return }
                 self.coordinator?.showDdayVC()
+            })
+            .disposed(by: disposeBag)
+        
+        input.editProfileBtnTapEvent
+            .subscribe(onNext: {[weak self] _ in
+                guard let self = self else{ return }
+                self.coordinator?.showEditProfileVC()
             })
             .disposed(by: disposeBag)
         

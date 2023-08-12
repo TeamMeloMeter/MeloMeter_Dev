@@ -104,7 +104,7 @@ class LogInUseCase {
     }
     
     func combineCheckObserver() {
-        self.userRepository.userInfoObserver()
+        self.userRepository.userAccessLevelObserver()
         self.userRepository.combineCheck
             .bind(to: self.isCombined)
             .disposed(by: disposeBag)

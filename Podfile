@@ -10,6 +10,7 @@ target 'MeloMeter' do
   pod 'AnyFormatKit'
   pod 'RxSwift'
   pod 'RxCocoa'
+  pod 'RxGesture'
   pod 'KakaoSDK'
   pod 'Kingfisher', '~> 5.0'
 

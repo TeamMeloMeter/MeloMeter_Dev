@@ -33,7 +33,7 @@ class MyProfileVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     // MARK: Binding
@@ -41,10 +41,13 @@ class MyProfileVC: UIViewController {
         self.dDayView.addGestureRecognizer(tapDdayGesture)
         
         let input = MyProfileVM.Input(
-            viewDidApearEvent: self.rx.methodInvoked(#selector(viewDidAppear(_:)))
+            viewWillApearEvent: self.rx.methodInvoked(#selector(viewWillAppear(_:)))
                 .map({ _ in })
                 .asObservable(),
             dDayViewTapEvent: tapDdayGesture.rx.event
+                .map({ _ in })
+                .asObservable(),
+            editProfileBtnTapEvent: self.profileEditButton.rx.tap
                 .map({ _ in })
                 .asObservable()
         )
@@ -450,21 +453,17 @@ class MyProfileVC: UIViewController {
         phoneNumLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             phoneNumLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 25),
-            phoneNumLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -239),
             phoneNumLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 70),
-            phoneNumLabel.widthAnchor.constraint(equalToConstant: 111),
             phoneNumLabel.heightAnchor.constraint(equalToConstant: 28)
         ])
     }
     private func stateMessageViewConstraints() {
         stateMessageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            stateMessageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 25),
-            stateMessageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -202),
-            stateMessageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 106),
-            stateMessageView.widthAnchor.constraint(equalToConstant: 110),
-            stateMessageView.heightAnchor.constraint(equalToConstant: 28)
-           
+            stateMessageView.leadingAnchor.constraint(equalTo: stateMessageLabel.leadingAnchor, constant: -19),
+            stateMessageView.trailingAnchor.constraint(equalTo: stateMessageLabel.trailingAnchor, constant: 19),
+            stateMessageView.topAnchor.constraint(equalTo: stateMessageLabel.topAnchor, constant: -1),
+            stateMessageView.bottomAnchor.constraint(equalTo: stateMessageLabel.bottomAnchor, constant: 1),
         ])
     }
     
@@ -472,9 +471,9 @@ class MyProfileVC: UIViewController {
         stateMessageLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            stateMessageLabel.centerXAnchor.constraint(equalTo: stateMessageView.centerXAnchor),
-            stateMessageLabel.topAnchor.constraint(equalTo: stateMessageView.topAnchor),
-            stateMessageLabel.bottomAnchor.constraint(equalTo: stateMessageView.bottomAnchor),
+            stateMessageLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 44),
+            stateMessageLabel.topAnchor.constraint(equalTo: phoneNumLabel.bottomAnchor, constant: 9),
+            stateMessageLabel.heightAnchor.constraint(equalToConstant: 28)
         ])
     }
     

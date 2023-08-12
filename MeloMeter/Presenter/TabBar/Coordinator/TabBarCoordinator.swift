@@ -66,8 +66,6 @@ extension TabBarCoordinator {
             self.connectChatFlow(to: tabNavigationController)
         case .myPage:
             self.connectMyProfileFlow(to: tabNavigationController)
-        default:
-            print("탭바코디네이터")
         }
     }
     
