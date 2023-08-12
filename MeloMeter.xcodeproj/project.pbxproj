@@ -27,7 +27,7 @@
 		2185C4DB2A83F13B00F99795 /* MockSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4CA2A83F13B00F99795 /* MockSocket.swift */; };
 		2185C4DC2A83F13B00F99795 /* DisplayChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4CB2A83F13B00F99795 /* DisplayChatVC.swift */; };
 		2185C4E12A83F31900F99795 /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2185C4E02A83F31900F99795 /* MessageKit */; };
-		45307ED7030327D357C85252 /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5A8595AED1BC03C3846C34F /* Pods_MeloMeter.framework */; };
+		2185C4E32A8400A600F99795 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2185C4E22A8400A600F99795 /* GoogleService-Info.plist */; };
 		521D41E52A7FFAD200E5CCDA /* DdayVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41E42A7FFAD200E5CCDA /* DdayVM.swift */; };
 		521D41E72A7FFD5F00E5CCDA /* DdayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */; };
 		521D41EC2A801D1200E5CCDA /* CoupleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41EB2A801D1200E5CCDA /* CoupleModel.swift */; };
@@ -35,7 +35,6 @@
 		521D41F42A814FFA00E5CCDA /* PresetCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41F32A814FFA00E5CCDA /* PresetCoordinator.swift */; };
 		521D41F62A81C71F00E5CCDA /* CoupleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41F52A81C71F00E5CCDA /* CoupleRepository.swift */; };
 		521D41F82A81C75100E5CCDA /* CoupleRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41F72A81C75100E5CCDA /* CoupleRepositoryP.swift */; };
-		521D41FB2A83F88300E5CCDA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 521D41FA2A83F88300E5CCDA /* GoogleService-Info.plist */; };
 		521D41FD2A843EB100E5CCDA /* TextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41FC2A843EB100E5CCDA /* TextField+.swift */; };
 		521D42022A8551E900E5CCDA /* EditProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D42012A8551E900E5CCDA /* EditProfileVM.swift */; };
 		521D42052A8552E300E5CCDA /* EditProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D42042A8552E300E5CCDA /* EditProfileUseCase.swift */; };
@@ -135,9 +134,11 @@
 		52F305362A16B7F500112A04 /* RecoveryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305352A16B7F400112A04 /* RecoveryVC.swift */; };
 		52F305382A16BF2A00112A04 /* WithdrawalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305372A16BF2A00112A04 /* WithdrawalView.swift */; };
 		52F3053A2A16BF4700112A04 /* WithdrawalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305392A16BF4700112A04 /* WithdrawalVC.swift */; };
+		607E018D0EBE2B3F12218F46 /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 238F16D92C4D34E4F24706C9 /* Pods_MeloMeter.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2054F52B053BCED1AD574085 /* Pods-MeloMeter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.debug.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.debug.xcconfig"; sourceTree = "<group>"; };
 		2108F0402A6EC1F0002EED7A /* ProfileInsertUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInsertUseCase.swift; sourceTree = "<group>"; };
 		2108F0422A6EC291002EED7A /* ProfileInsertRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInsertRepository.swift; sourceTree = "<group>"; };
 		2108F0462A6EC48B002EED7A /* UserDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
@@ -157,6 +158,8 @@
 		2185C4C92A83F13B00F99795 /* CustomLayoutSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLayoutSizeCalculator.swift; sourceTree = "<group>"; };
 		2185C4CA2A83F13B00F99795 /* MockSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSocket.swift; sourceTree = "<group>"; };
 		2185C4CB2A83F13B00F99795 /* DisplayChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayChatVC.swift; sourceTree = "<group>"; };
+		2185C4E22A8400A600F99795 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		238F16D92C4D34E4F24706C9 /* Pods_MeloMeter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeloMeter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		521D41E42A7FFAD200E5CCDA /* DdayVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayVM.swift; sourceTree = "<group>"; };
 		521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayUseCase.swift; sourceTree = "<group>"; };
 		521D41EB2A801D1200E5CCDA /* CoupleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleModel.swift; sourceTree = "<group>"; };
@@ -164,7 +167,6 @@
 		521D41F32A814FFA00E5CCDA /* PresetCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetCoordinator.swift; sourceTree = "<group>"; };
 		521D41F52A81C71F00E5CCDA /* CoupleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleRepository.swift; sourceTree = "<group>"; };
 		521D41F72A81C75100E5CCDA /* CoupleRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleRepositoryP.swift; sourceTree = "<group>"; };
-		521D41FA2A83F88300E5CCDA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		521D41FC2A843EB100E5CCDA /* TextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextField+.swift"; sourceTree = "<group>"; };
 		521D42012A8551E900E5CCDA /* EditProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVM.swift; sourceTree = "<group>"; };
 		521D42042A8552E300E5CCDA /* EditProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileUseCase.swift; sourceTree = "<group>"; };
@@ -258,10 +260,8 @@
 		52F305352A16B7F400112A04 /* RecoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryVC.swift; sourceTree = "<group>"; };
 		52F305372A16BF2A00112A04 /* WithdrawalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalView.swift; sourceTree = "<group>"; };
 		52F305392A16BF4700112A04 /* WithdrawalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalVC.swift; sourceTree = "<group>"; };
-		6F172644C2184ED18F3C3ACA /* Pods-MeloMeter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.debug.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.debug.xcconfig"; sourceTree = "<group>"; };
-		80E724853E983EBFAE15A81F /* Pods-MeloMeter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.release.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.release.xcconfig"; sourceTree = "<group>"; };
 		B61B0F5A29F7A5F500E25EEF /* MeloMeter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeloMeter.entitlements; sourceTree = "<group>"; };
-		C5A8595AED1BC03C3846C34F /* Pods_MeloMeter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeloMeter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F79EE45BA1892527262E01CF /* Pods-MeloMeter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.release.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,11 +275,11 @@
 				2185C4E12A83F31900F99795 /* MessageKit in Frameworks */,
 				5290BF932A6D3AFA00D734EE /* FirebaseStorage in Frameworks */,
 				5290BF872A6D3AFA00D734EE /* FirebaseAppCheck in Frameworks */,
-				45307ED7030327D357C85252 /* Pods_MeloMeter.framework in Frameworks */,
 				5290BF8D2A6D3AFA00D734EE /* FirebaseFirestoreSwift in Frameworks */,
 				5290BF832A6D3AC000D734EE /* FirebaseAuth in Frameworks */,
 				5290BF852A6D3AFA00D734EE /* FirebaseAnalytics in Frameworks */,
 				5290BF8B2A6D3AFA00D734EE /* FirebaseFirestore in Frameworks */,
+				607E018D0EBE2B3F12218F46 /* Pods_MeloMeter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,7 +605,7 @@
 				52697B7129EEB7B2002BDD04 /* MeloMeter */,
 				52697B7029EEB7B2002BDD04 /* Products */,
 				F436958110A740287E251D09 /* Pods */,
-				D44F96227B251CC47229DC2A /* Frameworks */,
+				692F78C1F1D931DB036686F1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -631,7 +631,7 @@
 				5290BFB82A72792A00D734EE /* Presenter */,
 				5271D4282A5FCFEF00FC7606 /* Utils */,
 				5290BFA22A703A1500D734EE /* Info.plist */,
-				521D41FA2A83F88300E5CCDA /* GoogleService-Info.plist */,
+				2185C4E22A8400A600F99795 /* GoogleService-Info.plist */,
 			);
 			path = MeloMeter;
 			sourceTree = "<group>";
@@ -870,10 +870,10 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		D44F96227B251CC47229DC2A /* Frameworks */ = {
+		692F78C1F1D931DB036686F1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C5A8595AED1BC03C3846C34F /* Pods_MeloMeter.framework */,
+				238F16D92C4D34E4F24706C9 /* Pods_MeloMeter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -881,8 +881,8 @@
 		F436958110A740287E251D09 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6F172644C2184ED18F3C3ACA /* Pods-MeloMeter.debug.xcconfig */,
-				80E724853E983EBFAE15A81F /* Pods-MeloMeter.release.xcconfig */,
+				2054F52B053BCED1AD574085 /* Pods-MeloMeter.debug.xcconfig */,
+				F79EE45BA1892527262E01CF /* Pods-MeloMeter.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -894,13 +894,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 52697B8329EEB7B3002BDD04 /* Build configuration list for PBXNativeTarget "MeloMeter" */;
 			buildPhases = (
-				EABEF18F484CD9189002D142 /* [CP] Check Pods Manifest.lock */,
+				89FA65C7AD501DA51737050F /* [CP] Check Pods Manifest.lock */,
 				52697B6B29EEB7B2002BDD04 /* Sources */,
 				52697B6C29EEB7B2002BDD04 /* Frameworks */,
 				52697B6D29EEB7B2002BDD04 /* Resources */,
-				62D803FBD07926643E6AEA64 /* [CP] Embed Pods Frameworks */,
 				5270EC192A49D0AA007FF444 /* ShellScript */,
-				42B67FD4DFFC05A2D6D1F49A /* [CP] Copy Pods Resources */,
+				1C77402D7C6CEF6096E9D01D /* [CP] Embed Pods Frameworks */,
+				1733371ADF574575966662AA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -971,7 +971,7 @@
 				5230B26B2A72859200781623 /* Pretendard-ExtraBold.otf in Resources */,
 				5230B26D2A72859200781623 /* Pretendard-Regular.otf in Resources */,
 				5230B2682A72859200781623 /* Pretendard-ExtraLight.otf in Resources */,
-				521D41FB2A83F88300E5CCDA /* GoogleService-Info.plist in Resources */,
+				2185C4E32A8400A600F99795 /* GoogleService-Info.plist in Resources */,
 				5230B26C2A72859200781623 /* Pretendard-SemiBold.otf in Resources */,
 				5230B26A2A72859200781623 /* Pretendard-Bold.otf in Resources */,
 				5230B2672A72859200781623 /* Pretendard-Thin.otf in Resources */,
@@ -984,7 +984,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		42B67FD4DFFC05A2D6D1F49A /* [CP] Copy Pods Resources */ = {
+		1733371ADF574575966662AA /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -999,6 +999,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MeloMeter/Pods-MeloMeter-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1C77402D7C6CEF6096E9D01D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MeloMeter/Pods-MeloMeter-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MeloMeter/Pods-MeloMeter-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MeloMeter/Pods-MeloMeter-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5270EC192A49D0AA007FF444 /* ShellScript */ = {
@@ -1020,24 +1037,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
 		};
-		62D803FBD07926643E6AEA64 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MeloMeter/Pods-MeloMeter-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MeloMeter/Pods-MeloMeter-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MeloMeter/Pods-MeloMeter-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EABEF18F484CD9189002D142 /* [CP] Check Pods Manifest.lock */ = {
+		89FA65C7AD501DA51737050F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1307,7 +1307,7 @@
 		};
 		52697B8429EEB7B3002BDD04 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F172644C2184ED18F3C3ACA /* Pods-MeloMeter.debug.xcconfig */;
+			baseConfigurationReference = 2054F52B053BCED1AD574085 /* Pods-MeloMeter.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1352,7 +1352,7 @@
 		};
 		52697B8529EEB7B3002BDD04 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 80E724853E983EBFAE15A81F /* Pods-MeloMeter.release.xcconfig */;
+			baseConfigurationReference = F79EE45BA1892527262E01CF /* Pods-MeloMeter.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

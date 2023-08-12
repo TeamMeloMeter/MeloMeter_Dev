@@ -12,13 +12,13 @@ import UIKit
 
 // MARK: - BasicExampleViewController
 
-class DisplayChatVC: ChatVC {
+final class DisplayChatVC: ChatVC {
     
     private let viewModel: ChatVM
     
-    init(viewModel: ChatVM) {
+    override init(viewModel: ChatVM) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init(viewModel: viewModel)
     }
     
     required init?(coder: NSCoder) {

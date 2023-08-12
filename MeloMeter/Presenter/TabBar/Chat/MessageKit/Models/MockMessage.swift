@@ -104,6 +104,7 @@ internal struct MockMessage: MessageType {
     self.init(kind: .custom(custom), user: user, messageId: messageId, date: date)
   }
 
+ //지금은 텍스트만 구현
   init(text: String, user: MockUser, messageId: String, date: Date) {
     self.init(kind: .text(text), user: user, messageId: messageId, date: date)
   }
