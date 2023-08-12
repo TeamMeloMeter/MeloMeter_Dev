@@ -7,15 +7,15 @@
 
 import UIKit
 import RxSwift
-import RxCocoa
+import RxRelay
 import RxGesture
 
 class EditProfileVC: UIViewController {
     
-    private var photoAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-    
     private let viewModel: EditProfileVM?
     private let disposeBag = DisposeBag()
+    private let imagePickerController = UIImagePickerController()
+    private let selectImage = PublishRelay<UIImage>()
     
     init(viewModel: EditProfileVM) {
         self.viewModel = viewModel
@@ -34,6 +34,27 @@ class EditProfileVC: UIViewController {
     }
     
     func setBindings() {
+        
+        self.cameraButton.rx.tap
+            .subscribe(onNext: {[weak self] _ in
+                guard let self = self else{ return }
+                self.showCameraAlert()
+                    .subscribe(onSuccess: { select in
+                        switch select {
+                        case .take:
+                            self.showCamera()
+                        case .get:
+                            self.showAlbum()
+                        case .delete:
+                            self.profileImageView.image = UIImage(named: "myProfileImage")
+                        case .cancel:
+                            break
+                        }
+                    })
+                    .disposed(by: self.disposeBag)
+            })
+            .disposed(by: disposeBag)
+        
         
         let input = EditProfileVM.Input(
             viewWillApearEvent: self.rx.methodInvoked(#selector(viewWillAppear(_:)))
@@ -87,40 +108,15 @@ class EditProfileVC: UIViewController {
             .disposed(by: disposeBag)
         
     }
+
+
+    // MARK: Event
     
-    //프사 편집 alert 생성
-    func createPhotoAlert() {
-        
-        let takePhoto = UIAlertAction(title: "사진찍기", style: .default) { action in
-            // alert 터치이벤트
-//            let cameraViewController = CameraViewController()
-//            cameraViewController.cameraModel.launchCamera()
-        }
-        let selectPhoto = UIAlertAction(title: "앨범에서 선택하기", style: .default, handler: nil)
-        let deleteProfile = UIAlertAction(title: "프로필 사진 지우기", style: .destructive, handler: nil)
-        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        
-        photoAlert.addAction(takePhoto)
-        photoAlert.addAction(selectPhoto)
-        photoAlert.addAction(deleteProfile)
-        photoAlert.addAction(cancel)
+    func showCameraAlert() -> Single<CameraAlert> {
+        return AlertManager(viewController: self)
+            .showCameraAlert()
     }
     
-  
-    
-//    //사진 편집 alert 표시
-//    @objc func showPhotoAlert() {
-//        self.present(photoAlert, animated: true, completion: nil)
-//    }
-
-//
-//    //성별 편집 alert 표시
-//    @objc func showGenderAlert() {
-//        self.present(genderAlert, animated: true, completion: nil)
-//    }
-//
-//
-
 //
 //    //로그아웃 alert
 //    @objc func showLogoutAlert() {
@@ -165,12 +161,14 @@ class EditProfileVC: UIViewController {
     
     // MARK: UI
     let profileImageView: UIImageView = {
-            let imageView = UIImageView()
-            imageView.image = UIImage(named: "profileTest")
-            imageView.contentMode = .scaleAspectFit
-            imageView.layer.borderColor = UIColor.clear.cgColor
-            return imageView
-        }()
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "myProfileImage")
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.borderColor = UIColor.clear.cgColor
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 59
+        return imageView
+    }()
     
     let cameraButton: UIButton = {
         let button = UIButton()
@@ -482,4 +480,30 @@ class EditProfileVC: UIViewController {
     }
 }
 
+//MARK: UIImagePicker
+extension EditProfileVC: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    func showCamera() {
+        let camera = self.imagePickerController
+        camera.delegate = self
+        camera.sourceType = .camera
+        camera.allowsEditing = true
+        present(camera, animated: true, completion: nil)
+    }
+    
+    func showAlbum() {
+        let album = self.imagePickerController
+        album.delegate = self
+        album.sourceType = .photoLibrary
+        present(album, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            
+            if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
+                self.profileImageView.image = image
+            }
 
+            picker.dismiss(animated: true, completion: nil)
+    }
+    
+}

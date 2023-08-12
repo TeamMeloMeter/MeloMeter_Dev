@@ -133,4 +133,29 @@ class AlertManager {
         }
     }
     
+    func showCameraAlert() -> Single<CameraAlert> {
+        return Single.create { single in
+            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let take = UIAlertAction(title: "사진찍기", style: .default) { action in
+                single(.success(.take))
+            }
+            let get = UIAlertAction(title: "앨범에서 선택하기", style: .default) { action in
+                single(.success(.get))
+            }
+            let delete = UIAlertAction(title: "프로필 사진 지우기", style: .destructive) { action in
+                single(.success(.delete))
+            }
+            let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+            alertController.addAction(take)
+            alertController.addAction(get)
+            alertController.addAction(delete)
+            alertController.addAction(cancel)
+            
+            self.baseViewController.present(alertController, animated: true, completion: nil)
+            return Disposables.create {
+                alertController.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+    
 }
