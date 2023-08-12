@@ -56,7 +56,12 @@ class LogInVM {
             guard let self = self else{ return }
             self.logInUseCase.inputVerificationCodeService(code: text)
                 .subscribe(onSuccess: { inviteCode in
-                    coordinator.showCoupleComvineVC(inviteCode: inviteCode)
+                    if let otherInviteCode = UserDefaults.standard.string(forKey: "otherInviteCode") {
+                        coordinator.showCoupleComvineVC(inviteCode: inviteCode, otherInviteCode: otherInviteCode)
+                    }else {
+                        coordinator.showCoupleComvineVC(inviteCode: inviteCode)
+                    }
+                    
                 }, onFailure: { error in
                     self.logInRequest.onNext(false)
                 }).disposed(by: disposeBag)
