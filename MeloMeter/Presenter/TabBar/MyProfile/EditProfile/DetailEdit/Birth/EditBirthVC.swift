@@ -21,7 +21,6 @@ class EditBirthVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.birthTextField.delegate = self
         configure()
         setAutoLayout()
         setBindings()
@@ -63,7 +62,6 @@ class EditBirthVC: UIViewController {
             changedStateMessage: nil,
             changedBirth: self.completeButton.rx.tap
                 .map{ _ in
-                    print("뷰컨:", self.birthTextField.text)
                     return self.birthTextField.text ?? ""
                 }
         )
@@ -89,13 +87,6 @@ class EditBirthVC: UIViewController {
             })
             .disposed(by: disposeBag)
     }
-    //데이트피커 날짜 변경 시 실행
-//    @objc func dateChanged(datePicker: UIDatePicker) {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "yyyy년 MM월 dd일"
-//        editBirthView.birthTextField.text = dateFormatter.string(from: datePicker.date)
-//        navigationItem.rightBarButtonItem?.isEnabled = true //등록버튼 활성화
-//    }
 
     // MARK: Configure
     func configure() {
@@ -188,10 +179,3 @@ class EditBirthVC: UIViewController {
 
 }
 
-extension EditBirthVC: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-
-//        self.datePicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
-        
-    }
-}
