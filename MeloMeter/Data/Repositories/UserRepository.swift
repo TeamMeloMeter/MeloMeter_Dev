@@ -76,11 +76,9 @@ class UserRepository: UserRepositoryP {
                     .flatMap{ source -> Single<Void> in
                         let dto = source.toObject(CoupleDTO.self)
                         guard let dto = dto else{ return Single.just(()) }
-                        print("유저네임:", userName, "anniDate:", dto.anniName)
                         let index = dto.anniName.firstIndex(of: "\(userName) 생일") ?? -1
                         var anniDate = dto.anniDate
                         anniDate[index] = birth
-                        print("변경 배열:", birth)
                         let values = ["anniDate": anniDate]
                         return self.firebaseService.updateDocument(collection: .Couples, document: coupleID, values: values)
                     }

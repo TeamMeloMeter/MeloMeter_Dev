@@ -9,6 +9,10 @@ import UIKit
 import RxSwift
 import RxRelay
 
+enum CameraAlert {
+    case take, get, delete, cancel
+}
+
 class DetailEditVM {
 
     weak var coordinator: MyProfileCoordinator?
@@ -110,7 +114,6 @@ class DetailEditVM {
                     output.inputError.onNext(true)
                 }else {
                     output.inputError.onNext(false)
-                    print("뷰모델:", birth)
                     self.editProfileUseCase.editInfo(field: .birth, value: birth)
                         .subscribe(onSuccess: {
                             self.coordinator?.popViewController()
