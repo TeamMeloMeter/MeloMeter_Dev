@@ -126,7 +126,7 @@
 		52F010182A0AAF820014FC01 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010172A0AAF820014FC01 /* CameraViewController.swift */; };
 		52F0101E2A0ACE190014FC01 /* EditNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0101D2A0ACE190014FC01 /* EditNameVC.swift */; };
 		52F010222A0ADD500014FC01 /* EditStateMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010212A0ADD500014FC01 /* EditStateMessageVC.swift */; };
-		52F010242A0B77ED0014FC01 /* EditBirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010232A0B77ED0014FC01 /* EditBirthViewController.swift */; };
+		52F010242A0B77ED0014FC01 /* EditBirthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010232A0B77ED0014FC01 /* EditBirthVC.swift */; };
 		52F010262A0B79270014FC01 /* EditBirthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010252A0B79270014FC01 /* EditBirthView.swift */; };
 		52F2083A29FBB31D0043BCA4 /* MyProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083929FBB31D0043BCA4 /* MyProfileVC.swift */; };
 		52F2083C29FBB3490043BCA4 /* MyProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */; };
@@ -250,7 +250,7 @@
 		52F010172A0AAF820014FC01 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		52F0101D2A0ACE190014FC01 /* EditNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameVC.swift; sourceTree = "<group>"; };
 		52F010212A0ADD500014FC01 /* EditStateMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStateMessageVC.swift; sourceTree = "<group>"; };
-		52F010232A0B77ED0014FC01 /* EditBirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBirthViewController.swift; sourceTree = "<group>"; };
+		52F010232A0B77ED0014FC01 /* EditBirthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBirthVC.swift; sourceTree = "<group>"; };
 		52F010252A0B79270014FC01 /* EditBirthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBirthView.swift; sourceTree = "<group>"; };
 		52F2083929FBB31D0043BCA4 /* MyProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileVC.swift; sourceTree = "<group>"; };
 		52F2083B29FBB3490043BCA4 /* MyProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileModel.swift; sourceTree = "<group>"; };
@@ -448,7 +448,7 @@
 			isa = PBXGroup;
 			children = (
 				52F010252A0B79270014FC01 /* EditBirthView.swift */,
-				52F010232A0B77ED0014FC01 /* EditBirthViewController.swift */,
+				52F010232A0B77ED0014FC01 /* EditBirthVC.swift */,
 			);
 			path = Birth;
 			sourceTree = "<group>";
@@ -1150,7 +1150,7 @@
 				5290BFAA2A70F3B700D734EE /* TabBarCoordinator.swift in Sources */,
 				52F3053A2A16BF4700112A04 /* WithdrawalVC.swift in Sources */,
 				5271D42C2A60484300FC7606 /* LogInDTO.swift in Sources */,
-				52F010242A0B77ED0014FC01 /* EditBirthViewController.swift in Sources */,
+				52F010242A0B77ED0014FC01 /* EditBirthVC.swift in Sources */,
 				52F305382A16BF2A00112A04 /* WithdrawalView.swift in Sources */,
 				5270EC102A460354007FF444 /* AuthNumVC.swift in Sources */,
 				52F00FFE2A094B450014FC01 /* QnAView.swift in Sources */,

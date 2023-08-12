@@ -52,9 +52,39 @@ class UserRepository: UserRepositoryP {
     
     func updateUserInfo(value: [String: String]) -> Single<Void> {
         guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return Single.just(())}
-        return self.firebaseService.updateDocument(collection: .Users,
-                                                   document: uid,
-                                                   values: value.asDictionary ?? [:])
+        if value.first?.key == "birth" {
+            return self.setAnniversaries(uid: uid, birth: value["birth"] ?? "")
+                .flatMap { _ in
+                    return self.firebaseService.updateDocument(collection: .Users,
+                                                               document: uid,
+                                                               values: value.asDictionary ?? [:])
+                }
+                
+        }else {
+            return self.firebaseService.updateDocument(collection: .Users,
+                                                       document: uid,
+                                                       values: value.asDictionary ?? [:])
+        }
+    }
+    
+    private func setAnniversaries(uid: String, birth: String) -> Single<Void> {
+        guard let userName = UserDefaults.standard.string(forKey: "userName") else{ return Single.just(()) }
+        let coupleRepository = CoupleRepository(firebaseService: self.firebaseService)
+        return coupleRepository.getCoupleID()
+            .flatMap{ coupleID -> Single<Void> in
+                self.firebaseService.getDocument(collection: .Couples, document: coupleID)
+                    .flatMap{ source -> Single<Void> in
+                        let dto = source.toObject(CoupleDTO.self)
+                        guard let dto = dto else{ return Single.just(()) }
+                        print("유저네임:", userName, "anniDate:", dto.anniName)
+                        let index = dto.anniName.firstIndex(of: "\(userName) 생일") ?? -1
+                        var anniDate = dto.anniDate
+                        anniDate[index] = birth
+                        print("변경 배열:", birth)
+                        let values = ["anniDate": anniDate]
+                        return self.firebaseService.updateDocument(collection: .Couples, document: coupleID, values: values)
+                    }
+            }
     }
 
 }

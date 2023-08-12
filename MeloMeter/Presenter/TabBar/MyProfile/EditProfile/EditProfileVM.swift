@@ -89,6 +89,13 @@ class EditProfileVM {
             })
             .disposed(by: disposeBag)
         
+        input.birthTapEvent
+            .subscribe(onNext: {[weak self] _ in
+                guard let self = self else{ return }
+                self.coordinator?.showEditBirthVC(birth: detailData.birth)
+            })
+            .disposed(by: disposeBag)
+        
         input.newGender
             .subscribe(onNext: {[weak self] genderType in
                 self?.editProfileUseCase.editInfo(field: .gender, value: genderType.stringType)

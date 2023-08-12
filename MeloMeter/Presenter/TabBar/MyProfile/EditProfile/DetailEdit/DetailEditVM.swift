@@ -35,6 +35,7 @@ class DetailEditVM {
         self.editProfileUseCase = editProfileUseCase
     }
     
+    // MARK: EditName
     func nameTransform(input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output()
         
@@ -63,6 +64,7 @@ class DetailEditVM {
         return output
     }
     
+    // MARK: EditStateMessage
     func stateMessageTransform(input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output()
         
@@ -80,6 +82,36 @@ class DetailEditVM {
                 }else {
                     output.inputError.onNext(false)
                     self.editProfileUseCase.editInfo(field: .stateMessage, value: stateMessage)
+                        .subscribe(onSuccess: {
+                            self.coordinator?.popViewController()
+                        })
+                        .disposed(by: disposeBag)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        return output
+    }
+    
+    // MARK: EditBirth
+    func birthTransform(input: Input, disposeBag: DisposeBag) -> Output {
+        let output = Output()
+        
+        input.backBtnTapEvent
+            .subscribe(onNext: {[weak self] _ in
+                guard let self = self else{ return }
+                self.coordinator?.popViewController()
+            })
+            .disposed(by: disposeBag)
+        
+        input.changedBirth?
+            .subscribe(onNext: { birth in
+                if birth.isEmpty {
+                    output.inputError.onNext(true)
+                }else {
+                    output.inputError.onNext(false)
+                    print("뷰모델:", birth)
+                    self.editProfileUseCase.editInfo(field: .birth, value: birth)
                         .subscribe(onSuccess: {
                             self.coordinator?.popViewController()
                         })

@@ -108,5 +108,22 @@ extension MyProfileCoordinator {
         self.navigationController.setNavigationBarHidden(false, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
     }
+    
+    func showEditBirthVC(birth: String) {
+        let viewModel = DetailEditVM(coordinator: self,
+                              editProfileUseCase: EditProfileUseCase(
+                                          userRepository: UserRepository(
+                                              firebaseService: DefaultFirebaseService()
+                                          )
+                                      )
+                              )
+        viewModel.birth = birth
+        
+        let viewController = EditBirthVC(viewModel: viewModel)
+        
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
 }
 
