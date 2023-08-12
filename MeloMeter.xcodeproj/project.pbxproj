@@ -27,6 +27,7 @@
 		2185C4DB2A83F13B00F99795 /* MockSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4CA2A83F13B00F99795 /* MockSocket.swift */; };
 		2185C4DC2A83F13B00F99795 /* DisplayChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4CB2A83F13B00F99795 /* DisplayChatVC.swift */; };
 		2185C4E12A83F31900F99795 /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2185C4E02A83F31900F99795 /* MessageKit */; };
+		2185C4E32A8400A600F99795 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2185C4E22A8400A600F99795 /* GoogleService-Info.plist */; };
 		45307ED7030327D357C85252 /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5A8595AED1BC03C3846C34F /* Pods_MeloMeter.framework */; };
 		521D41E52A7FFAD200E5CCDA /* DdayVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41E42A7FFAD200E5CCDA /* DdayVM.swift */; };
 		521D41E72A7FFD5F00E5CCDA /* DdayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */; };
@@ -35,7 +36,6 @@
 		521D41F42A814FFA00E5CCDA /* PresetCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41F32A814FFA00E5CCDA /* PresetCoordinator.swift */; };
 		521D41F62A81C71F00E5CCDA /* CoupleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41F52A81C71F00E5CCDA /* CoupleRepository.swift */; };
 		521D41F82A81C75100E5CCDA /* CoupleRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41F72A81C75100E5CCDA /* CoupleRepositoryP.swift */; };
-		521D41FB2A83F88300E5CCDA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 521D41FA2A83F88300E5CCDA /* GoogleService-Info.plist */; };
 		5230B2652A72859200781623 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25C2A72859100781623 /* Pretendard-Light.otf */; };
 		5230B2662A72859200781623 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25D2A72859100781623 /* Pretendard-Medium.otf */; };
 		5230B2672A72859200781623 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25E2A72859100781623 /* Pretendard-Thin.otf */; };
@@ -161,6 +161,7 @@
 		2185C4C92A83F13B00F99795 /* CustomLayoutSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLayoutSizeCalculator.swift; sourceTree = "<group>"; };
 		2185C4CA2A83F13B00F99795 /* MockSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSocket.swift; sourceTree = "<group>"; };
 		2185C4CB2A83F13B00F99795 /* DisplayChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayChatVC.swift; sourceTree = "<group>"; };
+		2185C4E22A8400A600F99795 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		521D41E42A7FFAD200E5CCDA /* DdayVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayVM.swift; sourceTree = "<group>"; };
 		521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayUseCase.swift; sourceTree = "<group>"; };
 		521D41EB2A801D1200E5CCDA /* CoupleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleModel.swift; sourceTree = "<group>"; };
@@ -168,7 +169,6 @@
 		521D41F32A814FFA00E5CCDA /* PresetCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetCoordinator.swift; sourceTree = "<group>"; };
 		521D41F52A81C71F00E5CCDA /* CoupleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleRepository.swift; sourceTree = "<group>"; };
 		521D41F72A81C75100E5CCDA /* CoupleRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleRepositoryP.swift; sourceTree = "<group>"; };
-		521D41FA2A83F88300E5CCDA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5230B25C2A72859100781623 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		5230B25D2A72859100781623 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		5230B25E2A72859100781623 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
@@ -606,7 +606,7 @@
 				5290BFB82A72792A00D734EE /* Presenter */,
 				5271D4282A5FCFEF00FC7606 /* Utils */,
 				5290BFA22A703A1500D734EE /* Info.plist */,
-				521D41FA2A83F88300E5CCDA /* GoogleService-Info.plist */,
+				2185C4E22A8400A600F99795 /* GoogleService-Info.plist */,
 			);
 			path = MeloMeter;
 			sourceTree = "<group>";
@@ -949,7 +949,7 @@
 				5230B26B2A72859200781623 /* Pretendard-ExtraBold.otf in Resources */,
 				5230B26D2A72859200781623 /* Pretendard-Regular.otf in Resources */,
 				5230B2682A72859200781623 /* Pretendard-ExtraLight.otf in Resources */,
-				521D41FB2A83F88300E5CCDA /* GoogleService-Info.plist in Resources */,
+				2185C4E32A8400A600F99795 /* GoogleService-Info.plist in Resources */,
 				5230B26C2A72859200781623 /* Pretendard-SemiBold.otf in Resources */,
 				5230B26A2A72859200781623 /* Pretendard-Bold.otf in Resources */,
 				5230B2672A72859200781623 /* Pretendard-Thin.otf in Resources */,
