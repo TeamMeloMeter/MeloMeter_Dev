@@ -93,8 +93,10 @@ class DdayUseCase {
         var addAni = Date()
         for data in dataArray {
             if data.dateName.contains("생일") {
-                addAni = calendar.date(byAdding: .year, value: 20, to: data.date) ?? Date()
-                for i in 1...50 {
+                var components = Calendar.current.dateComponents([.day, .month], from: data.date)
+                components.year = 2023
+                addAni = calendar.date(from: components) ?? Date()                
+                for i in 0...50 {
                     guard let yearAni = calendar.date(byAdding: .year, value: i, to: addAni) else{ return resultArray }
                     if sinceDday(from: yearAni) > 0 {
                         countDday = "\(sinceDday(from: yearAni))일 남음"

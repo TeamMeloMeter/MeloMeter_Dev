@@ -11,7 +11,6 @@ final class LogInCoordinator: Coordinator {
     
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
-    var inviteCode2: String?
     var isLogin: Bool = false
     
     init(_ navigationController: UINavigationController) {
@@ -25,8 +24,8 @@ final class LogInCoordinator: Coordinator {
         }else {
             if let inviteCode = UserDefaults.standard.string(forKey: "inviteCode") {
                 let code = "\(inviteCode.prefix(4)) \(inviteCode.suffix(4))"
-                if let code2 = inviteCode2 {
-                    showCoupleComvineVC(inviteCode: code, inviteCode2: code2)
+                if let otherInviteCode = UserDefaults.standard.string(forKey: "otherInviteCode") {
+                    showCoupleComvineVC(inviteCode: code, otherInviteCode: otherInviteCode)
                 }else {
                     showCoupleComvineVC(inviteCode: code)
                 }
@@ -69,7 +68,7 @@ extension LogInCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
-    func showCoupleComvineVC(inviteCode: String, inviteCode2: String? = nil) {
+    func showCoupleComvineVC(inviteCode: String, otherInviteCode: String? = nil) {
         let viewController = CoupleCombineVC(
             viewModel: LogInVM(
                 coordinator: self,
@@ -78,7 +77,7 @@ extension LogInCoordinator {
                                           )
             ),
             inviteCode: inviteCode,
-            inviteCode2: inviteCode2)
+            otherInviteCode: otherInviteCode)
 
         self.navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)

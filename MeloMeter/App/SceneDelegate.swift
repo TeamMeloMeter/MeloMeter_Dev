@@ -29,8 +29,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
             let queryItems = components.queryItems ?? []
             for queryItem in queryItems {
-                if queryItem.name == "appBtnTapped", let value = queryItem.value {
-                    appCoordinator?.connectLogInFlow(value)
+                if queryItem.name == "appBtnTapped", let otherCode = queryItem.value {
+                    UserDefaults.standard.set(otherCode, forKey: "otherInviteCode")
+                    appCoordinator?.start()
                 }
             }
         }

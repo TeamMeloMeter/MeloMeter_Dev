@@ -7,6 +7,21 @@
 
 import Foundation
 
+public enum GenderType: String {
+    case male, female, cancel
+    
+    var stringType: String {
+        switch self {
+        case .male:
+            return "남"
+        case .female:
+            return "여"
+        default:
+            return "남"
+        }
+    }
+}
+
 struct UserModel: Equatable, Hashable {
 
     // MARK: - Properties
@@ -15,9 +30,9 @@ struct UserModel: Equatable, Hashable {
     var name: String?
     var birth: Date?
     var stateMessage: String?
-    var gender: String?
+    var gender: GenderType?
     
-    init(uid: String?, phoneNumber: String?, name: String?, birth: Date?, stateMessage: String?, gender: String?) {
+    init(uid: String?, phoneNumber: String?, name: String?, birth: Date?, stateMessage: String?, gender: GenderType?) {
         self.uid = uid
         self.phoneNumber = phoneNumber
         self.name = name
@@ -32,7 +47,7 @@ struct UserModel: Equatable, Hashable {
         self.birth = birth
     }
     
-    init(name: String?, stateMessage: String?, birth: Date?, gender: String?) {
+    init(name: String?, stateMessage: String?, birth: Date?, gender: GenderType?) {
         self.init(uid: nil, phoneNumber: nil, name: name, birth: birth, stateMessage: stateMessage, gender: gender)
     }
     
@@ -44,7 +59,7 @@ struct UserModel: Equatable, Hashable {
             name: name ?? "",
             birth: birth?.toString(type: .yearToDay) ?? "",
             stateMessage: stateMessage,
-            gender: gender
+            gender: gender?.stringType
         )
     }
 }

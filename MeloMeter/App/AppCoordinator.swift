@@ -76,11 +76,10 @@ extension AppCoordinator {
         navigationController.pushViewController(startVC, animated: false)
     }
     
-    func connectLogInFlow(_ inviteCode: String? = nil, accessLevel: Bool = false) {
+    func connectLogInFlow(accessLevel: Bool = false) {
         self.navigationController.viewControllers.removeAll()
         let logInCoordinator = LogInCoordinator(self.navigationController)
         logInCoordinator.delegate = self
-        logInCoordinator.inviteCode2 = inviteCode
         logInCoordinator.isLogin = accessLevel
         logInCoordinator.start()
         self.childCoordinators.append(logInCoordinator)
