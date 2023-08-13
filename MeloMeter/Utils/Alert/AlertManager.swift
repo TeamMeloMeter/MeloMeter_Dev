@@ -24,8 +24,8 @@ class AlertManager {
         baseViewController = viewController
     }
     
-    func setTitle(_ time: String) -> AlertManager {
-        alertTitle = time
+    func setTitle(_ title: String) -> AlertManager {
+        alertTitle = title
         return self
     }
     

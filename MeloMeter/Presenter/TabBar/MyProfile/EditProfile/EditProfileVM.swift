@@ -18,6 +18,7 @@ class EditProfileVM {
     struct Input {
         let viewWillApearEvent: Observable<Void>
         let backBtnTapEvent: Observable<Void>
+        let changedProfileImage: Observable<UIImage>
         let nameTapEvent: Observable<Void>
         let stateMessageTapEvent: Observable<Void>
         let birthTapEvent: Observable<Void>
@@ -26,6 +27,7 @@ class EditProfileVM {
     }
 
     struct Output {
+        var profileImage = PublishSubject<UIImage?>()
         var userName = PublishSubject<String>()
         var stateMessage = PublishSubject<String>()
         var birth = PublishSubject<String>()
@@ -56,6 +58,11 @@ class EditProfileVM {
         
         self.editProfileUseCase.userData
             .bind(onNext: { userData in
+                self.editProfileUseCase.getProfileImage(url: userData.profileImage ?? "")
+                    .subscribe(onSuccess: { image in
+                        output.profileImage.onNext(image ?? UIImage(named: "myProfileImage")!)
+                    })
+                    .disposed(by: disposeBag)
                 detailData.userName = userData.name ?? ""
                 detailData.stateMessage = userData.stateMessage ?? ""
                 detailData.birth = userData.birth?.toString(type: .yearToDay) ?? ""
@@ -70,6 +77,17 @@ class EditProfileVM {
             .subscribe(onNext: {[weak self] _ in
                 guard let self = self else{ return }
                 self.coordinator?.popViewController()
+            })
+            .disposed(by: disposeBag)
+        
+        input.changedProfileImage
+            .subscribe(onNext: {[weak self] image in
+                guard let self = self else{ return }
+                self.editProfileUseCase.editProfileImage(image: image)
+                .subscribe(onSuccess: { image in
+                    output.profileImage.onNext(image)
+                })
+                .disposed(by: disposeBag)
             })
             .disposed(by: disposeBag)
         

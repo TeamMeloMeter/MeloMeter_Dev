@@ -63,6 +63,8 @@ class EditProfileVC: UIViewController {
             backBtnTapEvent: self.backBarButton.rx.tap
                 .map({ _ in })
                 .asObservable(),
+            changedProfileImage: self.selectImage
+                .asObservable(),
             nameTapEvent: self.nameView.rx.tapGesture().when(.ended)
                 .map({ _ in })
                 .asObservable(),
@@ -82,6 +84,17 @@ class EditProfileVC: UIViewController {
         )
         
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else{ return }
+        
+        output.profileImage
+            .bind(onNext: { image in
+                if let profileImage = image {
+                    self.profileImageView.image = profileImage
+                }else {
+                    self.profileImageView.image = UIImage(named: "myProfileImage")
+                    self.imageUploadErrorAlert()
+                }
+            })
+            .disposed(by: disposeBag)
         
         output.userName
             .bind(onNext: {[weak self] name in
@@ -115,6 +128,14 @@ class EditProfileVC: UIViewController {
     func showCameraAlert() -> Single<CameraAlert> {
         return AlertManager(viewController: self)
             .showCameraAlert()
+    }
+    
+    func imageUploadErrorAlert() {
+        AlertManager(viewController: self)
+            .showNomalAlert(title: "사진 업로드 실패",
+                            message: "프로필 사진 변경을 실패했습니다.\n다시 시도해주세요")
+            .subscribe(onSuccess: {})
+            .disposed(by: disposeBag)
     }
     
 //
@@ -494,16 +515,17 @@ extension EditProfileVC: UIImagePickerControllerDelegate & UINavigationControlle
         let album = self.imagePickerController
         album.delegate = self
         album.sourceType = .photoLibrary
+        album.allowsEditing = true
         present(album, animated: true, completion: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            
-            if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
-                self.profileImageView.image = image
-            }
 
-            picker.dismiss(animated: true, completion: nil)
+        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            self.selectImage.accept(image)
+        }
+
+        picker.dismiss(animated: true, completion: nil)
     }
     
 }

@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 import FirebaseFirestore
+import FirebaseStorage
 import RxSwift
 
 public enum FireStoreError: Error, LocalizedError {
@@ -143,6 +144,51 @@ public extension DefaultFirebaseService {
             .flatMap({ user -> Single<Void> in
                 return self.updateDocument(collection: .Users, document: user.uid, values: ["accessLevel": level])
             })
+    }
+    
+}
+
+//MARK: ImageUpload
+extension DefaultFirebaseService {
+    public func uploadImage(image: UIImage) -> Single<String> {
+        return Single.create { single in
+            guard let imageData = image.jpegData(compressionQuality: 0.4) else { return Disposables.create() }
+            guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return Disposables.create() }
+            let metaData = StorageMetadata()
+            metaData.contentType = "image/jpeg"
+            
+            let imageName = uid + "-ProfileImage"
+            let firebaseReference = Storage.storage().reference().child("\(imageName)")
+            
+            firebaseReference.putData(imageData, metadata: metaData) { _, error in
+                if let error = error { single(.failure(error)) }
+                
+                firebaseReference.downloadURL { url, _ in
+                    guard let url = url else {
+                        single(.failure(FireStoreError.unknown))
+                        return
+                    }
+                    single(.success(url.absoluteString))
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
+    public func downloadImage(urlString: String) -> Single<UIImage?> {
+        return Single.create { single in
+            let storageReference = Storage.storage().reference(forURL: urlString)
+            let megaByte = Int64(1 * 1024 * 1024)
+            
+            storageReference.getData(maxSize: megaByte) { data, error in
+                guard let imageData = data else {
+                    single(.success(nil))
+                    return
+                }
+                single(.success(UIImage(data: imageData)))
+            }
+            return Disposables.create()
+        }
     }
     
 }
