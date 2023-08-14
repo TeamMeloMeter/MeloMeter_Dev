@@ -23,7 +23,7 @@ final class MainCoordinator: Coordinator {
 
 }
 
-extension MainCoordinator {
+extension MainCoordinator: CoordinatorDelegate {
     
     func showMapVC() {
         let viewController = MapVC(viewModel: MapVM(
@@ -36,11 +36,17 @@ extension MainCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
    
-//    func showPermissionVC2() {
-//        let viewController = Permission2VC(viewModel: PermissionVM(coordinator: LogInCoordinator(UINavigationController())))
-//        
-//        self.navigationController.setNavigationBarHidden(true, animated: false)
-//        self.navigationController.pushViewController(viewController, animated: true)
-//    }
+    func showDdayFlow() {
+        let dDayCoordinator = DdayCoordinator(self.navigationController)
+        childCoordinators.append(dDayCoordinator)
+        dDayCoordinator.parentCoordinator = self
+        dDayCoordinator.start()
+    }
 
+    func didFinish(childCoordinator: Coordinator) {
+        print("didFinish")
+        if childCoordinator is DdayCoordinator {
+            self.navigationController.popViewController(animated: false)
+        }
+    }
 }

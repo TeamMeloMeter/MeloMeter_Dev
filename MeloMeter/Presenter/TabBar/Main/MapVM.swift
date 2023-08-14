@@ -53,7 +53,9 @@ class MapVM {
             .disposed(by: disposeBag)
         
         input.dDayBtnTapEvent
-            .subscribe(onNext: {  }) // 기념일 화면으로 전환하기
+            .subscribe(onNext: {[weak self] _ in
+                self?.coordinator?.showDdayFlow()
+            })
             .disposed(by: disposeBag)
         
         input.alarmBtnTapEvent

@@ -28,7 +28,7 @@ final class MyProfileCoordinator: Coordinator {
 
 }
 
-extension MyProfileCoordinator {
+extension MyProfileCoordinator: CoordinatorDelegate {
     
     func showMyProfileVC() {
         let viewController = MyProfileVC(viewModel: MyProfileVM(
@@ -44,22 +44,14 @@ extension MyProfileCoordinator {
         self.navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
     }
-   
-    func showDdayVC() {
-        let viewController = DdayVC(viewModel: DdayVM(coordinator: self,
-                                                      dDayUseCase: DdayUseCase(coupleRepository: CoupleRepository(firebaseService: DefaultFirebaseService()))))
-        
-        viewController.hidesBottomBarWhenPushed = true
-        self.navigationController.setNavigationBarHidden(false, animated: false)
-        self.navigationController.pushViewController(viewController, animated: true)
+
+    func showDdayFlow() {
+        let dDayCoordinator = DdayCoordinator(self.navigationController)
+        childCoordinators.append(dDayCoordinator)
+        dDayCoordinator.parentCoordinator = self
+        dDayCoordinator.start()
     }
     
-    func showAddDdayVC(viewModel: DdayVM) {
-        let viewController = AddDdayModal(viewModel: viewModel)
-        viewController.modalPresentationStyle = .custom
-        self.navigationController.present(viewController, animated: true, completion: nil)
-    }
-
     func showEditProfileVC() {
         let viewController = EditProfileVC(viewModel: EditProfileVM(
             coordinator: self,
@@ -125,5 +117,13 @@ extension MyProfileCoordinator {
         self.navigationController.setNavigationBarHidden(false, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
     }
+    
+    func didFinish(childCoordinator: Coordinator) {
+        if childCoordinator is DdayCoordinator {
+            childCoordinators.removeLast()
+            self.navigationController.popViewController(animated: false)
+        }
+    }
+    
 }
 

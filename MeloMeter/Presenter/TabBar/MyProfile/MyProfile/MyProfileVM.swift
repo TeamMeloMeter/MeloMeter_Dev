@@ -63,7 +63,7 @@ class MyProfileVM {
         input.dDayViewTapEvent
             .subscribe(onNext: {[weak self] _ in
                 guard let self = self else{ return }
-                self.coordinator?.showDdayVC()
+                self.coordinator?.showDdayFlow()
             })
             .disposed(by: disposeBag)
         

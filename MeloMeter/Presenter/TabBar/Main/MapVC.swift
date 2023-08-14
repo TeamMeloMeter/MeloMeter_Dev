@@ -34,7 +34,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         configure()
         setAutoLayout()
         setBindings()
-        setUpBarButton()
+        setNavigationBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -219,7 +219,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     }
     
     // MARK: navigationBar
-    func setUpBarButton() {
+    func setNavigationBar() {
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         let appearance = UINavigationBarAppearance()
