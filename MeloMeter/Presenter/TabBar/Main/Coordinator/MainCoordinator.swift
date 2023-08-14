@@ -23,7 +23,7 @@ final class MainCoordinator: Coordinator {
 
 }
 
-extension MainCoordinator: CoordinatorDelegate {
+extension MainCoordinator {
     
     func showMapVC() {
         let viewController = MapVC(viewModel: MapVM(
@@ -43,10 +43,4 @@ extension MainCoordinator: CoordinatorDelegate {
         dDayCoordinator.start()
     }
 
-    func didFinish(childCoordinator: Coordinator) {
-        print("didFinish")
-        if childCoordinator is DdayCoordinator {
-            self.navigationController.popViewController(animated: false)
-        }
-    }
 }

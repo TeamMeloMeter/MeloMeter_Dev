@@ -91,6 +91,15 @@ class EditProfileVC: UIViewController {
                     self.profileImageView.image = profileImage
                 }else {
                     self.profileImageView.image = UIImage(named: "defaultProfileImage")
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        output.uploadSuccess
+            .bind(onNext: { result in
+                if result {
+                    // 성공
+                }else {
                     self.imageUploadErrorAlert()
                 }
             })
@@ -132,7 +141,7 @@ class EditProfileVC: UIViewController {
     
     func imageUploadErrorAlert() {
         AlertManager(viewController: self)
-            .showNomalAlert(title: "사진 업로드 실패",
+            .showNomalAlert(title: "네트워크 오류",
                             message: "프로필 사진 변경을 실패했습니다.\n다시 시도해주세요")
             .subscribe(onSuccess: {})
             .disposed(by: disposeBag)
@@ -522,6 +531,7 @@ extension EditProfileVC: UIImagePickerControllerDelegate & UINavigationControlle
 
         if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             self.selectImage.accept(image)
+            self.profileImageView.image = image
         }
 
         picker.dismiss(animated: true, completion: nil)

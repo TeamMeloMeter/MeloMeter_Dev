@@ -28,6 +28,7 @@ class EditProfileVM {
 
     struct Output {
         var profileImage = PublishSubject<UIImage?>()
+        var uploadSuccess = PublishSubject<Bool>()
         var userName = PublishSubject<String>()
         var stateMessage = PublishSubject<String>()
         var birth = PublishSubject<String>()
@@ -59,9 +60,9 @@ class EditProfileVM {
         self.editProfileUseCase.userData
             .bind(onNext: { userData in
                 self.editProfileUseCase.getProfileImage(url: userData.profileImage ?? "")
-                    .subscribe(onSuccess: { image in
-                        output.profileImage.onNext(image)
-                    })
+                    .asObservable()
+                    .take(1)
+                    .bind(to: output.profileImage)
                     .disposed(by: disposeBag)
                 detailData.userName = userData.name ?? ""
                 detailData.stateMessage = userData.stateMessage ?? ""
@@ -84,8 +85,10 @@ class EditProfileVM {
             .subscribe(onNext: {[weak self] image in
                 guard let self = self else{ return }
                 self.editProfileUseCase.editProfileImage(image: image)
-                .subscribe(onSuccess: { image in
-                    output.profileImage.onNext(image)
+                .subscribe(onSuccess: {
+                    output.uploadSuccess.onNext(true)
+                }, onFailure: { error in
+                    output.uploadSuccess.onNext(false)
                 })
                 .disposed(by: disposeBag)
             })

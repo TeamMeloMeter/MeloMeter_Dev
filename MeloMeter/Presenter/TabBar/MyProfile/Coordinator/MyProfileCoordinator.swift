@@ -28,7 +28,7 @@ final class MyProfileCoordinator: Coordinator {
 
 }
 
-extension MyProfileCoordinator: CoordinatorDelegate {
+extension MyProfileCoordinator {
     
     func showMyProfileVC() {
         let viewController = MyProfileVC(viewModel: MyProfileVM(
@@ -116,13 +116,6 @@ extension MyProfileCoordinator: CoordinatorDelegate {
         viewController.hidesBottomBarWhenPushed = true
         self.navigationController.setNavigationBarHidden(false, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
-    }
-    
-    func didFinish(childCoordinator: Coordinator) {
-        if childCoordinator is DdayCoordinator {
-            childCoordinators.removeLast()
-            self.navigationController.popViewController(animated: false)
-        }
     }
     
 }
