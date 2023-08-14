@@ -25,7 +25,7 @@ class MyProfileVM {
         var profileImage = PublishRelay<UIImage?>()
         var userName = PublishRelay<String>()
         var userPhoneNumber = PublishRelay<String>()
-        var stateMessage = PublishRelay<String>()
+        var stateMessage = PublishRelay<String?>()
     }
     
     
@@ -46,16 +46,15 @@ class MyProfileVM {
                                 output.profileImage.accept(image)
                             })
                             .disposed(by: disposeBag)
+                        guard let name = user.name, let phoneNumber = user.phoneNumber else{ return }
+                        output.userName.accept(name)
+                        var number = phoneNumber.map{ String($0) }
+                        number.insert(" 0", at: 3)
+                        number.insert("-", at: 6)
+                        number.insert("-", at: 11)
+                        output.userPhoneNumber.accept(number.joined())
+                        output.stateMessage.accept(user.stateMessage)
                         
-                        if let name = user.name, let phoneNumber = user.phoneNumber, let stateMessage = user.stateMessage {
-                            output.userName.accept(name)
-                            var number = phoneNumber.map{ String($0) }
-                            number.insert(" 0", at: 3)
-                            number.insert("-", at: 6)
-                            number.insert("-", at: 11)
-                            output.userPhoneNumber.accept(number.joined())
-                            output.stateMessage.accept(stateMessage)
-                        }
                     })
                     .disposed(by: disposeBag)
             })

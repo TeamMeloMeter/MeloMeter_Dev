@@ -23,8 +23,11 @@ class MapVM {
     }
     
     struct Output {
+        var daySince = PublishRelay<String>()
         var myProfileImage = PublishRelay<UIImage?>()
         var otherProfileImage = PublishRelay<UIImage?>()
+        var myStateMessage =  PublishRelay<String?>()
+        var otherStateMessage =  PublishRelay<String?>()
         let authorizationAlertShouldShow = BehaviorRelay<Bool>(value: false)
         let currentLocation: BehaviorRelay<CLLocation> = BehaviorRelay(value: CLLocation(latitude: 37.541, longitude: 126.986))
         let currentOtherLocation: BehaviorRelay<CLLocation> = BehaviorRelay(value: CLLocation(latitude: 37.541, longitude: 126.986))
@@ -83,6 +86,9 @@ class MapVM {
             self.mainUseCase.getUserData()
             self.mainUseCase.userData
                 .bind(onNext: { userInfo in
+                    
+                    output.myStateMessage.accept(userInfo.stateMessage)
+
                     self.mainUseCase.getMyProfileImage(url: userInfo.profileImage ?? "")
                         .subscribe(onSuccess: { image in
                             output.myProfileImage.accept(image)
@@ -90,12 +96,26 @@ class MapVM {
                         .disposed(by: disposeBag)
                     
                     if let otherUid = userInfo.otherUid {
+                        self.mainUseCase.getOtherUserData(uid: otherUid)
+                        self.mainUseCase.otherUserData
+                            .bind(onNext: { otherUserModel in
+                                output.otherStateMessage.accept(otherUserModel.stateMessage ?? nil)
+                            })
+                            .disposed(by: disposeBag)
+                        
                         self.mainUseCase.getOtherProfileImage(otherUid: otherUid)
                             .subscribe(onSuccess: { image in
                                 output.otherProfileImage.accept(image)
                             })
                             .disposed(by: disposeBag)
                     }
+                    
+                    self.mainUseCase.getSinceFirstDay(coupleID: userInfo.coupleID ?? "")
+                        .subscribe(onSuccess: { date in
+                            output.daySince.accept("D+\(date)")
+                        })
+                        .disposed(by: disposeBag)
+                    
                 })
                 .disposed(by: disposeBag)
         }

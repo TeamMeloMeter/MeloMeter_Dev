@@ -20,6 +20,7 @@ struct UserDTO: Codable {
     // MARK: - Properties
     let uid: String
     let otherUid: String?
+    let coupleID: String?
     let phoneNumber: String
     let profileImagePath: String?
     let name: String
@@ -32,11 +33,12 @@ struct UserDTO: Codable {
         return UserModel(
             uid: uid,
             otherUid: otherUid,
+            coupleID: coupleID,
             phoneNumber: phoneNumber,
             profileImage: profileImagePath,
             name: name,
             birth: Date.fromStringOrNow(birth, .yearToDay),
-            stateMessage: stateMessage ?? "상태메세지를 변경해보세요!",
+            stateMessage: stateMessage,
             gender: gender == "남" ? .male : .female
         )
     }

@@ -55,6 +55,12 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else { return }
         
+        output.daySince
+            .bind(onNext: { text in
+                self.dDayButton.setTitle(text, for: .normal)
+            })
+            .disposed(by: disposeBag)
+        
         output.myProfileImage
             .asDriver(onErrorJustReturn: UIImage(named: "defaultProfileImage"))
             .drive(onNext: { image in
@@ -73,6 +79,32 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
                     self.changedMarkerIcon(isMine: false, profileImage: otherImage)
                 }else {
                     self.changedMarkerIcon(isMine: false, profileImage: UIImage(named: "defaultProfileImage")!)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        output.myStateMessage
+            .asDriver(onErrorJustReturn: nil)
+            .drive(onNext: { text in
+                if let message = text {
+                    self.myInfoWindowLabel.text = message
+                    self.infoWindow1.open(with: self.myMarker)
+                }else {
+                    self.myInfoWindowLabel.text = text
+                    self.infoWindow1.close()
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        output.otherStateMessage
+            .asDriver(onErrorJustReturn: nil)
+            .drive(onNext: { text in
+                if let message = text {
+                    self.otherInfoWindowLabel.text = message
+                    self.infoWindow2.open(with: self.otherMarker)
+                }else {
+                    self.otherInfoWindowLabel.text = text
+                    self.infoWindow2.close()
                 }
             })
             .disposed(by: disposeBag)
@@ -251,7 +283,6 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     
     let myInfoWindowLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 141, height: 43))
-        label.text = "오늘 기분 최고:)"
         label.textColor = .black
         label.textAlignment = .center
         label.font = FontManager.shared.regular(ofSize: 16)
@@ -295,7 +326,6 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     
     let otherInfoWindowLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 141, height: 43))
-        label.text = "오늘 기분 별로:("
         label.textColor = .black
         label.textAlignment = .center
         label.font = FontManager.shared.regular(ofSize: 16)
@@ -309,7 +339,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     
     let dDayButton: UIButton = {
         let button = UIButton()
-        button.setTitle("D-55", for: .normal)
+        button.setTitle("", for: .normal)
         button.setTitleColor(UIColor.gray1, for: .normal)
         button.titleLabel?.font = FontManager.shared.regular(ofSize: 18)
         button.backgroundColor = .white
