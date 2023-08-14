@@ -118,5 +118,21 @@ extension MyProfileCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
+    func showNoticeVC() {
+        let viewController = NoticeVC(viewModel: NoticeVM(coordinator: self))
+        
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showDetailNoticeVC() {
+        let viewController = DetailNoticeVC(viewModel: NoticeVM(coordinator: self))
+        
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
 }
 

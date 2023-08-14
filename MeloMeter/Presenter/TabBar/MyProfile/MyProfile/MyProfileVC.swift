@@ -8,12 +8,12 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import RxGesture
 
 class MyProfileVC: UIViewController {
     
     private let viewModel: MyProfileVM?
     let disposeBag = DisposeBag()
-    let tapDdayGesture = UITapGestureRecognizer()
     
     init(viewModel: MyProfileVM) {
         self.viewModel = viewModel
@@ -38,16 +38,18 @@ class MyProfileVC: UIViewController {
     
     // MARK: Binding
     func setBindings() {
-        self.dDayView.addGestureRecognizer(tapDdayGesture)
-        
+
         let input = MyProfileVM.Input(
             viewWillApearEvent: self.rx.methodInvoked(#selector(viewWillAppear(_:)))
                 .map({ _ in })
                 .asObservable(),
-            dDayViewTapEvent: tapDdayGesture.rx.event
+            editProfileBtnTapEvent: self.profileEditButton.rx.tap
                 .map({ _ in })
                 .asObservable(),
-            editProfileBtnTapEvent: self.profileEditButton.rx.tap
+            dDayViewTapEvent: self.dDayView.rx.tapGesture().when(.ended)
+                .map({ _ in })
+                .asObservable(),
+            noticeViewTapEvent: self.noticeStackView.rx.tapGesture().when(.ended)
                 .map({ _ in })
                 .asObservable()
         )
@@ -71,12 +73,14 @@ class MyProfileVC: UIViewController {
                 self?.nameLabel.text = name
             })
             .disposed(by: disposeBag)
+        
         output.userPhoneNumber
             .asDriver(onErrorJustReturn: "+82 010-????-????")
             .drive(onNext: { [weak self] number in
                 self?.phoneNumLabel.text = number
             })
             .disposed(by: disposeBag)
+        
         output.stateMessage
             .asDriver(onErrorJustReturn: "상태메세지를 변경해보세요!")
             .drive(onNext: { [weak self] message in

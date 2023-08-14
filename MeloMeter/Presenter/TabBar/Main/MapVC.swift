@@ -39,7 +39,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setMarker()
+        
     }
     
     // MARK: Binding
@@ -177,8 +177,8 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
 
     // MARK: Configure
     func configure() {
-        view.backgroundColor = .white
         [naverMapView, alarmButton, dDayButton, currentLocationButton].forEach { view.addSubview($0) }
+        setMarker()
     }
     
     // MARK: Event

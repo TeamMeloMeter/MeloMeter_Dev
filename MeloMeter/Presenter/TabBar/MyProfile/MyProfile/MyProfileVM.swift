@@ -17,8 +17,9 @@ class MyProfileVM {
 
     struct Input {
         let viewWillApearEvent: Observable<Void>
-        let dDayViewTapEvent: Observable<Void>
         let editProfileBtnTapEvent: Observable<Void>
+        let dDayViewTapEvent: Observable<Void>
+        let noticeViewTapEvent: Observable<Void>
     }
     
     struct Output {
@@ -71,6 +72,13 @@ class MyProfileVM {
             .subscribe(onNext: {[weak self] _ in
                 guard let self = self else{ return }
                 self.coordinator?.showEditProfileVC()
+            })
+            .disposed(by: disposeBag)
+        
+        input.noticeViewTapEvent
+            .subscribe(onNext: {[weak self] _ in
+                guard let self = self else{ return }
+                self.coordinator?.showNoticeVC()
             })
             .disposed(by: disposeBag)
         
