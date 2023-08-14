@@ -45,7 +45,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     // MARK: Binding
     func setBindings() {
         let input = MapVM.Input(
-            viewDidApearEvent: self.rx.methodInvoked(#selector(viewDidAppear(_:)))
+            viewWillApearEvent: self.rx.methodInvoked(#selector(viewWillAppear(_:)))
                 .map({ _ in })
                 .asObservable(),
             dDayBtnTapEvent: self.dDayButton.rx.tap.asObservable(),
@@ -54,6 +54,28 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         )
             
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else { return }
+        
+        output.myProfileImage
+            .asDriver(onErrorJustReturn: UIImage(named: "defaultProfileImage"))
+            .drive(onNext: { image in
+                if let myImage = image {
+                    self.changedMarkerIcon(isMine: true, profileImage: myImage)
+                }else {
+                    self.changedMarkerIcon(isMine: true, profileImage: UIImage(named: "defaultProfileImage")!)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        output.otherProfileImage
+            .asDriver(onErrorJustReturn: UIImage(named: "defaultProfileImage"))
+            .drive(onNext: { image in
+                if let otherImage = image {
+                    self.changedMarkerIcon(isMine: false, profileImage: otherImage)
+                }else {
+                    self.changedMarkerIcon(isMine: false, profileImage: UIImage(named: "defaultProfileImage")!)
+                }
+            })
+            .disposed(by: disposeBag)
         
         output.authorizationAlertShouldShow
             .asDriver(onErrorJustReturn: false)
@@ -129,13 +151,45 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     
     // MARK: Event
     
+    func changedMarkerIcon(isMine: Bool, profileImage: UIImage) {
+        let icon: UIImage = {
+            let image1 = UIImage(named: "myMarkerborder")
+            let image2 = UIImage(named: "myMarkerDot")
+            let imageSize = CGSize(width: 80, height: 107)
+            
+            UIGraphicsBeginImageContextWithOptions(imageSize, false, 0.0)
+            
+            image1?.draw(in: CGRect(x: 0, y: 0, width: 80, height: 90))
+            image2?.draw(in: CGRect(x: 31, y: 89, width: 18, height: 18))
+            
+            let size = CGSize(width: 66, height: 66)
+            let roundedProfileImage = UIGraphicsImageRenderer(size: size).image { _ in
+                UIBezierPath(roundedRect: CGRect(origin: .zero, size: size), cornerRadius: size.width / 2).addClip()
+                profileImage.draw(in: CGRect(origin: .zero, size: size))
+            }
+            roundedProfileImage.draw(in: CGRect(x: 7, y: 7, width: 66, height: 66))
+
+            let compositeImage = UIGraphicsGetImageFromCurrentImageContext()
+            
+            UIGraphicsEndImageContext()
+            
+            if let image = compositeImage {
+                return image
+            }
+            return UIImage(named: "myMarkerDot")!
+        }()
+        
+        if isMine {
+            myMarker.iconImage = NMFOverlayImage(image: icon)
+        }else {
+            otherMarker.iconImage = NMFOverlayImage(image: icon)
+        }
+    }
     
     // MARK: navigationBar
     func setUpBarButton() {
-        //스와이프 뒤로가기
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
-        //타이틀 속성 조정 - 폰트, 배경
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: FontManager.shared.medium(ofSize: 18)]
@@ -172,28 +226,27 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         return marker
     }()
     
+    
     let myMarkerIcon: UIImage = {
         let image1 = UIImage(named: "myMarkerborder")
         let image2 = UIImage(named: "myMarkerDot")
-        let image3 = UIImage(named: "profileTest")
-        
+
         let imageSize = CGSize(width: 80, height: 107)
-        
+
         UIGraphicsBeginImageContextWithOptions(imageSize, false, 0.0)
-        
+
         image1?.draw(in: CGRect(x: 0, y: 0, width: 80, height: 90))
         image2?.draw(in: CGRect(x: 31, y: 89, width: 18, height: 18))
-        image3?.draw(in: CGRect(x: 7, y: 7, width: 66, height: 66))
-        
+
         let compositeImage = UIGraphicsGetImageFromCurrentImageContext()
-        
+
         UIGraphicsEndImageContext()
-        
+
         if let image = compositeImage {
             return image
         }
         return UIImage(named: "myMarkerDot")!
-    
+
     }()
     
     let myInfoWindowLabel: UILabel = {
@@ -221,7 +274,6 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     let otherMarkerIcon: UIImage = {
         let image1 = UIImage(named: "otherMarkerborder")
         let image2 = UIImage(named: "otherMarkerDot")
-        let image3 = UIImage(named: "profileTest")
         
         let imageSize = CGSize(width: 80, height: 107)
         
@@ -229,7 +281,6 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         
         image1?.draw(in: CGRect(x: 0, y: 0, width: 80, height: 90))
         image2?.draw(in: CGRect(x: 31, y: 89, width: 18, height: 18))
-        image3?.draw(in: CGRect(x: 7, y: 7, width: 66, height: 66))
         
         let compositeImage = UIGraphicsGetImageFromCurrentImageContext()
         

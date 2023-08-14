@@ -179,6 +179,10 @@ extension DefaultFirebaseService {
     
     public func downloadImage(urlString: String) -> Single<UIImage?> {
         return Single.create { single in
+            guard !urlString.isEmpty else {
+                single(.success(nil))
+                return Disposables.create()
+            }
             let cachedKey = NSString(string: urlString)
             
             if let cachedImage = ImageCacheManager.shared.object(forKey: cachedKey) {

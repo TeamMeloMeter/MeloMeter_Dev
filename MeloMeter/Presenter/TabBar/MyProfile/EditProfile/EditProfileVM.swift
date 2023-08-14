@@ -60,7 +60,7 @@ class EditProfileVM {
             .bind(onNext: { userData in
                 self.editProfileUseCase.getProfileImage(url: userData.profileImage ?? "")
                     .subscribe(onSuccess: { image in
-                        output.profileImage.onNext(image ?? UIImage(named: "myProfileImage")!)
+                        output.profileImage.onNext(image)
                     })
                     .disposed(by: disposeBag)
                 detailData.userName = userData.name ?? ""

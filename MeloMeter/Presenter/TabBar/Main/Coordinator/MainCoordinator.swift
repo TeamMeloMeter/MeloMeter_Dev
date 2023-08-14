@@ -28,9 +28,7 @@ extension MainCoordinator {
     func showMapVC() {
         let viewController = MapVC(viewModel: MapVM(
             coordinator: self,
-            mainUseCase: MainUseCase(
-                locationService: DefaultLocationService()
-                )
+            mainUseCase: MainUseCase(locationService: DefaultLocationService())
             )
         )
         

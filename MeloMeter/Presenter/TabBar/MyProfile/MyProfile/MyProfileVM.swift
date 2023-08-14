@@ -22,6 +22,7 @@ class MyProfileVM {
     }
     
     struct Output {
+        var profileImage = PublishRelay<UIImage?>()
         var userName = PublishRelay<String>()
         var userPhoneNumber = PublishRelay<String>()
         var stateMessage = PublishRelay<String>()
@@ -40,6 +41,12 @@ class MyProfileVM {
                 guard let self = self else{ return }
                 self.myProfileUseCase.getUserInfo()
                     .subscribe(onNext: { user in
+                        self.myProfileUseCase.getProfileImage(url: user.profileImage ?? "")
+                            .subscribe(onSuccess: { image in
+                                output.profileImage.accept(image)
+                            })
+                            .disposed(by: disposeBag)
+                        
                         if let name = user.name, let phoneNumber = user.phoneNumber, let stateMessage = user.stateMessage {
                             output.userName.accept(name)
                             var number = phoneNumber.map{ String($0) }

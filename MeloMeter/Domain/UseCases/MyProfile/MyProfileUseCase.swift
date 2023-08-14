@@ -29,4 +29,8 @@ class MyProfileUseCase {
             .map{ $0.toModel() }
     }
     
+    func getProfileImage(url: String) -> Single<UIImage?> {
+        return self.userRepository.downloadImage(url: url)
+    }
+    
 }

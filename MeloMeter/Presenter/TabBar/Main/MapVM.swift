@@ -17,12 +17,14 @@ class MapVM {
     private var mainUseCase: MainUseCase
 
     struct Input {
-        let viewDidApearEvent: Observable<Void>
+        let viewWillApearEvent: Observable<Void>
         let dDayBtnTapEvent: Observable<Void>
         let alarmBtnTapEvent: Observable<Void>
     }
     
     struct Output {
+        var myProfileImage = PublishRelay<UIImage?>()
+        var otherProfileImage = PublishRelay<UIImage?>()
         let authorizationAlertShouldShow = BehaviorRelay<Bool>(value: false)
         let currentLocation: BehaviorRelay<CLLocation> = BehaviorRelay(value: CLLocation(latitude: 37.541, longitude: 126.986))
         let currentOtherLocation: BehaviorRelay<CLLocation> = BehaviorRelay(value: CLLocation(latitude: 37.541, longitude: 126.986))
@@ -37,8 +39,9 @@ class MapVM {
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output()
         
-        input.viewDidApearEvent
+        input.viewWillApearEvent
             .subscribe(onNext: { [weak self] _ in
+                setInfo()
                 self?.mainUseCase.checkAuthorization()
                 self?.mainUseCase.requestLocation()
                 self?.mainUseCase.requestOtherLocation()
@@ -76,7 +79,29 @@ class MapVM {
             .bind(to: output.currentOtherLocation)
             .disposed(by: disposeBag)
         
+        func setInfo() {
+            self.mainUseCase.getUserData()
+            self.mainUseCase.userData
+                .bind(onNext: { userInfo in
+                    self.mainUseCase.getMyProfileImage(url: userInfo.profileImage ?? "")
+                        .subscribe(onSuccess: { image in
+                            output.myProfileImage.accept(image)
+                        })
+                        .disposed(by: disposeBag)
+                    
+                    if let otherUid = userInfo.otherUid {
+                        self.mainUseCase.getOtherProfileImage(otherUid: otherUid)
+                            .subscribe(onSuccess: { image in
+                                output.otherProfileImage.accept(image)
+                            })
+                            .disposed(by: disposeBag)
+                    }
+                })
+                .disposed(by: disposeBag)
+        }
+        
         return output
     }
+    
     
 }

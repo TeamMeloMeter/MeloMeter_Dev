@@ -19,6 +19,7 @@ struct UserDTO: Codable {
     
     // MARK: - Properties
     let uid: String
+    let otherUid: String?
     let phoneNumber: String
     let profileImagePath: String?
     let name: String
@@ -30,6 +31,7 @@ struct UserDTO: Codable {
     func toModel() -> UserModel {
         return UserModel(
             uid: uid,
+            otherUid: otherUid,
             phoneNumber: phoneNumber,
             profileImage: profileImagePath,
             name: name,

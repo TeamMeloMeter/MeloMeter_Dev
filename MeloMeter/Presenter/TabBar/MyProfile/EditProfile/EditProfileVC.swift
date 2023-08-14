@@ -46,7 +46,7 @@ class EditProfileVC: UIViewController {
                         case .get:
                             self.showAlbum()
                         case .delete:
-                            self.profileImageView.image = UIImage(named: "myProfileImage")
+                            self.profileImageView.image = UIImage(named: "defaultProfileImage")
                         case .cancel:
                             break
                         }
@@ -90,7 +90,7 @@ class EditProfileVC: UIViewController {
                 if let profileImage = image {
                     self.profileImageView.image = profileImage
                 }else {
-                    self.profileImageView.image = UIImage(named: "myProfileImage")
+                    self.profileImageView.image = UIImage(named: "defaultProfileImage")
                     self.imageUploadErrorAlert()
                 }
             })
@@ -183,7 +183,6 @@ class EditProfileVC: UIViewController {
     // MARK: UI
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "myProfileImage")
         imageView.contentMode = .scaleAspectFit
         imageView.layer.borderColor = UIColor.clear.cgColor
         imageView.clipsToBounds = true

@@ -54,6 +54,17 @@ class MyProfileVC: UIViewController {
             
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else { return }
         
+        output.profileImage
+            .asDriver(onErrorJustReturn: UIImage(named: "defaultProfileImage"))
+            .drive(onNext: { image in
+                if let profileImage = image {
+                    self.profileImageView.image = profileImage
+                }else {
+                    self.profileImageView.image = UIImage(named: "defaultProfileImage")
+                }
+            })
+            .disposed(by: disposeBag)
+        
         output.userName
             .asDriver(onErrorJustReturn: "이름")
             .drive(onNext: { [weak self] name in
@@ -132,10 +143,8 @@ class MyProfileVC: UIViewController {
     //프로필사진
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "profileTest")
         imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = imageView.frame.height/2
-        imageView.layer.borderWidth = 1
+        imageView.layer.cornerRadius = 45
         imageView.clipsToBounds = true
         imageView.layer.borderColor = UIColor.clear.cgColor
         return imageView
@@ -480,13 +489,10 @@ class MyProfileVC: UIViewController {
     private func profileImageViewConstraints() {
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            profileImageView.leadingAnchor.constraint(equalTo: topView.leadingAnchor, constant: 265),
             profileImageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
             profileImageView.topAnchor.constraint(equalTo: topView.topAnchor, constant: 43),
-            profileImageView.bottomAnchor.constraint(equalTo: topView.bottomAnchor, constant: -310),
             profileImageView.widthAnchor.constraint(equalToConstant: 90),
             profileImageView.heightAnchor.constraint(equalToConstant: 90)
-            
             
         ])
     }

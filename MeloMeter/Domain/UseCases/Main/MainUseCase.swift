@@ -19,15 +19,20 @@ class MainUseCase {
     var authorizationStatus = BehaviorSubject<LocationAuthorizationStatus?>(value: nil)
     private let locationService: LocationService
     private let firebaseService: DefaultFirebaseService
+    private let userRepository: UserRepository
+    
     var updatedLocation: PublishRelay<CLLocation>
     var updatedOtherLocation: PublishRelay<CLLocation?>
+    var userData: PublishRelay<UserModel>
     var disposeBag: DisposeBag
     
     required init(locationService: LocationService) {
         self.locationService = locationService
         self.firebaseService = DefaultFirebaseService()
+        self.userRepository = UserRepository(firebaseService: self.firebaseService)
         self.updatedLocation = PublishRelay()
         self.updatedOtherLocation = PublishRelay()
+        self.userData = PublishRelay()
         self.disposeBag = DisposeBag()
     }
     
@@ -85,4 +90,30 @@ class MainUseCase {
         }
     }
     
+}
+
+extension MainUseCase {
+    func getUserData() {
+        guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return }
+        self.userRepository.getUserInfo(uid)
+            .map{ $0.toModel() }
+            .bind(to: self.userData)
+            .disposed(by: disposeBag)
+    }
+    
+    func getMyProfileImage(url: String) -> Single<UIImage?> {
+        return self.userRepository.downloadImage(url: url)
+    }
+    
+    func getOtherProfileImage(otherUid: String) -> Single<UIImage?> {
+        return self.userRepository.getUserInfo(otherUid)
+            .asSingle()
+            .flatMap{ otherUser in
+                if let url = otherUser.profileImagePath {
+                    return self.userRepository.downloadImage(url: url)
+                }else {
+                    return Single.just(nil)
+                }
+            }
+    }
 }
