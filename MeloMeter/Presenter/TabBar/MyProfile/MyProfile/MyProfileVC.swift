@@ -8,12 +8,12 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import RxGesture
 
 class MyProfileVC: UIViewController {
     
     private let viewModel: MyProfileVM?
     let disposeBag = DisposeBag()
-    let tapDdayGesture = UITapGestureRecognizer()
     
     init(viewModel: MyProfileVM) {
         self.viewModel = viewModel
@@ -38,21 +38,34 @@ class MyProfileVC: UIViewController {
     
     // MARK: Binding
     func setBindings() {
-        self.dDayView.addGestureRecognizer(tapDdayGesture)
-        
+
         let input = MyProfileVM.Input(
             viewWillApearEvent: self.rx.methodInvoked(#selector(viewWillAppear(_:)))
                 .map({ _ in })
                 .asObservable(),
-            dDayViewTapEvent: tapDdayGesture.rx.event
+            editProfileBtnTapEvent: self.profileEditButton.rx.tap
                 .map({ _ in })
                 .asObservable(),
-            editProfileBtnTapEvent: self.profileEditButton.rx.tap
+            dDayViewTapEvent: self.dDayView.rx.tapGesture().when(.ended)
+                .map({ _ in })
+                .asObservable(),
+            noticeViewTapEvent: self.noticeStackView.rx.tapGesture().when(.ended)
                 .map({ _ in })
                 .asObservable()
         )
             
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else { return }
+        
+        output.profileImage
+            .asDriver(onErrorJustReturn: UIImage(named: "defaultProfileImage"))
+            .drive(onNext: { image in
+                if let profileImage = image {
+                    self.profileImageView.image = profileImage
+                }else {
+                    self.profileImageView.image = UIImage(named: "defaultProfileImage")
+                }
+            })
+            .disposed(by: disposeBag)
         
         output.userName
             .asDriver(onErrorJustReturn: "이름")
@@ -60,16 +73,24 @@ class MyProfileVC: UIViewController {
                 self?.nameLabel.text = name
             })
             .disposed(by: disposeBag)
+        
         output.userPhoneNumber
             .asDriver(onErrorJustReturn: "+82 010-????-????")
             .drive(onNext: { [weak self] number in
                 self?.phoneNumLabel.text = number
             })
             .disposed(by: disposeBag)
+        
         output.stateMessage
             .asDriver(onErrorJustReturn: "상태메세지를 변경해보세요!")
             .drive(onNext: { [weak self] message in
-                self?.stateMessageLabel.text = message
+                if let text = message {
+                    self?.stateMessageLabel.textColor = .gray1
+                    self?.stateMessageLabel.text = message
+                }else {
+                    self?.stateMessageLabel.textColor = .gray2
+                    self?.stateMessageLabel.text = "상태메세지를 변경해보세요!"
+                }
             })
             .disposed(by: disposeBag)
         
@@ -132,10 +153,8 @@ class MyProfileVC: UIViewController {
     //프로필사진
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "profileTest")
         imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = imageView.frame.height/2
-        imageView.layer.borderWidth = 1
+        imageView.layer.cornerRadius = 45
         imageView.clipsToBounds = true
         imageView.layer.borderColor = UIColor.clear.cgColor
         return imageView
@@ -480,13 +499,10 @@ class MyProfileVC: UIViewController {
     private func profileImageViewConstraints() {
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            profileImageView.leadingAnchor.constraint(equalTo: topView.leadingAnchor, constant: 265),
             profileImageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
             profileImageView.topAnchor.constraint(equalTo: topView.topAnchor, constant: 43),
-            profileImageView.bottomAnchor.constraint(equalTo: topView.bottomAnchor, constant: -310),
             profileImageView.widthAnchor.constraint(equalToConstant: 90),
             profileImageView.heightAnchor.constraint(equalToConstant: 90)
-            
             
         ])
     }

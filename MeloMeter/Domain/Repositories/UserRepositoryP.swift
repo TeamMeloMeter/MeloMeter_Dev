@@ -11,7 +11,7 @@ import RxSwift
 protocol UserRepositoryP {
     func getUserInfo(_ uid: String) -> Observable<UserDTO>
     func updateUserInfo(value: [String: String]) -> Single<Void>
-    func updateProfileImage(image: UIImage) -> Single<UIImage?>
+    func updateProfileImage(image: UIImage) -> Single<Void>
     func downloadImage(url: String) -> Single<UIImage?>
     func userAccessLevelObserver()
 }

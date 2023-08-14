@@ -168,6 +168,8 @@ extension DefaultFirebaseService {
                         single(.failure(FireStoreError.unknown))
                         return
                     }
+                    let cachedKey = NSString(string: url.absoluteString)
+                    ImageCacheManager.shared.setObject(UIImage(data: imageData)!, forKey: cachedKey)
                     single(.success(url.absoluteString))
                 }
             }
@@ -177,6 +179,17 @@ extension DefaultFirebaseService {
     
     public func downloadImage(urlString: String) -> Single<UIImage?> {
         return Single.create { single in
+            guard !urlString.isEmpty else {
+                single(.success(nil))
+                return Disposables.create()
+            }
+            let cachedKey = NSString(string: urlString)
+            
+            if let cachedImage = ImageCacheManager.shared.object(forKey: cachedKey) {
+                single(.success(cachedImage))
+                return Disposables.create()
+            }
+            
             let storageReference = Storage.storage().reference(forURL: urlString)
             let megaByte = Int64(1 * 1024 * 1024)
             
@@ -185,6 +198,7 @@ extension DefaultFirebaseService {
                     single(.success(nil))
                     return
                 }
+                ImageCacheManager.shared.setObject(UIImage(data: imageData)!, forKey: cachedKey)
                 single(.success(UIImage(data: imageData)))
             }
             return Disposables.create()

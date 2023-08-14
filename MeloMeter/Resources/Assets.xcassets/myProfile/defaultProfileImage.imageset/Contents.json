@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Rectangle 1175.png",
+      "filename" : "ProfileImage.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Rectangle 1173.png",
+      "filename" : "ProfileImage 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Rectangle 1174.png",
+      "filename" : "ProfileImage 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

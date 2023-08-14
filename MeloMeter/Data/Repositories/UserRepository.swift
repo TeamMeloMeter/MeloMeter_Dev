@@ -50,14 +50,11 @@ class UserRepository: UserRepositoryP {
         
     }
     
-    func updateProfileImage(image: UIImage) -> Single<UIImage?> {
-        guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return Single.just(UIImage(named: "myProfileImage")) }
+    func updateProfileImage(image: UIImage) -> Single<Void> {
+        guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return Single.just(()) }
         return self.firebaseService.uploadImage(image: image)
             .flatMap{ url in
                 return self.firebaseService.updateDocument(collection: .Users, document: uid, values: ["profileImagePath": url] as? [String: Any] ?? [:])
-                    .flatMap{ _ in
-                        return self.firebaseService.downloadImage(urlString: url)
-                    }
             }
     }
     

@@ -11,10 +11,9 @@ import RxRelay
 // MARK: - LoginViewModel
 class LogInVM {
     
-    var userInfoModel = UserInfoModel()
     private let logInUseCase: LogInUseCase
     let disposeBag = DisposeBag()
-    private var timerSubscription: Disposable? // 타이머 해제할 Disposable
+    private var timerSubscription: Disposable?
     weak var coordinator: LogInCoordinator?
     var phoneNumber: String?
     
