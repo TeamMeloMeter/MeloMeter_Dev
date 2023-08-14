@@ -134,5 +134,21 @@ extension MyProfileCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
+    func showQnAVC() {
+        let viewController = QnAVC(viewModel: QnAVM(coordinator: self))
+        
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showDetailQnAVC(title: String, contents: String) {
+        let viewController = DetailQnAVC(viewModel: QnAVM(coordinator: self), title: title, contents: contents)
+        
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
 }
 

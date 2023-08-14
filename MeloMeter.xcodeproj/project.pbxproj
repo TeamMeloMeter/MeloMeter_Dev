@@ -43,6 +43,7 @@
 		521D42122A8A106700E5CCDA /* DdayCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D42112A8A106700E5CCDA /* DdayCoordinator.swift */; };
 		521D42152A8A6E7300E5CCDA /* NoticeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D42142A8A6E7300E5CCDA /* NoticeVM.swift */; };
 		521D42172A8A839D00E5CCDA /* DetailNoticeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D42162A8A839D00E5CCDA /* DetailNoticeVC.swift */; };
+		521D42192A8A99B700E5CCDA /* QnAVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D42182A8A99B700E5CCDA /* QnAVM.swift */; };
 		5230B2652A72859200781623 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25C2A72859100781623 /* Pretendard-Light.otf */; };
 		5230B2662A72859200781623 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25D2A72859100781623 /* Pretendard-Medium.otf */; };
 		5230B2672A72859200781623 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B25E2A72859100781623 /* Pretendard-Thin.otf */; };
@@ -117,12 +118,10 @@
 		52F00FF62A0930FF0014FC01 /* AddDdayModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FF52A0930FF0014FC01 /* AddDdayModal.swift */; };
 		52F00FFA2A0938480014FC01 /* NoticeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FF92A0938480014FC01 /* NoticeVC.swift */; };
 		52F00FFC2A093A410014FC01 /* NoticeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FFB2A093A410014FC01 /* NoticeTableViewCell.swift */; };
-		52F00FFE2A094B450014FC01 /* QnAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FFD2A094B450014FC01 /* QnAView.swift */; };
-		52F010002A094B550014FC01 /* QnAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FFF2A094B550014FC01 /* QnAViewController.swift */; };
+		52F010002A094B550014FC01 /* QnAVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FFF2A094B550014FC01 /* QnAVC.swift */; };
 		52F010082A097D120014FC01 /* AlarmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010072A097D120014FC01 /* AlarmTableViewCell.swift */; };
 		52F0100B2A0A493C0014FC01 /* QnATableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0100A2A0A493C0014FC01 /* QnATableViewCell.swift */; };
-		52F0100D2A0A4FD20014FC01 /* AnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0100C2A0A4FD20014FC01 /* AnswerView.swift */; };
-		52F0100F2A0A55470014FC01 /* AnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0100E2A0A55470014FC01 /* AnswerViewController.swift */; };
+		52F0100F2A0A55470014FC01 /* DetailQnAVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0100E2A0A55470014FC01 /* DetailQnAVC.swift */; };
 		52F010142A0AAD380014FC01 /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010132A0AAD380014FC01 /* EditProfileVC.swift */; };
 		52F0101E2A0ACE190014FC01 /* EditNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F0101D2A0ACE190014FC01 /* EditNameVC.swift */; };
 		52F010222A0ADD500014FC01 /* EditStateMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F010212A0ADD500014FC01 /* EditStateMessageVC.swift */; };
@@ -177,6 +176,7 @@
 		521D42112A8A106700E5CCDA /* DdayCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayCoordinator.swift; sourceTree = "<group>"; };
 		521D42142A8A6E7300E5CCDA /* NoticeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeVM.swift; sourceTree = "<group>"; };
 		521D42162A8A839D00E5CCDA /* DetailNoticeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailNoticeVC.swift; sourceTree = "<group>"; };
+		521D42182A8A99B700E5CCDA /* QnAVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QnAVM.swift; sourceTree = "<group>"; };
 		5230B25C2A72859100781623 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		5230B25D2A72859100781623 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		5230B25E2A72859100781623 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
@@ -244,12 +244,10 @@
 		52F00FF52A0930FF0014FC01 /* AddDdayModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDdayModal.swift; sourceTree = "<group>"; };
 		52F00FF92A0938480014FC01 /* NoticeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeVC.swift; sourceTree = "<group>"; };
 		52F00FFB2A093A410014FC01 /* NoticeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeTableViewCell.swift; sourceTree = "<group>"; };
-		52F00FFD2A094B450014FC01 /* QnAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QnAView.swift; sourceTree = "<group>"; };
-		52F00FFF2A094B550014FC01 /* QnAViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QnAViewController.swift; sourceTree = "<group>"; };
+		52F00FFF2A094B550014FC01 /* QnAVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QnAVC.swift; sourceTree = "<group>"; };
 		52F010072A097D120014FC01 /* AlarmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmTableViewCell.swift; sourceTree = "<group>"; };
 		52F0100A2A0A493C0014FC01 /* QnATableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QnATableViewCell.swift; sourceTree = "<group>"; };
-		52F0100C2A0A4FD20014FC01 /* AnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerView.swift; sourceTree = "<group>"; };
-		52F0100E2A0A55470014FC01 /* AnswerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerViewController.swift; sourceTree = "<group>"; };
+		52F0100E2A0A55470014FC01 /* DetailQnAVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailQnAVC.swift; sourceTree = "<group>"; };
 		52F010132A0AAD380014FC01 /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
 		52F0101D2A0ACE190014FC01 /* EditNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameVC.swift; sourceTree = "<group>"; };
 		52F010212A0ADD500014FC01 /* EditStateMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStateMessageVC.swift; sourceTree = "<group>"; };
@@ -834,11 +832,10 @@
 		52F010092A0A49150014FC01 /* QnA */ = {
 			isa = PBXGroup;
 			children = (
-				52F00FFD2A094B450014FC01 /* QnAView.swift */,
+				521D42182A8A99B700E5CCDA /* QnAVM.swift */,
 				52F0100A2A0A493C0014FC01 /* QnATableViewCell.swift */,
-				52F00FFF2A094B550014FC01 /* QnAViewController.swift */,
-				52F0100C2A0A4FD20014FC01 /* AnswerView.swift */,
-				52F0100E2A0A55470014FC01 /* AnswerViewController.swift */,
+				52F00FFF2A094B550014FC01 /* QnAVC.swift */,
+				52F0100E2A0A55470014FC01 /* DetailQnAVC.swift */,
 			);
 			path = QnA;
 			sourceTree = "<group>";
@@ -1101,11 +1098,10 @@
 				5230B2802A7C20D400781623 /* BackgroundTaskManager.swift in Sources */,
 				5230B2842A7D029200781623 /* MyProfileUseCase.swift in Sources */,
 				2185C4DB2A83F13B00F99795 /* MockSocket.swift in Sources */,
-				52F0100D2A0A4FD20014FC01 /* AnswerView.swift in Sources */,
 				2108F0432A6EC292002EED7A /* ProfileInsertRepository.swift in Sources */,
 				52F010222A0ADD500014FC01 /* EditStateMessageVC.swift in Sources */,
 				521D41F42A814FFA00E5CCDA /* PresetCoordinator.swift in Sources */,
-				52F010002A094B550014FC01 /* QnAViewController.swift in Sources */,
+				52F010002A094B550014FC01 /* QnAVC.swift in Sources */,
 				2185C4D12A83F13B00F99795 /* SettingUserDefaults.swift in Sources */,
 				52F2083A29FBB31D0043BCA4 /* MyProfileVC.swift in Sources */,
 				52F305322A168D6000112A04 /* DisconnectView.swift in Sources */,
@@ -1117,7 +1113,7 @@
 				5271D4112A5580F200FC7606 /* Permission2VC.swift in Sources */,
 				52F305342A16B7AE00112A04 /* RecoveryView.swift in Sources */,
 				5271D41C2A58435A00FC7606 /* DefaultFirebaseService.swift in Sources */,
-				52F0100F2A0A55470014FC01 /* AnswerViewController.swift in Sources */,
+				52F0100F2A0A55470014FC01 /* DetailQnAVC.swift in Sources */,
 				5271D41F2A5887E500FC7606 /* LogInRepository.swift in Sources */,
 				5271D42A2A5FD02900FC7606 /* AlertManager.swift in Sources */,
 				52CE6EA12A01875C00E43D39 /* AlarmViewController.swift in Sources */,
@@ -1168,7 +1164,6 @@
 				52F010242A0B77ED0014FC01 /* EditBirthVC.swift in Sources */,
 				52F305382A16BF2A00112A04 /* WithdrawalView.swift in Sources */,
 				5270EC102A460354007FF444 /* AuthNumVC.swift in Sources */,
-				52F00FFE2A094B450014FC01 /* QnAView.swift in Sources */,
 				5271D4062A51DBDD00FC7606 /* ProfileInsertVC.swift in Sources */,
 				5271D4302A605B0900FC7606 /* Encodable+.swift in Sources */,
 				5270EC0C2A44614A007FF444 /* PhoneCertifiedVC.swift in Sources */,
@@ -1180,6 +1175,7 @@
 				521D41E52A7FFAD200E5CCDA /* DdayVM.swift in Sources */,
 				521D41EE2A801D5700E5CCDA /* CoupleDTO.swift in Sources */,
 				52697B7529EEB7B2002BDD04 /* SceneDelegate.swift in Sources */,
+				521D42192A8A99B700E5CCDA /* QnAVM.swift in Sources */,
 				52F0101E2A0ACE190014FC01 /* EditNameVC.swift in Sources */,
 				5271D4152A55C9DD00FC7606 /* LogInModel.swift in Sources */,
 				52F2084029FBFF280043BCA4 /* DdayVC.swift in Sources */,

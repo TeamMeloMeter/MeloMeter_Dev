@@ -51,6 +51,9 @@ class MyProfileVC: UIViewController {
                 .asObservable(),
             noticeViewTapEvent: self.noticeStackView.rx.tapGesture().when(.ended)
                 .map({ _ in })
+                .asObservable(),
+            qnAViewTapEvent: self.qnAStackView.rx.tapGesture().when(.ended)
+                .map({ _ in })
                 .asObservable()
         )
             
