@@ -139,10 +139,10 @@ public extension DefaultFirebaseService {
         }
     }
     
-    func setAccessLevel(_ level: String) -> Single<Void> {
+    func setAccessLevel(_ level: AccessLevel) -> Single<Void> {
         return self.getCurrentUser()
             .flatMap({ user -> Single<Void> in
-                return self.updateDocument(collection: .Users, document: user.uid, values: ["accessLevel": level])
+                return self.updateDocument(collection: .Users, document: user.uid, values: ["accessLevel": level.toString])
             })
     }
     

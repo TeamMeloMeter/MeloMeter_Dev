@@ -12,7 +12,6 @@ final class LogInCoordinator: Coordinator {
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
     var isLogin: Bool = false
-    
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
         self.childCoordinators = []
@@ -83,5 +82,15 @@ extension LogInCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
+    func finish() {
+        self.delegate?.didFinish(childCoordinator: self)
+    }
+    
+}
 
+extension LogInCoordinator: CoordinatorDelegate {
+    func didFinish(childCoordinator: Coordinator) {
+        self.childCoordinators.removeAll()
+        self.delegate?.didFinish(childCoordinator: self)
+    }
 }

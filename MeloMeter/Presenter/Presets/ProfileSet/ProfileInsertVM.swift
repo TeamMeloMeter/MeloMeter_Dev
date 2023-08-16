@@ -31,7 +31,7 @@ class ProfileInsertVM {
             guard let self = self else{ return }
             self.profileInsertUseCase.insertUserInfoService(userInfo: info)
                 .subscribe(onSuccess: {
-                    coordinator.showPermissionVC1()
+                    self.coordinator?.showPermissionVC1()
                 }, onFailure: { error in
                     self.sendProfileInsertRequest.onNext(false)
                 }).disposed(by: disposeBag)
@@ -44,11 +44,8 @@ class ProfileInsertVM {
             guard let firstDay = info[2] else { single(.success(false)); return Disposables.create()}
             
             if Date.stringToDate(dateString: birth, type: .yearToDayHipen) == nil || Date.stringToDate(dateString: firstDay, type: .yearToDayHipen) == nil {
-                //실패
-                //싱글 객채의 success에 true를 담는다!
                 single(.success(false))
             } else{
-                //성공
                 single(.success(true))
             }
             return Disposables.create()

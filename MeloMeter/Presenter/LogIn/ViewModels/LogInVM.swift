@@ -44,7 +44,7 @@ class LogInVM {
             self.phoneNumber = text
             self.logInUseCase.sendNumberService(text: text)
                 .subscribe(onSuccess: {
-                    coordinator.showAuthNumVC(phoneNumber: text)
+                    self.coordinator?.showAuthNumVC(phoneNumber: text)
                 }, onFailure: { error in
                     self.sendNumRequest.onNext(false)
                 }).disposed(by: disposeBag)
@@ -55,10 +55,14 @@ class LogInVM {
             guard let self = self else{ return }
             self.logInUseCase.inputVerificationCodeService(code: text)
                 .subscribe(onSuccess: { inviteCode in
-                    if let otherInviteCode = UserDefaults.standard.string(forKey: "otherInviteCode") {
-                        coordinator.showCoupleComvineVC(inviteCode: inviteCode, otherInviteCode: otherInviteCode)
+                    if let code = inviteCode {
+                        if let otherInviteCode = UserDefaults.standard.string(forKey: "otherInviteCode") {
+                            self.coordinator?.showCoupleComvineVC(inviteCode: code, otherInviteCode: otherInviteCode)
+                        }else {
+                            self.coordinator?.showCoupleComvineVC(inviteCode: code)
+                        }
                     }else {
-                        coordinator.showCoupleComvineVC(inviteCode: inviteCode)
+                        self.coordinator?.finish()
                     }
                     
                 }, onFailure: { error in
@@ -69,21 +73,27 @@ class LogInVM {
         //인증번호 재발급
         resendBtnTapped.subscribe(onNext: {
             self.logInUseCase.sendNumberService(text: self.phoneNumber)
-                .subscribe(onSuccess: {
-                    self.stopTimer()
-                    self.verificationCodeTimer()
-                }, onFailure: { error in
-                    self.sendNumRequest.onNext(false)
+                .subscribe(onSuccess: {[weak self] _ in
+                    self?.stopTimer()
+                    self?.verificationCodeTimer()
+                }, onFailure: {[weak self] error in
+                    self?.sendNumRequest.onNext(false)
                 }).disposed(by: self.disposeBag)
         }).disposed(by: self.disposeBag)
         
         coupleCombineViewDidLoadEvent
-            .subscribe(onNext: {
+            .subscribe(onNext: {[weak self] _ in
+                guard let self = self else{ return }
                 self.logInUseCase.combineCheckObserver()
                 self.logInUseCase.isCombined
-                    .subscribe(onNext: { isCombined in
+                    .subscribe(onNext: {[weak self] isCombined in
+                        guard let self = self else{ return }
                         if isCombined {
-                            coordinator.finish()
+                            self.logInUseCase.uploadDefaultProfileImage()
+                                .subscribe(onSuccess: {
+                                    self.coordinator?.finish()
+                                })
+                                .disposed(by: self.disposeBag)
                         }
                     })
                     .disposed(by: self.disposeBag)
@@ -95,15 +105,15 @@ class LogInVM {
             guard let self = self else{ return }
             self.logInUseCase.combineCoupleService(text)
                 .subscribe(onSuccess: {
-                    coordinator.finish()
+                    self.coordinator?.finish()
                 }, onFailure: { error in
                     self.combineRequest.onNext(false)
                 }).disposed(by: disposeBag)
         }).disposed(by: disposeBag)
         
         //인증번호 시간초과 alert 버튼 이벤트
-        alertBtnTapped.subscribe(onNext: {
-            coordinator.popViewController()
+        alertBtnTapped.subscribe(onNext: {[weak self] _ in
+            self?.coordinator?.popViewController()
         }).disposed(by: disposeBag)
     }
     

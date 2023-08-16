@@ -27,6 +27,7 @@ struct UserDTO: Codable {
     let birth: String
     let stateMessage: String?
     let gender: String?
+    let createdAt: String?
     
     // MARK: - Methods
     func toModel() -> UserModel {
@@ -39,7 +40,8 @@ struct UserDTO: Codable {
             name: name,
             birth: Date.fromStringOrNow(birth, .yearToDay),
             stateMessage: stateMessage,
-            gender: gender == "남" ? .male : .female
+            gender: gender == "남" ? .male : .female,
+            createdAt: Date.fromStringOrNow(createdAt ?? "", .timeStamp)
         )
     }
 }

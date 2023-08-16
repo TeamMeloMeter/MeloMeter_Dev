@@ -150,5 +150,17 @@ extension MyProfileCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
+    func finish() {
+        self.delegate?.didFinish(childCoordinator: self)
+    }
+    
 }
 
+extension MyProfileCoordinator: CoordinatorDelegate {
+    
+    func didFinish(childCoordinator: Coordinator) {
+        self.childCoordinators = []
+        childCoordinator.navigationController.popToRootViewController(animated: true)
+    }
+    
+}

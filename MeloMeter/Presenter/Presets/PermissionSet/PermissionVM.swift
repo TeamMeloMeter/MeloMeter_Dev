@@ -32,8 +32,8 @@ class PermissionVM {
     
     func transform1(input: Input1, disposeBag: DisposeBag) {
         input.startBtnTapped1
-            .subscribe(onNext: {
-                self.coordinator?.showPermissionVC2()
+            .subscribe(onNext: {[weak self] _ in
+                self?.coordinator?.showPermissionVC2()
             })
             .disposed(by: disposeBag)
     }
@@ -47,8 +47,8 @@ class PermissionVM {
             .disposed(by: disposeBag)
         
         input.startBtnTapped2
-            .subscribe(onNext: {
-                self.coordinator?.finish()
+            .subscribe(onNext: {[weak self] _ in
+                self?.coordinator?.finish()
             })
             .disposed(by: disposeBag)
     
