@@ -66,16 +66,34 @@ class AlertManager {
         }
     }
     
+    func showLogoutAlert() -> Single<Void> {
+        let message =   """
+                        로그아웃 하시겠습니까? 추후 같은 아이디로
+                        로그인하면 상대방과 연결을 다시 진행할 수 있
+                        습니다.
+                        """
+        
+        return Single.create{ single in
+            let alertController = UIAlertController(title: "로그아웃", message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+                single(.success(()))
+            }
+            let cancelAction = UIAlertAction(title: "취소", style: .default, handler: nil)
+            alertController.addAction(cancelAction)
+            alertController.addAction(okAction)
+            self.baseViewController.present(alertController, animated: true, completion: nil)
+            return Disposables.create {
+                alertController.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+ 
     func showRequestLocationServiceAlert() -> Single<Bool> {
         return Single.create { single in
             let requestLocationServiceAlert = UIAlertController(title: "위치 정보 이용", message: "위치 서비스를 사용할 수 없습니다.\n디바이스의 '설정 > 개인정보 보호'에서 위치 서비스를 켜주세요.", preferredStyle: .alert)
             let goSetting = UIAlertAction(title: "설정으로 이동", style: .destructive) { _ in
                 single(.success(true))
             }
-//            let cancel = UIAlertAction(title: "허용 안함", style: .default) {_ in
-//                single(.success(false))
-//            }
-            //requestLocationServiceAlert.addAction(cancel)
             requestLocationServiceAlert.addAction(goSetting)
             
             self.baseViewController.present(requestLocationServiceAlert, animated: true)

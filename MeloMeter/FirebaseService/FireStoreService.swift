@@ -22,6 +22,6 @@ public protocol FireStoreService {
     
     func uploadImage(image: UIImage) -> Single<String>
     func downloadImage(urlString: String) -> Single<UIImage?>
-    func setAccessLevel(_ level: String) -> Single<Void>
+    func setAccessLevel(_ level: AccessLevel) -> Single<Void>
 
 }

@@ -34,8 +34,9 @@ struct UserModel: Equatable, Hashable {
     var birth: Date?
     var stateMessage: String?
     var gender: GenderType?
+    var createdAt: Date?
     
-    init(uid: String?, otherUid: String?, coupleID: String?, phoneNumber: String?, profileImage: String?,name: String?, birth: Date?, stateMessage: String?, gender: GenderType?) {
+    init(uid: String?, otherUid: String?, coupleID: String?, phoneNumber: String?, profileImage: String?,name: String?, birth: Date?, stateMessage: String?, gender: GenderType?, createdAt: Date?) {
         self.uid = uid
         self.otherUid = otherUid
         self.coupleID = coupleID
@@ -45,16 +46,17 @@ struct UserModel: Equatable, Hashable {
         self.birth = birth
         self.stateMessage = stateMessage
         self.gender = gender
+        self.createdAt = createdAt
     }
     
     init(name: String?, birth: Date?) {
-        self.init(uid: nil, otherUid: nil, coupleID: nil, phoneNumber: nil, profileImage: nil, name: name, birth: birth, stateMessage: nil, gender: nil)
+        self.init(uid: nil, otherUid: nil, coupleID: nil, phoneNumber: nil, profileImage: nil, name: name, birth: birth, stateMessage: nil, gender: nil, createdAt: nil)
         self.name = name
         self.birth = birth
     }
     
     init(name: String?, stateMessage: String?, birth: Date?, gender: GenderType?) {
-        self.init(uid: nil, otherUid: nil, coupleID: nil, phoneNumber: nil, profileImage: nil, name: name, birth: birth, stateMessage: stateMessage, gender: gender)
+        self.init(uid: nil, otherUid: nil, coupleID: nil, phoneNumber: nil, profileImage: nil, name: name, birth: birth, stateMessage: stateMessage, gender: gender, createdAt: nil)
     }
     
     // MARK: - Methods
@@ -68,7 +70,8 @@ struct UserModel: Equatable, Hashable {
             name: name ?? "",
             birth: birth?.toString(type: .yearToDay) ?? "",
             stateMessage: stateMessage, 
-            gender: gender?.stringType
+            gender: gender?.stringType,
+            createdAt: createdAt?.toString(type: .timeStamp)
         )
     }
 }

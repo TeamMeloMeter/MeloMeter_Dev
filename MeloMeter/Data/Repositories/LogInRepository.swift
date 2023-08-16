@@ -12,24 +12,20 @@ import FirebaseFirestore
 class LogInRepository: LogInRepositoryP {
     
     private let firebaseService: FireStoreService
-    private var userModel: UserModel
     private var logInStatus: LogInStatus = .none
     private let disposeBag = DisposeBag()
     
     init(firebaseService: FireStoreService) {
         self.firebaseService = firebaseService
-        self.userModel = UserModel(name: nil, birth: nil)
     }
     
     //전화번호 전송, 인증ID 저장
     func sendNumber(phoneNumber: String?) -> Single<LogInStatus> {
-        return Single.create { [weak self] single in
-            guard let self = self else { return Disposables.create() }
+        return Single.create { single in
             guard let number = phoneNumber else { return Disposables.create() }
-            self.userModel.phoneNumber = "+82 \(number.components(separatedBy: "-").joined())"
-
+            let authPhoneNumber = "+82 \(number.components(separatedBy: "-").joined())"
             PhoneAuthProvider.provider()
-                .verifyPhoneNumber(self.userModel.phoneNumber ?? "", uiDelegate: nil) { (verificationID, error) in
+                .verifyPhoneNumber(authPhoneNumber, uiDelegate: nil) { (verificationID, error) in
                     if let error = error {
                         single(.failure(error))
                         return
@@ -51,7 +47,7 @@ class LogInRepository: LogInRepositoryP {
     }
     
     //인증번호 입력 -> 로그인
-    func inputVerificationCode(verificationCode: String?) -> Single<String> {
+    func inputVerificationCode(verificationCode: String?) -> Single<String?> {
         return Single.create { [weak self] single in
             guard let self = self else { return Disposables.create() }
             guard let code = verificationCode else { return Disposables.create() }
@@ -64,14 +60,18 @@ class LogInRepository: LogInRepositoryP {
                 if let error = error {
                     single(.failure(error))
                 }else {
-                    self.userInFirestore().subscribe(onSuccess: { inviteCode in
-                        self.firebaseService.setAccessLevel("Authenticated")
+                    self.userInFirestore().subscribe(onSuccess: { state in
+                        self.firebaseService.setAccessLevel(state.0)
                             .subscribe(onSuccess: {
-                                single(.success(inviteCode))
+                                single(.success(state.1))
                             })
                             .disposed(by: self.disposeBag)
                     }, onFailure: { error in
-                        single(.failure(error))
+                        self.firebaseService.setAccessLevel(.none)
+                            .subscribe(onSuccess: {
+                                single(.success(nil))
+                            })
+                            .disposed(by: self.disposeBag)
                     }).disposed(by: self.disposeBag)
                 }
             }
@@ -81,7 +81,7 @@ class LogInRepository: LogInRepositoryP {
     }
 
     //로그인된 사용자의 uid, phoneNumber 받아서 storeUserInFirestore 호출
-    func userInFirestore() -> Single<String> {
+    func userInFirestore() -> Single<(AccessLevel, String?)> {
         return Single.create { [weak self] single in
             guard let self = self else{ return Disposables.create() }
             var uid = ""
@@ -89,32 +89,50 @@ class LogInRepository: LogInRepositoryP {
             self.firebaseService.getCurrentUser()
                 .subscribe(onSuccess: { user in
                     uid = user.uid
+                    UserDefaults.standard.set("\(uid)", forKey: "uid")
                     guard let number = user.phoneNumber else{ return }
                     phoneNumber = number
+                    UserDefaults.standard.set("\(phoneNumber)", forKey: "phoneNumber")
+                    let createdAt = Date()
+                    let inviteCode = "\(phoneNumber.suffix(4) + createdAt.toString(type: Date.Format.timeStamp).filter{ $0.isNumber }.map{ String($0) }.suffix(4).joined())"
+                    let dto = LogInDTO(uid: uid,
+                                       phoneNumber: phoneNumber,
+                                       createdAt: createdAt.toString(type: Date.Format.timeStamp),
+                                       inviteCode: inviteCode)
+                    
+                    self.firebaseService.getDocument(collection: .Users, document: uid)
+                        .subscribe(onSuccess: { user in
+                            guard let userModel = user.toObject(UserDTO.self)?.toModel() else{ return }
+                            if let name = userModel.name {
+                                UserDefaults.standard.set(name, forKey: "userName")
+                                single(.success((AccessLevel.complete, nil)))
+                            }else if let coupleID = userModel.coupleID {
+                                UserDefaults.standard.set(coupleID, forKey: "coupleDocumentID")
+                                single(.success((AccessLevel.coupleCombined, nil)))
+                            }
+                        },onFailure: {[weak self] error in
+                            guard let values = dto.asDictionary, let self = self else { return }
+                            
+                            self.firebaseService.createDocument(collection: .Users,
+                                                                document: dto.uid,
+                                                                values: values)
+                            .subscribe(onSuccess: { _ in
+                                UserDefaults.standard.set("\(inviteCode)", forKey: "inviteCode")
+                                single(.success((.authenticated, inviteCode)))
+                            })
+                            .disposed(by: self.disposeBag)
+                            let geopoint = GeoPoint(latitude: 37.541, longitude: 126.986)
+                            self.firebaseService.createDocument(collection: .Locations,
+                                                                document: uid,
+                                                                values: ["location": geopoint])
+                            .subscribe(onSuccess: {}).disposed(by: self.disposeBag)
+                        })
+                        .disposed(by: self.disposeBag)
                 })
                 .disposed(by: disposeBag)
-            let createdAt = Date()
-            let inviteCode = "\(phoneNumber.suffix(4) + createdAt.toString(type: Date.Format.timeStamp).filter{ $0.isNumber }.map{ String($0) }.suffix(4).joined())"
-            let dto = LogInDTO(uid: uid,
-                               phoneNumber: phoneNumber,
-                               createdAt: createdAt.toString(type: Date.Format.timeStamp),
-                               inviteCode: inviteCode)
-            guard let values = dto.asDictionary else { return Disposables.create() }
-            self.firebaseService.createDocument(collection: .Users,
-                                                       document: dto.uid,
-                                                       values: values)
-            .subscribe(onSuccess: {
-                single(.success(inviteCode))
-                UserDefaults.standard.set("\(inviteCode)", forKey: "inviteCode")
-                UserDefaults.standard.set("\(uid)", forKey: "uid")
-                UserDefaults.standard.set("\(phoneNumber)", forKey: "phoneNumber")
-            }, onFailure: { error in
-                single(.failure(error))
-            })
-            .disposed(by: disposeBag)
-    
             return Disposables.create()
         }
+        
     }
     
     
@@ -140,7 +158,7 @@ class LogInRepository: LogInRepositoryP {
                 .flatMap{ user -> Single<Void> in
                     return self.firebaseService.getDocument(collection: .Users, field: "inviteCode", values: [inviteCode])
                         .flatMap{ data -> Single<Void> in
-                            guard !data.isEmpty else{ return Single.just(()) }
+                            guard !data.isEmpty else{ return Single.error(FireStoreError.unknown) }
                             guard let uid2 = data.last?["uid"] as? String else{ return Single.just(()) }
                             UserDefaults.standard.set("\(uid2)", forKey: "uid2")
                             let updateMyDB = self.firebaseService.updateDocument(collection: .Users, document: user.uid, values: ["otherUid": uid2])
@@ -159,11 +177,12 @@ class LogInRepository: LogInRepositoryP {
                     guard let coupleDocumentID = UserDefaults.standard.string(forKey: "coupleDocumentID") else{ return }
                     let update1 = self.firebaseService.updateDocument(collection: .Users, document: uid, values: ["coupleID" : coupleDocumentID])
                     let update2 = self.firebaseService.updateDocument(collection: .Users, document: uid2, values: ["coupleID" : coupleDocumentID])
-                    let updateAccessLevel = self.firebaseService.setAccessLevel("CoupleCombined")
-                    let updateOtherAccessLevel = self.firebaseService.updateDocument(collection: .Users, document: uid2, values: ["accessLevel" : "CoupleCombined"])
+                    let chatDocumentCreate = self.firebaseService.createDocument(collection: .Locations, document: coupleDocumentID, values: ["chatField": []])
+                    let updateAccessLevel = self.firebaseService.setAccessLevel(.coupleCombined)
+                    let updateOtherAccessLevel = self.firebaseService.updateDocument(collection: .Users, document: uid2, values: ["accessLevel" : "coupleCombined"])
                     
-                    Single.zip(update1, update2, updateAccessLevel, updateOtherAccessLevel)
-                        .subscribe(onSuccess: { _, _, _, _ in
+                    Single.zip(update1, update2, chatDocumentCreate, updateAccessLevel, updateOtherAccessLevel)
+                        .subscribe(onSuccess: { _, _, _, _, _ in
                             single(.success(()))
                         })
                         .disposed(by: self.disposeBag)

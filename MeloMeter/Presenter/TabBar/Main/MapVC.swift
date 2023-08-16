@@ -57,7 +57,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         
         output.daySince
             .bind(onNext: { text in
-                self.dDayButton.setTitle(text, for: .normal)
+                self.dDayLabel.text = text
             })
             .disposed(by: disposeBag)
         
@@ -123,6 +123,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         output.currentLocation
             .asDriver(onErrorJustReturn: CLLocation(latitude: 37.541, longitude: 126.986))
             .drive(onNext: { [weak self] current in
+                print("내위치 vc", current, Date())
                 self?.updateMyMarker(current)
             })
             .disposed(by: disposeBag)
@@ -160,13 +161,11 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     func updateMyMarker(_ location: CLLocation) {
         myMarker.position = NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
         myMarker.mapView = naverMapView
-        infoWindow1.open(with: myMarker)
     }
     
     func updateOtherMarker(_ location: CLLocation) {
         otherMarker.position = NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
         otherMarker.mapView = naverMapView
-        infoWindow2.open(with: otherMarker)
     }
     
     func updateCamera(_ location: CLLocation) {
@@ -184,9 +183,10 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     // MARK: Event
     
     func changedMarkerIcon(isMine: Bool, profileImage: UIImage) {
+        let imageName = isMine ? "myMarker" : "otherMarker"
         let icon: UIImage = {
-            let image1 = UIImage(named: "myMarkerborder")
-            let image2 = UIImage(named: "myMarkerDot")
+            let image1 = UIImage(named: "\(imageName)border")
+            let image2 = UIImage(named: "\(imageName)Dot")
             let imageSize = CGSize(width: 80, height: 107)
             
             UIGraphicsBeginImageContextWithOptions(imageSize, false, 0.0)
@@ -208,7 +208,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             if let image = compositeImage {
                 return image
             }
-            return UIImage(named: "myMarkerDot")!
+            return UIImage(named: "\(imageName)Dot")!
         }()
         
         if isMine {
@@ -262,6 +262,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     let myMarkerIcon: UIImage = {
         let image1 = UIImage(named: "myMarkerborder")
         let image2 = UIImage(named: "myMarkerDot")
+        let defaultProfileImage = UIImage(named: "defaultProfileImage")!
 
         let imageSize = CGSize(width: 80, height: 107)
 
@@ -269,7 +270,8 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
 
         image1?.draw(in: CGRect(x: 0, y: 0, width: 80, height: 90))
         image2?.draw(in: CGRect(x: 31, y: 89, width: 18, height: 18))
-
+        defaultProfileImage.draw(in: CGRect(x: 7, y: 7, width: 66, height: 66))
+        
         let compositeImage = UIGraphicsGetImageFromCurrentImageContext()
 
         UIGraphicsEndImageContext()
@@ -305,14 +307,16 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     let otherMarkerIcon: UIImage = {
         let image1 = UIImage(named: "otherMarkerborder")
         let image2 = UIImage(named: "otherMarkerDot")
-        
+        let defaultProfileImage = UIImage(named: "defaultProfileImage")!
+
         let imageSize = CGSize(width: 80, height: 107)
         
         UIGraphicsBeginImageContextWithOptions(imageSize, false, 0.0)
         
         image1?.draw(in: CGRect(x: 0, y: 0, width: 80, height: 90))
         image2?.draw(in: CGRect(x: 31, y: 89, width: 18, height: 18))
-        
+        defaultProfileImage.draw(in: CGRect(x: 7, y: 7, width: 66, height: 66))
+
         let compositeImage = UIGraphicsGetImageFromCurrentImageContext()
         
         UIGraphicsEndImageContext()
@@ -337,16 +341,21 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         return label
     }()
     
-    let dDayButton: UIButton = {
+    lazy var dDayButton: UIButton = {
         let button = UIButton()
-        button.setTitle("", for: .normal)
-        button.setTitleColor(UIColor.gray1, for: .normal)
-        button.titleLabel?.font = FontManager.shared.regular(ofSize: 18)
         button.backgroundColor = .white
         button.clipsToBounds = true
         button.layer.cornerRadius = 25
         button.layer.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1).cgColor
+        button.addSubview(dDayLabel)
         return button
+    }()
+    
+    let dDayLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .gray1
+        label.font = FontManager.shared.regular(ofSize: 18)
+        return label
     }()
     
     let alarmButton: UIButton = {
@@ -390,14 +399,18 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     
     private func mapViewElementConstraints() {
         dDayButton.translatesAutoresizingMaskIntoConstraints = false
+        dDayLabel.translatesAutoresizingMaskIntoConstraints = false
         alarmButton.translatesAutoresizingMaskIntoConstraints = false
         currentLocationButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            dDayButton.centerXAnchor.constraint(equalTo: naverMapView.centerXAnchor),
+            dDayButton.leadingAnchor.constraint(equalTo: dDayLabel.leadingAnchor, constant: -20),
+            dDayButton.trailingAnchor.constraint(equalTo: dDayLabel.trailingAnchor, constant: 20),
             dDayButton.topAnchor.constraint(equalTo: naverMapView.topAnchor, constant: 17),
-            dDayButton.widthAnchor.constraint(equalToConstant: 86),
             dDayButton.heightAnchor.constraint(equalToConstant: 48),
+            
+            dDayLabel.centerXAnchor.constraint(equalTo: naverMapView.centerXAnchor),
+            dDayLabel.centerYAnchor.constraint(equalTo: dDayButton.centerYAnchor),
             
             alarmButton.trailingAnchor.constraint(equalTo: naverMapView.trailingAnchor, constant: -16),
             alarmButton.topAnchor.constraint(equalTo: naverMapView.topAnchor, constant: 17),

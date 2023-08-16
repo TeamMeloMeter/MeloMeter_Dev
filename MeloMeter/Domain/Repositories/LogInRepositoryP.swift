@@ -10,8 +10,8 @@ import RxSwift
 
 protocol LogInRepositoryP {
     func sendNumber(phoneNumber: String?) -> Single<LogInStatus>
-    func inputVerificationCode(verificationCode: String?) -> Single<String>
-    func userInFirestore() -> Single<String>
+    func inputVerificationCode(verificationCode: String?) -> Single<String?>
+    func userInFirestore() -> Single<(AccessLevel, String?)>
     func getUserLoginInfo() -> Single<LogInModel?>
     func combineCouple(code: String) -> Single<Void>
 }

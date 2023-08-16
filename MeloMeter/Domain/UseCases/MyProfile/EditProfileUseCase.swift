@@ -40,4 +40,7 @@ class EditProfileUseCase {
         return self.userRepository.updateProfileImage(image: image)
     }
     
+    func logout() {
+        self.userRepository.signOut()
+    }
 }

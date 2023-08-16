@@ -23,9 +23,49 @@ class UserRepository: UserRepositoryP {
         self.combineCheck = PublishRelay()
     }
     
+    func presetUserInfo(user: UserModel, dDay: CoupleModel) -> Single<Void> {
+        return Single.create { [weak self] single in
+            guard let self = self else { return Disposables.create() }
+            var coupleDocumentID = ""
+            //모델객체 -> DTO객체
+            let userDTO = user.toProfileInsertDTO()
+            let dDayDTO = dDay.toDTO() // [이름] [날짜]
+            UserDefaults.standard.set(userDTO.name, forKey: "userName")
+            guard let userValues = userDTO.asDictionary, var coupleValues = dDayDTO.asDictionary else { return Disposables.create() }
+            coupleValues["anniName"] = FieldValue.arrayUnion(coupleValues["anniName"] as! [Any])
+            coupleValues["anniDate"] = FieldValue.arrayUnion(coupleValues["anniDate"] as! [Any])
+            self.firebaseService.getDocument(collection: .Users, document: userDTO.uid)
+                .subscribe(onSuccess: { userInfo in
+                    guard let coupleID = userInfo["coupleID"] as? String else{ single(.failure(FireStoreError.unknown)); return }
+                    coupleDocumentID = coupleID
+                    let couplesUpdate = self.firebaseService.updateDocument(collection: .Couples,
+                                                                                   document: coupleDocumentID,
+                                                                                   values: coupleValues)
+                    let usersUpdate = self.firebaseService.createDocument(collection: .Users,
+                                                               document: userDTO.uid,
+                                                               values: userValues)
+                    Single.zip(couplesUpdate, usersUpdate)
+                    .subscribe(onSuccess: { _,_ in
+                        self.firebaseService.setAccessLevel(.complete)
+                            .subscribe(onSuccess: {
+                                single(.success(()) )
+                            })
+                            .disposed(by: self.disposeBag)
+                    }, onFailure: { error in
+                        single(.failure(error))
+                    })
+                    .disposed(by: self.disposeBag)
+                })
+                .disposed(by: disposeBag)
+            
+            return Disposables.create()
+        }
+        
+    }
+    
     func getUserInfo(_ uid: String) -> Observable<UserDTO> {
         return self.firebaseService.getDocument(collection: .Users, document: uid)
-            .map{ $0.toObject(UserDTO.self)! }
+            .compactMap{ $0.toObject(UserDTO.self) }
             .asObservable()
     }
     
@@ -36,7 +76,7 @@ class UserRepository: UserRepositoryP {
                 self.firebaseService.observer(collection: .Users, document: user.uid)
                     .map{ data -> Bool in
                         if let isCombined = data["accessLevel"] as? String {
-                            if isCombined == "CoupleCombined" {
+                            if isCombined == "coupleCombined" {
                                 return true
                             }
                         }
@@ -97,4 +137,7 @@ class UserRepository: UserRepositoryP {
             }
     }
 
+    func signOut() {
+        try? Auth.auth().signOut()
+    }
 }

@@ -45,10 +45,10 @@ class MapVM {
         input.viewWillApearEvent
             .subscribe(onNext: { [weak self] _ in
                 setInfo()
+                self?.mainUseCase.requestAuthorization()
                 self?.mainUseCase.checkAuthorization()
                 self?.mainUseCase.requestLocation()
                 self?.mainUseCase.requestOtherLocation()
-                self?.mainUseCase.locationStart()
             })
             .disposed(by: disposeBag)
         
@@ -88,15 +88,12 @@ class MapVM {
             self.mainUseCase.getUserData()
             self.mainUseCase.userData
                 .bind(onNext: { userInfo in
-                    
                     output.myStateMessage.accept(userInfo.stateMessage)
-
                     self.mainUseCase.getMyProfileImage(url: userInfo.profileImage ?? "")
                         .subscribe(onSuccess: { image in
                             output.myProfileImage.accept(image)
                         })
                         .disposed(by: disposeBag)
-                    
                     if let otherUid = userInfo.otherUid {
                         self.mainUseCase.getOtherUserData(uid: otherUid)
                         self.mainUseCase.otherUserData
@@ -104,7 +101,6 @@ class MapVM {
                                 output.otherStateMessage.accept(otherUserModel.stateMessage ?? nil)
                             })
                             .disposed(by: disposeBag)
-                        
                         self.mainUseCase.getOtherProfileImage(otherUid: otherUid)
                             .subscribe(onSuccess: { image in
                                 output.otherProfileImage.accept(image)
