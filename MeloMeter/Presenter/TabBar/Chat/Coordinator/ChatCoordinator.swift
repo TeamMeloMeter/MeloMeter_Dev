@@ -20,19 +20,20 @@ final class ChatCoordinator: Coordinator {
     func start() {
         showChatVC()
     }
-
+    
 }
 
 extension ChatCoordinator {
     
     func showChatVC() {
         let viewController = DisplayChatVC(
-            viewModel: ChatVM( coordinator: self )
+            viewModel: ChatVM(coordinator: self, chatUseCase: ChatUseCase(chatRepository: ChatRepository(firebaseService: DefaultFirebaseService()))
+                             )
         )
         
         self.navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
     }
-
-
+    
+    
 }

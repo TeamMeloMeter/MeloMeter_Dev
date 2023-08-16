@@ -16,9 +16,11 @@ import RxSwift
 /// A base class for the example controllers
 class ChatVC: MessagesViewController, MessagesDataSource {
     
-    private let viewModel: ChatVM
+    private let viewModel: ChatVM?
     let disposeBag = DisposeBag()
     let tapGesture = UITapGestureRecognizer()
+    var sendMessage = PublishRelay<MockMessage>()
+    
     lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
     lazy var messageList: [MockMessage] = []
     
@@ -109,15 +111,16 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         
         //Rx로 fireBase에서 가져와야함
         var messages : [MockMessage] = []
-        let message1 = MockMessage(text: "test Message1", user: self.mockUser, messageId: "test MId", date: Date())
-        let message2 = MockMessage(text: "test Message2", user: self.mockUser2, messageId: "test MId", date: Date())
+        let message1 = MockMessage(text: "test Message1", user: self.mockUser, messageId: UUID().uuidString, date: Date())
+        let message2 = MockMessage(text: "test Message2", user: self.mockUser2, messageId: UUID().uuidString, date: Date())
         
         messages.append(message1)
         messages.append(message2)
         
+        //화면에 뿌리는 코드
         DispatchQueue.global(qos: .userInitiated).async {
             DispatchQueue.main.async {
-                self.messageList = messages
+                self.messageList = messages // messages <= MockMessage의 배열
                 self.messagesCollectionView.reloadData()
                 self.messagesCollectionView.scrollToLastItem(animated: false)
             }
@@ -159,11 +162,18 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     // MARK: - EVENT
     
-    
     // MARK: - Binding
     func setBindings() {
         view.addGestureRecognizer(tapGesture)
+        
         //바인딩
+        let input = ChatVM.Input(
+            mySendMessage: self.sendMessage
+                .asObservable()
+        )
+        
+        guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else{ return }
+
     }
     
     // MARK: - Helpers
@@ -222,6 +232,9 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     func messageTopLabelAttributedText(for message: MessageType, at _: IndexPath) -> NSAttributedString? {
         let name = message.sender.displayName
+//       let tf = message.sender.senderId
+//       if tf{}
+        let true_name = "[내이름, 상대방이름]"
         return NSAttributedString(
             string: name,
             attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
@@ -244,7 +257,9 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     private let formatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateStyle = .medium
+//        formatter.dateStyle = .medium
+        //우리가 원하는 형태로 바꿔서
+        formatter.dateStyle = .long
         return formatter
     }()
 }
@@ -382,7 +397,7 @@ extension ChatVC: InputBarAccessoryViewDelegate {
             print("Autocompleted: `", substring, "` with context: ", context ?? [])
         }
         
-        let components = inputBar.inputTextView.components
+        let components = inputBar.inputTextView.components //String
         inputBar.inputTextView.text = String()
         inputBar.invalidatePlugins()
         // Send button activity animation
@@ -396,8 +411,8 @@ extension ChatVC: InputBarAccessoryViewDelegate {
             DispatchQueue.main.async { [weak self] in
                 inputBar.sendButton.stopAnimating()
                 inputBar.inputTextView.placeholder = "Aa"
-                self?.insertMessages(components) // < == 눈에 보이는것만 있음
-                // 여기에
+                
+                self?.insertMessages(components)
                 self?.messagesCollectionView.scrollToLastItem(animated: true)
             }
         }
@@ -408,12 +423,13 @@ extension ChatVC: InputBarAccessoryViewDelegate {
     
     private func insertMessages(_ data: [Any]) {
         for component in data {
-            let user = SampleData.shared.currentSender
             if let str = component as? String {
-                let message = MockMessage(text: str, user: user, messageId: UUID().uuidString, date: Date())
+                let message = MockMessage(text: str, user: self.mockUser, messageId: UUID().uuidString, date: Date())
                 insertMessage(message)
+                sendMessage.accept(message)
+                
             } else if let img = component as? UIImage {
-                let message = MockMessage(image: img, user: user, messageId: UUID().uuidString, date: Date())
+                let message = MockMessage(image: img, user: self.mockUser, messageId: UUID().uuidString, date: Date())
                 insertMessage(message)
             }
         }
