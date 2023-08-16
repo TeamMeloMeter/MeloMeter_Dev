@@ -23,6 +23,8 @@ final class CoupleCombineVC: UIViewController {
         super.init(nibName: nil, bundle: nil)
         if let code = otherInviteCode {
             self.codeTF.text = code
+            self.lineColorChangedT()
+            self.nextBtnEnabledT()
         }
     }
     
@@ -80,7 +82,6 @@ final class CoupleCombineVC: UIViewController {
         
         viewModel.inviteCodeTimer()
         viewModel.timerString
-            // .bind(to:  <= 바인딩 된 객체값을 우측값에 대입
             .bind(to: self.user1Label.rx.text)
             .disposed(by: disposeBag)
         viewModel.timerDisposed
@@ -102,7 +103,7 @@ final class CoupleCombineVC: UIViewController {
         AlertManager(viewController: self)
             .setTitle("잘못된 코드")
             .setMessage("초대코드가 일치하지 않습니다\n 올바른 상대방의 초대코드를\n 입력해주세요")
-            .addActionConfirm("확인")
+            .addActionConfirm("확인", action: { self.codeTF.becomeFirstResponder() })
             .showCustomAlert()
         hideProgressDialog()
     }
@@ -132,7 +133,8 @@ final class CoupleCombineVC: UIViewController {
         [progressImage, titleLabel, user1Label, myCodeLabel, shareBtn, lineView1,
         user2Label, codeTF, lineView2,
          questLabel, contactBtn].forEach { view.addSubview($0) }
-        
+        nextBtnEnabledF()
+        lineColorChangedF()
     }
     
     // MARK: - UI
@@ -255,7 +257,7 @@ final class CoupleCombineVC: UIViewController {
         button.setTitle("연결하기", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.layer.applyShadow(color: .primary1, alpha: 0.4, x: 4, y: 0, blur: 10)
-        button.isEnabled = true
+        button.isEnabled = false
         return button
     }()
     

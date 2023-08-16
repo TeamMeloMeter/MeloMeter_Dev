@@ -18,7 +18,7 @@ struct DdayCell {
 
 class DdayVM {
 
-    weak var coordinator: MyProfileCoordinator?
+    weak var coordinator: DdayCoordinator?
     private var dDayUseCase: DdayUseCase
 
     struct Input {
@@ -39,7 +39,7 @@ class DdayVM {
         let addDday: Observable<[String]>
     }
     
-    init(coordinator: MyProfileCoordinator, dDayUseCase: DdayUseCase) {
+    init(coordinator: DdayCoordinator, dDayUseCase: DdayUseCase) {
         self.coordinator = coordinator
         self.dDayUseCase = dDayUseCase
     }
@@ -98,6 +98,8 @@ class DdayVM {
             .subscribe(onNext: {[weak self] _ in
                 guard let self = self else{ return }
                 self.coordinator?.popViewController()
+                self.coordinator?.parentCoordinator?.childCoordinators.removeLast()
+                
             })
             .disposed(by: disposeBag)
         

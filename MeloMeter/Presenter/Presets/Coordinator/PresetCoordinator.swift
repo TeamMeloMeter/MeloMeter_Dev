@@ -29,7 +29,9 @@ extension PresetCoordinator {
         let viewController = ProfileInsertVC(
             viewModel: ProfileInsertVM(
                 coordinator: self,
-                profileInsertUseCase: ProfileInsertUseCase(profileInsertRepository: ProfileInsertRepository()))
+                profileInsertUseCase: ProfileInsertUseCase(
+                    userRepository: UserRepository(firebaseService: DefaultFirebaseService()))
+            )
         )
         
         self.navigationController.setNavigationBarHidden(true, animated: false)
@@ -58,4 +60,15 @@ extension PresetCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
 
+    func finish() {
+        self.delegate?.didFinish(childCoordinator: self)
+    }
+    
+}
+
+extension PresetCoordinator: CoordinatorDelegate {
+    func didFinish(childCoordinator: Coordinator) {
+        self.childCoordinators.removeAll()
+        self.delegate?.didFinish(childCoordinator: self)
+    }
 }

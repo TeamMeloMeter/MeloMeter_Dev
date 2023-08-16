@@ -7,11 +7,9 @@
 
 import UIKit
 
-//자주묻는 질문 테이블뷰 셀
 class QnATableViewCell: UITableViewCell {
     
     
-    //질문내용
     let questionLabel: UILabel = {
         let label = UILabel()
         label.text = "계정 인증이 뭔가요?"
@@ -20,7 +18,6 @@ class QnATableViewCell: UITableViewCell {
         return label
     }()
     
-    //화살표 > 이미지
     private let arrowImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "arrowIcon")

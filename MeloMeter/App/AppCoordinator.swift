@@ -8,6 +8,25 @@
 import UIKit
 import RxSwift
 
+public enum AccessLevel: String {
+    case none, start, authenticated, coupleCombined, complete
+    
+    var toString: String {
+        switch self {
+        case .start:
+            return "none"
+        case .authenticated:
+            return "authenticated"
+        case .coupleCombined:
+            return "coupleCombined"
+        case .complete:
+            return "complete"
+        default:
+            return "none"
+        }
+    }
+}
+
 final class AppCoordinator: Coordinator {
     
     // MARK: - Properties
@@ -16,6 +35,7 @@ final class AppCoordinator: Coordinator {
     var childCoordinators: [Coordinator]
     var firebaseService: FireStoreService
     var disposeBag = DisposeBag()
+    
     // MARK: - Initializers
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -25,49 +45,19 @@ final class AppCoordinator: Coordinator {
     
     // MARK: - Methods
     func start() {
-        // 스플래시뷰 구현하고 스플래시 동작 중에 실행하고, 완료되면 화면전환하게 바꾸기
-        selectStartView()
-            .subscribe(onSuccess: { state in
-                switch state {
-                case "NO":
-                    self.showStartVC()
-                case "Authenticated":
-                    self.connectLogInFlow(accessLevel: true)
-                case "CoupleCombined":
-                    self.connectPresetFlow()
-                case "Complete":
-                    self.connectTabBarFlow()
-                default:
-                    self.showStartVC()
-                }
-            }, onFailure: { _ in
-                self.showStartVC()
-            })
-            .disposed(by: disposeBag)
+        self.showSplashVC()
     }
     
 }
 
 // MARK: - connectFlow Methods
 extension AppCoordinator {
-    func selectStartView() -> Single<String> {
-        return Single.create { single in
-            self.firebaseService.getCurrentUser()
-                .subscribe(onSuccess: { user in
-                    self.firebaseService.getDocument(collection: .Users, document: user.uid)
-                        .subscribe(onSuccess: { data in
-                            guard let accessLevel = data["accessLevel"] as? String else{ single(.success("NO")); return}
-                            single(.success(accessLevel))
-                        }, onFailure: { _ in
-                            single(.success("NO"))
-                        })
-                        .disposed(by: self.disposeBag)
-                }, onFailure: { _ in
-                    single(.success("NO"))
-                })
-                .disposed(by: self.disposeBag)
-            return Disposables.create()
-        }
+    
+    func showSplashVC() {
+        let splashVC = SplashVC(viewModel: SplashVM(coordinator: self,
+                                                   firebaseService: DefaultFirebaseService()))
+        navigationController.setNavigationBarHidden(true, animated: false)
+        navigationController.pushViewController(splashVC, animated: false)
     }
     
     func showStartVC() {
@@ -94,7 +84,7 @@ extension AppCoordinator {
     }
     
     func connectTabBarFlow() {
-        self.navigationController.popToRootViewController(animated: true)
+        //self.navigationController.popToRootViewController(animated: true)
         let tabBarCoordinator = TabBarCoordinator(self.navigationController)
         tabBarCoordinator.delegate = self
         tabBarCoordinator.start()
@@ -108,9 +98,16 @@ extension AppCoordinator {
 extension AppCoordinator: CoordinatorDelegate {
     
     func didFinish(childCoordinator: Coordinator) {
-        self.navigationController.popToRootViewController(animated: true)
+        self.childCoordinators = []
+        self.navigationController.viewControllers.removeAll()
+        print("앱ㅋ코디네이터 didFinish", childCoordinator)
         if childCoordinator is LogInCoordinator {
-            self.connectPresetFlow()
+            if let userName = UserDefaults.standard.string(forKey: "userName") {
+                print("앱ㅋ코디네이터 탭바플로우 시작점")
+                self.connectTabBarFlow()
+            }else {
+                self.connectPresetFlow()
+            }
         }else if childCoordinator is PresetCoordinator {
             self.connectTabBarFlow()
         }else {

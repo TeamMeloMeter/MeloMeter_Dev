@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "ProfileImage.png",
+      "filename" : "newDot.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ProfileImage 1.png",
+      "filename" : "newDot 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ProfileImage 2.png",
+      "filename" : "newDot 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
@@ -19,5 +19,8 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "template-rendering-intent" : "original"
   }
 }

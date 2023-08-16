@@ -71,18 +71,21 @@ extension TabBarCoordinator {
     
     func connectMainFlow(to tabNavigationController: UINavigationController) {
         let mainCoordinator = MainCoordinator(tabNavigationController)
+        mainCoordinator.delegate = self
         mainCoordinator.start()
         childCoordinators.append(mainCoordinator)
     }
     
     func connectMyProfileFlow(to tabNavigationController: UINavigationController) {
         let myProfileCoordinator = MyProfileCoordinator(tabNavigationController)
+        myProfileCoordinator.delegate = self
         myProfileCoordinator.start()
         childCoordinators.append(myProfileCoordinator)
     }
     
     func connectChatFlow(to tabNavigationController: UINavigationController) {
         let chatCoordinator = ChatCoordinator(tabNavigationController)
+        chatCoordinator.delegate = self
         chatCoordinator.start()
         childCoordinators.append(chatCoordinator)
     }
@@ -91,7 +94,7 @@ extension TabBarCoordinator {
 
 extension TabBarCoordinator: CoordinatorDelegate {
     func didFinish(childCoordinator: Coordinator) {
-        self.navigationController.popToRootViewController(animated: false)
-        self.finish()
+//        self.navigationController.viewControllers.removeAll()
+//        self.delegate?.didFinish(childCoordinator: self)
     }
 }

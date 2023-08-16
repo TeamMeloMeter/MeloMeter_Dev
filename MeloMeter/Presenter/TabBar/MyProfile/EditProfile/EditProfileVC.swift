@@ -46,7 +46,8 @@ class EditProfileVC: UIViewController {
                         case .get:
                             self.showAlbum()
                         case .delete:
-                            self.profileImageView.image = UIImage(named: "myProfileImage")
+                            self.profileImageView.image = UIImage(named: "defaultProfileImage")
+                            self.selectImage.accept(UIImage(named: "defaultProfileImage")!)
                         case .cancel:
                             break
                         }
@@ -63,6 +64,8 @@ class EditProfileVC: UIViewController {
             backBtnTapEvent: self.backBarButton.rx.tap
                 .map({ _ in })
                 .asObservable(),
+            changedProfileImage: self.selectImage
+                .asObservable(),
             nameTapEvent: self.nameView.rx.tapGesture().when(.ended)
                 .map({ _ in })
                 .asObservable(),
@@ -78,10 +81,36 @@ class EditProfileVC: UIViewController {
                     guard let self = self else{ return Single.just(GenderType.cancel) }
                     return AlertManager(viewController: self)
                         .showGenderAlert()
-                }
+                },
+            logoutEvent: self.logoutLabel.rx.tapGesture().when(.ended)
+                        .flatMap{[weak self] _ in
+                            guard let self = self else{ return Single.just(()) }
+                            return AlertManager(viewController: self)
+                                .showLogoutAlert()
+                        }
         )
         
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else{ return }
+        
+        output.profileImage
+            .bind(onNext: { image in
+                if let profileImage = image {
+                    self.profileImageView.image = profileImage
+                }else {
+                    self.profileImageView.image = UIImage(named: "defaultProfileImage")
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        output.uploadSuccess
+            .bind(onNext: { result in
+                if result {
+                    // 성공
+                }else {
+                    self.imageUploadErrorAlert()
+                }
+            })
+            .disposed(by: disposeBag)
         
         output.userName
             .bind(onNext: {[weak self] name in
@@ -117,30 +146,12 @@ class EditProfileVC: UIViewController {
             .showCameraAlert()
     }
     
-//
-//    //로그아웃 alert
-//    @objc func showLogoutAlert() {
-//        let alertController = UIAlertController(title: "로그아웃", message: "로그아웃 하시겠습니까? 추후 같은 아이디로\n로그인하면 상대방과 연결을 다시 진행할 수 있\n습니다.", preferredStyle: .alert)
-//
-//        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-//        alertController.addAction(cancelAction)
-//
-//        let logoutAction = UIAlertAction(title: "로그아웃", style: .destructive) { _ in
-//            // 로그아웃 처리 로직을 여기에 작성
-//            // 예: 세션 종료, 사용자 정보 초기화 등
-//            self.logout()
-//        }
-//        alertController.addAction(logoutAction)
-//
-//        present(alertController, animated: true, completion: nil)
-//    }
-
-    func logout() {
-        // 로그아웃 처리 로직을 여기에 작성
-        // 예: 세션 종료, 사용자 정보 초기화 등
-        
-        // 로그아웃 완료 후 필요한 동작 수행
-        // 예: 홈 화면으로 이동, 로그인 화면 표시 등
+    func imageUploadErrorAlert() {
+        AlertManager(viewController: self)
+            .showNomalAlert(title: "네트워크 오류",
+                            message: "프로필 사진 변경을 실패했습니다.\n다시 시도해주세요")
+            .subscribe(onSuccess: {})
+            .disposed(by: disposeBag)
     }
     
     
@@ -162,7 +173,6 @@ class EditProfileVC: UIViewController {
     // MARK: UI
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "myProfileImage")
         imageView.contentMode = .scaleAspectFit
         imageView.layer.borderColor = UIColor.clear.cgColor
         imageView.clipsToBounds = true
@@ -460,18 +470,20 @@ class EditProfileVC: UIViewController {
             disconnectLabel.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 11),
             disconnectLabel.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 14),
             
-            lineView2.centerXAnchor.constraint(equalTo: bottomView.centerXAnchor),
+            lineView2.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 11),
+            lineView2.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -11),
             lineView2.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 44),
-            lineView2.widthAnchor.constraint(equalToConstant: 321),
-            lineView2.heightAnchor.constraint(equalToConstant: 0.5),
+            lineView2.heightAnchor.constraint(equalToConstant: 1),
             
             logoutLabel.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 11),
+            logoutLabel.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -11),
+            logoutLabel.heightAnchor.constraint(equalToConstant: 44),
             logoutLabel.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor),
             
-            lineView3.centerXAnchor.constraint(equalTo: bottomView.centerXAnchor),
-            lineView3.topAnchor.constraint(equalTo: lineView2.topAnchor, constant: 44),
-            lineView3.widthAnchor.constraint(equalToConstant: 321),
-            lineView3.heightAnchor.constraint(equalToConstant: 0.5),
+            lineView3.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 11),
+            lineView3.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -11),
+            lineView3.topAnchor.constraint(equalTo: lineView2.bottomAnchor, constant: 44),
+            lineView3.heightAnchor.constraint(equalToConstant: 1),
             
             withdrawalLabel.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 11),
             withdrawalLabel.bottomAnchor.constraint(equalTo: bottomView.bottomAnchor, constant: -13),
@@ -494,16 +506,18 @@ extension EditProfileVC: UIImagePickerControllerDelegate & UINavigationControlle
         let album = self.imagePickerController
         album.delegate = self
         album.sourceType = .photoLibrary
+        album.allowsEditing = true
         present(album, animated: true, completion: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            
-            if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
-                self.profileImageView.image = image
-            }
 
-            picker.dismiss(animated: true, completion: nil)
+        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            self.selectImage.accept(image)
+            self.profileImageView.image = image
+        }
+
+        picker.dismiss(animated: true, completion: nil)
     }
     
 }

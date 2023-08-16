@@ -13,7 +13,7 @@ class NoticeTableViewCell: UITableViewCell {
     // dot 이미지
     let dotImageView: UIImageView = {
        let imageView = UIImageView()
-        imageView.image = UIImage(named: "noticeDotIcon")
+        imageView.image = UIImage(named: "newDot")
         return imageView
     }()
     
@@ -22,22 +22,20 @@ class NoticeTableViewCell: UITableViewCell {
         let label = UILabel()
         label.text = "안내"
         label.textColor = .gray2
-        label.font = FontManager.shared.medium(ofSize: 14)
+        label.font = FontManager.shared.semiBold(ofSize: 14)
         return label
     }()
     
-    //구분자
     let seperateLine: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.5215686275, green: 0.5215686275, blue: 0.5215686275, alpha: 1)
-    
+        view.backgroundColor = .gray2
         return view
     }()
     
     // 공지사항 날짜
     let noticeDateLabel: UILabel = {
         let label = UILabel()
-        label.text = "2023년 05월 04일"
+        label.text = "2023년 08월 15일"
         label.textColor = .gray2
         label.font = FontManager.shared.medium(ofSize: 14)
         return label
@@ -47,7 +45,7 @@ class NoticeTableViewCell: UITableViewCell {
     let contentsLabel: UILabel = {
         let label = UILabel()
         label.text = "멜로미터에 오신 것을 환영합니다!"
-        label.textColor = UIColor.black
+        label.textColor = .gray1
         label.font = FontManager.shared.medium(ofSize: 16)
         return label
     }()

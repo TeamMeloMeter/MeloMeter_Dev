@@ -18,14 +18,17 @@ class EditProfileVM {
     struct Input {
         let viewWillApearEvent: Observable<Void>
         let backBtnTapEvent: Observable<Void>
+        let changedProfileImage: Observable<UIImage>
         let nameTapEvent: Observable<Void>
         let stateMessageTapEvent: Observable<Void>
         let birthTapEvent: Observable<Void>
         let newGender: Observable<GenderType>
-
+        let logoutEvent: Observable<Void>
     }
 
     struct Output {
+        var profileImage = PublishSubject<UIImage?>()
+        var uploadSuccess = PublishSubject<Bool>()
         var userName = PublishSubject<String>()
         var stateMessage = PublishSubject<String>()
         var birth = PublishSubject<String>()
@@ -56,6 +59,11 @@ class EditProfileVM {
         
         self.editProfileUseCase.userData
             .bind(onNext: { userData in
+                self.editProfileUseCase.getProfileImage(url: userData.profileImage ?? "")
+                    .asObservable()
+                    .take(1)
+                    .bind(to: output.profileImage)
+                    .disposed(by: disposeBag)
                 detailData.userName = userData.name ?? ""
                 detailData.stateMessage = userData.stateMessage ?? ""
                 detailData.birth = userData.birth?.toString(type: .yearToDay) ?? ""
@@ -70,6 +78,19 @@ class EditProfileVM {
             .subscribe(onNext: {[weak self] _ in
                 guard let self = self else{ return }
                 self.coordinator?.popViewController()
+            })
+            .disposed(by: disposeBag)
+        
+        input.changedProfileImage
+            .subscribe(onNext: {[weak self] image in
+                guard let self = self else{ return }
+                self.editProfileUseCase.editProfileImage(image: image)
+                .subscribe(onSuccess: {
+                    output.uploadSuccess.onNext(true)
+                }, onFailure: { error in
+                    output.uploadSuccess.onNext(false)
+                })
+                .disposed(by: disposeBag)
             })
             .disposed(by: disposeBag)
         
@@ -103,6 +124,13 @@ class EditProfileVM {
                         output.gender.onNext(genderType.stringType)
                     })
                     .disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
+        
+        input.logoutEvent
+            .subscribe(onNext: {[weak self] _ in
+                self?.editProfileUseCase.logout()
+                self?.coordinator?.finish()
             })
             .disposed(by: disposeBag)
         

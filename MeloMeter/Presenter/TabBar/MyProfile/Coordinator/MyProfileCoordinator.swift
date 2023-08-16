@@ -44,22 +44,14 @@ extension MyProfileCoordinator {
         self.navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
     }
-   
-    func showDdayVC() {
-        let viewController = DdayVC(viewModel: DdayVM(coordinator: self,
-                                                      dDayUseCase: DdayUseCase(coupleRepository: CoupleRepository(firebaseService: DefaultFirebaseService()))))
-        
-        viewController.hidesBottomBarWhenPushed = true
-        self.navigationController.setNavigationBarHidden(false, animated: false)
-        self.navigationController.pushViewController(viewController, animated: true)
+
+    func showDdayFlow() {
+        let dDayCoordinator = DdayCoordinator(self.navigationController)
+        childCoordinators.append(dDayCoordinator)
+        dDayCoordinator.parentCoordinator = self
+        dDayCoordinator.start()
     }
     
-    func showAddDdayVC(viewModel: DdayVM) {
-        let viewController = AddDdayModal(viewModel: viewModel)
-        viewController.modalPresentationStyle = .custom
-        self.navigationController.present(viewController, animated: true, completion: nil)
-    }
-
     func showEditProfileVC() {
         let viewController = EditProfileVC(viewModel: EditProfileVM(
             coordinator: self,
@@ -125,5 +117,50 @@ extension MyProfileCoordinator {
         self.navigationController.setNavigationBarHidden(false, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
     }
+    
+    func showNoticeVC() {
+        let viewController = NoticeVC(viewModel: NoticeVM(coordinator: self))
+        
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showDetailNoticeVC() {
+        let viewController = DetailNoticeVC(viewModel: NoticeVM(coordinator: self))
+        
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showQnAVC() {
+        let viewController = QnAVC(viewModel: QnAVM(coordinator: self))
+        
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showDetailQnAVC(title: String, contents: String) {
+        let viewController = DetailQnAVC(viewModel: QnAVM(coordinator: self), title: title, contents: contents)
+        
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func finish() {
+        self.delegate?.didFinish(childCoordinator: self)
+    }
+    
 }
 
+extension MyProfileCoordinator: CoordinatorDelegate {
+    
+    func didFinish(childCoordinator: Coordinator) {
+        self.childCoordinators = []
+        childCoordinator.navigationController.popToRootViewController(animated: true)
+    }
+    
+}

@@ -27,7 +27,7 @@ final class KakaoService {
         
         // 메인이 되는 사진, 이미지 URL, 클릭 시 이동하는 링크를 설정합니다.
         let content = Content(title: "[멜로미터] 초대코드: \(inviteCode)",
-                              imageUrl: URL(string: "https://mud-kage.kakao.com/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png")!,
+                              imageUrl: URL(string: "asset://startView")!,
                               link: appLink)
         
         let template = FeedTemplate(content: content, buttons: [appButton])

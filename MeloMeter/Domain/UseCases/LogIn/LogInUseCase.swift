@@ -54,13 +54,17 @@ class LogInUseCase {
     }
     
     //로그인 요청 서비스
-    func inputVerificationCodeService(code: String?) -> Single<String> {
+    func inputVerificationCodeService(code: String?) -> Single<String?> {
         return Single.create { [weak self] single in
             guard let self = self else{ return Disposables.create() }
             self.logInRepository.inputVerificationCode(verificationCode: code)
-                .subscribe(onSuccess: { inviteCode in
-                    let code = "\(inviteCode.prefix(4)) \(inviteCode.suffix(4))"
-                    single(.success(code))
+                .subscribe(onSuccess: { code in
+                    if let inviteCode = code {
+                        let code = "\(inviteCode.prefix(4)) \(inviteCode.suffix(4))"
+                        single(.success(code))
+                    }else {
+                        single(.success(nil))
+                    }
                 }, onFailure: { error in
                     single(.failure(error))
                 }).disposed(by: disposeBag)
@@ -110,4 +114,8 @@ class LogInUseCase {
             .disposed(by: disposeBag)
     }
     
+    func uploadDefaultProfileImage() -> Single<Void> {
+        let defaultProfileImage = UIImage(named: "defaultProfileImage")!
+        return self.userRepository.updateProfileImage(image: defaultProfileImage)
+    }
 }
