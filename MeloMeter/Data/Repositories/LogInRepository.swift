@@ -177,11 +177,12 @@ class LogInRepository: LogInRepositoryP {
                     guard let coupleDocumentID = UserDefaults.standard.string(forKey: "coupleDocumentID") else{ return }
                     let update1 = self.firebaseService.updateDocument(collection: .Users, document: uid, values: ["coupleID" : coupleDocumentID])
                     let update2 = self.firebaseService.updateDocument(collection: .Users, document: uid2, values: ["coupleID" : coupleDocumentID])
+                    let chatDocumentCreate = self.firebaseService.createDocument(collection: .Locations, document: coupleDocumentID, values: ["chatField": []])
                     let updateAccessLevel = self.firebaseService.setAccessLevel(.coupleCombined)
                     let updateOtherAccessLevel = self.firebaseService.updateDocument(collection: .Users, document: uid2, values: ["accessLevel" : "coupleCombined"])
                     
-                    Single.zip(update1, update2, updateAccessLevel, updateOtherAccessLevel)
-                        .subscribe(onSuccess: { _, _, _, _ in
+                    Single.zip(update1, update2, chatDocumentCreate, updateAccessLevel, updateOtherAccessLevel)
+                        .subscribe(onSuccess: { _, _, _, _, _ in
                             single(.success(()))
                         })
                         .disposed(by: self.disposeBag)

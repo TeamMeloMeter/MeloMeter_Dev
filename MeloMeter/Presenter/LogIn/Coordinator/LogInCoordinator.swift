@@ -8,10 +8,11 @@
 import UIKit
 final class LogInCoordinator: Coordinator {
     var delegate: CoordinatorDelegate?
-    
+    let firebaseService = DefaultFirebaseService()
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
     var isLogin: Bool = false
+    
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
         self.childCoordinators = []
@@ -36,15 +37,12 @@ final class LogInCoordinator: Coordinator {
 }
 
 extension LogInCoordinator {
-    
     func showPhoneCertifiedVC() {
         let viewController = PhoneCertifiedVC(
             viewModel: LogInVM(
                 coordinator: self,
-                logInUseCase: LogInUseCase(logInRepository: LogInRepository(firebaseService: DefaultFirebaseService()),
-                                           userRepository: UserRepository(firebaseService: DefaultFirebaseService()
-                                                                         )
-                                          )
+                logInUseCase: LogInUseCase(logInRepository: LogInRepository(firebaseService: firebaseService),
+                                           userRepository: UserRepository(firebaseService: firebaseService))
             )
         )
         
@@ -55,9 +53,8 @@ extension LogInCoordinator {
     func showAuthNumVC(phoneNumber: String?) {
         let viewModel = LogInVM(
             coordinator: self,
-            logInUseCase: LogInUseCase(logInRepository: LogInRepository(firebaseService: DefaultFirebaseService()),
-                                       userRepository: UserRepository(firebaseService: DefaultFirebaseService()
-                                                                     )
+            logInUseCase: LogInUseCase(logInRepository: LogInRepository(firebaseService: firebaseService),
+                                       userRepository: UserRepository(firebaseService: firebaseService)
                                       )
         )
         viewModel.phoneNumber = phoneNumber
@@ -71,8 +68,8 @@ extension LogInCoordinator {
         let viewController = CoupleCombineVC(
             viewModel: LogInVM(
                 coordinator: self,
-                logInUseCase: LogInUseCase(logInRepository: LogInRepository(firebaseService: DefaultFirebaseService()),
-                                           userRepository: UserRepository(firebaseService: DefaultFirebaseService())
+                logInUseCase: LogInUseCase(logInRepository: LogInRepository(firebaseService: firebaseService),
+                                           userRepository: UserRepository(firebaseService: firebaseService)
                                           )
             ),
             inviteCode: inviteCode,
@@ -83,6 +80,7 @@ extension LogInCoordinator {
     }
     
     func finish() {
+        print("로그인코디finish")
         self.delegate?.didFinish(childCoordinator: self)
     }
     
@@ -90,6 +88,7 @@ extension LogInCoordinator {
 
 extension LogInCoordinator: CoordinatorDelegate {
     func didFinish(childCoordinator: Coordinator) {
+        print("로그인코디Didfinish")
         self.childCoordinators.removeAll()
         self.delegate?.didFinish(childCoordinator: self)
     }

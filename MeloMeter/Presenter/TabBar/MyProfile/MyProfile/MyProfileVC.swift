@@ -89,7 +89,7 @@ class MyProfileVC: UIViewController {
             .drive(onNext: { [weak self] message in
                 if let text = message {
                     self?.stateMessageLabel.textColor = .gray1
-                    self?.stateMessageLabel.text = message
+                    self?.stateMessageLabel.text = text
                 }else {
                     self?.stateMessageLabel.textColor = .gray2
                     self?.stateMessageLabel.text = "상태메세지를 변경해보세요!"

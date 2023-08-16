@@ -94,7 +94,7 @@ extension TabBarCoordinator {
 
 extension TabBarCoordinator: CoordinatorDelegate {
     func didFinish(childCoordinator: Coordinator) {
-        self.navigationController.viewControllers.removeAll()
-        self.delegate?.didFinish(childCoordinator: self)
+//        self.navigationController.viewControllers.removeAll()
+//        self.delegate?.didFinish(childCoordinator: self)
     }
 }

@@ -46,7 +46,7 @@ class NoticeVC: UIViewController {
             cellTapEvent: selectedCellIndex.asObserver()
         )
         
-        guard let output = viewModel?.transform(input: input, disposeBag: self.disposeBag) else{ return }
+        viewModel?.transform(input: input, disposeBag: self.disposeBag)
         
         
     }

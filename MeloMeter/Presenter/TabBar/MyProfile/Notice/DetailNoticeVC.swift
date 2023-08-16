@@ -40,7 +40,7 @@ class DetailNoticeVC: UIViewController {
                 .asObservable()
         )
         
-        guard let output = viewModel?.detailTransform(input: input, disposeBag: self.disposeBag) else{ return }
+        viewModel?.detailTransform(input: input, disposeBag: self.disposeBag)
         
         
     }

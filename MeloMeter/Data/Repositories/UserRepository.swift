@@ -138,7 +138,6 @@ class UserRepository: UserRepositoryP {
     }
 
     func signOut() {
-        guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return }
         try? Auth.auth().signOut()
     }
 }

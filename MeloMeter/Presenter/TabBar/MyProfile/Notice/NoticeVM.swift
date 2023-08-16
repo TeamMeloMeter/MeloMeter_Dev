@@ -36,12 +36,12 @@ class NoticeVM {
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output()
         
-        input.viewWillApearEvent
-            .subscribe(onNext: {[weak self] _ in
-                guard let self = self else{ return }
-               
-            })
-            .disposed(by: disposeBag)
+//        input.viewWillApearEvent
+//            .subscribe(onNext: {[weak self] _ in
+//                guard let self = self else{ return }
+//               
+//            })
+//            .disposed(by: disposeBag)
         
         input.backBtnTapEvent
             .subscribe(onNext: {[weak self] _ in

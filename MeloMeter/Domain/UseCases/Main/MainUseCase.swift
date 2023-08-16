@@ -17,7 +17,7 @@ enum LocationAuthorizationStatus {
 
 class MainUseCase {
     var authorizationStatus = BehaviorSubject<LocationAuthorizationStatus?>(value: nil)
-    private let locationService: LocationService
+    private let locationService: DefaultLocationService
     private let firebaseService: DefaultFirebaseService
     private let userRepository: UserRepositoryP
     private let coupleRepository: CoupleRepositoryP
@@ -28,7 +28,7 @@ class MainUseCase {
     var otherUserData: PublishRelay<UserModel>
     var disposeBag: DisposeBag
     
-    required init(locationService: LocationService) {
+    required init(locationService: DefaultLocationService) {
         self.locationService = locationService
         self.firebaseService = DefaultFirebaseService()
         self.userRepository = UserRepository(firebaseService: self.firebaseService)
@@ -56,6 +56,7 @@ class MainUseCase {
     func checkAuthorization() {
         self.locationService.observeUpdatedAuthorization()
             .subscribe(onNext: { [weak self] status in
+                print("권한쳌", status.rawValue)
                 switch status {
                 case .authorizedAlways:
                     self?.authorizationStatus.onNext(.allowed)
@@ -88,7 +89,7 @@ class MainUseCase {
                     guard let geopoint = firebaseData["location"] as? GeoPoint else { return nil }
                     return CLLocation(latitude: geopoint.latitude, longitude: geopoint.longitude)
                 }
-                .asDriver(onErrorJustReturn: CLLocation(latitude: 0, longitude: 0))
+                .asDriver(onErrorJustReturn: CLLocation(latitude: 37.541, longitude: 126.986))
                 .asObservable()
                 .bind(to: self.updatedOtherLocation)
                 .disposed(by: disposeBag)
