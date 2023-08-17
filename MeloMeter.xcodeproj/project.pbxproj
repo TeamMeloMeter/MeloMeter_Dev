@@ -26,6 +26,11 @@
 		2185C4DB2A83F13B00F99795 /* MockSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4CA2A83F13B00F99795 /* MockSocket.swift */; };
 		2185C4DC2A83F13B00F99795 /* DisplayChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4CB2A83F13B00F99795 /* DisplayChatVC.swift */; };
 		2185C4E12A83F31900F99795 /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2185C4E02A83F31900F99795 /* MessageKit */; };
+		2185C4E32A8400A600F99795 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2185C4E22A8400A600F99795 /* GoogleService-Info.plist */; };
+		21C3821D2A87F778003638E1 /* ChatRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C3821C2A87F778003638E1 /* ChatRepositoryP.swift */; };
+		21C3821F2A87F7B1003638E1 /* ChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C3821E2A87F7B1003638E1 /* ChatRepository.swift */; };
+		21C382222A87F812003638E1 /* ChatUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C382212A87F812003638E1 /* ChatUseCase.swift */; };
+		21C382242A87F85F003638E1 /* ChatDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C382232A87F85F003638E1 /* ChatDTO.swift */; };
 		521D41E52A7FFAD200E5CCDA /* DdayVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41E42A7FFAD200E5CCDA /* DdayVM.swift */; };
 		521D41E72A7FFD5F00E5CCDA /* DdayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */; };
 		521D41EC2A801D1200E5CCDA /* CoupleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41EB2A801D1200E5CCDA /* CoupleModel.swift */; };
@@ -156,6 +161,12 @@
 		2185C4C92A83F13B00F99795 /* CustomLayoutSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLayoutSizeCalculator.swift; sourceTree = "<group>"; };
 		2185C4CA2A83F13B00F99795 /* MockSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSocket.swift; sourceTree = "<group>"; };
 		2185C4CB2A83F13B00F99795 /* DisplayChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayChatVC.swift; sourceTree = "<group>"; };
+		2185C4E22A8400A600F99795 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		21C3821C2A87F778003638E1 /* ChatRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRepositoryP.swift; sourceTree = "<group>"; };
+		21C3821E2A87F7B1003638E1 /* ChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRepository.swift; sourceTree = "<group>"; };
+		21C382212A87F812003638E1 /* ChatUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUseCase.swift; sourceTree = "<group>"; };
+		21C382232A87F85F003638E1 /* ChatDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDTO.swift; sourceTree = "<group>"; };
+		238F16D92C4D34E4F24706C9 /* Pods_MeloMeter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeloMeter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		521D41E42A7FFAD200E5CCDA /* DdayVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayVM.swift; sourceTree = "<group>"; };
 		521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayUseCase.swift; sourceTree = "<group>"; };
 		521D41EB2A801D1200E5CCDA /* CoupleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleModel.swift; sourceTree = "<group>"; };
@@ -360,6 +371,14 @@
 				2185C4CA2A83F13B00F99795 /* MockSocket.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		21C382202A87F7F9003638E1 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				21C382212A87F812003638E1 /* ChatUseCase.swift */,
+			);
+			path = Chat;
 			sourceTree = "<group>";
 		};
 		521D41E82A7FFD6300E5CCDA /* MyProfile */ = {
@@ -679,6 +698,7 @@
 				5271D41E2A5887E500FC7606 /* LogInRepository.swift */,
 				526EB85D2A7D5992005B1940 /* UserRepository.swift */,
 				521D41F52A81C71F00E5CCDA /* CoupleRepository.swift */,
+				21C3821E2A87F7B1003638E1 /* ChatRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -741,6 +761,7 @@
 				5271D42B2A60484300FC7606 /* LogInDTO.swift */,
 				2108F0462A6EC48B002EED7A /* UserDTO.swift */,
 				521D41ED2A801D5700E5CCDA /* CoupleDTO.swift */,
+				21C382232A87F85F003638E1 /* ChatDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -751,6 +772,7 @@
 				5290BFB32A7270DF00D734EE /* LogInRepositoryP.swift */,
 				526EB85F2A7D59A4005B1940 /* UserRepositoryP.swift */,
 				521D41F72A81C75100E5CCDA /* CoupleRepositoryP.swift */,
+				21C3821C2A87F778003638E1 /* ChatRepositoryP.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -758,6 +780,7 @@
 		5290BFB52A72712800D734EE /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				21C382202A87F7F9003638E1 /* Chat */,
 				521D41E92A7FFD7000E5CCDA /* LogIn */,
 				521D41F92A83D5C100E5CCDA /* Presets */,
 				521D41EA2A7FFD7C00E5CCDA /* Main */,
@@ -1101,6 +1124,7 @@
 				521D41EC2A801D1200E5CCDA /* CoupleModel.swift in Sources */,
 				2108F04B2A702A77002EED7A /* PermissionVM.swift in Sources */,
 				52697B7329EEB7B2002BDD04 /* AppDelegate.swift in Sources */,
+				21C382242A87F85F003638E1 /* ChatDTO.swift in Sources */,
 				52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */,
 				5271D40B2A544A2D00FC7606 /* LogInVM.swift in Sources */,
 				5230B2802A7C20D400781623 /* BackgroundTaskManager.swift in Sources */,
@@ -1122,6 +1146,8 @@
 				5271D41C2A58435A00FC7606 /* DefaultFirebaseService.swift in Sources */,
 				52F0100F2A0A55470014FC01 /* DetailQnAVC.swift in Sources */,
 				5271D41F2A5887E500FC7606 /* LogInRepository.swift in Sources */,
+				21C3821D2A87F778003638E1 /* ChatRepositoryP.swift in Sources */,
+				21C3821F2A87F7B1003638E1 /* ChatRepository.swift in Sources */,
 				5271D42A2A5FD02900FC7606 /* AlertManager.swift in Sources */,
 				52CE6EA12A01875C00E43D39 /* AlarmViewController.swift in Sources */,
 				5290BFAC2A70F46C00D734EE /* MainCoordinator.swift in Sources */,
@@ -1133,6 +1159,7 @@
 				52F00FF62A0930FF0014FC01 /* AddDdayModal.swift in Sources */,
 				2185C4CF2A83F13B00F99795 /* ChatCoordinator.swift in Sources */,
 				2185C4D82A83F13B00F99795 /* CustomTextLayoutSizeCalculator.swift in Sources */,
+				21C382222A87F812003638E1 /* ChatUseCase.swift in Sources */,
 				52F0100B2A0A493C0014FC01 /* QnATableViewCell.swift in Sources */,
 				5290BFB42A7270DF00D734EE /* LogInRepositoryP.swift in Sources */,
 				52F305362A16B7F500112A04 /* RecoveryVC.swift in Sources */,

@@ -9,6 +9,7 @@ import Foundation
 import MessageKit
 
 struct MockUser: SenderType, Equatable {
-  var senderId: String
-  var displayName: String
+  var senderId: String //자신의 UUID
+  var displayName: String //프로필 이름
 }
+

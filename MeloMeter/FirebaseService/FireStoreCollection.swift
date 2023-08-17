@@ -8,7 +8,7 @@
 import Foundation
 
 public enum FireStoreCollection: String {
-    case Users, Couples, Locations
+    case Users, Couples, Locations, Chat
     
     var name: String {
         return self.rawValue
