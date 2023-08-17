@@ -178,7 +178,7 @@ class LogInRepository: LogInRepositoryP {
                     let defaultProfileImage = UIImage(named: "defaultProfileImage")!
                     let update1 = self.firebaseService.updateDocument(collection: .Users, document: uid, values: ["coupleID" : coupleDocumentID])
                     let update2 = self.firebaseService.updateDocument(collection: .Users, document: uid2, values: ["coupleID" : coupleDocumentID])
-                    let chatDocumentCreate = self.firebaseService.createDocument(collection: .Locations, document: coupleDocumentID, values: ["chatField": []])
+                    let chatDocumentCreate = self.firebaseService.createDocument(collection: .Chat, document: coupleDocumentID, values: ["chatField": []])
                     let uploadDefaultImage = self.firebaseService.uploadImage(filePath: uid, image: defaultProfileImage)
                     let uploadDefaultImage2 = self.firebaseService.uploadImage(filePath: uid2, image: defaultProfileImage)
                     let updateAccessLevel = self.firebaseService.setAccessLevel(.coupleCombined)
