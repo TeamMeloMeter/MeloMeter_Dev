@@ -28,12 +28,12 @@ class MainUseCase {
     var otherUserData: PublishRelay<UserModel>
     var disposeBag: DisposeBag
     
-    required init(locationService: DefaultLocationService) {
+    required init(locationService: DefaultLocationService, firebaseService: DefaultFirebaseService) {
         self.locationService = locationService
-        self.firebaseService = DefaultFirebaseService()
+        self.firebaseService = firebaseService
         self.userRepository = UserRepository(firebaseService: self.firebaseService)
         self.coupleRepository = CoupleRepository(firebaseService: self.firebaseService)
-
+        
         self.updatedLocation = PublishRelay()
         self.updatedOtherLocation = PublishRelay()
         self.userData = PublishRelay()
@@ -56,24 +56,24 @@ class MainUseCase {
     func checkAuthorization() {
         self.locationService.observeUpdatedAuthorization()
             .subscribe(onNext: { [weak self] status in
-                print("권한쳌", status.rawValue)
+                guard let self = self else{ return }
                 switch status {
                 case .authorizedAlways:
-                    self?.authorizationStatus.onNext(.allowed)
-                    self?.locationService.start()
+                    self.authorizationStatus.onNext(.allowed)
+                    self.locationService.start()
                 case .authorizedWhenInUse:
-                    self?.authorizationStatus.onNext(.halfallowed)
-                    self?.locationService.start()
+                    self.authorizationStatus.onNext(.halfallowed)
+                    self.locationService.start()
                 case .notDetermined:
-                    self?.authorizationStatus.onNext(.notDetermined)
+                    self.authorizationStatus.onNext(.notDetermined)
                 case .denied, .restricted:
-                    self?.authorizationStatus.onNext(.disallowed)
+                    self.authorizationStatus.onNext(.disallowed)
                 @unknown default:
-                    self?.authorizationStatus.onNext(nil)
+                    self.authorizationStatus.onNext(nil)
                 }
                 
             })
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func requestLocation() {

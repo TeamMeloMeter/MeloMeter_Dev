@@ -92,7 +92,7 @@ class UserRepository: UserRepositoryP {
     
     func updateProfileImage(image: UIImage) -> Single<Void> {
         guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return Single.just(()) }
-        return self.firebaseService.uploadImage(image: image)
+        return self.firebaseService.uploadImage(filePath: uid, image: image)
             .flatMap{ url in
                 return self.firebaseService.updateDocument(collection: .Users, document: uid, values: ["profileImagePath": url] as? [String: Any] ?? [:])
             }

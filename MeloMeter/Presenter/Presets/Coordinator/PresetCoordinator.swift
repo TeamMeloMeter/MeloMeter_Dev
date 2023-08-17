@@ -39,10 +39,12 @@ extension PresetCoordinator {
     }
     
     func showPermissionVC1() {
+        let firebaseService = DefaultFirebaseService()
         let viewController = PermissionVC(
             viewModel: PermissionVM(
                 coordinator: self,
-                mainUseCase: MainUseCase(locationService: DefaultLocationService()))
+                mainUseCase: MainUseCase(locationService: DefaultLocationService(firebaseService: firebaseService),
+                                         firebaseService: firebaseService))
         )
         
         self.navigationController.setNavigationBarHidden(true, animated: false)
@@ -50,10 +52,12 @@ extension PresetCoordinator {
     }
     
     func showPermissionVC2() {
+        let firebaseService = DefaultFirebaseService()
         let viewController = Permission2VC(
             viewModel: PermissionVM(
                 coordinator: self,
-                mainUseCase: MainUseCase(locationService: DefaultLocationService()))
+                mainUseCase: MainUseCase(locationService: DefaultLocationService(firebaseService: firebaseService),
+                                         firebaseService: firebaseService))
         )
         
         self.navigationController.setNavigationBarHidden(true, animated: false)

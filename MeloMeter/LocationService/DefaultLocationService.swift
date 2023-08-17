@@ -10,24 +10,32 @@ import Foundation
 import FirebaseFirestore
 import RxRelay
 import RxSwift
+import RxCocoa
 
 final class DefaultLocationService: NSObject, LocationService {
-    let locationManager = CLLocationManager()
+    var locationManager = CLLocationManager()
+    var firebaseService: DefaultFirebaseService
     var disposeBag: DisposeBag = DisposeBag()
+    
     var authorizationStatus = BehaviorRelay<CLAuthorizationStatus>(value: .notDetermined)
-    private var currentLocation = PublishRelay<CLLocation>()
-    private let firebaseService = DefaultFirebaseService()
+    var currentLocation = PublishRelay<CLLocation>()
+    
     private let uid = UserDefaults.standard.string(forKey: "uid")
-    override init() {
+    init(firebaseService: DefaultFirebaseService) {
+        self.firebaseService = firebaseService
         super.init()
         self.locationManager.delegate = self
-        self.locationManager.distanceFilter = CLLocationDistance(1)
+        self.locationManager.distanceFilter = CLLocationDistance(5)
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        self.locationManager.pausesLocationUpdatesAutomatically = false
+        
     }
     
     func start() {
-        self.locationManager.startUpdatingLocation()
+        DispatchQueue.global().async {
+            if CLLocationManager.locationServicesEnabled() {
+                self.locationManager.startUpdatingLocation()
+            }
+        }
         //startMonitoringSignificantLocationChanges() // 종료 시, 백그라운드 시에도 위치 업데이트받기
     }
     
@@ -51,11 +59,8 @@ final class DefaultLocationService: NSObject, LocationService {
 
 extension DefaultLocationService: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("위치업데이트??", manager,locations)
-
         guard let location = locations.last else { return }
-        print("위치업데이트", location.coordinate.latitude, location.coordinate.longitude)
-        currentLocation.accept(location)
+        self.currentLocation.accept(location)
         if let uid = self.uid {
             let geopoint = GeoPoint(latitude: location.coordinate.latitude,
                                     longitude: location.coordinate.longitude)
@@ -71,4 +76,9 @@ extension DefaultLocationService: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         self.authorizationStatus.accept(status)
     }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        self.currentLocation.accept(CLLocation(latitude: 37.541, longitude: 126.986))
+    }
+    
 }
