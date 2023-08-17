@@ -7,6 +7,7 @@
 
 import UIKit
 final class MainCoordinator: Coordinator {
+    
     var delegate: CoordinatorDelegate?
     
     var navigationController: UINavigationController
@@ -26,10 +27,16 @@ final class MainCoordinator: Coordinator {
 extension MainCoordinator {
     
     func showMapVC() {
+        let firebaseService = DefaultFirebaseService()
         let viewController = MapVC(viewModel: MapVM(
             coordinator: self,
-            mainUseCase: MainUseCase(locationService: DefaultLocationService())
+            mainUseCase: MainUseCase(
+                locationService: DefaultLocationService(
+                    firebaseService: firebaseService
+                ),
+                firebaseService: firebaseService
             )
+        )
         )
         
         self.navigationController.setNavigationBarHidden(true, animated: false)
@@ -39,8 +46,16 @@ extension MainCoordinator {
     func showDdayFlow() {
         let dDayCoordinator = DdayCoordinator(self.navigationController)
         childCoordinators.append(dDayCoordinator)
-        dDayCoordinator.parentCoordinator = self
+        dDayCoordinator.delegate = self
         dDayCoordinator.start()
     }
 
+}
+
+extension MainCoordinator: CoordinatorDelegate {
+    func didFinish(childCoordinator: Coordinator) {
+        if childCoordinator is DdayCoordinator {
+            self.navigationController.popViewController(animated: false)
+        }
+    }
 }

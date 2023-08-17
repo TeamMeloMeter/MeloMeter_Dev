@@ -114,8 +114,4 @@ class LogInUseCase {
             .disposed(by: disposeBag)
     }
     
-    func uploadDefaultProfileImage() -> Single<Void> {
-        let defaultProfileImage = UIImage(named: "defaultProfileImage")!
-        return self.userRepository.updateProfileImage(image: defaultProfileImage)
-    }
 }

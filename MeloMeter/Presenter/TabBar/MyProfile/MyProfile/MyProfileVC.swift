@@ -39,6 +39,12 @@ class MyProfileVC: UIViewController {
     // MARK: Binding
     func setBindings() {
 
+        self.infoStackView.rx.tapGesture().when(.ended)
+            .subscribe(onNext: {[weak self] _ in
+                self?.showInfoAlert()
+            })
+            .disposed(by: disposeBag)
+        
         let input = MyProfileVM.Input(
             viewWillApearEvent: self.rx.methodInvoked(#selector(viewWillAppear(_:)))
                 .map({ _ in })
@@ -109,7 +115,13 @@ class MyProfileVC: UIViewController {
 
     
     // MARK: Event
-
+    func showInfoAlert() {
+        AlertManager(viewController: self)
+            .setTitle("정보")
+            .setMessage("버전 정보: 1.0.0\nProduced by Team Melometer")
+            .addActionConfirm("확인")
+            .showCustomAlert()
+    }
     
     // MARK: UI
     //마이페이지 상단 배경 뷰
@@ -424,7 +436,7 @@ class MyProfileVC: UIViewController {
         let stview = UIStackView(arrangedSubviews: [noticeStackView, lineView1, qnAStackView, lineView2, infoStackView])
         stview.backgroundColor = .white
         stview.axis = .vertical
-        stview.spacing = 16
+        //stview.spacing = 16
         return stview
     }()
     
@@ -452,8 +464,8 @@ class MyProfileVC: UIViewController {
     private func topViewConstraints() {
         topView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            topView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            topView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+            topView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            topView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             topView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             topView.heightAnchor.constraint(equalToConstant: 444)
            
@@ -464,9 +476,7 @@ class MyProfileVC: UIViewController {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             nameLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 25),
-            nameLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -298),
             nameLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 47),
-            nameLabel.widthAnchor.constraint(equalToConstant: 52),
             nameLabel.heightAnchor.constraint(equalToConstant: 28)
         ])
     }
@@ -482,7 +492,7 @@ class MyProfileVC: UIViewController {
     private func stateMessageViewConstraints() {
         stateMessageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            stateMessageView.leadingAnchor.constraint(equalTo: stateMessageLabel.leadingAnchor, constant: -19),
+            stateMessageView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 25),
             stateMessageView.trailingAnchor.constraint(equalTo: stateMessageLabel.trailingAnchor, constant: 19),
             stateMessageView.topAnchor.constraint(equalTo: stateMessageLabel.topAnchor, constant: -1),
             stateMessageView.bottomAnchor.constraint(equalTo: stateMessageLabel.bottomAnchor, constant: 1),
@@ -493,7 +503,7 @@ class MyProfileVC: UIViewController {
         stateMessageLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            stateMessageLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 44),
+            stateMessageLabel.leadingAnchor.constraint(equalTo: stateMessageView.leadingAnchor, constant: 19),
             stateMessageLabel.topAnchor.constraint(equalTo: phoneNumLabel.bottomAnchor, constant: 9),
             stateMessageLabel.heightAnchor.constraint(equalToConstant: 28)
         ])
@@ -506,21 +516,16 @@ class MyProfileVC: UIViewController {
             profileImageView.topAnchor.constraint(equalTo: topView.topAnchor, constant: 43),
             profileImageView.widthAnchor.constraint(equalToConstant: 90),
             profileImageView.heightAnchor.constraint(equalToConstant: 90)
-            
         ])
     }
     
     private func profileEditButtonConstraints() {
         profileEditButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            profileEditButton.leadingAnchor.constraint(equalTo: profileImageView.leadingAnchor, constant: 69),
             profileEditButton.trailingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 4),
-            profileEditButton.topAnchor.constraint(equalTo: profileImageView.topAnchor, constant: 66),
-            profileEditButton.bottomAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 1),
-            profileEditButton.widthAnchor.constraint(equalToConstant: 25),
-            profileEditButton.heightAnchor.constraint(equalToConstant: 25)
-            
-            
+            profileEditButton.bottomAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 2),
+            profileEditButton.widthAnchor.constraint(equalToConstant: 26),
+            profileEditButton.heightAnchor.constraint(equalToConstant: 26)
         ])
     }
     
@@ -532,22 +537,16 @@ class MyProfileVC: UIViewController {
         alarmImageView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            alarmTitleLabel.leadingAnchor.constraint(equalTo: alarmView.leadingAnchor, constant: 70),
-            alarmTitleLabel.trailingAnchor.constraint(equalTo: alarmView.trailingAnchor, constant: -223),
+            alarmTitleLabel.leadingAnchor.constraint(equalTo: alarmImageView.trailingAnchor, constant: 21),
             alarmTitleLabel.topAnchor.constraint(equalTo: alarmView.topAnchor, constant: 10),
-            alarmTitleLabel.bottomAnchor.constraint(equalTo: alarmView.bottomAnchor, constant: -30),
-            alarmTitleLabel.widthAnchor.constraint(equalToConstant: 50),
             alarmTitleLabel.heightAnchor.constraint(equalToConstant: 28),
             
-            alarmSubtitleLabel.leadingAnchor.constraint(equalTo: alarmView.leadingAnchor, constant: 70),
-            alarmSubtitleLabel.trailingAnchor.constraint(equalTo: alarmView.trailingAnchor, constant: -85),
+            alarmSubtitleLabel.leadingAnchor.constraint(equalTo: alarmImageView.trailingAnchor, constant: 21),
             alarmSubtitleLabel.bottomAnchor.constraint(equalTo: alarmView.bottomAnchor, constant: -9),
             alarmSubtitleLabel.heightAnchor.constraint(equalToConstant: 28),
             
-            alarmImageView.leadingAnchor.constraint(equalTo: alarmView.leadingAnchor, constant: 21),
-            alarmImageView.trailingAnchor.constraint(equalTo: alarmSubtitleLabel.leadingAnchor, constant: -25),
-            alarmImageView.topAnchor.constraint(equalTo: alarmView.topAnchor, constant: 24),
-            alarmImageView.bottomAnchor.constraint(equalTo: alarmView.bottomAnchor, constant: -20),
+            alarmImageView.leadingAnchor.constraint(equalTo: alarmView.leadingAnchor, constant: 25),
+            alarmImageView.centerYAnchor.constraint(equalTo: alarmView.centerYAnchor),
             alarmImageView.widthAnchor.constraint(equalToConstant: 24),
             alarmImageView.heightAnchor.constraint(equalToConstant: 24)
         ])
@@ -560,22 +559,16 @@ class MyProfileVC: UIViewController {
         dDayImageView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            dDayTitleLabel.leadingAnchor.constraint(equalTo: dDayView.leadingAnchor, constant: 70),
-            dDayTitleLabel.trailingAnchor.constraint(equalTo: dDayView.trailingAnchor, constant: -223),
+            dDayTitleLabel.leadingAnchor.constraint(equalTo: dDayImageView.trailingAnchor, constant: 21),
             dDayTitleLabel.topAnchor.constraint(equalTo: dDayView.topAnchor, constant: 10),
-            dDayTitleLabel.bottomAnchor.constraint(equalTo: dDayView.bottomAnchor, constant: -30),
-            dDayTitleLabel.widthAnchor.constraint(equalToConstant: 50),
             dDayTitleLabel.heightAnchor.constraint(equalToConstant: 28),
             
-            dDaySubtitleLabel.leadingAnchor.constraint(equalTo: dDayView.leadingAnchor, constant: 70),
-            dDaySubtitleLabel.trailingAnchor.constraint(equalTo: dDayView.trailingAnchor, constant: -85),
+            dDaySubtitleLabel.leadingAnchor.constraint(equalTo: dDayImageView.trailingAnchor, constant: 21),
             dDaySubtitleLabel.bottomAnchor.constraint(equalTo: dDayView.bottomAnchor, constant: -9),
             dDaySubtitleLabel.heightAnchor.constraint(equalToConstant: 28),
             
-            dDayImageView.leadingAnchor.constraint(equalTo: dDayView.leadingAnchor, constant: 21),
-            dDayImageView.trailingAnchor.constraint(equalTo: dDaySubtitleLabel.leadingAnchor, constant: -25),
-            dDayImageView.topAnchor.constraint(equalTo: dDayView.topAnchor, constant: 24),
-            dDayImageView.bottomAnchor.constraint(equalTo: dDayView.bottomAnchor, constant: -20),
+            dDayImageView.leadingAnchor.constraint(equalTo: dDayView.leadingAnchor, constant: 25),
+            dDayImageView.centerYAnchor.constraint(equalTo: dDayView.centerYAnchor),
             dDayImageView.widthAnchor.constraint(equalToConstant: 24),
             dDayImageView.heightAnchor.constraint(equalToConstant: 24)
         ])
@@ -588,22 +581,16 @@ class MyProfileVC: UIViewController {
         hundredQnAImageView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            hundredQnATitleLabel.leadingAnchor.constraint(equalTo: hundredQnAView.leadingAnchor, constant: 70),
-            hundredQnATitleLabel.trailingAnchor.constraint(equalTo: hundredQnAView.trailingAnchor, constant: -223),
+            hundredQnATitleLabel.leadingAnchor.constraint(equalTo: hundredQnAImageView.trailingAnchor, constant: 21),
             hundredQnATitleLabel.topAnchor.constraint(equalTo: hundredQnAView.topAnchor, constant: 10),
-            hundredQnATitleLabel.bottomAnchor.constraint(equalTo: hundredQnAView.bottomAnchor, constant: -30),
-            hundredQnATitleLabel.widthAnchor.constraint(equalToConstant: 50),
             hundredQnATitleLabel.heightAnchor.constraint(equalToConstant: 28),
             
-            hundredQnASubtitleLabel.leadingAnchor.constraint(equalTo: hundredQnAView.leadingAnchor, constant: 70),
-            hundredQnASubtitleLabel.trailingAnchor.constraint(equalTo: hundredQnAView.trailingAnchor, constant: -85),
+            hundredQnASubtitleLabel.leadingAnchor.constraint(equalTo: hundredQnAImageView.trailingAnchor, constant: 21),
             hundredQnASubtitleLabel.bottomAnchor.constraint(equalTo: hundredQnAView.bottomAnchor, constant: -9),
             hundredQnASubtitleLabel.heightAnchor.constraint(equalToConstant: 28),
             
-            hundredQnAImageView.leadingAnchor.constraint(equalTo: hundredQnAView.leadingAnchor, constant: 21),
-            hundredQnAImageView.trailingAnchor.constraint(equalTo: hundredQnASubtitleLabel.leadingAnchor, constant: -25),
-            hundredQnAImageView.topAnchor.constraint(equalTo: hundredQnAView.topAnchor, constant: 24),
-            hundredQnAImageView.bottomAnchor.constraint(equalTo: hundredQnAView.bottomAnchor, constant: -20),
+            hundredQnAImageView.leadingAnchor.constraint(equalTo: hundredQnAView.leadingAnchor, constant: 25),
+            hundredQnAImageView.centerYAnchor.constraint(equalTo: hundredQnAView.centerYAnchor),
             hundredQnAImageView.widthAnchor.constraint(equalToConstant: 24),
             hundredQnAImageView.heightAnchor.constraint(equalToConstant: 24)
         ])
@@ -682,23 +669,18 @@ class MyProfileVC: UIViewController {
         lineView1.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
 
-            bottomStackView.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 36),
-            bottomStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 21),
-            bottomStackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -26),
-            bottomStackView.widthAnchor.constraint(equalToConstant: 328),
-            bottomStackView.heightAnchor.constraint(equalToConstant: 136),
+            bottomStackView.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 29),
+            bottomStackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            bottomStackView.widthAnchor.constraint(equalToConstant: 343),
+            bottomStackView.heightAnchor.constraint(equalToConstant: 168),
             
-            lineView1.topAnchor.constraint(equalTo: bottomStackView.topAnchor, constant: 40),
-            lineView1.leadingAnchor.constraint(equalTo: bottomStackView.leadingAnchor),
-            lineView1.trailingAnchor.constraint(equalTo: bottomStackView.trailingAnchor),
-            lineView1.widthAnchor.constraint(equalToConstant: 343),
-            lineView1.heightAnchor.constraint(equalToConstant: 0.5),
+            lineView1.topAnchor.constraint(equalTo: bottomStackView.topAnchor, constant: 56),
+            lineView1.widthAnchor.constraint(equalTo: bottomStackView.widthAnchor),
+            lineView1.heightAnchor.constraint(equalToConstant: 1),
             
-            lineView2.topAnchor.constraint(equalTo: bottomStackView.bottomAnchor, constant: -40),
-            lineView2.leadingAnchor.constraint(equalTo: bottomStackView.leadingAnchor),
-            lineView2.trailingAnchor.constraint(equalTo: bottomStackView.trailingAnchor),
-            lineView2.widthAnchor.constraint(equalToConstant: 343),
-            lineView2.heightAnchor.constraint(equalToConstant: 0.5)
+            lineView2.topAnchor.constraint(equalTo: bottomStackView.bottomAnchor, constant: -56),
+            lineView2.widthAnchor.constraint(equalTo: bottomStackView.widthAnchor),
+            lineView2.heightAnchor.constraint(equalToConstant: 1)
 
         ])
     }

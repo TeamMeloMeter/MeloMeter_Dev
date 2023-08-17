@@ -90,11 +90,7 @@ class LogInVM {
                     .subscribe(onNext: {[weak self] isCombined in
                         guard let self = self else{ return }
                         if isCombined {
-                            self.logInUseCase.uploadDefaultProfileImage()
-                                .subscribe(onSuccess: {
-                                    self.coordinator?.finish()
-                                })
-                                .disposed(by: self.disposeBag)
+                            self.coordinator?.finish()
                         }
                     })
                     .disposed(by: self.disposeBag)

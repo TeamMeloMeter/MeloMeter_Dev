@@ -44,7 +44,7 @@ public final class DefaultFirebaseService: FireStoreService {
     
     public func getDocument(collection: FireStoreCollection, document: String) -> Single<FirebaseData> {
         return Single<FirebaseData>.create { [weak self] single in
-            guard let self else { return Disposables.create() }
+            guard let self = self else { return Disposables.create() }
             
             self.database.collection(collection.name).document(document).getDocument { snapshot, error in
                 if let error = error { single(.failure(error)) }
@@ -61,7 +61,7 @@ public final class DefaultFirebaseService: FireStoreService {
     
     public func getDocument(collection: FireStoreCollection, field: String, values: [Any]) -> Single<[FirebaseData]> {
         return Single.create { [weak self] single in
-                    guard let self else { return Disposables.create() }
+                    guard let self = self else { return Disposables.create() }
                     
                     var queries = values
                     if queries.isEmpty { queries.append("") }
@@ -84,7 +84,7 @@ public final class DefaultFirebaseService: FireStoreService {
     
     public func createDocument(collection: FireStoreCollection, document: String, values: FirebaseData) -> Single<Void> {
         return Single.create { [weak self] single in
-            guard let self else { return Disposables.create() }
+            guard let self = self else { return Disposables.create() }
             var newDocument: DocumentReference
             
             if document == "" { //문서ID 자동생성
@@ -106,11 +106,12 @@ public final class DefaultFirebaseService: FireStoreService {
     
     public func updateDocument(collection: FireStoreCollection, document: String, values: FirebaseData) -> Single<Void> {
         return Single.create { [weak self] single in
-            guard let self else { return Disposables.create() }
+            guard let self = self else { return Disposables.create() }
             self.database.collection(collection.name)
                 .document(document)
                 .updateData(values) { error in
                     if let error = error { single(.failure(error)) }
+
                     single(.success(()))
                 }
             return Disposables.create()
@@ -150,14 +151,13 @@ public extension DefaultFirebaseService {
 
 //MARK: ImageUpload
 extension DefaultFirebaseService {
-    public func uploadImage(image: UIImage) -> Single<String> {
+    public func uploadImage(filePath: String, image: UIImage) -> Single<String> {
         return Single.create { single in
             guard let imageData = image.jpegData(compressionQuality: 0.4) else { return Disposables.create() }
-            guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return Disposables.create() }
             let metaData = StorageMetadata()
             metaData.contentType = "image/jpeg"
             
-            let imageName = uid + "-ProfileImage"
+            let imageName = filePath + "-ProfileImage"
             let firebaseReference = Storage.storage().reference().child("\(imageName)")
             
             firebaseReference.putData(imageData, metadata: metaData) { _, error in

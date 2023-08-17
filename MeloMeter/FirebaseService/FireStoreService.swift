@@ -20,7 +20,7 @@ public protocol FireStoreService {
     func updateDocument(collection: FireStoreCollection, document: String, values: FirebaseData) -> Single<Void>
     func observer(collection: FireStoreCollection, document: String) -> Observable<FirebaseData>
     
-    func uploadImage(image: UIImage) -> Single<String>
+    func uploadImage(filePath: String, image: UIImage) -> Single<String>
     func downloadImage(urlString: String) -> Single<UIImage?>
     func setAccessLevel(_ level: AccessLevel) -> Single<Void>
 
