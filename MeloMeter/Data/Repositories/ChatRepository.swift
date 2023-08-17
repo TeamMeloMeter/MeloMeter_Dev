@@ -20,8 +20,14 @@ class ChatRepository: ChatRepositoryP{
     }
     
     // MockMessage타입을 인자로 받아서 fireBase에 insert하는 함수 / 리턴 t/f
-//    func addChatMessage(mockMessage: MockMessage) -> Single<Void> {
-//  
+    func addChatMessage(mockMessage: MockMessage) -> Single<Void> {
+        let myUid = UserDefaults.standard.string(forKey: "coupleDocumentID") ?? ""
+        let dto = mockMessage.toDTO()
+        let values = dto.asDictionary ?? [:]
+        let valArr = [values]
+        
+        return self.firebaseService.updateDocument(collection: .Chat, document: myUid, values: ["chatField":valArr])
+        
 //        return Single<Void>.create { single in
 //            let myUid = UserDefaults.standard.string(forKey: "uid") ?? ""
 //            let dto = mockMessage.toDTO()
@@ -36,16 +42,16 @@ class ChatRepository: ChatRepositoryP{
 //                        let pdata = data.append(contentsOf: valArr)
 //                        return self.firebaseService.updateDocument(collection: .Chat, document: myUid, values: pdata)
 //                    }
-//                    
-//                    
+//
+//
 //                }
 //                .subscribe(onSuccess: {
-//                    
+//
 //                }, onFailure: { error in
 //                    single(.failure(error))
 //                })
 //                .disposed(by: disposeBag) as! Disposable
 //        }
-//    }
+    }
 }
 
