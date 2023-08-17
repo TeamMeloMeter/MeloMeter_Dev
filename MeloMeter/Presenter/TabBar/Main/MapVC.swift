@@ -123,7 +123,6 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         output.currentLocation
             .asDriver(onErrorJustReturn: CLLocation(latitude: 37.541, longitude: 126.986))
             .drive(onNext: { [weak self] current in
-                print("내위치 vc", current, Date())
                 self?.updateMyMarker(current)
             })
             .disposed(by: disposeBag)

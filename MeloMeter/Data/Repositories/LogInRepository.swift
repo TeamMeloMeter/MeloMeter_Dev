@@ -175,15 +175,20 @@ class LogInRepository: LogInRepositoryP {
                     guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return }
                     guard let uid2 = UserDefaults.standard.string(forKey: "uid2") else{ return }
                     guard let coupleDocumentID = UserDefaults.standard.string(forKey: "coupleDocumentID") else{ return }
+                    let defaultProfileImage = UIImage(named: "defaultProfileImage")!
                     let update1 = self.firebaseService.updateDocument(collection: .Users, document: uid, values: ["coupleID" : coupleDocumentID])
                     let update2 = self.firebaseService.updateDocument(collection: .Users, document: uid2, values: ["coupleID" : coupleDocumentID])
-                    let chatDocumentCreate = self.firebaseService.createDocument(collection: .Chat, document: coupleDocumentID, values: ["chatField": []])
+                    let chatDocumentCreate = self.firebaseService.createDocument(collection: .Locations, document: coupleDocumentID, values: ["chatField": []])
+                    let uploadDefaultImage = self.firebaseService.uploadImage(filePath: uid, image: defaultProfileImage)
+                    let uploadDefaultImage2 = self.firebaseService.uploadImage(filePath: uid2, image: defaultProfileImage)
                     let updateAccessLevel = self.firebaseService.setAccessLevel(.coupleCombined)
                     let updateOtherAccessLevel = self.firebaseService.updateDocument(collection: .Users, document: uid2, values: ["accessLevel" : "coupleCombined"])
                     
-                    Single.zip(update1, update2, chatDocumentCreate, updateAccessLevel, updateOtherAccessLevel)
-                        .subscribe(onSuccess: { _, _, _, _, _ in
+                    Single.zip(update1, update2, chatDocumentCreate, uploadDefaultImage, uploadDefaultImage2, updateAccessLevel, updateOtherAccessLevel)
+                        .subscribe(onSuccess: { _, _, _, _, _, _, _ in
                             single(.success(()))
+                        }, onFailure: { error in
+                            single(.failure(error))
                         })
                         .disposed(by: self.disposeBag)
                 }, onFailure: { error in
