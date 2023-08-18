@@ -26,7 +26,6 @@
 		2185C4DB2A83F13B00F99795 /* MockSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4CA2A83F13B00F99795 /* MockSocket.swift */; };
 		2185C4DC2A83F13B00F99795 /* DisplayChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4CB2A83F13B00F99795 /* DisplayChatVC.swift */; };
 		2185C4E12A83F31900F99795 /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2185C4E02A83F31900F99795 /* MessageKit */; };
-		2185C4E32A8400A600F99795 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2185C4E22A8400A600F99795 /* GoogleService-Info.plist */; };
 		21C3821D2A87F778003638E1 /* ChatRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C3821C2A87F778003638E1 /* ChatRepositoryP.swift */; };
 		21C3821F2A87F7B1003638E1 /* ChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C3821E2A87F7B1003638E1 /* ChatRepository.swift */; };
 		21C382222A87F812003638E1 /* ChatUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C382212A87F812003638E1 /* ChatUseCase.swift */; };
@@ -114,6 +113,8 @@
 		5290BFAE2A71F8FB00D734EE /* TabBarPageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5290BFAD2A71F8FB00D734EE /* TabBarPageType.swift */; };
 		5290BFB02A71F9A600D734EE /* TabBarPageCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5290BFAF2A71F9A600D734EE /* TabBarPageCase.swift */; };
 		5290BFB42A7270DF00D734EE /* LogInRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5290BFB32A7270DF00D734EE /* LogInRepositoryP.swift */; };
+		52B7EBCB2A8F2E79008F5F53 /* AccountsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B7EBCA2A8F2E79008F5F53 /* AccountsVM.swift */; };
+		52B7EBCD2A8F2F05008F5F53 /* DisconnectUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B7EBCC2A8F2F05008F5F53 /* DisconnectUseCase.swift */; };
 		52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6E8229FEBC0200E43D39 /* FontManager.swift */; };
 		52CE6EA12A01875C00E43D39 /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA02A01875C00E43D39 /* AlarmViewController.swift */; };
 		52CE6EA32A0187BB00E43D39 /* AlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA22A0187BB00E43D39 /* AlarmView.swift */; };
@@ -134,10 +135,7 @@
 		52F2083A29FBB31D0043BCA4 /* MyProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083929FBB31D0043BCA4 /* MyProfileVC.swift */; };
 		52F2084029FBFF280043BCA4 /* DdayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F2083F29FBFF280043BCA4 /* DdayVC.swift */; };
 		52F305302A168CE900112A04 /* DisconnectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F3052F2A168CE900112A04 /* DisconnectVC.swift */; };
-		52F305322A168D6000112A04 /* DisconnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305312A168D6000112A04 /* DisconnectView.swift */; };
-		52F305342A16B7AE00112A04 /* RecoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305332A16B7AE00112A04 /* RecoveryView.swift */; };
 		52F305362A16B7F500112A04 /* RecoveryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305352A16B7F400112A04 /* RecoveryVC.swift */; };
-		52F305382A16BF2A00112A04 /* WithdrawalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305372A16BF2A00112A04 /* WithdrawalView.swift */; };
 		52F3053A2A16BF4700112A04 /* WithdrawalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305392A16BF4700112A04 /* WithdrawalVC.swift */; };
 		584747DECB244E9C525139CD /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE5DBEF8B7E76BA06972B7E /* Pods_MeloMeter.framework */; };
 /* End PBXBuildFile section */
@@ -161,12 +159,10 @@
 		2185C4C92A83F13B00F99795 /* CustomLayoutSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLayoutSizeCalculator.swift; sourceTree = "<group>"; };
 		2185C4CA2A83F13B00F99795 /* MockSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSocket.swift; sourceTree = "<group>"; };
 		2185C4CB2A83F13B00F99795 /* DisplayChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayChatVC.swift; sourceTree = "<group>"; };
-		2185C4E22A8400A600F99795 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		21C3821C2A87F778003638E1 /* ChatRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRepositoryP.swift; sourceTree = "<group>"; };
 		21C3821E2A87F7B1003638E1 /* ChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRepository.swift; sourceTree = "<group>"; };
 		21C382212A87F812003638E1 /* ChatUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUseCase.swift; sourceTree = "<group>"; };
 		21C382232A87F85F003638E1 /* ChatDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDTO.swift; sourceTree = "<group>"; };
-		238F16D92C4D34E4F24706C9 /* Pods_MeloMeter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeloMeter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		521D41E42A7FFAD200E5CCDA /* DdayVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayVM.swift; sourceTree = "<group>"; };
 		521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayUseCase.swift; sourceTree = "<group>"; };
 		521D41EB2A801D1200E5CCDA /* CoupleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleModel.swift; sourceTree = "<group>"; };
@@ -244,6 +240,8 @@
 		5290BFAD2A71F8FB00D734EE /* TabBarPageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPageType.swift; sourceTree = "<group>"; };
 		5290BFAF2A71F9A600D734EE /* TabBarPageCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPageCase.swift; sourceTree = "<group>"; };
 		5290BFB32A7270DF00D734EE /* LogInRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInRepositoryP.swift; sourceTree = "<group>"; };
+		52B7EBCA2A8F2E79008F5F53 /* AccountsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsVM.swift; sourceTree = "<group>"; };
+		52B7EBCC2A8F2F05008F5F53 /* DisconnectUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectUseCase.swift; sourceTree = "<group>"; };
 		52CE6E8229FEBC0200E43D39 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		52CE6EA02A01875C00E43D39 /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
 		52CE6EA22A0187BB00E43D39 /* AlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmView.swift; sourceTree = "<group>"; };
@@ -264,10 +262,7 @@
 		52F2083929FBB31D0043BCA4 /* MyProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileVC.swift; sourceTree = "<group>"; };
 		52F2083F29FBFF280043BCA4 /* DdayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayVC.swift; sourceTree = "<group>"; };
 		52F3052F2A168CE900112A04 /* DisconnectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectVC.swift; sourceTree = "<group>"; };
-		52F305312A168D6000112A04 /* DisconnectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectView.swift; sourceTree = "<group>"; };
-		52F305332A16B7AE00112A04 /* RecoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryView.swift; sourceTree = "<group>"; };
 		52F305352A16B7F400112A04 /* RecoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryVC.swift; sourceTree = "<group>"; };
-		52F305372A16BF2A00112A04 /* WithdrawalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalView.swift; sourceTree = "<group>"; };
 		52F305392A16BF4700112A04 /* WithdrawalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalVC.swift; sourceTree = "<group>"; };
 		8FAA2654E1FEB91139B384AA /* Pods-MeloMeter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.debug.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.debug.xcconfig"; sourceTree = "<group>"; };
 		B61B0F5A29F7A5F500E25EEF /* MeloMeter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeloMeter.entitlements; sourceTree = "<group>"; };
@@ -387,6 +382,7 @@
 				5230B2832A7D029200781623 /* MyProfileUseCase.swift */,
 				521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */,
 				521D42042A8552E300E5CCDA /* EditProfileUseCase.swift */,
+				52B7EBCC2A8F2F05008F5F53 /* DisconnectUseCase.swift */,
 			);
 			path = MyProfile;
 			sourceTree = "<group>";
@@ -474,13 +470,6 @@
 				52F010232A0B77ED0014FC01 /* EditBirthVC.swift */,
 			);
 			path = Birth;
-			sourceTree = "<group>";
-		};
-		521D420B2A87BA2600E5CCDA /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		521D42132A8A107900E5CCDA /* Coordinator */ = {
@@ -820,6 +809,17 @@
 			path = LogIn;
 			sourceTree = "<group>";
 		};
+		52B7EBC92A8F2E5D008F5F53 /* Accounts */ = {
+			isa = PBXGroup;
+			children = (
+				52B7EBCA2A8F2E79008F5F53 /* AccountsVM.swift */,
+				52F3052F2A168CE900112A04 /* DisconnectVC.swift */,
+				52F305352A16B7F400112A04 /* RecoveryVC.swift */,
+				52F305392A16BF4700112A04 /* WithdrawalVC.swift */,
+			);
+			path = Accounts;
+			sourceTree = "<group>";
+		};
 		52CE6E8D29FEBD5700E43D39 /* Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -882,12 +882,9 @@
 		52F010192A0ACD420014FC01 /* EditProfile */ = {
 			isa = PBXGroup;
 			children = (
-				52F305312A168D6000112A04 /* DisconnectView.swift */,
-				52F305332A16B7AE00112A04 /* RecoveryView.swift */,
-				52F305372A16BF2A00112A04 /* WithdrawalView.swift */,
-				52F0101A2A0ACD6E0014FC01 /* DetailEdit */,
 				521D42012A8551E900E5CCDA /* EditProfileVM.swift */,
 				52F010132A0AAD380014FC01 /* EditProfileVC.swift */,
+				52F0101A2A0ACD6E0014FC01 /* DetailEdit */,
 			);
 			path = EditProfile;
 			sourceTree = "<group>";
@@ -895,14 +892,11 @@
 		52F0101A2A0ACD6E0014FC01 /* DetailEdit */ = {
 			isa = PBXGroup;
 			children = (
-				521D420B2A87BA2600E5CCDA /* New Group */,
 				521D42092A85CCEE00E5CCDA /* DetailEditVM.swift */,
 				521D42062A85CC7200E5CCDA /* Name */,
 				521D42072A85CC7900E5CCDA /* StateMessage */,
 				521D42082A85CC8600E5CCDA /* Birth */,
-				52F3052F2A168CE900112A04 /* DisconnectVC.swift */,
-				52F305352A16B7F400112A04 /* RecoveryVC.swift */,
-				52F305392A16BF4700112A04 /* WithdrawalVC.swift */,
+				52B7EBC92A8F2E5D008F5F53 /* Accounts */,
 			);
 			path = DetailEdit;
 			sourceTree = "<group>";
@@ -1105,6 +1099,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52B7EBCB2A8F2E79008F5F53 /* AccountsVM.swift in Sources */,
 				5271D4172A5841E500FC7606 /* FireStoreService.swift in Sources */,
 				52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */,
 				2185C4DA2A83F13B00F99795 /* CustomLayoutSizeCalculator.swift in Sources */,
@@ -1135,14 +1130,12 @@
 				52F010002A094B550014FC01 /* QnAVC.swift in Sources */,
 				2185C4D12A83F13B00F99795 /* SettingUserDefaults.swift in Sources */,
 				52F2083A29FBB31D0043BCA4 /* MyProfileVC.swift in Sources */,
-				52F305322A168D6000112A04 /* DisconnectView.swift in Sources */,
 				521D42102A89C2DF00E5CCDA /* ImageCacheManager.swift in Sources */,
 				521D42122A8A106700E5CCDA /* DdayCoordinator.swift in Sources */,
 				2185C4D92A83F13B00F99795 /* MockUser.swift in Sources */,
 				5230B27C2A77926A00781623 /* MainUseCase.swift in Sources */,
 				2185C4DC2A83F13B00F99795 /* DisplayChatVC.swift in Sources */,
 				5271D4112A5580F200FC7606 /* Permission2VC.swift in Sources */,
-				52F305342A16B7AE00112A04 /* RecoveryView.swift in Sources */,
 				5271D41C2A58435A00FC7606 /* DefaultFirebaseService.swift in Sources */,
 				52F0100F2A0A55470014FC01 /* DetailQnAVC.swift in Sources */,
 				5271D41F2A5887E500FC7606 /* LogInRepository.swift in Sources */,
@@ -1196,7 +1189,6 @@
 				5271D42C2A60484300FC7606 /* LogInDTO.swift in Sources */,
 				5262BB782A8C809A003EB016 /* SplashVC.swift in Sources */,
 				52F010242A0B77ED0014FC01 /* EditBirthVC.swift in Sources */,
-				52F305382A16BF2A00112A04 /* WithdrawalView.swift in Sources */,
 				5270EC102A460354007FF444 /* AuthNumVC.swift in Sources */,
 				5271D4062A51DBDD00FC7606 /* ProfileInsertVC.swift in Sources */,
 				5271D4302A605B0900FC7606 /* Encodable+.swift in Sources */,
@@ -1210,6 +1202,7 @@
 				521D41EE2A801D5700E5CCDA /* CoupleDTO.swift in Sources */,
 				52697B7529EEB7B2002BDD04 /* SceneDelegate.swift in Sources */,
 				5262BB7A2A8C80DB003EB016 /* SplashVM.swift in Sources */,
+				52B7EBCD2A8F2F05008F5F53 /* DisconnectUseCase.swift in Sources */,
 				521D42192A8A99B700E5CCDA /* QnAVM.swift in Sources */,
 				52F0101E2A0ACE190014FC01 /* EditNameVC.swift in Sources */,
 				5271D4152A55C9DD00FC7606 /* LogInModel.swift in Sources */,

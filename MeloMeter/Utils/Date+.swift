@@ -54,7 +54,7 @@ extension Date {
         formatter.locale = Locale(identifier: "ko_KR")
         formatter.timeZone = TimeZone(abbreviation: "KST")
         formatter.dateFormat = format
-
+        
         return formatter.date(from: dateString)
     }
 }

@@ -82,12 +82,18 @@ class EditProfileVC: UIViewController {
                     return AlertManager(viewController: self)
                         .showGenderAlert()
                 },
+            disconnectEvent: self.disconnectLabel.rx.tapGesture().when(.ended)
+                .map({ _ in })
+                .asObservable(),
             logoutEvent: self.logoutLabel.rx.tapGesture().when(.ended)
                         .flatMap{[weak self] _ in
                             guard let self = self else{ return Single.just(()) }
                             return AlertManager(viewController: self)
                                 .showLogoutAlert()
-                        }
+                        },
+            withdrawalEvent: self.withdrawalLabel.rx.tapGesture().when(.ended)
+                .map({ _ in })
+                .asObservable()
         )
         
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else{ return }
