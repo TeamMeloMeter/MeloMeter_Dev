@@ -77,14 +77,12 @@ extension TabBarCoordinator {
     
     func connectMyProfileFlow(to tabNavigationController: UINavigationController) {
         let myProfileCoordinator = MyProfileCoordinator(tabNavigationController)
-        //myProfileCoordinator.delegate = self
         myProfileCoordinator.start()
         childCoordinators.append(myProfileCoordinator)
     }
     
     func connectChatFlow(to tabNavigationController: UINavigationController) {
         let chatCoordinator = ChatCoordinator(tabNavigationController)
-        //chatCoordinator.delegate = self
         chatCoordinator.start()
         childCoordinators.append(chatCoordinator)
     }

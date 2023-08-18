@@ -23,7 +23,9 @@ class EditProfileVM {
         let stateMessageTapEvent: Observable<Void>
         let birthTapEvent: Observable<Void>
         let newGender: Observable<GenderType>
+        let disconnectEvent: Observable<Void>
         let logoutEvent: Observable<Void>
+        let withdrawalEvent: Observable<Void>
     }
 
     struct Output {
@@ -127,10 +129,22 @@ class EditProfileVM {
             })
             .disposed(by: disposeBag)
         
+        input.disconnectEvent
+            .subscribe(onNext: {[weak self] _ in
+                self?.coordinator?.showDisconnectVC()
+            })
+            .disposed(by: disposeBag)
+        
         input.logoutEvent
             .subscribe(onNext: {[weak self] _ in
                 self?.editProfileUseCase.logout()
                 self?.coordinator?.finish()
+            })
+            .disposed(by: disposeBag)
+        
+        input.withdrawalEvent
+            .subscribe(onNext: {[weak self] _ in
+                self?.coordinator?.showWithdrawalVC()
             })
             .disposed(by: disposeBag)
         

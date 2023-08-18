@@ -150,6 +150,45 @@ extension MyProfileCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
+    func showDisconnectVC() {
+        let viewController = DisconnectVC(viewModel: AccountsVM(
+            coordinator: self,
+            disconnectUseCase: DisconnectUseCase(
+                userRepository: UserRepository(firebaseService: DefaultFirebaseService())
+            ))
+        )
+        
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showRecoveryVC() {
+        let viewController = RecoveryVC(viewModel: AccountsVM(
+            coordinator: self,
+            disconnectUseCase: DisconnectUseCase(
+                userRepository: UserRepository(firebaseService: DefaultFirebaseService())
+            ))
+        )
+        
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showWithdrawalVC() {
+        let viewController = WithdrawalVC(viewModel: AccountsVM(
+            coordinator: self,
+            disconnectUseCase: DisconnectUseCase(
+                userRepository: UserRepository(firebaseService: DefaultFirebaseService())
+            ))
+        )
+        
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
     func finish() {
         self.delegate?.didFinish(childCoordinator: self)
     }
