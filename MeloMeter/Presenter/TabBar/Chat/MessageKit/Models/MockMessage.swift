@@ -10,6 +10,7 @@ import CoreLocation
 import Foundation
 import MessageKit
 import UIKit
+import Firebase
 
 // MARK: - CoordinateItem
 
@@ -193,7 +194,7 @@ internal struct MockMessage: MessageType {
             text: myMessage,
             userId: self.user.senderId,
             messageId: self.messageId,
-            date: sentDate
+            date: Timestamp(date: self.sentDate)
         )
     }
 }

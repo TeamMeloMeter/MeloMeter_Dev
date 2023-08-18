@@ -161,6 +161,13 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     }
     
     // MARK: - EVENT
+    func messageSendfaileAlert(){
+        AlertManager(viewController: self)
+            .setTitle("전송실패")
+            .setMessage("서버와 연결에 실패했습니다.\n잠시후에 다시 시도해주세요. ")
+            .addActionConfirm("확인")
+            .showCustomAlert()
+    }
     
     // MARK: - Binding
     func setBindings() {
@@ -173,7 +180,16 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         )
         
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else{ return }
-
+        
+        output.senddSuccess
+            .bind(onNext: {result in
+                if result {
+                    //성공
+                }
+                else {
+                    self.messageSendfaileAlert()
+                }
+            })
     }
     
     // MARK: - Helpers
@@ -423,13 +439,16 @@ extension ChatVC: InputBarAccessoryViewDelegate {
     
     private func insertMessages(_ data: [Any]) {
         for component in data {
+            //텍스트 타입
             if let str = component as? String {
-                let message = MockMessage(text: str, user: self.mockUser, messageId: UUID().uuidString, date: Date())
+                
+                let message = MockMessage(text: str, user: self.mockUser, messageId: UUID().uuidString, date: Date.fromStringOrNow(Date().toString(type: .timeStamp), .timeStamp))
                 insertMessage(message)
                 sendMessage.accept(message)
-                
+            
+            //이미지 타입
             } else if let img = component as? UIImage {
-                let message = MockMessage(image: img, user: self.mockUser, messageId: UUID().uuidString, date: Date())
+                let message = MockMessage(image: img, user: self.mockUser, messageId: UUID().uuidString, date: Date.fromStringOrNow(Date().toString(type: .timeStamp), .timeStamp))
                 insertMessage(message)
             }
         }

@@ -21,7 +21,7 @@ class ChatVM {
     
     struct Output {
         //전달할 변수
-        
+        var senddSuccess = PublishSubject<Bool>()
     }
     
     // MARK: Input
@@ -37,16 +37,12 @@ class ChatVM {
         input.mySendMessage
             .subscribe(onNext: {[weak self] myMessage in
                 guard let self = self else{ return }
-                
-                print("@@@@@@@@@@@@@@@@@@")
-                print("VM")
-                print(myMessage)
-                print("@@@@@@@@@@@@@@@@@@")
-                
                 self.chatUseCase.sendNumberService(mockMessage: myMessage)
                     .subscribe(onSuccess: {
-                    })
-                    .disposed(by: disposeBag)
+                        output.senddSuccess.onNext(true)
+                    },onFailure: { error in
+                        output.senddSuccess.onNext(false)
+                    }).disposed(by: disposeBag)
             })
             .disposed(by: disposeBag)
         

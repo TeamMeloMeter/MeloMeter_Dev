@@ -7,6 +7,7 @@
 
 import Foundation
 import Firebase
+import FirebaseFirestoreSwift
 
 struct ChatDTO: Codable {
 
@@ -14,17 +15,17 @@ struct ChatDTO: Codable {
     let text: String?
     let userId: String
     let messageId: String
-    let date: Date
+    let date: Timestamp
 
 
-// MARK: - Methods
-//    func toModel() -> MockMessage {
-//        return MockMessage(
-//            text: text ?? "",
-//            user: MockUser,// userId(uuid)를 이용해서 MockUser타입으로 리턴 해주는 매서드 필요
-//            messageId: messageId,
-//            date: date//타임스탬프를 데이트형태로 바꿔주는 작업이 필요
-//        )
-//    }
+    // MARK: - Date 형을 firestore에 입력하면 Unix Time Stamp형으로 변환하는 작업
+
+    private enum CodingKeys: String, CodingKey {
+        case text
+        case userId
+        case messageId
+        case date
+    }
+
     
 }
