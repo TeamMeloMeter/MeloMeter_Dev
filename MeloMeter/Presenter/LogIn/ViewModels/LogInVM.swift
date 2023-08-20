@@ -86,11 +86,12 @@ class LogInVM {
             .subscribe(onNext: {[weak self] _ in
                 guard let self = self else{ return }
                 self.logInUseCase.combineCheckObserver()
-                self.logInUseCase.isCombined
-                    .subscribe(onNext: {[weak self] isCombined in
+                self.logInUseCase.accessLevel
+                    .subscribe(onNext: {[weak self] accessLevel in
                         guard let self = self else{ return }
-                        if isCombined {
+                        if accessLevel == .coupleCombined {
                             self.coordinator?.finish()
+                            return
                         }
                     })
                     .disposed(by: self.disposeBag)

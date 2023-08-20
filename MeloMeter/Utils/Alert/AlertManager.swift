@@ -75,7 +75,7 @@ class AlertManager {
         
         return Single.create{ single in
             let alertController = UIAlertController(title: "로그아웃", message: message, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+            let okAction = UIAlertAction(title: "로그아웃", style: .destructive) { _ in
                 single(.success(()))
             }
             let cancelAction = UIAlertAction(title: "취소", style: .default, handler: nil)

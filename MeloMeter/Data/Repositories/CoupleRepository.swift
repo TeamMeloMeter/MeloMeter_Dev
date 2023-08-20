@@ -14,34 +14,28 @@ class CoupleRepository: CoupleRepositoryP {
     
     var firebaseService: FireStoreService
     var disposeBag: DisposeBag
-    var coupleModel: PublishRelay<CoupleModel>
+    var coupleModel: PublishSubject<CoupleModel?>
     init(firebaseService: FireStoreService) {
         self.firebaseService = firebaseService
-        self.coupleModel = PublishRelay()
+        self.coupleModel = PublishSubject()
         self.disposeBag = DisposeBag()
     }
     
     func getCoupleID() -> Single<String> {
-        return self.firebaseService.getCurrentUser()
-            .flatMap{ user -> Single<String> in
-                return self.firebaseService.getDocument(collection: .Users, document: user.uid)
-                    .flatMap{ data -> Single<String> in
-                        guard let id = data["coupleID"] as? String else{ return Single.just("") }
-                        return Single.just(id)
-                    }
-            }
-    }
-    
-    func couplesObserver() {
-        getCoupleID()
-            .subscribe(onSuccess: { coupleID in
-                self.firebaseService.observer(collection: .Couples, document: coupleID)
-                    .map{ $0.toObject(CoupleDTO.self)?.toModel() ?? CoupleModel(firstDay: Date(), anniversaries: []) }
-                    .asObservable()
-                    .bind(to: self.coupleModel)
-                    .disposed(by: self.disposeBag)
-            })
-            .disposed(by: disposeBag)
+        if let coupleID = UserDefaults.standard.string(forKey: "coupleDocumentID") {
+            return Single.just(coupleID)
+        }else {
+            return self.firebaseService.getCurrentUser()
+                .flatMap{ user -> Single<String> in
+                    return self.firebaseService.getDocument(collection: .Users, document: user.uid)
+                        .flatMap{ data -> Single<String> in
+                            guard let id = data["coupleID"] as? String else{ return Single.just("") }
+                            UserDefaults.standard.set(id, forKey: "coupleDocumentID")
+                            return Single.just(id)
+                        }
+                        
+                }
+        }
     }
     
     func setAnniversaries(data: [String]) -> Single<Void> {
@@ -59,6 +53,48 @@ class CoupleRepository: CoupleRepositoryP {
                         return self.firebaseService.updateDocument(collection: .Couples, document: coupleID, values: values)
                     }
             }
+    }
+    
+    func disconnect() -> Single<Date> {
+        return self.getCoupleID()
+            .flatMap{ coupleID -> Single<Date> in
+                return self.firebaseService.updateDocument(collection: .Couples,
+                                                           document: coupleID,
+                                                           values: ["disconnectedDate": Date().toString(type: .yearToDay)]
+                                                           )
+                    .flatMap{ _ -> Single<Date> in
+                        return Single.just(Date())
+                    }
+            }
+    }
+    
+    func recovery(deadlineDate: Date) -> Single<Bool> {
+        if deadlineDate < Date() {
+            return Single.just(false)
+        }else {
+            return self.getCoupleID()
+                .flatMap{ coupleID in
+                    return self.firebaseService.updateDocument(collection: .Couples,
+                                                               document: coupleID,
+                                                               values: ["disconnectedDate": ""]
+                                                               )
+                    .map{ _ -> Bool in
+                        return true
+                    }
+                }
+        }
+    }
+    
+    func withdrawalAlarm(otherUid: String) -> Single<Void> {
+        return self.firebaseService.updateDocument(collection: .Users,
+                                            document: otherUid,
+                                            values: ["coupleID": "",
+                                                     "otherUid": "",
+                                                     "birth": "",
+                                                     "name": "",
+                                                     "accessLevel": "authenticated"
+                                                    ]
+        )
     }
     
 }

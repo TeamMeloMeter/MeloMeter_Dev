@@ -12,18 +12,18 @@ import RxRelay
 class EditProfileUseCase {
     private let userRepository: UserRepository
     private var disposeBag: DisposeBag
-    var userData: PublishRelay<UserModel>
+    var userData: PublishSubject<UserModel>
     
     required init(userRepository: UserRepository) {
         self.userRepository = userRepository
-        self.userData = PublishRelay()
+        self.userData = PublishSubject()
         self.disposeBag = DisposeBag()
     }
  
     func getUserData() {
         guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return }
         self.userRepository.getUserInfo(uid)
-            .map{ $0.toModel() }
+            .catchAndReturn(UserModel(name: nil, birth: nil))
             .bind(to: self.userData)
             .disposed(by: disposeBag)
     }
@@ -39,8 +39,5 @@ class EditProfileUseCase {
     func editProfileImage(image: UIImage) -> Single<Void> {
         return self.userRepository.updateProfileImage(image: image)
     }
-    
-    func logout() {
-        self.userRepository.signOut()
-    }
+
 }

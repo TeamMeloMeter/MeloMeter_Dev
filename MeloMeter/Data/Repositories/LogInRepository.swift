@@ -121,7 +121,7 @@ class LogInRepository: LogInRepositoryP {
                                 single(.success((.authenticated, inviteCode)))
                             })
                             .disposed(by: self.disposeBag)
-                            let geopoint = GeoPoint(latitude: 37.541, longitude: 126.986)
+                            let geopoint = GeoPoint(latitude: 0, longitude: 0)
                             self.firebaseService.createDocument(collection: .Locations,
                                                                 document: uid,
                                                                 values: ["location": geopoint])
@@ -152,43 +152,54 @@ class LogInRepository: LogInRepositoryP {
         return Single.create{ [weak self] single in
             guard let self = self else { return Disposables.create() }
             
-            let date = Date().toString(type: .timeStamp)
             let inviteCode = code.components(separatedBy: " ").joined()
             firebaseService.getCurrentUser()
                 .flatMap{ user -> Single<Void> in
                     return self.firebaseService.getDocument(collection: .Users, field: "inviteCode", values: [inviteCode])
                         .flatMap{ data -> Single<Void> in
                             guard !data.isEmpty else{ return Single.error(FireStoreError.unknown) }
-                            guard let uid2 = data.last?["uid"] as? String else{ return Single.just(()) }
-                            UserDefaults.standard.set("\(uid2)", forKey: "uid2")
-                            let updateMyDB = self.firebaseService.updateDocument(collection: .Users, document: user.uid, values: ["otherUid": uid2])
-                            let updateOtherDB = self.firebaseService.updateDocument(collection: .Users, document: uid2, values: ["otherUid": user.uid])
+                            guard let otherUid = data.last?["uid"] as? String else{ return Single.just(()) }
+                            UserDefaults.standard.set("\(otherUid)", forKey: "otherUid")
+                            let updateMyDB = self.firebaseService.updateDocument(collection: .Users, document: user.uid, values: ["otherUid": otherUid])
+                            let updateOtherDB = self.firebaseService.updateDocument(collection: .Users, document: otherUid, values: ["otherUid": user.uid])
                             
                             return Single.zip(updateMyDB, updateOtherDB)
                                 .flatMap({ _,_ -> Single<Void> in
-                                    return self.firebaseService.createDocument(collection: .Couples, document: "", values: ["coupleCreatedAt" : date])
+                                    return self.firebaseService.createDocument(collection: .Couples, document: "", values: ["disconnectedDate" : ""])
                                 })
                             
                         }
                 }
                 .subscribe(onSuccess: {
                     guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return }
-                    guard let uid2 = UserDefaults.standard.string(forKey: "uid2") else{ return }
+                    guard let otherUid = UserDefaults.standard.string(forKey: "otherUid") else{ return }
                     guard let coupleDocumentID = UserDefaults.standard.string(forKey: "coupleDocumentID") else{ return }
                     let defaultProfileImage = UIImage(named: "defaultProfileImage")!
-                    let update1 = self.firebaseService.updateDocument(collection: .Users, document: uid, values: ["coupleID" : coupleDocumentID])
-                    let update2 = self.firebaseService.updateDocument(collection: .Users, document: uid2, values: ["coupleID" : coupleDocumentID])
-                    let chatDocumentCreate = self.firebaseService.createDocument(collection: .Chat, document: coupleDocumentID, values: ["chatField": []])
                     let uploadDefaultImage = self.firebaseService.uploadImage(filePath: uid, image: defaultProfileImage)
-                    let uploadDefaultImage2 = self.firebaseService.uploadImage(filePath: uid2, image: defaultProfileImage)
-                    let updateAccessLevel = self.firebaseService.setAccessLevel(.coupleCombined)
-                    let updateOtherAccessLevel = self.firebaseService.updateDocument(collection: .Users, document: uid2, values: ["accessLevel" : "coupleCombined"])
-                    
-                    Single.zip(update1, update2, chatDocumentCreate, uploadDefaultImage, uploadDefaultImage2, updateAccessLevel, updateOtherAccessLevel)
-                        .subscribe(onSuccess: { _, _, _, _, _, _, _ in
-                            single(.success(()))
-                        }, onFailure: { error in
-                            single(.failure(error))
+                    let uploadDefaultImage2 = self.firebaseService.uploadImage(filePath: otherUid, image: defaultProfileImage)
+                    Single.zip(uploadDefaultImage, uploadDefaultImage2)
+                        .subscribe(onSuccess: { user1, user2 in
+                            let update1 = self.firebaseService.updateDocument(collection: .Users,
+                                                                              document: uid,
+                                                                              values: ["coupleID": coupleDocumentID,
+                                                                                       "profileImagePath": user1]
+                            )
+                            let update2 = self.firebaseService.updateDocument(collection: .Users,
+                                                                              document: otherUid,
+                                                                              values: ["coupleID": coupleDocumentID,
+                                                                                       "profileImagePath": user2]
+                            )
+                            let chatDocumentCreate = self.firebaseService.createDocument(collection: .Chat, document: coupleDocumentID, values: ["chatField": []])
+                            let updateAccessLevel = self.firebaseService.setAccessLevel(.coupleCombined)
+                            let updateOtherAccessLevel = self.firebaseService.updateDocument(collection: .Users, document: otherUid, values: ["accessLevel" : "coupleCombined"])
+                            
+                            Single.zip(update1, update2, chatDocumentCreate, updateAccessLevel, updateOtherAccessLevel)
+                                .subscribe(onSuccess: { _, _, _, _, _ in
+                                    single(.success(()))
+                                }, onFailure: { error in
+                                    single(.failure(error))
+                                })
+                                .disposed(by: self.disposeBag)
                         })
                         .disposed(by: self.disposeBag)
                 }, onFailure: { error in
@@ -198,7 +209,5 @@ class LogInRepository: LogInRepositoryP {
             return Disposables.create()
         }
     }
-    
-    
     
 }

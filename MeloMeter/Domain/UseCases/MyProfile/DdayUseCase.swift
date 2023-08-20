@@ -16,13 +16,13 @@ class DdayUseCase {
     private var disposeBag: DisposeBag
     private var coupleRepository: CoupleRepository
     private let calendar = Calendar.current
-    var firstDay: PublishRelay<Date>
-    var dDayCellArray: PublishRelay<[DdayCellData]>
+    var firstDay: PublishSubject<Date>
+    var dDayCellArray: PublishSubject<[DdayCellData]>
     
     init(coupleRepository: CoupleRepository) {
         self.coupleRepository = coupleRepository
-        self.firstDay = PublishRelay()
-        self.dDayCellArray = PublishRelay()
+        self.firstDay = PublishSubject()
+        self.dDayCellArray = PublishSubject()
         self.disposeBag = DisposeBag()
     }
     
@@ -31,7 +31,8 @@ class DdayUseCase {
         self.coupleRepository.coupleModel
             .take(1)
             .subscribe(onNext: { data in
-                self.firstDay.accept(data.firstDay)
+                guard let data = data else{ return }
+                self.firstDay.onNext(data.firstDay)
             })
             .disposed(by: disposeBag)
     }
@@ -47,11 +48,13 @@ class DdayUseCase {
         self.coupleRepository.couplesObserver()
         self.coupleRepository.coupleModel
             .map{ data in
+                guard let data = data else{ return []}
                 let dataArray = data.anniversaries, firstDay = data.firstDay
                 return self.createDdayList(dataArray, firstDay)
             }
             .asObservable()
-            .bind(to: self.dDayCellArray)
+            .asDriver(onErrorJustReturn: [])
+            .drive(self.dDayCellArray)
             .disposed(by: disposeBag)
     }
     

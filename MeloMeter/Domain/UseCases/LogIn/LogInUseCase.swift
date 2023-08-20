@@ -22,13 +22,13 @@ class LogInUseCase {
     private let logInRepository: LogInRepository
     private let disposeBag = DisposeBag()
     private let userRepository: UserRepository
-    var isCombined: PublishRelay<Bool>
+    var accessLevel: PublishRelay<AccessLevel>
     
     // MARK: Initializers
     init(logInRepository: LogInRepository, userRepository: UserRepository) {
         self.logInRepository = logInRepository
         self.userRepository = userRepository
-        self.isCombined = PublishRelay()
+        self.accessLevel = PublishRelay()
     }
     
     // MARK: - Methods
@@ -109,8 +109,9 @@ class LogInUseCase {
     
     func combineCheckObserver() {
         self.userRepository.userAccessLevelObserver()
-        self.userRepository.combineCheck
-            .bind(to: self.isCombined)
+        self.userRepository.accessLevelCheck
+            .catchAndReturn(.none)
+            .bind(to: self.accessLevel)
             .disposed(by: disposeBag)
     }
     

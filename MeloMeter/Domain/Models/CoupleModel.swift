@@ -18,16 +18,16 @@ struct CoupleModel {
     // MARK: - Properties
     let firstDay: Date
     let anniversaries: [DdayCellData]
-    let coupleCreatedAt: Date?
+    let disconnectedDate: Date?
     
-    init(firstDay: Date, anniversaries: [DdayCellData], coupleCreatedAt: Date?) {
+    init(firstDay: Date, anniversaries: [DdayCellData], disconnectedDate: Date?) {
         self.firstDay = firstDay
         self.anniversaries = anniversaries
-        self.coupleCreatedAt = coupleCreatedAt
+        self.disconnectedDate = disconnectedDate
     }
     
     init(firstDay: Date, anniversaries: [DdayCellData]) {
-        self.init(firstDay: firstDay, anniversaries: anniversaries, coupleCreatedAt: nil)
+        self.init(firstDay: firstDay, anniversaries: anniversaries, disconnectedDate: nil)
     }
 
     
@@ -37,7 +37,7 @@ struct CoupleModel {
             firstDay: firstDay.toString(type: .yearToDay),
             anniName: anniversaries.map{ $0.dateName },
             anniDate: anniversaries.map{ $0.date.toString(type: .yearToDay) },
-            coupleCreatedAt: (coupleCreatedAt?.toString(type: .timeStamp)) ?? nil
+            disconnectedDate: (disconnectedDate?.toString(type: .timeStamp)) ?? nil
         )
     }
 }

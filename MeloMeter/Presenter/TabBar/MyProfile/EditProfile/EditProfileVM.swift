@@ -13,7 +13,7 @@ class EditProfileVM {
 
     weak var coordinator: MyProfileCoordinator?
     private var editProfileUseCase: EditProfileUseCase
-
+    private var accountsUseCase: AccountsUseCase
     
     struct Input {
         let viewWillApearEvent: Observable<Void>
@@ -43,9 +43,10 @@ class EditProfileVM {
         var birth = ""
     }
     
-    init(coordinator: MyProfileCoordinator, editProfileUseCase: EditProfileUseCase) {
+    init(coordinator: MyProfileCoordinator, editProfileUseCase: EditProfileUseCase, accountsUseCase: AccountsUseCase) {
         self.coordinator = coordinator
         self.editProfileUseCase = editProfileUseCase
+        self.accountsUseCase = accountsUseCase
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -60,7 +61,7 @@ class EditProfileVM {
             .disposed(by: disposeBag)
         
         self.editProfileUseCase.userData
-            .bind(onNext: { userData in
+            .subscribe(onNext: { userData in
                 self.editProfileUseCase.getProfileImage(url: userData.profileImage ?? "")
                     .asObservable()
                     .take(1)
@@ -137,7 +138,7 @@ class EditProfileVM {
         
         input.logoutEvent
             .subscribe(onNext: {[weak self] _ in
-                self?.editProfileUseCase.logout()
+                self?.accountsUseCase.excuteLogout()
                 self?.coordinator?.finish()
             })
             .disposed(by: disposeBag)

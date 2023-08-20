@@ -32,7 +32,7 @@ final class SplashVM {
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
                     switch state {
                     case .none, .start:
-                        self.coordinator?.showStartVC()
+                        self.coordinator?.connectLogInFlow(accessLevel: false)
                     case .authenticated:
                         self.coordinator?.connectLogInFlow(accessLevel: true)
                     case .coupleCombined:
@@ -42,7 +42,7 @@ final class SplashVM {
                     }
                 }
             }, onFailure: { _ in
-                self.coordinator?.showStartVC()
+                self.coordinator?.connectLogInFlow(accessLevel: false)
             })
             .disposed(by: disposeBag)
     }
