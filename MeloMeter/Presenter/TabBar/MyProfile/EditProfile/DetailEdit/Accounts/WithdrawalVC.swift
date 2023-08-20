@@ -46,7 +46,13 @@ class WithdrawalVC: UIViewController {
         
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else{ return }
         
-        
+        output.withdrawalFailed
+            .subscribe(onNext: {[weak self] result in
+                if result {
+                    self?.withdrawalErrorAlert()
+                }
+            })
+            .disposed(by: disposeBag)
     }
    
     //MARK: Configure
@@ -56,7 +62,18 @@ class WithdrawalVC: UIViewController {
     }
     
     // MARK: Event
-
+    func withdrawalErrorAlert() {
+        AlertManager(viewController: self)
+            .setTitle("탈퇴 오류")
+            .setMessage(
+            """
+            서버와 통신에 실패했습니다.
+            잠시후 다시 시도해주세요.
+            """
+            )
+            .addActionConfirm("확인")
+            .showCustomAlert()
+    }
     // MARK: NavigationBar
     private func setNavigationBar() {
         navigationItem.title = "연결 끊기"

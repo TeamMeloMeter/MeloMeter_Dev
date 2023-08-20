@@ -114,7 +114,7 @@
 		5290BFB02A71F9A600D734EE /* TabBarPageCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5290BFAF2A71F9A600D734EE /* TabBarPageCase.swift */; };
 		5290BFB42A7270DF00D734EE /* LogInRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5290BFB32A7270DF00D734EE /* LogInRepositoryP.swift */; };
 		52B7EBCB2A8F2E79008F5F53 /* AccountsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B7EBCA2A8F2E79008F5F53 /* AccountsVM.swift */; };
-		52B7EBCD2A8F2F05008F5F53 /* DisconnectUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B7EBCC2A8F2F05008F5F53 /* DisconnectUseCase.swift */; };
+		52B7EBCD2A8F2F05008F5F53 /* AccountsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B7EBCC2A8F2F05008F5F53 /* AccountsUseCase.swift */; };
 		52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6E8229FEBC0200E43D39 /* FontManager.swift */; };
 		52CE6EA12A01875C00E43D39 /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA02A01875C00E43D39 /* AlarmViewController.swift */; };
 		52CE6EA32A0187BB00E43D39 /* AlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA22A0187BB00E43D39 /* AlarmView.swift */; };
@@ -241,7 +241,7 @@
 		5290BFAF2A71F9A600D734EE /* TabBarPageCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPageCase.swift; sourceTree = "<group>"; };
 		5290BFB32A7270DF00D734EE /* LogInRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInRepositoryP.swift; sourceTree = "<group>"; };
 		52B7EBCA2A8F2E79008F5F53 /* AccountsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsVM.swift; sourceTree = "<group>"; };
-		52B7EBCC2A8F2F05008F5F53 /* DisconnectUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectUseCase.swift; sourceTree = "<group>"; };
+		52B7EBCC2A8F2F05008F5F53 /* AccountsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsUseCase.swift; sourceTree = "<group>"; };
 		52CE6E8229FEBC0200E43D39 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		52CE6EA02A01875C00E43D39 /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
 		52CE6EA22A0187BB00E43D39 /* AlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmView.swift; sourceTree = "<group>"; };
@@ -382,7 +382,7 @@
 				5230B2832A7D029200781623 /* MyProfileUseCase.swift */,
 				521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */,
 				521D42042A8552E300E5CCDA /* EditProfileUseCase.swift */,
-				52B7EBCC2A8F2F05008F5F53 /* DisconnectUseCase.swift */,
+				52B7EBCC2A8F2F05008F5F53 /* AccountsUseCase.swift */,
 			);
 			path = MyProfile;
 			sourceTree = "<group>";
@@ -534,6 +534,7 @@
 		5230B2532A727BEA00781623 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				5241382F2A62F943002AADA6 /* StartVM.swift */,
 				5271D40A2A544A2D00FC7606 /* LogInVM.swift */,
 			);
 			path = ViewModels;
@@ -705,6 +706,7 @@
 		5271D4272A5CD40500FC7606 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5270EC032A445077007FF444 /* StartVC.swift */,
 				5270EC0B2A44614A007FF444 /* PhoneCertifiedVC.swift */,
 				5270EC0F2A460354007FF444 /* AuthNumVC.swift */,
 				52E0CDEF2A4B091600E4A182 /* CoupleCombineVC.swift */,
@@ -782,21 +784,11 @@
 			isa = PBXGroup;
 			children = (
 				524138292A62EB95002AADA6 /* Coordinator.swift */,
-				5290BFB92A72794000D734EE /* Start */,
 				5290BFBA2A72796A00D734EE /* LogIn */,
 				521D41EF2A814E8400E5CCDA /* Presets */,
 				5230B24E2A727A3100781623 /* TabBar */,
 			);
 			path = Presenter;
-			sourceTree = "<group>";
-		};
-		5290BFB92A72794000D734EE /* Start */ = {
-			isa = PBXGroup;
-			children = (
-				5241382F2A62F943002AADA6 /* StartVM.swift */,
-				5270EC032A445077007FF444 /* StartVC.swift */,
-			);
-			path = Start;
 			sourceTree = "<group>";
 		};
 		5290BFBA2A72796A00D734EE /* LogIn */ = {
@@ -1202,7 +1194,7 @@
 				521D41EE2A801D5700E5CCDA /* CoupleDTO.swift in Sources */,
 				52697B7529EEB7B2002BDD04 /* SceneDelegate.swift in Sources */,
 				5262BB7A2A8C80DB003EB016 /* SplashVM.swift in Sources */,
-				52B7EBCD2A8F2F05008F5F53 /* DisconnectUseCase.swift in Sources */,
+				52B7EBCD2A8F2F05008F5F53 /* AccountsUseCase.swift in Sources */,
 				521D42192A8A99B700E5CCDA /* QnAVM.swift in Sources */,
 				52F0101E2A0ACE190014FC01 /* EditNameVC.swift in Sources */,
 				5271D4152A55C9DD00FC7606 /* LogInModel.swift in Sources */,

@@ -36,7 +36,10 @@ public final class DefaultFirebaseService: FireStoreService {
     
     public func getCurrentUser() -> Single<User> {
         return Single.create { single in
-            guard let currentUser = Auth.auth().currentUser else{single(.failure(FireStoreError.unknown)); return Disposables.create()}
+            guard let currentUser = Auth.auth().currentUser else{
+                single(.failure(FireStoreError.unknown))
+                return Disposables.create()
+            }
             single(.success(currentUser))
             return Disposables.create()
         }
@@ -47,7 +50,8 @@ public final class DefaultFirebaseService: FireStoreService {
             guard let self = self else { return Disposables.create() }
             
             self.database.collection(collection.name).document(document).getDocument { snapshot, error in
-                if let error = error { single(.failure(error)) }
+                if let error = error { single(.failure(error))
+                }
                 
                 guard let snapshot = snapshot, let data = snapshot.data() else {
                     single(.failure(FireStoreError.unknown))
@@ -118,6 +122,37 @@ public final class DefaultFirebaseService: FireStoreService {
         }
     }
     
+    public func deleteDocument(collection: FireStoreCollection, document: String) -> Single<Void> {
+        return Single.create { [weak self] single in
+            guard let self else { return Disposables.create() }
+            
+            self.database.collection(collection.name)
+                .document(document)
+                .delete { error in
+                    if let error = error { single(.failure(error)) }
+                    single(.success(()))
+                }
+            return Disposables.create()
+        }
+    }
+    
+    public func deleteDocuments(collections: [(FireStoreCollection, String)]) -> Single<Void> {
+        let batch = self.database.batch()
+        
+        collections.forEach { collection, document in
+            let document = self.database.collection(collection.name).document(document)
+            batch.deleteDocument(document)
+        }
+        
+        return Single.create { single in
+            batch.commit { error in
+                if let error = error { single(.failure(error)) }
+                single(.success(()))
+            }
+            
+            return Disposables.create()
+        }
+    }
 }
 
 public extension DefaultFirebaseService {
@@ -203,6 +238,24 @@ extension DefaultFirebaseService {
             }
             return Disposables.create()
         }
+    }
+    
+    public func deleteImageFromStorage(imageURL: String) -> Single<Void> {
+        return Single.create { single in
+            let storage = Storage.storage()
+            let storageReference = storage.reference(forURL: imageURL)
+            let cachedKey = NSString(string: imageURL)
+            storageReference.delete { error in
+                if let error = error {
+                    single(.failure(error))
+                } else {
+                    single(.success(()))
+                    ImageCacheManager.shared.removeObject(forKey: cachedKey)
+                }
+            }
+            return Disposables.create()
+        }
+        
     }
     
 }

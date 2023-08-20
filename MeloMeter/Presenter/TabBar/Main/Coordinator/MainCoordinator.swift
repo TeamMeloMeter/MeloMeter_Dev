@@ -38,7 +38,6 @@ extension MainCoordinator {
             )
         )
         )
-        
         self.navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
     }
@@ -50,10 +49,18 @@ extension MainCoordinator {
         dDayCoordinator.start()
     }
 
+    func finish() {
+        UserDefaults.standard.removeObject(forKey: "otherUid")
+        UserDefaults.standard.removeObject(forKey: "coupleDocumentID")
+        UserDefaults.standard.removeObject(forKey: "userName")
+        self.delegate?.didFinish(childCoordinator: self)
+    }
 }
 
 extension MainCoordinator: CoordinatorDelegate {
     func didFinish(childCoordinator: Coordinator) {
+        self.childCoordinators = []
+
         if childCoordinator is DdayCoordinator {
             self.navigationController.popViewController(animated: false)
         }

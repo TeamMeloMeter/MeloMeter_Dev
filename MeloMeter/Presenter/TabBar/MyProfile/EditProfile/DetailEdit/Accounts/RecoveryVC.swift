@@ -12,9 +12,17 @@ class RecoveryVC: UIViewController {
     
     private let viewModel: AccountsVM?
     private let disposeBag = DisposeBag()
-
-    init(viewModel: AccountsVM) {
+    var disconnectDate: String
+    var deadlineDate: String
+    var userName: String
+    var otherUserName: String
+    
+    init(viewModel: AccountsVM, date: (String, String), names: (String, String)) {
         self.viewModel = viewModel
+        self.disconnectDate = date.0
+        self.deadlineDate = date.1
+        self.userName = names.0
+        self.otherUserName = names.1
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -34,8 +42,32 @@ class RecoveryVC: UIViewController {
         super.viewDidAppear(animated)
     }
     
+    // MARK: Configure
+    func configure() {
+        view.backgroundColor = .white
+        [infoView, titleLabel, namesLabel, exLabel1, exLabel2, lineView, recoveryBtn].forEach { view.addSubview($0) }
+        exLabel1.text =
+"""
+• 연결 끊김 : \(self.disconnectDate)
+• 복구 가능한 기간 : \(self.deadlineDate) 까지
+"""
+        let attributedString = NSMutableAttributedString(string: exLabel1.text ?? "")
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 8
+        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
+        exLabel1.attributedText = attributedString
+        
+        self.namesLabel.text = "\(userName)&\(otherUserName)"
+    }
+    
     // MARK: Bindings
     func setBindings() {
+        self.recoveryBtn.rx.tap
+            .subscribe(onNext: {[weak self] _ in
+                self?.viewModel?.deadlineDate = self?.deadlineDate ?? ""
+            })
+            .disposed(by: disposeBag)
+        
         let input = AccountsVM.Input(
             backBtnTapEvent: self.backBarButton.rx.tap
                 .map({ _ in })
@@ -47,16 +79,37 @@ class RecoveryVC: UIViewController {
         
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else{ return }
         
+        output.recoveryFailed
+            .subscribe(onNext: {[weak self] result in
+                if result {
+                    self?.recoveryErrorAlert()
+                }
+            })
+            .disposed(by: disposeBag)
         
     }
     
     // MARK: Event
-
+    func recoveryErrorAlert() {
+        AlertManager(viewController: self)
+            .setTitle("자료 복구 실패")
+            .setMessage(
+"""
+복구 가능한 기간이 초과했습니다.
+모든 개인 정보는 삭제 처리되며
+재인증 후 새로운 커플 연결을
+통해 멜로미터를 사용해주세요
+""")
+            .addActionConfirm("확인", action: { self.viewModel?.recoveryErrorAlertTapEvent.onNext(true) })
+            .showCustomAlert()
+            
+    }
+    
     // MARK: NavigationBar
     private func setNavigationBar() {
         navigationItem.title = "연결 끊기"
-        navigationItem.leftBarButtonItem = backBarButton
-        navigationItem.leftBarButtonItem?.tintColor = .black
+        navigationItem.leftBarButtonItem = nil
+        navigationItem.hidesBackButton = true
     }
     
     private lazy var backBarButton: UIBarButtonItem = {
@@ -94,7 +147,6 @@ class RecoveryVC: UIViewController {
     
     private let namesLabel: UILabel = {
         let label = UILabel()
-        label.text = "소희&제훈"
         label.font = FontManager.shared.semiBold(ofSize: 14)
         label.textColor = .gray1
         return label
@@ -103,13 +155,6 @@ class RecoveryVC: UIViewController {
     private let exLabel1: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.text = "• 연결 끊김 : 2023.05.15\n• 복구 가능한 기간 : 2023.06.15 까지"
-
-        let attributedString = NSMutableAttributedString(string: label.text ?? "")
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 8
-        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
-        label.attributedText = attributedString
         label.font = FontManager.shared.semiBold(ofSize: 14)
         label.textColor = .gray1
         return label
@@ -159,12 +204,7 @@ class RecoveryVC: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: Configure
-    func configure() {
-        view.backgroundColor = .white
-        [infoView, titleLabel, namesLabel, exLabel1, exLabel2, lineView, recoveryBtn].forEach { view.addSubview($0) }
-    }
+
     // MARK: 오토레이아웃
     private func setAutoLayout() {
         infoView.translatesAutoresizingMaskIntoConstraints = false
@@ -186,10 +226,12 @@ class RecoveryVC: UIViewController {
             
             namesLabel.leadingAnchor.constraint(equalTo: infoView.leadingAnchor, constant: 25),
             namesLabel.topAnchor.constraint(equalTo: infoView.topAnchor, constant: 24),
+            namesLabel.heightAnchor.constraint(equalToConstant: 28),
 
             exLabel1.leadingAnchor.constraint(equalTo: infoView.leadingAnchor, constant: 16),
             exLabel1.topAnchor.constraint(equalTo: namesLabel.bottomAnchor, constant: 2),
-            
+            exLabel1.heightAnchor.constraint(equalToConstant: 48),
+
             exLabel2.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 27),
             exLabel2.topAnchor.constraint(equalTo: infoView.bottomAnchor, constant: 30),
             exLabel2.widthAnchor.constraint(equalToConstant: 298),

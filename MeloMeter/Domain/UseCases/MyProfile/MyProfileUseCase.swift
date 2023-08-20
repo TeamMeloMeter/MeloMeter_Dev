@@ -24,7 +24,6 @@ class MyProfileUseCase {
     
     func getUserInfo() -> Observable<UserModel> {
         return self.userRepository.getUserInfo(self.uid)
-            .map{ $0.toModel() }
     }
     
     func getProfileImage(url: String) -> Single<UIImage?> {

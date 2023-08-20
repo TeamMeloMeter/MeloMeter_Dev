@@ -20,17 +20,19 @@ class MapVM {
         let viewWillApearEvent: Observable<Void>
         let dDayBtnTapEvent: Observable<Void>
         let alarmBtnTapEvent: Observable<Void>
+        let endTriggerAlertTapEvent: Observable<Void>
     }
     
     struct Output {
-        var daySince = PublishRelay<String>()
-        var myProfileImage = PublishRelay<UIImage?>()
-        var otherProfileImage = PublishRelay<UIImage?>()
-        var myStateMessage =  PublishRelay<String?>()
-        var otherStateMessage =  PublishRelay<String?>()
-        let authorizationAlertShouldShow = BehaviorRelay<Bool>(value: false)
-        let currentLocation: BehaviorRelay<CLLocation> = BehaviorRelay(value: CLLocation(latitude: 37.541, longitude: 126.986))
-        let currentOtherLocation: BehaviorRelay<CLLocation> = BehaviorRelay(value: CLLocation(latitude: 37.541, longitude: 126.986))
+        var daySince = PublishSubject<String?>()
+        var myProfileImage = PublishSubject<UIImage?>()
+        var otherProfileImage = PublishSubject<UIImage?>()
+        var myStateMessage = PublishSubject<String?>()
+        var otherStateMessage = PublishSubject<String?>()
+        var authorizationAlertShouldShow = PublishSubject<Bool>()
+        var currentLocation = PublishSubject<CLLocation?>()
+        var currentOtherLocation = PublishSubject<CLLocation?>()
+        var endTrigger = PublishSubject<Bool>()
     }
     
     
@@ -44,6 +46,14 @@ class MapVM {
         
         input.viewWillApearEvent
             .subscribe(onNext: { [weak self] _ in
+                self?.mainUseCase.disconnectionObserver()
+                    .subscribe(onSuccess: { result in
+                        if result {
+                            print("연결 끊김")
+                            output.endTrigger.onNext(true)
+                        }
+                    })
+                    .disposed(by: disposeBag)
                 setInfo()
                 self?.mainUseCase.requestAuthorization()
                 self?.mainUseCase.checkAuthorization()
@@ -68,52 +78,69 @@ class MapVM {
             .disposed(by: disposeBag)
         
         self.mainUseCase.updatedLocation
-            .asObservable()
-            .bind(to: output.currentLocation)
+            .subscribe(onNext: { location in
+                if let location = location {
+                    output.currentLocation.onNext(location)
+                }else {
+                    output.currentLocation.onNext(CLLocation(latitude: 0, longitude: 0))
+                }
+            })
             .disposed(by: disposeBag)
         
         self.mainUseCase.updatedOtherLocation
-            .map{ otherLocation in
+            .subscribe(onNext: { otherLocation in
                 if let location = otherLocation {
-                    return location
+                    output.currentOtherLocation.onNext(location)
                 }else {
-                    return CLLocation(latitude: 37.541, longitude: 126.986)
+                    output.currentOtherLocation.onNext(CLLocation(latitude: 0, longitude: 0))
                 }
-            }
-            .asObservable()
-            .bind(to: output.currentOtherLocation)
+            })
+            .disposed(by: disposeBag)
+        
+        input.endTriggerAlertTapEvent
+            .subscribe(onNext: {[weak self] _ in
+                print("알럿탭이벤트")
+                self?.coordinator?.finish()
+            })
             .disposed(by: disposeBag)
         
         func setInfo() {
             self.mainUseCase.getUserData()
             self.mainUseCase.userData
-                .bind(onNext: { userInfo in
-                    output.myStateMessage.accept(userInfo.stateMessage)
+                .subscribe(onNext: { userInfo in
+                    guard let userInfo = userInfo else{ return }
+                    output.myStateMessage.onNext(userInfo.stateMessage ?? nil)
                     self.mainUseCase.getMyProfileImage(url: userInfo.profileImage ?? "")
                         .subscribe(onSuccess: { image in
-                            output.myProfileImage.accept(image)
+                            output.myProfileImage.onNext(image)
                         })
                         .disposed(by: disposeBag)
                     if let otherUid = userInfo.otherUid {
                         self.mainUseCase.getOtherUserData(uid: otherUid)
                         self.mainUseCase.otherUserData
                             .bind(onNext: { otherUserModel in
-                                output.otherStateMessage.accept(otherUserModel.stateMessage ?? nil)
+                                guard let otherUserModel = otherUserModel else{
+                                    output.endTrigger.onNext(true)
+                                    return
+                                }
+                                output.otherStateMessage.onNext(otherUserModel.stateMessage ?? nil)
                             })
                             .disposed(by: disposeBag)
                         self.mainUseCase.getOtherProfileImage(otherUid: otherUid)
                             .subscribe(onSuccess: { image in
-                                output.otherProfileImage.accept(image)
+                                output.otherProfileImage.onNext(image)
                             })
                             .disposed(by: disposeBag)
                     }
                     
                     self.mainUseCase.getSinceFirstDay(coupleID: userInfo.coupleID ?? "")
                         .subscribe(onSuccess: { date in
-                            output.daySince.accept("D+\(date)")
+                            output.daySince.onNext("D+\(date)")
                         })
                         .disposed(by: disposeBag)
                     
+                }, onError: { error in
+                    output.endTrigger.onNext(true)
                 })
                 .disposed(by: disposeBag)
         }
