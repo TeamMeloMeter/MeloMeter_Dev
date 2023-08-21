@@ -16,12 +16,14 @@ class ChatVM {
     
     struct Input {
         //전달받을 변수
+        let viewWillApearEvent: Observable<Void>
         let mySendMessage: Observable<MockMessage>
     }
     
     struct Output {
         //전달할 변수
         var senddSuccess = PublishSubject<Bool>()
+        var getMessage = PublishSubject<[MockMessage]>()
     }
     
     // MARK: Input
@@ -33,6 +35,18 @@ class ChatVM {
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output()
+        
+        input.viewWillApearEvent
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else{ return }
+                let myCoupleid = UserDefaults.standard.string(forKey: "coupleDocumentID") ?? ""
+                print(myCoupleid, " %%%%%%%%%%%%%%%%%%%%")
+//                self.chatUseCase.getChatMessageService()
+//                    .asObservable()
+//                    .bind(to: output.getMessage)
+//                    .disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
         
         input.mySendMessage
             .subscribe(onNext: {[weak self] myMessage in

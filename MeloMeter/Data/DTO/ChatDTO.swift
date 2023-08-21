@@ -26,6 +26,15 @@ struct ChatDTO: Codable {
         case messageId
         case date
     }
+    
+    func toModel() ->MockMessage {
+        return MockMessage(
+            text: text ?? "",
+            user: MockUser(senderId: userId, displayName: ""),
+            messageId: messageId,
+            date: date.dateValue()
+        )
+    }
 
     
 }

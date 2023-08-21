@@ -43,4 +43,18 @@ class ChatUseCase {
             return Disposables.create()
         }
     }
+    
+    // 메시지 가져오기
+    func getChatMessageService() -> Observable<[MockMessage]> {
+        return self.chatRepository.getChatMessage()
+            .compactMap{ DTOArr in
+                let processedDTOArr = DTOArr.map { dto in
+                    let processedChatDTO = dto.toModel()
+                    return processedChatDTO
+                }
+                
+                return processedDTOArr
+            }
+            .asObservable()
+    }
 }

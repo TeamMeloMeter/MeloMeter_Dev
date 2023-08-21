@@ -63,7 +63,10 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         
         configureMessageCollectionView()
         configureMessageInputBar()
-        loadFirstMessages()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -83,7 +86,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     }
     
     // MARK: - 처음 로딩시 채팅 리스트 가져오는곳
-    func loadFirstMessages() {
+    func loadFirstMessages(_ chatMassageList: [MockMessage]) {
 //        //디스패치 큐로 로컬에서 가져옴
 //        DispatchQueue.global(qos: .userInitiated).async {
 //            //처음 몇개를 가져올건지
@@ -108,19 +111,11 @@ class ChatVC: MessagesViewController, MessagesDataSource {
 //          var senderId: String
 //          var displayName: String
 //        }
-        
-        //Rx로 fireBase에서 가져와야함
-        var messages : [MockMessage] = []
-        let message1 = MockMessage(text: "test Message1", user: self.mockUser, messageId: UUID().uuidString, date: Date())
-        let message2 = MockMessage(text: "test Message2", user: self.mockUser2, messageId: UUID().uuidString, date: Date())
-        
-        messages.append(message1)
-        messages.append(message2)
-        
+                
         //화면에 뿌리는 코드
         DispatchQueue.global(qos: .userInitiated).async {
             DispatchQueue.main.async {
-                self.messageList = messages // messages <= MockMessage의 배열
+                self.messageList = chatMassageList // DB에서 받아온 메세지 배열 삽입
                 self.messagesCollectionView.reloadData()
                 self.messagesCollectionView.scrollToLastItem(animated: false)
             }
@@ -175,6 +170,9 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         
         //바인딩
         let input = ChatVM.Input(
+            viewWillApearEvent: self.rx.methodInvoked(#selector(viewWillAppear(_:)))
+                .map({ _ in })
+                .asObservable(),
             mySendMessage: self.sendMessage
                 .asObservable()
         )
@@ -190,6 +188,12 @@ class ChatVC: MessagesViewController, MessagesDataSource {
                     self.messageSendfaileAlert()
                 }
             })
+            .disposed(by: disposeBag)
+        output.getMessage
+            .bind(onNext: {chatMessageList in
+                self.loadFirstMessages(chatMessageList)
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Helpers
