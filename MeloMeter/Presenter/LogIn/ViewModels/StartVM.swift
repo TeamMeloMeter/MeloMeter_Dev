@@ -10,18 +10,18 @@ import RxSwift
 
 class StartVM {
     
-    weak var coordinator: AppCoordinator?
+    weak var coordinator: LogInCoordinator?
     private let disposeBag = DisposeBag()
     // MARK: Input
     var startBtnTab = PublishSubject<Bool>()
     
-    init(coordinator: AppCoordinator) {
+    init(coordinator: LogInCoordinator) {
         self.coordinator = coordinator
         
         startBtnTab
             .subscribe(onNext: { result in
                 if result {
-                    coordinator.didFinish(childCoordinator: coordinator)
+                    self.coordinator?.showPhoneCertifiedVC()
                 }
             }).disposed(by: disposeBag)
     }

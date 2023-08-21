@@ -35,7 +35,7 @@ final class AppCoordinator: Coordinator {
     var childCoordinators: [Coordinator]
     var firebaseService: FireStoreService
     var disposeBag = DisposeBag()
-    
+    var accessLevel: AccessLevel = .none
     // MARK: - Initializers
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -60,12 +60,6 @@ extension AppCoordinator {
         navigationController.pushViewController(splashVC, animated: false)
     }
     
-    func showStartVC() {
-        let startVC = StartVC(viewModel: StartVM(coordinator: self))
-        navigationController.setNavigationBarHidden(true, animated: false)
-        navigationController.pushViewController(startVC, animated: false)
-    }
-    
     func connectLogInFlow(accessLevel: Bool = false) {
         self.navigationController.viewControllers.removeAll()
         let logInCoordinator = LogInCoordinator(self.navigationController)
@@ -84,7 +78,6 @@ extension AppCoordinator {
     }
     
     func connectTabBarFlow() {
-        //self.navigationController.popToRootViewController(animated: true)
         let tabBarCoordinator = TabBarCoordinator(self.navigationController)
         tabBarCoordinator.delegate = self
         tabBarCoordinator.start()
@@ -100,17 +93,18 @@ extension AppCoordinator: CoordinatorDelegate {
     func didFinish(childCoordinator: Coordinator) {
         self.childCoordinators = []
         self.navigationController.viewControllers.removeAll()
-        print("앱ㅋ코디네이터 didFinish", childCoordinator)
         if childCoordinator is LogInCoordinator {
-            if let userName = UserDefaults.standard.string(forKey: "userName") {
-                print("앱ㅋ코디네이터 탭바플로우 시작점")
+            if UserDefaults.standard.string(forKey: "userName") != nil {
                 self.connectTabBarFlow()
             }else {
                 self.connectPresetFlow()
             }
         }else if childCoordinator is PresetCoordinator {
             self.connectTabBarFlow()
-        }else {
+        }else if childCoordinator is TabBarCoordinator {
+            self.showSplashVC()
+        }
+        else {
             self.connectLogInFlow()
         }
     }

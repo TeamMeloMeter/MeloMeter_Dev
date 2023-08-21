@@ -15,21 +15,20 @@ class UserRepository: UserRepositoryP {
     
     private var firebaseService: FireStoreService
     private var disposeBag: DisposeBag
-    var combineCheck: PublishRelay<Bool>
+    var accessLevelCheck: PublishSubject<AccessLevel>
     
     init(firebaseService: FireStoreService) {
         self.firebaseService = firebaseService
         self.disposeBag = DisposeBag()
-        self.combineCheck = PublishRelay()
+        self.accessLevelCheck = PublishSubject()
     }
     
     func presetUserInfo(user: UserModel, dDay: CoupleModel) -> Single<Void> {
         return Single.create { [weak self] single in
             guard let self = self else { return Disposables.create() }
             var coupleDocumentID = ""
-            //모델객체 -> DTO객체
             let userDTO = user.toProfileInsertDTO()
-            let dDayDTO = dDay.toDTO() // [이름] [날짜]
+            let dDayDTO = dDay.toDTO()
             UserDefaults.standard.set(userDTO.name, forKey: "userName")
             guard let userValues = userDTO.asDictionary, var coupleValues = dDayDTO.asDictionary else { return Disposables.create() }
             coupleValues["anniName"] = FieldValue.arrayUnion(coupleValues["anniName"] as! [Any])
@@ -39,22 +38,22 @@ class UserRepository: UserRepositoryP {
                     guard let coupleID = userInfo["coupleID"] as? String else{ single(.failure(FireStoreError.unknown)); return }
                     coupleDocumentID = coupleID
                     let couplesUpdate = self.firebaseService.updateDocument(collection: .Couples,
-                                                                                   document: coupleDocumentID,
-                                                                                   values: coupleValues)
+                                                                            document: coupleDocumentID,
+                                                                            values: coupleValues)
                     let usersUpdate = self.firebaseService.createDocument(collection: .Users,
-                                                               document: userDTO.uid,
-                                                               values: userValues)
+                                                                          document: userDTO.uid,
+                                                                          values: userValues)
                     Single.zip(couplesUpdate, usersUpdate)
-                    .subscribe(onSuccess: { _,_ in
-                        self.firebaseService.setAccessLevel(.complete)
-                            .subscribe(onSuccess: {
-                                single(.success(()) )
-                            })
-                            .disposed(by: self.disposeBag)
-                    }, onFailure: { error in
-                        single(.failure(error))
-                    })
-                    .disposed(by: self.disposeBag)
+                        .subscribe(onSuccess: { _,_ in
+                            self.firebaseService.setAccessLevel(.complete)
+                                .subscribe(onSuccess: {
+                                    single(.success(()) )
+                                })
+                                .disposed(by: self.disposeBag)
+                        }, onFailure: { error in
+                            single(.failure(error))
+                        })
+                        .disposed(by: self.disposeBag)
                 })
                 .disposed(by: disposeBag)
             
@@ -63,9 +62,9 @@ class UserRepository: UserRepositoryP {
         
     }
     
-    func getUserInfo(_ uid: String) -> Observable<UserDTO> {
+    func getUserInfo(_ uid: String) -> Observable<UserModel> {
         return self.firebaseService.getDocument(collection: .Users, document: uid)
-            .compactMap{ $0.toObject(UserDTO.self) }
+            .compactMap{ $0.toObject(UserDTO.self)?.toModel() }
             .asObservable()
     }
     
@@ -74,16 +73,21 @@ class UserRepository: UserRepositoryP {
         self.firebaseService.getCurrentUser()
             .subscribe(onSuccess: { user in
                 self.firebaseService.observer(collection: .Users, document: user.uid)
-                    .map{ data -> Bool in
-                        if let isCombined = data["accessLevel"] as? String {
-                            if isCombined == "coupleCombined" {
-                                return true
+                    .map{ data -> AccessLevel in
+                        if let accessLev = data["accessLevel"] as? String {
+                            switch accessLev {
+                            case "authenticated":
+                                return .authenticated
+                            case "coupleCombined":
+                                return .coupleCombined
+                            default:
+                                return .none
                             }
                         }
-                        return false
+                        return .none
                     }
                     .asObservable()
-                    .bind(to: self.combineCheck)
+                    .bind(to: self.accessLevelCheck)
                     .disposed(by: self.disposeBag)
             })
             .disposed(by: self.disposeBag)
@@ -111,7 +115,7 @@ class UserRepository: UserRepositoryP {
                                                                document: uid,
                                                                values: value.asDictionary ?? [:])
                 }
-                
+            
         }else {
             return self.firebaseService.updateDocument(collection: .Users,
                                                        document: uid,
@@ -120,24 +124,99 @@ class UserRepository: UserRepositoryP {
     }
     
     private func setAnniversaries(uid: String, birth: String) -> Single<Void> {
-        guard let userName = UserDefaults.standard.string(forKey: "userName") else{ return Single.just(()) }
-        let coupleRepository = CoupleRepository(firebaseService: self.firebaseService)
-        return coupleRepository.getCoupleID()
-            .flatMap{ coupleID -> Single<Void> in
-                self.firebaseService.getDocument(collection: .Couples, document: coupleID)
-                    .flatMap{ source -> Single<Void> in
-                        let dto = source.toObject(CoupleDTO.self)
-                        guard let dto = dto else{ return Single.just(()) }
-                        let index = dto.anniName.firstIndex(of: "\(userName) 생일") ?? -1
-                        var anniDate = dto.anniDate
-                        anniDate[index] = birth
-                        let values = ["anniDate": anniDate]
-                        return self.firebaseService.updateDocument(collection: .Couples, document: coupleID, values: values)
-                    }
-            }
+        return Single.create{ single in
+            guard let userName = UserDefaults.standard.string(forKey: "userName") else{ return Disposables.create()}
+            let coupleRepository = CoupleRepository(firebaseService: self.firebaseService)
+            coupleRepository.getCoupleID()
+                .subscribe(onSuccess: { coupleID in
+                    self.firebaseService.getDocument(collection: .Couples, document: coupleID)
+                        .subscribe(onSuccess: { source in
+                            let dto = source.toObject(CoupleDTO.self)
+                            guard let dto = dto else{ single(.failure(FireStoreError.decodeError)); return }
+                            let index = dto.anniName.firstIndex(of: "\(userName) 생일") ?? -1
+                            var anniDate = dto.anniDate
+                            anniDate[index] = birth
+                            let values = ["anniDate": anniDate]
+                            self.firebaseService.updateDocument(collection: .Couples, document: coupleID, values: values)
+                                .subscribe(onSuccess: {
+                                    single(.success(()))
+                                }, onFailure: { error in
+                                    single(.failure(error))
+                                })
+                                .disposed(by: self.disposeBag)
+                        }, onFailure: { error in
+                            single(.failure(error))
+                        })
+                        .disposed(by: self.disposeBag)
+                }, onFailure: { error in
+                    single(.failure(error))
+                })
+                .disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
+        
     }
+    
+    func signOut() -> Single<Void> {
+        return Single.create { single in
+            do {
+                try Auth.auth().signOut()
+                single(.success(()))
+            } catch let error {
+                single(.failure(error))
+                return Disposables.create()
+            }
+            return Disposables.create()
+        }
+    }
+    
+    func dropOut() -> Single<Void> {
+        guard let user = Auth.auth().currentUser else {
+            return .error(FireStoreError.unknown)
+        }
+        
+        return Single.create { single in
+            user.delete { error in
+                if let error = error {
+                    print("dropoutError", error.localizedDescription)
+                    single(.failure(error))
+                    return
+                }
+                single(.success(()))
 
-    func signOut() {
-        try? Auth.auth().signOut()
+            }
+            return Disposables.create()
+        }
+    }
+    
+    func withdrawal(uid: String, coupleID: String) -> Single<Void> {
+        return Single.create{ single in
+            self.getUserInfo(uid)
+                .subscribe(onNext: { userInfo in
+                    self.firebaseService.deleteImageFromStorage(imageURL: userInfo.profileImage ?? "")
+                        .subscribe(onSuccess: {
+                            self.firebaseService.deleteDocuments(
+                                collections: [(.Users, uid),
+                                              (.Locations, uid),
+                                              (.Couples, coupleID),
+                                              (.Chat, coupleID)]
+                            )
+                            .subscribe(onSuccess: {
+                                if let appDomain = Bundle.main.bundleIdentifier {
+                                    UserDefaults.standard.removePersistentDomain(forName: appDomain)
+                                }
+                                single(.success(()))
+                            }, onFailure: { error in
+                                single(.failure(error))
+                            })
+                            .disposed(by: self.disposeBag)
+                        }, onFailure: { error in
+                            single(.failure(error))
+                        })
+                        .disposed(by: self.disposeBag)
+                })
+                .disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
     }
 }

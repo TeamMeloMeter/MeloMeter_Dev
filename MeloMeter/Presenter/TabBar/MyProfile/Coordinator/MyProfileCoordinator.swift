@@ -31,12 +31,14 @@ final class MyProfileCoordinator: Coordinator {
 extension MyProfileCoordinator {
     
     func showMyProfileVC() {
+    let firebaseService = DefaultFirebaseService()
         let viewController = MyProfileVC(viewModel: MyProfileVM(
             coordinator: self,
             myProfileUseCase: MyProfileUseCase(
                         userRepository: UserRepository(
-                            firebaseService: DefaultFirebaseService()
-                        )
+                            firebaseService: firebaseService
+                        ),
+                        coupleRepository: CoupleRepository(firebaseService: firebaseService)
                     )
             )
         )
@@ -45,6 +47,13 @@ extension MyProfileCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
 
+    func showAlarmFlow() {
+        let alarmCoordinator = AlarmCoordinator(self.navigationController)
+        childCoordinators.append(alarmCoordinator)
+        alarmCoordinator.parentCoordinator = self
+        alarmCoordinator.start()
+    }
+    
     func showDdayFlow() {
         let dDayCoordinator = DdayCoordinator(self.navigationController)
         childCoordinators.append(dDayCoordinator)
@@ -53,13 +62,15 @@ extension MyProfileCoordinator {
     }
     
     func showEditProfileVC() {
+        let firebaseService = DefaultFirebaseService()
+        let userRepository = UserRepository(
+            firebaseService: firebaseService
+        )
         let viewController = EditProfileVC(viewModel: EditProfileVM(
             coordinator: self,
-            editProfileUseCase: EditProfileUseCase(
-                        userRepository: UserRepository(
-                            firebaseService: DefaultFirebaseService()
-                        )
-                    )
+            editProfileUseCase: EditProfileUseCase(userRepository: userRepository),
+            accountsUseCase: AccountsUseCase(userRepository: userRepository,
+                                             coupleRepository: CoupleRepository(firebaseService: firebaseService))
             )
         )
         viewController.hidesBottomBarWhenPushed = true
@@ -148,6 +159,58 @@ extension MyProfileCoordinator {
         viewController.hidesBottomBarWhenPushed = true
         self.navigationController.setNavigationBarHidden(false, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showDisconnectVC() {
+        let firebaseService = DefaultFirebaseService()
+        let viewController = DisconnectVC(viewModel: AccountsVM(
+            coordinator: self,
+            accountsUseCase: AccountsUseCase(
+                userRepository: UserRepository(firebaseService: firebaseService),
+                coupleRepository: CoupleRepository(firebaseService: firebaseService)
+            ))
+        )
+        
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showRecoveryVC(date: (String, String), names: (String, String)) {
+        let firebaseService = DefaultFirebaseService()
+        let viewController = RecoveryVC(viewModel: AccountsVM(
+            coordinator: self,
+            accountsUseCase: AccountsUseCase(
+                userRepository: UserRepository(firebaseService: firebaseService),
+                coupleRepository: CoupleRepository(firebaseService: firebaseService)
+            )),
+                                        date: date,
+                                        names: names
+        )
+        
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showWithdrawalVC() {
+        let firebaseService = DefaultFirebaseService()
+        let viewController = WithdrawalVC(viewModel: AccountsVM(
+            coordinator: self,
+            accountsUseCase: AccountsUseCase(
+                userRepository: UserRepository(firebaseService: DefaultFirebaseService()),
+                coupleRepository: CoupleRepository(firebaseService: firebaseService)
+            ))
+        )
+        
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func recoverySuccess() {
+        self.navigationController.viewControllers.removeAll()
+        self.showMyProfileVC()
     }
     
     func finish() {

@@ -16,7 +16,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
 
     let infoWindow1 = NMFInfoWindow()
     let infoWindow2 = NMFInfoWindow()
-    
+    var endTriggerAlertEvent = PublishSubject<Void>()
     private var viewModel: MapVM?
     let disposeBag = DisposeBag()
     
@@ -49,8 +49,9 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
                 .map({ _ in })
                 .asObservable(),
             dDayBtnTapEvent: self.dDayButton.rx.tap.asObservable(),
-            alarmBtnTapEvent: self.alarmButton.rx.tap.asObservable()
-
+            alarmBtnTapEvent: self.alarmButton.rx.tap.asObservable(),
+            endTriggerAlertTapEvent: self.endTriggerAlertEvent
+                .asObserver()
         )
             
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else { return }
@@ -121,9 +122,9 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             .disposed(by: disposeBag)
         
         output.currentLocation
-            .asDriver(onErrorJustReturn: CLLocation(latitude: 37.541, longitude: 126.986))
+            .asDriver(onErrorJustReturn: CLLocation(latitude: 0, longitude: 0))
             .drive(onNext: { [weak self] current in
-                self?.updateMyMarker(current)
+                self?.updateMyMarker(current ?? CLLocation(latitude: 0, longitude: 0))
             })
             .disposed(by: disposeBag)
         
@@ -131,14 +132,14 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             .take(4)
             .asDriver(onErrorJustReturn: CLLocation(latitude: 37.541, longitude: 126.986))
             .drive(onNext: { [weak self] current in
-                self?.updateCamera(current)
+                self?.updateCamera(current ?? CLLocation(latitude: 0, longitude: 0))
             })
             .disposed(by: disposeBag)
         
         output.currentOtherLocation
-            .asDriver(onErrorJustReturn: CLLocation(latitude: 37.541, longitude: 126.986))
+            .asDriver(onErrorJustReturn: CLLocation(latitude: 0, longitude: 0))
             .drive(onNext: { [weak self] current in
-                self?.updateOtherMarker(current)
+                self?.updateOtherMarker(current ?? CLLocation(latitude: 0, longitude: 0))
             })
             .disposed(by: disposeBag)
         
@@ -148,12 +149,19 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
                     .take(1)
                     .asDriver(onErrorJustReturn: CLLocation(latitude: 37.541, longitude: 126.986))
                     .drive(onNext: { [weak self] current in
-                        self?.updateCamera(current)
+                        self?.updateCamera(current ?? CLLocation(latitude: 0, longitude: 0))
                     })
                     .dispose()
             })
             .disposed(by: disposeBag)
         
+        output.endTrigger
+            .subscribe(onNext: { trig in
+                if trig {
+                    self.endTriggerAlert()
+                }
+            })
+            .disposed(by: disposeBag)
     }
 
     // MARK: Map
@@ -180,6 +188,19 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     }
     
     // MARK: Event
+    func endTriggerAlert() {
+        AlertManager(viewController: self)
+            .setTitle("연결 종료")
+            .setMessage("""
+                        상대방과의 연결이 종료되었습니다.
+                        새로운 커플 연결을 통해
+                        멜로미터를 다시 이용하실 수
+                        있습니다.
+                        """
+            )
+            .addActionConfirm("확인", action: { self.endTriggerAlertEvent.onNext(()) })
+            .showCustomAlert()
+    }
     
     func changedMarkerIcon(isMine: Bool, profileImage: UIImage) {
         let imageName = isMine ? "myMarker" : "otherMarker"

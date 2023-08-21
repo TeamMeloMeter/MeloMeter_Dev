@@ -19,13 +19,13 @@ class MainUseCase {
     var authorizationStatus = BehaviorSubject<LocationAuthorizationStatus?>(value: nil)
     private let locationService: DefaultLocationService
     private let firebaseService: DefaultFirebaseService
-    private let userRepository: UserRepositoryP
-    private let coupleRepository: CoupleRepositoryP
+    private let userRepository: UserRepository
+    private let coupleRepository: CoupleRepository
     
-    var updatedLocation: PublishRelay<CLLocation>
-    var updatedOtherLocation: PublishRelay<CLLocation?>
-    var userData: PublishRelay<UserModel>
-    var otherUserData: PublishRelay<UserModel>
+    var updatedLocation: BehaviorRelay<CLLocation?>
+    var updatedOtherLocation: BehaviorRelay<CLLocation?>
+    var userData: PublishRelay<UserModel?>
+    var otherUserData: PublishRelay<UserModel?>
     var disposeBag: DisposeBag
     
     required init(locationService: DefaultLocationService, firebaseService: DefaultFirebaseService) {
@@ -34,8 +34,8 @@ class MainUseCase {
         self.userRepository = UserRepository(firebaseService: self.firebaseService)
         self.coupleRepository = CoupleRepository(firebaseService: self.firebaseService)
         
-        self.updatedLocation = PublishRelay()
-        self.updatedOtherLocation = PublishRelay()
+        self.updatedLocation = BehaviorRelay(value: CLLocation(latitude: 0, longitude: 0))
+        self.updatedOtherLocation = BehaviorRelay(value: CLLocation(latitude: 0, longitude: 0))
         self.userData = PublishRelay()
         self.otherUserData = PublishRelay()
         self.disposeBag = DisposeBag()
@@ -83,17 +83,19 @@ class MainUseCase {
     }
     
     func requestOtherLocation() {
-        if let documentID = UserDefaults.standard.string(forKey: "uid2") {
-            self.firebaseService.observer(collection: .Locations, document: documentID)
-                .map{ firebaseData -> CLLocation? in
-                    guard let geopoint = firebaseData["location"] as? GeoPoint else { return nil }
-                    return CLLocation(latitude: geopoint.latitude, longitude: geopoint.longitude)
-                }
-                .asDriver(onErrorJustReturn: CLLocation(latitude: 37.541, longitude: 126.986))
-                .asObservable()
-                .bind(to: self.updatedOtherLocation)
-                .disposed(by: disposeBag)
-        }
+        self.userData
+            .subscribe(onNext: { userInfo in
+                self.firebaseService.observer(collection: .Locations, document: userInfo?.otherUid ?? "")
+                    .map{ firebaseData -> CLLocation? in
+                        guard let geopoint = firebaseData["location"] as? GeoPoint else { return nil }
+                        return CLLocation(latitude: geopoint.latitude, longitude: geopoint.longitude)
+                    }
+                    .asDriver(onErrorJustReturn: CLLocation(latitude: 0, longitude: 0))
+                    .asObservable()
+                    .bind(to: self.updatedOtherLocation)
+                    .disposed(by: self.disposeBag)
+            })
+            .disposed(by: disposeBag)
     }
     
 }
@@ -104,24 +106,25 @@ extension MainUseCase {
         let calendar = Calendar.current
         return self.firebaseService.getDocument(collection: .Couples, document: coupleID)
             .flatMap{ source in
-                guard let coupleModel = source.toObject(CoupleDTO.self)?.toModel() else{ return Single.just("D-00")}
+                guard let coupleModel = source.toObject(CoupleDTO.self)?.toModel() else{ return Single.just("")}
                 let currentDate = Date.fromStringOrNow(Date().toString(type: .yearToDay), .yearToDay)
                 let sinceDay = calendar.dateComponents([.day], from: currentDate, to: coupleModel.firstDay).day ?? 0
                 return Single.just(String(abs(sinceDay)))
             }
+            .catchAndReturn("")
     }
     
     func getUserData() {
         guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return }
         self.userRepository.getUserInfo(uid)
-            .map{ $0.toModel() }
+            .catchAndReturn(UserModel(name: nil, birth: nil))
             .bind(to: self.userData)
             .disposed(by: disposeBag)
     }
     
     func getOtherUserData(uid: String) {
         self.userRepository.getUserInfo(uid)
-            .map{ $0.toModel() }
+            .catchAndReturn(UserModel(name: nil, birth: nil))
             .bind(to: self.otherUserData)
             .disposed(by: disposeBag)
     }
@@ -134,11 +137,28 @@ extension MainUseCase {
         return self.userRepository.getUserInfo(otherUid)
             .asSingle()
             .flatMap{ otherUser in
-                if let url = otherUser.profileImagePath {
+                if let url = otherUser.profileImage {
                     return self.userRepository.downloadImage(url: url)
                 }else {
                     return Single.just(nil)
                 }
             }
+            .catchAndReturn(nil)
+    }
+    
+    func disconnectionObserver() -> Single<Bool> {
+        return Single.create{ single in
+            self.userRepository.userAccessLevelObserver()
+            self.userRepository.accessLevelCheck
+                .subscribe(onNext: { accessLevel in
+                    if accessLevel == .authenticated {
+                        single(.success(true))
+                        return
+                    }
+                })
+                .disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
+        
     }
 }

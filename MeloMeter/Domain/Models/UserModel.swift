@@ -58,7 +58,7 @@ struct UserModel: Equatable, Hashable {
     init(name: String?, stateMessage: String?, birth: Date?, gender: GenderType?) {
         self.init(uid: nil, otherUid: nil, coupleID: nil, phoneNumber: nil, profileImage: nil, name: name, birth: birth, stateMessage: stateMessage, gender: gender, createdAt: nil)
     }
-    
+
     // MARK: - Methods
     func toProfileInsertDTO() -> UserDTO {
         return UserDTO(

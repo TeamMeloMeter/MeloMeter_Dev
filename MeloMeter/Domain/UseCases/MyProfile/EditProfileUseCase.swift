@@ -23,7 +23,7 @@ class EditProfileUseCase {
     func getUserData() {
         guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return }
         self.userRepository.getUserInfo(uid)
-            .map{ $0.toModel() }
+            .catchAndReturn(UserModel(name: nil, birth: nil))
             .bind(to: self.userData)
             .disposed(by: disposeBag)
     }
@@ -39,8 +39,5 @@ class EditProfileUseCase {
     func editProfileImage(image: UIImage) -> Single<Void> {
         return self.userRepository.updateProfileImage(image: image)
     }
-    
-    func logout() {
-        self.userRepository.signOut()
-    }
+
 }

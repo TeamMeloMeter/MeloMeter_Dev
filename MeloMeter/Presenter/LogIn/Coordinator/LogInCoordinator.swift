@@ -20,7 +20,7 @@ final class LogInCoordinator: Coordinator {
     
     func start() {
         if !isLogin {
-            showPhoneCertifiedVC()
+            showStartVC()
         }else {
             if let inviteCode = UserDefaults.standard.string(forKey: "inviteCode") {
                 let code = "\(inviteCode.prefix(4)) \(inviteCode.suffix(4))"
@@ -37,6 +37,12 @@ final class LogInCoordinator: Coordinator {
 }
 
 extension LogInCoordinator {
+    func showStartVC() {
+        let startVC = StartVC(viewModel: StartVM(coordinator: self))
+        navigationController.setNavigationBarHidden(true, animated: false)
+        navigationController.pushViewController(startVC, animated: false)
+    }
+    
     func showPhoneCertifiedVC() {
         let viewController = PhoneCertifiedVC(
             viewModel: LogInVM(
@@ -80,7 +86,6 @@ extension LogInCoordinator {
     }
     
     func finish() {
-        print("로그인코디finish")
         self.delegate?.didFinish(childCoordinator: self)
     }
     
@@ -88,7 +93,6 @@ extension LogInCoordinator {
 
 extension LogInCoordinator: CoordinatorDelegate {
     func didFinish(childCoordinator: Coordinator) {
-        print("로그인코디Didfinish")
         self.childCoordinators.removeAll()
         self.delegate?.didFinish(childCoordinator: self)
     }

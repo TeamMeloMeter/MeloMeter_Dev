@@ -13,7 +13,7 @@ struct CoupleDTO: Codable {
     let firstDay: String
     let anniName: [String]
     let anniDate: [String]
-    let coupleCreatedAt: String?
+    let disconnectedDate: String?
     
     
     // MARK: - Methods
@@ -25,7 +25,7 @@ struct CoupleDTO: Codable {
                              date: Date.fromStringOrNow($0.1, .yearToDay),
                              countDdays: "")
             },
-            coupleCreatedAt: Date.fromStringOrNow(coupleCreatedAt ?? "", .timeStamp)
+            disconnectedDate: Date.fromStringOrNow(disconnectedDate ?? "", .timeStamp)
         )
     }
 }

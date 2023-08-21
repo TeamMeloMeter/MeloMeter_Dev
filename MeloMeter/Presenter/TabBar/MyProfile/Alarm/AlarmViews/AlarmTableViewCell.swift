@@ -7,17 +7,14 @@
 
 import UIKit
 
-//알림 테이블뷰 셀
 class AlarmTableViewCell: UITableViewCell {
     
     lazy var alarmView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 8
-        view.clipsToBounds = true
-        view.layer.shadowColor = #colorLiteral(red: 0.5137254902, green: 0.5058823529, blue: 0.5058823529, alpha: 0.1)
-        view.layer.shadowOffset = CGSize(width: 2, height: 2)
-        view.layer.shadowOpacity = 10
+        view.layer.masksToBounds = false
+        view.layer.applyShadow(color: UIColor.primary1, alpha: 0.25, x: 0, y: 2, blur: 18)
         view.addSubview(alarmTitleLabel)
         view.addSubview(alarmSubtitleLabel)
         view.addSubview(alarmImageView)
@@ -26,7 +23,7 @@ class AlarmTableViewCell: UITableViewCell {
     
     let alarmTitleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = #colorLiteral(red: 0.5215686275, green: 0.5215686275, blue: 0.5215686275, alpha: 1)
+        label.textColor = .gray2
         label.font = FontManager.shared.medium(ofSize: 14)
         label.text = "D-7"
         return label
@@ -34,7 +31,7 @@ class AlarmTableViewCell: UITableViewCell {
     
     let alarmSubtitleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .gray1
         label.font = FontManager.shared.medium(ofSize: 14)
         label.text = "00님의 생일까지 7일이 남았어요"
         return label
@@ -51,7 +48,7 @@ class AlarmTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(alarmView)
-        backgroundColor = #colorLiteral(red: 0.9764705882, green: 0.9764705882, blue: 0.9764705882, alpha: 1)
+        backgroundColor = .white
         alarmViewConstraints()
     }
 

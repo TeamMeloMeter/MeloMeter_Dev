@@ -13,7 +13,7 @@ class EditProfileVM {
 
     weak var coordinator: MyProfileCoordinator?
     private var editProfileUseCase: EditProfileUseCase
-
+    private var accountsUseCase: AccountsUseCase
     
     struct Input {
         let viewWillApearEvent: Observable<Void>
@@ -23,7 +23,9 @@ class EditProfileVM {
         let stateMessageTapEvent: Observable<Void>
         let birthTapEvent: Observable<Void>
         let newGender: Observable<GenderType>
+        let disconnectEvent: Observable<Void>
         let logoutEvent: Observable<Void>
+        let withdrawalEvent: Observable<Void>
     }
 
     struct Output {
@@ -41,9 +43,10 @@ class EditProfileVM {
         var birth = ""
     }
     
-    init(coordinator: MyProfileCoordinator, editProfileUseCase: EditProfileUseCase) {
+    init(coordinator: MyProfileCoordinator, editProfileUseCase: EditProfileUseCase, accountsUseCase: AccountsUseCase) {
         self.coordinator = coordinator
         self.editProfileUseCase = editProfileUseCase
+        self.accountsUseCase = accountsUseCase
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -58,7 +61,7 @@ class EditProfileVM {
             .disposed(by: disposeBag)
         
         self.editProfileUseCase.userData
-            .bind(onNext: { userData in
+            .subscribe(onNext: { userData in
                 self.editProfileUseCase.getProfileImage(url: userData.profileImage ?? "")
                     .asObservable()
                     .take(1)
@@ -127,10 +130,25 @@ class EditProfileVM {
             })
             .disposed(by: disposeBag)
         
+        input.disconnectEvent
+            .subscribe(onNext: {[weak self] _ in
+                self?.coordinator?.showDisconnectVC()
+            })
+            .disposed(by: disposeBag)
+        
         input.logoutEvent
             .subscribe(onNext: {[weak self] _ in
-                self?.editProfileUseCase.logout()
-                self?.coordinator?.finish()
+                self?.accountsUseCase.excuteLogout()
+                    .subscribe(onSuccess: {
+                        self?.coordinator?.finish()
+                    })
+                    .disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
+        
+        input.withdrawalEvent
+            .subscribe(onNext: {[weak self] _ in
+                self?.coordinator?.showWithdrawalVC()
             })
             .disposed(by: disposeBag)
         

@@ -18,7 +18,7 @@ final class DefaultLocationService: NSObject, LocationService {
     var disposeBag: DisposeBag = DisposeBag()
     
     var authorizationStatus = BehaviorRelay<CLAuthorizationStatus>(value: .notDetermined)
-    var currentLocation = PublishRelay<CLLocation>()
+    var currentLocation = PublishSubject<CLLocation>()
     
     private let uid = UserDefaults.standard.string(forKey: "uid")
     init(firebaseService: DefaultFirebaseService) {
@@ -45,7 +45,6 @@ final class DefaultLocationService: NSObject, LocationService {
 
     func requestAuthorization() {
         self.locationManager.requestWhenInUseAuthorization()
-        self.locationManager.requestAlwaysAuthorization()
     }
     
     func observeUpdatedAuthorization() -> Observable<CLAuthorizationStatus> {
@@ -60,7 +59,7 @@ final class DefaultLocationService: NSObject, LocationService {
 extension DefaultLocationService: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        self.currentLocation.accept(location)
+        self.currentLocation.onNext(location)
         if let uid = self.uid {
             let geopoint = GeoPoint(latitude: location.coordinate.latitude,
                                     longitude: location.coordinate.longitude)
@@ -78,7 +77,7 @@ extension DefaultLocationService: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        self.currentLocation.accept(CLLocation(latitude: 37.541, longitude: 126.986))
+        self.currentLocation.onNext(CLLocation(latitude: 0, longitude: 0))
     }
     
 }

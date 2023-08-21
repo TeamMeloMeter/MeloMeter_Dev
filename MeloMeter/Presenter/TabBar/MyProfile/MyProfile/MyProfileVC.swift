@@ -52,6 +52,9 @@ class MyProfileVC: UIViewController {
             editProfileBtnTapEvent: self.profileEditButton.rx.tap
                 .map({ _ in })
                 .asObservable(),
+            alarmViewTapEvent: self.alarmView.rx.tapGesture().when(.ended)
+                .map({ _ in })
+                .asObservable(),
             dDayViewTapEvent: self.dDayView.rx.tapGesture().when(.ended)
                 .map({ _ in })
                 .asObservable(),
@@ -103,6 +106,19 @@ class MyProfileVC: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        output.coupleUserName
+            .asDriver(onErrorJustReturn: "나 & 상대방")
+            .drive(onNext: { nameText in
+                self.dDayTitleLabel.text = nameText
+            })
+            .disposed(by: disposeBag)
+        
+        output.sinceFirstDay
+            .asDriver(onErrorJustReturn: "기념일")
+            .drive(onNext: { sinceText in
+                self.dDaySubtitleLabel.text = sinceText
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: configure
@@ -124,7 +140,6 @@ class MyProfileVC: UIViewController {
     }
     
     // MARK: UI
-    //마이페이지 상단 배경 뷰
     lazy var topView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "topView")
@@ -133,7 +148,6 @@ class MyProfileVC: UIViewController {
         return view
     }()
     
-    // 사용자 이름
     let nameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray1
@@ -141,7 +155,6 @@ class MyProfileVC: UIViewController {
         return label
     }()
     
-    // 사용자 전화번호
     let phoneNumLabel: UILabel = {
         let label = UILabel()
         label.font = FontManager.shared.medium(ofSize: 12)
@@ -149,7 +162,6 @@ class MyProfileVC: UIViewController {
         return label
     }()
     
-    // 상태메시지 View
     private lazy var stateMessageView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -157,7 +169,7 @@ class MyProfileVC: UIViewController {
         view.layer.cornerRadius = 15
         return view
     }()
-    // 상태메시지 Label
+
     let stateMessageLabel: UILabel = {
         let label = UILabel()
         label.font = FontManager.shared.medium(ofSize: 14)
@@ -165,7 +177,7 @@ class MyProfileVC: UIViewController {
         label.textAlignment = .center
         return label
     }()
-    //프로필사진
+    
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -174,7 +186,7 @@ class MyProfileVC: UIViewController {
         imageView.layer.borderColor = UIColor.clear.cgColor
         return imageView
     }()
-    //프로필 편집 버튼
+    
     let profileEditButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "profileEdit"), for: .normal)
@@ -182,8 +194,8 @@ class MyProfileVC: UIViewController {
         return button
     }()
     
-    // 알림
-     lazy var alarmView: UIView = {
+    
+    lazy var alarmView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.clipsToBounds = true
@@ -240,7 +252,6 @@ class MyProfileVC: UIViewController {
         let label = UILabel()
         label.textColor = .gray2
         label.font = FontManager.shared.medium(ofSize: 13)
-        label.text = "00 & 00"
         return label
     }()
     
@@ -248,7 +259,7 @@ class MyProfileVC: UIViewController {
         let label = UILabel()
         label.textColor = .gray1
         label.font = FontManager.shared.medium(ofSize: 14)
-        label.text = "1234일째 함께하는 중"
+        label.text = "기념일"
         return label
     }()
     
@@ -259,7 +270,7 @@ class MyProfileVC: UIViewController {
         imageView.layer.borderColor = UIColor.clear.cgColor
         return imageView
     }()
-    //백문백답
+
     lazy var hundredQnAView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -298,7 +309,7 @@ class MyProfileVC: UIViewController {
         imageView.layer.borderColor = UIColor.clear.cgColor
         return imageView
     }()
-    //상단 스택뷰 (알림, 기념일, 백문백답)
+    
     private lazy var topStackView: UIStackView = {
         let stview = UIStackView(arrangedSubviews: [alarmView, dDayView, hundredQnAView])
         stview.spacing = 16
@@ -307,8 +318,7 @@ class MyProfileVC: UIViewController {
         
         return stview
     }()
-    //공지사항
-    //공지사항 이미지
+  
     let noticeImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "noticeIcon")
@@ -327,7 +337,6 @@ class MyProfileVC: UIViewController {
         return label
     }()
     
-    //화살표 이미지
     let noticeArrowImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "arrowIcon")
@@ -344,8 +353,6 @@ class MyProfileVC: UIViewController {
         return stview
     }()
     
-    //QnA 자주묻는질문
-    //QnA 이미지
     let qnAImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "qAIcon")
@@ -364,7 +371,6 @@ class MyProfileVC: UIViewController {
         return label
     }()
     
-    //화살표 이미지
     let qnAArrowImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "arrowIcon")
@@ -381,8 +387,6 @@ class MyProfileVC: UIViewController {
         return stview
     }()
     
-    //정보
-    //정보이미지
     let infoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "infoIcon")
@@ -400,8 +404,7 @@ class MyProfileVC: UIViewController {
         label.text = "정보"
         return label
     }()
-    
-    //화살표 이미지
+
     let infoArrowImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "arrowIcon")
@@ -430,8 +433,7 @@ class MyProfileVC: UIViewController {
         view.backgroundColor = .gray45
         return view
     }()
-    
-    //하단 스택뷰(공지사항, 자주묻는 질문, 정보, 구분선 포함)
+
     private lazy var bottomStackView: UIStackView = {
         let stview = UIStackView(arrangedSubviews: [noticeStackView, lineView1, qnAStackView, lineView2, infoStackView])
         stview.backgroundColor = .white
@@ -529,8 +531,6 @@ class MyProfileVC: UIViewController {
         ])
     }
     
-    
-    //alarmView에 포함된 label, image Constraints
     private func alarmViewConstraints() {
         alarmTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         alarmSubtitleLabel.translatesAutoresizingMaskIntoConstraints = false
