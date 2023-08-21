@@ -12,11 +12,11 @@ import RxRelay
 class EditProfileUseCase {
     private let userRepository: UserRepository
     private var disposeBag: DisposeBag
-    var userData: PublishSubject<UserModel>
+    var userData: PublishRelay<UserModel>
     
     required init(userRepository: UserRepository) {
         self.userRepository = userRepository
-        self.userData = PublishSubject()
+        self.userData = PublishRelay()
         self.disposeBag = DisposeBag()
     }
  

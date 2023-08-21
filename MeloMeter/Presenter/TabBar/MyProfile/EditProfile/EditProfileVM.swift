@@ -139,7 +139,10 @@ class EditProfileVM {
         input.logoutEvent
             .subscribe(onNext: {[weak self] _ in
                 self?.accountsUseCase.excuteLogout()
-                self?.coordinator?.finish()
+                    .subscribe(onSuccess: {
+                        self?.coordinator?.finish()
+                    })
+                    .disposed(by: disposeBag)
             })
             .disposed(by: disposeBag)
         

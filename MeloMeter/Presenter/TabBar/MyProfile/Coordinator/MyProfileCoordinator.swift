@@ -31,12 +31,14 @@ final class MyProfileCoordinator: Coordinator {
 extension MyProfileCoordinator {
     
     func showMyProfileVC() {
+    let firebaseService = DefaultFirebaseService()
         let viewController = MyProfileVC(viewModel: MyProfileVM(
             coordinator: self,
             myProfileUseCase: MyProfileUseCase(
                         userRepository: UserRepository(
-                            firebaseService: DefaultFirebaseService()
-                        )
+                            firebaseService: firebaseService
+                        ),
+                        coupleRepository: CoupleRepository(firebaseService: firebaseService)
                     )
             )
         )

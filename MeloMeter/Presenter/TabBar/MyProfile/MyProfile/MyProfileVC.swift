@@ -103,6 +103,19 @@ class MyProfileVC: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        output.coupleUserName
+            .asDriver(onErrorJustReturn: "나 & 상대방")
+            .drive(onNext: { nameText in
+                self.dDayTitleLabel.text = nameText
+            })
+            .disposed(by: disposeBag)
+        
+        output.sinceFirstDay
+            .asDriver(onErrorJustReturn: "기념일")
+            .drive(onNext: { sinceText in
+                self.dDaySubtitleLabel.text = sinceText
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: configure
@@ -236,7 +249,6 @@ class MyProfileVC: UIViewController {
         let label = UILabel()
         label.textColor = .gray2
         label.font = FontManager.shared.medium(ofSize: 13)
-        label.text = "00 & 00"
         return label
     }()
     
@@ -244,7 +256,7 @@ class MyProfileVC: UIViewController {
         let label = UILabel()
         label.textColor = .gray1
         label.font = FontManager.shared.medium(ofSize: 14)
-        label.text = "1234일째 함께하는 중"
+        label.text = "기념일"
         return label
     }()
     

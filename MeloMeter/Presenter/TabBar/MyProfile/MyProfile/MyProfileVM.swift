@@ -26,8 +26,10 @@ class MyProfileVM {
     struct Output {
         var profileImage = PublishRelay<UIImage?>()
         var userName = PublishRelay<String>()
+        var coupleUserName = PublishRelay<String>()
         var userPhoneNumber = PublishRelay<String>()
         var stateMessage = PublishRelay<String?>()
+        var sinceFirstDay = PublishRelay<String>()
     }
     
     
@@ -48,7 +50,13 @@ class MyProfileVM {
                                 output.profileImage.accept(image)
                             })
                             .disposed(by: disposeBag)
-                        guard let name = user.name, let phoneNumber = user.phoneNumber else{ return }
+                        guard let name = user.name, let phoneNumber = user.phoneNumber, let otherUid = user.otherUid else{ return }
+                        self.myProfileUseCase.getDdayInfo(otherUid: otherUid)
+                            .subscribe(onSuccess: { dDayInfo in
+                                output.coupleUserName.accept("\(name) & \(dDayInfo[0])")
+                                output.sinceFirstDay.accept("\(dDayInfo[1])째 함께하는 중")
+                            })
+                            .disposed(by: disposeBag)
                         output.userName.accept(name)
                         var number = phoneNumber.map{ String($0) }
                         number.insert(" 0", at: 3)
