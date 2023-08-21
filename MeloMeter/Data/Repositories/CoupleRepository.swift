@@ -38,6 +38,16 @@ class CoupleRepository: CoupleRepositoryP {
         }
     }
     
+    func getCoupleDocument() -> Single<CoupleModel> {
+        return self.getCoupleID()
+            .flatMap{ coupleID -> Single<CoupleModel> in
+                return self.firebaseService.getDocument(collection: .Couples, document: coupleID)
+                    .compactMap{ $0.toObject(CoupleDTO.self)?.toModel() }
+                    .asObservable()
+                    .asSingle()
+            }
+    }
+    
     func setAnniversaries(data: [String]) -> Single<Void> {
         return self.getCoupleID()
             .flatMap{ coupleID -> Single<Void> in
@@ -53,6 +63,18 @@ class CoupleRepository: CoupleRepositoryP {
                         return self.firebaseService.updateDocument(collection: .Couples, document: coupleID, values: values)
                     }
             }
+    }
+    
+    func couplesObserver() {
+        getCoupleID()
+            .subscribe(onSuccess: { coupleID in
+                self.firebaseService.observer(collection: .Couples, document: coupleID)
+                    .map{ $0.toObject(CoupleDTO.self)?.toModel() ?? CoupleModel(firstDay: Date(), anniversaries: []) }
+                    .asObservable()
+                    .bind(to: self.coupleModel)
+                    .disposed(by: self.disposeBag)
+            })
+            .disposed(by: disposeBag)
     }
     
     func disconnect() -> Single<Date> {
