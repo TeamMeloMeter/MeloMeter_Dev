@@ -10,7 +10,6 @@ import RxCocoa
 import RxSwift
 import RxRelay
 
-// 기념일 화면 뷰컨트롤러
 class DdayVC: UIViewController {
 
     private let viewModel: DdayVM?

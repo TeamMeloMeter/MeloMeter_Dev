@@ -52,6 +52,9 @@ class MyProfileVC: UIViewController {
             editProfileBtnTapEvent: self.profileEditButton.rx.tap
                 .map({ _ in })
                 .asObservable(),
+            alarmViewTapEvent: self.alarmView.rx.tapGesture().when(.ended)
+                .map({ _ in })
+                .asObservable(),
             dDayViewTapEvent: self.dDayView.rx.tapGesture().when(.ended)
                 .map({ _ in })
                 .asObservable(),
