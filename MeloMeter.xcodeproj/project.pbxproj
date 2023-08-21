@@ -113,11 +113,12 @@
 		5290BFAE2A71F8FB00D734EE /* TabBarPageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5290BFAD2A71F8FB00D734EE /* TabBarPageType.swift */; };
 		5290BFB02A71F9A600D734EE /* TabBarPageCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5290BFAF2A71F9A600D734EE /* TabBarPageCase.swift */; };
 		5290BFB42A7270DF00D734EE /* LogInRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5290BFB32A7270DF00D734EE /* LogInRepositoryP.swift */; };
+		52AEACFA2A9335810097930E /* AlarmCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AEACF92A9335810097930E /* AlarmCoordinator.swift */; };
+		52AEACFD2A9337F40097930E /* AlarmVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AEACFC2A9337F40097930E /* AlarmVM.swift */; };
 		52B7EBCB2A8F2E79008F5F53 /* AccountsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B7EBCA2A8F2E79008F5F53 /* AccountsVM.swift */; };
 		52B7EBCD2A8F2F05008F5F53 /* AccountsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B7EBCC2A8F2F05008F5F53 /* AccountsUseCase.swift */; };
 		52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6E8229FEBC0200E43D39 /* FontManager.swift */; };
-		52CE6EA12A01875C00E43D39 /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA02A01875C00E43D39 /* AlarmViewController.swift */; };
-		52CE6EA32A0187BB00E43D39 /* AlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA22A0187BB00E43D39 /* AlarmView.swift */; };
+		52CE6EA12A01875C00E43D39 /* AlarmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA02A01875C00E43D39 /* AlarmVC.swift */; };
 		52CE6EA72A02571E00E43D39 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA62A02571E00E43D39 /* MapVC.swift */; };
 		52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EAC2A02C0B800E43D39 /* DdayTableViewCell.swift */; };
 		52E0CDF02A4B091600E4A182 /* CoupleCombineVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0CDEF2A4B091600E4A182 /* CoupleCombineVC.swift */; };
@@ -240,11 +241,12 @@
 		5290BFAD2A71F8FB00D734EE /* TabBarPageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPageType.swift; sourceTree = "<group>"; };
 		5290BFAF2A71F9A600D734EE /* TabBarPageCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPageCase.swift; sourceTree = "<group>"; };
 		5290BFB32A7270DF00D734EE /* LogInRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInRepositoryP.swift; sourceTree = "<group>"; };
+		52AEACF92A9335810097930E /* AlarmCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCoordinator.swift; sourceTree = "<group>"; };
+		52AEACFC2A9337F40097930E /* AlarmVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmVM.swift; sourceTree = "<group>"; };
 		52B7EBCA2A8F2E79008F5F53 /* AccountsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsVM.swift; sourceTree = "<group>"; };
 		52B7EBCC2A8F2F05008F5F53 /* AccountsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsUseCase.swift; sourceTree = "<group>"; };
 		52CE6E8229FEBC0200E43D39 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
-		52CE6EA02A01875C00E43D39 /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
-		52CE6EA22A0187BB00E43D39 /* AlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmView.swift; sourceTree = "<group>"; };
+		52CE6EA02A01875C00E43D39 /* AlarmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmVC.swift; sourceTree = "<group>"; };
 		52CE6EA62A02571E00E43D39 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		52CE6EAC2A02C0B800E43D39 /* DdayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayTableViewCell.swift; sourceTree = "<group>"; };
 		52E0CDEF2A4B091600E4A182 /* CoupleCombineVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleCombineVC.swift; sourceTree = "<group>"; };
@@ -557,6 +559,8 @@
 		5230B2562A727C7F00781623 /* Alarm */ = {
 			isa = PBXGroup;
 			children = (
+				52AEACFB2A9335EA0097930E /* Coordinator */,
+				52AEACFC2A9337F40097930E /* AlarmVM.swift */,
 				52F010062A097CEE0014FC01 /* AlarmViews */,
 			);
 			path = Alarm;
@@ -801,6 +805,14 @@
 			path = LogIn;
 			sourceTree = "<group>";
 		};
+		52AEACFB2A9335EA0097930E /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				52AEACF92A9335810097930E /* AlarmCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		52B7EBC92A8F2E5D008F5F53 /* Accounts */ = {
 			isa = PBXGroup;
 			children = (
@@ -853,9 +865,8 @@
 		52F010062A097CEE0014FC01 /* AlarmViews */ = {
 			isa = PBXGroup;
 			children = (
-				52CE6EA22A0187BB00E43D39 /* AlarmView.swift */,
 				52F010072A097D120014FC01 /* AlarmTableViewCell.swift */,
-				52CE6EA02A01875C00E43D39 /* AlarmViewController.swift */,
+				52CE6EA02A01875C00E43D39 /* AlarmVC.swift */,
 			);
 			path = AlarmViews;
 			sourceTree = "<group>";
@@ -1134,7 +1145,7 @@
 				21C3821D2A87F778003638E1 /* ChatRepositoryP.swift in Sources */,
 				21C3821F2A87F7B1003638E1 /* ChatRepository.swift in Sources */,
 				5271D42A2A5FD02900FC7606 /* AlertManager.swift in Sources */,
-				52CE6EA12A01875C00E43D39 /* AlarmViewController.swift in Sources */,
+				52CE6EA12A01875C00E43D39 /* AlarmVC.swift in Sources */,
 				5290BFAC2A70F46C00D734EE /* MainCoordinator.swift in Sources */,
 				2185C4D72A83F13B00F99795 /* MockMessage.swift in Sources */,
 				2185C4D62A83F13B00F99795 /* SampleData.swift in Sources */,
@@ -1169,9 +1180,10 @@
 				5241382E2A62F2ED002AADA6 /* LogInCoordinator.swift in Sources */,
 				5271D40F2A5576E500FC7606 /* PermissionVC.swift in Sources */,
 				2185C4CE2A83F13B00F99795 /* ChatVC.swift in Sources */,
+				52AEACFD2A9337F40097930E /* AlarmVM.swift in Sources */,
+				52AEACFA2A9335810097930E /* AlarmCoordinator.swift in Sources */,
 				521D42022A8551E900E5CCDA /* EditProfileVM.swift in Sources */,
 				52F010142A0AAD380014FC01 /* EditProfileVC.swift in Sources */,
-				52CE6EA32A0187BB00E43D39 /* AlarmView.swift in Sources */,
 				5290BFA82A70F35E00D734EE /* MapVM.swift in Sources */,
 				5241382A2A62EB95002AADA6 /* Coordinator.swift in Sources */,
 				5271D4132A55BF1B00FC7606 /* LogInUseCase.swift in Sources */,

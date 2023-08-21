@@ -45,7 +45,6 @@ final class DefaultLocationService: NSObject, LocationService {
 
     func requestAuthorization() {
         self.locationManager.requestWhenInUseAuthorization()
-        self.locationManager.requestAlwaysAuthorization()
     }
     
     func observeUpdatedAuthorization() -> Observable<CLAuthorizationStatus> {
@@ -78,7 +77,7 @@ extension DefaultLocationService: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        self.currentLocation.onNext(CLLocation(latitude: 37.541, longitude: 126.986))
+        self.currentLocation.onNext(CLLocation(latitude: 0, longitude: 0))
     }
     
 }

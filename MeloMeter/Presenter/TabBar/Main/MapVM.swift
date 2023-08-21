@@ -49,14 +49,13 @@ class MapVM {
                 self?.mainUseCase.disconnectionObserver()
                     .subscribe(onSuccess: { result in
                         if result {
-                            print("연결 끊김")
                             output.endTrigger.onNext(true)
                         }
                     })
                     .disposed(by: disposeBag)
                 setInfo()
-                self?.mainUseCase.requestAuthorization()
                 self?.mainUseCase.checkAuthorization()
+                self?.mainUseCase.requestAuthorization()
                 self?.mainUseCase.requestLocation()
                 self?.mainUseCase.requestOtherLocation()
             })
@@ -99,7 +98,6 @@ class MapVM {
         
         input.endTriggerAlertTapEvent
             .subscribe(onNext: {[weak self] _ in
-                print("알럿탭이벤트")
                 self?.coordinator?.finish()
             })
             .disposed(by: disposeBag)

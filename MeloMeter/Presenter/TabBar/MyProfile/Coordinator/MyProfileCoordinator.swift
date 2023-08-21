@@ -47,6 +47,13 @@ extension MyProfileCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
 
+    func showAlarmFlow() {
+        let alarmCoordinator = AlarmCoordinator(self.navigationController)
+        childCoordinators.append(alarmCoordinator)
+        alarmCoordinator.parentCoordinator = self
+        alarmCoordinator.start()
+    }
+    
     func showDdayFlow() {
         let dDayCoordinator = DdayCoordinator(self.navigationController)
         childCoordinators.append(dDayCoordinator)

@@ -18,6 +18,7 @@ class MyProfileVM {
     struct Input {
         let viewWillApearEvent: Observable<Void>
         let editProfileBtnTapEvent: Observable<Void>
+        let alarmViewTapEvent: Observable<Void>
         let dDayViewTapEvent: Observable<Void>
         let noticeViewTapEvent: Observable<Void>
         let qnAViewTapEvent: Observable<Void>
@@ -67,6 +68,13 @@ class MyProfileVM {
                         
                     })
                     .disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
+        
+        input.alarmViewTapEvent
+            .subscribe(onNext: {[weak self] _ in
+                guard let self = self else{ return }
+                self.coordinator?.showAlarmFlow()
             })
             .disposed(by: disposeBag)
         
