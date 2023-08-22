@@ -168,6 +168,8 @@ final class ProfileInsertVC: UIViewController {
         birthTF.delegate = self
         firstDayTF.delegate = self
         
+        nextBtnEnabledF()
+        
         [insertSubViwes, progressImage].forEach { view.addSubview($0) }
     }
     
@@ -377,11 +379,6 @@ final class ProfileInsertVC: UIViewController {
             insertSubViwes.topAnchor.constraint(equalTo: self.view.topAnchor),
             //하
             insertSubViwes.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -212)
-            
-//            //넓이
-//            insertSubViwes.widthAnchor.constraint(equalToConstant: 42),
-//            //높이
-//            insertSubViwes.heightAnchor.constraint(equalToConstant: 5)
         ])
     }
     
@@ -477,27 +474,7 @@ final class ProfileInsertVC: UIViewController {
 
 // MARK: - 텍스트필드 델리게이트
 extension ProfileInsertVC: UITextFieldDelegate {
-    
-//    func textFieldDidBeginEditing(_ textField: UITextField) {
-//        activeTextField = textField
-//
-//        if textField.tag == 1 {
-//
-//        } else if textField.tag == 2 {
-//
-//        } else if textField.tag == 3 {
-//
-//        }
-//    }
-//
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        activeTextField = textField
-//
-//        if activeTextField == textField {
-//            activeTextField = nil
-//        }
-//    }
-    
+
     //번호 입력 포멧, 길이 제한
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 //        cancelBtn.isHidden = false
