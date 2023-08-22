@@ -54,7 +54,7 @@ class WriteAnswerVC: UIViewController {
                 .asObservable(),
             answerBtnTapEvent: self.completeButton.rx.tap
                 .map({ _ in
-                    return (.answerComplete, [""])
+                    return (.answerComplete, [self.answerTextView.text ?? ""])
                 })
                 .asObservable()
         )

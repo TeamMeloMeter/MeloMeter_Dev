@@ -58,7 +58,7 @@ class AnswerVM {
                     self.coordinator?.showWriteAnswerVC(question: text[0], name: text[1])
                 }
                 if type == .answerComplete {
-                    
+                    self.hundredQAUserCase.addAnswer(answerText: "1212")
                 }
             })
             .disposed(by: disposeBag)
