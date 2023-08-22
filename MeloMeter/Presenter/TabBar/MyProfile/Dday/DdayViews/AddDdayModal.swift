@@ -372,14 +372,11 @@ class AddDdayModal: UIViewController, UITextFieldDelegate {
 extension AddDdayModal: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
-        //text 변경 시 placeholder 숨김
         self.textPlaceHolderLabel.isHidden = !textView.text.isEmpty
-        //입력 글자 수 label 표시
         self.textCountLabel.text = "\(self.titleTextView.text.count)/10"
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        // 현재 텍스트 길이와 입력하려는 텍스트 길이의 합이 최대 길이를 초과하면 false 반환
         let currentText = textView.text ?? ""
         let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
         return newText.count <= 10

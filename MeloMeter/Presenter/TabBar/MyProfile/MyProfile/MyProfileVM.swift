@@ -20,6 +20,7 @@ class MyProfileVM {
         let editProfileBtnTapEvent: Observable<Void>
         let alarmViewTapEvent: Observable<Void>
         let dDayViewTapEvent: Observable<Void>
+        let hundredQAViewTapEvent: Observable<Void>
         let noticeViewTapEvent: Observable<Void>
         let qnAViewTapEvent: Observable<Void>
     }
@@ -82,6 +83,13 @@ class MyProfileVM {
             .subscribe(onNext: {[weak self] _ in
                 guard let self = self else{ return }
                 self.coordinator?.showDdayFlow()
+            })
+            .disposed(by: disposeBag)
+        
+        input.hundredQAViewTapEvent
+            .subscribe(onNext: {[weak self] _ in
+                guard let self = self else{ return }
+                self.coordinator?.showHundredQAFlow()
             })
             .disposed(by: disposeBag)
         
