@@ -8,7 +8,6 @@
 import UIKit
 final class ChatCoordinator: Coordinator {
     var delegate: CoordinatorDelegate?
-    
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
     
@@ -26,8 +25,9 @@ final class ChatCoordinator: Coordinator {
 extension ChatCoordinator {
     
     func showChatVC() {
+        let firebaseService = DefaultFirebaseService()
         let viewController = DisplayChatVC(
-            viewModel: ChatVM(coordinator: self, chatUseCase: ChatUseCase(chatRepository: ChatRepository(firebaseService: DefaultFirebaseService()))
+            viewModel: ChatVM(coordinator: self, chatUseCase: ChatUseCase(chatRepository: ChatRepository(firebaseService: firebaseService), coupleRepository: CoupleRepository(firebaseService: firebaseService))
                              )
         )
         

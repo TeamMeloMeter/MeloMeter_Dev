@@ -159,7 +159,6 @@ public extension DefaultFirebaseService {
     func observer(collection: FireStoreCollection, document: String) -> Observable<FirebaseData> {
         return Observable<FirebaseData>.create { [weak self] observable in
             guard let self else { return Disposables.create() }
-            
             self.database.collection(collection.name)
                 .document(document)
                 .addSnapshotListener { snapshot, error in

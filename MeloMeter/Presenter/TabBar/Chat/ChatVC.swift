@@ -19,6 +19,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     private let viewModel: ChatVM?
     let disposeBag = DisposeBag()
     let tapGesture = UITapGestureRecognizer()
+    let viewDidLoadEvent = PublishSubject<Void>()
     var sendMessage = PublishRelay<MockMessage>()
     
     lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
@@ -60,10 +61,14 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         
         //바인딩 추가
         setBindings()
+        self.viewDidLoadEvent.onNext(())
         
         configureMessageCollectionView()
         configureMessageInputBar()
-        loadFirstMessages()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -83,7 +88,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     }
     
     // MARK: - 처음 로딩시 채팅 리스트 가져오는곳
-    func loadFirstMessages() {
+    func loadFirstMessages(_ chatMassageList: [MockMessage]) {
 //        //디스패치 큐로 로컬에서 가져옴
 //        DispatchQueue.global(qos: .userInitiated).async {
 //            //처음 몇개를 가져올건지
@@ -108,19 +113,11 @@ class ChatVC: MessagesViewController, MessagesDataSource {
 //          var senderId: String
 //          var displayName: String
 //        }
-        
-        //Rx로 fireBase에서 가져와야함
-        var messages : [MockMessage] = []
-        let message1 = MockMessage(text: "test Message1", user: self.mockUser, messageId: UUID().uuidString, date: Date())
-        let message2 = MockMessage(text: "test Message2", user: self.mockUser2, messageId: UUID().uuidString, date: Date())
-        
-        messages.append(message1)
-        messages.append(message2)
-        
+                
         //화면에 뿌리는 코드
         DispatchQueue.global(qos: .userInitiated).async {
             DispatchQueue.main.async {
-                self.messageList = messages // messages <= MockMessage의 배열
+                self.messageList = chatMassageList // DB에서 받아온 메세지 배열 삽입
                 self.messagesCollectionView.reloadData()
                 self.messagesCollectionView.scrollToLastItem(animated: false)
             }
@@ -161,6 +158,18 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     }
     
     // MARK: - EVENT
+    func messageSendfaileAlert(){
+        AlertManager(viewController: self)
+            .setTitle("전송실패")
+            .setMessage("서버와 연결에 실패했습니다.\n잠시후에 다시 시도해주세요. ")
+            .addActionConfirm("확인")
+            .showCustomAlert()
+    }
+    
+    
+    @objc func viewDidLoadEventMethod(){
+        
+    }
     
     // MARK: - Binding
     func setBindings() {
@@ -168,12 +177,41 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         
         //바인딩
         let input = ChatVM.Input(
+            viewDidLoadEvent: self.viewDidLoadEvent
+                .map({ _ in })
+                .asObservable(),
+            viewWillApearEvent: self.rx.methodInvoked(#selector(viewWillAppear(_:)))
+                .map({ _ in })
+                .asObservable(),
             mySendMessage: self.sendMessage
                 .asObservable()
         )
         
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else{ return }
-
+        
+        output.senddSuccess
+            .bind(onNext: {result in
+                if result {
+                    //성공
+                }
+                else {
+                    self.messageSendfaileAlert()
+                }
+            })
+            .disposed(by: disposeBag)
+        output.getMessage
+            .bind(onNext: {chatMessageList in
+                self.loadFirstMessages(chatMessageList)
+            })
+            .disposed(by: disposeBag)
+        
+        output.getRealTimeMessage
+            .bind(onNext: {chatMessageList in
+                chatMessageList.map{ chatMessage in
+                    self.insertMessage(chatMessage)
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Helpers
@@ -209,6 +247,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         messageList[indexPath.section]
     }
     
+    //여기에서 일이 넘어갈때만 출력하도록 ( 00,00,00 시에 가장 가까운 매세지에 한번 출력 )
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         if indexPath.section % 3 == 0 {
             return NSAttributedString(
@@ -251,10 +290,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         nil
     }
     
-    // MARK: Private
-    
     // MARK: - Private properties
-    
     private let formatter: DateFormatter = {
         let formatter = DateFormatter()
 //        formatter.dateStyle = .medium
@@ -394,7 +430,6 @@ extension ChatVC: InputBarAccessoryViewDelegate {
             
             let substring = attributedText.attributedSubstring(from: range)
             let context = substring.attribute(.autocompletedContext, at: 0, effectiveRange: nil)
-            print("Autocompleted: `", substring, "` with context: ", context ?? [])
         }
         
         let components = inputBar.inputTextView.components //String
@@ -411,26 +446,27 @@ extension ChatVC: InputBarAccessoryViewDelegate {
             DispatchQueue.main.async { [weak self] in
                 inputBar.sendButton.stopAnimating()
                 inputBar.inputTextView.placeholder = "Aa"
-                
+                //챗팅창에 보이게 하는 메서드
                 self?.insertMessages(components)
+                //컬렉션 뷰 마지막에 요소 추가
                 self?.messagesCollectionView.scrollToLastItem(animated: true)
             }
         }
     }
     
     // MARK: Private
-    //샘플 데이터
-    
     private func insertMessages(_ data: [Any]) {
         for component in data {
+            //텍스트 타입
             if let str = component as? String {
-                let message = MockMessage(text: str, user: self.mockUser, messageId: UUID().uuidString, date: Date())
-                insertMessage(message)
-                sendMessage.accept(message)
                 
+                let message = MockMessage(text: str, user: self.mockUser, messageId: UUID().uuidString, date: Date.fromStringOrNow(Date().toString(type: .timeStamp), .timeStamp))
+                sendMessage.accept(message)
+            
+            //이미지 타입
             } else if let img = component as? UIImage {
-                let message = MockMessage(image: img, user: self.mockUser, messageId: UUID().uuidString, date: Date())
-                insertMessage(message)
+                let message = MockMessage(image: img, user: self.mockUser, messageId: UUID().uuidString, date: Date.fromStringOrNow(Date().toString(type: .timeStamp), .timeStamp))
+//                insertMessage(message)
             }
         }
     }
