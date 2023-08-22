@@ -30,7 +30,7 @@ extension HundredCoordinator {
     func showHundredQAVC() {
         let firebaseService = DefaultFirebaseService()
         let viewController = HundredQAVC(viewModel: HundredQAVM(coordinator: self,
-                                                                hundredQAUserCase: HundredQAUserCase(coupleRepository: CoupleRepository(
+                                                                hundredQAUserCase: HundredQAUserCase(hundredQARepository: HundredQARepository(
                                                                     firebaseService: firebaseService)
                                                                 ))
         )
@@ -44,7 +44,7 @@ extension HundredCoordinator {
     func showReadAnswerVC() {
         let firebaseService = DefaultFirebaseService()
         let viewController = ReadAnswerVC(viewModel: AnswerVM(coordinator: self,
-                                                                hundredQAUserCase: HundredQAUserCase(coupleRepository: CoupleRepository(
+                                                              hundredQAUserCase: HundredQAUserCase(hundredQARepository: HundredQARepository(
                                                                     firebaseService: firebaseService)
                                                                 ))
         )
@@ -58,7 +58,7 @@ extension HundredCoordinator {
     func showWriteAnswerVC(question: String, name: String) {
         let firebaseService = DefaultFirebaseService()
         let viewController = WriteAnswerVC(viewModel: AnswerVM(coordinator: self,
-                                                                hundredQAUserCase: HundredQAUserCase(coupleRepository: CoupleRepository(
+                                                                hundredQAUserCase: HundredQAUserCase(hundredQARepository: HundredQARepository(
                                                                     firebaseService: firebaseService)
                                                                 )
                                                              ),

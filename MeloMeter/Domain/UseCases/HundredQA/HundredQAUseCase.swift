@@ -12,12 +12,16 @@ import RxRelay
 class HundredQAUserCase {
     
     private var disposeBag: DisposeBag
-    private var coupleRepository: CoupleRepository
+    private var hundredQARepository: HundredQARepository
     
-    init(coupleRepository: CoupleRepository) {
-        self.coupleRepository = coupleRepository
+    init(hundredQARepository: HundredQARepository) {
+        self.hundredQARepository = hundredQARepository
         self.disposeBag = DisposeBag()
     }
  
+    func addAnswer(answerText: String) {
+        guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return }
+        self.hundredQARepository.getAnswerList()
+    }
     
 }
