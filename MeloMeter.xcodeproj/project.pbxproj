@@ -115,6 +115,11 @@
 		5290BFB42A7270DF00D734EE /* LogInRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5290BFB32A7270DF00D734EE /* LogInRepositoryP.swift */; };
 		52AEACFA2A9335810097930E /* AlarmCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AEACF92A9335810097930E /* AlarmCoordinator.swift */; };
 		52AEACFD2A9337F40097930E /* AlarmVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AEACFC2A9337F40097930E /* AlarmVM.swift */; };
+		52AEAD002A93D6250097930E /* HundredQACoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AEACFF2A93D6250097930E /* HundredQACoordinator.swift */; };
+		52AEAD032A93D9770097930E /* HundredQAVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AEAD022A93D9770097930E /* HundredQAVM.swift */; };
+		52AEAD052A93DA050097930E /* HundredQAVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AEAD042A93DA050097930E /* HundredQAVC.swift */; };
+		52AEAD082A93DAEF0097930E /* HundredQAUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AEAD072A93DAEF0097930E /* HundredQAUseCase.swift */; };
+		52AEAD0A2A93EAB20097930E /* HundredQATableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AEAD092A93EAB20097930E /* HundredQATableViewCell.swift */; };
 		52B7EBCB2A8F2E79008F5F53 /* AccountsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B7EBCA2A8F2E79008F5F53 /* AccountsVM.swift */; };
 		52B7EBCD2A8F2F05008F5F53 /* AccountsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B7EBCC2A8F2F05008F5F53 /* AccountsUseCase.swift */; };
 		52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6E8229FEBC0200E43D39 /* FontManager.swift */; };
@@ -138,7 +143,14 @@
 		52F305302A168CE900112A04 /* DisconnectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F3052F2A168CE900112A04 /* DisconnectVC.swift */; };
 		52F305362A16B7F500112A04 /* RecoveryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305352A16B7F400112A04 /* RecoveryVC.swift */; };
 		52F3053A2A16BF4700112A04 /* WithdrawalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F305392A16BF4700112A04 /* WithdrawalVC.swift */; };
-		7ED5DD1A612E8220CC3372C8 /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277B52F21CBE9A233F04022A /* Pods_MeloMeter.framework */; };
+		52F7394A2A9404EF00D46FBB /* ReadAnswerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F739492A9404EF00D46FBB /* ReadAnswerVC.swift */; };
+		52F7394D2A94058500D46FBB /* WriteAnswerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F7394C2A94058500D46FBB /* WriteAnswerVC.swift */; };
+		52F7394F2A946C6E00D46FBB /* AnswerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F7394E2A946C6E00D46FBB /* AnswerVM.swift */; };
+		52F739512A94DE1D00D46FBB /* HundredQARepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F739502A94DE1D00D46FBB /* HundredQARepository.swift */; };
+		52F739532A94DE7800D46FBB /* HundredQARepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F739522A94DE7800D46FBB /* HundredQARepositoryP.swift */; };
+		52F739552A94E6DB00D46FBB /* HundredQAModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F739542A94E6DB00D46FBB /* HundredQAModel.swift */; };
+		52F739572A94E71500D46FBB /* HundredQADTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F739562A94E71500D46FBB /* HundredQADTO.swift */; };
+		584747DECB244E9C525139CD /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE5DBEF8B7E76BA06972B7E /* Pods_MeloMeter.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -245,6 +257,11 @@
 		5290BFB32A7270DF00D734EE /* LogInRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInRepositoryP.swift; sourceTree = "<group>"; };
 		52AEACF92A9335810097930E /* AlarmCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCoordinator.swift; sourceTree = "<group>"; };
 		52AEACFC2A9337F40097930E /* AlarmVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmVM.swift; sourceTree = "<group>"; };
+		52AEACFF2A93D6250097930E /* HundredQACoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQACoordinator.swift; sourceTree = "<group>"; };
+		52AEAD022A93D9770097930E /* HundredQAVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQAVM.swift; sourceTree = "<group>"; };
+		52AEAD042A93DA050097930E /* HundredQAVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQAVC.swift; sourceTree = "<group>"; };
+		52AEAD072A93DAEF0097930E /* HundredQAUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQAUseCase.swift; sourceTree = "<group>"; };
+		52AEAD092A93EAB20097930E /* HundredQATableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQATableViewCell.swift; sourceTree = "<group>"; };
 		52B7EBCA2A8F2E79008F5F53 /* AccountsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsVM.swift; sourceTree = "<group>"; };
 		52B7EBCC2A8F2F05008F5F53 /* AccountsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsUseCase.swift; sourceTree = "<group>"; };
 		52CE6E8229FEBC0200E43D39 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
@@ -268,7 +285,14 @@
 		52F3052F2A168CE900112A04 /* DisconnectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectVC.swift; sourceTree = "<group>"; };
 		52F305352A16B7F400112A04 /* RecoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryVC.swift; sourceTree = "<group>"; };
 		52F305392A16BF4700112A04 /* WithdrawalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalVC.swift; sourceTree = "<group>"; };
-		A06187238AA90BD38E58BB0E /* Pods-MeloMeter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.debug.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.debug.xcconfig"; sourceTree = "<group>"; };
+		52F739492A9404EF00D46FBB /* ReadAnswerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadAnswerVC.swift; sourceTree = "<group>"; };
+		52F7394C2A94058500D46FBB /* WriteAnswerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteAnswerVC.swift; sourceTree = "<group>"; };
+		52F7394E2A946C6E00D46FBB /* AnswerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerVM.swift; sourceTree = "<group>"; };
+		52F739502A94DE1D00D46FBB /* HundredQARepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQARepository.swift; sourceTree = "<group>"; };
+		52F739522A94DE7800D46FBB /* HundredQARepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQARepositoryP.swift; sourceTree = "<group>"; };
+		52F739542A94E6DB00D46FBB /* HundredQAModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQAModel.swift; sourceTree = "<group>"; };
+		52F739562A94E71500D46FBB /* HundredQADTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQADTO.swift; sourceTree = "<group>"; };
+		8FAA2654E1FEB91139B384AA /* Pods-MeloMeter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.debug.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.debug.xcconfig"; sourceTree = "<group>"; };
 		B61B0F5A29F7A5F500E25EEF /* MeloMeter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeloMeter.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -481,6 +505,7 @@
 				5230B2512A727AAC00781623 /* Main */,
 				5230B2552A727C5000781623 /* MyProfile */,
 				2185C4B52A83F13B00F99795 /* Chat */,
+				52AEACFE2A93D59F0097930E /* HundredQA */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -685,6 +710,7 @@
 				526EB85D2A7D5992005B1940 /* UserRepository.swift */,
 				521D41F52A81C71F00E5CCDA /* CoupleRepository.swift */,
 				21C3821E2A87F7B1003638E1 /* ChatRepository.swift */,
+				52F739502A94DE1D00D46FBB /* HundredQARepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -749,6 +775,7 @@
 				2108F0462A6EC48B002EED7A /* UserDTO.swift */,
 				521D41ED2A801D5700E5CCDA /* CoupleDTO.swift */,
 				21C382232A87F85F003638E1 /* ChatDTO.swift */,
+				52F739562A94E71500D46FBB /* HundredQADTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -760,6 +787,7 @@
 				526EB85F2A7D59A4005B1940 /* UserRepositoryP.swift */,
 				521D41F72A81C75100E5CCDA /* CoupleRepositoryP.swift */,
 				21C3821C2A87F778003638E1 /* ChatRepositoryP.swift */,
+				52F739522A94DE7800D46FBB /* HundredQARepositoryP.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -772,6 +800,7 @@
 				521D41F92A83D5C100E5CCDA /* Presets */,
 				521D41EA2A7FFD7C00E5CCDA /* Main */,
 				521D41E82A7FFD6300E5CCDA /* MyProfile */,
+				52AEAD062A93DAB50097930E /* HundredQA */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -803,6 +832,32 @@
 				52AEACF92A9335810097930E /* AlarmCoordinator.swift */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		52AEACFE2A93D59F0097930E /* HundredQA */ = {
+			isa = PBXGroup;
+			children = (
+				52AEAD012A93D95D0097930E /* Coordinator */,
+				52F739482A9404BC00D46FBB /* QuestionList */,
+				52F7394B2A9404F600D46FBB /* Answer */,
+			);
+			path = HundredQA;
+			sourceTree = "<group>";
+		};
+		52AEAD012A93D95D0097930E /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				52AEACFF2A93D6250097930E /* HundredQACoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		52AEAD062A93DAB50097930E /* HundredQA */ = {
+			isa = PBXGroup;
+			children = (
+				52AEAD072A93DAEF0097930E /* HundredQAUseCase.swift */,
+			);
+			path = HundredQA;
 			sourceTree = "<group>";
 		};
 		52B7EBC92A8F2E5D008F5F53 /* Accounts */ = {
@@ -902,16 +957,29 @@
 				5271D4142A55C9DD00FC7606 /* LogInModel.swift */,
 				2108F0482A6EC565002EED7A /* UserModel.swift */,
 				521D41EB2A801D1200E5CCDA /* CoupleModel.swift */,
+				52F739542A94E6DB00D46FBB /* HundredQAModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		DD477B9BE2552388D8137ECB /* Frameworks */ = {
+		52F739482A9404BC00D46FBB /* QuestionList */ = {
 			isa = PBXGroup;
 			children = (
-				277B52F21CBE9A233F04022A /* Pods_MeloMeter.framework */,
+				52AEAD022A93D9770097930E /* HundredQAVM.swift */,
+				52AEAD042A93DA050097930E /* HundredQAVC.swift */,
+				52AEAD092A93EAB20097930E /* HundredQATableViewCell.swift */,
 			);
-			name = Frameworks;
+			path = QuestionList;
+			sourceTree = "<group>";
+		};
+		52F7394B2A9404F600D46FBB /* Answer */ = {
+			isa = PBXGroup;
+			children = (
+				52F7394E2A946C6E00D46FBB /* AnswerVM.swift */,
+				52F739492A9404EF00D46FBB /* ReadAnswerVC.swift */,
+				52F7394C2A94058500D46FBB /* WriteAnswerVC.swift */,
+			);
+			path = Answer;
 			sourceTree = "<group>";
 		};
 		F436958110A740287E251D09 /* Pods */ = {
@@ -1103,6 +1171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52B7EBCB2A8F2E79008F5F53 /* AccountsVM.swift in Sources */,
+				52AEAD052A93DA050097930E /* HundredQAVC.swift in Sources */,
 				5271D4172A5841E500FC7606 /* FireStoreService.swift in Sources */,
 				52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */,
 				2185C4DA2A83F13B00F99795 /* CustomLayoutSizeCalculator.swift in Sources */,
@@ -1122,10 +1191,13 @@
 				521D41EC2A801D1200E5CCDA /* CoupleModel.swift in Sources */,
 				2108F04B2A702A77002EED7A /* PermissionVM.swift in Sources */,
 				52697B7329EEB7B2002BDD04 /* AppDelegate.swift in Sources */,
+				52F7394F2A946C6E00D46FBB /* AnswerVM.swift in Sources */,
 				21C382242A87F85F003638E1 /* ChatDTO.swift in Sources */,
 				52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */,
 				5271D40B2A544A2D00FC7606 /* LogInVM.swift in Sources */,
+				52AEAD002A93D6250097930E /* HundredQACoordinator.swift in Sources */,
 				5230B2802A7C20D400781623 /* BackgroundTaskManager.swift in Sources */,
+				52AEAD0A2A93EAB20097930E /* HundredQATableViewCell.swift in Sources */,
 				5230B2842A7D029200781623 /* MyProfileUseCase.swift in Sources */,
 				2185C4DB2A83F13B00F99795 /* MockSocket.swift in Sources */,
 				52F010222A0ADD500014FC01 /* EditStateMessageVC.swift in Sources */,
@@ -1135,6 +1207,7 @@
 				52F2083A29FBB31D0043BCA4 /* MyProfileVC.swift in Sources */,
 				521D42102A89C2DF00E5CCDA /* ImageCacheManager.swift in Sources */,
 				521D42122A8A106700E5CCDA /* DdayCoordinator.swift in Sources */,
+				52AEAD032A93D9770097930E /* HundredQAVM.swift in Sources */,
 				2185C4D92A83F13B00F99795 /* MockUser.swift in Sources */,
 				5230B27C2A77926A00781623 /* MainUseCase.swift in Sources */,
 				2185C4DC2A83F13B00F99795 /* DisplayChatVC.swift in Sources */,
@@ -1147,6 +1220,7 @@
 				5271D42A2A5FD02900FC7606 /* AlertManager.swift in Sources */,
 				52CE6EA12A01875C00E43D39 /* AlarmVC.swift in Sources */,
 				5290BFAC2A70F46C00D734EE /* MainCoordinator.swift in Sources */,
+				52AEAD082A93DAEF0097930E /* HundredQAUseCase.swift in Sources */,
 				2185C4D72A83F13B00F99795 /* MockMessage.swift in Sources */,
 				2185C4D62A83F13B00F99795 /* SampleData.swift in Sources */,
 				5270EC042A445077007FF444 /* StartVC.swift in Sources */,
@@ -1161,6 +1235,7 @@
 				52F305362A16B7F500112A04 /* RecoveryVC.swift in Sources */,
 				52CE6EA72A02571E00E43D39 /* MapVC.swift in Sources */,
 				2185C4D52A83F13B00F99795 /* Lorem.swift in Sources */,
+				52F739572A94E71500D46FBB /* HundredQADTO.swift in Sources */,
 				521D41F62A81C71F00E5CCDA /* CoupleRepository.swift in Sources */,
 				5230B2862A7D048400781623 /* MyProfileVM.swift in Sources */,
 				5271D4192A58429000FC7606 /* FireStoreCollection.swift in Sources */,
@@ -1180,6 +1255,7 @@
 				5241382E2A62F2ED002AADA6 /* LogInCoordinator.swift in Sources */,
 				5271D40F2A5576E500FC7606 /* PermissionVC.swift in Sources */,
 				2185C4CE2A83F13B00F99795 /* ChatVC.swift in Sources */,
+				52F739552A94E6DB00D46FBB /* HundredQAModel.swift in Sources */,
 				52AEACFD2A9337F40097930E /* AlarmVM.swift in Sources */,
 				52AEACFA2A9335810097930E /* AlarmCoordinator.swift in Sources */,
 				521D42022A8551E900E5CCDA /* EditProfileVM.swift in Sources */,
@@ -1203,12 +1279,16 @@
 				2108F0492A6EC565002EED7A /* UserModel.swift in Sources */,
 				5271D4322A606D0B00FC7606 /* Dictionary+.swift in Sources */,
 				521D41E52A7FFAD200E5CCDA /* DdayVM.swift in Sources */,
+				52F7394D2A94058500D46FBB /* WriteAnswerVC.swift in Sources */,
 				521D41EE2A801D5700E5CCDA /* CoupleDTO.swift in Sources */,
 				52697B7529EEB7B2002BDD04 /* SceneDelegate.swift in Sources */,
 				5262BB7A2A8C80DB003EB016 /* SplashVM.swift in Sources */,
 				52B7EBCD2A8F2F05008F5F53 /* AccountsUseCase.swift in Sources */,
+				52F739532A94DE7800D46FBB /* HundredQARepositoryP.swift in Sources */,
+				52F739512A94DE1D00D46FBB /* HundredQARepository.swift in Sources */,
 				521D42192A8A99B700E5CCDA /* QnAVM.swift in Sources */,
 				52F0101E2A0ACE190014FC01 /* EditNameVC.swift in Sources */,
+				52F7394A2A9404EF00D46FBB /* ReadAnswerVC.swift in Sources */,
 				5271D4152A55C9DD00FC7606 /* LogInModel.swift in Sources */,
 				52F2084029FBFF280043BCA4 /* DdayVC.swift in Sources */,
 			);

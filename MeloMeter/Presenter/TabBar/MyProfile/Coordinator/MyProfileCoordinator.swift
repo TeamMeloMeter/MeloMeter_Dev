@@ -61,6 +61,12 @@ extension MyProfileCoordinator {
         dDayCoordinator.start()
     }
     
+    func showHundredQAFlow() {
+        let hundredQACoordinator = HundredCoordinator(self.navigationController)
+        childCoordinators.append(hundredQACoordinator)
+        hundredQACoordinator.start()
+    }
+    
     func showEditProfileVC() {
         let firebaseService = DefaultFirebaseService()
         let userRepository = UserRepository(

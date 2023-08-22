@@ -52,6 +52,7 @@ class DdayVM {
                 guard let self = self else{ return }
                 self.dDayUseCase.coupleObserverExcute()
                 self.dDayUseCase.getFirstDay()
+                
             })
             .disposed(by: disposeBag)
         
@@ -62,7 +63,7 @@ class DdayVM {
             .asObservable()
             .bind(to: output.firstDay)
             .disposed(by: disposeBag)
-        
+            
         self.dDayUseCase.firstDay
             .map{ day -> String in
                 return "\(abs(self.dDayUseCase.sinceDday(from: day)))일"

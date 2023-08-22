@@ -33,7 +33,7 @@ extension AlarmCoordinator {
         self.navigationController.setNavigationBarHidden(false, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
     }
-    
+
     func finish() {
         self.navigationController.popViewController(animated: true)
     }
