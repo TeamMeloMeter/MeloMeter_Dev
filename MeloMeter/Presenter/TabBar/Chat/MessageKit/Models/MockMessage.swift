@@ -114,7 +114,7 @@ internal struct MockMessage: MessageType {
         self.init(kind: .attributedText(attributedText), user: user, messageId: messageId, date: date)
     }
     
-    init(image: UIImage, user: MockUser, messageId: String, date: Date) {
+    init(image: UIImage, user: MockUser, messageId: String, date: Date) { //구현해야함
         let mediaItem = ImageMediaItem(image: image)
         self.init(kind: .photo(mediaItem), user: user, messageId: messageId, date: date)
     }

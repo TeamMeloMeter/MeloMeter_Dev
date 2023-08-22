@@ -16,6 +16,7 @@ class ChatVM {
     
     struct Input {
         //전달받을 변수
+        let viewDidLoadEvent: Observable<Void>
         let viewWillApearEvent: Observable<Void>
         let mySendMessage: Observable<MockMessage>
     }
@@ -24,6 +25,7 @@ class ChatVM {
         //전달할 변수
         var senddSuccess = PublishSubject<Bool>()
         var getMessage = PublishSubject<[MockMessage]>()
+        var getRealTimeMessage = PublishSubject<[MockMessage]>()
     }
     
     // MARK: Input
@@ -36,27 +38,42 @@ class ChatVM {
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output()
         
-        input.viewWillApearEvent
+        input.viewDidLoadEvent
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else{ return }
-                let myCoupleid = UserDefaults.standard.string(forKey: "coupleDocumentID") ?? ""
-                print(myCoupleid, " %%%%%%%%%%%%%%%%%%%%")
-//                self.chatUseCase.getChatMessageService()
-//                    .asObservable()
-//                    .bind(to: output.getMessage)
-//                    .disposed(by: disposeBag)
+                self.chatUseCase.getChatMessageService()
+                self.chatUseCase.startRealTimeChatMassage()
             })
             .disposed(by: disposeBag)
+        
+//        input.viewWillApearEvent
+//            .subscribe(onNext: { [weak self] _ in
+//                guard let self = self else{ return }
+//
+//            })
+//            .disposed(by: disposeBag)
         
         input.mySendMessage
             .subscribe(onNext: {[weak self] myMessage in
                 guard let self = self else{ return }
-                self.chatUseCase.sendNumberService(mockMessage: myMessage)
+                self.chatUseCase.sendMessageService(mockMessage: myMessage)
                     .subscribe(onSuccess: {
                         output.senddSuccess.onNext(true)
                     },onFailure: { error in
                         output.senddSuccess.onNext(false)
                     }).disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
+        
+        self.chatUseCase.recieveChatMessageService
+            .subscribe(onNext: {chatMessageList in
+                output.getMessage.onNext(chatMessageList ?? [])
+            })
+            .disposed(by: disposeBag)
+        
+        self.chatUseCase.recieveRealTimeMessageService
+            .subscribe(onNext: {chatMessageList in
+                output.getRealTimeMessage.onNext(chatMessageList ?? [])
             })
             .disposed(by: disposeBag)
         

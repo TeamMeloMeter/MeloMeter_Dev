@@ -19,6 +19,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     private let viewModel: ChatVM?
     let disposeBag = DisposeBag()
     let tapGesture = UITapGestureRecognizer()
+    let viewDidLoadEvent = PublishSubject<Void>()
     var sendMessage = PublishRelay<MockMessage>()
     
     lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
@@ -60,6 +61,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         
         //바인딩 추가
         setBindings()
+        self.viewDidLoadEvent.onNext(())
         
         configureMessageCollectionView()
         configureMessageInputBar()
@@ -164,12 +166,20 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             .showCustomAlert()
     }
     
+    
+    @objc func viewDidLoadEventMethod(){
+        
+    }
+    
     // MARK: - Binding
     func setBindings() {
         view.addGestureRecognizer(tapGesture)
         
         //바인딩
         let input = ChatVM.Input(
+            viewDidLoadEvent: self.viewDidLoadEvent
+                .map({ _ in })
+                .asObservable(),
             viewWillApearEvent: self.rx.methodInvoked(#selector(viewWillAppear(_:)))
                 .map({ _ in })
                 .asObservable(),
@@ -192,6 +202,14 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         output.getMessage
             .bind(onNext: {chatMessageList in
                 self.loadFirstMessages(chatMessageList)
+            })
+            .disposed(by: disposeBag)
+        
+        output.getRealTimeMessage
+            .bind(onNext: {chatMessageList in
+                chatMessageList.map{ chatMessage in
+                    self.insertMessage(chatMessage)
+                }
             })
             .disposed(by: disposeBag)
     }
@@ -229,6 +247,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         messageList[indexPath.section]
     }
     
+    //여기에서 일이 넘어갈때만 출력하도록 ( 00,00,00 시에 가장 가까운 매세지에 한번 출력 )
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         if indexPath.section % 3 == 0 {
             return NSAttributedString(
@@ -271,10 +290,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         nil
     }
     
-    // MARK: Private
-    
     // MARK: - Private properties
-    
     private let formatter: DateFormatter = {
         let formatter = DateFormatter()
 //        formatter.dateStyle = .medium
@@ -414,7 +430,6 @@ extension ChatVC: InputBarAccessoryViewDelegate {
             
             let substring = attributedText.attributedSubstring(from: range)
             let context = substring.attribute(.autocompletedContext, at: 0, effectiveRange: nil)
-            print("Autocompleted: `", substring, "` with context: ", context ?? [])
         }
         
         let components = inputBar.inputTextView.components //String
@@ -431,29 +446,27 @@ extension ChatVC: InputBarAccessoryViewDelegate {
             DispatchQueue.main.async { [weak self] in
                 inputBar.sendButton.stopAnimating()
                 inputBar.inputTextView.placeholder = "Aa"
-                
+                //챗팅창에 보이게 하는 메서드
                 self?.insertMessages(components)
+                //컬렉션 뷰 마지막에 요소 추가
                 self?.messagesCollectionView.scrollToLastItem(animated: true)
             }
         }
     }
     
     // MARK: Private
-    //샘플 데이터
-    
     private func insertMessages(_ data: [Any]) {
         for component in data {
             //텍스트 타입
             if let str = component as? String {
                 
                 let message = MockMessage(text: str, user: self.mockUser, messageId: UUID().uuidString, date: Date.fromStringOrNow(Date().toString(type: .timeStamp), .timeStamp))
-                insertMessage(message)
                 sendMessage.accept(message)
             
             //이미지 타입
             } else if let img = component as? UIImage {
                 let message = MockMessage(image: img, user: self.mockUser, messageId: UUID().uuidString, date: Date.fromStringOrNow(Date().toString(type: .timeStamp), .timeStamp))
-                insertMessage(message)
+//                insertMessage(message)
             }
         }
     }
