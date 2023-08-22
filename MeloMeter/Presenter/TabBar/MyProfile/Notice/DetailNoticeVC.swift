@@ -109,8 +109,40 @@ class DetailNoticeVC: UIViewController {
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.sizeToFit()
-        label.text = "안녕하세요. 멜로미터입니다. \n\n회원 가입 시 입력하는 번호가 고객님의 멜로미터 아이디입니다. 아이디는 원활한 앱 사용을 위해~~ \n\n[계정 인증 방법]\n\n 가입 직후 발송된 멜로미터의 어쩌구 확인"
-        label.textColor = .black
+        label.text = """
+안녕하세요. 멜로미터입니다. 회원 가입 시 입력하는 번호가 고객님의 멜로미터 아이디입니다. 아이디는 원활한 앱 사용을 위해~~ [계정 인증 방법]\n\n 가입 직후 발송된 멜로미터의 어쩌구 확인
+d
+d
+d
+d
+d
+d
+d
+
+d
+d
+d
+d
+dd
+d
+d
+d
+d
+d
+d
+d
+d
+dd
+df
+d
+d
+d
+d
+d
+
+d
+"""
+        label.textColor = .gray1
         label.font = FontManager.shared.medium(ofSize: 16)
         return label
     }()
@@ -128,7 +160,7 @@ class DetailNoticeVC: UIViewController {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         contentsView.translatesAutoresizingMaskIntoConstraints = false
         contentsLabel.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             titleLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 26),
@@ -144,18 +176,18 @@ class DetailNoticeVC: UIViewController {
             scrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             scrollView.topAnchor.constraint(equalTo: lineView.bottomAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             
             contentsView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             contentsView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentsView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentsView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 20),
+            contentsView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             contentsView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
             contentsLabel.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor, constant: 16),
             contentsLabel.topAnchor.constraint(equalTo: contentsView.topAnchor, constant: 30),
             contentsLabel.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor, constant: -16),
-            
+            contentsLabel.bottomAnchor.constraint(equalTo: contentsView.bottomAnchor, constant: -30),
+
         ])
     }
 }

@@ -58,6 +58,9 @@ class MyProfileVC: UIViewController {
             dDayViewTapEvent: self.dDayView.rx.tapGesture().when(.ended)
                 .map({ _ in })
                 .asObservable(),
+            hundredQAViewTapEvent: self.hundredQnAView.rx.tapGesture().when(.ended)
+                .map({ _ in })
+                .asObservable(),
             noticeViewTapEvent: self.noticeStackView.rx.tapGesture().when(.ended)
                 .map({ _ in })
                 .asObservable(),
