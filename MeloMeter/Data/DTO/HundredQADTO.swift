@@ -7,16 +7,31 @@
 
 import Foundation
 
-struct HundredQADTO: Codable {
+struct AnswerDTO: Codable {
+    let userId: String
+    let answerText: String
+    let userName: String
+    
+    func toModel() -> AnswerModel {
+        return AnswerModel(
+            userId: userId == UserID.mine.toUid ? .mine : .other,
+            answerText: answerText,
+            userName: userName
+        )
+    }
+}
+struct AnswerInfoDTO {
     
     // MARK: - Properties
-    let answerList: [[String: String]]
+    let answerInfo: [AnswerDTO]
+    let questionText: String
     
-    // MARK: - Methods
-//    func toModel() -> HundredQAModel {
-//        return HundredQAModel(
-//            userID: answerList[0][""] == UserDefaults.standard.string(forKey: "uid") ? .mine : .other,
-//            answerText: answerText
-//        )
-//    }
+    func toModel() -> AnswerInfoModel {
+        return AnswerInfoModel(
+            answerInfo: answerInfo.map{ answer in
+                return answer.toModel()
+            },
+            questionText: questionText
+        )
+    }
 }

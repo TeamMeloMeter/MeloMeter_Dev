@@ -39,26 +39,71 @@ class HundredQARepository: HundredQARepositoryP {
         }
     }
     
-    func getAnswerList() -> Void {
-        self.getCoupleID()
-            .subscribe(onSuccess: { coupleID in
-                self.firebaseService.getDocument(collection: .Couples, document: coupleID)
-                    .subscribe(onSuccess: { data in
-                        print("커플문서", data)
-                    })
-            })
-    }
-    
-    func setAnswerList(data: HundredQAModel) -> Single<Void> {
-        return self.getCoupleID()
-            .flatMap{ coupleID -> Single<Void> in
-                self.firebaseService.getDocument(collection: .Couples, document: coupleID)
-                    .flatMap{ source -> Single<Void> in
-                        
-                        return self.firebaseService.updateDocument(collection: .Couples, document: coupleID, values: [:])
-                    }
+    func getAnswerList(coupleID: String) -> Single<[AnswerInfoDTO]> {
+        return self.firebaseService.getDocument(collection: .Couples, document: coupleID)
+            .flatMap { documentSnapshot -> Single<[AnswerInfoDTO]> in
+                
+                if let answersList = documentSnapshot["answersList"] as? [String: Any], !answersList.isEmpty{
+
+                    return self.getQusestionList()
+                        .flatMap { questionList -> Single<[AnswerInfoDTO]> in
+
+                            var resultDTO: [AnswerInfoDTO] = []
+                            for questionNumber in answersList.keys.sorted(by: { Int($0) ?? 0 < Int($1) ?? 0 }) {
+                                var answerDTOArray: [AnswerDTO] = []
+                                for answerInfo in answersList[questionNumber] as? [[String: String]] ?? [] {
+                                    
+                                    let answerDTO = AnswerDTO(
+                                        userId: answerInfo["userId"] ?? "",
+                                        answerText: answerInfo["answerText"] ?? "",
+                                        userName: answerInfo["userName"] ?? ""
+                                    )
+                                    
+                                    answerDTOArray.append(answerDTO)
+                                }
+
+                                let answerInfoDTO = AnswerInfoDTO(
+                                    answerInfo: answerDTOArray,
+                                    questionText: questionList[Int(questionNumber) ?? 0]
+                                )
+                                resultDTO.append(answerInfoDTO)
+                            }
+                            return Single.just(resultDTO)
+                        }
+                } else {
+                    return self.getQusestionList()
+                        .flatMap { questionList in
+                            let answerInfoDTO = AnswerInfoDTO(
+                                answerInfo: [AnswerDTO(userId: "", answerText: "", userName: "")],
+                                questionText: questionList[0]
+                            )
+                            return Single.just([answerInfoDTO])
+                        }
+                    
+                }
+
             }
     }
+    
+    func getQusestionList() -> Single<[String]> {
+        return self.firebaseService.getDocument(collection: .QusestionList, document: "IRzqEbKybgdvUij8LZpT")
+            .map{ listDic in
+                guard let listArray = listDic["List"] as? [String] else{ return []}
+                return listArray
+            }
+    }
+
+    func setAnswerList(questionNumber: String, answerData: AnswerModel, coupleID: String) -> Single<Void> {
+        guard let values = answerData.toDTO().asDictionary else{ return Single.just(())}
+        print("리포지토리 입력정보", answerData)
+        return self.firebaseService.createDocument(
+            collection: .Couples,
+            document: coupleID,
+            values: ["answersList" :  [questionNumber: FieldValue.arrayUnion([values])] ]
+        )
+
+    }
+    
     
     func answerListObserver() {
         getCoupleID()

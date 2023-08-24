@@ -14,8 +14,11 @@ class HundredQAVC: UIViewController {
 
     private let viewModel: HundredQAVM?
     let disposeBag = DisposeBag()
-    var selectedCellIndex = PublishSubject<Int>()
-
+    var selectedCellIndex = PublishSubject<(Int, String)>()
+    var questionTopData: [String] = []
+    var questionBottomData: [String] = []
+    var questionNumbers: [[String]] = []
+    
     init(viewModel: HundredQAVM) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -37,7 +40,6 @@ class HundredQAVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //self.hundredQATableView.scrollToRow(at: self.indexPath, at: .top, animated: true)
     }
     
     func setBindings() {
@@ -49,12 +51,38 @@ class HundredQAVC: UIViewController {
             backBtnTapEvent: self.backBarButton.rx.tap
                 .map({ _ in })
                 .asObservable(),
-            cellTapEvent: self.selectedCellIndex.asObservable()
+            cellTapEvent: self.selectedCellIndex
+                .asObservable()
         )
         
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else { return }
         
-       
+        output.questionTopData
+            .subscribe(onNext: { questions in
+                self.questionTopData = questions
+                if questions.count == 2 {
+                    self.questionCountLabel.isHidden = false
+                    self.questionCountLabel.text = "1/2"
+                }else {
+                    self.questionCountLabel.isHidden = true
+                }
+                self.hundredQATableView.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
+        output.questionBottomData
+            .subscribe(onNext: { questions in
+                self.questionBottomData = questions
+                self.hundredQATableView.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
+        output.questionNumbers
+            .subscribe(onNext: { numbers in
+                self.questionNumbers = numbers
+                self.hundredQATableView.reloadData()
+            })
+            .disposed(by: disposeBag)
         
     }
     
@@ -84,7 +112,6 @@ class HundredQAVC: UIViewController {
 
     let questionCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "1/2"
         label.font = FontManager.shared.medium(ofSize: 12)
         label.textColor = .gray2
         return label
@@ -148,9 +175,9 @@ extension HundredQAVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 2
+            return self.questionTopData.count
         } else if section == 1 {
-            return 10
+            return self.questionBottomData.count
         }
         return 0
     }
@@ -181,19 +208,28 @@ extension HundredQAVC: UITableViewDataSource, UITableViewDelegate {
             if indexPath.row == 0 {
                 cell.newDotImage.isHidden = false
             }
-            //let rowData = dataForSection0[indexPath.row]
-            
+            cell.questionLabel.text = self.questionTopData[indexPath.row]
+            cell.numberLabel.text = self.questionNumbers[0][indexPath.row]
         } else if indexPath.section == 1 {
-            //let rowData = dataForSection1[indexPath.row]
-            
+            cell.newDotImage.isHidden = true
+            cell.numberLabel.text = self.questionNumbers[1][indexPath.row]
+            cell.questionLabel.text = self.questionBottomData[indexPath.row]
         }
         
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        self.selectedCellIndex.onNext(indexPath.row)
+        var question = ""
+        var index = 0
+        if indexPath.section == 0 {
+            question = self.questionTopData[indexPath.row]
+            index = (Int(self.questionNumbers[0][indexPath.row]) ?? 0) - 1
+        }else {
+            question = self.questionBottomData[indexPath.row]
+            index = (Int(self.questionNumbers[1][indexPath.row]) ?? 0) - 1
+        }
+        self.selectedCellIndex.onNext((index, question))
     }
     
 }

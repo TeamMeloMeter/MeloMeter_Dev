@@ -121,6 +121,7 @@ class MapVM {
                                     output.endTrigger.onNext(true)
                                     return
                                 }
+                                UserDefaults.standard.set(otherUserModel.name, forKey: "otherUserName")
                                 output.otherStateMessage.onNext(otherUserModel.stateMessage ?? nil)
                             })
                             .disposed(by: disposeBag)
