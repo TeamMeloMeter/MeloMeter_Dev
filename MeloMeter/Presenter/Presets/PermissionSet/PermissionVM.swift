@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import AVFoundation
 
 class PermissionVM {
 
@@ -44,6 +45,7 @@ class PermissionVM {
             .subscribe(onNext: { [weak self] _ in
                 self?.mainUseCase.requestAuthorization()
                 self?.registerForPushNotifications()
+                self?.requestCameraPermission()
             })
             .disposed(by: disposeBag)
         
@@ -64,4 +66,17 @@ class PermissionVM {
                 print("Permission granted: \(granted)")
             }
     }
+    
+    func requestCameraPermission() {
+        AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
+            if response {
+                // 카메라 권한이 허용된 경우
+                print("카메라 권한이 허용되었습니다.")
+            } else {
+                // 카메라 권한이 거부된 경우
+                print("카메라 권한이 거부되었습니다.")
+            }
+        }
+    }
+
 }

@@ -31,7 +31,6 @@ final class DisplayChatVC: ChatVC {
     messagesCollectionView.messagesDisplayDelegate = self
   }
     
-
     
   func textCellSizeCalculator(for _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> CellSizeCalculator? {
     nil
@@ -44,7 +43,7 @@ extension DisplayChatVC: MessagesDisplayDelegate {
   // MARK: - Text Messages
 
   func textColor(for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> UIColor {
-    isFromCurrentSender(message: message) ? .white : .darkText
+    isFromCurrentSender(message: message) ? .darkText : .darkText
   }
 
   func detectorAttributes(for detector: DetectorType, and _: MessageType, at _: IndexPath) -> [NSAttributedString.Key: Any] {
@@ -61,31 +60,57 @@ extension DisplayChatVC: MessagesDisplayDelegate {
   // MARK: - All Messages
 
   func backgroundColor(for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> UIColor {
-    isFromCurrentSender(message: message) ? .primary1 : UIColor(red: 230 / 255, green: 230 / 255, blue: 230 / 255, alpha: 1)
+      isFromCurrentSender(message: message) ? UIColor.primary1.withAlphaComponent(0.22) : .white
   }
+    
 
-  func messageStyle(for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> MessageStyle {
-    let tail: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
-    return .bubbleTail(tail, .curved)
-  }
+  func messageStyle(for message: MessageType, at indexPath: IndexPath, in _: MessagesCollectionView) -> MessageStyle {
+      var corners: UIRectCorner = []
 
-//  func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) {
-//    let avatar = SampleData.shared.getAvatarFor(sender: message.sender)
-//    avatarView.set(avatar: avatar)
-//  }
+      if isFromCurrentSender(message: message) {
+        corners.formUnion(.topLeft)
+        corners.formUnion(.bottomLeft)
+        if !isPreviousMessageSameSender(at: indexPath) {
+          corners.formUnion(.topRight)
+        }
+        if !isNextMessageSameSender(at: indexPath) {
+          corners.formUnion(.bottomRight)
+        }
+      } else {
+        corners.formUnion(.topRight)
+        corners.formUnion(.bottomRight)
+        if !isPreviousMessageSameSender(at: indexPath) {
+          corners.formUnion(.topLeft)
+        }
+        if !isNextMessageSameSender(at: indexPath) {
+          corners.formUnion(.bottomLeft)
+        }
+      }
 
-  func configureMediaMessageImageView(
-    _ imageView: UIImageView,
-    for message: MessageType,
-    at _: IndexPath,
-    in _: MessagesCollectionView)
-  {
-    if case MessageKind.photo(let media) = message.kind, let imageURL = media.url {
-      imageView.kf.setImage(with: imageURL)
-    } else {
-      imageView.kf.cancelDownloadTask()
+      return .custom { view in
+        let radius: CGFloat = 16
+        let path = UIBezierPath(
+          roundedRect: view.bounds,
+          byRoundingCorners: corners,
+          cornerRadii: CGSize(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        view.layer.mask = mask
+      }
     }
-  }
+
+    func configureAvatarView(
+      _ avatarView: AvatarView,
+      for message: MessageType,
+      at indexPath: IndexPath,
+      in _: MessagesCollectionView)
+    {
+      let avatar = SampleData.shared.getAvatarFor(sender: message.sender)
+      avatarView.set(avatar: avatar)
+      avatarView.isHidden = isPreviousMessageSameSender(at: indexPath)
+      avatarView.layer.borderWidth = 2
+        avatarView.layer.borderColor = UIColor.primary1.cgColor
+    }
 
   // MARK: - Location Messages
 
@@ -146,19 +171,25 @@ extension DisplayChatVC: MessagesDisplayDelegate {
 // MARK: MessagesLayoutDelegate
 
 extension DisplayChatVC: MessagesLayoutDelegate {
-  func cellTopLabelHeight(for _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> CGFloat {
-    18
+  func cellTopLabelHeight(for _: MessageType, at indexPath: IndexPath, in _: MessagesCollectionView) -> CGFloat {
+//    if isTimeLabelVisible(at: indexPath) {
+//      return 18
+//    }
+    return 0
   }
 
-  func cellBottomLabelHeight(for _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> CGFloat {
-    17
+  func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in _: MessagesCollectionView) -> CGFloat {
+      let outgoingAvatarOverlap: CGFloat = 17.5
+      
+    if isFromCurrentSender(message: message) {
+      return !isPreviousMessageSameSender(at: indexPath) ? 20 : 0
+    } else {
+      return !isPreviousMessageSameSender(at: indexPath) ? (20 + outgoingAvatarOverlap) : 0
+    }
   }
 
-  func messageTopLabelHeight(for _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> CGFloat {
-    20
+  func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in _: MessagesCollectionView) -> CGFloat {
+    (!isNextMessageSameSender(at: indexPath) && isFromCurrentSender(message: message)) ? 16 : 0
   }
-
-  func messageBottomLabelHeight(for _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> CGFloat {
-    16
-  }
+ 
 }
