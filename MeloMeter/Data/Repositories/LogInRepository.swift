@@ -165,8 +165,10 @@ class LogInRepository: LogInRepositoryP {
                             
                             return Single.zip(updateMyDB, updateOtherDB)
                                 .flatMap({ _,_ -> Single<Void> in
-                                    return self.firebaseService.createDocument(collection: .Couples, document: "", values: ["disconnectedDate" : "",
-                                                                                                                            "answersList": []])
+                                    return self.firebaseService.createDocument(collection: .Couples,
+                                                                               document: "",
+                                                                               values: ["disconnectedDate" : "",
+                                                                                        "answersList": ["0": []]])
                                 })
                             
                         }
