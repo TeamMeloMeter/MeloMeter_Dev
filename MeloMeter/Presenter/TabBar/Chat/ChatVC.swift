@@ -72,11 +72,14 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         
         //백그라운드 이미지 추가
         self.view.addSubview(backgroundImageView)
-        setAutoLayout()
+        self.view.sendSubviewToBack(backgroundImageView)
+        setBgAutoLayout()
+        
+        
     }
     
     // MARK: 오토레이아웃
-    func setAutoLayout() {
+    func setBgAutoLayout() {
         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             backgroundImageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -175,7 +178,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     func configureMessageCollectionView() {
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messageCellDelegate = self
-        
+        //백그라운드 이미 설정
+        messagesCollectionView.backgroundView = backgroundImageView
         scrollsToLastItemOnKeyboardBeginsEditing = true // default false
         maintainPositionOnInputBarHeightChanged = true // default false
         showMessageTimestampOnSwipeLeft = true // default false
@@ -551,7 +555,7 @@ extension ChatVC: InputBarAccessoryViewDelegate {
         inputBar.invalidatePlugins()
         // Send button activity animation
         inputBar.sendButton.startAnimating()
-        inputBar.inputTextView.placeholder = "Sending..."
+        inputBar.inputTextView.placeholder = "전송중..."
         // Resign first responder for iPad split view
         inputBar.inputTextView.resignFirstResponder()
         

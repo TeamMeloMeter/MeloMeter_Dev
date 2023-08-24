@@ -32,7 +32,6 @@
 		21C3821F2A87F7B1003638E1 /* ChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C3821E2A87F7B1003638E1 /* ChatRepository.swift */; };
 		21C382222A87F812003638E1 /* ChatUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C382212A87F812003638E1 /* ChatUseCase.swift */; };
 		21C382242A87F85F003638E1 /* ChatDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C382232A87F85F003638E1 /* ChatDTO.swift */; };
-		3C42E9DD815EDE55BE96BD0E /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77A0DDFA05797B6EF1DCF62E /* Pods_MeloMeter.framework */; };
 		521D41E52A7FFAD200E5CCDA /* DdayVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41E42A7FFAD200E5CCDA /* DdayVM.swift */; };
 		521D41E72A7FFD5F00E5CCDA /* DdayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */; };
 		521D41EC2A801D1200E5CCDA /* CoupleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D41EB2A801D1200E5CCDA /* CoupleModel.swift */; };
@@ -154,6 +153,7 @@
 		52F739532A94DE7800D46FBB /* HundredQARepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F739522A94DE7800D46FBB /* HundredQARepositoryP.swift */; };
 		52F739552A94E6DB00D46FBB /* HundredQAModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F739542A94E6DB00D46FBB /* HundredQAModel.swift */; };
 		52F739572A94E71500D46FBB /* HundredQADTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F739562A94E71500D46FBB /* HundredQADTO.swift */; };
+		6670AFDEF04F605A5083090E /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBABE571FEDA55A7AACA0D6D /* Pods_MeloMeter.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -296,10 +296,10 @@
 		52F739522A94DE7800D46FBB /* HundredQARepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQARepositoryP.swift; sourceTree = "<group>"; };
 		52F739542A94E6DB00D46FBB /* HundredQAModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQAModel.swift; sourceTree = "<group>"; };
 		52F739562A94E71500D46FBB /* HundredQADTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQADTO.swift; sourceTree = "<group>"; };
-		77A0DDFA05797B6EF1DCF62E /* Pods_MeloMeter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeloMeter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		912C27AD0861E49B830804E8 /* Pods-MeloMeter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.debug.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.debug.xcconfig"; sourceTree = "<group>"; };
+		86926D45BA61725DD927019D /* Pods-MeloMeter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.debug.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.debug.xcconfig"; sourceTree = "<group>"; };
 		B61B0F5A29F7A5F500E25EEF /* MeloMeter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeloMeter.entitlements; sourceTree = "<group>"; };
-		D1F542457FA9EDD0A529A83E /* Pods-MeloMeter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.release.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.release.xcconfig"; sourceTree = "<group>"; };
+		BBABE571FEDA55A7AACA0D6D /* Pods_MeloMeter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeloMeter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE51B5AE6357DC6CAC06B2BD /* Pods-MeloMeter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.release.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -317,7 +317,7 @@
 				5290BF832A6D3AC000D734EE /* FirebaseAuth in Frameworks */,
 				5290BF852A6D3AFA00D734EE /* FirebaseAnalytics in Frameworks */,
 				5290BF8B2A6D3AFA00D734EE /* FirebaseFirestore in Frameworks */,
-				3C42E9DD815EDE55BE96BD0E /* Pods_MeloMeter.framework in Frameworks */,
+				6670AFDEF04F605A5083090E /* Pods_MeloMeter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -670,7 +670,7 @@
 				52697B7129EEB7B2002BDD04 /* MeloMeter */,
 				52697B7029EEB7B2002BDD04 /* Products */,
 				F436958110A740287E251D09 /* Pods */,
-				7E6D63117FD24448E0B00B73 /* Frameworks */,
+				9203F97BC10EDB558A263F8E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -991,10 +991,10 @@
 			path = Answer;
 			sourceTree = "<group>";
 		};
-		7E6D63117FD24448E0B00B73 /* Frameworks */ = {
+		9203F97BC10EDB558A263F8E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				77A0DDFA05797B6EF1DCF62E /* Pods_MeloMeter.framework */,
+				BBABE571FEDA55A7AACA0D6D /* Pods_MeloMeter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1002,8 +1002,8 @@
 		F436958110A740287E251D09 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				912C27AD0861E49B830804E8 /* Pods-MeloMeter.debug.xcconfig */,
-				D1F542457FA9EDD0A529A83E /* Pods-MeloMeter.release.xcconfig */,
+				86926D45BA61725DD927019D /* Pods-MeloMeter.debug.xcconfig */,
+				DE51B5AE6357DC6CAC06B2BD /* Pods-MeloMeter.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1015,13 +1015,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 52697B8329EEB7B3002BDD04 /* Build configuration list for PBXNativeTarget "MeloMeter" */;
 			buildPhases = (
-				ECA9BD51F68ACE020A1ACA23 /* [CP] Check Pods Manifest.lock */,
+				4193F75EBDF7DD97C33559A6 /* [CP] Check Pods Manifest.lock */,
 				52697B6B29EEB7B2002BDD04 /* Sources */,
 				52697B6C29EEB7B2002BDD04 /* Frameworks */,
 				52697B6D29EEB7B2002BDD04 /* Resources */,
 				5270EC192A49D0AA007FF444 /* ShellScript */,
-				B96B9EF975AD1504B6B711E8 /* [CP] Embed Pods Frameworks */,
-				3026593105F19FB1A1601E16 /* [CP] Copy Pods Resources */,
+				5CD9F241D16C1ADC7ACDF240 /* [CP] Embed Pods Frameworks */,
+				0648C451490A9ED639FF33A1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1105,7 +1105,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3026593105F19FB1A1601E16 /* [CP] Copy Pods Resources */ = {
+		0648C451490A9ED639FF33A1 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1120,6 +1120,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MeloMeter/Pods-MeloMeter-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4193F75EBDF7DD97C33559A6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MeloMeter-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5270EC192A49D0AA007FF444 /* ShellScript */ = {
@@ -1141,7 +1163,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
 		};
-		B96B9EF975AD1504B6B711E8 /* [CP] Embed Pods Frameworks */ = {
+		5CD9F241D16C1ADC7ACDF240 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1156,28 +1178,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MeloMeter/Pods-MeloMeter-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		ECA9BD51F68ACE020A1ACA23 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MeloMeter-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1447,7 +1447,7 @@
 		};
 		52697B8429EEB7B3002BDD04 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 912C27AD0861E49B830804E8 /* Pods-MeloMeter.debug.xcconfig */;
+			baseConfigurationReference = 86926D45BA61725DD927019D /* Pods-MeloMeter.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1494,7 +1494,7 @@
 		};
 		52697B8529EEB7B3002BDD04 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1F542457FA9EDD0A529A83E /* Pods-MeloMeter.release.xcconfig */;
+			baseConfigurationReference = DE51B5AE6357DC6CAC06B2BD /* Pods-MeloMeter.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

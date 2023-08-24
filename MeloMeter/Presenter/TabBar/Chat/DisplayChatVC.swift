@@ -297,54 +297,7 @@ extension DisplayChatVC: MessagesDisplayDelegate {
       let avatar = SampleData.shared.getAvatarFor(sender: message.sender)
       avatarView.set(avatar: avatar)
       avatarView.isHidden = isPreviousMessageSameSender(at: indexPath)
-      avatarView.layer.borderWidth = 2
-        avatarView.layer.borderColor = UIColor.primary1.cgColor
     }
-
-  // MARK: - Location Messages
-
-  func annotationViewForLocation(message _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> MKAnnotationView? {
-    let annotationView = MKAnnotationView(annotation: nil, reuseIdentifier: nil)
-    let pinImage = #imageLiteral(resourceName: "myMarkerDot")
-    annotationView.image = pinImage
-    annotationView.centerOffset = CGPoint(x: 0, y: -pinImage.size.height / 2)
-    return annotationView
-  }
-
-  func animationBlockForLocation(
-    message _: MessageType,
-    at _: IndexPath,
-    in _: MessagesCollectionView) -> ((UIImageView) -> Void)?
-  {
-    { view in
-      view.layer.transform = CATransform3DMakeScale(2, 2, 2)
-      UIView.animate(
-        withDuration: 0.6,
-        delay: 0,
-        usingSpringWithDamping: 0.9,
-        initialSpringVelocity: 0,
-        options: [],
-        animations: {
-          view.layer.transform = CATransform3DIdentity
-        },
-        completion: nil)
-    }
-    
-    // MARK: - All Messages
-    
-    func backgroundColor(for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> UIColor {
-        isFromCurrentSender(message: message) ? .primary1 : UIColor(red: 230 / 255, green: 230 / 255, blue: 230 / 255, alpha: 1)
-    }
-    
-    func messageStyle(for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> MessageStyle {
-        let tail: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
-        return .bubbleTail(tail, .curved)
-    }
-    
-    //  func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) {
-    //    let avatar = SampleData.shared.getAvatarFor(sender: message.sender)
-    //    avatarView.set(avatar: avatar)
-    //  }
     
     func configureMediaMessageImageView(
         _ imageView: UIImageView,
