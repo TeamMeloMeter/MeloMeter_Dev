@@ -29,9 +29,9 @@ class ChatRepository: ChatRepositoryP{
     func addChatMessage(mockMessage: MockMessage, coupleID: String) -> Single<Void> {
         let dto = mockMessage.toDTO()
         let values = dto.asDictionary ?? [:]
-        
+        let userName = UserDefaults.standard.string(forKey: "userName") ?? "상대방"
         //푸시노티
-        self.sendPushNotification(to:" cAbr3c14CUbsv9Xw_qCcoh:APA91bHSmOJfYeoAmxW1B_DZ_Ewk_9Yb5InC0IW5Sfk0lAcCxcDI_FDOgPYUDsjJWqOL1E8MoqGzU5x1tR3cBM-W4Hn0Qb0cqvuhyeVBdRPUUVRGGnBkwW4Y-qlK9SVNDLPWMEst6Z50", title: "이름", body: "텍스트")
+        PushNotificationService.shared.sendPushNotification(title: userName, body: values["text"] as? String ?? "메세지가 도착했어요!")
         
         return self.firebaseService.updateDocument(collection: .Chat, document: coupleID, values: ["chatField" : FieldValue.arrayUnion([values]) ])
         
@@ -112,40 +112,6 @@ class ChatRepository: ChatRepositoryP{
         }
         return chatDTOArray
     }
-    
-    //푸싱노티
-    func sendPushNotification(to token: String, title: String, body: String) {
-        let message = [
-            "to": token,
-            "notification": [
-                "title": title,
-                "body": body
-            ]
-        ] as [String : Any]
         
-        let url = URL(string: "https://fcm.googleapis.com/fcm/send")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("key=AAAAjeFoI_I:APA91bGvnP4wgl3VQtbw6-QBGJ2cam87ZW0B7elXX7vqMtvK-xA88vJWXWorFdVF3SUdgSJZ8TlvidzrmkNqeQLz1TBvtezNw6p_Bpvo4ccufJztB9STZq8PxWWig7akBeJZ-flebXyK", forHTTPHeaderField: "Authorization") // Replace with your server key
-        
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: message, options: .prettyPrinted)
-        } catch let error {
-            print("Error creating push notification: \(error.localizedDescription)")
-            return
-        }
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("Error sending push notification: \(error.localizedDescription)")
-            } else if let data = data {
-                let responseString = String(data: data, encoding: .utf8)
-                print("Push notification sent successfully, response: \(responseString ?? "")")
-            }
-        }
-        
-        task.resume()
-    }
 }
 

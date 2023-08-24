@@ -30,10 +30,12 @@ extension ChatCoordinator {
             viewModel: ChatVM(coordinator: self, chatUseCase: ChatUseCase(chatRepository: ChatRepository(firebaseService: firebaseService), coupleRepository: CoupleRepository(firebaseService: firebaseService))
                              )
         )
-        
-        self.navigationController.setNavigationBarHidden(true, animated: false)
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController.setNavigationBarHidden(false, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
-    
+    func finish() {
+        self.delegate?.didFinish(childCoordinator: self)
+    }
 }

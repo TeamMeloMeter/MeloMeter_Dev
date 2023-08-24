@@ -67,6 +67,7 @@
 		5241382C2A62F240002AADA6 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5241382B2A62F240002AADA6 /* AppCoordinator.swift */; };
 		5241382E2A62F2ED002AADA6 /* LogInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5241382D2A62F2ED002AADA6 /* LogInCoordinator.swift */; };
 		524138302A62F943002AADA6 /* StartVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5241382F2A62F943002AADA6 /* StartVM.swift */; };
+		5256947D2A97608200821B20 /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5256947C2A97608200821B20 /* PushNotificationService.swift */; };
 		5262BB782A8C809A003EB016 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262BB772A8C809A003EB016 /* SplashVC.swift */; };
 		5262BB7A2A8C80DB003EB016 /* SplashVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262BB792A8C80DB003EB016 /* SplashVM.swift */; };
 		52697B7329EEB7B2002BDD04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697B7229EEB7B2002BDD04 /* AppDelegate.swift */; };
@@ -216,6 +217,7 @@
 		5241382B2A62F240002AADA6 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		5241382D2A62F2ED002AADA6 /* LogInCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInCoordinator.swift; sourceTree = "<group>"; };
 		5241382F2A62F943002AADA6 /* StartVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartVM.swift; sourceTree = "<group>"; };
+		5256947C2A97608200821B20 /* PushNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationService.swift; sourceTree = "<group>"; };
 		5262BB772A8C809A003EB016 /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		5262BB792A8C80DB003EB016 /* SplashVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVM.swift; sourceTree = "<group>"; };
 		52697B6F29EEB7B2002BDD04 /* MeloMeter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeloMeter.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -699,6 +701,7 @@
 				5271D4182A58429000FC7606 /* FireStoreCollection.swift */,
 				5271D4162A5841E500FC7606 /* FireStoreService.swift */,
 				5271D41B2A58435A00FC7606 /* DefaultFirebaseService.swift */,
+				5256947C2A97608200821B20 /* PushNotificationService.swift */,
 			);
 			path = FirebaseService;
 			sourceTree = "<group>";
@@ -1248,6 +1251,7 @@
 				5230B2862A7D048400781623 /* MyProfileVM.swift in Sources */,
 				5271D4192A58429000FC7606 /* FireStoreCollection.swift in Sources */,
 				527547EE2A68FC9000313EFC /* CustomAlertVC.swift in Sources */,
+				5256947D2A97608200821B20 /* PushNotificationService.swift in Sources */,
 				5230B2782A77907500781623 /* LocationService.swift in Sources */,
 				5271D42E2A604BF400FC7606 /* Date+.swift in Sources */,
 				521D42152A8A6E7300E5CCDA /* NoticeVM.swift in Sources */,

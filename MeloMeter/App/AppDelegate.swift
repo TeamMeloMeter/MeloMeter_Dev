@@ -37,6 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     // FCMToken 업데이트시
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         print("🟢 fcmToken : ", #function, fcmToken ?? "")
+        UserDefaults.standard.set(fcmToken, forKey: "fcmToken")
     }
     
     // 스위즐링 NO시, APNs등록, 토큰값가져옴
