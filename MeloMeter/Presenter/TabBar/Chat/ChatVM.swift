@@ -18,6 +18,7 @@ class ChatVM {
         //전달받을 변수
         let viewDidLoadEvent: Observable<Void>
         let viewWillApearEvent: Observable<Void>
+        let backBtnTapEvent: Observable<Void>
         let mySendMessage: Observable<MockMessage>
     }
     
@@ -74,6 +75,12 @@ class ChatVM {
         self.chatUseCase.recieveRealTimeMessageService
             .subscribe(onNext: {chatMessageList in
                 output.getRealTimeMessage.onNext(chatMessageList ?? [])
+            })
+            .disposed(by: disposeBag)
+        
+        input.backBtnTapEvent
+            .subscribe(onNext: {
+                self.coordinator?.finish()
             })
             .disposed(by: disposeBag)
         

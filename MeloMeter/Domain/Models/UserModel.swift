@@ -25,6 +25,7 @@ public enum GenderType: String {
 struct UserModel: Equatable, Hashable {
 
     // MARK: - Properties
+    var fcmToken: String?
     var uid: String?
     var otherUid: String?
     var coupleID: String?
@@ -36,7 +37,8 @@ struct UserModel: Equatable, Hashable {
     var gender: GenderType?
     var createdAt: Date?
     
-    init(uid: String?, otherUid: String?, coupleID: String?, phoneNumber: String?, profileImage: String?,name: String?, birth: Date?, stateMessage: String?, gender: GenderType?, createdAt: Date?) {
+    init(fcmToken: String?, uid: String?, otherUid: String?, coupleID: String?, phoneNumber: String?, profileImage: String?,name: String?, birth: Date?, stateMessage: String?, gender: GenderType?, createdAt: Date?) {
+        self.fcmToken = fcmToken
         self.uid = uid
         self.otherUid = otherUid
         self.coupleID = coupleID
@@ -50,18 +52,19 @@ struct UserModel: Equatable, Hashable {
     }
     
     init(name: String?, birth: Date?) {
-        self.init(uid: nil, otherUid: nil, coupleID: nil, phoneNumber: nil, profileImage: nil, name: name, birth: birth, stateMessage: nil, gender: nil, createdAt: nil)
+        self.init(fcmToken: nil, uid: nil, otherUid: nil, coupleID: nil, phoneNumber: nil, profileImage: nil, name: name, birth: birth, stateMessage: nil, gender: nil, createdAt: nil)
         self.name = name
         self.birth = birth
     }
     
     init(name: String?, stateMessage: String?, birth: Date?, gender: GenderType?) {
-        self.init(uid: nil, otherUid: nil, coupleID: nil, phoneNumber: nil, profileImage: nil, name: name, birth: birth, stateMessage: stateMessage, gender: gender, createdAt: nil)
+        self.init(fcmToken: nil, uid: nil, otherUid: nil, coupleID: nil, phoneNumber: nil, profileImage: nil, name: name, birth: birth, stateMessage: stateMessage, gender: gender, createdAt: nil)
     }
 
     // MARK: - Methods
     func toProfileInsertDTO() -> UserDTO {
         return UserDTO(
+            fcmToken: fcmToken,
             uid: UserDefaults.standard.string(forKey: "uid") ?? "",
             otherUid: otherUid,
             coupleID: coupleID,

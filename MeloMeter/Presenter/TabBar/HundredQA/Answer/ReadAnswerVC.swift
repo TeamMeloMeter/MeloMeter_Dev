@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import CoreImage
 
 class ReadAnswerVC: UIViewController {
     
@@ -33,7 +34,6 @@ class ReadAnswerVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("윌언리ㅏㄴㅇ")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -224,7 +224,17 @@ class ReadAnswerVC: UIViewController {
         label.sizeToFit()
         label.textColor = .gray3
         label.font = FontManager.shared.medium(ofSize: 15)
-        //label.addSubview(visualEffectView)
+        if let attributedText = label.attributedText {
+            let context = CIContext(options: nil)
+            let filter = CIFilter(name: "CIGaussianBlur")
+            filter?.setValue(attributedText, forKey: kCIInputImageKey)
+            filter?.setValue(10, forKey: kCIInputRadiusKey)
+            
+            if let outputImage = filter?.outputImage,
+               let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
+                label.layer.contents = cgImage
+            }
+        }        //label.addSubview(visualEffectView)
         return label
     }()
     

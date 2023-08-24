@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 final class TabBarCoordinator: Coordinator {
     var delegate: CoordinatorDelegate?
     var tabBarController: UITabBarController
@@ -24,6 +25,7 @@ final class TabBarCoordinator: Coordinator {
             self.createTabNavigationController(of: $0)
         }
         self.configureTabBarController(with: controllers)
+        
     }
     
     func currentPage() -> TabBarPageType? {
@@ -85,18 +87,28 @@ extension TabBarCoordinator {
     
     func connectChatFlow(to tabNavigationController: UINavigationController) {
         let chatCoordinator = ChatCoordinator(tabNavigationController)
+        chatCoordinator.delegate = self
         chatCoordinator.start()
         childCoordinators.append(chatCoordinator)
     }
+    
     func finish() {
         self.delegate?.didFinish(childCoordinator: self)
     }
 }
 
 extension TabBarCoordinator: CoordinatorDelegate {
-    func didFinish(childCoordinator: Coordinator) {
-        self.childCoordinators.removeAll()
-        self.navigationController.popToRootViewController(animated: false)
-        self.finish()
+    
+    
+    func didFinish(childCoordinator: Coordinator) {        
+        if childCoordinator is ChatCoordinator {
+            self.selectPage(.main)
+        }else {
+            self.childCoordinators.removeAll()
+            self.navigationController.popToRootViewController(animated: false)
+            self.finish()
+        }
+        
     }
+   
 }

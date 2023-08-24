@@ -95,12 +95,19 @@ class HundredQARepository: HundredQARepositoryP {
 
     func setAnswerList(questionNumber: String, answerData: AnswerModel, coupleID: String) -> Single<Void> {
         guard let values = answerData.toDTO().asDictionary else{ return Single.just(())}
-        print("리포지토리 입력정보", answerData)
         return self.firebaseService.createDocument(
             collection: .Couples,
             document: coupleID,
             values: ["answersList" :  [questionNumber: FieldValue.arrayUnion([values])] ]
         )
+        .flatMap{ _ in
+            let userName = UserDefaults.standard.string(forKey: "userName") ?? "상대방"
+            PushNotificationService.shared.sendPushNotification(title: "백문백답", body: "\(userName)님이 \((Int(questionNumber) ?? 0)+1)번째 백문백답에 답변했어요!")
+            return Single.create{ single in
+                single(.success(()))
+                return Disposables.create()
+            }
+        }
 
     }
     

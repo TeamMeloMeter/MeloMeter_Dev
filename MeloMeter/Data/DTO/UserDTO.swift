@@ -18,6 +18,7 @@ enum EditUserInfo: String {
 struct UserDTO: Codable {
     
     // MARK: - Properties
+    let fcmToken: String?
     let uid: String
     let otherUid: String?
     let coupleID: String?
@@ -32,6 +33,7 @@ struct UserDTO: Codable {
     // MARK: - Methods
     func toModel() -> UserModel {
         return UserModel(
+            fcmToken: fcmToken,
             uid: uid,
             otherUid: otherUid,
             coupleID: coupleID,
