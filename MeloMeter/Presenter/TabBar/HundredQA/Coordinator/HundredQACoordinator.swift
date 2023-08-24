@@ -30,7 +30,7 @@ extension HundredCoordinator {
     func showHundredQAVC() {
         let firebaseService = DefaultFirebaseService()
         let viewController = HundredQAVC(viewModel: HundredQAVM(coordinator: self,
-                                                                hundredQAUserCase: HundredQAUserCase(hundredQARepository: HundredQARepository(
+                                                                hundredQAUseCase: HundredQAUseCase(hundredQARepository: HundredQARepository(
                                                                     firebaseService: firebaseService)
                                                                 ))
         )
@@ -41,31 +41,30 @@ extension HundredCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
-    func showReadAnswerVC() {
+    func showReadAnswerVC(questionNumber: String, question: String, myAnswerInfo: AnswerModel, otherAnswerInfo: AnswerModel) {
         let firebaseService = DefaultFirebaseService()
-        let viewController = ReadAnswerVC(viewModel: AnswerVM(coordinator: self,
-                                                              hundredQAUserCase: HundredQAUserCase(hundredQARepository: HundredQARepository(
-                                                                    firebaseService: firebaseService)
-                                                                ))
-        )
-                                                        
+        let viewModel = AnswerVM(coordinator: self,
+                                 hundredQAUseCase: HundredQAUseCase(hundredQARepository: HundredQARepository(
+                                     firebaseService: firebaseService)
+                                 ),
+                                 questionNumber: questionNumber,
+                                 questionText: question,
+                                 myAnswerInfo: myAnswerInfo,
+                                 otherAnswerInfo: otherAnswerInfo
+                              )
+        let viewController = ReadAnswerVC(viewModel: viewModel)
+        
+        print("코디네이터", viewModel.otherAnswerInfo)
         
         viewController.hidesBottomBarWhenPushed = true
         self.navigationController.setNavigationBarHidden(false, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
-    func showWriteAnswerVC(question: String, name: String) {
-        let firebaseService = DefaultFirebaseService()
-        let viewController = WriteAnswerVC(viewModel: AnswerVM(coordinator: self,
-                                                                hundredQAUserCase: HundredQAUserCase(hundredQARepository: HundredQARepository(
-                                                                    firebaseService: firebaseService)
-                                                                )
-                                                             ),
-                                           question: question,
-                                           userName: name)
-                                                        
-        
+    func showWriteAnswerVC(viewModel: AnswerVM) {
+        let viewController = WriteAnswerVC(viewModel: viewModel)
+
+
         viewController.hidesBottomBarWhenPushed = true
         self.navigationController.setNavigationBarHidden(false, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)

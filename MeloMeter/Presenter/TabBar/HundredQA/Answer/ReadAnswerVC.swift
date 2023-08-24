@@ -33,6 +33,7 @@ class ReadAnswerVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("윌언리ㅏㄴㅇ")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -49,17 +50,86 @@ class ReadAnswerVC: UIViewController {
                 .map({ _ in })
                 .asObservable(),
             answerBtnTapEvent: self.answerBtn.rx.tap
-                .map({ _ in
-                    return (.goAnswer, [self.questionLabel.text ?? "", "소희"])
-                })
-                .asObservable()
+                .map({ _ in })
+                .asObservable(),
+            answerInputText: nil
         )
         
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else { return }
         
-       
+        output.questionText
+            .subscribe(onNext: { text in
+                self.questionLabel.text = text
+            })
+            .disposed(by: disposeBag)
         
+        output.myAnswerInfo
+            .subscribe(onNext: {[weak self] info in
+                guard let self = self else{ return }
+                self.myUserLabel.text = "\(info.userName)님의 답변"
+                if info.answerText.isEmpty {
+                    self.myAnswerLabel.text = "서로의 생각을 확인하고 싶다면\n백문백답을 답변해주세요!"
+                }else {
+                    self.myAnswerLabel.text = info.answerText
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        output.otherAnswerInfo
+            .subscribe(onNext: {[weak self] info in
+                guard let self = self else{ return }
+                self.otherUserLabel.text = "\(info.userName)님의 답변"
+                if info.answerText.isEmpty {
+                    self.otherAnswerLabel.text = "\(info.userName)님이 아직 답변하지 않으셨어요!"
+                }else {
+                    self.otherAnswerLabel.text = info.answerText
+                }
+            })
+            .disposed(by: disposeBag)
+       
+        output.isAnswers
+            .subscribe(onNext: {[weak self] isAnswers in
+                self?.isAnswer(mine: isAnswers[0], other: isAnswers[1])
+            })
+            .disposed(by: disposeBag)
     }
+    
+    
+    // MARK: Event
+    func isAnswer(mine: Bool, other: Bool) {
+        if mine && other { //둘다 답변
+            self.lockImageView.image = UIImage(named: "unlockImage")
+            self.myAnswerCompleteLabel.isHidden = true
+            self.answerBtn.isHidden = true
+            self.otherAnswerLabel.textColor = .gray1
+            return
+        }
+        
+        if !mine && other { // 상대만 답변
+            self.otherAnswerLabel.textColor = .gray1
+            
+            self.lockImageView.image = UIImage(named: "lockImage")
+            self.answerBtn.isHidden = false
+            self.myAnswerCompleteLabel.isHidden = true
+            return
+        }
+        
+        if mine && !other { // 나만 답변
+            self.lockImageView.image = UIImage(named: "unlockImage")
+            self.answerBtn.isHidden = true
+            self.myAnswerCompleteLabel.isHidden = false
+            
+            self.otherAnswerLabel.textColor = .gray3
+        }
+       
+        if !mine && !other { // 둘다안함
+            self.answerBtn.isHidden = false
+            self.lockImageView.image = UIImage(named: "lockImage")
+            self.myAnswerCompleteLabel.isHidden = true
+            self.otherAnswerLabel.textColor = .gray3
+        }
+    }
+    
     
     // MARK: Configure
     func configure() {
@@ -101,7 +171,6 @@ class ReadAnswerVC: UIViewController {
     private let questionLabel: UILabel = {
         let label = UILabel()
         label.textColor = .primary1
-        label.text = "제일 좋아하는 데이트 장소는 어디인가요?"
         label.font = FontManager.shared.bold(ofSize: 16)
         return label
     }()
@@ -113,7 +182,7 @@ class ReadAnswerVC: UIViewController {
         
         return imageView
     }()
-
+    
     lazy var otherUserView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -127,10 +196,9 @@ class ReadAnswerVC: UIViewController {
         return view
     }()
     
-    private let otherUserLabel: UILabel = {
+    let otherUserLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray1
-        label.text = "제훈님의 답변"
         label.font = FontManager.shared.semiBold(ofSize: 16)
         return label
     }()
@@ -154,11 +222,19 @@ class ReadAnswerVC: UIViewController {
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.sizeToFit()
-        label.text = "안녕하세요. 답변입니다 \n\n 100글자를 채워 보겠 습니 다 \n\n ㅡㅡㅡㅡㅡㅡㅡ100자가 얼만큼 일까요\nㅇㄹ롿ㅈㅇ롸지로ㅓ지ㅏ로ㅓㅣㄹ오다ㅑㅓㅜㅚ"
-        label.textColor = .gray1
+        label.textColor = .gray3
         label.font = FontManager.shared.medium(ofSize: 15)
+        //label.addSubview(visualEffectView)
         return label
     }()
+    
+//    lazy var visualEffectView: UIVisualEffectView = {
+//        let blurEffect = UIBlurEffect(style: .regular)
+//        let view = UIVisualEffectView(effect: blurEffect)
+//        view.contentView.addSubview(otherAnswerLabel)
+//        view.contentView.alpha = 0.1
+//        return view
+//    }()
     
     lazy var myUserView: UIView = {
         let view = UIView()
@@ -176,7 +252,6 @@ class ReadAnswerVC: UIViewController {
     private let myUserLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray1
-        label.text = "소희님의 답변"
         label.font = FontManager.shared.semiBold(ofSize: 16)
         return label
     }()
@@ -194,6 +269,7 @@ class ReadAnswerVC: UIViewController {
         scView.addSubview(myAnswerLabel)
         scView.addSubview(lockImageView)
         scView.addSubview(answerBtn)
+        scView.addSubview(myAnswerCompleteLabel)
         return scView
     }()
     
@@ -202,7 +278,22 @@ class ReadAnswerVC: UIViewController {
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.sizeToFit()
-        label.text = "서로의 생각을 확인하고 싶다면\n백문백답을 답변해주세요!"
+        label.textColor = .gray1
+        label.font = FontManager.shared.medium(ofSize: 15)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 7
+        let attributedText = NSMutableAttributedString(string: label.text ?? "")
+        attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
+        label.attributedText = attributedText
+        return label
+    }()
+    
+    let myAnswerCompleteLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.sizeToFit()
+        label.text = "답변 완료!\n상대방은 어떻게 생각할까요? 물어봐 주세요!"
         label.textColor = .gray1
         label.font = FontManager.shared.medium(ofSize: 15)
         let paragraphStyle = NSMutableParagraphStyle()
@@ -243,6 +334,7 @@ class ReadAnswerVC: UIViewController {
         lineView1.translatesAutoresizingMaskIntoConstraints = false
         otherScrollView.translatesAutoresizingMaskIntoConstraints = false
         otherUserLabel.translatesAutoresizingMaskIntoConstraints = false
+        //visualEffectView.translatesAutoresizingMaskIntoConstraints = false
 
         myUserView.translatesAutoresizingMaskIntoConstraints = false
         lineView2.translatesAutoresizingMaskIntoConstraints = false
@@ -250,6 +342,8 @@ class ReadAnswerVC: UIViewController {
         myScrollView.translatesAutoresizingMaskIntoConstraints = false
         lockImageView.translatesAutoresizingMaskIntoConstraints = false
         myAnswerLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        myAnswerCompleteLabel.translatesAutoresizingMaskIntoConstraints = false
 
         answerBtn.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -289,6 +383,11 @@ class ReadAnswerVC: UIViewController {
             otherAnswerLabel.trailingAnchor.constraint(equalTo: otherScrollView.trailingAnchor, constant: -17),
             otherAnswerLabel.bottomAnchor.constraint(equalTo: otherScrollView.bottomAnchor, constant: -5),
 
+//            visualEffectView.leadingAnchor.constraint(equalTo: otherAnswerLabel.leadingAnchor),
+//            visualEffectView.trailingAnchor.constraint(equalTo: otherAnswerLabel.trailingAnchor),
+//            visualEffectView.topAnchor.constraint(equalTo: otherAnswerLabel.topAnchor),
+//            visualEffectView.bottomAnchor.constraint(equalTo: otherAnswerLabel.bottomAnchor),
+
             myUserView.topAnchor.constraint(equalTo: otherUserView.bottomAnchor, constant: 26),
             myUserView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
             myUserView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
@@ -321,6 +420,10 @@ class ReadAnswerVC: UIViewController {
             answerBtn.heightAnchor.constraint(equalToConstant: 48),
             answerBtn.topAnchor.constraint(equalTo: lockImageView.bottomAnchor, constant: 20),
 
+            myAnswerCompleteLabel.topAnchor.constraint(equalTo: lockImageView.bottomAnchor, constant: 20),
+            myAnswerCompleteLabel.centerXAnchor.constraint(equalTo: lockImageView.centerXAnchor),
+            myAnswerCompleteLabel.widthAnchor.constraint(equalToConstant: 308),
+            myAnswerCompleteLabel.heightAnchor.constraint(equalToConstant: 53)
         ])
     }
     

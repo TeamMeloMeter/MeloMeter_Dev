@@ -161,7 +161,7 @@ class QnAVC: UIViewController {
     
     let radioBtn1: UIButton = {
         let button = UIButton()
-        button.setTitle("아이디/비밀번호 분실", for: .normal)
+        button.setTitle("변경/탈퇴", for: .normal)
         button.setTitleColor(.gray2, for: .normal)
         button.titleLabel?.font = FontManager.shared.medium(ofSize: 14)
         button.setTitleColor(.white, for: .selected)
@@ -174,7 +174,7 @@ class QnAVC: UIViewController {
     
     let radioBtn2: UIButton = {
         let button = UIButton()
-        button.setTitle("변경/탈퇴", for: .normal)
+        button.setTitle("위치기반", for: .normal)
         button.setTitleColor(.gray2, for: .normal)
         button.titleLabel?.font = FontManager.shared.medium(ofSize: 14)
         button.setTitleColor(.white, for: .selected)
@@ -187,7 +187,7 @@ class QnAVC: UIViewController {
     
     let radioBtn3: UIButton = {
         let button = UIButton()
-        button.setTitle("위치기반", for: .normal)
+        button.setTitle("연결/재연결", for: .normal)
         button.setTitleColor(.gray2, for: .normal)
         button.titleLabel?.font = FontManager.shared.medium(ofSize: 14)
         button.setTitleColor(.white, for: .selected)
@@ -200,7 +200,7 @@ class QnAVC: UIViewController {
     
     let radioBtn4: UIButton = {
         let button = UIButton()
-        button.setTitle("연결/재연결", for: .normal)
+        button.setTitle("백업/복구", for: .normal)
         button.setTitleColor(.gray2, for: .normal)
         button.titleLabel?.font = FontManager.shared.medium(ofSize: 14)
         button.setTitleColor(.white, for: .selected)
@@ -213,7 +213,7 @@ class QnAVC: UIViewController {
     
     let radioBtn5: UIButton = {
         let button = UIButton()
-        button.setTitle("백업/복구", for: .normal)
+        button.setTitle("그외", for: .normal)
         button.setTitleColor(.gray2, for: .normal)
         button.titleLabel?.font = FontManager.shared.medium(ofSize: 14)
         button.setTitleColor(.white, for: .selected)

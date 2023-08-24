@@ -2,7 +2,6 @@
 private/
 
 # CocoaPods 관련 파일 제외
-Podfile.lock
 Pods/
 
 # 앱 정보 관련 파일 제외

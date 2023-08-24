@@ -15,13 +15,13 @@ enum QnADataType {
 }
 
 enum QnARadioBtn {
-    case auth, withdraw, location, connection, backup
+    case auth, withdraw, location, connection, backup, etc
     
     var detailData: [QnADataType: [String]] {
         switch self {
         case .auth:
             return [.title: ["가입/인증에 대해"],
-                    .contents: ["가입설명"]] // MARK: 자주묻는 질문 답변 넣기
+                    .contents: ["가입설명"]]
         case .withdraw:
             return [.title: ["변경/탈퇴에 대해"],
                     .contents: ["탈퇴설명"]]
@@ -34,6 +34,9 @@ enum QnARadioBtn {
         case .backup:
             return [.title: ["백업/복구에 대해"],
                     .contents: ["백업 설명"]]
+        case .etc:
+            return [.title: ["그외 에 대해"],
+                    .contents: ["기타 설명"]]
         }
     }
     

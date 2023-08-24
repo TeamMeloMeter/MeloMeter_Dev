@@ -14,11 +14,9 @@ class WriteAnswerVC: UIViewController {
     private let viewModel: AnswerVM?
     let disposeBag = DisposeBag()
     
-    init(viewModel: AnswerVM, question: String, userName: String) {
+    init(viewModel: AnswerVM) {
         self.viewModel = viewModel
-        self.questionLabel.text = question
-        self.myUserLabel.text = "\(userName)님의 답변"
-        self.textPlaceHolderLabel.text = "\(userName)님의 의견이 궁금해요!!"
+
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -52,17 +50,27 @@ class WriteAnswerVC: UIViewController {
             backBtnTapEvent: self.backBarButton.rx.tap
                 .map({ _ in })
                 .asObservable(),
-            answerBtnTapEvent: self.completeButton.rx.tap
+            answerBtnTapEvent: nil,
+            answerInputText:  self.completeButton.rx.tap
                 .map({ _ in
-                    return (.answerComplete, [self.answerTextView.text ?? ""])
+                    return self.answerTextView.text ?? ""
                 })
                 .asObservable()
         )
         
-        guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else { return }
+        guard let output = self.viewModel?.writeTransform(input: input, disposeBag: self.disposeBag) else { return }
         
-       
+        output.questionText
+            .subscribe(onNext: { text in
+                self.questionLabel.text = text
+            })
+            .disposed(by: disposeBag)
         
+        output.myName
+            .subscribe(onNext: { text in
+                self.myUserLabel.text = "\(text)님의 답변"
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: Configure
