@@ -17,6 +17,7 @@ public enum LogInStatus {
 }
 
 struct LogInModel: Equatable, Hashable {
+    let fcmToken: String?
     let uid: String
     let phoneNumber: String
     let createdAt: Date

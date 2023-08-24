@@ -93,9 +93,11 @@ class LogInRepository: LogInRepositoryP {
                     guard let number = user.phoneNumber else{ return }
                     phoneNumber = number
                     UserDefaults.standard.set("\(phoneNumber)", forKey: "phoneNumber")
+                    guard let fcmToken = UserDefaults.standard.string(forKey: "fcmToken") else{ return }
                     let createdAt = Date()
                     let inviteCode = "\(phoneNumber.suffix(4) + createdAt.toString(type: Date.Format.timeStamp).filter{ $0.isNumber }.map{ String($0) }.suffix(4).joined())"
-                    let dto = LogInDTO(uid: uid,
+                    let dto = LogInDTO(fcmToken: fcmToken,
+                                       uid: uid,
                                        phoneNumber: phoneNumber,
                                        createdAt: createdAt.toString(type: Date.Format.timeStamp),
                                        inviteCode: inviteCode)
@@ -159,9 +161,11 @@ class LogInRepository: LogInRepositoryP {
                         .flatMap{ data -> Single<Void> in
                             guard !data.isEmpty else{ return Single.error(FireStoreError.unknown) }
                             guard let otherUid = data.last?["uid"] as? String else{ return Single.just(()) }
+                            guard let otherFcmToken = data.last?["fcmToken"] as? String else{ return Single.just(()) }
                             UserDefaults.standard.set("\(otherUid)", forKey: "otherUid")
-                            let updateMyDB = self.firebaseService.updateDocument(collection: .Users, document: user.uid, values: ["otherUid": otherUid])
-                            let updateOtherDB = self.firebaseService.updateDocument(collection: .Users, document: otherUid, values: ["otherUid": user.uid])
+                            guard let myFcmToken = UserDefaults.standard.string(forKey: "fcmToken") else{ return Single.just(()) }
+                            let updateMyDB = self.firebaseService.updateDocument(collection: .Users, document: user.uid, values: ["otherFcmToken": otherFcmToken, "otherUid": otherUid])
+                            let updateOtherDB = self.firebaseService.updateDocument(collection: .Users, document: otherUid, values: ["otherFcmToken": myFcmToken, "otherUid": user.uid])
                             
                             return Single.zip(updateMyDB, updateOtherDB)
                                 .flatMap({ _,_ -> Single<Void> in

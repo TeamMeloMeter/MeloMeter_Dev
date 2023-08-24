@@ -56,13 +56,12 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.largeTitleDisplayMode = .never
-        navigationItem.title = "MessageKit"
+        
         
         //바인딩 추가
         setBindings()
         self.viewDidLoadEvent.onNext(())
-        
+        setNavigationBar()
         configureMessageCollectionView()
         configureMessageInputBar()
     }
@@ -137,6 +136,21 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         }
     }
     
+    // MARK: NavigationBar
+    private func setNavigationBar() {
+        navigationItem.title = "채팅"
+        navigationItem.leftBarButtonItem = backBarButton
+        navigationItem.leftBarButtonItem?.tintColor = .black
+    }
+    
+    private lazy var backBarButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(image: UIImage(named: "backIcon"),
+                                     style: .plain,
+                                     target: self,
+                                     action: nil)
+        return button
+    }()
+    
     func configureMessageCollectionView() {
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messageCellDelegate = self
@@ -183,6 +197,9 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             viewWillApearEvent: self.rx.methodInvoked(#selector(viewWillAppear(_:)))
                 .map({ _ in })
                 .asObservable(),
+            backBtnTapEvent: self.backBarButton.rx.tap
+                .map({ _ in })
+                .asObservable(),
             mySendMessage: self.sendMessage
                 .asObservable()
         )
@@ -213,6 +230,13 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             })
             .disposed(by: disposeBag)
     }
+    
+    // MARK: UI
+    let cameraBtn: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "cameraIcon"), for: .normal)
+        return button
+    }()
     
     // MARK: - Helpers
     //MockMessage 형태로 입력받아 scrollToLastItem(마지막 아이탬에 추가한다)
@@ -434,6 +458,7 @@ extension ChatVC: InputBarAccessoryViewDelegate {
         processInputBar(messageInputBar)
     }
     
+    
     func processInputBar(_ inputBar: InputBarAccessoryView) {
         // Here we can parse for which substrings were autocompleted
         let attributedText = inputBar.inputTextView.attributedText!
@@ -452,6 +477,7 @@ extension ChatVC: InputBarAccessoryViewDelegate {
         inputBar.inputTextView.placeholder = "Sending..."
         // Resign first responder for iPad split view
         inputBar.inputTextView.resignFirstResponder()
+        
         DispatchQueue.global(qos: .default).async {
             // fake send request task
             sleep(1)

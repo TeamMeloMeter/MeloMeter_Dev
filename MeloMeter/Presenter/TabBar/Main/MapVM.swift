@@ -122,6 +122,7 @@ class MapVM {
                                     return
                                 }
                                 UserDefaults.standard.set(otherUserModel.name, forKey: "otherUserName")
+                                UserDefaults.standard.set(otherUserModel.fcmToken, forKey: "otherFcmToken")
                                 output.otherStateMessage.onNext(otherUserModel.stateMessage ?? nil)
                             })
                             .disposed(by: disposeBag)
