@@ -194,5 +194,7 @@ class WithdrawalVC: UIViewController {
             withdrawalBtn.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -70),
             withdrawalBtn.widthAnchor.constraint(equalToConstant: 327),
             withdrawalBtn.heightAnchor.constraint(equalToConstant: 52),
-        ])    }
+        ])
+        
+    }
 }
