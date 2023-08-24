@@ -248,15 +248,21 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     }
     
     //여기에서 일이 넘어갈때만 출력하도록 ( 00,00,00 시에 가장 가까운 매세지에 한번 출력 )
+    // 인덱스패스를 통해 바로 이전 메세지에서 데이트 차이가 -가 되는 경우에만 출력
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        if indexPath.section % 3 == 0 {
-            return NSAttributedString(
-                string: MessageKitDateFormatter.shared.string(from: message.sentDate),
-                attributes: [
-                    NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10),
-                    NSAttributedString.Key.foregroundColor: UIColor.darkGray,
-                ])
+        guard let lastMessage = self.messageList.last else{ return nil }
+        
+        if indexPath.section - 1 > 0{
+            if Calendar.current.dateComponents([.day], from: messageList[indexPath.section - 1].sentDate, to: message.sentDate).day ?? 0 < 0 {
+                return NSAttributedString(
+                    string: message.sentDate.toString(type: .yearAndMonthAndDate),
+                    attributes: [
+                        NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10),
+                        NSAttributedString.Key.foregroundColor: UIColor.darkGray,
+                    ])
+            }
         }
+        
         return nil
     }
     
@@ -264,8 +270,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         NSAttributedString(
             string: "Read",
             attributes: [
-                NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10),
-                NSAttributedString.Key.foregroundColor: UIColor.darkGray,
+                NSAttributedString.Key.font: FontManager.shared.regular(ofSize: 10),
+                NSAttributedString.Key.foregroundColor: UIColor.gray2,
             ])
     }
     
@@ -276,18 +282,24 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         let true_name = "[내이름, 상대방이름]"
         return NSAttributedString(
             string: name,
-            attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
+            attributes: [
+                NSAttributedString.Key.font: FontManager.shared.medium(ofSize: 12),
+                NSAttributedString.Key.foregroundColor: UIColor.gray2
+                        ])
     }
     
     func messageBottomLabelAttributedText(for message: MessageType, at _: IndexPath) -> NSAttributedString? {
         let dateString = formatter.string(from: message.sentDate)
         return NSAttributedString(
             string: dateString,
-            attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
+            attributes: [
+                NSAttributedString.Key.font: FontManager.shared.regular(ofSize: 10),
+                NSAttributedString.Key.foregroundColor: UIColor.gray2,
+            ])
     }
     
     func textCell(for _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> UICollectionViewCell? {
-        nil
+        nil //텍스트 셀 피그마에 맞추기
     }
     
     // MARK: - Private properties
@@ -448,7 +460,7 @@ extension ChatVC: InputBarAccessoryViewDelegate {
                 inputBar.inputTextView.placeholder = "Aa"
                 //챗팅창에 보이게 하는 메서드
                 self?.insertMessages(components)
-                //컬렉션 뷰 마지막에 요소 추가
+                //컬렉션 뷰 마지막으로 스크롤 이동
                 self?.messagesCollectionView.scrollToLastItem(animated: true)
             }
         }
