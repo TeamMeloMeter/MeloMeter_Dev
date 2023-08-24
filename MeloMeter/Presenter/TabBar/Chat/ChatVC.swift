@@ -63,8 +63,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         //바인딩 추가
         setBindings()
         self.viewDidLoadEvent.onNext(())
@@ -173,6 +171,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         return button
     }()
     
+    // MARK: Configure
     func configureMessageCollectionView() {
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messageCellDelegate = self

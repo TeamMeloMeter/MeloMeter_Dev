@@ -9,32 +9,221 @@ import Kingfisher
 import MapKit
 import MessageKit
 import UIKit
+import RxSwift
 
 // MARK: - BasicExampleViewController
 
 final class DisplayChatVC: ChatVC {
     
-    private let viewModel: ChatVM
-    
+    private let viewModel: ChatVM?
+    var downBtnToggle = false
     override init(viewModel: ChatVM) {
         self.viewModel = viewModel
         super.init(viewModel: viewModel)
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-  override func configureMessageCollectionView() {
-    super.configureMessageCollectionView()
-    messagesCollectionView.messagesLayoutDelegate = self
-    messagesCollectionView.messagesDisplayDelegate = self
-  }
+    override func configureMessageCollectionView() {
+        super.configureMessageCollectionView()
+        messagesCollectionView.messagesLayoutDelegate = self
+        messagesCollectionView.messagesDisplayDelegate = self
+        configure()
+        setBinding()
+        setAutoLayout()
+    }
     
+    func textCellSizeCalculator(for _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> CellSizeCalculator? {
+        nil
+    }
+    // MARK: Bindings
+    func setBinding() {
+        self.downBtn.rx.tap
+            .subscribe(onNext: { _ in
+                if self.downBtnToggle {
+                    self.downBtnToggle = false
+                    self.noticeUp()
+                }else {
+                    self.downBtnToggle = true
+                    self.noticeDown()
+                }
+                
+            })
+            .disposed(by: disposeBag)
+        
+        let input = ChatVM.NoticeInput(
+            lastAnswerBtnTapEvent: self.lastAnswerBtn.rx.tap
+                .map({ _ in })
+                .asObservable(),
+            goAnswerBtnTapEvent: self.goAnswerBtn.rx.tap
+                .map({ _ in })
+                .asObservable()
+        )
+        
+        guard let output = self.viewModel?.noticeTransform(input: input, disposeBag: self.disposeBag) else{ return }
+        
+        
+    }
     
-  func textCellSizeCalculator(for _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> CellSizeCalculator? {
-    nil
-  }
+    // MARK: Event
+    func noticeDown() {
+        self.noticeView.heightAnchor.constraint(equalToConstant: 170).isActive = true
+        self.qLabel.isHidden = false
+        self.questionLabel.isHidden = false
+        self.lastAnswerBtn.isHidden = false
+        self.goAnswerBtn.isHidden = false
+        self.lineView.isHidden = false
+        self.noticeView.backgroundColor = .white
+        self.noticeView.alpha = 0.9
+    }
+    func noticeUp() {
+        self.noticeView.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        self.qLabel.isHidden = true
+        self.questionLabel.isHidden = true
+        self.lastAnswerBtn.isHidden = true
+        self.goAnswerBtn.isHidden = true
+        self.lineView.isHidden = true
+    }
+    
+    // MARK: Configure
+    func configure() {
+        [noticeView, letterImageView, alarmLabel, downBtn,
+         lineView, qLabel, questionLabel, goAnswerBtn, lastAnswerBtn].forEach { view.addSubview($0) }
+        self.noticeUp()
+    }
+    // MARK: UI
+    lazy var noticeView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.applyShadow(color: #colorLiteral(red: 0.6070454717, green: 0.6070454121, blue: 0.6070454121, alpha: 1), alpha: 0.25, x: 2, y: 2, blur: 15)
+        view.alpha = 0.9
+        view.layer.cornerRadius = 8
+        view.layer.masksToBounds = false
+        return view
+    }()
+    
+    let letterImageView = UIImageView(image: UIImage(named: "hundredQA"))
+    
+    let alarmLabel: UILabel = {
+        let label = UILabel()
+        label.text = "백문백답질문도착"
+        label.textColor = .gray1
+        label.font = FontManager.shared.medium(ofSize: 16)
+        return label
+    }()
+    
+    let downBtn: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "downBtn"), for: .normal)
+        return button
+    }()
+    
+    let lineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 0.997919023, green: 0.828189075, blue: 0.9971280694, alpha: 1)
+        return view
+    }()
+    
+    let qLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Q."
+        label.textColor = .gray1
+        label.font = FontManager.shared.regular(ofSize: 16)
+        return label
+    }()
+    
+    let questionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "질문 내용"
+        label.textColor = .gray1
+        label.font = FontManager.shared.regular(ofSize: 15)
+        return label
+    }()
+    
+    let lastAnswerBtn: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.setTitle("지난 답변 확인", for: .normal)
+        button.setTitleColor(.gray1, for: .normal)
+        button.titleLabel?.font = FontManager.shared.regular(ofSize: 14)
+        button.layer.cornerRadius = 8
+        button.layer.applyShadow(color: UIColor.primary1, alpha: 0.26, x: 0, y: 0, blur: 6)
+        button.layer.masksToBounds = false
+        return button
+    }()
+    
+    let goAnswerBtn: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.setTitle("답변하러가기", for: .normal)
+        button.setTitleColor(.gray1, for: .normal)
+        button.titleLabel?.font = FontManager.shared.regular(ofSize: 14)
+        button.layer.cornerRadius = 8
+        button.layer.applyShadow(color: UIColor.primary1, alpha: 0.26, x: 0, y: 0, blur: 6)
+        button.layer.masksToBounds = false
+        return button
+    }()
+    
+    // MARK: 오토레이아웃
+    func setAutoLayout() {
+        noticeView.translatesAutoresizingMaskIntoConstraints = false
+        letterImageView.translatesAutoresizingMaskIntoConstraints = false
+        alarmLabel.translatesAutoresizingMaskIntoConstraints = false
+        downBtn.translatesAutoresizingMaskIntoConstraints = false
+
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        qLabel.translatesAutoresizingMaskIntoConstraints = false
+        questionLabel.translatesAutoresizingMaskIntoConstraints = false
+        lastAnswerBtn.translatesAutoresizingMaskIntoConstraints = false
+        goAnswerBtn.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            noticeView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+            noticeView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            noticeView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 9),
+            noticeView.heightAnchor.constraint(equalToConstant: 170),
+            
+            letterImageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 30),
+            letterImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            letterImageView.widthAnchor.constraint(equalToConstant: 20),
+            letterImageView.heightAnchor.constraint(equalToConstant: 18),
+
+            alarmLabel.leadingAnchor.constraint(equalTo: letterImageView.trailingAnchor, constant: 16),
+            alarmLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 23),
+            alarmLabel.heightAnchor.constraint(equalToConstant: 21),
+
+            downBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -17),
+            downBtn.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 9),
+            downBtn.widthAnchor.constraint(equalToConstant: 48),
+            downBtn.heightAnchor.constraint(equalToConstant: 48),
+            
+            lineView.topAnchor.constraint(equalTo: noticeView.topAnchor, constant: 48),
+            lineView.centerXAnchor.constraint(equalTo: noticeView.centerXAnchor),
+            lineView.widthAnchor.constraint(equalToConstant: 308),
+            lineView.heightAnchor.constraint(equalToConstant: 1),
+            
+            qLabel.topAnchor.constraint(equalTo: lineView.bottomAnchor, constant: 22),
+            qLabel.leadingAnchor.constraint(equalTo: noticeView.leadingAnchor, constant: 18),
+            qLabel.heightAnchor.constraint(equalToConstant: 22),
+            
+            questionLabel.topAnchor.constraint(equalTo: lineView.bottomAnchor, constant: 22),
+            questionLabel.leadingAnchor.constraint(equalTo: qLabel.trailingAnchor, constant: 18),
+            questionLabel.heightAnchor.constraint(equalToConstant: 22),
+            
+            lastAnswerBtn.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 24),
+            lastAnswerBtn.leadingAnchor.constraint(equalTo: noticeView.leadingAnchor, constant: 18),
+            lastAnswerBtn.widthAnchor.constraint(equalToConstant: 150),
+            lastAnswerBtn.heightAnchor.constraint(equalToConstant: 38),
+            
+            goAnswerBtn.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 24),
+            goAnswerBtn.leadingAnchor.constraint(equalTo: lastAnswerBtn.trailingAnchor, constant: 7),
+            goAnswerBtn.widthAnchor.constraint(equalToConstant: 150),
+            goAnswerBtn.heightAnchor.constraint(equalToConstant: 38),
+        ])
+    }
 }
 
 // MARK: MessagesDisplayDelegate
@@ -140,32 +329,90 @@ extension DisplayChatVC: MessagesDisplayDelegate {
         },
         completion: nil)
     }
-  }
-
-  func snapshotOptionsForLocation(
-    message _: MessageType,
-    at _: IndexPath,
-    in _: MessagesCollectionView)
+    
+    // MARK: - All Messages
+    
+    func backgroundColor(for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> UIColor {
+        isFromCurrentSender(message: message) ? .primary1 : UIColor(red: 230 / 255, green: 230 / 255, blue: 230 / 255, alpha: 1)
+    }
+    
+    func messageStyle(for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> MessageStyle {
+        let tail: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
+        return .bubbleTail(tail, .curved)
+    }
+    
+    //  func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) {
+    //    let avatar = SampleData.shared.getAvatarFor(sender: message.sender)
+    //    avatarView.set(avatar: avatar)
+    //  }
+    
+    func configureMediaMessageImageView(
+        _ imageView: UIImageView,
+        for message: MessageType,
+        at _: IndexPath,
+        in _: MessagesCollectionView)
+    {
+        if case MessageKind.photo(let media) = message.kind, let imageURL = media.url {
+            imageView.kf.setImage(with: imageURL)
+        } else {
+            imageView.kf.cancelDownloadTask()
+        }
+    }
+    
+    // MARK: - Location Messages
+    
+    func annotationViewForLocation(message _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> MKAnnotationView? {
+        let annotationView = MKAnnotationView(annotation: nil, reuseIdentifier: nil)
+        let pinImage = #imageLiteral(resourceName: "myMarkerDot")
+        annotationView.image = pinImage
+        annotationView.centerOffset = CGPoint(x: 0, y: -pinImage.size.height / 2)
+        return annotationView
+    }
+    
+    func animationBlockForLocation(
+        message _: MessageType,
+        at _: IndexPath,
+        in _: MessagesCollectionView) -> ((UIImageView) -> Void)?
+    {
+        { view in
+            view.layer.transform = CATransform3DMakeScale(2, 2, 2)
+            UIView.animate(
+                withDuration: 0.6,
+                delay: 0,
+                usingSpringWithDamping: 0.9,
+                initialSpringVelocity: 0,
+                options: [],
+                animations: {
+                    view.layer.transform = CATransform3DIdentity
+                },
+                completion: nil)
+        }
+    }
+    
+    func snapshotOptionsForLocation(
+        message _: MessageType,
+        at _: IndexPath,
+        in _: MessagesCollectionView)
     -> LocationMessageSnapshotOptions
-  {
-    LocationMessageSnapshotOptions(
-      showsBuildings: true,
-      showsPointsOfInterest: true,
-      span: MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10))
-  }
-
-  // MARK: - Audio Messages
-
-  func audioTintColor(for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> UIColor {
-    isFromCurrentSender(message: message) ? .white : UIColor(red: 15 / 255, green: 135 / 255, blue: 255 / 255, alpha: 1.0)
-  }
-
-  func configureAudioCell(_ cell: AudioMessageCell, message: MessageType) {
-    audioController
-      .configureAudioCell(
-        cell,
-        message: message) // this is needed especially when the cell is reconfigure while is playing sound
-  }
+    {
+        LocationMessageSnapshotOptions(
+            showsBuildings: true,
+            showsPointsOfInterest: true,
+            span: MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10))
+    }
+    
+    // MARK: - Audio Messages
+    
+    func audioTintColor(for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> UIColor {
+        isFromCurrentSender(message: message) ? .white : UIColor(red: 15 / 255, green: 135 / 255, blue: 255 / 255, alpha: 1.0)
+    }
+    
+    func configureAudioCell(_ cell: AudioMessageCell, message: MessageType) {
+        audioController
+            .configureAudioCell(
+                cell,
+                message: message) // this is needed especially when the cell is reconfigure while is playing sound
+    }
 }
 
 // MARK: MessagesLayoutDelegate
