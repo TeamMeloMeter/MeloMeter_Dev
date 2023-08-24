@@ -29,6 +29,17 @@ class ChatVM {
         var getRealTimeMessage = PublishSubject<[MockMessage]>()
     }
     
+    
+    struct NoticeInput {
+        let lastAnswerBtnTapEvent: Observable<Void>
+        let goAnswerBtnTapEvent: Observable<Void>
+    }
+    
+    struct NoticeOutput {
+        var questionNumber = PublishSubject<String>()
+        var questionText = PublishSubject<String>()
+    }
+    
     // MARK: Input
     // 데이트 타입을 받아서, 우리가 원하는(멜로망스)에 맞는 형태로 바꾸는 메서드를 Date유틸에 추가하고, 이 동작을 하는 메서드를 만들어야해 여기에.
     init(coordinator: ChatCoordinator, chatUseCase: ChatUseCase) {
@@ -87,5 +98,35 @@ class ChatVM {
         return output
     }
     
+    func noticeTransform(input: NoticeInput, disposeBag: DisposeBag) -> NoticeOutput {
+        let output = NoticeOutput()
+//        input.viewDidLoadEvent
+//            .subscribe(onNext: { [weak self] _ in
+//                guard let self = self else{ return }
+//                self.chatUseCase.getChatMessageService()
+//                self.chatUseCase.startRealTimeChatMassage()
+//            })
+//            .disposed(by: disposeBag)
+//
+//        input.viewWillApearEvent
+//            .subscribe(onNext: { [weak self] _ in
+//                guard let self = self else{ return }
+//
+//            })
+//            .disposed(by: disposeBag)
+        input.lastAnswerBtnTapEvent
+            .subscribe(onNext: {[weak self] _ in
+                self?.coordinator?.showHundredQAFlow()
+            })
+            .disposed(by: disposeBag)
+        
+        input.goAnswerBtnTapEvent
+            .subscribe(onNext: {[weak self] _ in
+                //self?.coordinator?.showWriteAnswerVC(viewModel: <#T##AnswerVM#>, )
+            })
+            .disposed(by: disposeBag)
+        
+        return output
+    }
 }
     

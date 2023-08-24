@@ -56,8 +56,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         //바인딩 추가
         setBindings()
         self.viewDidLoadEvent.onNext(())
@@ -151,6 +149,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         return button
     }()
     
+    // MARK: Configure
     func configureMessageCollectionView() {
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messageCellDelegate = self
@@ -169,6 +168,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         messageInputBar.sendButton.setTitleColor(
             UIColor.primary1.withAlphaComponent(0.3),
             for: .highlighted)
+        
     }
     
     // MARK: - EVENT
@@ -230,13 +230,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             })
             .disposed(by: disposeBag)
     }
-    
-    // MARK: UI
-    let cameraBtn: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "cameraIcon"), for: .normal)
-        return button
-    }()
     
     // MARK: - Helpers
     //MockMessage 형태로 입력받아 scrollToLastItem(마지막 아이탬에 추가한다)

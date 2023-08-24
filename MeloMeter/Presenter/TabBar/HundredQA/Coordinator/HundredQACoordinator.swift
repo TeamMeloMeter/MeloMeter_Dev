@@ -53,9 +53,7 @@ extension HundredCoordinator {
                                  otherAnswerInfo: otherAnswerInfo
                               )
         let viewController = ReadAnswerVC(viewModel: viewModel)
-        
-        print("코디네이터", viewModel.otherAnswerInfo)
-        
+                
         viewController.hidesBottomBarWhenPushed = true
         self.navigationController.setNavigationBarHidden(false, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
