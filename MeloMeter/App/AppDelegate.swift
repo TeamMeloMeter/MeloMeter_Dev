@@ -8,6 +8,8 @@
 import UIKit
 import NMapsMap
 import Firebase
+import FirebaseCore
+import FirebaseMessaging
 import UserNotifications
 import FirebaseAppCheck
 import KakaoSDKCommon
@@ -26,23 +28,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         Messaging.messaging().delegate = self
         Messaging.messaging().isAutoInitEnabled = true
         UNUserNotificationCenter.current().delegate = self
+        
         application.registerForRemoteNotifications()
 
         return true
     }
     
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {}
+    // FCMToken 업데이트시
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        print("🟢 fcmToken : ", #function, fcmToken ?? "")
+    }
     
+    // 스위즐링 NO시, APNs등록, 토큰값가져옴
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        // APNS Device Token 받은 후 서버에 전송하거나, FCM Token과 연결할 수 있음
         Messaging.messaging().apnsToken = deviceToken
-        
+        let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
+        print("🟢 deviceTokenString : ", #function, deviceTokenString)
     }
     
     // APNS 등록 실패 시 호출
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print("APNS 등록 실패: \(error.localizedDescription)")
+        print("🟢APNS 등록 실패: \(error.localizedDescription)")
     }
+    
+    // 푸시클릭시
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        print("🟢 클릭 : ", #function)
+        let userInfo = response.notification.request.content.userInfo
+        
+            
+    }
+
+    // 앱화면 보고있는중에 푸시올 때
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+        print("🟢 인앱 : ", #function)
+        
+        return [.sound, .banner, .list]
+    }
+    
     
     // MARK: UISceneSession Lifecycle
     
@@ -60,4 +83,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     
     
 }
-
