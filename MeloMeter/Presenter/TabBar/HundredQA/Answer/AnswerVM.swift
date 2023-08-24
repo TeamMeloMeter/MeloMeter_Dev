@@ -61,18 +61,33 @@ class AnswerVM {
         input.viewWillApearEvent
             .subscribe(onNext: {[weak self] _ in
                 guard let self = self else{ return }
+                self.hundredQAUseCase.getAnswerList()
+                    .subscribe(onSuccess: { answerInfoModel in
+                        let answersArray = answerInfoModel.map{ $0.answerInfo }
+                        let answers = answersArray[Int(self.questionNumber) ?? 0]
+                        let myAnswer = answers.filter{ $0.userId == .mine }
+                        let otherAnswer = answers.filter{ $0.userId == .other }
+                        
+                        var isAnswers = [false, false]
+                        if !myAnswer.isEmpty {
+                            output.myAnswerInfo.onNext(myAnswer[0])
+                            isAnswers[0] = true
+                        }else {
+                            output.myAnswerInfo.onNext(self.myAnswerInfo)
+                        }
+                        if !otherAnswer.isEmpty {
+                            output.otherAnswerInfo.onNext(otherAnswer[0])
+                            isAnswers[1] = true
+                        }else {
+                            output.otherAnswerInfo.onNext(self.otherAnswerInfo)
+                        }
+                        output.isAnswers.onNext(isAnswers)
+                    })
+                    .disposed(by: disposeBag)
+                
                 output.questionNumber.onNext(self.questionNumber)
                 output.questionText.onNext(self.questionText)
-                var isAnswers = [false, false]
-                if !self.myAnswerInfo.answerText.isEmpty {
-                    isAnswers[0] = true
-                }
-                if !self.otherAnswerInfo.answerText.isEmpty {
-                    isAnswers[1] = true
-                }
-                output.myAnswerInfo.onNext(self.myAnswerInfo)
-                output.otherAnswerInfo.onNext(self.otherAnswerInfo)
-                output.isAnswers.onNext(isAnswers)
+                
             })
             .disposed(by: disposeBag)
         
