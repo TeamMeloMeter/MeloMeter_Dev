@@ -190,6 +190,8 @@ class EditProfileVC: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(named: "cameraIcon"), for: .normal)
         button.isEnabled = true
+        button.layer.applyShadow(color: #colorLiteral(red: 0.7725490196, green: 0.7607843137, blue: 0.7607843137, alpha: 1), alpha: 0.3, x: 0, y: 4, blur: 8)
+        button.layer.masksToBounds = false
         return button
     }()
     
@@ -406,7 +408,7 @@ class EditProfileVC: UIViewController {
             nameView.widthAnchor.constraint(equalToConstant: 343),
             nameView.heightAnchor.constraint(equalToConstant: 46),
             
-            userNameLabel.leadingAnchor.constraint(equalTo: nameView.leadingAnchor, constant: 11),
+            userNameLabel.leadingAnchor.constraint(equalTo: nameView.leadingAnchor, constant: 14),
             userNameLabel.centerYAnchor.constraint(equalTo: nameView.centerYAnchor),
             
             stateMessageLabel.leadingAnchor.constraint(equalTo: nameView.leadingAnchor),
@@ -417,7 +419,7 @@ class EditProfileVC: UIViewController {
             stateMessageView.widthAnchor.constraint(equalToConstant: 343),
             stateMessageView.heightAnchor.constraint(equalToConstant: 46),
 
-            userStateMessageLabel.leadingAnchor.constraint(equalTo: stateMessageView.leadingAnchor, constant: 11),
+            userStateMessageLabel.leadingAnchor.constraint(equalTo: stateMessageView.leadingAnchor, constant: 14),
             userStateMessageLabel.centerYAnchor.constraint(equalTo: stateMessageView.centerYAnchor),
         ])
     }
@@ -436,10 +438,10 @@ class EditProfileVC: UIViewController {
             birthGenderView.widthAnchor.constraint(equalToConstant: 343),
             birthGenderView.heightAnchor.constraint(equalToConstant: 88),
             
-            birthLabel.leadingAnchor.constraint(equalTo: birthGenderView.leadingAnchor, constant: 11),
+            birthLabel.leadingAnchor.constraint(equalTo: birthGenderView.leadingAnchor, constant: 14),
             birthLabel.topAnchor.constraint(equalTo: birthGenderView.topAnchor, constant: 14),
             
-            birthDateLabel.trailingAnchor.constraint(equalTo: birthGenderView.trailingAnchor, constant: -11),
+            birthDateLabel.trailingAnchor.constraint(equalTo: birthGenderView.trailingAnchor, constant: -14),
             birthDateLabel.topAnchor.constraint(equalTo: birthGenderView.topAnchor, constant: 14),
             birthDateLabel.widthAnchor.constraint(equalToConstant: 100),
             
@@ -448,10 +450,10 @@ class EditProfileVC: UIViewController {
             lineView1.widthAnchor.constraint(equalToConstant: 321),
             lineView1.heightAnchor.constraint(equalToConstant: 0.5),
             
-            genderLabel.leadingAnchor.constraint(equalTo: birthGenderView.leadingAnchor, constant: 11),
+            genderLabel.leadingAnchor.constraint(equalTo: birthGenderView.leadingAnchor, constant: 14),
             genderLabel.bottomAnchor.constraint(equalTo: birthGenderView.bottomAnchor, constant: -13),
             
-            userGenderLabel.trailingAnchor.constraint(equalTo: birthGenderView.trailingAnchor, constant: -11),
+            userGenderLabel.trailingAnchor.constraint(equalTo: birthGenderView.trailingAnchor, constant: -14),
             userGenderLabel.bottomAnchor.constraint(equalTo: birthGenderView.bottomAnchor, constant: -14),
             userGenderLabel.widthAnchor.constraint(equalToConstant: 87)
 
@@ -473,7 +475,7 @@ class EditProfileVC: UIViewController {
             bottomView.widthAnchor.constraint(equalToConstant: 343),
             bottomView.heightAnchor.constraint(equalToConstant: 132),
             
-            disconnectLabel.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 11),
+            disconnectLabel.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 14),
             disconnectLabel.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 14),
             
             lineView2.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 11),
@@ -481,7 +483,7 @@ class EditProfileVC: UIViewController {
             lineView2.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 44),
             lineView2.heightAnchor.constraint(equalToConstant: 1),
             
-            logoutLabel.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 11),
+            logoutLabel.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 14),
             logoutLabel.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -11),
             logoutLabel.heightAnchor.constraint(equalToConstant: 44),
             logoutLabel.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor),
@@ -491,7 +493,7 @@ class EditProfileVC: UIViewController {
             lineView3.topAnchor.constraint(equalTo: lineView2.bottomAnchor, constant: 44),
             lineView3.heightAnchor.constraint(equalToConstant: 1),
             
-            withdrawalLabel.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 11),
+            withdrawalLabel.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 14),
             withdrawalLabel.bottomAnchor.constraint(equalTo: bottomView.bottomAnchor, constant: -13),
         
         ])

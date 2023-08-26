@@ -14,7 +14,6 @@ class AlarmTableViewCell: UITableViewCell {
         view.backgroundColor = .white
         view.layer.cornerRadius = 8
         view.layer.masksToBounds = false
-        view.layer.applyShadow(color: UIColor.primary1, alpha: 0.25, x: 0, y: 2, blur: 18)
         view.addSubview(alarmTitleLabel)
         view.addSubview(alarmSubtitleLabel)
         view.addSubview(alarmImageView)
@@ -63,19 +62,19 @@ class AlarmTableViewCell: UITableViewCell {
         alarmImageView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            alarmView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            alarmView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
+            alarmView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             alarmView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            alarmView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            alarmView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             alarmView.heightAnchor.constraint(equalToConstant: 82),
 
             alarmTitleLabel.leadingAnchor.constraint(equalTo: alarmView.leadingAnchor, constant: 64),
-            alarmTitleLabel.topAnchor.constraint(equalTo: alarmView.topAnchor, constant: 15),
+            alarmTitleLabel.topAnchor.constraint(equalTo: alarmView.topAnchor, constant: 14),
+            alarmTitleLabel.heightAnchor.constraint(equalToConstant: 34),
             
             alarmSubtitleLabel.leadingAnchor.constraint(equalTo: alarmView.leadingAnchor, constant: 64),
-            alarmSubtitleLabel.topAnchor.constraint(equalTo: alarmView.topAnchor, constant: 36),
-            
-            
+            alarmSubtitleLabel.bottomAnchor.constraint(equalTo: alarmView.bottomAnchor, constant: -11),
+            alarmSubtitleLabel.heightAnchor.constraint(equalToConstant: 34),
+
             alarmImageView.leadingAnchor.constraint(equalTo: alarmView.leadingAnchor, constant: 18),
             alarmImageView.topAnchor.constraint(equalTo: alarmView.topAnchor, constant: 27),
             alarmImageView.widthAnchor.constraint(equalToConstant: 24),

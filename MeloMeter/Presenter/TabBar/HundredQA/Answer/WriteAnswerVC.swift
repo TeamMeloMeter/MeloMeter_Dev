@@ -233,14 +233,13 @@ class WriteAnswerVC: UIViewController {
             textCountLabel.trailingAnchor.constraint(equalTo: answerView.trailingAnchor, constant: -16),
 
             lineView.topAnchor.constraint(equalTo: myUserLabel.bottomAnchor, constant: 8),
-            lineView.centerXAnchor.constraint(equalTo: answerView.centerXAnchor),
-            lineView.widthAnchor.constraint(equalToConstant: 308),
+            lineView.leadingAnchor.constraint(equalTo: answerView.leadingAnchor, constant: 16),
+            lineView.trailingAnchor.constraint(equalTo: answerView.trailingAnchor, constant: -16),
             lineView.heightAnchor.constraint(equalToConstant: 1),
 
             answerTextView.topAnchor.constraint(equalTo: lineView.bottomAnchor, constant: 17),
             answerTextView.centerXAnchor.constraint(equalTo: answerView.centerXAnchor),
             answerTextView.widthAnchor.constraint(equalToConstant: 308),
-            answerTextView.heightAnchor.constraint(equalToConstant: 155),
 
             textPlaceHolderLabel.leadingAnchor.constraint(equalTo: answerTextView.leadingAnchor, constant: 13),
             textPlaceHolderLabel.topAnchor.constraint(equalTo: answerTextView.topAnchor, constant: 16),

@@ -56,7 +56,7 @@ class MyProfileVM {
                         self.myProfileUseCase.getDdayInfo(otherUid: otherUid)
                             .subscribe(onSuccess: { dDayInfo in
                                 output.coupleUserName.accept("\(name) & \(dDayInfo[0])")
-                                output.sinceFirstDay.accept("\(dDayInfo[1])째 함께하는 중")
+                                output.sinceFirstDay.accept("\(dDayInfo[1])일째 함께하는 중")
                             })
                             .disposed(by: disposeBag)
                         output.userName.accept(name)
@@ -96,6 +96,7 @@ class MyProfileVM {
         input.editProfileBtnTapEvent
             .subscribe(onNext: {[weak self] _ in
                 guard let self = self else{ return }
+                print("프로필 탭이벤트")
                 self.coordinator?.showEditProfileVC()
             })
             .disposed(by: disposeBag)

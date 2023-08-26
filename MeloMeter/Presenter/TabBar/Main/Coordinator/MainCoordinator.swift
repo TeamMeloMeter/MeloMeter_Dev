@@ -42,13 +42,20 @@ extension MainCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
    
+    func showAlarmFlow() {
+        let alarmCoordinator = AlarmCoordinator(self.navigationController)
+        childCoordinators.append(alarmCoordinator)
+        alarmCoordinator.parentCoordinator = self
+        alarmCoordinator.start()
+    }
+    
     func showDdayFlow() {
         let dDayCoordinator = DdayCoordinator(self.navigationController)
         childCoordinators.append(dDayCoordinator)
-        dDayCoordinator.delegate = self
+        dDayCoordinator.parentCoordinator = self
         dDayCoordinator.start()
     }
-
+    
     func finish() {
         UserDefaults.standard.removeObject(forKey: "otherUid")
         UserDefaults.standard.removeObject(forKey: "coupleDocumentID")
@@ -60,7 +67,7 @@ extension MainCoordinator {
 extension MainCoordinator: CoordinatorDelegate {
     func didFinish(childCoordinator: Coordinator) {
         self.childCoordinators = []
-
+        print("tapbarFInish", childCoordinator)
         if childCoordinator is DdayCoordinator {
             self.navigationController.popViewController(animated: false)
         }

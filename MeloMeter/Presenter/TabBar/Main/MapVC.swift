@@ -89,6 +89,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             .drive(onNext: { text in
                 if let message = text {
                     self.myInfoWindowLabel.text = message
+                    self.myInfoWindowView.widthAnchor.constraint(equalTo: self.myInfoWindowLabel.widthAnchor).isActive = true
                     self.infoWindow1.open(with: self.myMarker)
                 }else {
                     self.myInfoWindowLabel.text = text
@@ -96,7 +97,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
                 }
             })
             .disposed(by: disposeBag)
-        
+        // MARK: 상태메세지에 맞게 infoWindowView 너비 고치기
         output.otherStateMessage
             .asDriver(onErrorJustReturn: nil)
             .drive(onNext: { text in
@@ -254,11 +255,14 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     /// 마커 아이콘, 상태메세지 정보창 설정
     func setMarker() {
         myMarker.iconImage = NMFOverlayImage(image: myMarkerIcon)
-        let dataSource1 = CustomInfoViewDataSource(customView: myInfoWindowLabel)
+        self.myInfoWindowView.widthAnchor.constraint(equalTo: self.myInfoWindowLabel.widthAnchor).isActive = true
+        let dataSource1 = CustomInfoViewDataSource(customView: myInfoWindowView)
+        infoWindow1.offsetY = 5
         infoWindow1.dataSource = dataSource1
         
         otherMarker.iconImage = NMFOverlayImage(image: otherMarkerIcon)
         let dataSource2 = CustomInfoViewDataSource(customView: otherInfoWindowLabel)
+        infoWindow2.offsetY = 5
         infoWindow2.dataSource = dataSource2
     }
     
@@ -302,17 +306,22 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         return UIImage(named: "myMarkerDot")!
 
     }()
-    
+    lazy var myInfoWindowView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.borderColor = #colorLiteral(red: 0.9843137255, green: 0.3607843137, blue: 0.9960784314, alpha: 1)
+        view.layer.borderWidth = 1.0
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 20
+        view.addSubview(myInfoWindowLabel)
+        return view
+    }()
     let myInfoWindowLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 141, height: 43))
-        label.textColor = .black
+        let label = UILabel()
+        label.textColor = .gray1
         label.textAlignment = .center
         label.font = FontManager.shared.regular(ofSize: 16)
         label.backgroundColor = .white
-        label.layer.borderColor = #colorLiteral(red: 0.9843137255, green: 0.3607843137, blue: 0.9960784314, alpha: 1)
-        label.layer.borderWidth = 1.0
-        label.clipsToBounds = true
-        label.layer.cornerRadius = 20
         return label
     }()
     
@@ -367,6 +376,8 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         button.clipsToBounds = true
         button.layer.cornerRadius = 25
         button.layer.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1).cgColor
+        button.layer.applyShadow(color: #colorLiteral(red: 0.3764705882, green: 0.3764705882, blue: 0.3764705882, alpha: 1), alpha: 0.28, x: 3, y: 3, blur: 8)
+        button.layer.masksToBounds = false
         button.addSubview(dDayLabel)
         return button
     }()
@@ -381,11 +392,11 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     let alarmButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "alarmIcon"), for: .normal)
-        
         button.backgroundColor = .white
         button.clipsToBounds = true
         button.layer.cornerRadius = 24
-        button.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
+        button.layer.applyShadow(color: #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1), alpha: 0.25, x: 3, y: 3, blur: 8)
+        button.layer.masksToBounds = false
         return button
     }()
     
@@ -393,9 +404,9 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         let button = UIButton()
         button.setImage(UIImage(named: "myPositionIcon"), for: .normal)
         button.backgroundColor = .white
-        button.clipsToBounds = true
         button.layer.cornerRadius = 24
-        button.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
+        button.layer.applyShadow(color: #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1), alpha: 0.25, x: 3, y: 3, blur: 8)
+        button.layer.masksToBounds = false
         return button
     }()
     

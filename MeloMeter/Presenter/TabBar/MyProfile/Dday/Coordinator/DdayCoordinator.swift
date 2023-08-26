@@ -41,4 +41,8 @@ extension DdayCoordinator {
         self.navigationController.present(viewController, animated: true, completion: nil)
     }
     
+    func finish() {
+        self.delegate?.didFinish(childCoordinator: self)
+    }
+    
 }
