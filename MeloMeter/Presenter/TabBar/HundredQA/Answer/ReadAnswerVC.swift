@@ -97,11 +97,17 @@ class ReadAnswerVC: UIViewController {
     
     // MARK: Event
     func isAnswer(mine: Bool, other: Bool) {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 8
+        let attributedText = NSMutableAttributedString(string: self.myAnswerLabel.text ?? "")
+        attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
+        self.myAnswerLabel.attributedText = attributedText
         if mine && other { //둘다 답변
-            self.lockImageView.image = UIImage(named: "unlockImage")
+            self.lockImageView.isHidden = true
             self.myAnswerCompleteLabel.isHidden = true
             self.answerBtn.isHidden = true
             self.otherAnswerLabel.textColor = .gray1
+            self.myUserView.heightAnchor.constraint(equalToConstant: 170).isActive = true
             return
         }
         
@@ -127,6 +133,7 @@ class ReadAnswerVC: UIViewController {
             self.lockImageView.image = UIImage(named: "lockImage")
             self.myAnswerCompleteLabel.isHidden = true
             self.otherAnswerLabel.textColor = .gray3
+            
         }
     }
     
@@ -291,7 +298,7 @@ class ReadAnswerVC: UIViewController {
         label.textColor = .gray1
         label.font = FontManager.shared.medium(ofSize: 15)
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 7
+        paragraphStyle.lineSpacing = 26
         let attributedText = NSMutableAttributedString(string: label.text ?? "")
         attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
         label.attributedText = attributedText
@@ -379,8 +386,8 @@ class ReadAnswerVC: UIViewController {
             otherUserLabel.leadingAnchor.constraint(equalTo: otherUserView.leadingAnchor, constant: 17),
 
             lineView1.topAnchor.constraint(equalTo: otherUserLabel.bottomAnchor, constant: 8),
-            lineView1.centerXAnchor.constraint(equalTo: otherUserView.centerXAnchor),
-            lineView1.widthAnchor.constraint(equalToConstant: 308),
+            lineView1.leadingAnchor.constraint(equalTo: otherUserView.leadingAnchor, constant: 16),
+            lineView1.trailingAnchor.constraint(equalTo: otherUserView.trailingAnchor, constant: -16),
             lineView1.heightAnchor.constraint(equalToConstant: 1),
 
             otherScrollView.topAnchor.constraint(equalTo: lineView1.bottomAnchor),
@@ -407,8 +414,8 @@ class ReadAnswerVC: UIViewController {
             myUserLabel.leadingAnchor.constraint(equalTo: myUserView.leadingAnchor, constant: 17),
 
             lineView2.topAnchor.constraint(equalTo: myUserLabel.bottomAnchor, constant: 8),
-            lineView2.centerXAnchor.constraint(equalTo: myUserView.centerXAnchor),
-            lineView2.widthAnchor.constraint(equalToConstant: 308),
+            lineView2.leadingAnchor.constraint(equalTo: otherUserView.leadingAnchor, constant: 16),
+            lineView2.trailingAnchor.constraint(equalTo: otherUserView.trailingAnchor, constant: -16),
             lineView2.heightAnchor.constraint(equalToConstant: 1),
 
             myScrollView.topAnchor.constraint(equalTo: lineView2.bottomAnchor),
@@ -421,14 +428,14 @@ class ReadAnswerVC: UIViewController {
             myAnswerLabel.trailingAnchor.constraint(equalTo: myScrollView.trailingAnchor, constant: -17),
             
             lockImageView.centerXAnchor.constraint(equalTo: myScrollView.centerXAnchor),
-            lockImageView.topAnchor.constraint(equalTo: myAnswerLabel.bottomAnchor, constant: 20),
+            lockImageView.topAnchor.constraint(equalTo: myAnswerLabel.bottomAnchor, constant: 30),
             lockImageView.widthAnchor.constraint(equalToConstant: 309),
             lockImageView.heightAnchor.constraint(equalToConstant: 131),
 
             answerBtn.centerXAnchor.constraint(equalTo: myUserView.centerXAnchor),
             answerBtn.widthAnchor.constraint(equalToConstant: 320),
             answerBtn.heightAnchor.constraint(equalToConstant: 48),
-            answerBtn.topAnchor.constraint(equalTo: lockImageView.bottomAnchor, constant: 20),
+            answerBtn.topAnchor.constraint(equalTo: lockImageView.bottomAnchor, constant: 25),
 
             myAnswerCompleteLabel.topAnchor.constraint(equalTo: lockImageView.bottomAnchor, constant: 20),
             myAnswerCompleteLabel.centerXAnchor.constraint(equalTo: lockImageView.centerXAnchor),

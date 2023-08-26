@@ -29,7 +29,7 @@ class QnAVC: UIViewController {
         self.qnATableView.delegate = self
         self.qnATableView.dataSource = self
         radioBtnArray = [self.radioBtn, self.radioBtn1, self.radioBtn2,
-                         self.radioBtn3, self.radioBtn4, self.radioBtn5]
+                         self.radioBtn3]
          
         configure()
         setAutoLayout()
@@ -78,7 +78,7 @@ class QnAVC: UIViewController {
         self.radioBtn1.rx.tap
             .map({ _ in
                 self.radioBtnTapped(self.radioBtn1)
-                return QnARadioBtn.auth
+                return QnARadioBtn.backup
             })
             .bind(to: self.selectedRadioBtn)
             .disposed(by: disposeBag)
@@ -86,7 +86,7 @@ class QnAVC: UIViewController {
         self.radioBtn2.rx.tap
             .map({ _ in
                 self.radioBtnTapped(self.radioBtn2)
-                return QnARadioBtn.withdraw
+                return QnARadioBtn.connection
             })
             .bind(to: self.selectedRadioBtn)
             .disposed(by: disposeBag)
@@ -94,32 +94,17 @@ class QnAVC: UIViewController {
         self.radioBtn3.rx.tap
             .map({ _ in
                 self.radioBtnTapped(self.radioBtn3)
-                return QnARadioBtn.location
+                return QnARadioBtn.withdraw
             })
             .bind(to: self.selectedRadioBtn)
             .disposed(by: disposeBag)
         
-        self.radioBtn4.rx.tap
-            .map({ _ in
-                self.radioBtnTapped(self.radioBtn4)
-                return QnARadioBtn.connection
-            })
-            .bind(to: self.selectedRadioBtn)
-            .disposed(by: disposeBag)
-        
-        self.radioBtn5.rx.tap
-            .map({ _ in
-                self.radioBtnTapped(self.radioBtn5)
-                return QnARadioBtn.backup
-            })
-            .bind(to: self.selectedRadioBtn)
-            .disposed(by: disposeBag)
     }
     
     // MARK: Configure
     func configure() {
         view.backgroundColor = .white
-        [radioBtn, radioBtn1, radioBtn2, radioBtn3, radioBtn4, radioBtn5, qnATableView].forEach { view.addSubview($0) }
+        [radioBtn, radioBtn1, radioBtn2, radioBtn3, qnATableView].forEach { view.addSubview($0) }
     }
     
     // MARK: Event
@@ -161,7 +146,7 @@ class QnAVC: UIViewController {
     
     let radioBtn1: UIButton = {
         let button = UIButton()
-        button.setTitle("변경/탈퇴", for: .normal)
+        button.setTitle("백업/복구", for: .normal)
         button.setTitleColor(.gray2, for: .normal)
         button.titleLabel?.font = FontManager.shared.medium(ofSize: 14)
         button.setTitleColor(.white, for: .selected)
@@ -174,7 +159,7 @@ class QnAVC: UIViewController {
     
     let radioBtn2: UIButton = {
         let button = UIButton()
-        button.setTitle("위치기반", for: .normal)
+        button.setTitle("재연결", for: .normal)
         button.setTitleColor(.gray2, for: .normal)
         button.titleLabel?.font = FontManager.shared.medium(ofSize: 14)
         button.setTitleColor(.white, for: .selected)
@@ -187,33 +172,7 @@ class QnAVC: UIViewController {
     
     let radioBtn3: UIButton = {
         let button = UIButton()
-        button.setTitle("연결/재연결", for: .normal)
-        button.setTitleColor(.gray2, for: .normal)
-        button.titleLabel?.font = FontManager.shared.medium(ofSize: 14)
-        button.setTitleColor(.white, for: .selected)
-        button.backgroundColor = .gray5
-        button.clipsToBounds = true
-        button.layer.cornerRadius = 20
-        
-        return button
-    }()
-    
-    let radioBtn4: UIButton = {
-        let button = UIButton()
-        button.setTitle("백업/복구", for: .normal)
-        button.setTitleColor(.gray2, for: .normal)
-        button.titleLabel?.font = FontManager.shared.medium(ofSize: 14)
-        button.setTitleColor(.white, for: .selected)
-        button.backgroundColor = .gray5
-        button.clipsToBounds = true
-        button.layer.cornerRadius = 20
-        
-        return button
-    }()
-    
-    let radioBtn5: UIButton = {
-        let button = UIButton()
-        button.setTitle("그외", for: .normal)
+        button.setTitle("탈퇴", for: .normal)
         button.setTitleColor(.gray2, for: .normal)
         button.titleLabel?.font = FontManager.shared.medium(ofSize: 14)
         button.setTitleColor(.white, for: .selected)
@@ -250,8 +209,6 @@ class QnAVC: UIViewController {
         radioBtn1.translatesAutoresizingMaskIntoConstraints = false
         radioBtn2.translatesAutoresizingMaskIntoConstraints = false
         radioBtn3.translatesAutoresizingMaskIntoConstraints = false
-        radioBtn4.translatesAutoresizingMaskIntoConstraints = false
-        radioBtn5.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             radioBtn.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
@@ -261,36 +218,26 @@ class QnAVC: UIViewController {
            
             radioBtn1.leadingAnchor.constraint(equalTo: radioBtn.trailingAnchor, constant: 8),
             radioBtn1.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 26),
-            radioBtn1.widthAnchor.constraint(equalToConstant: 150),
+            radioBtn1.widthAnchor.constraint(equalToConstant: 86),
             radioBtn1.heightAnchor.constraint(equalToConstant: 37),
             
             radioBtn2.leadingAnchor.constraint(equalTo: radioBtn1.trailingAnchor, constant: 8),
             radioBtn2.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 26),
-            radioBtn2.widthAnchor.constraint(equalToConstant: 86),
+            radioBtn2.widthAnchor.constraint(equalToConstant: 69),
             radioBtn2.heightAnchor.constraint(equalToConstant: 37),
             
-            radioBtn3.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            radioBtn3.topAnchor.constraint(equalTo: radioBtn.bottomAnchor, constant: 17),
-            radioBtn3.widthAnchor.constraint(equalToConstant: 81),
+            radioBtn3.leadingAnchor.constraint(equalTo: radioBtn2.trailingAnchor, constant: 10),
+            radioBtn3.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 26),
+            radioBtn3.widthAnchor.constraint(equalToConstant: 57),
             radioBtn3.heightAnchor.constraint(equalToConstant: 37),
-            
-            radioBtn4.leadingAnchor.constraint(equalTo: radioBtn3.trailingAnchor, constant: 8),
-            radioBtn4.topAnchor.constraint(equalTo: radioBtn1.bottomAnchor, constant: 17),
-            radioBtn4.widthAnchor.constraint(equalToConstant: 98),
-            radioBtn4.heightAnchor.constraint(equalToConstant: 37),
-            
-            radioBtn5.leadingAnchor.constraint(equalTo: radioBtn4.trailingAnchor, constant: 8),
-            radioBtn5.topAnchor.constraint(equalTo: radioBtn2.bottomAnchor, constant: 17),
-            radioBtn5.widthAnchor.constraint(equalToConstant: 86),
-            radioBtn5.heightAnchor.constraint(equalToConstant: 37),
-            
+
         ])
     }
     
     private func qnATableViewConstraints() {
         qnATableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            qnATableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            qnATableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             qnATableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             qnATableView.topAnchor.constraint(equalTo: radioBtn3.bottomAnchor, constant: 31.5),
             qnATableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
@@ -308,6 +255,9 @@ extension QnAVC: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "QnATableViewCell", for: indexPath) as? QnATableViewCell else { return UITableViewCell() }
         let data = self.cellData[indexPath.row]
         cell.questionLabel.text = data
+        if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
+        }
         return cell
     }
     

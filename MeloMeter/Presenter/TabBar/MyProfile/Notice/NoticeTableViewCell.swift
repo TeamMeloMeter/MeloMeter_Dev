@@ -90,7 +90,7 @@ class NoticeTableViewCell: UITableViewCell {
             noticeDateLabel.leadingAnchor.constraint(equalTo: seperateLine.trailingAnchor, constant: 10),
             noticeDateLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 31),
             
-            contentsLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            contentsLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 31),
             contentsLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
             
         ])

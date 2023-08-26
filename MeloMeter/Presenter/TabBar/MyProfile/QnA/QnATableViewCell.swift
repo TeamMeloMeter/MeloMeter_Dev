@@ -12,8 +12,10 @@ class QnATableViewCell: UITableViewCell {
     
     let questionLabel: UILabel = {
         let label = UILabel()
-        label.text = "계정 인증이 뭔가요?"
-        label.textColor = .black
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.sizeToFit()
+        label.textColor = .gray1
         label.font = FontManager.shared.medium(ofSize: 16)
         return label
     }()

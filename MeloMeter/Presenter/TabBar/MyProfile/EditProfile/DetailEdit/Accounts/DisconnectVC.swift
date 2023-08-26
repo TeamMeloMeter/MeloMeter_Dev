@@ -114,7 +114,7 @@ class DisconnectVC: UIViewController {
         label.text = labelText
         let findString = ["끊은 시점으로부터 30일입니다.", "재연결 시, 연결을 끊었던 계정으로 로그인 및 재연결을 해야만 합니다."]
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 7
+        paragraphStyle.lineSpacing = 8
         attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
         for i in findString {
             if let range = label.text?.range(of: i) {

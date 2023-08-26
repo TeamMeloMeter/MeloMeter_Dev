@@ -220,16 +220,23 @@ extension MyProfileCoordinator {
     }
     
     func finish() {
+        print("코디네이터피니시")
         self.delegate?.didFinish(childCoordinator: self)
     }
     
 }
 
 extension MyProfileCoordinator: CoordinatorDelegate {
-    
     func didFinish(childCoordinator: Coordinator) {
         self.childCoordinators = []
-        childCoordinator.navigationController.popToRootViewController(animated: true)
+        print("myprofile", childCoordinator)
+
+        if childCoordinator is DdayCoordinator {
+            self.navigationController.popViewController(animated: true)
+            self.childCoordinators.removeLast()
+        }else {
+            childCoordinator.navigationController.popToRootViewController(animated: true)
+        }
     }
     
 }

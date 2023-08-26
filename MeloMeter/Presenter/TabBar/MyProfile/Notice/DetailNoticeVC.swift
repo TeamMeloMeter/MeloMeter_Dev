@@ -110,40 +110,29 @@ class DetailNoticeVC: UIViewController {
         label.lineBreakMode = .byWordWrapping
         label.sizeToFit()
         label.text = """
-안녕하세요. 멜로미터입니다. 회원 가입 시 입력하는 번호가 고객님의 멜로미터 아이디입니다. 아이디는 원활한 앱 사용을 위해~~ [계정 인증 방법]\n\n 가입 직후 발송된 멜로미터의 어쩌구 확인
-d
-d
-d
-d
-d
-d
-d
+안녕하세요. 멜로미터입니다.
 
-d
-d
-d
-d
-dd
-d
-d
-d
-d
-d
-d
-d
-d
-dd
-df
-d
-d
-d
-d
-d
+멜로미터는 연인 간의 사랑의 감정을 뜻하는 멜로와
+(melo) 길이를 표현하는 미터를(meter)를 합쳐 만든
+단어로, 연인 간의 사랑과 두 사람이 함께 걷는 여정을
+뜻합니다.
 
-d
+지도를 기반으로 커플들의 위치를 실시간으로
+공유하고 함께 다녀온 곳을 기록하고 앞으로
+함께할 시간들에 대한 계획을 세울 수도 있습니다.
+
+기념일, 백문백답으로 서로에게 더 가까워지는
+멜로미터를 체험해보세요.
+
+감사합니다!
 """
         label.textColor = .gray1
         label.font = FontManager.shared.medium(ofSize: 16)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 8
+        let attributedText = NSMutableAttributedString(string: label.text ?? "")
+        attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
+        label.attributedText = attributedText
         return label
     }()
     
@@ -162,7 +151,7 @@ d
         contentsLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            titleLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             titleLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 26),
             
             infoLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
@@ -183,7 +172,7 @@ d
             contentsView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             contentsView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
-            contentsLabel.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor, constant: 16),
+            contentsLabel.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor, constant: 20),
             contentsLabel.topAnchor.constraint(equalTo: contentsView.topAnchor, constant: 30),
             contentsLabel.trailingAnchor.constraint(equalTo: contentsView.trailingAnchor, constant: -16),
             contentsLabel.bottomAnchor.constraint(equalTo: contentsView.bottomAnchor, constant: -30),

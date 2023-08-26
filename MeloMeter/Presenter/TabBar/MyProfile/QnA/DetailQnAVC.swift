@@ -21,6 +21,8 @@ class DetailQnAVC: UIViewController {
         self.titleLabel.text = title
         self.answerLabel.text = contents
         super.init(nibName: nil, bundle: nil)
+        self.setLabel()
+
     }
  
     override func viewDidLoad() {
@@ -50,7 +52,17 @@ class DetailQnAVC: UIViewController {
         view.backgroundColor = .white
         [titleLabel, lineView, scrollView].forEach { view.addSubview($0) }
     }
-    
+    func setLabel() {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 8
+        let attributedText = NSMutableAttributedString(string: self.answerLabel.text ?? "")
+        attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
+        self.answerLabel.attributedText = attributedText
+
+        let attributedText1 = NSMutableAttributedString(string: self.titleLabel.text ?? "")
+        attributedText1.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText1.length))
+        self.titleLabel.attributedText = attributedText1
+    }
     // MARK: NavigationBar
     private func setNavigationBar() {
         navigationItem.title = ""
@@ -68,7 +80,9 @@ class DetailQnAVC: UIViewController {
     // MARK: UI
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "계정 인증이 뭔가요?"
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.sizeToFit()
         label.textColor = .gray1
         label.font = FontManager.shared.semiBold(ofSize: 18)
         return label
@@ -120,7 +134,7 @@ class DetailQnAVC: UIViewController {
         answerLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            titleLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             titleLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 26),
             
             lineView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
@@ -139,10 +153,8 @@ class DetailQnAVC: UIViewController {
             answerContentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 20),
             answerContentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
-            answerLabel.leadingAnchor.constraint(equalTo: answerContentView.leadingAnchor, constant: 16),
+            answerLabel.leadingAnchor.constraint(equalTo: answerContentView.leadingAnchor, constant: 20),
             answerLabel.topAnchor.constraint(equalTo: answerContentView.topAnchor, constant: 45),
-            answerLabel.trailingAnchor.constraint(equalTo: answerContentView.trailingAnchor, constant: -52),
-            answerLabel.bottomAnchor.constraint(equalTo: answerContentView.bottomAnchor, constant: -20),
 
         ])
         
