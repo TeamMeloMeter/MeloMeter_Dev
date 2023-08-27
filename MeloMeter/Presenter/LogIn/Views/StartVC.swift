@@ -111,19 +111,19 @@ final class StartVC: UIViewController {
         startBtn.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            background.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            background.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            background.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 44),
+            background.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            background.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            background.topAnchor.constraint(equalTo: self.view.topAnchor),
             background.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             
             titleLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            titleLabel.topAnchor.constraint(equalTo: background.topAnchor, constant: 88),
+            titleLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 88),
             
             exLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            exLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 430),
+            exLabel.bottomAnchor.constraint(equalTo: startBtn.topAnchor, constant: -24),
             
             startBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            startBtn.topAnchor.constraint(equalTo: exLabel.bottomAnchor, constant: 24),
+            startBtn.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -70),
             startBtn.widthAnchor.constraint(equalToConstant: 327),
             startBtn.heightAnchor.constraint(equalToConstant: 52)
         ])

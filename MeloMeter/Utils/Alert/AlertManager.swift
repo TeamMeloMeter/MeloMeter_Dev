@@ -41,9 +41,9 @@ class AlertManager {
     
     @discardableResult
     func showCustomAlert() -> Self {
-        alertViewController.modalPresentationStyle = .overFullScreen
+        alertViewController.modalPresentationStyle = .overCurrentContext
         alertViewController.modalTransitionStyle = .crossDissolve
-        
+
         alertViewController.alertTitle = alertTitle
         alertViewController.message = message
         alertViewController.addActionConfirm = addActionConfirm

@@ -131,8 +131,8 @@ final class CoupleCombineVC: UIViewController {
         view.backgroundColor = .white
         codeTF.delegate = self
         [progressImage, titleLabel, user1Label, myCodeLabel, shareBtn, lineView1,
-        user2Label, codeTF, lineView2,
-         questLabel, contactBtn].forEach { view.addSubview($0) }
+        user2Label, codeTF, lineView2
+        ].forEach { view.addSubview($0) }
         nextBtnEnabledF()
         lineColorChangedF()
     }
@@ -225,25 +225,6 @@ final class CoupleCombineVC: UIViewController {
         return view
     }()
     
-    private let questLabel: UILabel = {
-        let label = UILabel()
-        label.sizeToFit()
-        label.text = "연결에 문제가 있나요?"
-        label.textColor = .gray2
-        label.font = FontManager.shared.medium(ofSize: 14)
-        return label
-    }()
-    
-    //문의버튼
-    let contactBtn: UIButton = {
-        let button = UIButton()
-        button.setTitle("문의하기", for: .normal)
-        button.setTitleColor(.gray1, for: .normal)
-        button.backgroundColor = .white
-        button.titleLabel?.font = FontManager.shared.semiBold(ofSize: 14)
-        return button
-    }()
-    
     // 다음버튼
     lazy var nextInputView: UIView = {
         let view = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 52))
@@ -268,7 +249,6 @@ final class CoupleCombineVC: UIViewController {
         titleLabelConstraints()
         myCodeConstraints()
         user2Constraints()
-        contactConstraints()
         nextInputViewConstraints()
         lineView1.setGradientBackground(colors: [.primary1, .white])
     }
@@ -331,20 +311,6 @@ final class CoupleCombineVC: UIViewController {
             lineView2.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
             lineView2.topAnchor.constraint(equalTo: codeTF.bottomAnchor, constant: 10),
             lineView2.heightAnchor.constraint(equalToConstant: 1),
-        ])
-    }
-    private func contactConstraints() {
-        questLabel.translatesAutoresizingMaskIntoConstraints = false
-        contactBtn.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            questLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            questLabel.topAnchor.constraint(equalTo: lineView2.bottomAnchor, constant: 22),
-            
-            contactBtn.leadingAnchor.constraint(equalTo: questLabel.trailingAnchor, constant: 9),
-            contactBtn.topAnchor.constraint(equalTo: questLabel.topAnchor),
-            contactBtn.widthAnchor.constraint(equalToConstant: 49),
-            contactBtn.heightAnchor.constraint(equalToConstant: 17)
         ])
     }
     private func nextInputViewConstraints() {
