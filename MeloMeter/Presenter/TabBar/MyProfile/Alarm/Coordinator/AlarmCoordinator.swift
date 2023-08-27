@@ -11,7 +11,6 @@ final class AlarmCoordinator: Coordinator {
     
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
-    weak var parentCoordinator: Coordinator?
     
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -35,7 +34,7 @@ extension AlarmCoordinator {
     }
 
     func finish() {
-        self.navigationController.popViewController(animated: true)
+        self.delegate?.didFinish(childCoordinator: self)
     }
     
 }

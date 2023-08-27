@@ -12,7 +12,6 @@ final class HundredCoordinator: Coordinator {
     
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
-    weak var parentCoordinator: Coordinator?
     
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -66,6 +65,10 @@ extension HundredCoordinator {
         viewController.hidesBottomBarWhenPushed = true
         self.navigationController.setNavigationBarHidden(false, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func finish() {
+        self.delegate?.didFinish(childCoordinator: self)
     }
     
 }

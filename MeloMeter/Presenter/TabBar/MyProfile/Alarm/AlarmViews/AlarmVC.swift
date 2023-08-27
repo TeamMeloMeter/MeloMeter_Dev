@@ -90,9 +90,9 @@ class AlarmVC: UIViewController {
         alarmTableView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            alarmTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+            alarmTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             alarmTableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 28),
-            alarmTableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            alarmTableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             alarmTableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
     }
@@ -107,6 +107,12 @@ extension AlarmVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "AlarmTableViewCell", for: indexPath) as? AlarmTableViewCell else { return UITableViewCell() }
         
+        if indexPath.row == 0 {
+            cell.alarmView.layer.applyShadow(color: UIColor.primary1, alpha: 0.25, x: 0, y: 2, blur: 18)
+        }else {
+            cell.alarmView.layer.applyShadow(color: #colorLiteral(red: 0.5137254902, green: 0.5058823529, blue: 0.5058823529, alpha: 1), alpha: 0.1, x: 0, y: 2, blur: 20)
+        }
         return cell
     }
 }
+

@@ -39,7 +39,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        setMarker()
     }
     
     // MARK: Binding
@@ -86,9 +86,12 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         
         output.myStateMessage
             .asDriver(onErrorJustReturn: nil)
-            .drive(onNext: { text in
+            .drive(onNext: {[weak self] text in
+                guard let self = self else { return }
                 if let message = text {
                     self.myInfoWindowLabel.text = message
+                    self.myInfoWindowLabel.layoutIfNeeded()
+                    self.myInfoWindowView.layoutIfNeeded()
                     self.infoWindow1.open(with: self.myMarker)
                 }else {
                     self.myInfoWindowLabel.text = text
@@ -96,14 +99,17 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
                 }
             })
             .disposed(by: disposeBag)
-        
+
         output.otherStateMessage
             .asDriver(onErrorJustReturn: nil)
-            .drive(onNext: { text in
+            .drive(onNext: {[weak self] text in
+                guard let self = self else { return }
                 if let message = text {
                     self.otherInfoWindowLabel.text = message
+                    self.otherInfoWindowLabel.layoutIfNeeded()
+                    self.otherInfoWindowView.layoutIfNeeded()
                     self.infoWindow2.open(with: self.otherMarker)
-                }else {
+                } else {
                     self.otherInfoWindowLabel.text = text
                     self.infoWindow2.close()
                 }
@@ -129,7 +135,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             .disposed(by: disposeBag)
         
         output.currentLocation
-            .take(4)
+            .take(1)
             .asDriver(onErrorJustReturn: CLLocation(latitude: 37.541, longitude: 126.986))
             .drive(onNext: { [weak self] current in
                 self?.updateCamera(current ?? CLLocation(latitude: 0, longitude: 0))
@@ -145,13 +151,9 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         
         currentLocationButton.rx.tap
             .subscribe(onNext: {[weak self] _ in
-                output.currentLocation
-                    .take(1)
-                    .asDriver(onErrorJustReturn: CLLocation(latitude: 37.541, longitude: 126.986))
-                    .drive(onNext: { [weak self] current in
-                        self?.updateCamera(current ?? CLLocation(latitude: 0, longitude: 0))
-                    })
-                    .dispose()
+                guard let self = self else{ return }
+                let current = CLLocation(latitude: myMarker.position.lat, longitude: myMarker.position.lng)
+                self.updateCamera(current)
             })
             .disposed(by: disposeBag)
         
@@ -184,7 +186,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     // MARK: Configure
     func configure() {
         [naverMapView, alarmButton, dDayButton, currentLocationButton].forEach { view.addSubview($0) }
-        setMarker()
+        view.sendSubviewToBack(naverMapView)
     }
     
     // MARK: Event
@@ -254,30 +256,29 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     /// 마커 아이콘, 상태메세지 정보창 설정
     func setMarker() {
         myMarker.iconImage = NMFOverlayImage(image: myMarkerIcon)
-        let dataSource1 = CustomInfoViewDataSource(customView: myInfoWindowLabel)
+        let dataSource1 = CustomInfoViewDataSource(customView: myInfoWindowView)
+        infoWindow1.offsetY = 5
         infoWindow1.dataSource = dataSource1
-        
         otherMarker.iconImage = NMFOverlayImage(image: otherMarkerIcon)
-        let dataSource2 = CustomInfoViewDataSource(customView: otherInfoWindowLabel)
+        let dataSource2 = CustomInfoViewDataSource(customView: otherInfoWindowView)
+        infoWindow2.offsetY = 5
         infoWindow2.dataSource = dataSource2
     }
     
     lazy var naverMapView: NMFMapView = {
         let view = NMFMapView()
-        view.allowsZooming = true // 줌 가능
-        view.logoInteractionEnabled = false // 로고 터치 불가능
-        view.allowsScrolling = true // 스크롤 가능
+        view.allowsZooming = true
+        view.logoInteractionEnabled = false
+        view.allowsScrolling = true
         return view
     }()
     
-    //내 위치 마커
     var myMarker: NMFMarker = {
         let marker = NMFMarker()
         marker.width = CGFloat(NMF_MARKER_SIZE_AUTO)
         marker.height = CGFloat(NMF_MARKER_SIZE_AUTO)
         return marker
     }()
-    
     
     let myMarkerIcon: UIImage = {
         let image1 = UIImage(named: "myMarkerborder")
@@ -302,17 +303,23 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         return UIImage(named: "myMarkerDot")!
 
     }()
-    
+    lazy var myInfoWindowView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.borderColor = #colorLiteral(red: 0.9843137255, green: 0.3607843137, blue: 0.9960784314, alpha: 1)
+        view.layer.borderWidth = 1.0
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 20
+        view.addSubview(myInfoWindowLabel)
+        return view
+    }()
     let myInfoWindowLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 141, height: 43))
-        label.textColor = .black
+        let label = UILabel()
+        label.textColor = .gray1
         label.textAlignment = .center
         label.font = FontManager.shared.regular(ofSize: 16)
         label.backgroundColor = .white
-        label.layer.borderColor = #colorLiteral(red: 0.9843137255, green: 0.3607843137, blue: 0.9960784314, alpha: 1)
-        label.layer.borderWidth = 1.0
-        label.clipsToBounds = true
-        label.layer.cornerRadius = 20
+        label.sizeToFit()
         return label
     }()
     
@@ -348,16 +355,24 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     
     }()
     
+    lazy var otherInfoWindowView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.borderColor = #colorLiteral(red: 1, green: 0.8549019608, blue: 0.3490196078, alpha: 1)
+        view.layer.borderWidth = 1.0
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 20
+        view.addSubview(otherInfoWindowLabel)
+        return view
+    }()
+    
     let otherInfoWindowLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 141, height: 43))
-        label.textColor = .black
+        let label = UILabel()
+        label.textColor = .gray1
         label.textAlignment = .center
         label.font = FontManager.shared.regular(ofSize: 16)
         label.backgroundColor = .white
-        label.layer.borderColor = #colorLiteral(red: 1, green: 0.8549019608, blue: 0.3490196078, alpha: 1)
-        label.layer.borderWidth = 1.0
-        label.clipsToBounds = true
-        label.layer.cornerRadius = 20
+        label.sizeToFit()
         return label
     }()
     
@@ -367,6 +382,8 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         button.clipsToBounds = true
         button.layer.cornerRadius = 25
         button.layer.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1).cgColor
+        button.layer.applyShadow(color: #colorLiteral(red: 0.3764705882, green: 0.3764705882, blue: 0.3764705882, alpha: 1), alpha: 0.28, x: 3, y: 3, blur: 8)
+        button.layer.masksToBounds = false
         button.addSubview(dDayLabel)
         return button
     }()
@@ -381,11 +398,11 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     let alarmButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "alarmIcon"), for: .normal)
-        
         button.backgroundColor = .white
         button.clipsToBounds = true
         button.layer.cornerRadius = 24
-        button.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
+        button.layer.applyShadow(color: #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1), alpha: 0.25, x: 3, y: 3, blur: 8)
+        button.layer.masksToBounds = false
         return button
     }()
     
@@ -393,9 +410,9 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         let button = UIButton()
         button.setImage(UIImage(named: "myPositionIcon"), for: .normal)
         button.backgroundColor = .white
-        button.clipsToBounds = true
         button.layer.cornerRadius = 24
-        button.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
+        button.layer.applyShadow(color: #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1), alpha: 0.25, x: 3, y: 3, blur: 8)
+        button.layer.masksToBounds = false
         return button
     }()
     
@@ -405,6 +422,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     private func setAutoLayout() {
         mapViewConstraints()
         mapViewElementConstraints()
+        infoWindowConstraints()
     }
     
     private func mapViewConstraints() {
@@ -412,28 +430,51 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         NSLayoutConstraint.activate([
             naverMapView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             naverMapView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            naverMapView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 44),
+            naverMapView.topAnchor.constraint(equalTo: self.view.topAnchor),
             naverMapView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-    
+    private func infoWindowConstraints() {
+        myInfoWindowView.translatesAutoresizingMaskIntoConstraints = false
+        myInfoWindowLabel.translatesAutoresizingMaskIntoConstraints = false
+        otherInfoWindowView.translatesAutoresizingMaskIntoConstraints = false
+        otherInfoWindowLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            myInfoWindowView.leadingAnchor.constraint(equalTo: self.myInfoWindowLabel.leadingAnchor, constant: -20),
+            myInfoWindowView.trailingAnchor.constraint(equalTo: self.myInfoWindowLabel.trailingAnchor, constant: 20),
+            myInfoWindowView.heightAnchor.constraint(equalToConstant: 43),
+            
+            myInfoWindowLabel.centerXAnchor.constraint(equalTo: myInfoWindowView.centerXAnchor),
+            myInfoWindowLabel.centerYAnchor.constraint(equalTo: myInfoWindowView.centerYAnchor),
+            myInfoWindowLabel.heightAnchor.constraint(equalToConstant: 43),
+            
+            otherInfoWindowView.leadingAnchor.constraint(equalTo: self.otherInfoWindowLabel.leadingAnchor, constant: -20),
+            otherInfoWindowView.trailingAnchor.constraint(equalTo: self.otherInfoWindowLabel.trailingAnchor, constant: 20),
+            otherInfoWindowView.heightAnchor.constraint(equalToConstant: 43),
+            
+            otherInfoWindowLabel.centerXAnchor.constraint(equalTo: otherInfoWindowView.centerXAnchor),
+            otherInfoWindowLabel.centerYAnchor.constraint(equalTo: otherInfoWindowView.centerYAnchor),
+            otherInfoWindowLabel.heightAnchor.constraint(equalToConstant: 43)
+        
+        ])
+        
+    }
     private func mapViewElementConstraints() {
         dDayButton.translatesAutoresizingMaskIntoConstraints = false
         dDayLabel.translatesAutoresizingMaskIntoConstraints = false
         alarmButton.translatesAutoresizingMaskIntoConstraints = false
         currentLocationButton.translatesAutoresizingMaskIntoConstraints = false
-
         NSLayoutConstraint.activate([
             dDayButton.leadingAnchor.constraint(equalTo: dDayLabel.leadingAnchor, constant: -20),
             dDayButton.trailingAnchor.constraint(equalTo: dDayLabel.trailingAnchor, constant: 20),
-            dDayButton.topAnchor.constraint(equalTo: naverMapView.topAnchor, constant: 17),
+            dDayButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 60),
             dDayButton.heightAnchor.constraint(equalToConstant: 48),
             
             dDayLabel.centerXAnchor.constraint(equalTo: naverMapView.centerXAnchor),
             dDayLabel.centerYAnchor.constraint(equalTo: dDayButton.centerYAnchor),
             
             alarmButton.trailingAnchor.constraint(equalTo: naverMapView.trailingAnchor, constant: -16),
-            alarmButton.topAnchor.constraint(equalTo: naverMapView.topAnchor, constant: 17),
+            alarmButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 60),
             alarmButton.widthAnchor.constraint(equalToConstant: 48),
             alarmButton.heightAnchor.constraint(equalToConstant: 48),
 
@@ -441,6 +482,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             currentLocationButton.bottomAnchor.constraint(equalTo: naverMapView.bottomAnchor, constant: -16),
             currentLocationButton.widthAnchor.constraint(equalToConstant: 48),
             currentLocationButton.heightAnchor.constraint(equalToConstant: 48),
+                        
         ])
     }
     

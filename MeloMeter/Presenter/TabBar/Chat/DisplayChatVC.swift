@@ -232,7 +232,7 @@ extension DisplayChatVC: MessagesDisplayDelegate {
   // MARK: - Text Messages
 
   func textColor(for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> UIColor {
-    isFromCurrentSender(message: message) ? .darkText : .darkText
+      isFromCurrentSender(message: message) ? .gray1 : .gray1
   }
 
   func detectorAttributes(for detector: DetectorType, and _: MessageType, at _: IndexPath) -> [NSAttributedString.Key: Any] {

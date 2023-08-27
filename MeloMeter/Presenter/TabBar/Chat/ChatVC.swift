@@ -185,33 +185,35 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         showMessageTimestampOnSwipeLeft = true // default false
         
         messagesCollectionView.refreshControl = refreshControl
+        self.messageInputBar.inputTextView.placeholder = "메세지를 입력해주세요."
     }
     
     func configureMessageInputBar() {
-      // super.configureMessageInputBar()
-
-      messageInputBar = CameraInputBarAccessoryView()
-      messageInputBar.delegate = self
+        // super.configureMessageInputBar()
+        
+        messageInputBar = CameraInputBarAccessoryView()
+        messageInputBar.delegate = self
         messageInputBar.inputTextView.tintColor = .gray2
-      messageInputBar.sendButton.setTitleColor(.gray2, for: .normal)
-      messageInputBar.sendButton.setTitleColor(
-        UIColor.gray2.withAlphaComponent(0.3),
-        for: .highlighted)
-
-      messageInputBar.isTranslucent = true
-      messageInputBar.separatorLine.isHidden = true
-      messageInputBar.inputTextView.tintColor = .gray2
-      messageInputBar.inputTextView.backgroundColor = UIColor(red: 245 / 255, green: 245 / 255, blue: 245 / 255, alpha: 1)
-      messageInputBar.inputTextView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
-      messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 36)
-      messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
-      messageInputBar.inputTextView.layer.borderColor = UIColor(red: 200 / 255, green: 200 / 255, blue: 200 / 255, alpha: 1).cgColor
-      messageInputBar.inputTextView.layer.borderWidth = 1.0
-      messageInputBar.inputTextView.layer.cornerRadius = 16.0
-      messageInputBar.inputTextView.layer.masksToBounds = true
-      messageInputBar.inputTextView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-      configureInputBarItems()
-      inputBarType = .custom(messageInputBar)
+        messageInputBar.sendButton.setTitleColor(.gray2, for: .normal)
+        messageInputBar.sendButton.setTitleColor(
+            UIColor.gray2.withAlphaComponent(0.3),
+            for: .highlighted)
+        
+        messageInputBar.isTranslucent = true
+        messageInputBar.separatorLine.isHidden = true
+        messageInputBar.inputTextView.tintColor = .gray2
+        messageInputBar.inputTextView.backgroundColor = UIColor(red: 245 / 255, green: 245 / 255, blue: 245 / 255, alpha: 1)
+        messageInputBar.inputTextView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
+        messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 36)
+        messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
+        messageInputBar.inputTextView.layer.borderColor = UIColor(red: 200 / 255, green: 200 / 255, blue: 200 / 255, alpha: 1).cgColor
+        messageInputBar.inputTextView.layer.borderWidth = 1.0
+        messageInputBar.inputTextView.layer.cornerRadius = 16.0
+        messageInputBar.inputTextView.layer.masksToBounds = true
+        messageInputBar.inputTextView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        messageInputBar.inputTextView.placeholder = "메세지를 입력해주세요."
+        configureInputBarItems()
+        inputBarType = .custom(messageInputBar)
     }
     
     // MARK: - EVENT
@@ -226,6 +228,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     //인풋바 아이탬 설정
     private func configureInputBarItems() {
       messageInputBar.setRightStackViewWidthConstant(to: 36, animated: false)
+    
       messageInputBar.sendButton.imageView?.backgroundColor = UIColor(white: 0.85, alpha: 1)
       messageInputBar.sendButton.setSize(CGSize(width: 36, height: 36), animated: false)
       messageInputBar.sendButton.title = "전송"
@@ -395,7 +398,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     }
     
     func messageBottomLabelAttributedText(for message: MessageType, at _: IndexPath) -> NSAttributedString? {
-        let dateString = formatter.string(from: message.sentDate)
+        let dateString = message.sentDate.toString(type: .chatDate)
         return NSAttributedString(
             string: dateString,
             attributes: [
@@ -411,9 +414,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     // MARK: - Private properties
     private let formatter: DateFormatter = {
         let formatter = DateFormatter()
-//        formatter.dateStyle = .medium
-        //우리가 원하는 형태로 바꿔서
-        formatter.dateStyle = .long
         return formatter
     }()
 }

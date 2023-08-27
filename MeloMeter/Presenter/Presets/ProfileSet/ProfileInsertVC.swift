@@ -174,8 +174,6 @@ final class ProfileInsertVC: UIViewController {
     }
     
     // MARK: - UI
-    //서브 뷰 생성
-    // lazy : 지연
     lazy var insertSubViwes: UIView = {
         let view = UIView()
         view.backgroundColor = .white

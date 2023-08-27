@@ -169,6 +169,8 @@ class AddDdayModal: UIViewController, UITextFieldDelegate {
         tv.becomeFirstResponder()
         tv.textContainerInset = UIEdgeInsets(top: 16, left: 9, bottom: 15, right: 15)
         tv.tintColor = .gray1
+        tv.layer.cornerRadius = 8
+        tv.clipsToBounds = true
         return tv
     }()
     
@@ -207,6 +209,8 @@ class AddDdayModal: UIViewController, UITextFieldDelegate {
         tv.inputView = datePicker
         tv.inputAccessoryView = dateInputView
         tv.addLeftPadding()
+        tv.layer.cornerRadius = 8
+        tv.clipsToBounds = true
         return tv
     }()
     
@@ -295,7 +299,7 @@ class AddDdayModal: UIViewController, UITextFieldDelegate {
     private func xButtonConstraints() {
         xButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            xButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -6),
+            xButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             xButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 24),
             xButton.widthAnchor.constraint(equalToConstant: 48),
             xButton.heightAnchor.constraint(equalToConstant: 48)
@@ -307,7 +311,7 @@ class AddDdayModal: UIViewController, UITextFieldDelegate {
         topLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            topLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            topLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             topLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 32)
         ])
     }
@@ -316,7 +320,7 @@ class AddDdayModal: UIViewController, UITextFieldDelegate {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             titleLabel.topAnchor.constraint(equalTo: topLabel.bottomAnchor, constant: 31)
         ])
     }
@@ -335,7 +339,7 @@ class AddDdayModal: UIViewController, UITextFieldDelegate {
             textPlaceHolderLabel.leadingAnchor.constraint(equalTo: titleTextView.leadingAnchor, constant: 13),
             textPlaceHolderLabel.topAnchor.constraint(equalTo: titleTextView.topAnchor, constant: 16),
 
-            textCountLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -18),
+            textCountLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
             textCountLabel.bottomAnchor.constraint(equalTo: titleTextView.topAnchor, constant: -20)
         ])
     }
@@ -350,7 +354,7 @@ class AddDdayModal: UIViewController, UITextFieldDelegate {
             dateTextField.topAnchor.constraint(equalTo: titleTextView.bottomAnchor, constant: 61),
             dateTextField.widthAnchor.constraint(equalToConstant: 343),
             dateTextField.heightAnchor.constraint(equalToConstant: 50),
-            dateTitleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            dateTitleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             dateTitleLabel.topAnchor.constraint(equalTo: titleTextView.bottomAnchor, constant: 27),
 
         ])

@@ -11,7 +11,6 @@ final class DdayCoordinator: Coordinator {
     
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
-    weak var parentCoordinator: Coordinator?
     
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -41,4 +40,18 @@ extension DdayCoordinator {
         self.navigationController.present(viewController, animated: true, completion: nil)
     }
     
+    func finish() {
+        self.delegate?.didFinish(childCoordinator: self)
+    }
+    
+}
+
+extension DdayCoordinator: CoordinatorDelegate {
+    func didFinish(childCoordinator: Coordinator) {
+        self.childCoordinators = []
+        print("ddayCodi", childCoordinator)
+        if childCoordinator is DdayCoordinator {
+            self.navigationController.popViewController(animated: false)
+        }
+    }
 }

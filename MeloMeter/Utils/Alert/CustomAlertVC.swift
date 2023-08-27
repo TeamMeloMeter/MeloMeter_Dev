@@ -84,7 +84,7 @@ class CustomAlertVC: UIViewController {
         
         NSLayoutConstraint.activate([
             alertView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            alertView.topAnchor.constraint(equalTo: view.topAnchor, constant: 280),
+            alertView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             alertView.widthAnchor.constraint(equalToConstant: 280),
             alertView.heightAnchor.constraint(equalToConstant: 303),
             

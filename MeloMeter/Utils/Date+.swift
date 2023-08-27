@@ -17,6 +17,7 @@ extension Date {
         case hourAndMinute = "HH:mm"
         case monthAndDate = "M월 d일"
         case monthAndDate2 = "MM/dd"
+        case chatDate = "a hh:mm"
         case yearAndMonthAndDate = "YYYY년 M월 d일"
         case yearAndMonth = "YYYY년 M월"
     }
