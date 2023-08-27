@@ -53,6 +53,7 @@ class MyProfileVM {
                             })
                             .disposed(by: disposeBag)
                         guard let name = user.name, let phoneNumber = user.phoneNumber, let otherUid = user.otherUid else{ return }
+                        print("내 정보", user.name, user.otherUid)
                         self.myProfileUseCase.getDdayInfo(otherUid: otherUid)
                             .subscribe(onSuccess: { dDayInfo in
                                 output.coupleUserName.accept("\(name) & \(dDayInfo[0])")

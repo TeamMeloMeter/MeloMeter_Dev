@@ -99,7 +99,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
                 }
             })
             .disposed(by: disposeBag)
-        // MARK: 상태메세지에 맞게 infoWindowView 너비 고치기
+
         output.otherStateMessage
             .asDriver(onErrorJustReturn: nil)
             .drive(onNext: {[weak self] text in
@@ -186,6 +186,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     // MARK: Configure
     func configure() {
         [naverMapView, alarmButton, dDayButton, currentLocationButton].forEach { view.addSubview($0) }
+        view.sendSubviewToBack(naverMapView)
     }
     
     // MARK: Event
@@ -466,14 +467,14 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         NSLayoutConstraint.activate([
             dDayButton.leadingAnchor.constraint(equalTo: dDayLabel.leadingAnchor, constant: -20),
             dDayButton.trailingAnchor.constraint(equalTo: dDayLabel.trailingAnchor, constant: 20),
-            dDayButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            dDayButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 60),
             dDayButton.heightAnchor.constraint(equalToConstant: 48),
             
             dDayLabel.centerXAnchor.constraint(equalTo: naverMapView.centerXAnchor),
             dDayLabel.centerYAnchor.constraint(equalTo: dDayButton.centerYAnchor),
             
             alarmButton.trailingAnchor.constraint(equalTo: naverMapView.trailingAnchor, constant: -16),
-            alarmButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            alarmButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 60),
             alarmButton.widthAnchor.constraint(equalToConstant: 48),
             alarmButton.heightAnchor.constraint(equalToConstant: 48),
 

@@ -240,6 +240,7 @@ class WriteAnswerVC: UIViewController {
             answerTextView.topAnchor.constraint(equalTo: lineView.bottomAnchor, constant: 17),
             answerTextView.centerXAnchor.constraint(equalTo: answerView.centerXAnchor),
             answerTextView.widthAnchor.constraint(equalToConstant: 308),
+            answerTextView.bottomAnchor.constraint(equalTo: answerView.bottomAnchor),
 
             textPlaceHolderLabel.leadingAnchor.constraint(equalTo: answerTextView.leadingAnchor, constant: 13),
             textPlaceHolderLabel.topAnchor.constraint(equalTo: answerTextView.topAnchor, constant: 16),

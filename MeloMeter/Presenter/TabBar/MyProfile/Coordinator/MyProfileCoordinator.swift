@@ -50,20 +50,21 @@ extension MyProfileCoordinator {
     func showAlarmFlow() {
         let alarmCoordinator = AlarmCoordinator(self.navigationController)
         childCoordinators.append(alarmCoordinator)
-        alarmCoordinator.parentCoordinator = self
+        alarmCoordinator.delegate = self
         alarmCoordinator.start()
     }
     
     func showDdayFlow() {
         let dDayCoordinator = DdayCoordinator(self.navigationController)
         childCoordinators.append(dDayCoordinator)
-        dDayCoordinator.parentCoordinator = self
+        dDayCoordinator.delegate = self
         dDayCoordinator.start()
     }
     
     func showHundredQAFlow() {
         let hundredQACoordinator = HundredCoordinator(self.navigationController)
         childCoordinators.append(hundredQACoordinator)
+        hundredQACoordinator.delegate = self
         hundredQACoordinator.start()
     }
     
@@ -220,7 +221,6 @@ extension MyProfileCoordinator {
     }
     
     func finish() {
-        print("코디네이터피니시")
         self.delegate?.didFinish(childCoordinator: self)
     }
     
@@ -228,13 +228,14 @@ extension MyProfileCoordinator {
 
 extension MyProfileCoordinator: CoordinatorDelegate {
     func didFinish(childCoordinator: Coordinator) {
-        self.childCoordinators = []
+        
         print("myprofile", childCoordinator)
-
-        if childCoordinator is DdayCoordinator {
+        
+        if childCoordinator is DdayCoordinator || childCoordinator is AlarmCoordinator || childCoordinator is HundredCoordinator {
             self.navigationController.popViewController(animated: true)
             self.childCoordinators.removeLast()
         }else {
+            self.childCoordinators = []
             childCoordinator.navigationController.popToRootViewController(animated: true)
         }
     }

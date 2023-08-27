@@ -45,14 +45,14 @@ extension MainCoordinator {
     func showAlarmFlow() {
         let alarmCoordinator = AlarmCoordinator(self.navigationController)
         childCoordinators.append(alarmCoordinator)
-        alarmCoordinator.parentCoordinator = self
+        alarmCoordinator.delegate = self
         alarmCoordinator.start()
     }
     
     func showDdayFlow() {
         let dDayCoordinator = DdayCoordinator(self.navigationController)
         childCoordinators.append(dDayCoordinator)
-        dDayCoordinator.parentCoordinator = self
+        dDayCoordinator.delegate = self
         dDayCoordinator.start()
     }
     
@@ -67,9 +67,9 @@ extension MainCoordinator {
 extension MainCoordinator: CoordinatorDelegate {
     func didFinish(childCoordinator: Coordinator) {
         self.childCoordinators = []
-        print("tapbarFInish", childCoordinator)
-        if childCoordinator is DdayCoordinator {
-            self.navigationController.popViewController(animated: false)
+        print("main", childCoordinators)
+        if childCoordinator is DdayCoordinator || childCoordinator is AlarmCoordinator {
+            self.navigationController.popViewController(animated: true)
         }
     }
 }
