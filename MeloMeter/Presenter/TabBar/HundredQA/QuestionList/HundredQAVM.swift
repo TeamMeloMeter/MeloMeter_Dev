@@ -66,7 +66,7 @@ class HundredQAVM {
         input.backBtnTapEvent
             .subscribe(onNext: {[weak self] _ in
                 guard let self = self else{ return }
-                self.coordinator?.popViewController()
+                self.coordinator?.finish()
             })
             .disposed(by: disposeBag)
         

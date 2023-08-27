@@ -104,19 +104,23 @@ class ReadAnswerVC: UIViewController {
         self.myAnswerLabel.attributedText = attributedText
         if mine && other { //둘다 답변
             self.lockImageView.isHidden = true
+            self.unlockImageView.isHidden = false
             self.myAnswerCompleteLabel.isHidden = true
             self.answerBtn.isHidden = true
             self.otherAnswerLabel.textColor = .gray1
-            self.myUserView.heightAnchor.constraint(equalToConstant: 170).isActive = true
+            self.myUserView.heightAnchor.constraint(equalToConstant: 133).isActive = true
             return
         }
         
+        self.unlockImageView.isHidden = true
+        self.myUserView.heightAnchor.constraint(equalToConstant: 359).isActive = true
+
         if !mine && other { // 상대만 답변
             self.otherAnswerLabel.textColor = .gray1
-            
             self.lockImageView.image = UIImage(named: "lockImage")
             self.answerBtn.isHidden = false
             self.myAnswerCompleteLabel.isHidden = true
+            self.otherAnswerLabel.text = "\(self.otherUserLabel.text?.prefix(2) ?? "")님이 답변을 완료했습니다."
             return
         }
         
@@ -124,7 +128,6 @@ class ReadAnswerVC: UIViewController {
             self.lockImageView.image = UIImage(named: "unlockImage")
             self.answerBtn.isHidden = true
             self.myAnswerCompleteLabel.isHidden = false
-            
             self.otherAnswerLabel.textColor = .gray3
         }
        
@@ -133,7 +136,6 @@ class ReadAnswerVC: UIViewController {
             self.lockImageView.image = UIImage(named: "lockImage")
             self.myAnswerCompleteLabel.isHidden = true
             self.otherAnswerLabel.textColor = .gray3
-            
         }
     }
     
@@ -144,7 +146,8 @@ class ReadAnswerVC: UIViewController {
         setNavigationBar()
         [questionView,
          otherUserView,
-         myUserView].forEach { view.addSubview($0) }
+         myUserView,
+         unlockImageView].forEach { view.addSubview($0) }
     }
     
     // MARK: NavigationBar
@@ -231,27 +234,8 @@ class ReadAnswerVC: UIViewController {
         label.sizeToFit()
         label.textColor = .gray3
         label.font = FontManager.shared.medium(ofSize: 15)
-        if let attributedText = label.attributedText {
-            let context = CIContext(options: nil)
-            let filter = CIFilter(name: "CIGaussianBlur")
-            filter?.setValue(attributedText, forKey: kCIInputImageKey)
-            filter?.setValue(10, forKey: kCIInputRadiusKey)
-            
-            if let outputImage = filter?.outputImage,
-               let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
-                label.layer.contents = cgImage
-            }
-        }        //label.addSubview(visualEffectView)
         return label
     }()
-    
-//    lazy var visualEffectView: UIVisualEffectView = {
-//        let blurEffect = UIBlurEffect(style: .regular)
-//        let view = UIVisualEffectView(effect: blurEffect)
-//        view.contentView.addSubview(otherAnswerLabel)
-//        view.contentView.alpha = 0.1
-//        return view
-//    }()
     
     lazy var myUserView: UIView = {
         let view = UIView()
@@ -323,13 +307,25 @@ class ReadAnswerVC: UIViewController {
     
     let lockImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.isHidden = true
         imageView.image = UIImage(named: "lockImage")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
+    let unlockImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = .white
+        imageView.isHidden = true
+        imageView.image = UIImage(named: "completeImage")
+        imageView.contentMode = .scaleAspectFill
+        //imageView.layer.applyShadow(color: #colorLiteral(red: 0.7529411765, green: 0.7529411765, blue: 0.7529411765, alpha: 1), alpha: 0.25, x: 0, y: 2, blur: 8)
+        return imageView
+    }()
+    
     let answerBtn: UIButton = {
         let button = UIButton()
+        button.isHidden = true
         button.backgroundColor = .white
         button.setTitle("답변하기", for: .normal)
         button.setTitleColor(.primary1, for: .normal)
@@ -351,7 +347,6 @@ class ReadAnswerVC: UIViewController {
         lineView1.translatesAutoresizingMaskIntoConstraints = false
         otherScrollView.translatesAutoresizingMaskIntoConstraints = false
         otherUserLabel.translatesAutoresizingMaskIntoConstraints = false
-        //visualEffectView.translatesAutoresizingMaskIntoConstraints = false
 
         myUserView.translatesAutoresizingMaskIntoConstraints = false
         lineView2.translatesAutoresizingMaskIntoConstraints = false
@@ -359,7 +354,7 @@ class ReadAnswerVC: UIViewController {
         myScrollView.translatesAutoresizingMaskIntoConstraints = false
         lockImageView.translatesAutoresizingMaskIntoConstraints = false
         myAnswerLabel.translatesAutoresizingMaskIntoConstraints = false
-
+        unlockImageView.translatesAutoresizingMaskIntoConstraints = false
         myAnswerCompleteLabel.translatesAutoresizingMaskIntoConstraints = false
 
         answerBtn.translatesAutoresizingMaskIntoConstraints = false
@@ -400,15 +395,9 @@ class ReadAnswerVC: UIViewController {
             otherAnswerLabel.trailingAnchor.constraint(equalTo: otherScrollView.trailingAnchor, constant: -17),
             otherAnswerLabel.bottomAnchor.constraint(equalTo: otherScrollView.bottomAnchor, constant: -5),
 
-//            visualEffectView.leadingAnchor.constraint(equalTo: otherAnswerLabel.leadingAnchor),
-//            visualEffectView.trailingAnchor.constraint(equalTo: otherAnswerLabel.trailingAnchor),
-//            visualEffectView.topAnchor.constraint(equalTo: otherAnswerLabel.topAnchor),
-//            visualEffectView.bottomAnchor.constraint(equalTo: otherAnswerLabel.bottomAnchor),
-
             myUserView.topAnchor.constraint(equalTo: otherUserView.bottomAnchor, constant: 26),
             myUserView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
             myUserView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
-            myUserView.heightAnchor.constraint(equalToConstant: 359),
 
             myUserLabel.topAnchor.constraint(equalTo: myUserView.topAnchor, constant: 18),
             myUserLabel.leadingAnchor.constraint(equalTo: myUserView.leadingAnchor, constant: 17),
@@ -419,17 +408,17 @@ class ReadAnswerVC: UIViewController {
             lineView2.heightAnchor.constraint(equalToConstant: 1),
 
             myScrollView.topAnchor.constraint(equalTo: lineView2.bottomAnchor),
-            myScrollView.widthAnchor.constraint(equalTo: myUserView.widthAnchor),
+            myScrollView.widthAnchor.constraint(equalTo: lineView2.widthAnchor),
             myScrollView.centerXAnchor.constraint(equalTo: myUserView.centerXAnchor),
-            myScrollView.bottomAnchor.constraint(equalTo: myUserView.bottomAnchor),
+            myScrollView.bottomAnchor.constraint(equalTo: myUserView.bottomAnchor, constant: -5),
        
-            myAnswerLabel.leadingAnchor.constraint(equalTo: myScrollView.leadingAnchor, constant: 17),
+            myAnswerLabel.leadingAnchor.constraint(equalTo: myScrollView.leadingAnchor),
             myAnswerLabel.topAnchor.constraint(equalTo: myScrollView.topAnchor, constant: 17),
-            myAnswerLabel.trailingAnchor.constraint(equalTo: myScrollView.trailingAnchor, constant: -17),
-            
-            lockImageView.centerXAnchor.constraint(equalTo: myScrollView.centerXAnchor),
-            lockImageView.topAnchor.constraint(equalTo: myAnswerLabel.bottomAnchor, constant: 30),
-            lockImageView.widthAnchor.constraint(equalToConstant: 309),
+            myAnswerLabel.trailingAnchor.constraint(equalTo: myScrollView.trailingAnchor),
+
+            lockImageView.leadingAnchor.constraint(equalTo: myScrollView.leadingAnchor),
+            lockImageView.trailingAnchor.constraint(equalTo: myScrollView.trailingAnchor),
+            lockImageView.topAnchor.constraint(equalTo: myAnswerLabel.bottomAnchor, constant: 23),
             lockImageView.heightAnchor.constraint(equalToConstant: 131),
 
             answerBtn.centerXAnchor.constraint(equalTo: myUserView.centerXAnchor),
@@ -438,9 +427,16 @@ class ReadAnswerVC: UIViewController {
             answerBtn.topAnchor.constraint(equalTo: lockImageView.bottomAnchor, constant: 25),
 
             myAnswerCompleteLabel.topAnchor.constraint(equalTo: lockImageView.bottomAnchor, constant: 20),
+            myAnswerCompleteLabel.bottomAnchor.constraint(equalTo: myScrollView.bottomAnchor, constant: -20),
             myAnswerCompleteLabel.centerXAnchor.constraint(equalTo: lockImageView.centerXAnchor),
             myAnswerCompleteLabel.widthAnchor.constraint(equalToConstant: 308),
-            myAnswerCompleteLabel.heightAnchor.constraint(equalToConstant: 53)
+            myAnswerCompleteLabel.heightAnchor.constraint(equalToConstant: 53),
+            
+            unlockImageView.heightAnchor.constraint(equalToConstant: 131),
+            unlockImageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+            unlockImageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            unlockImageView.topAnchor.constraint(equalTo: myUserView.bottomAnchor, constant: 24),
+
         ])
     }
     
