@@ -377,10 +377,14 @@ extension DisplayChatVC: MessagesLayoutDelegate {
         return CGSize(width: 0, height: 0)
     }
     
-    func cellTopLabelHeight(for _: MessageType, at indexPath: IndexPath, in _: MessagesCollectionView) -> CGFloat {
-        //    if isTimeLabelVisible(at: indexPath) {
-        //      return 18
-        //    }
+    func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in _: MessagesCollectionView) -> CGFloat {
+        guard super.messageList.last != nil else{ return 0 }
+        
+        if indexPath.section - 1 > 0{
+            if !isNextDates(date1: messageList[indexPath.section - 1].sentDate, date2: message.sentDate){
+                return 22
+            }
+        }
         return 0
     }
     

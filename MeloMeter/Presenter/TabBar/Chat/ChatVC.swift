@@ -21,7 +21,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     let tapGesture = UITapGestureRecognizer()
     let viewDidLoadEvent = PublishSubject<Void>()
     var sendMessage = PublishRelay<MockMessage>()
-    
     lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
     lazy var messageList: [MockMessage] = []
     
@@ -373,10 +372,10 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     //여기에서 일이 넘어갈때만 출력하도록 ( 00,00,00 시에 가장 가까운 매세지에 한번 출력 )
     // 인덱스패스를 통해 바로 이전 메세지에서 데이트 차이가 -가 되는 경우에만 출력
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        guard let lastMessage = self.messageList.last else{ return nil }
+        guard self.messageList.last != nil else{ return nil }
         
         if indexPath.section - 1 > 0{
-            if Calendar.current.dateComponents([.day], from: messageList[indexPath.section - 1].sentDate, to: message.sentDate).day ?? 0 < 0 {
+            if !isNextDates(date1: messageList[indexPath.section - 1].sentDate, date2: message.sentDate){
                 return NSAttributedString(
                     string: message.sentDate.toString(type: .yearAndMonthAndDate),
                     attributes: [
@@ -385,8 +384,14 @@ class ChatVC: MessagesViewController, MessagesDataSource {
                     ])
             }
         }
-        
         return nil
+    }
+    func isNextDates(date1: Date, date2: Date) -> Bool {
+        let calendar = Calendar.current
+        let components1 = calendar.dateComponents([.year, .month, .day], from: date1)
+        let components2 = calendar.dateComponents([.year, .month, .day], from: date2)
+        
+        return components1.year == components2.year && components1.month == components2.month && components1.day == components2.day
     }
     
     func cellBottomLabelAttributedText(for _: MessageType, at _: IndexPath) -> NSAttributedString? {
@@ -422,7 +427,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     }
     
     func textCell(for message: MessageType, at indexPath: IndexPath, in messageView: MessagesCollectionView) -> UICollectionViewCell? {
-        print("셀셀")
         let cell = messageView.dequeueReusableCell(TextMessageCell.self, for: indexPath)
 //        cell.configure(with: message, at: indexPath, and: messagesCollectionView)
 //        cell.messageContainerView.translatesAutoresizingMaskIntoConstraints = false
