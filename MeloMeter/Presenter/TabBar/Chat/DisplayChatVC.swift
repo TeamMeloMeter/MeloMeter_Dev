@@ -91,6 +91,9 @@ final class DisplayChatVC: ChatVC {
         [noticeView, letterImageView, alarmLabel, downBtn,
          lineView, qLabel, questionLabel, goAnswerBtn, lastAnswerBtn].forEach { view.addSubview($0) }
         self.noticeUp()
+        if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
+            layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
+        }
     }
     // MARK: UI
     lazy var noticeView: UIView = {
@@ -285,10 +288,11 @@ extension DisplayChatVC: MessagesDisplayDelegate {
         let avatar = SampleData.shared.getAvatarFor(sender: message.sender)
         avatarView.set(avatar: avatar)
         if isFromCurrentSender(message: message) {
-            avatarView.removeFromSuperview()
+            avatarView.isHidden = true
         }else {
             avatarView.isHidden = isPreviousMessageSameSender(at: indexPath)
         }
+        
     }
     
     func configureMediaMessageImageView(
@@ -365,7 +369,6 @@ extension DisplayChatVC: MessagesDisplayDelegate {
 extension DisplayChatVC: MessagesLayoutDelegate {
     
     func textCellSizeCalculator(for _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> CellSizeCalculator? {
-//        CustomLayoutSizeCalculator()
         nil
     }
     
