@@ -183,7 +183,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         scrollsToLastItemOnKeyboardBeginsEditing = true // default false
         maintainPositionOnInputBarHeightChanged = true // default false
         showMessageTimestampOnSwipeLeft = true // default false
-        
+     
         messagesCollectionView.refreshControl = refreshControl
         self.messageInputBar.inputTextView.placeholder = "메세지를 입력해주세요."
     }
@@ -265,16 +265,30 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     // MARK: - Helpers
 
-
+    
     func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
-      guard indexPath.section - 1 >= 0 else { return false }
-      return messageList[indexPath.section].user == messageList[indexPath.section - 1].user
+        guard indexPath.section - 1 >= 0 else { return false }
+        return messageList[indexPath.section].user == messageList[indexPath.section - 1].user
+    }
+    
+    func isNextMessageSameSender(at indexPath: IndexPath) -> Bool {
+        guard indexPath.section + 1 < messageList.count else { return false }
+        return messageList[indexPath.section].user == messageList[indexPath.section + 1].user
+    }
+    
+    func isNextMessageSameDate(at indexPath: IndexPath) -> Bool {
+        guard indexPath.section + 1 < messageList.count else { return false }
+        return areSameDates(date1: messageList[indexPath.section].sentDate, date2: messageList[indexPath.section + 1].sentDate)
+    }
+    
+    func areSameDates(date1: Date, date2: Date) -> Bool {
+        let calendar = Calendar.current
+        let components1 = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date1)
+        let components2 = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date2)
+        
+        return components1.year == components2.year && components1.month == components2.month && components1.day == components2.day && components1.minute == components2.minute
     }
 
-    func isNextMessageSameSender(at indexPath: IndexPath) -> Bool {
-      guard indexPath.section + 1 < messageList.count else { return false }
-      return messageList[indexPath.section].user == messageList[indexPath.section + 1].user
-    }
     
     // MARK: - Binding
     func setBindings() {
@@ -407,9 +421,24 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             ])
     }
     
-    func textCell(for _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> UICollectionViewCell? {
-        nil //텍스트 셀 피그마에 맞추기
+    func textCell(for message: MessageType, at indexPath: IndexPath, in messageView: MessagesCollectionView) -> UICollectionViewCell? {
+        print("셀셀")
+        let cell = messageView.dequeueReusableCell(TextMessageCell.self, for: indexPath)
+//        cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+//        cell.messageContainerView.translatesAutoresizingMaskIntoConstraints = false
+//
+//        if isFromCurrentSender(message: message) {
+//            cell.messageContainerView.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -5).isActive = true
+//            //cell.messageContainerView.topAnchor.constraint(equalTo: cell.messageTimestampLabel.topAnchor).isActive = true
+//            cell.messageContainerView.widthAnchor.constraint(equalTo: cell.messageLabel.widthAnchor).isActive = true
+//            cell.messageContainerView.heightAnchor.constraint(equalTo: cell.messageLabel.heightAnchor).isActive = true
+//        }else {
+//
+//        }
+        
+        return nil
     }
+    
     
     // MARK: - Private properties
     private let formatter: DateFormatter = {
@@ -417,6 +446,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         return formatter
     }()
 }
+
 
 // MARK: MessageCellDelegate
 
