@@ -37,6 +37,7 @@ extension ChatCoordinator {
     
     func showHundredQAFlow() {
         let hundredQACoordinator = HundredCoordinator(self.navigationController)
+        hundredQACoordinator.delegate = self
         childCoordinators.append(hundredQACoordinator)
         hundredQACoordinator.start()
     }
@@ -52,5 +53,18 @@ extension ChatCoordinator {
     
     func finish() {
         self.delegate?.didFinish(childCoordinator: self)
+    }
+}
+
+extension ChatCoordinator: CoordinatorDelegate {
+    
+    func didFinish(childCoordinator: Coordinator) {
+        if childCoordinator is HundredCoordinator {
+            self.navigationController.popViewController(animated: true)
+            self.childCoordinators.removeLast()
+        }else {
+            self.childCoordinators = []
+            childCoordinator.navigationController.popToRootViewController(animated: true)
+        }
     }
 }

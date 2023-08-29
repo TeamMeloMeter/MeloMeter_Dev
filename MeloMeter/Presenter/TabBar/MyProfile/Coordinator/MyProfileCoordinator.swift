@@ -14,14 +14,15 @@ final class MyProfileCoordinator: Coordinator {
     
     init(_ navigationController: UINavigationController) {
         let appearance = UINavigationBarAppearance()
+       
         appearance.configureWithOpaqueBackground()
         appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: FontManager.shared.medium(ofSize: 18)]
-        navigationController.navigationBar.standardAppearance = appearance
         
+        navigationController.navigationBar.standardAppearance = appearance
         self.navigationController = navigationController
         self.childCoordinators = []
+        
     }
-    
     func start() {
         showMyProfileVC()
     }
@@ -228,9 +229,7 @@ extension MyProfileCoordinator {
 
 extension MyProfileCoordinator: CoordinatorDelegate {
     func didFinish(childCoordinator: Coordinator) {
-        
-        print("myprofile", childCoordinator)
-        
+            
         if childCoordinator is DdayCoordinator || childCoordinator is AlarmCoordinator || childCoordinator is HundredCoordinator {
             self.navigationController.popViewController(animated: true)
             self.childCoordinators.removeLast()

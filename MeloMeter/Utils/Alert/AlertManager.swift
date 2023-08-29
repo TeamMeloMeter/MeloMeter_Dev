@@ -168,12 +168,11 @@ class AlertManager {
             alertController.addAction(get)
             alertController.addAction(delete)
             alertController.addAction(cancel)
-            
+            print("루투퓨ㅜ벋갸", (UIApplication.shared.delegate as? SceneDelegate)?.window?.rootViewController?.navigationController?.topViewController)
             self.baseViewController.present(alertController, animated: true, completion: nil)
             return Disposables.create {
                 alertController.dismiss(animated: true, completion: nil)
             }
         }
     }
-    
 }

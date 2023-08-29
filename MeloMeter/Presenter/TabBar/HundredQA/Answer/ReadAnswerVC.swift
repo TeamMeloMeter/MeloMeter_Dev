@@ -319,7 +319,7 @@ class ReadAnswerVC: UIViewController {
         imageView.isHidden = true
         imageView.image = UIImage(named: "completeImage")
         imageView.contentMode = .scaleAspectFill
-        //imageView.layer.applyShadow(color: #colorLiteral(red: 0.7529411765, green: 0.7529411765, blue: 0.7529411765, alpha: 1), alpha: 0.25, x: 0, y: 2, blur: 8)
+        imageView.layer.applyShadow(color: #colorLiteral(red: 0.7529411765, green: 0.7529411765, blue: 0.7529411765, alpha: 1), alpha: 0.25, x: 0, y: 2, blur: 8)
         return imageView
     }()
     

@@ -10,12 +10,13 @@ import MapKit
 import MessageKit
 import UIKit
 import RxSwift
-
+import RxGesture
 // MARK: - BasicExampleViewController
 
 final class DisplayChatVC: ChatVC {
     
     private let viewModel: ChatVM?
+    private var noticeViewHeight: NSLayoutConstraint!
     var downBtnToggle = false
     override init(viewModel: ChatVM) {
         self.viewModel = viewModel
@@ -31,14 +32,15 @@ final class DisplayChatVC: ChatVC {
         super.configureMessageCollectionView()
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
-        
         configure()
         setBinding()
         setAutoLayout()
+        
     }
 
     // MARK: Bindings
     func setBinding() {
+        
         self.downBtn.rx.tap
             .subscribe(onNext: { _ in
                 if self.downBtnToggle {
@@ -63,38 +65,58 @@ final class DisplayChatVC: ChatVC {
         
         guard let output = self.viewModel?.noticeTransform(input: input, disposeBag: self.disposeBag) else{ return }
         
-        
+
     }
     
     // MARK: Event
     func noticeDown() {
-        self.noticeView.heightAnchor.constraint(equalToConstant: 170).isActive = true
+        self.noticeView.removeConstraint(self.noticeViewHeight)
+        self.noticeView.translatesAutoresizingMaskIntoConstraints = false
+        self.noticeViewHeight = self.noticeView.heightAnchor.constraint(equalToConstant: 170)
+        self.noticeViewHeight.isActive = true
+        
+        self.noticeView.alpha = 0.9
         self.qLabel.isHidden = false
         self.questionLabel.isHidden = false
         self.lastAnswerBtn.isHidden = false
         self.goAnswerBtn.isHidden = false
         self.lineView.isHidden = false
-        self.noticeView.backgroundColor = .white
-        self.noticeView.alpha = 0.9
+        
+        self.view.layoutIfNeeded()
     }
     func noticeUp() {
-        self.noticeView.heightAnchor.constraint(equalToConstant: 48).isActive = true
         self.qLabel.isHidden = true
         self.questionLabel.isHidden = true
         self.lastAnswerBtn.isHidden = true
         self.goAnswerBtn.isHidden = true
         self.lineView.isHidden = true
+        if self.noticeViewHeight != nil {
+            self.noticeView.removeConstraint(self.noticeViewHeight)
+        }
+        self.noticeView.translatesAutoresizingMaskIntoConstraints = false
+        self.noticeViewHeight = self.noticeView.heightAnchor.constraint(equalToConstant: 48)
+        self.noticeViewHeight.isActive = true
+        UIView.animate(withDuration: 0.3) {
+            self.noticeView.backgroundColor = .white
+            self.noticeView.alpha = 1
+            self.view.layoutIfNeeded()
+        }
     }
-    
+    // MARK: Event
+    func showCameraAlert() -> Single<CameraAlert> {
+        return AlertManager(viewController: self)
+            .showCameraAlert()
+    }
     // MARK: Configure
     func configure() {
-        [noticeView, letterImageView, alarmLabel, downBtn,
-         lineView, qLabel, questionLabel, goAnswerBtn, lastAnswerBtn].forEach { view.addSubview($0) }
+        [noticeView, letterImageView, alarmLabel, downBtn].forEach { view.addSubview($0) }
         self.noticeUp()
         if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
             layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
+            
         }
     }
+   
     // MARK: UI
     lazy var noticeView: UIView = {
         let view = UIView()
@@ -103,6 +125,7 @@ final class DisplayChatVC: ChatVC {
         view.alpha = 0.9
         view.layer.cornerRadius = 8
         view.layer.masksToBounds = false
+        [lineView, qLabel, questionLabel, goAnswerBtn, lastAnswerBtn].forEach { view.addSubview($0) }
         return view
     }()
     
@@ -185,7 +208,6 @@ final class DisplayChatVC: ChatVC {
             noticeView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
             noticeView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
             noticeView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 9),
-            noticeView.heightAnchor.constraint(equalToConstant: 170),
             
             letterImageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 30),
             letterImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 24),
