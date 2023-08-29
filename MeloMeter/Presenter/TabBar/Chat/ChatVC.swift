@@ -10,7 +10,7 @@ import MessageKit
 import UIKit
 import RxCocoa
 import RxSwift
-
+import RxGesture
 // MARK: - ChatViewController
 
 /// A base class for the example controllers
@@ -26,7 +26,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     // 백그라운드 이미지
     let backgroundImageView: UIImageView = {
-       let imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.image = UIImage(named: "chatBackground")
         return imageView
     }()
@@ -51,14 +51,14 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     }
     
     // MARK: - Public properties
-
+    
     private(set) lazy var refreshControl: UIRefreshControl = {
         let control = UIRefreshControl()
         control.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
         return control
     }()
     
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,31 +110,31 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     // MARK: - 처음 로딩시 채팅 리스트 가져오는곳
     func loadFirstMessages(_ chatMassageList: [MockMessage]) {
-//        //디스패치 큐로 로컬에서 가져옴
-//        DispatchQueue.global(qos: .userInitiated).async {
-//            //처음 몇개를 가져올건지
-//            let count = UserDefaults.standard.mockMessagesCount()
-//            SampleData.shared.getMessages(count: count) { messages in
-//                DispatchQueue.main.async {
-//                    self.messageList = messages
-//                    self.messagesCollectionView.reloadData()
-//                    self.messagesCollectionView.scrollToLastItem(animated: false)
-//                }
-//            }
-//        }
+        //        //디스패치 큐로 로컬에서 가져옴
+        //        DispatchQueue.global(qos: .userInitiated).async {
+        //            //처음 몇개를 가져올건지
+        //            let count = UserDefaults.standard.mockMessagesCount()
+        //            SampleData.shared.getMessages(count: count) { messages in
+        //                DispatchQueue.main.async {
+        //                    self.messageList = messages
+        //                    self.messagesCollectionView.reloadData()
+        //                    self.messagesCollectionView.scrollToLastItem(animated: false)
+        //                }
+        //            }
+        //        }
         
         //====================
-//         message의 기본타입
-//         init(text: String, user: MockUser, messageId: String, date: Date) {
-//           self.init(kind: .text(text), user: user, messageId: messageId, date: date)
-//         }
+        //         message의 기본타입
+        //         init(text: String, user: MockUser, messageId: String, date: Date) {
+        //           self.init(kind: .text(text), user: user, messageId: messageId, date: date)
+        //         }
         
-//          MockUser의 기본타입
-//        struct MockUser: SenderType, Equatable {
-//          var senderId: String
-//          var displayName: String
-//        }
-                
+        //          MockUser의 기본타입
+        //        struct MockUser: SenderType, Equatable {
+        //          var senderId: String
+        //          var displayName: String
+        //        }
+        
         //화면에 뿌리는 코드
         DispatchQueue.global(qos: .userInitiated).async {
             DispatchQueue.main.async {
@@ -182,9 +182,9 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         scrollsToLastItemOnKeyboardBeginsEditing = true // default false
         maintainPositionOnInputBarHeightChanged = true // default false
         showMessageTimestampOnSwipeLeft = true // default false
-     
+        
         messagesCollectionView.refreshControl = refreshControl
-        self.messageInputBar.inputTextView.placeholder = "메세지를 입력해주세요."
+        self.messageInputBar.inputTextView.placeholder = " 메세지를 입력해주세요."
     }
     
     func configureMessageInputBar() {
@@ -192,25 +192,25 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         
         messageInputBar = CameraInputBarAccessoryView()
         messageInputBar.delegate = self
+        messageInputBar.backgroundColor = .white
+        
         messageInputBar.inputTextView.tintColor = .gray2
         messageInputBar.sendButton.setTitleColor(.gray2, for: .normal)
         messageInputBar.sendButton.setTitleColor(
             UIColor.gray2.withAlphaComponent(0.3),
             for: .highlighted)
-        
-        messageInputBar.isTranslucent = true
+        messageInputBar.sendButton.titleLabel?.font = FontManager.shared.regular(ofSize: 14)
+        messageInputBar.isTranslucent = false
         messageInputBar.separatorLine.isHidden = true
         messageInputBar.inputTextView.tintColor = .gray2
-        messageInputBar.inputTextView.backgroundColor = UIColor(red: 245 / 255, green: 245 / 255, blue: 245 / 255, alpha: 1)
-        messageInputBar.inputTextView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
-        messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 36)
-        messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
-        messageInputBar.inputTextView.layer.borderColor = UIColor(red: 200 / 255, green: 200 / 255, blue: 200 / 255, alpha: 1).cgColor
-        messageInputBar.inputTextView.layer.borderWidth = 1.0
-        messageInputBar.inputTextView.layer.cornerRadius = 16.0
+        messageInputBar.inputTextView.backgroundColor = .gray5
+        messageInputBar.inputTextView.placeholderTextColor = .gray2
+        messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 11.5, left: 14, bottom: 11.5, right: 60)
+        messageInputBar.inputTextView.layer.cornerRadius = 8
         messageInputBar.inputTextView.layer.masksToBounds = true
         messageInputBar.inputTextView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-        messageInputBar.inputTextView.placeholder = "메세지를 입력해주세요."
+        
+        messageInputBar.inputTextView.placeholder = " 메세지를 입력해주세요."
         configureInputBarItems()
         inputBarType = .custom(messageInputBar)
     }
@@ -226,44 +226,35 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     //인풋바 아이탬 설정
     private func configureInputBarItems() {
-      messageInputBar.setRightStackViewWidthConstant(to: 36, animated: false)
-    
-      messageInputBar.sendButton.imageView?.backgroundColor = UIColor(white: 0.85, alpha: 1)
-      messageInputBar.sendButton.setSize(CGSize(width: 36, height: 36), animated: false)
-      messageInputBar.sendButton.title = "전송"
-      messageInputBar.sendButton.imageView?.layer.cornerRadius = 16
-      configureInputBarPadding()
-      // This just adds some more flare
-      messageInputBar.sendButton
-        .onEnabled { item in
-          UIView.animate(withDuration: 0.3, animations: {
-            item.imageView?.backgroundColor = .primary1
-          })
-        }.onDisabled { item in
-          UIView.animate(withDuration: 0.3, animations: {
-            item.imageView?.backgroundColor = UIColor(white: 0.85, alpha: 1)
-          })
-        }
+        messageInputBar.setRightStackViewWidthConstant(to: 56, animated: false)
+        
+        messageInputBar.sendButton.backgroundColor = .gray5
+        messageInputBar.sendButton.setSize(CGSize(width: 44, height: 44), animated: false)
+        messageInputBar.sendButton.title = "전송"
+        messageInputBar.sendButton.layer.cornerRadius = 8
+        messageInputBar.sendButton.layer.masksToBounds = true
+        
+        configureInputBarPadding()
+        
     }
     
     private func configureInputBarPadding() {
-      // Entire InputBar padding
-      messageInputBar.padding.bottom = 8
-
-      // or MiddleContentView padding
-      messageInputBar.middleContentViewPadding.right = -38
-
-      // or InputTextView padding
-      messageInputBar.inputTextView.textContainerInset.bottom = 8
+        // Entire InputBar padding
+        messageInputBar.padding.bottom = 8
+        // or MiddleContentView padding
+        messageInputBar.middleContentViewPadding.right = -52
+        
+        // or InputTextView padding
+        messageInputBar.inputTextView.textContainerInset.bottom = 8
     }
-    
+  
     @objc func viewDidLoadEventMethod(){
         
     }
     
     
     // MARK: - Helpers
-
+    
     
     func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
         guard indexPath.section - 1 >= 0 else { return false }
@@ -287,7 +278,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         
         return components1.year == components2.year && components1.month == components2.month && components1.day == components2.day && components1.minute == components2.minute
     }
-
+    
     
     // MARK: - Binding
     func setBindings() {
@@ -405,15 +396,15 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     func messageTopLabelAttributedText(for message: MessageType, at _: IndexPath) -> NSAttributedString? {
         let name = message.sender.displayName
-//       let tf = message.sender.senderId
-//       if tf{}
+        //       let tf = message.sender.senderId
+        //       if tf{}
         let true_name = "[내이름, 상대방이름]"
         return NSAttributedString(
             string: name,
             attributes: [
                 NSAttributedString.Key.font: FontManager.shared.medium(ofSize: 12),
                 NSAttributedString.Key.foregroundColor: UIColor.gray2
-                        ])
+            ])
     }
     
     func messageBottomLabelAttributedText(for message: MessageType, at _: IndexPath) -> NSAttributedString? {
@@ -428,17 +419,17 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     func textCell(for message: MessageType, at indexPath: IndexPath, in messageView: MessagesCollectionView) -> UICollectionViewCell? {
         let cell = messageView.dequeueReusableCell(TextMessageCell.self, for: indexPath)
-//        cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-//        cell.messageContainerView.translatesAutoresizingMaskIntoConstraints = false
-//
-//        if isFromCurrentSender(message: message) {
-//            cell.messageContainerView.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -5).isActive = true
-//            //cell.messageContainerView.topAnchor.constraint(equalTo: cell.messageTimestampLabel.topAnchor).isActive = true
-//            cell.messageContainerView.widthAnchor.constraint(equalTo: cell.messageLabel.widthAnchor).isActive = true
-//            cell.messageContainerView.heightAnchor.constraint(equalTo: cell.messageLabel.heightAnchor).isActive = true
-//        }else {
-//
-//        }
+        //        cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+        //        cell.messageContainerView.translatesAutoresizingMaskIntoConstraints = false
+        //
+        //        if isFromCurrentSender(message: message) {
+        //            cell.messageContainerView.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -5).isActive = true
+        //            //cell.messageContainerView.topAnchor.constraint(equalTo: cell.messageTimestampLabel.topAnchor).isActive = true
+        //            cell.messageContainerView.widthAnchor.constraint(equalTo: cell.messageLabel.widthAnchor).isActive = true
+        //            cell.messageContainerView.heightAnchor.constraint(equalTo: cell.messageLabel.heightAnchor).isActive = true
+        //        }else {
+        //
+        //        }
         
         return nil
     }
@@ -589,16 +580,15 @@ extension ChatVC: InputBarAccessoryViewDelegate {
         inputBar.invalidatePlugins()
         // Send button activity animation
         inputBar.sendButton.startAnimating()
-        inputBar.inputTextView.placeholder = "전송중..."
+        inputBar.inputTextView.placeholder = "이것좀 없애자"
         // Resign first responder for iPad split view
         inputBar.inputTextView.resignFirstResponder()
-        
         DispatchQueue.global(qos: .default).async {
             // fake send request task
             sleep(1)
             DispatchQueue.main.async { [weak self] in
                 inputBar.sendButton.stopAnimating()
-                inputBar.inputTextView.placeholder = "메세지를 입력해주세요."
+                inputBar.inputTextView.placeholder = " 메세지를 입력해주세요."
                 //챗팅창에 보이게 하는 메서드
                 self?.insertMessages(components)
                 //컬렉션 뷰 마지막으로 스크롤 이동
@@ -615,11 +605,11 @@ extension ChatVC: InputBarAccessoryViewDelegate {
                 
                 let message = MockMessage(text: str, user: self.mockUser, messageId: UUID().uuidString, date: Date.fromStringOrNow(Date().toString(type: .timeStamp), .timeStamp))
                 sendMessage.accept(message)
-            
-            //이미지 타입
+                
+                //이미지 타입
             } else if let img = component as? UIImage {
                 let message = MockMessage(image: img, user: self.mockUser, messageId: UUID().uuidString, date: Date.fromStringOrNow(Date().toString(type: .timeStamp), .timeStamp))
-//                insertMessage(message)
+                //                insertMessage(message)
             }
         }
     }
@@ -628,17 +618,17 @@ extension ChatVC: InputBarAccessoryViewDelegate {
 // MARK: CameraInputBarAccessoryViewDelegate
 
 extension ChatVC: CameraInputBarAccessoryViewDelegate {
-  func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith attachments: [AttachmentManager.Attachment]) {
-    for item in attachments {
-      if case .image(let image) = item {
-        self.sendImageMessage(photo: image)
-      }
+    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith attachments: [AttachmentManager.Attachment]) {
+        for item in attachments {
+            if case .image(let image) = item {
+                self.sendImageMessage(photo: image)
+            }
+        }
+        inputBar.invalidatePlugins()
     }
-    inputBar.invalidatePlugins()
-  }
-
-  func sendImageMessage(photo: UIImage) {
-    let photoMessage = MockMessage(image: photo, user: currentSender as! MockUser, messageId: UUID().uuidString, date: Date())
-    insertMessage(photoMessage)
-  }
+    
+    func sendImageMessage(photo: UIImage) {
+        let photoMessage = MockMessage(image: photo, user: currentSender as! MockUser, messageId: UUID().uuidString, date: Date())
+        insertMessage(photoMessage)
+    }
 }
