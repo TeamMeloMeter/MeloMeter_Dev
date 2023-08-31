@@ -20,7 +20,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     let disposeBag = DisposeBag()
     let tapGesture = UITapGestureRecognizer()
     let viewDidLoadEvent = PublishSubject<Void>()
-    var sendMessage = PublishRelay<MockMessage>()
+    var sendTextMessage = PublishRelay<MockMessage>()
+    var sendImageMessage = PublishRelay<MockMessage>()
     lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
     lazy var messageList: [MockMessage] = []
     
@@ -138,6 +139,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         //화면에 뿌리는 코드
         DispatchQueue.global(qos: .userInitiated).async {
             DispatchQueue.main.async {
+                print(chatMassageList, "^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
                 self.messageList = chatMassageList // DB에서 받아온 메세지 배열 삽입
                 self.messagesCollectionView.reloadData()
                 self.messagesCollectionView.scrollToLastItem(animated: false)
@@ -295,7 +297,9 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             backBtnTapEvent: self.backBarButton.rx.tap
                 .map({ _ in })
                 .asObservable(),
-            mySendMessage: self.sendMessage
+            mySendTextMessage: self.sendTextMessage
+                .asObservable(),
+            mySendImageMessage: self.sendImageMessage
                 .asObservable()
         )
         
@@ -604,12 +608,7 @@ extension ChatVC: InputBarAccessoryViewDelegate {
             if let str = component as? String {
                 
                 let message = MockMessage(text: str, user: self.mockUser, messageId: UUID().uuidString, date: Date.fromStringOrNow(Date().toString(type: .timeStamp), .timeStamp))
-                sendMessage.accept(message)
-                
-                //이미지 타입
-            } else if let img = component as? UIImage {
-                let message = MockMessage(image: img, user: self.mockUser, messageId: UUID().uuidString, date: Date.fromStringOrNow(Date().toString(type: .timeStamp), .timeStamp))
-                //                insertMessage(message)
+                sendTextMessage.accept(message)
             }
         }
     }
@@ -621,14 +620,16 @@ extension ChatVC: CameraInputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith attachments: [AttachmentManager.Attachment]) {
         for item in attachments {
             if case .image(let image) = item {
-                self.sendImageMessage(photo: image)
+                self.sendImageMessageEvent(photo: image)
             }
         }
         inputBar.invalidatePlugins()
     }
     
-    func sendImageMessage(photo: UIImage) {
+    //이미지타입 전송
+    func sendImageMessageEvent(photo: UIImage) {
+        
         let photoMessage = MockMessage(image: photo, user: currentSender as! MockUser, messageId: UUID().uuidString, date: Date())
-        insertMessage(photoMessage)
+        sendImageMessage.accept(photoMessage)
     }
 }

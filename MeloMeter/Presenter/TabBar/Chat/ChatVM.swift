@@ -19,7 +19,8 @@ class ChatVM {
         let viewDidLoadEvent: Observable<Void>
         let viewWillApearEvent: Observable<Void>
         let backBtnTapEvent: Observable<Void>
-        let mySendMessage: Observable<MockMessage>
+        let mySendTextMessage: Observable<MockMessage>
+        let mySendImageMessage: Observable<MockMessage>
     }
     
     struct Output {
@@ -58,17 +59,23 @@ class ChatVM {
             })
             .disposed(by: disposeBag)
         
-//        input.viewWillApearEvent
-//            .subscribe(onNext: { [weak self] _ in
-//                guard let self = self else{ return }
-//
-//            })
-//            .disposed(by: disposeBag)
         
-        input.mySendMessage
+        input.mySendTextMessage
             .subscribe(onNext: {[weak self] myMessage in
                 guard let self = self else{ return }
-                self.chatUseCase.sendMessageService(mockMessage: myMessage)
+                self.chatUseCase.sendMessageService(mockMessage: myMessage, chatType: .text)
+                    .subscribe(onSuccess: {
+                        output.senddSuccess.onNext(true)
+                    },onFailure: { error in
+                        output.senddSuccess.onNext(false)
+                    }).disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
+        
+        input.mySendImageMessage
+            .subscribe(onNext: {[weak self] myMessage in
+                guard let self = self else{ return }
+                self.chatUseCase.sendMessageService(mockMessage: myMessage, chatType: .image)
                     .subscribe(onSuccess: {
                         output.senddSuccess.onNext(true)
                     },onFailure: { error in
@@ -79,6 +86,7 @@ class ChatVM {
         
         self.chatUseCase.recieveChatMessageService
             .subscribe(onNext: {chatMessageList in
+                print(chatMessageList, "*****************")
                 output.getMessage.onNext(chatMessageList ?? [])
             })
             .disposed(by: disposeBag)

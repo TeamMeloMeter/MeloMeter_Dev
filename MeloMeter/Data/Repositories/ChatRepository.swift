@@ -31,11 +31,32 @@ class ChatRepository: ChatRepositoryP{
         let values = dto.asDictionary ?? [:]
         let userName = UserDefaults.standard.string(forKey: "userName") ?? "상대방"
         //푸시노티
-        PushNotificationService.shared.sendPushNotification(title: userName, body: values["text"] as? String ?? "메세지가 도착했어요!")
+        PushNotificationService.shared.sendPushNotification(title: userName, body: values["contents"] as? String ?? "메세지가 도착했어요!")
         
         return self.firebaseService.updateDocument(collection: .Chat, document: coupleID, values: ["chatField" : FieldValue.arrayUnion([values]) ])
-        
     }
+    
+    // 이미지 메세지 처리
+    func addImageMessage(mockMessage: MockMessage, coupleID: String) -> Single<Void> {
+        switch mockMessage.kind {
+        case .photo(let photo):
+            guard let image = photo.image else{ return Single.error(FireStoreError.unknown)}
+            let uuidData = UUID().uuidString
+            return self.firebaseService.uploadImage(filePath: "chat/"+coupleID+"/"+uuidData, image: image)
+                .flatMap{ url in
+                    let dto = mockMessage.toDTO(url: url)
+                    let values = dto.asDictionary ?? [:]
+                    let userName = UserDefaults.standard.string(forKey: "userName") ?? "상대방"
+                    //푸시노티
+                    PushNotificationService.shared.sendPushNotification(title: userName, body: values["contents"] as? String ?? "메세지가 도착했어요!")
+                    
+                    return self.firebaseService.updateDocument(collection: .Chat, document: coupleID, values: ["chatField" : FieldValue.arrayUnion([values]) ])
+                }
+        default:
+            return Single.error(FireStoreError.unknown)
+        }
+    }
+
     
     //실시간으로 변경되는 문서 가져오기
     func getRealTimeChat(coupleID: String) {
@@ -94,19 +115,24 @@ class ChatRepository: ChatRepositoryP{
             .asObservable()
     }
     
+    func downloadImage(url: String) -> Single<UIImage?> {
+        return self.firebaseService.downloadImage(urlString: url)
+    }
+    
     //딕셔너리로 가져온 데이터 [DTO] 로 변환
     func convertToChatDTOArray(from dictionaries: [[String: Any]]) -> [ChatDTO] {
         var chatDTOArray: [ChatDTO] = []
         
         for dictionary in dictionaries {
-            if let text = dictionary["text"] as? String,
+            if let contents = dictionary["contents"] as? String,
+               let chatType = dictionary["chatType"] as? String,
                let userId = dictionary["userId"] as? String,
                let messageId = dictionary["messageId"] as? String,
                let date = dictionary["date"] as? [String:Int]
             {
                 let timestamp = Timestamp(seconds: Int64(date["seconds"] ?? 0), nanoseconds: Int32(date["nanoseconds"] ?? 0))
                 
-                let chatDTO = ChatDTO(text: text, userId: userId, messageId: messageId, date: timestamp)
+                let chatDTO = ChatDTO(chatType: chatType, contents: contents, userId: userId, messageId: messageId, date: timestamp)
                 chatDTOArray.append(chatDTO)
             }
         }
