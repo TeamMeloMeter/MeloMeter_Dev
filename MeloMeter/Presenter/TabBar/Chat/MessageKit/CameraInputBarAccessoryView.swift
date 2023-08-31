@@ -45,8 +45,6 @@ class CameraInputBarAccessoryView: InputBarAccessoryView {
         camera.tintColor = .white
         camera.onTouchUpInside { [weak self] _ in
             self?.showImagePickerControllerActionSheet()
-           
-                
         }
         setLeftStackViewWidthConstant(to: 52, animated: true)
         setStackViewItems([camera], forStack: .left, animated: false)
@@ -124,7 +122,7 @@ extension CameraInputBarAccessoryView: UIImagePickerControllerDelegate, UINaviga
         }
         else if let originImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             inputPlugins.forEach { _ = $0.handleInput(of: originImage) }
-            // self.sendImageMessage(photo: originImage)
+            //self.sendImageMessage(photo: originImage)
         }
         getTopViewController()?.dismiss(animated: true, completion: nil)
         inputAccessoryView?.isHidden = false
@@ -155,25 +153,30 @@ extension CameraInputBarAccessoryView: AttachmentManagerDelegate {
     // MARK: - AttachmentManagerDelegate
     
     func attachmentManager(_: AttachmentManager, shouldBecomeVisible: Bool) {
+        print("55555555")
         setAttachmentManager(active: shouldBecomeVisible)
     }
     
     func attachmentManager(_ manager: AttachmentManager, didReloadTo _: [AttachmentManager.Attachment]) {
+        print("444444444")
         sendButton.isEnabled = manager.attachments.count > 0
     }
     
     func attachmentManager(_ manager: AttachmentManager, didInsert _: AttachmentManager.Attachment, at _: Int) {
+        print("33333333332")
         sendButton.isEnabled = manager.attachments.count > 0
     }
     
     func attachmentManager(_ manager: AttachmentManager, didRemove _: AttachmentManager.Attachment, at _: Int) {
+        print("22222222222222")
         sendButton.isEnabled = manager.attachments.count > 0
     }
-    
-    func attachmentManager(_: AttachmentManager, didSelectAddAttachmentAt _: Int) {
+
+    func attachmentManager(_ manager: AttachmentManager, didSelectAddAttachmentAt index: Int) {
+        print("디드셀렉트에드어텟ㅅ치", manager, index)
         showImagePickerControllerActionSheet()
     }
-    
+
     // MARK: - AttachmentManagerDelegate Helper
     
     func setAttachmentManager(active: Bool) {
