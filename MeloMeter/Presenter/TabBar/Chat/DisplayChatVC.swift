@@ -108,7 +108,7 @@ final class DisplayChatVC: ChatVC {
             
             layout.setMessageOutgoingMessagePadding(UIEdgeInsets(top: 0, left: self.view.frame.width / 3, bottom: 0, right: 10))
             layout.setMessageIncomingMessagePadding(UIEdgeInsets(top: 0, left: 10, bottom: 0, right: self.view.frame.width / 3))
-       
+            
             layout.textMessageSizeCalculator.incomingAvatarPosition.vertical = .messageCenter
             layout.textMessageSizeCalculator.incomingMessageBottomLabelAlignment.textInsets.left = 6
             layout.textMessageSizeCalculator.outgoingMessageBottomLabelAlignment.textInsets.right = 6
@@ -129,6 +129,7 @@ final class DisplayChatVC: ChatVC {
     }
     // MARK: TextCustomCell
     override func textCell(for message: MessageType, at indexPath: IndexPath, in messageView: MessagesCollectionView) -> UICollectionViewCell? {
+        print("textCell")
         let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: "CustomMessageCell", for: indexPath) as! CustomMessageCell
         cell.apply(messagesCollectionView.messagesCollectionViewFlowLayout.layoutAttributesForItem(at: indexPath)!)
         cell.configure(with: message, at: indexPath, and: messagesCollectionView)
@@ -440,9 +441,10 @@ extension DisplayChatVC: MessagesLayoutDelegate {
         return 0
     }
     
-//    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-//        return 10
-//    }
+    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        print("하이트 진로")
+        return 0
+    }
     
     func messageBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment? {
         return nil
