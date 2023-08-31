@@ -335,8 +335,12 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         messagesCollectionView.performBatchUpdates({
             messagesCollectionView.insertSections([messageList.count - 1])
             if messageList.count >= 2 {
-                messagesCollectionView.reloadSections([messageList.count - 2])
-                //messagesCollectionView.reloadData()
+                //messagesCollectionView.reloadSections([messageList.count - 2])
+                print("message", messageList.count)
+                self.messagesCollectionView.reloadData()
+//                messagesCollectionView.messagesDataSource.message messagesCollectionView.messagesDataSource?.textCell(for: message, at: IndexPath(row: 0, section: messageList.count-1), in: self.messagesCollectionView)
+//                messagesCollectionView.reloadDataAndKeepOffset()
+                //messagesCollectionView.reloadItems(at: [IndexPath(row: 0, section: messageList.count - 2)])
             }
         }, completion: { [weak self] _ in
             if self?.isLastSectionVisible() == true {
@@ -344,6 +348,25 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             }
         })
     }
+    
+//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        if let dataSource = collectionView.messagesDataSource? {
+//            let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+//                
+//            
+//        }
+//        if let message = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView){
+//            switch message.kind {
+//            case .text, .attributedText, .emoji:
+//                if let cell = self.messagesDataSource.textCell(for: message, at: indexPath, in: messagesCollectionView) {
+//                    return cell
+//                }
+//            default:
+//                break
+//            }
+//        }
+//    
+//    }
     
     func isLastSectionVisible() -> Bool {
         guard !messageList.isEmpty else { return false }
@@ -435,12 +458,7 @@ class CustomMessageCell: TextMessageCell {
             messageBottomLabel.frame.origin.y = contentView.frame.maxY - 12
         }
         messageBottomLabel.frame.size.height = 10
-        messageBottomLabel.backgroundColor = .yellow
-//        if let _ = messageBottomLabel.text {
-//            messageBottomLabel.isHidden = true
-//        }else {
-//            messageBottomLabel.isHidden = false
-//        }
+
     }
     
     open override func prepareForReuse() {
