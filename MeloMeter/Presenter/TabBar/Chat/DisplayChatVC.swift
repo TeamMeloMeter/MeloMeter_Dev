@@ -27,17 +27,8 @@ final class DisplayChatVC: ChatVC {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func configureMessageCollectionView() {
-        super.configureMessageCollectionView()
-        messagesCollectionView.messagesLayoutDelegate = self
-        messagesCollectionView.messagesDisplayDelegate = self
-        configure()
-        setBinding()
-        setAutoLayout()
-        
-    }
 
+    
     // MARK: Bindings
     func setBinding() {
         
@@ -102,21 +93,59 @@ final class DisplayChatVC: ChatVC {
             self.view.layoutIfNeeded()
         }
     }
-    // MARK: Event
     func showCameraAlert() -> Single<CameraAlert> {
         return AlertManager(viewController: self)
             .showCameraAlert()
     }
+    
     // MARK: Configure
     func configure() {
         [noticeView, letterImageView, alarmLabel, downBtn].forEach { view.addSubview($0) }
         self.noticeUp()
         if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
             layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
+            layout.textMessageSizeCalculator.incomingAvatarSize = CGSize(width: 35, height: 35)
+            
+            layout.setMessageOutgoingMessagePadding(UIEdgeInsets(top: 0, left: self.view.frame.width / 3, bottom: 0, right: 10))
+            layout.setMessageIncomingMessagePadding(UIEdgeInsets(top: 0, left: 10, bottom: 0, right: self.view.frame.width / 3))
+       
+            layout.textMessageSizeCalculator.incomingAvatarPosition.vertical = .messageCenter
+            layout.textMessageSizeCalculator.incomingMessageBottomLabelAlignment.textInsets.left = 6
+            layout.textMessageSizeCalculator.outgoingMessageBottomLabelAlignment.textInsets.right = 6
             
         }
     }
-   
+    override func configureMessageCollectionView() {
+        super.configureMessageCollectionView()
+        messagesCollectionView.messagesDataSource = self
+        messagesCollectionView.messagesLayoutDelegate = self
+        messagesCollectionView.messagesDisplayDelegate = self
+        messagesCollectionView.register(CustomMessageCell.self, forCellWithReuseIdentifier: "CustomMessageCell")
+        messagesCollectionView.scrollToLastItem()
+        configure()
+        setBinding()
+        setAutoLayout()
+        
+    }
+    // MARK: TextCustomCell
+    override func textCell(for message: MessageType, at indexPath: IndexPath, in messageView: MessagesCollectionView) -> UICollectionViewCell? {
+        let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: "CustomMessageCell", for: indexPath) as! CustomMessageCell
+        cell.apply(messagesCollectionView.messagesCollectionViewFlowLayout.layoutAttributesForItem(at: indexPath)!)
+        cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+        if !isNextMessageSameSender(at: indexPath) {
+            cell.messageBottomLabel.isHidden = false
+        }else if isNextMessageSameSender(at: indexPath) {
+            if !isNextMessageSameDate(at: indexPath) {
+                cell.messageBottomLabel.isHidden = false
+            }else {
+                cell.messageBottomLabel.isHidden = true
+            }
+        }else {
+            cell.messageBottomLabel.isHidden = false
+        }
+        return cell
+    }
+    
     // MARK: UI
     lazy var noticeView: UIView = {
         let view = UIView()
@@ -253,7 +282,6 @@ final class DisplayChatVC: ChatVC {
 
 extension DisplayChatVC: MessagesDisplayDelegate {
     // MARK: - Text Messages
-    
     func textColor(for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> UIColor {
         isFromCurrentSender(message: message) ? .gray1 : .gray1
     }
@@ -268,7 +296,7 @@ extension DisplayChatVC: MessagesDisplayDelegate {
     func enabledDetectors(for _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> [DetectorType] {
         [.url, .address, .phoneNumber, .date, .transitInformation, .mention, .hashtag]
     }
-    
+
     // MARK: - All Messages
     
     func backgroundColor(for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> UIColor {
@@ -276,9 +304,8 @@ extension DisplayChatVC: MessagesDisplayDelegate {
     }
     
     
-    func messageStyle(for message: MessageType, at indexPath: IndexPath, in _: MessagesCollectionView) -> MessageStyle {
+    func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
         var corners: UIRectCorner = []
-        
         if isFromCurrentSender(message: message) {
             corners.formUnion(.topLeft)
             corners.formUnion(.topRight)
@@ -329,7 +356,7 @@ extension DisplayChatVC: MessagesDisplayDelegate {
             imageView.kf.cancelDownloadTask()
         }
     }
-    
+
     // MARK: - Location Messages
     
     func annotationViewForLocation(message _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> MKAnnotationView? {
@@ -390,12 +417,11 @@ extension DisplayChatVC: MessagesDisplayDelegate {
 
 extension DisplayChatVC: MessagesLayoutDelegate {
     
-    func textCellSizeCalculator(for _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> CellSizeCalculator? {
-        nil
-    }
-    
     // 아래 여백
     func footerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        if section == messageList.count - 1 {
+            return CGSize(width: 0, height: 20)
+        }
         return CGSize(width: 0, height: 0)
     }
     
@@ -404,7 +430,7 @@ extension DisplayChatVC: MessagesLayoutDelegate {
         
         if indexPath.section - 1 > 0{
             if !isNextDates(date1: messageList[indexPath.section - 1].sentDate, date2: message.sentDate){
-                return 22
+                return 44
             }
         }
         return 0
@@ -414,15 +440,15 @@ extension DisplayChatVC: MessagesLayoutDelegate {
         return 0
     }
     
-    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in _: MessagesCollectionView) -> CGFloat {
-        if !isNextMessageSameSender(at: indexPath) {
-            return 12
-        }else if isNextMessageSameSender(at: indexPath) {
-            return !isNextMessageSameDate(at: indexPath) ? 12 : 0
-        }else {
-            return 0
-        }
-        
+//    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+//        return 10
+//    }
+    
+    func messageBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment? {
+        return nil
     }
     
+    
 }
+
+
