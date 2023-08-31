@@ -32,36 +32,62 @@ class ChatUseCase {
     
     // MARK: - Methods
     //메세지 전송 서비스
-    func sendMessageService(mockMessage: MockMessage) -> Single<Void> {
+    func sendMessageService(mockMessage: MockMessage, chatType: ChatType) -> Single<Void> {
         return Single<Void>.create { [weak self] single in
             guard let self = self else{ return Disposables.create() }
-            
             self.coupleRepository.getCoupleID().subscribe(onSuccess: { coupleID in
-                //레파지토리로 넘기기
-                self.chatRepository.addChatMessage(mockMessage: mockMessage, coupleID: coupleID)
-                    .subscribe(onSuccess: {
-                        //데이터베이스 입력성공
-                        single(.success(()))
-                    },onFailure: { error in
-                        //데이터베이스 실패
-                        single(.failure(error))
-                    }).disposed(by: self.disposeBag)
+                switch chatType{
+                case .text:
+                    //레파지토리로 넘기기
+                    self.chatRepository.addChatMessage(mockMessage: mockMessage, coupleID: coupleID)
+                        .subscribe(onSuccess: {
+                            //데이터베이스 입력성공
+                            single(.success(()))
+                        },onFailure: { error in
+                            //데이터베이스 실패
+                            single(.failure(error))
+                        }).disposed(by: self.disposeBag)
+                case .image:
+                    //레파지토리로 넘기기
+                    self.chatRepository.addImageMessage(mockMessage: mockMessage, coupleID: coupleID)
+                        .subscribe(onSuccess: {
+                            //데이터베이스 입력성공
+                            single(.success(()))
+                        },onFailure: { error in
+                            //데이터베이스 실패
+                            single(.failure(error))
+                        }).disposed(by: self.disposeBag)
+                }
             }).disposed(by: disposeBag)
         
             return Disposables.create()
         }
     }
     
-    // 메시지 가져오기
+// 메시지 가져오기
     func getChatMessageService() {
         self.coupleRepository.getCoupleID().subscribe(onSuccess: { coupleID in
             self.chatRepository.getChatMessage(coupleID: coupleID)
                 .compactMap{ DTOArr in
-                    let processedDTOArr = DTOArr.map { dto in
-                        let processedChatDTO = dto.toModel()
-                        return processedChatDTO
+                    var resultArray: [MockMessage] = []
+                    for dto in DTOArr {
+                        if dto.chatType == "text" {
+                            let processedChatDTO = dto.toModel()
+                            resultArray.append(processedChatDTO)
+                        }else if dto.chatType == "image" {
+                            DispatchQueue.main.async {
+                                self.chatRepository.downloadImage(url: dto.contents ?? "")
+                                    .subscribe(onSuccess: { getimage in
+                                        guard let getimage = getimage else{ return }
+                                        let processedChatDTO = dto.toModel(image: getimage)
+                                        print(processedChatDTO, "%%%%%%%%%%%%%%%%%%%%%%")
+                                        resultArray.append(processedChatDTO)
+                                    })
+                                    .disposed(by: self.disposeBag)
+                            }
+                        }
                     }
-                    return processedDTOArr
+                    return resultArray
                 }
                 .catchAndReturn(nil)
                 .bind(to: self.recieveChatMessageService)

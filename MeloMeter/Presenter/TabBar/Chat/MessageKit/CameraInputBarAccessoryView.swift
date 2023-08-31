@@ -44,7 +44,6 @@ class CameraInputBarAccessoryView: InputBarAccessoryView {
         let camera = makeButton(named: "chatCamera")
         camera.tintColor = .white
         camera.onTouchUpInside { [weak self] _ in
-            print("카메라 터치")
             self?.showImagePickerControllerActionSheet()
         }
         setLeftStackViewWidthConstant(to: 52, animated: true)

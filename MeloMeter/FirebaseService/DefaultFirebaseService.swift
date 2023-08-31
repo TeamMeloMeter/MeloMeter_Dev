@@ -191,7 +191,7 @@ extension DefaultFirebaseService {
             let metaData = StorageMetadata()
             metaData.contentType = "image/jpeg"
             
-            let imageName = filePath + "-ProfileImage"
+            let imageName = filePath
             let firebaseReference = Storage.storage().reference().child("\(imageName)")
             
             firebaseReference.putData(imageData, metadata: metaData) { _, error in

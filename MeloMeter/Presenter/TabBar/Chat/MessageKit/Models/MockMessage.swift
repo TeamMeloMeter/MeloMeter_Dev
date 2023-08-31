@@ -105,18 +105,18 @@ internal struct MockMessage: MessageType {
         self.init(kind: .custom(custom), user: user, messageId: messageId, date: date)
     }
     
-    //지금은 텍스트만 구현======================================================================
+    //지금은 텍스트 / 이미지 구현======================================================================
     init(text: String, user: MockUser, messageId: String, date: Date) {
         self.init(kind: .text(text), user: user, messageId: messageId, date: date)
+    }
+    
+    init(image: UIImage, user: MockUser, messageId: String, date: Date) {
+        let mediaItem = ImageMediaItem(image: image)
+        self.init(kind: .photo(mediaItem), user: user, messageId: messageId, date: date)
     }
     //====================================================================================
     init(attributedText: NSAttributedString, user: MockUser, messageId: String, date: Date) {
         self.init(kind: .attributedText(attributedText), user: user, messageId: messageId, date: date)
-    }
-    
-    init(image: UIImage, user: MockUser, messageId: String, date: Date) { //구현해야함
-        let mediaItem = ImageMediaItem(image: image)
-        self.init(kind: .photo(mediaItem), user: user, messageId: messageId, date: date)
     }
     
     init(imageURL: URL, user: MockUser, messageId: String, date: Date) {
@@ -164,37 +164,34 @@ internal struct MockMessage: MessageType {
     }
     
     func toDTO() -> ChatDTO {
-        
-        var myMessage:String = ""
-        
         switch self.kind {
         case .text(let text):
-            myMessage = text
-        case .attributedText(_):
-            break
-        case .photo(_):
-            break
-        case .video(_):
-            break
-        case .location(_):
-            break
-        case .emoji(_):
-            break
-        case .audio(_):
-            break
-        case .contact(_):
-            break
-        case .linkPreview(_):
-            break
-        case .custom(_):
+            return ChatDTO(
+                chatType: ChatType.text.stringType,
+                contents: text,
+                userId: self.user.senderId,
+                messageId: self.messageId,
+                date: Timestamp(date: self.sentDate)
+            )
+        default:
             break
         }
-        
-        return ChatDTO(
-            text: myMessage,
-            userId: self.user.senderId,
-            messageId: self.messageId,
-            date: Timestamp(date: self.sentDate)
-        )
+        return ChatDTO(chatType: ChatType.text.stringType, contents: "", userId: "", messageId: "", date: Timestamp(date: self.sentDate))
+    }
+    
+    func toDTO(url: String) -> ChatDTO {
+        switch self.kind {
+        case .photo(_):
+            return ChatDTO(
+                chatType: ChatType.image.stringType,
+                contents: url,
+                userId: self.user.senderId,
+                messageId: self.messageId,
+                date: Timestamp(date: self.sentDate)
+            )
+        default:
+            break
+        }
+        return ChatDTO(chatType: ChatType.image.stringType, contents: "", userId: "", messageId: "", date: Timestamp(date: self.sentDate))
     }
 }
