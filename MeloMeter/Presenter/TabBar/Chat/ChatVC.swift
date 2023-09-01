@@ -63,19 +63,15 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //바인딩 추가
         setBindings()
         self.viewDidLoadEvent.onNext(())
         setNavigationBar()
         configureMessageCollectionView()
         configureMessageInputBar()
         
-        //백그라운드 이미지 추가
         self.view.addSubview(backgroundImageView)
         self.view.sendSubviewToBack(backgroundImageView)
         setBgAutoLayout()
-        
-        
     }
     
     // MARK: 오토레이아웃
@@ -91,55 +87,27 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        configureMessageInputBar()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //샘플데이터 출력
-        //    MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu])
-        //      .onNewMessage { [weak self] message in
-        //        self?.insertMessage(message)
-        //      }
+        DispatchQueue.main.async {
+            if !self.messageList.isEmpty {
+                self.messagesCollectionView.scrollToItem(at: IndexPath(row: 0, section: self.messageList.count-1), at: .centeredVertically, animated: false)
+            }
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        //샘플데이터 멈추기
-        //    MockSocket.shared.disconnect()
         audioController.stopAnyOngoingPlaying()
     }
     
     // MARK: - 처음 로딩시 채팅 리스트 가져오는곳
     func loadFirstMessages(_ chatMassageList: [MockMessage]) {
-        //        //디스패치 큐로 로컬에서 가져옴
-        //        DispatchQueue.global(qos: .userInitiated).async {
-        //            //처음 몇개를 가져올건지
-        //            let count = UserDefaults.standard.mockMessagesCount()
-        //            SampleData.shared.getMessages(count: count) { messages in
-        //                DispatchQueue.main.async {
-        //                    self.messageList = messages
-        //                    self.messagesCollectionView.reloadData()
-        //                    self.messagesCollectionView.scrollToLastItem(animated: false)
-        //                }
-        //            }
-        //        }
-        
-        //====================
-        //         message의 기본타입
-        //         init(text: String, user: MockUser, messageId: String, date: Date) {
-        //           self.init(kind: .text(text), user: user, messageId: messageId, date: date)
-        //         }
-        
-        //          MockUser의 기본타입
-        //        struct MockUser: SenderType, Equatable {
-        //          var senderId: String
-        //          var displayName: String
-        //        }
-        
-        //화면에 뿌리는 코드
         DispatchQueue.global(qos: .userInitiated).async {
             DispatchQueue.main.async {
-                print(chatMassageList, "^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
                 self.messageList = chatMassageList // DB에서 받아온 메세지 배열 삽입
                 self.messagesCollectionView.reloadData()
                 self.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: false)
@@ -179,7 +147,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     func configureMessageCollectionView() {
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messageCellDelegate = self
-        //백그라운드 이미 설정
         messagesCollectionView.backgroundView = backgroundImageView
         scrollsToLastItemOnKeyboardBeginsEditing = true // default false
         maintainPositionOnInputBarHeightChanged = true // default false
@@ -190,12 +157,10 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     }
     
     func configureMessageInputBar() {
-        // super.configureMessageInputBar()
         
         messageInputBar = CameraInputBarAccessoryView()
         messageInputBar.delegate = self
         messageInputBar.backgroundColor = .white
-        
         messageInputBar.inputTextView.tintColor = .gray2
         messageInputBar.sendButton.setTitleColor(.gray2, for: .normal)
         messageInputBar.sendButton.setTitleColor(
@@ -235,24 +200,17 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         messageInputBar.sendButton.title = "전송"
         messageInputBar.sendButton.layer.cornerRadius = 8
         messageInputBar.sendButton.layer.masksToBounds = true
-        
         configureInputBarPadding()
         
     }
     
     private func configureInputBarPadding() {
-        // Entire InputBar padding
         messageInputBar.padding.bottom = 8
-        // or MiddleContentView padding
         messageInputBar.middleContentViewPadding.right = -52
-        
-        // or InputTextView padding
         messageInputBar.inputTextView.textContainerInset.bottom = 8
     }
   
-    @objc func viewDidLoadEventMethod(){
-        
-    }
+    @objc func viewDidLoadEventMethod(){}
     
     
     // MARK: - Helpers
@@ -283,9 +241,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     
     // MARK: - Binding
-    func setBindings() {
-        view.addGestureRecognizer(tapGesture)
-        
+    func setBindings() {        
         //바인딩
         let input = ChatVM.Input(
             viewDidLoadEvent: self.viewDidLoadEvent
@@ -323,7 +279,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         
         output.getRealTimeMessage
             .bind(onNext: {chatMessageList in
-                chatMessageList.map{ chatMessage in
+                chatMessageList.forEach{ chatMessage in
                     self.insertMessage(chatMessage)
                 }
             })
@@ -339,12 +295,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         messagesCollectionView.performBatchUpdates({
             messagesCollectionView.insertSections([messageList.count - 1])
             if messageList.count >= 2 {
-                //messagesCollectionView.reloadSections([messageList.count - 2])
-                print("message", messageList.count)
-                self.messagesCollectionView.reloadData()
-//                messagesCollectionView.messagesDataSource.message messagesCollectionView.messagesDataSource?.textCell(for: message, at: IndexPath(row: 0, section: messageList.count-1), in: self.messagesCollectionView)
-//                messagesCollectionView.reloadDataAndKeepOffset()
-                //messagesCollectionView.reloadItems(at: [IndexPath(row: 0, section: messageList.count - 2)])
+                messagesCollectionView.reloadSections([messageList.count - 2])
             }
         }, completion: { [weak self] _ in
             if self?.isLastSectionVisible() == true {
@@ -353,24 +304,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         })
     }
     
-//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        if let dataSource = collectionView.messagesDataSource? {
-//            let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-//                
-//            
-//        }
-//        if let message = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView){
-//            switch message.kind {
-//            case .text, .attributedText, .emoji:
-//                if let cell = self.messagesDataSource.textCell(for: message, at: indexPath, in: messagesCollectionView) {
-//                    return cell
-//                }
-//            default:
-//                break
-//            }
-//        }
-//    
-//    }
     
     func isLastSectionVisible() -> Bool {
         guard !messageList.isEmpty else { return false }
@@ -413,70 +346,54 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         return components1.year == components2.year && components1.month == components2.month && components1.day == components2.day
     }
     
-    func messageBottomLabelAttributedText(for message: MessageType, at _: IndexPath) -> NSAttributedString? {
+    func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         let dateString = message.sentDate.toString(type: .chatDate)
-        return NSAttributedString(
-            string: dateString,
-            attributes: [
-                NSAttributedString.Key.font: FontManager.shared.medium(ofSize: 10),
-                NSAttributedString.Key.foregroundColor: UIColor.gray2
-            ])
-    }
-    
-
-    func textCell(for message: MessageType, at indexPath: IndexPath, in messageView: MessagesCollectionView) -> UICollectionViewCell? {
+        if !isNextMessageSameSender(at: indexPath) {
+            return NSAttributedString(
+                string: dateString,
+                attributes: [
+                    NSAttributedString.Key.font: FontManager.shared.medium(ofSize: 10),
+                    NSAttributedString.Key.foregroundColor: UIColor.gray2
+                ])
+        }else if isNextMessageSameSender(at: indexPath) {
+            if !isNextMessageSameDate(at: indexPath) {
+                return NSAttributedString(
+                    string: dateString,
+                    attributes: [
+                        NSAttributedString.Key.font: FontManager.shared.medium(ofSize: 10),
+                        NSAttributedString.Key.foregroundColor: UIColor.gray2
+                    ])
+                
+            }else {
+                return nil
+            }
+        }else {
+            return nil
+        }
         
-        return nil
     }
-    
-    
+
+    // MARK: TextCustomCell
+    func textCell(for message: MessageType, at indexPath: IndexPath, in messageView: MessagesCollectionView) -> UICollectionViewCell? {
+        let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: "CustomMessageCell", for: indexPath) as! CustomMessageCell
+        cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+
+        return cell
+    }
+    // MARK: PhotoCustomCell
+    func photoCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell? {
+        let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: "CustomPhotoCell", for: indexPath) as! CustomPhotoCell
+        cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+
+        return cell
+    }
+
     // MARK: - Private properties
     private let formatter: DateFormatter = {
         let formatter = DateFormatter()
         return formatter
     }()
     
-}
-// MARK: CustomMessageCell Class
-class CustomMessageCell: TextMessageCell {
-    
-    open override weak var delegate: MessageCellDelegate? {
-        didSet {
-            messageLabel.delegate = delegate
-        }
-    }
-    
-    override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
-        super.configure(with: message, at: indexPath, and: messagesCollectionView)
-        
-        guard let dataSource = messagesCollectionView.messagesDataSource else {
-            return
-        }
-        messageLabel.lineBreakMode = .byCharWrapping
-        
-        if dataSource.isFromCurrentSender(message: message) {
-            messageBottomLabel.frame.origin.x = contentView.frame.minX - messageContainerView.frame.width - 10
-            messageBottomLabel.frame.origin.y = contentView.frame.maxY - 12
-        }else {
-            messageBottomLabel.frame.origin.x = messageContainerView.frame.maxX
-            messageBottomLabel.frame.origin.y = contentView.frame.maxY - 12
-        }
-        messageBottomLabel.frame.size.height = 10
-
-    }
-    
-    open override func prepareForReuse() {
-        super.prepareForReuse()
-        messageLabel.attributedText = nil
-        messageLabel.text = nil
-    }
-    
-    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
-        super.apply(layoutAttributes)
-        guard let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes else { return }
-        messageBottomLabel.textInsets = attributes.messageBottomLabelAlignment.textInsets
-    }
-
 }
 
 // MARK: MessageCellDelegate
@@ -666,3 +583,4 @@ extension ChatVC: CameraInputBarAccessoryViewDelegate {
         sendImageMessage.accept(photoMessage)
     }
 }
+
