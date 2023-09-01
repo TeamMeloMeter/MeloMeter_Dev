@@ -113,6 +113,11 @@ final class DisplayChatVC: ChatVC {
             layout.textMessageSizeCalculator.incomingMessageBottomLabelAlignment.textInsets.left = 6
             layout.textMessageSizeCalculator.outgoingMessageBottomLabelAlignment.textInsets.right = 6
             
+            layout.photoMessageSizeCalculator.outgoingAvatarSize = .zero
+            layout.photoMessageSizeCalculator.incomingAvatarSize = CGSize(width: 35, height: 35)
+            layout.photoMessageSizeCalculator.incomingAvatarPosition.vertical = .messageTop
+            layout.photoMessageSizeCalculator.incomingMessageBottomLabelAlignment.textInsets.left = 6
+            layout.photoMessageSizeCalculator.outgoingMessageBottomLabelAlignment.textInsets.right = 6
         }
     }
     override func configureMessageCollectionView() {
@@ -121,30 +126,12 @@ final class DisplayChatVC: ChatVC {
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.register(CustomMessageCell.self, forCellWithReuseIdentifier: "CustomMessageCell")
+        messagesCollectionView.register(CustomPhotoCell.self, forCellWithReuseIdentifier: "CustomPhotoCell")
+
         messagesCollectionView.scrollToLastItem()
         configure()
         setBinding()
         setAutoLayout()
-        
-    }
-    // MARK: TextCustomCell
-    override func textCell(for message: MessageType, at indexPath: IndexPath, in messageView: MessagesCollectionView) -> UICollectionViewCell? {
-        print("textCell")
-        let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: "CustomMessageCell", for: indexPath) as! CustomMessageCell
-        cell.apply(messagesCollectionView.messagesCollectionViewFlowLayout.layoutAttributesForItem(at: indexPath)!)
-        cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-        if !isNextMessageSameSender(at: indexPath) {
-            cell.messageBottomLabel.isHidden = false
-        }else if isNextMessageSameSender(at: indexPath) {
-            if !isNextMessageSameDate(at: indexPath) {
-                cell.messageBottomLabel.isHidden = false
-            }else {
-                cell.messageBottomLabel.isHidden = true
-            }
-        }else {
-            cell.messageBottomLabel.isHidden = false
-        }
-        return cell
     }
     
     // MARK: UI
@@ -437,12 +424,10 @@ extension DisplayChatVC: MessagesLayoutDelegate {
         return 0
     }
     
-    func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in _: MessagesCollectionView) -> CGFloat {
-        return 0
-    }
-    
-    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        print("하이트 진로")
+    func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        if !isPreviousMessageSameSender(at: indexPath) {
+            return 32
+        }
         return 0
     }
     
