@@ -17,6 +17,7 @@ final class DisplayChatVC: ChatVC {
     
     private let viewModel: ChatVM?
     private var noticeViewHeight: NSLayoutConstraint!
+    var otherProfileImage = UIImage(named: "defaultProfileImage")!
     var downBtnToggle = false
     override init(viewModel: ChatVM) {
         self.viewModel = viewModel
@@ -45,7 +46,10 @@ final class DisplayChatVC: ChatVC {
             })
             .disposed(by: disposeBag)
         
-        let input = ChatVM.NoticeInput(
+        let input = ChatVM.DisplayInput(
+            viewWillApearEvent: self.rx.methodInvoked(#selector(viewWillAppear(_:)))
+                .map({ _ in })
+                .asObservable(),
             lastAnswerBtnTapEvent: self.lastAnswerBtn.rx.tap
                 .map({ _ in })
                 .asObservable(),
@@ -56,7 +60,12 @@ final class DisplayChatVC: ChatVC {
         
         guard let output = self.viewModel?.noticeTransform(input: input, disposeBag: self.disposeBag) else{ return }
         
-
+        output.otherProfileImage
+            .bind(onNext: {[weak self] image in
+                self?.otherProfileImage = image
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     // MARK: Event
@@ -127,7 +136,6 @@ final class DisplayChatVC: ChatVC {
         messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.register(CustomMessageCell.self, forCellWithReuseIdentifier: "CustomMessageCell")
         messagesCollectionView.register(CustomPhotoCell.self, forCellWithReuseIdentifier: "CustomPhotoCell")
-
         messagesCollectionView.scrollToLastItem()
         configure()
         setBinding()
@@ -322,11 +330,12 @@ extension DisplayChatVC: MessagesDisplayDelegate {
         at indexPath: IndexPath,
         in _: MessagesCollectionView)
     {
-        let avatar = SampleData.shared.getAvatarFor(sender: message.sender)
-        avatarView.set(avatar: avatar)
+        let avatar = Avatar(image: self.otherProfileImage, initials: "연인")
+        
         if isFromCurrentSender(message: message) {
             avatarView.isHidden = true
         }else {
+            avatarView.set(avatar: avatar)
             avatarView.isHidden = isPreviousMessageSameSender(at: indexPath)
         }
         

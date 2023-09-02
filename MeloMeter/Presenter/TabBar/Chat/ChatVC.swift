@@ -94,6 +94,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         super.viewDidAppear(animated)
         DispatchQueue.main.async {
             if !self.messageList.isEmpty {
+                self.messagesCollectionView.reloadDataAndKeepOffset()
                 self.messagesCollectionView.scrollToItem(at: IndexPath(row: 0, section: self.messageList.count-1), at: .centeredVertically, animated: false)
             }
         }
@@ -194,7 +195,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     //인풋바 아이탬 설정
     private func configureInputBarItems() {
         messageInputBar.setRightStackViewWidthConstant(to: 56, animated: false)
-        
         messageInputBar.sendButton.backgroundColor = .gray5
         messageInputBar.sendButton.setSize(CGSize(width: 44, height: 44), animated: false)
         messageInputBar.sendButton.title = "전송"
@@ -242,12 +242,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     // MARK: - Binding
     func setBindings() {        
-        //바인딩
         let input = ChatVM.Input(
             viewDidLoadEvent: self.viewDidLoadEvent
-                .map({ _ in })
-                .asObservable(),
-            viewWillApearEvent: self.rx.methodInvoked(#selector(viewWillAppear(_:)))
                 .map({ _ in })
                 .asObservable(),
             backBtnTapEvent: self.backBarButton.rx.tap
@@ -260,7 +256,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         )
         
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else{ return }
-        
+          
         output.senddSuccess
             .bind(onNext: {result in
                 if result {

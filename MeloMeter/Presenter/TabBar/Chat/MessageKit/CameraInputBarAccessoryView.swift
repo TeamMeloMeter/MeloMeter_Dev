@@ -37,7 +37,6 @@ class CameraInputBarAccessoryView: InputBarAccessoryView {
     lazy var attachmentManager: AttachmentManager = { [unowned self] in
         let manager = AttachmentManager()
         manager.delegate = self
-        
         return manager
     }()
     
@@ -155,7 +154,7 @@ extension CameraInputBarAccessoryView: UIImagePickerControllerDelegate, UINaviga
 extension CameraInputBarAccessoryView: AttachmentManagerDelegate {
     // MARK: - AttachmentManagerDelegate
     
-    func attachmentManager(_: AttachmentManager, shouldBecomeVisible: Bool) {
+    func attachmentManager(_ manager: AttachmentManager, shouldBecomeVisible: Bool) {
         setAttachmentManager(active: shouldBecomeVisible)
     }
     
@@ -163,7 +162,10 @@ extension CameraInputBarAccessoryView: AttachmentManagerDelegate {
         sendButton.isEnabled = manager.attachments.count > 0
     }
     
-    func attachmentManager(_ manager: AttachmentManager, didInsert _: AttachmentManager.Attachment, at _: Int) {
+    func attachmentManager(_ manager: AttachmentManager, didInsert cell: AttachmentManager.Attachment, at index: Int) {
+        manager.dataSource?.attachmentManager(manager, cellFor: cell, at: index)
+            .deleteButton.setImage(UIImage(named: "cancel"), for: .normal)
+
         sendButton.isEnabled = manager.attachments.count > 0
     }
     
