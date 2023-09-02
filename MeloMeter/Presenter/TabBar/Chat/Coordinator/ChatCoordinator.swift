@@ -27,7 +27,11 @@ extension ChatCoordinator {
     func showChatVC() {
         let firebaseService = DefaultFirebaseService()
         let viewController = DisplayChatVC(
-            viewModel: ChatVM(coordinator: self, chatUseCase: ChatUseCase(chatRepository: ChatRepository(firebaseService: firebaseService), coupleRepository: CoupleRepository(firebaseService: firebaseService))
+            viewModel: ChatVM(coordinator: self,
+                              chatUseCase: ChatUseCase(
+                                chatRepository: ChatRepository(firebaseService: firebaseService),
+                                coupleRepository: CoupleRepository(firebaseService: firebaseService),
+                                userRepository: UserRepository(firebaseService: firebaseService))
                              )
         )
         viewController.hidesBottomBarWhenPushed = true

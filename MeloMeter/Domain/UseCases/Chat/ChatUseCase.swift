@@ -19,15 +19,20 @@ class ChatUseCase {
     // MARK: - Property
     private let chatRepository: ChatRepository
     private let coupleRepository: CoupleRepository
+    private let userRepository: UserRepository
     private let disposeBag = DisposeBag()
     
     var recieveChatMessageService = PublishRelay<[MockMessage]?>()
     var recieveRealTimeMessageService = PublishRelay<[MockMessage]?>()
     
     // MARK: Initializers
-    init(chatRepository: ChatRepository, coupleRepository: CoupleRepository) {
+    init(chatRepository: ChatRepository,
+         coupleRepository: CoupleRepository,
+         userRepository: UserRepository)
+    {
         self.chatRepository = chatRepository
         self.coupleRepository = coupleRepository
+        self.userRepository = userRepository
     }
     
     // MARK: - Methods
@@ -41,7 +46,6 @@ class ChatUseCase {
                     //레파지토리로 넘기기
                     self.chatRepository.addChatMessage(message: mockMessage, coupleID: coupleID)
                         .subscribe(onSuccess: {
-                            //데이터베이스 입력성공
                             single(.success(()))
                         },onFailure: { error in
                             //데이터베이스 실패
@@ -82,6 +86,9 @@ class ChatUseCase {
             let textTypeArray = DTOArray.filter{ $0.chatType == "text" }.map{ $0.toModel() }
             resultMockMessageArray = textTypeArray
             let imageTypeArray = DTOArray.filter{ $0.chatType == "image" }
+            if imageTypeArray.isEmpty {
+                single(.success(resultMockMessageArray))
+            }
             for dto in imageTypeArray {
                 self.chatRepository.downloadImage(url: dto.contents ?? "")
                     .subscribe(onSuccess: { getimage in
@@ -99,6 +106,7 @@ class ChatUseCase {
                     })
                     .disposed(by: self.disposeBag)
             }
+            
             return Disposables.create()
         }
     }
@@ -106,10 +114,9 @@ class ChatUseCase {
     func startRealTimeChatMassage() {
         self.coupleRepository.getCoupleID()
             .subscribe(onSuccess: { coupleID in
-            //실시간 메세지 감시 시작
-            self.chatRepository.getRealTimeChat(coupleID: coupleID)
-            
-            //변경된 값 받아오기
+                //실시간 메세지 감시 시작
+                self.chatRepository.getRealTimeChat(coupleID: coupleID)
+                //변경된 값 받아오기
                 self.chatRepository.recieveChatMessage.subscribe(onNext: { DTOArr in
                     guard let dtoArray = DTOArr else{ return }
                     self.downloadChatImages(DTOArray: dtoArray)
@@ -118,8 +125,23 @@ class ChatUseCase {
                         })
                         .disposed(by: self.disposeBag)
                 }).disposed(by: self.disposeBag)
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
     }
     
+    func getProfileImage() -> Single<UIImage> {
+        guard let uid = UserDefaults.standard.string(forKey: "otherUid") else{ return Single.just(UIImage(named: "defaultProfileImage")!)}
+            return userRepository.getUserInfo(uid)
+            .asSingle()
+            .flatMap{ userInfo -> Single<UIImage> in
+                return self.chatRepository.downloadImage(url: userInfo.profileImage ?? "")
+                    .map{ image in
+                        if let image = image {
+                            return image
+                        }else {
+                            return UIImage(named: "defaultProfileImage")!
+                        }
+                    }
+            }
+    }
     
 }

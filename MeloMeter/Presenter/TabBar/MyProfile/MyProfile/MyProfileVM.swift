@@ -53,7 +53,6 @@ class MyProfileVM {
                             })
                             .disposed(by: disposeBag)
                         guard let name = user.name, let phoneNumber = user.phoneNumber, let otherUid = user.otherUid else{ return }
-                        print("내 정보", user.name, user.otherUid)
                         self.myProfileUseCase.getDdayInfo(otherUid: otherUid)
                             .subscribe(onSuccess: { dDayInfo in
                                 output.coupleUserName.accept("\(name) & \(dDayInfo[0])")
@@ -97,7 +96,6 @@ class MyProfileVM {
         input.editProfileBtnTapEvent
             .subscribe(onNext: {[weak self] _ in
                 guard let self = self else{ return }
-                print("프로필 탭이벤트")
                 self.coordinator?.showEditProfileVC()
             })
             .disposed(by: disposeBag)
