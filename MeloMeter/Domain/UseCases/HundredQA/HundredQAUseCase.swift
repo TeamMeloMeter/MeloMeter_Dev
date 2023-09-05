@@ -53,4 +53,14 @@ class HundredQAUseCase {
         }
     }
     
+    func addQuestion(newQuestion: Int) {
+        self.hundredQARepository.getCoupleID().subscribe(onSuccess: { coupleID in
+            self.hundredQARepository.setAnswerList(questionNumber: String(newQuestion), answerData: nil, coupleID: coupleID)
+                .subscribe(onSuccess: {
+                    print("성공")
+                })
+                .disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
+
+    }
 }

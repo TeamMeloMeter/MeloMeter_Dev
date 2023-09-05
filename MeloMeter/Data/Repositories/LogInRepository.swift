@@ -155,6 +155,7 @@ class LogInRepository: LogInRepositoryP {
             guard let self = self else { return Disposables.create() }
             
             let inviteCode = code.components(separatedBy: " ").joined()
+            let currentDate = Date().toString(type: .yearToHour)
             firebaseService.getCurrentUser()
                 .flatMap{ user -> Single<Void> in
                     return self.firebaseService.getDocument(collection: .Users, field: "inviteCode", values: [inviteCode])
@@ -172,7 +173,9 @@ class LogInRepository: LogInRepositoryP {
                                     return self.firebaseService.createDocument(collection: .Couples,
                                                                                document: "",
                                                                                values: ["disconnectedDate" : "",
-                                                                                        "answersList": ["0": []]])
+                                                                                        "answersList": ["0": [["date": currentDate]]]
+                                                                                       ]
+                                                                                )
                                 })
                             
                         }

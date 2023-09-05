@@ -41,22 +41,38 @@ class HundredQAVM {
                 guard let self = self else{ return }
                 self.hundredQAUseCase.getAnswerList()
                     .subscribe(onSuccess: { answerModel in
+                        print(answerModel, "VVVVVV")
                         self.answerArray = answerModel.map{ $0.answerInfo }
-                        let questionTextArray = answerModel.map{ $0.questionText }
-                        var topData: [String] = []
+                        let questionTextArray = answerModel.map{ ($0.questionText, $0.date) }
+                        var topData: [(String, Date)] = []
                         var bottomData: [String] = []
                         var numbers: [[String]] = Array(repeating: [], count: 2)
-                        for answers in 0..<self.answerArray.count {
-                            if self.answerArray[answers].count < 2 {
+                        for answers in 0..<self.answerArray.count-1 {
+                            if self.answerArray[answers].count < 2 || self.datesCompare(date1: questionTextArray[answers].1, date2: Date()) {
                                 topData.append(questionTextArray[answers])
                                 numbers[0].append(String(answers + 1))
                             }else {
-                                bottomData.append(questionTextArray[answers])
+                                bottomData.append(questionTextArray[answers].0)
                                 numbers[1].append(String(answers + 1))
                             }
                         }
+                        
+                        if let last = topData.last {
+                            if !self.datesCompare(date1: last.1, date2: Date()) && topData.count < 2 {
+                                self.hundredQAUseCase.addQuestion(newQuestion: self.answerArray.count-1)
+                                print(topData.map{ $0.0 } + [questionTextArray[self.answerArray.count-1].0], "🟢11")
+                                output.questionTopData.onNext(topData.map{ $0.0 } + [questionTextArray[self.answerArray.count-1].0])
+                                numbers[0].append(String(self.answerArray.count))
+                            }else {
+                                output.questionTopData.onNext(topData.map{ $0.0 })
+                            }
+                        }else {
+                            self.hundredQAUseCase.addQuestion(newQuestion: self.answerArray.count-1)
+                            print(topData.map{ $0.0 } + [questionTextArray[self.answerArray.count-1].0], "🟢2")
+                            output.questionTopData.onNext(topData.map{ $0.0 } + [questionTextArray[self.answerArray.count-1].0])
+                            numbers[0].append(String(self.answerArray.count))
+                        }
                         output.questionNumbers.onNext(numbers)
-                        output.questionTopData.onNext(topData)
                         output.questionBottomData.onNext(bottomData)
                     })
                     .disposed(by: disposeBag)
@@ -89,5 +105,12 @@ class HundredQAVM {
         return output
     }
     
+    func datesCompare(date1: Date, date2: Date) -> Bool {
+        let calendar = Calendar.current
+        let components1 = calendar.dateComponents([.year, .month, .day], from: date1)
+        let components2 = calendar.dateComponents([.year, .month, .day], from: date2)
+        
+        return components1.year == components2.year && components1.month == components2.month && components1.day == components2.day
+    }
 }
 
