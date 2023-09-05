@@ -49,10 +49,14 @@ class HundredQARepository: HundredQARepositoryP {
                         .flatMap { questionList -> Single<[AnswerInfoDTO]> in
 
                             var resultDTO: [AnswerInfoDTO] = []
-                            for questionNumber in answersList.keys.sorted(by: { Int($0) ?? 0 < Int($1) ?? 0 }) {
+                            for questionNumber in 0...answersList.count {
                                 var answerDTOArray: [AnswerDTO] = []
-                                for answerInfo in answersList[questionNumber] as? [[String: String]] ?? [] {
-                                    
+                                var date = ""
+                                for answerInfo in answersList[String(questionNumber)] as? [[String: String]] ?? [] {
+                                    if let dateValue = answerInfo["date"] {
+                                        date = dateValue
+                                        continue
+                                    }
                                     let answerDTO = AnswerDTO(
                                         userId: answerInfo["userId"] ?? "",
                                         answerText: answerInfo["answerText"] ?? "",
@@ -61,10 +65,11 @@ class HundredQARepository: HundredQARepositoryP {
                                     
                                     answerDTOArray.append(answerDTO)
                                 }
-
+                                
                                 let answerInfoDTO = AnswerInfoDTO(
                                     answerInfo: answerDTOArray,
-                                    questionText: questionList[Int(questionNumber) ?? 0]
+                                    questionText: questionList[Int(questionNumber)],
+                                    date: date
                                 )
                                 resultDTO.append(answerInfoDTO)
                             }
@@ -75,7 +80,8 @@ class HundredQARepository: HundredQARepositoryP {
                         .flatMap { questionList in
                             let answerInfoDTO = AnswerInfoDTO(
                                 answerInfo: [AnswerDTO(userId: "", answerText: "", userName: "")],
-                                questionText: questionList[0]
+                                questionText: questionList[0],
+                                date: ""
                             )
                             return Single.just([answerInfoDTO])
                         }
@@ -93,22 +99,39 @@ class HundredQARepository: HundredQARepositoryP {
             }
     }
 
-    func setAnswerList(questionNumber: String, answerData: AnswerModel, coupleID: String) -> Single<Void> {
-        guard let values = answerData.toDTO().asDictionary else{ return Single.just(())}
-        return self.firebaseService.createDocument(
-            collection: .Couples,
-            document: coupleID,
-            values: ["answersList" :  [questionNumber: FieldValue.arrayUnion([values])] ]
-        )
-        .flatMap{ _ in
-            let userName = UserDefaults.standard.string(forKey: "userName") ?? "상대방"
-            PushNotificationService.shared.sendPushNotification(title: "백문백답", body: "\(userName)님이 \((Int(questionNumber) ?? 0)+1)번째 백문백답에 답변했어요!")
-            return Single.create{ single in
-                single(.success(()))
-                return Disposables.create()
+    func setAnswerList(questionNumber: String, answerData: AnswerModel?, coupleID: String) -> Single<Void> {
+        if let answerData = answerData {
+            guard let values = answerData.toDTO().asDictionary else{ return Single.just(())}
+            return self.firebaseService.createDocument(
+                collection: .Couples,
+                document: coupleID,
+                values: ["answersList" :  [questionNumber: FieldValue.arrayUnion([values])] ]
+            )
+            .flatMap{ _ in
+                let userName = UserDefaults.standard.string(forKey: "userName") ?? "상대방"
+                PushNotificationService.shared.sendPushNotification(title: "백문백답", body: "\(userName)님이 \((Int(questionNumber) ?? 0)+1)번째 백문백답에 답변했어요!")
+                return Single.create{ single in
+                    single(.success(()))
+                    return Disposables.create()
+                }
+            }
+        }else {
+            let currentDate = Date().toString(type: .yearToHour)
+            let values: [Any] = [["date": currentDate]]
+            return self.firebaseService.createDocument(
+                collection: .Couples,
+                document: coupleID,
+                values: ["answersList" :  [questionNumber: FieldValue.arrayUnion(values)] ]
+            )
+            .flatMap{ _ in
+                PushNotificationService.shared.sendPushNotification(title: "백문백답", body: "오늘의 질문이 도착했어요!")
+                PushNotificationService.shared.localPushNotification(title: "백문백답", body: "오늘의 질문이 도착했어요!")
+                return Single.create{ single in
+                    single(.success(()))
+                    return Disposables.create()
+                }
             }
         }
-
     }
     
     
