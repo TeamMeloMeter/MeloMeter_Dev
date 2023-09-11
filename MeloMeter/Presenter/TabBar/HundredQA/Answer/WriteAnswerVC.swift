@@ -212,7 +212,7 @@ class WriteAnswerVC: UIViewController {
             questionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 28),
             questionView.heightAnchor.constraint(equalToConstant: 48),
 
-            questionImageView.leadingAnchor.constraint(equalTo: questionView.leadingAnchor, constant: 14),
+            questionImageView.leadingAnchor.constraint(equalTo: questionView.leadingAnchor, constant: 12),
             questionImageView.centerYAnchor.constraint(equalTo: questionView.centerYAnchor),
             questionImageView.widthAnchor.constraint(equalToConstant: 20),
             questionImageView.heightAnchor.constraint(equalToConstant: 18),

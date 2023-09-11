@@ -39,7 +39,8 @@ extension MyProfileCoordinator {
                         userRepository: UserRepository(
                             firebaseService: firebaseService
                         ),
-                        coupleRepository: CoupleRepository(firebaseService: firebaseService)
+                        coupleRepository: CoupleRepository(firebaseService: firebaseService),
+                        hundredQARepository: HundredQARepository(firebaseService: firebaseService)
                     )
             )
         )
