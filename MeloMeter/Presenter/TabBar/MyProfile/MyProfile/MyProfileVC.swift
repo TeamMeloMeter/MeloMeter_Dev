@@ -122,6 +122,13 @@ class MyProfileVC: UIViewController {
                 self.dDaySubtitleLabel.text = sinceText
             })
             .disposed(by: disposeBag)
+        
+        output.lastHundredQA
+            .asDriver(onErrorJustReturn: "백문백답을 시작해보세요!")
+            .drive(onNext: { lastNumberString in
+                self.hundredQnASubtitleLabel.text = lastNumberString
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: configure

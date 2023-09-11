@@ -103,28 +103,29 @@ class ReadAnswerVC: UIViewController {
         attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
         self.myAnswerLabel.attributedText = attributedText
         if mine && other { //둘다 답변
+            self.myUserView.heightAnchor.constraint(equalToConstant: 133).isActive = true
             self.lockImageView.isHidden = true
             self.unlockImageView.isHidden = false
             self.myAnswerCompleteLabel.isHidden = true
             self.answerBtn.isHidden = true
             self.otherAnswerLabel.textColor = .gray1
-            self.myUserView.heightAnchor.constraint(equalToConstant: 133).isActive = true
             return
         }
         
         self.unlockImageView.isHidden = true
+        self.lockImageView.isHidden = false
         self.myUserView.heightAnchor.constraint(equalToConstant: 359).isActive = true
 
         if !mine && other { // 상대만 답변
             self.otherAnswerLabel.textColor = .gray1
             self.lockImageView.image = UIImage(named: "lockImage")
-            self.answerBtn.isHidden = false
             self.myAnswerCompleteLabel.isHidden = true
             self.otherAnswerLabel.text = "\(self.otherUserLabel.text?.prefix(2) ?? "")님이 답변을 완료했습니다."
             return
         }
         
         if mine && !other { // 나만 답변
+            self.myUserView.heightAnchor.constraint(equalToConstant: 347).isActive = true
             self.lockImageView.image = UIImage(named: "unlockImage")
             self.answerBtn.isHidden = true
             self.myAnswerCompleteLabel.isHidden = false
@@ -246,7 +247,7 @@ class ReadAnswerVC: UIViewController {
         view.addSubview(myUserLabel)
         view.addSubview(lineView2)
         view.addSubview(myScrollView)
-
+        view.addSubview(answerBtn)
         return view
     }()
     
@@ -269,7 +270,6 @@ class ReadAnswerVC: UIViewController {
         scView.indicatorStyle = .black
         scView.addSubview(myAnswerLabel)
         scView.addSubview(lockImageView)
-        scView.addSubview(answerBtn)
         scView.addSubview(myAnswerCompleteLabel)
         return scView
     }()
@@ -315,10 +315,10 @@ class ReadAnswerVC: UIViewController {
     
     let unlockImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .white
         imageView.isHidden = true
         imageView.image = UIImage(named: "completeImage")
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
         imageView.layer.applyShadow(color: #colorLiteral(red: 0.7529411765, green: 0.7529411765, blue: 0.7529411765, alpha: 1), alpha: 0.25, x: 0, y: 2, blur: 8)
         return imageView
     }()
@@ -369,7 +369,7 @@ class ReadAnswerVC: UIViewController {
             questionImageView.widthAnchor.constraint(equalToConstant: 20),
             questionImageView.heightAnchor.constraint(equalToConstant: 18),
             
-            questionLabel.leadingAnchor.constraint(equalTo: questionImageView.trailingAnchor, constant: 14),
+            questionLabel.leadingAnchor.constraint(equalTo: questionImageView.trailingAnchor, constant: 12),
             questionLabel.centerYAnchor.constraint(equalTo: questionView.centerYAnchor),
 
             otherUserView.topAnchor.constraint(equalTo: questionView.bottomAnchor, constant: 27),
@@ -432,11 +432,11 @@ class ReadAnswerVC: UIViewController {
             myAnswerCompleteLabel.widthAnchor.constraint(equalToConstant: 308),
             myAnswerCompleteLabel.heightAnchor.constraint(equalToConstant: 53),
             
-            unlockImageView.heightAnchor.constraint(equalToConstant: 131),
+            
             unlockImageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
             unlockImageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
             unlockImageView.topAnchor.constraint(equalTo: myUserView.bottomAnchor, constant: 24),
-
+            unlockImageView.heightAnchor.constraint(equalToConstant: 131),
         ])
     }
     

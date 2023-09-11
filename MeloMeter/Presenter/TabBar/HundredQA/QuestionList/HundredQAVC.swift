@@ -62,7 +62,7 @@ class HundredQAVC: UIViewController {
                 self.questionTopData = questions
                 if questions.count == 2 {
                     self.questionCountLabel.isHidden = false
-                    self.questionCountLabel.text = "1/2"
+                    self.questionCountLabel.text = "2/2"
                 }else {
                     self.questionCountLabel.isHidden = true
                 }
@@ -175,6 +175,8 @@ extension HundredQAVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
+            self.questionCountLabel.isHidden = false
+            if self.questionTopData.count < 2 { self.questionCountLabel.isHidden = true }
             return self.questionTopData.count
         } else if section == 1 {
             return self.questionBottomData.count
@@ -199,21 +201,27 @@ extension HundredQAVC: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let spacerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 57))
-
         return spacerView
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "HundredQATableViewCell", for: indexPath) as? HundredQATableViewCell else { return UITableViewCell() }
         if indexPath.section == 0 {
-            if indexPath.row == 0 {
-                cell.newDotImage.isHidden = false
-            }
             cell.questionLabel.text = self.questionTopData[indexPath.row]
             cell.numberLabel.text = self.questionNumbers[0][indexPath.row]
+            if indexPath.row == 0 {
+                cell.newDotImage.isHidden = false
+                cell.questionLabel.textColor = .gray1
+            }else if indexPath.row == 1 {
+                cell.newDotImage.isHidden = true
+                cell.questionLabel.text = "이전 질문 먼저 답변해주세요!"
+                cell.questionLabel.textColor = .gray2
+            }
+            
         } else if indexPath.section == 1 {
             cell.newDotImage.isHidden = true
             cell.numberLabel.text = self.questionNumbers[1][indexPath.row]
             cell.questionLabel.text = self.questionBottomData[indexPath.row]
+            cell.questionLabel.textColor = .gray1
         }
         
         return cell
@@ -230,6 +238,13 @@ extension HundredQAVC: UITableViewDataSource, UITableViewDelegate {
             index = (Int(self.questionNumbers[1][indexPath.row]) ?? 0) - 1
         }
         self.selectedCellIndex.onNext((index, question))
+    }
+    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if indexPath.section == 0 && indexPath.row == 1 {
+            return nil
+        }
+        return indexPath
     }
     
 }

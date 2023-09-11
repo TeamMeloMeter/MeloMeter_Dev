@@ -24,7 +24,7 @@ class HundredQATableViewCell: UITableViewCell {
     let newDotImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "newDot")
-        imageView.isHidden = true
+        //imageView.isHidden = true
         return imageView
     }()
     
@@ -32,7 +32,6 @@ class HundredQATableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .gray1
         label.font = FontManager.shared.semiBold(ofSize: 16)
-        label.text = "13"
         return label
     }()
     
@@ -40,7 +39,6 @@ class HundredQATableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .gray1
         label.font = FontManager.shared.medium(ofSize: 14)
-        label.text = "가장 좋아하는 데이트 장소는 어디인가요?"
         return label
     }()
     
