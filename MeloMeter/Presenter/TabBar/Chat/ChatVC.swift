@@ -394,7 +394,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         guard self.messageList.last != nil else{ return nil }
         
         if indexPath.section - 1 > 0{
-            if !isNextDates(date1: messageList[indexPath.section - 1].sentDate, date2: message.sentDate){
+            if !datesCompare(date1: messageList[indexPath.section - 1].sentDate, date2: message.sentDate){
                 return NSAttributedString(
                     string: message.sentDate.toString(type: .yearAndMonthAndDate),
                     attributes: [
@@ -405,7 +405,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         }
         return nil
     }
-    func isNextDates(date1: Date, date2: Date) -> Bool {
+    
+    func datesCompare(date1: Date, date2: Date) -> Bool {
         let calendar = Calendar.current
         let components1 = calendar.dateComponents([.year, .month, .day], from: date1)
         let components2 = calendar.dateComponents([.year, .month, .day], from: date2)

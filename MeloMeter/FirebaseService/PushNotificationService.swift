@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class PushNotificationService {
     static let shared = PushNotificationService()
@@ -18,10 +19,21 @@ final class PushNotificationService {
     func sendPushNotification(title: String, body: String) {
         let message = [
             "to": UserDefaults.standard.string(forKey: "otherFcmToken") ?? "",
+            "content_available": true,
             "notification": [
+                "badge": 1,
                 "title": title,
                 "body": body
             ]
+//              "to": UserDefaults.standard.string(forKey: "otherFcmToken") ?? "",
+//              "content_available": true,
+//              "apns-push-type": "background",
+//              "apns-priority": 5,
+//              "data": [
+//                "title": title,
+//                "date" : "\(Date())",
+//                "body": body
+//              ]
         ] as [String : Any]
         
         let url = URL(string: "https://fcm.googleapis.com/fcm/send")!

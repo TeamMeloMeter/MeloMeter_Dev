@@ -124,7 +124,6 @@ class DdayUseCase {
             
         }
         
-        
         return resultArray.sorted(by: { $0.date < $1.date })
     }
     

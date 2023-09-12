@@ -19,6 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     
     var window: UIWindow?
     
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        UIApplication.shared.applicationIconBadgeNumber = 0
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         // Override point for customization after application launch.
@@ -30,10 +34,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         Messaging.messaging().isAutoInitEnabled = true
-        UNUserNotificationCenter.current().delegate = self
         
-        application.registerForRemoteNotifications()
+        // Request permission for remote notifications
+        UNUserNotificationCenter.current().delegate = self
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if granted {
+                DispatchQueue.main.async {
+                    application.registerForRemoteNotifications()
+                }
+            } else {
+                // Handle the case where permission is not granted
+                print("Remote notification permission denied.")
+            }
+        }
+        
+        if (launchOptions?[.remoteNotification]) != nil {
+            //여기서 처리
+            print("🟢 네 ㅋㅋㅋㅋㅋㅋㅋㅋㅋ")
+        }
 
+        
         return true
     }
     
@@ -55,13 +75,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         print("🟢APNS 등록 실패: \(error.localizedDescription)")
     }
     
+    //완전종료 알림 처리
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        //사일런트 푸시 받는 용도
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            let backgroundTaskManager = BackgroundTaskManager(firebaseService: DefaultFirebaseService())
+            
+            print("🟢 백그라운드 : ", #function)
+            
+            if let title = userInfo["title"] as? String,
+               let date = userInfo["date"] as? String,
+               let body = userInfo["body"] as? String {
+                print("보낸사람 : \(title)")
+                print("내용 : \(date)")
+                print("시간 : \(body)")
+                
+                backgroundTaskManager.addAlarm(title: title, body: body, date: date)
+            }
+        }
+        
+     }
+    
     // 푸시클릭시
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
-        print("🟢 클릭 : ", #function)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
         
-            
+        print("🟢 클릭 : ", #function)
     }
+    
 
     // 앱화면 보고있는중에 푸시올 때
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
@@ -84,6 +126,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-    
     
 }

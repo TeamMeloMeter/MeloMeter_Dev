@@ -15,7 +15,7 @@ class MapVM {
 
     weak var coordinator: MainCoordinator?
     private var mainUseCase: MainUseCase
-
+    
     struct Input {
         let viewWillApearEvent: Observable<Void>
         let dDayBtnTapEvent: Observable<Void>
@@ -44,22 +44,40 @@ class MapVM {
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output()
         
-        input.viewWillApearEvent
-            .subscribe(onNext: { [weak self] _ in
-                self?.mainUseCase.disconnectionObserver()
-                    .subscribe(onSuccess: { result in
-                        if result {
-                            output.endTrigger.onNext(true)
+        if #available(iOS 16.0, *) {
+            input.viewWillApearEvent
+                .subscribe(onNext: { [weak self] _ in
+                    self?.mainUseCase.disconnectionObserver()
+                        .subscribe(onSuccess: { result in
+                            if result {
+                                output.endTrigger.onNext(true)
+                            }
+                        })
+                        .disposed(by: disposeBag)
+                    setInfo()
+                    self?.mainUseCase.checkAuthorization()
+                    self?.mainUseCase.requestAuthorization()
+                    self?.mainUseCase.requestLocation()
+                    self?.mainUseCase.requestOtherLocation()
+                    
+                    //잔여 알림 가져오기
+                    UNUserNotificationCenter.current().getDeliveredNotifications { notifications in
+                        DispatchQueue.main.sync {
+                            
+                            for item in notifications {
+                                print("🟢 노티 : ",item.request.content.body)
+                            }
                         }
-                    })
-                    .disposed(by: disposeBag)
-                setInfo()
-                self?.mainUseCase.checkAuthorization()
-                self?.mainUseCase.requestAuthorization()
-                self?.mainUseCase.requestLocation()
-                self?.mainUseCase.requestOtherLocation()
-            })
-            .disposed(by: disposeBag)
+                    }
+                    
+                    //잔여 알림목록 초기화
+                    UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+                    UNUserNotificationCenter.current().setBadgeCount(0)
+                })
+                .disposed(by: disposeBag)
+        } else {
+            // Fallback on earlier versions
+        }
         
         input.dDayBtnTapEvent
             .subscribe(onNext: {[weak self] _ in
