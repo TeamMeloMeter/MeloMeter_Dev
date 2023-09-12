@@ -426,7 +426,7 @@ extension DisplayChatVC: MessagesLayoutDelegate {
         guard super.messageList.last != nil else{ return 0 }
         
         if indexPath.section - 1 > 0{
-            if !isNextDates(date1: messageList[indexPath.section - 1].sentDate, date2: message.sentDate){
+            if !datesCompare(date1: messageList[indexPath.section - 1].sentDate, date2: message.sentDate){
                 return 44
             }
         }

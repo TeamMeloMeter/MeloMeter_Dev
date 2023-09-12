@@ -5,15 +5,38 @@
 //  Created by 오현택 on 2023/08/04.
 //
 
-import UIKit
+import Foundation
+import FirebaseFirestore
 import RxSwift
-import RxCocoa
 
 class BackgroundTaskManager {
-    static let shared = BackgroundTaskManager()
-    private let disposeBag = DisposeBag()
     
-    private init() {}
+    var firebaseService: FireStoreService
+    var disposeBag: DisposeBag
+    
+    init(firebaseService: FireStoreService) {
+        self.firebaseService = firebaseService
+        self.disposeBag = DisposeBag()
+    }
+    
+    func addAlarm(title: String, body: String, date: String) -> Void {
+        
+        print("🟢 add알림 함수 실행")
+        
+        guard let uid = UserDefaults.standard.string(forKey: "uid") else { return }
+        
+        let values = [
+            "title" : title,
+            "body" : body,
+            "date" : date
+        ]
+        //푸시노티
+        PushNotificationService.shared.sendPushNotification(title: title, body: body)
+        
+        self.firebaseService.updateDocument(collection: .Alarm, document: uid, values: ["alarmList" : FieldValue.arrayUnion([values]) ]).subscribe(onSuccess: { print("🟢알림저장")})
+        
+        
+    }
     
 //    func startBackgroundTask() {
 //        UIApplication.shared.rx.backgroundTask {

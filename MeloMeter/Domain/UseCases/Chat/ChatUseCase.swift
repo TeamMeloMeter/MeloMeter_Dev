@@ -21,7 +21,7 @@ class ChatUseCase {
     private let coupleRepository: CoupleRepository
     private let userRepository: UserRepository
     private let disposeBag = DisposeBag()
-    
+
     var recieveChatMessageService = PublishRelay<[MockMessage]?>()
     var recieveRealTimeMessageService = PublishRelay<[MockMessage]?>()
     

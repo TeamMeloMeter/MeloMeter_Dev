@@ -200,11 +200,13 @@ class LogInRepository: LogInRepositoryP {
                                                                                        "profileImagePath": user2]
                             )
                             let chatDocumentCreate = self.firebaseService.createDocument(collection: .Chat, document: coupleDocumentID, values: ["chatField": []])
+                            let myAlarmDocumentCreate = self.firebaseService.createDocument(collection: .Alarm, document: uid, values: ["alarmList": []])
+                            let otherAlarmDocumentCreate = self.firebaseService.createDocument(collection: .Alarm, document: otherUid, values: ["alarmList": []])
                             let updateAccessLevel = self.firebaseService.setAccessLevel(.coupleCombined)
                             let updateOtherAccessLevel = self.firebaseService.updateDocument(collection: .Users, document: otherUid, values: ["accessLevel" : "coupleCombined"])
                             
-                            Single.zip(update1, update2, chatDocumentCreate, updateAccessLevel, updateOtherAccessLevel)
-                                .subscribe(onSuccess: { _, _, _, _, _ in
+                            Single.zip(update1, update2, chatDocumentCreate, myAlarmDocumentCreate, otherAlarmDocumentCreate, updateAccessLevel, updateOtherAccessLevel)
+                                .subscribe(onSuccess: { _, _, _, _, _, _, _ in
                                     single(.success(()))
                                 }, onFailure: { error in
                                     single(.failure(error))

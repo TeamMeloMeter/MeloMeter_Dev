@@ -12,6 +12,7 @@ import RxSwift
 class ProfileInsertVM {
     
     let profileInsertUseCase: ProfileInsertUseCase
+//    let dDayUseCase: DdayUseCase
     let disposeBag = DisposeBag()
     weak var coordinator: PresetCoordinator?
     
@@ -31,6 +32,7 @@ class ProfileInsertVM {
             guard let self = self else{ return }
             self.profileInsertUseCase.insertUserInfoService(userInfo: info)
                 .subscribe(onSuccess: {
+//                    self.dDayUseCase?.createDdayList
                     self.coordinator?.showPermissionVC1()
                 }, onFailure: { error in
                     self.sendProfileInsertRequest.onNext(false)
