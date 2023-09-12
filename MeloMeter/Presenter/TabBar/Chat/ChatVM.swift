@@ -15,34 +15,32 @@ class ChatVM {
     private var chatUseCase: ChatUseCase
     
     struct Input {
-        //전달받을 변수
         let viewDidLoadEvent: Observable<Void>
-        let viewWillApearEvent: Observable<Void>
         let backBtnTapEvent: Observable<Void>
         let mySendTextMessage: Observable<MockMessage>
         let mySendImageMessage: Observable<MockMessage>
     }
     
     struct Output {
-        //전달할 변수
         var senddSuccess = PublishSubject<Bool>()
         var getMessage = PublishSubject<[MockMessage]>()
         var getRealTimeMessage = PublishSubject<[MockMessage]>()
     }
     
     
-    struct NoticeInput {
+    struct DisplayInput {
+        let viewWillApearEvent: Observable<Void>
         let lastAnswerBtnTapEvent: Observable<Void>
         let goAnswerBtnTapEvent: Observable<Void>
     }
     
-    struct NoticeOutput {
+    struct DisplayOutput {
         var questionNumber = PublishSubject<String>()
         var questionText = PublishSubject<String>()
+        var otherProfileImage = PublishSubject<UIImage>()
     }
     
     // MARK: Input
-    // 데이트 타입을 받아서, 우리가 원하는(멜로망스)에 맞는 형태로 바꾸는 메서드를 Date유틸에 추가하고, 이 동작을 하는 메서드를 만들어야해 여기에.
     init(coordinator: ChatCoordinator, chatUseCase: ChatUseCase) {
         self.coordinator = coordinator
         self.chatUseCase = chatUseCase
@@ -86,7 +84,6 @@ class ChatVM {
         
         self.chatUseCase.recieveChatMessageService
             .subscribe(onNext: {chatMessageList in
-                print(chatMessageList, "*****************")
                 output.getMessage.onNext(chatMessageList ?? [])
             })
             .disposed(by: disposeBag)
@@ -106,22 +103,20 @@ class ChatVM {
         return output
     }
     
-    func noticeTransform(input: NoticeInput, disposeBag: DisposeBag) -> NoticeOutput {
-        let output = NoticeOutput()
-//        input.viewDidLoadEvent
-//            .subscribe(onNext: { [weak self] _ in
-//                guard let self = self else{ return }
-//                self.chatUseCase.getChatMessageService()
-//                self.chatUseCase.startRealTimeChatMassage()
-//            })
-//            .disposed(by: disposeBag)
-//
-//        input.viewWillApearEvent
-//            .subscribe(onNext: { [weak self] _ in
-//                guard let self = self else{ return }
-//
-//            })
-//            .disposed(by: disposeBag)
+    func noticeTransform(input: DisplayInput, disposeBag: DisposeBag) -> DisplayOutput {
+        let output = DisplayOutput()
+
+        input.viewWillApearEvent
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else{ return }
+                self.chatUseCase.getProfileImage()
+                    .subscribe(onSuccess: { image in
+                        output.otherProfileImage.onNext(image)
+                    })
+                    .disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
+        
         input.lastAnswerBtnTapEvent
             .subscribe(onNext: {[weak self] _ in
                 self?.coordinator?.showHundredQAFlow()

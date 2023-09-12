@@ -6,14 +6,15 @@
 //
 
 import Foundation
+import UserNotifications
 import UIKit
 
 final class PushNotificationService {
     static let shared = PushNotificationService()
 //    private var token: String?
-//    private var title: String?
-//    private var body: String?
-
+    //    private var title: String?
+    //    private var body: String?
+    
     private init() {}
     
     func sendPushNotification(title: String, body: String) {
@@ -59,5 +60,27 @@ final class PushNotificationService {
         }
         
         task.resume()
+    }
+    
+    func localPushNotification(title: String, body: String) {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            if settings.authorizationStatus == UNAuthorizationStatus.authorized{
+                let content = UNMutableNotificationContent()
+                content.title = title
+                content.body = body
+                content.sound = .default
+                
+                //트리거 생성
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+                
+                let request = UNNotificationRequest(identifier: "dipose", content: content, trigger: trigger)
+                
+                //발송을 위한 센터에 추가
+                UNUserNotificationCenter.current().add(request)
+                
+            }else{
+                print("알림 거부")
+            }
+        }
     }
 }

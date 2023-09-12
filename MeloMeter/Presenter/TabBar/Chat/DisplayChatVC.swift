@@ -17,6 +17,7 @@ final class DisplayChatVC: ChatVC {
     
     private let viewModel: ChatVM?
     private var noticeViewHeight: NSLayoutConstraint!
+    var otherProfileImage = UIImage(named: "defaultProfileImage")!
     var downBtnToggle = false
     override init(viewModel: ChatVM) {
         self.viewModel = viewModel
@@ -45,7 +46,10 @@ final class DisplayChatVC: ChatVC {
             })
             .disposed(by: disposeBag)
         
-        let input = ChatVM.NoticeInput(
+        let input = ChatVM.DisplayInput(
+            viewWillApearEvent: self.rx.methodInvoked(#selector(viewWillAppear(_:)))
+                .map({ _ in })
+                .asObservable(),
             lastAnswerBtnTapEvent: self.lastAnswerBtn.rx.tap
                 .map({ _ in })
                 .asObservable(),
@@ -56,7 +60,12 @@ final class DisplayChatVC: ChatVC {
         
         guard let output = self.viewModel?.noticeTransform(input: input, disposeBag: self.disposeBag) else{ return }
         
-
+        output.otherProfileImage
+            .bind(onNext: {[weak self] image in
+                self?.otherProfileImage = image
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     // MARK: Event
@@ -113,6 +122,11 @@ final class DisplayChatVC: ChatVC {
             layout.textMessageSizeCalculator.incomingMessageBottomLabelAlignment.textInsets.left = 6
             layout.textMessageSizeCalculator.outgoingMessageBottomLabelAlignment.textInsets.right = 6
             
+            layout.photoMessageSizeCalculator.outgoingAvatarSize = .zero
+            layout.photoMessageSizeCalculator.incomingAvatarSize = CGSize(width: 35, height: 35)
+            layout.photoMessageSizeCalculator.incomingAvatarPosition.vertical = .messageTop
+            layout.photoMessageSizeCalculator.incomingMessageBottomLabelAlignment.textInsets.left = 6
+            layout.photoMessageSizeCalculator.outgoingMessageBottomLabelAlignment.textInsets.right = 6
         }
     }
     override func configureMessageCollectionView() {
@@ -121,30 +135,11 @@ final class DisplayChatVC: ChatVC {
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.register(CustomMessageCell.self, forCellWithReuseIdentifier: "CustomMessageCell")
+        messagesCollectionView.register(CustomPhotoCell.self, forCellWithReuseIdentifier: "CustomPhotoCell")
         messagesCollectionView.scrollToLastItem()
         configure()
         setBinding()
         setAutoLayout()
-        
-    }
-    // MARK: TextCustomCell
-    override func textCell(for message: MessageType, at indexPath: IndexPath, in messageView: MessagesCollectionView) -> UICollectionViewCell? {
-        print("textCell")
-        let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: "CustomMessageCell", for: indexPath) as! CustomMessageCell
-        cell.apply(messagesCollectionView.messagesCollectionViewFlowLayout.layoutAttributesForItem(at: indexPath)!)
-        cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-        if !isNextMessageSameSender(at: indexPath) {
-            cell.messageBottomLabel.isHidden = false
-        }else if isNextMessageSameSender(at: indexPath) {
-            if !isNextMessageSameDate(at: indexPath) {
-                cell.messageBottomLabel.isHidden = false
-            }else {
-                cell.messageBottomLabel.isHidden = true
-            }
-        }else {
-            cell.messageBottomLabel.isHidden = false
-        }
-        return cell
     }
     
     // MARK: UI
@@ -335,11 +330,12 @@ extension DisplayChatVC: MessagesDisplayDelegate {
         at indexPath: IndexPath,
         in _: MessagesCollectionView)
     {
-        let avatar = SampleData.shared.getAvatarFor(sender: message.sender)
-        avatarView.set(avatar: avatar)
+        let avatar = Avatar(image: self.otherProfileImage, initials: "연인")
+        
         if isFromCurrentSender(message: message) {
             avatarView.isHidden = true
         }else {
+            avatarView.set(avatar: avatar)
             avatarView.isHidden = isPreviousMessageSameSender(at: indexPath)
         }
         
@@ -437,11 +433,10 @@ extension DisplayChatVC: MessagesLayoutDelegate {
         return 0
     }
     
-    func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in _: MessagesCollectionView) -> CGFloat {
-        return 0
-    }
-    
-    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+    func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        if !isPreviousMessageSameSender(at: indexPath) {
+            return 32
+        }
         return 0
     }
     

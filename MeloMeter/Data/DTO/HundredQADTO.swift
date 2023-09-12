@@ -25,13 +25,15 @@ struct AnswerInfoDTO {
     // MARK: - Properties
     let answerInfo: [AnswerDTO]
     let questionText: String
+    let date: String
     
     func toModel() -> AnswerInfoModel {
         return AnswerInfoModel(
             answerInfo: answerInfo.map{ answer in
                 return answer.toModel()
             },
-            questionText: questionText
+            questionText: questionText,
+            date: Date.fromStringOrNow(date, .yearToHour)
         )
     }
 }

@@ -72,6 +72,7 @@
 		5241382E2A62F2ED002AADA6 /* LogInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5241382D2A62F2ED002AADA6 /* LogInCoordinator.swift */; };
 		524138302A62F943002AADA6 /* StartVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5241382F2A62F943002AADA6 /* StartVM.swift */; };
 		5256947D2A97608200821B20 /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5256947C2A97608200821B20 /* PushNotificationService.swift */; };
+		525694812AA2371F00821B20 /* ChatCustomCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525694802AA2371F00821B20 /* ChatCustomCells.swift */; };
 		5262BB782A8C809A003EB016 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262BB772A8C809A003EB016 /* SplashVC.swift */; };
 		5262BB7A2A8C80DB003EB016 /* SplashVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262BB792A8C80DB003EB016 /* SplashVM.swift */; };
 		52697B7329EEB7B2002BDD04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697B7229EEB7B2002BDD04 /* AppDelegate.swift */; };
@@ -224,6 +225,7 @@
 		5241382D2A62F2ED002AADA6 /* LogInCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInCoordinator.swift; sourceTree = "<group>"; };
 		5241382F2A62F943002AADA6 /* StartVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartVM.swift; sourceTree = "<group>"; };
 		5256947C2A97608200821B20 /* PushNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationService.swift; sourceTree = "<group>"; };
+		525694802AA2371F00821B20 /* ChatCustomCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCustomCells.swift; sourceTree = "<group>"; };
 		5262BB772A8C809A003EB016 /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		5262BB792A8C80DB003EB016 /* SplashVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVM.swift; sourceTree = "<group>"; };
 		52697B6F29EEB7B2002BDD04 /* MeloMeter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeloMeter.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -342,6 +344,7 @@
 				2185C4CB2A83F13B00F99795 /* DisplayChatVC.swift */,
 				2185C4B72A83F13B00F99795 /* ChatVC.swift */,
 				2185C4B92A83F13B00F99795 /* ChatVM.swift */,
+				525694802AA2371F00821B20 /* ChatCustomCells.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1261,6 +1264,7 @@
 				2185C4CF2A83F13B00F99795 /* ChatCoordinator.swift in Sources */,
 				2185C4D82A83F13B00F99795 /* CustomTextLayoutSizeCalculator.swift in Sources */,
 				21C382222A87F812003638E1 /* ChatUseCase.swift in Sources */,
+				525694812AA2371F00821B20 /* ChatCustomCells.swift in Sources */,
 				52F0100B2A0A493C0014FC01 /* QnATableViewCell.swift in Sources */,
 				5290BFB42A7270DF00D734EE /* LogInRepositoryP.swift in Sources */,
 				52F305362A16B7F500112A04 /* RecoveryVC.swift in Sources */,

@@ -50,6 +50,8 @@ class CameraInputBarAccessoryView: InputBarAccessoryView {
         setStackViewItems([camera], forStack: .left, animated: false)
         padding.left = 0
         inputPlugins = [attachmentManager]
+        attachmentManager.delegate = self
+        
     }
     
     override func didSelectSendButton() {
@@ -152,29 +154,27 @@ extension CameraInputBarAccessoryView: UIImagePickerControllerDelegate, UINaviga
 extension CameraInputBarAccessoryView: AttachmentManagerDelegate {
     // MARK: - AttachmentManagerDelegate
     
-    func attachmentManager(_: AttachmentManager, shouldBecomeVisible: Bool) {
-        print("55555555")
+    func attachmentManager(_ manager: AttachmentManager, shouldBecomeVisible: Bool) {
         setAttachmentManager(active: shouldBecomeVisible)
     }
     
     func attachmentManager(_ manager: AttachmentManager, didReloadTo _: [AttachmentManager.Attachment]) {
-        print("444444444")
         sendButton.isEnabled = manager.attachments.count > 0
     }
     
-    func attachmentManager(_ manager: AttachmentManager, didInsert _: AttachmentManager.Attachment, at _: Int) {
-        print("33333333332")
+    func attachmentManager(_ manager: AttachmentManager, didInsert cell: AttachmentManager.Attachment, at index: Int) {
+        manager.dataSource?.attachmentManager(manager, cellFor: cell, at: index)
+            .deleteButton.setImage(UIImage(named: "cancel"), for: .normal)
+
         sendButton.isEnabled = manager.attachments.count > 0
     }
     
     func attachmentManager(_ manager: AttachmentManager, didRemove _: AttachmentManager.Attachment, at _: Int) {
-        print("22222222222222")
         sendButton.isEnabled = manager.attachments.count > 0
     }
 
     func attachmentManager(_ manager: AttachmentManager, didSelectAddAttachmentAt index: Int) {
-        print("디드셀렉트에드어텟ㅅ치", manager, index)
-        showImagePickerControllerActionSheet()
+        self.showImagePickerControllerActionSheet()
     }
 
     // MARK: - AttachmentManagerDelegate Helper

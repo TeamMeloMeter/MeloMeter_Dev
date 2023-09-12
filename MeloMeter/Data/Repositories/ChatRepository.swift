@@ -26,8 +26,8 @@ class ChatRepository: ChatRepositoryP{
     }
     
     // MockMessage타입을 인자로 받아서 fireBase에 insert하는 함수 / 리턴 t/f
-    func addChatMessage(mockMessage: MockMessage, coupleID: String) -> Single<Void> {
-        let dto = mockMessage.toDTO()
+    func addChatMessage(message: MockMessage, coupleID: String) -> Single<Void> {
+        let dto = message.toDTO()
         let values = dto.asDictionary ?? [:]
         let userName = UserDefaults.standard.string(forKey: "userName") ?? "상대방"
         //푸시노티
@@ -48,7 +48,7 @@ class ChatRepository: ChatRepositoryP{
                     let values = dto.asDictionary ?? [:]
                     let userName = UserDefaults.standard.string(forKey: "userName") ?? "상대방"
                     //푸시노티
-                    PushNotificationService.shared.sendPushNotification(title: userName, body: values["contents"] as? String ?? "메세지가 도착했어요!")
+                    PushNotificationService.shared.sendPushNotification(title: userName, body: "(사진)")
                     
                     return self.firebaseService.updateDocument(collection: .Chat, document: coupleID, values: ["chatField" : FieldValue.arrayUnion([values]) ])
                 }
@@ -72,14 +72,10 @@ class ChatRepository: ChatRepositoryP{
                         return date1.seconds > date2.seconds ||
                         (date1.seconds == date2.seconds && date1.nanoseconds > date2.nanoseconds)
                     }
-                    // 최대 30개의 매세지를 가져온다
                     let numberOfMessagesToRetrieve = 1
                     let recentChatFields = Array(sortedChatFields.suffix(numberOfMessagesToRetrieve))
-                    
-                    // DTO타입으로 형변환
                     self.recieveChatMessage.accept(self.convertToChatDTOArray(from: recentChatFields))
                 } else {
-                    //비어있는경우
                     self.recieveChatMessage.accept([])
                 }
             }) { error in

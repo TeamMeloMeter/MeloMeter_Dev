@@ -32,6 +32,7 @@ class MyProfileVM {
         var userPhoneNumber = PublishRelay<String>()
         var stateMessage = PublishRelay<String?>()
         var sinceFirstDay = PublishRelay<String>()
+        var lastHundredQA = PublishRelay<String>()
     }
     
     
@@ -53,7 +54,6 @@ class MyProfileVM {
                             })
                             .disposed(by: disposeBag)
                         guard let name = user.name, let phoneNumber = user.phoneNumber, let otherUid = user.otherUid else{ return }
-                        print("내 정보", user.name, user.otherUid)
                         self.myProfileUseCase.getDdayInfo(otherUid: otherUid)
                             .subscribe(onSuccess: { dDayInfo in
                                 output.coupleUserName.accept("\(name) & \(dDayInfo[0])")
@@ -65,6 +65,11 @@ class MyProfileVM {
                         number.insert(" 0", at: 3)
                         number.insert("-", at: 6)
                         number.insert("-", at: 11)
+                        self.myProfileUseCase.getLastHundredQA()
+                            .subscribe(onSuccess: { number in
+                                output.lastHundredQA.accept("\(number)번째 백문백답 완료!")
+                            })
+                            .disposed(by: disposeBag)
                         output.userPhoneNumber.accept(number.joined())
                         output.stateMessage.accept(user.stateMessage)
                         
@@ -97,7 +102,6 @@ class MyProfileVM {
         input.editProfileBtnTapEvent
             .subscribe(onNext: {[weak self] _ in
                 guard let self = self else{ return }
-                print("프로필 탭이벤트")
                 self.coordinator?.showEditProfileVC()
             })
             .disposed(by: disposeBag)

@@ -11,6 +11,7 @@ extension Date {
     
     enum Format: String {
         case yearToDay = "yyyy.MM.dd"
+        case yearToHour = "yyyy.MM.dd.hh"
         case yearToDayHipen = "yyyy-MM-dd"
         case yearToSecond = "yyyy-MM-dd HH:mm:ss"
         case timeStamp = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
