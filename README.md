@@ -37,9 +37,9 @@
 <img width="300" alt="coord" src="https://github.com/TeamMeloMeter/MeloMeter/assets/111224287/85dfd947-d852-4f19-8e81-26ecf5429ed3">
 
 ### 💌 하루 한번, 질문을 받고 답변을 상대방과 공유할 수 있어요.
-<img width="280" alt="coord" src="https://github.com/TeamMeloMeter/MeloMeter/assets/111224287/3f466252-2a23-43b9-9192-00c69c6fd0f6">
-<img width="280" alt="coord" src="https://github.com/TeamMeloMeter/MeloMeter/assets/111224287/20ad70de-24e3-4630-a907-ea2fbe222ac4">
-<img width="280" alt="coord" src="https://github.com/TeamMeloMeter/MeloMeter/assets/111224287/81601fb2-53bf-427c-8e20-fbece417b4e4">
+<img width="250" alt="coord" src="https://github.com/TeamMeloMeter/MeloMeter/assets/111224287/3f466252-2a23-43b9-9192-00c69c6fd0f6">
+<img width="250" alt="coord" src="https://github.com/TeamMeloMeter/MeloMeter/assets/111224287/20ad70de-24e3-4630-a907-ea2fbe222ac4">
+<img width="250" alt="coord" src="https://github.com/TeamMeloMeter/MeloMeter/assets/111224287/81601fb2-53bf-427c-8e20-fbece417b4e4">
 
 ### 👀 기념일을 확인하고, 새로운 날짜를 추가할 수 있어요.
 <img width="300" alt="coord" src="https://github.com/TeamMeloMeter/MeloMeter/assets/111224287/d32e7f1a-05b4-42d6-93b9-ef6fc298da8e">
