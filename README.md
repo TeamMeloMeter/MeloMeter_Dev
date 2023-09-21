@@ -45,6 +45,10 @@
 <img width="300" alt="coord" src="https://github.com/TeamMeloMeter/MeloMeter/assets/111224287/d32e7f1a-05b4-42d6-93b9-ef6fc298da8e">
 <img width="300" alt="coord" src="https://github.com/TeamMeloMeter/MeloMeter/assets/111224287/8864cb64-9c75-4ebc-a767-2b9c54dc0030">
 
+### ✍️ 다양한 나의 정보를 변경할 수 있어요.
+<img width="300" alt="coord" src="https://github.com/TeamMeloMeter/MeloMeter/assets/111224287/43c1efad-97c2-445c-99bb-8243ed98b15b">
+<img width="300" alt="coord" src="https://github.com/TeamMeloMeter/MeloMeter/assets/111224287/540300c9-a9a4-449a-a9ec-503d2fd06391">
+
 # 🛠️ 주요 사용 기술
 
 ## ➜ MVVM
