@@ -27,9 +27,9 @@
 ---
 
 ### 📲 전화번호 인증과 초대코드 입력으로, 상대방과 연결 후 시작할 수 있어요! 내 초대코드를 상대방에게 카카오톡으로 공유할 수 있어요!
-<img width="300" alt="coord" src="https://github.com/TeamMeloMeter/MeloMeter/assets/111224287/40985906-6c48-4cff-802a-6a5cf64076b4">
-<img width="300" alt="coord" src="https://github.com/TeamMeloMeter/MeloMeter/assets/111224287/a8995d3b-a851-4fff-a44a-c9da10a3b64f">
-<img width="300" alt="coord" src="https://github.com/TeamMeloMeter/MeloMeter/assets/111224287/652a5dd9-72d3-482b-b86f-de5cc6ad0161">
+<img width="250" alt="coord" src="https://github.com/TeamMeloMeter/MeloMeter/assets/111224287/40985906-6c48-4cff-802a-6a5cf64076b4">
+<img width="250" alt="coord" src="https://github.com/TeamMeloMeter/MeloMeter/assets/111224287/a8995d3b-a851-4fff-a44a-c9da10a3b64f">
+<img width="250" alt="coord" src="https://github.com/TeamMeloMeter/MeloMeter/assets/111224287/652a5dd9-72d3-482b-b86f-de5cc6ad0161">
 
 
 ### 📍 상대방과 위치를 실시간으로 확인할 수 있어요. 　　　💬　상대와 둘만 있는 공간에서 채팅할 수 있어요.
