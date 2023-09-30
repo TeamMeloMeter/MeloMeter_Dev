@@ -32,6 +32,7 @@ class AlarmVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = false
     }
     
     func setBindings() {
@@ -59,16 +60,8 @@ class AlarmVC: UIViewController {
     // MARK: NavigationBar
     private func setNavigationBar() {
         navigationItem.title = "알림"
-//        let appearance = UINavigationBarAppearance()
-//        let backButtonImage = UIImage(systemName: "backIcon")
-//        
-//        appearance.configureWithTransparentBackground()
-//        appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
-//        self.navigationController?.navigationBar.tintColor = .black
-//        
-//        navigationItem.standardAppearance = appearance
-        //self.navigationItem.scrollEdgeAppearance = appearance
-        
+        navigationItem.leftBarButtonItem = backBarButton
+        navigationItem.leftBarButtonItem?.tintColor = .black
     }
     
     private lazy var backBarButton: UIBarButtonItem = {
