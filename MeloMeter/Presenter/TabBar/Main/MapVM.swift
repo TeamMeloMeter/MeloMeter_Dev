@@ -89,7 +89,7 @@ class MapVM {
         input.alarmBtnTapEvent
             .subscribe(onNext: {[weak self] _ in
                 self?.coordinator?.showAlarmFlow()
-            }) // 알림 화면으로 전환하기
+            }) 
             .disposed(by: disposeBag)
         
         self.mainUseCase.authorizationStatus

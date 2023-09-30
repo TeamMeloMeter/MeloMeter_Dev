@@ -40,6 +40,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setMarker()
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     // MARK: Binding
@@ -48,8 +49,12 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             viewWillApearEvent: self.rx.methodInvoked(#selector(viewWillAppear(_:)))
                 .map({ _ in })
                 .asObservable(),
-            dDayBtnTapEvent: self.dDayButton.rx.tap.asObservable(),
-            alarmBtnTapEvent: self.alarmButton.rx.tap.asObservable(),
+            dDayBtnTapEvent: self.dDayButton.rx.tap
+                .map({ _ in })
+                .asObservable(),
+            alarmBtnTapEvent: self.alarmButton.rx.tap
+                .map({ _ in })
+                .asObservable(),
             endTriggerAlertTapEvent: self.endTriggerAlertEvent
                 .asObserver()
         )
@@ -185,7 +190,10 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
 
     // MARK: Configure
     func configure() {
-        [naverMapView, alarmButton, dDayButton, currentLocationButton].forEach { view.addSubview($0) }
+        [naverMapView,
+         currentLocationButton,
+         dDayButton,
+         alarmButton].forEach { view.addSubview($0) }
         view.sendSubviewToBack(naverMapView)
     }
     
@@ -243,7 +251,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     // MARK: navigationBar
     func setNavigationBar() {
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-
+        self.navigationController?.navigationBar.isHidden = true
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: FontManager.shared.medium(ofSize: 18)]
@@ -399,7 +407,6 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         let button = UIButton()
         button.setImage(UIImage(named: "alarmIcon"), for: .normal)
         button.backgroundColor = .white
-        button.clipsToBounds = true
         button.layer.cornerRadius = 24
         button.layer.applyShadow(color: #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1), alpha: 0.25, x: 3, y: 3, blur: 8)
         button.layer.masksToBounds = false
@@ -467,14 +474,14 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         NSLayoutConstraint.activate([
             dDayButton.leadingAnchor.constraint(equalTo: dDayLabel.leadingAnchor, constant: -20),
             dDayButton.trailingAnchor.constraint(equalTo: dDayLabel.trailingAnchor, constant: 20),
-            dDayButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 60),
+            dDayButton.topAnchor.constraint(equalTo: naverMapView.topAnchor, constant: 60),
             dDayButton.heightAnchor.constraint(equalToConstant: 48),
             
             dDayLabel.centerXAnchor.constraint(equalTo: naverMapView.centerXAnchor),
             dDayLabel.centerYAnchor.constraint(equalTo: dDayButton.centerYAnchor),
             
             alarmButton.trailingAnchor.constraint(equalTo: naverMapView.trailingAnchor, constant: -16),
-            alarmButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 60),
+            alarmButton.topAnchor.constraint(equalTo: naverMapView.topAnchor, constant: 60),
             alarmButton.widthAnchor.constraint(equalToConstant: 48),
             alarmButton.heightAnchor.constraint(equalToConstant: 48),
 
