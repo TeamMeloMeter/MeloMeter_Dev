@@ -126,7 +126,7 @@ class MyProfileVC: UIViewController {
         output.lastHundredQA
             .asDriver(onErrorJustReturn: "백문백답을 시작해보세요!")
             .drive(onNext: { lastNumberString in
-                self.hundredQnASubtitleLabel.text = lastNumberString
+                self.hundredQnASubtitleLabel.text = "1번째 백문백답 완료!"// lastNumberString
             })
             .disposed(by: disposeBag)
     }
@@ -231,7 +231,7 @@ class MyProfileVC: UIViewController {
         let label = UILabel()
         label.textColor = .gray1
         label.font = FontManager.shared.medium(ofSize: 14)
-        label.text = "00님의 생일까지 7일이 남았어요"
+        label.text = "이름님의 생일까지 7일이 남았어요"
         return label
     }()
     
@@ -308,7 +308,7 @@ class MyProfileVC: UIViewController {
         let label = UILabel()
         label.textColor = .gray1
         label.font = FontManager.shared.medium(ofSize: 14)
-        label.text = "1234번째 백문백답 완료!"
+        label.text = "2번째 백문백답 완료!"
         return label
     }()
     

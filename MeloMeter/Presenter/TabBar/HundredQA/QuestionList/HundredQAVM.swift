@@ -41,7 +41,6 @@ class HundredQAVM {
                 guard let self = self else{ return }
                 self.hundredQAUseCase.getAnswerList()
                     .subscribe(onSuccess: { answerModel in
-                        print(answerModel, "VVVVVV")
                         self.answerArray = answerModel.map{ $0.answerInfo }
                         let questionTextArray = answerModel.map{ ($0.questionText, $0.date) }
                         var topData: [(String, Date)] = []
