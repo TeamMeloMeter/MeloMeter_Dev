@@ -126,7 +126,7 @@ final class PushNotificationService {
         //반복 알림 추가
         let center = UNUserNotificationCenter.current()
         
-//        center.removeAllPendingNotificationRequests()
+        center.removeAllPendingNotificationRequests()
         
         // 알림 콘텐츠 생성
         let content = UNMutableNotificationContent()
@@ -272,15 +272,15 @@ final class PushNotificationService {
         }
 
 //        개수 가져오기
-        UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { notiList in
-
-            print("🟢등록된 개수 : ", notiList.count)
-
-            notiList.map { noti in
-                print("🟢등록된 내용 : ", noti.content.body)
-                print("🟢등록된 유저인포 : ", noti.content.userInfo["type"] ?? "")
-            }
-        })
+//        UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { notiList in
+//
+//            print("🟢등록된 개수 : ", notiList.count)
+//
+//            notiList.map { noti in
+//                print("🟢등록된 내용 : ", noti.content.body)
+//                print("🟢등록된 유저인포 : ", noti.content.userInfo["type"] ?? "")
+//            }
+//        })
         
     }
     
