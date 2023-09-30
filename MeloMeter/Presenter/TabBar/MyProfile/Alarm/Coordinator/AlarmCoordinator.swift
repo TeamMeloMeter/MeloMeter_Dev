@@ -26,7 +26,7 @@ final class AlarmCoordinator: Coordinator {
 extension AlarmCoordinator {
     
     func showAlarmVC() {
-        let viewController = AlarmVC(viewModel: AlarmVM(coordinator: self))
+        let viewController = AlarmVC(viewModel: AlarmVM(coordinator: self, alarmUseCase: AlarmUseCase(alarmRepository: AlarmRepository(firebaseService: DefaultFirebaseService()))))
         
         viewController.hidesBottomBarWhenPushed = true
         self.navigationController.setNavigationBarHidden(false, animated: false)

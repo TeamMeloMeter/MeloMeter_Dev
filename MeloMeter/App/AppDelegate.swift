@@ -79,21 +79,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
         //사일런트 푸시 받는 용도
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            let backgroundTaskManager = BackgroundTaskManager(firebaseService: DefaultFirebaseService())
-            
-            print("🟢 백그라운드 : ", #function)
-            
-            if let title = userInfo["title"] as? String,
-               let date = userInfo["date"] as? String,
-               let body = userInfo["body"] as? String {
-                print("보낸사람 : \(title)")
-                print("내용 : \(date)")
-                print("시간 : \(body)")
-                
-                backgroundTaskManager.addAlarm(title: title, body: body, date: date)
-            }
-        }
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+//
+//
+//            print("🟢 백그라운드 : ", #function)
+//
+//            if let title = userInfo["title"] as? String,
+//               let date = userInfo["date"] as? String,
+//               let body = userInfo["body"] as? String {
+//                print("보낸사람 : \(title)")
+//                print("내용 : \(date)")
+//                print("시간 : \(body)")
+//
+//                PushNotificationService.shared.addAlarm(title: title, body: body, date: date, type: AlarmType.custom.stringType)
+//            }
+//        }
         
      }
     
@@ -108,6 +108,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     // 앱화면 보고있는중에 푸시올 때
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
         print("🟢 인앱 : ", #function)
+        
+        let userInfo = notification.request.content.userInfo
+        
+        print("🟢🟢🟢",userInfo)
+        
+        if let title = notification.request.content.title as? String,
+           let date = Date().toString() as? String,
+           let body = notification.request.content.body as? String
+        {
+
+            print("보낸사람 : \(title)")
+            print("내용 : \((body))")
+            print("시간 : \(date)")
+//            print("타입 : \(type)")
+            
+            PushNotificationService.shared.addAlarm(title: title, body: body, date: date, type: "type")
+        } else { print( "파멸이다!!!!!!!") }
+//        UNUserNotificationCenter.current()
+        
         
         return [.sound, .banner, .list]
     }

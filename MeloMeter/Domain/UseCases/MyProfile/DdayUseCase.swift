@@ -44,12 +44,14 @@ class DdayUseCase {
         return result
     }
     
+    //기념일s 날짜, 처음만난 날짜 가져와서 createDdayList로 넘겨서 결과값을 받아, 변수로 저장
     func coupleObserverExcute() {
         self.coupleRepository.couplesObserver()
         self.coupleRepository.coupleModel
             .map{ data in
                 guard let data = data else{ return []}
                 let dataArray = data.anniversaries, firstDay = data.firstDay
+                
                 return self.createDdayList(dataArray, firstDay)
             }
             .asObservable()
@@ -123,7 +125,7 @@ class DdayUseCase {
             }
             
         }
-        
+    
         return resultArray.sorted(by: { $0.date < $1.date })
     }
     

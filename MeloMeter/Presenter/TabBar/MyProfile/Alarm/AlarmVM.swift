@@ -13,7 +13,8 @@ import RxCocoa
 class AlarmVM {
 
     weak var coordinator: AlarmCoordinator?
-
+    private var alarmUseCase: AlarmUseCase
+    
     struct Input {
         let viewWillApearEvent: Observable<Void>
         let backBtnTapEvent: Observable<Void>
@@ -23,7 +24,8 @@ class AlarmVM {
 
     }
     
-    init(coordinator: AlarmCoordinator) {
+    init(coordinator: AlarmCoordinator, alarmUseCase: AlarmUseCase) {
+        self.alarmUseCase = alarmUseCase
         self.coordinator = coordinator
     }
     
@@ -34,6 +36,16 @@ class AlarmVM {
             .subscribe(onNext: {[weak self] _ in
                 guard let self = self else{ return }
                 self.coordinator?.finish()
+            })
+            .disposed(by: disposeBag)
+        
+        input.viewWillApearEvent
+            .subscribe(onNext: {[weak self] _ in
+                guard let self = self else{ return }
+                self.alarmUseCase.getAlarmService().subscribe( onSuccess: { Element in
+                    print("🟢",Element)
+                })
+                .disposed(by: disposeBag)
             })
             .disposed(by: disposeBag)
         

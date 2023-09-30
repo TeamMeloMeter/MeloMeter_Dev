@@ -68,7 +68,7 @@ class ChatUseCase {
         }
     }
     
-// 메시지 가져오기
+    // 메시지 가져오기
     func getChatMessageService() {
         self.coupleRepository.getCoupleID().subscribe(onSuccess: { coupleID in
             self.chatRepository.getChatMessage(coupleID: coupleID)

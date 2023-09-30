@@ -12,6 +12,11 @@
 		2108F0472A6EC48B002EED7A /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108F0462A6EC48B002EED7A /* UserDTO.swift */; };
 		2108F0492A6EC565002EED7A /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108F0482A6EC565002EED7A /* UserModel.swift */; };
 		2108F04B2A702A77002EED7A /* PermissionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108F04A2A702A77002EED7A /* PermissionVM.swift */; };
+		210BAFC02AC88AEA0012B786 /* AlarmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210BAFBF2AC88AEA0012B786 /* AlarmRepository.swift */; };
+		210BAFC22AC88B0C0012B786 /* AlarmRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210BAFC12AC88B0C0012B786 /* AlarmRepositoryP.swift */; };
+		210BAFC42AC88B610012B786 /* AlarmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210BAFC32AC88B610012B786 /* AlarmModel.swift */; };
+		210BAFC62AC88DF70012B786 /* AlarmDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210BAFC52AC88DF70012B786 /* AlarmDTO.swift */; };
+		210BAFC92AC896D70012B786 /* AlarmUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210BAFC82AC896D70012B786 /* AlarmUseCase.swift */; };
 		2124EC872A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2124EC862A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift */; };
 		2124EC892A97BB1300FC6C0B /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2124EC882A97BB1300FC6C0B /* AlertService.swift */; };
 		214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */; };
@@ -63,7 +68,6 @@
 		5230B2782A77907500781623 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2772A77907500781623 /* LocationService.swift */; };
 		5230B27A2A7790A300781623 /* DefaultLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2792A7790A300781623 /* DefaultLocationService.swift */; };
 		5230B27C2A77926A00781623 /* MainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B27B2A77926A00781623 /* MainUseCase.swift */; };
-		5230B2802A7C20D400781623 /* BackgroundTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B27F2A7C20D400781623 /* BackgroundTaskManager.swift */; };
 		5230B2822A7CFF6F00781623 /* MyProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2812A7CFF6F00781623 /* MyProfileCoordinator.swift */; };
 		5230B2842A7D029200781623 /* MyProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2832A7D029200781623 /* MyProfileUseCase.swift */; };
 		5230B2862A7D048400781623 /* MyProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2852A7D048400781623 /* MyProfileVM.swift */; };
@@ -164,6 +168,11 @@
 		2108F0462A6EC48B002EED7A /* UserDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
 		2108F0482A6EC565002EED7A /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		2108F04A2A702A77002EED7A /* PermissionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionVM.swift; sourceTree = "<group>"; };
+		210BAFBF2AC88AEA0012B786 /* AlarmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmRepository.swift; sourceTree = "<group>"; };
+		210BAFC12AC88B0C0012B786 /* AlarmRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmRepositoryP.swift; sourceTree = "<group>"; };
+		210BAFC32AC88B610012B786 /* AlarmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmModel.swift; sourceTree = "<group>"; };
+		210BAFC52AC88DF70012B786 /* AlarmDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDTO.swift; sourceTree = "<group>"; };
+		210BAFC82AC896D70012B786 /* AlarmUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmUseCase.swift; sourceTree = "<group>"; };
 		2124EC862A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraInputBarAccessoryView.swift; sourceTree = "<group>"; };
 		2124EC882A97BB1300FC6C0B /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardStatusDetector.swift; sourceTree = "<group>"; };
@@ -216,7 +225,6 @@
 		5230B2772A77907500781623 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		5230B2792A7790A300781623 /* DefaultLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLocationService.swift; sourceTree = "<group>"; };
 		5230B27B2A77926A00781623 /* MainUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUseCase.swift; sourceTree = "<group>"; };
-		5230B27F2A7C20D400781623 /* BackgroundTaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTaskManager.swift; sourceTree = "<group>"; };
 		5230B2812A7CFF6F00781623 /* MyProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileCoordinator.swift; sourceTree = "<group>"; };
 		5230B2832A7D029200781623 /* MyProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileUseCase.swift; sourceTree = "<group>"; };
 		5230B2852A7D048400781623 /* MyProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileVM.swift; sourceTree = "<group>"; };
@@ -334,6 +342,14 @@
 				210369092AA772BA00A5EEB5 /* CalendarNotificationTriggerUseCase.swift */,
 			);
 			path = CalenderNoti;
+			sourceTree = "<group>";
+		};
+		210BAFC72AC896B80012B786 /* Alarm */ = {
+			isa = PBXGroup;
+			children = (
+				210BAFC82AC896D70012B786 /* AlarmUseCase.swift */,
+			);
+			path = Alarm;
 			sourceTree = "<group>";
 		};
 		2185C4B52A83F13B00F99795 /* Chat */ = {
@@ -566,7 +582,6 @@
 				52697B7229EEB7B2002BDD04 /* AppDelegate.swift */,
 				52697B7429EEB7B2002BDD04 /* SceneDelegate.swift */,
 				5241382B2A62F240002AADA6 /* AppCoordinator.swift */,
-				5230B27F2A7C20D400781623 /* BackgroundTaskManager.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -733,6 +748,7 @@
 				521D41F52A81C71F00E5CCDA /* CoupleRepository.swift */,
 				21C3821E2A87F7B1003638E1 /* ChatRepository.swift */,
 				52F739502A94DE1D00D46FBB /* HundredQARepository.swift */,
+				210BAFBF2AC88AEA0012B786 /* AlarmRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -798,6 +814,7 @@
 				521D41ED2A801D5700E5CCDA /* CoupleDTO.swift */,
 				21C382232A87F85F003638E1 /* ChatDTO.swift */,
 				52F739562A94E71500D46FBB /* HundredQADTO.swift */,
+				210BAFC52AC88DF70012B786 /* AlarmDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -810,6 +827,7 @@
 				521D41F72A81C75100E5CCDA /* CoupleRepositoryP.swift */,
 				21C3821C2A87F778003638E1 /* ChatRepositoryP.swift */,
 				52F739522A94DE7800D46FBB /* HundredQARepositoryP.swift */,
+				210BAFC12AC88B0C0012B786 /* AlarmRepositoryP.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -817,6 +835,7 @@
 		5290BFB52A72712800D734EE /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				210BAFC72AC896B80012B786 /* Alarm */,
 				210369082AA7728400A5EEB5 /* CalenderNoti */,
 				21C382202A87F7F9003638E1 /* Chat */,
 				521D41E92A7FFD7000E5CCDA /* LogIn */,
@@ -981,6 +1000,7 @@
 				2108F0482A6EC565002EED7A /* UserModel.swift */,
 				521D41EB2A801D1200E5CCDA /* CoupleModel.swift */,
 				52F739542A94E6DB00D46FBB /* HundredQAModel.swift */,
+				210BAFC32AC88B610012B786 /* AlarmModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1229,7 +1249,6 @@
 				52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */,
 				5271D40B2A544A2D00FC7606 /* LogInVM.swift in Sources */,
 				52AEAD002A93D6250097930E /* HundredQACoordinator.swift in Sources */,
-				5230B2802A7C20D400781623 /* BackgroundTaskManager.swift in Sources */,
 				52AEAD0A2A93EAB20097930E /* HundredQATableViewCell.swift in Sources */,
 				5230B2842A7D029200781623 /* MyProfileUseCase.swift in Sources */,
 				2185C4DB2A83F13B00F99795 /* MockSocket.swift in Sources */,
@@ -1275,6 +1294,7 @@
 				5230B2862A7D048400781623 /* MyProfileVM.swift in Sources */,
 				5271D4192A58429000FC7606 /* FireStoreCollection.swift in Sources */,
 				527547EE2A68FC9000313EFC /* CustomAlertVC.swift in Sources */,
+				210BAFC42AC88B610012B786 /* AlarmModel.swift in Sources */,
 				5256947D2A97608200821B20 /* PushNotificationService.swift in Sources */,
 				5230B2782A77907500781623 /* LocationService.swift in Sources */,
 				5271D42E2A604BF400FC7606 /* Date+.swift in Sources */,
@@ -1305,13 +1325,16 @@
 				5271D42C2A60484300FC7606 /* LogInDTO.swift in Sources */,
 				5262BB782A8C809A003EB016 /* SplashVC.swift in Sources */,
 				52F010242A0B77ED0014FC01 /* EditBirthVC.swift in Sources */,
+				210BAFC02AC88AEA0012B786 /* AlarmRepository.swift in Sources */,
 				5270EC102A460354007FF444 /* AuthNumVC.swift in Sources */,
 				5271D4062A51DBDD00FC7606 /* ProfileInsertVC.swift in Sources */,
 				5271D4302A605B0900FC7606 /* Encodable+.swift in Sources */,
+				210BAFC62AC88DF70012B786 /* AlarmDTO.swift in Sources */,
 				5270EC0C2A44614A007FF444 /* PhoneCertifiedVC.swift in Sources */,
 				5230B2822A7CFF6F00781623 /* MyProfileCoordinator.swift in Sources */,
 				526EB85E2A7D5992005B1940 /* UserRepository.swift in Sources */,
 				52F00FFA2A0938480014FC01 /* NoticeVC.swift in Sources */,
+				210BAFC92AC896D70012B786 /* AlarmUseCase.swift in Sources */,
 				2108F0492A6EC565002EED7A /* UserModel.swift in Sources */,
 				5271D4322A606D0B00FC7606 /* Dictionary+.swift in Sources */,
 				521D41E52A7FFAD200E5CCDA /* DdayVM.swift in Sources */,
@@ -1324,6 +1347,7 @@
 				52F739512A94DE1D00D46FBB /* HundredQARepository.swift in Sources */,
 				521D42192A8A99B700E5CCDA /* QnAVM.swift in Sources */,
 				52F0101E2A0ACE190014FC01 /* EditNameVC.swift in Sources */,
+				210BAFC22AC88B0C0012B786 /* AlarmRepositoryP.swift in Sources */,
 				52F7394A2A9404EF00D46FBB /* ReadAnswerVC.swift in Sources */,
 				5271D4152A55C9DD00FC7606 /* LogInModel.swift in Sources */,
 				52F2084029FBFF280043BCA4 /* DdayVC.swift in Sources */,

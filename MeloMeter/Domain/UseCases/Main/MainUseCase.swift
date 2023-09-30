@@ -107,6 +107,8 @@ extension MainUseCase {
         return self.firebaseService.getDocument(collection: .Couples, document: coupleID)
             .flatMap{ source in
                 guard let coupleModel = source.toObject(CoupleDTO.self)?.toModel() else{ return Single.just("")}
+                //주기적 알림 등록
+                PushNotificationService.shared.addRepeatAlarm(coupleModel.anniversaries, coupleModel.firstDay)
                 let currentDate = Date.fromStringOrNow(Date().toString(type: .yearToDay), .yearToDay)
                 let sinceDay = calendar.dateComponents([.day], from: currentDate, to: coupleModel.firstDay).day ?? 0
                 return Single.just(String(abs(sinceDay)))
