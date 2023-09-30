@@ -109,7 +109,7 @@ class HundredQARepository: HundredQARepositoryP {
             )
             .flatMap{ _ in
                 let userName = UserDefaults.standard.string(forKey: "userName") ?? "상대방"
-                PushNotificationService.shared.sendPushNotification(title: "백문백답", body: "\(userName)님이 \((Int(questionNumber) ?? 0)+1)번째 백문백답에 답변했어요!")
+                PushNotificationService.shared.sendPushNotification(title: "백문백답", body: "\(userName)님이 \((Int(questionNumber) ?? 0)+1)번째 백문백답에 답변했어요!", type: AlarmType.hundredQA)
                 return Single.create{ single in
                     single(.success(()))
                     return Disposables.create()
@@ -124,7 +124,7 @@ class HundredQARepository: HundredQARepositoryP {
                 values: ["answersList" :  [questionNumber: FieldValue.arrayUnion(values)] ]
             )
             .flatMap{ _ in
-                PushNotificationService.shared.sendPushNotification(title: "백문백답", body: "오늘의 질문이 도착했어요!")
+                PushNotificationService.shared.sendPushNotification(title: "백문백답", body: "오늘의 질문이 도착했어요!", type: AlarmType.hundredQA)
                 PushNotificationService.shared.localPushNotification(title: "백문백답", body: "오늘의 질문이 도착했어요!")
                 return Single.create{ single in
                     single(.success(()))

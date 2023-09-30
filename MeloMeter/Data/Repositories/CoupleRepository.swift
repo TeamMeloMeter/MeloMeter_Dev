@@ -32,8 +32,7 @@ class CoupleRepository: CoupleRepositoryP {
                             guard let id = data["coupleID"] as? String else{ return Single.just("") }
                             UserDefaults.standard.set(id, forKey: "coupleDocumentID")
                             return Single.just(id)
-                        }
-                        
+                        }    
                 }
         }
     }

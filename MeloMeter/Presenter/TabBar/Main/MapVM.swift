@@ -65,7 +65,7 @@ class MapVM {
                         DispatchQueue.main.sync {
                             
                             for item in notifications {
-                                print("🟢 노티 : ",item.request.content.body)
+                                print("🟢 읽지않은 노티 : ",item.request.content.body)
                             }
                         }
                     }
@@ -73,6 +73,7 @@ class MapVM {
                     //잔여 알림목록 초기화
                     UNUserNotificationCenter.current().removeAllDeliveredNotifications()
                     UNUserNotificationCenter.current().setBadgeCount(0)
+    
                 })
                 .disposed(by: disposeBag)
         } else {

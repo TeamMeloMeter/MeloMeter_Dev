@@ -31,7 +31,7 @@ class ChatRepository: ChatRepositoryP{
         let values = dto.asDictionary ?? [:]
         let userName = UserDefaults.standard.string(forKey: "userName") ?? "상대방"
         //푸시노티
-        PushNotificationService.shared.sendPushNotification(title: userName, body: values["contents"] as? String ?? "메세지가 도착했어요!")
+        PushNotificationService.shared.sendPushNotification(title: userName, body: values["contents"] as? String ?? "메세지가 도착했어요!", type: AlarmType.chat)
         
         return self.firebaseService.updateDocument(collection: .Chat, document: coupleID, values: ["chatField" : FieldValue.arrayUnion([values]) ])
     }
@@ -48,7 +48,7 @@ class ChatRepository: ChatRepositoryP{
                     let values = dto.asDictionary ?? [:]
                     let userName = UserDefaults.standard.string(forKey: "userName") ?? "상대방"
                     //푸시노티
-                    PushNotificationService.shared.sendPushNotification(title: userName, body: "(사진)")
+                    PushNotificationService.shared.sendPushNotification(title: userName, body: "(사진)", type: AlarmType.chat)
                     
                     return self.firebaseService.updateDocument(collection: .Chat, document: coupleID, values: ["chatField" : FieldValue.arrayUnion([values]) ])
                 }

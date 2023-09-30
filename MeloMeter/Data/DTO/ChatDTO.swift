@@ -23,6 +23,7 @@ enum ChatType: String, Codable {
             }
         }
 }
+
 struct ChatDTO: Codable {
 
 // MARK: - Properties
