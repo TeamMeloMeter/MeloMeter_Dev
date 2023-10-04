@@ -21,16 +21,16 @@ class AlarmRepository: AlarmRepositoryP {
     }
     
     //실시간으로 추가된 알림 목록 가져오기
-    func getAlarm() -> Single<[AlarmDTO]> {
+    func getAlarm() -> Observable<[AlarmDTO]> {
         return self.firebaseService.observer(collection: .Alarm, document: UserDefaults.standard.string(forKey: "uid") ?? "")
-            .map { documentSnapshot in
+            .map { documentSnapshot -> [AlarmDTO] in
+                
                 if let alarmList = documentSnapshot["alarmList"] as? [[String: Any]],  !alarmList.isEmpty{
                     return self.convertToAlarmDTOArray(from: alarmList)
                 } else {
                     return []
                 }
             }
-            .asSingle()
     }
     
     //딕셔너리로 가져온 데이터 [DTO] 로 변환
@@ -38,16 +38,14 @@ class AlarmRepository: AlarmRepositoryP {
         var alarmDTOArray: [AlarmDTO] = []
         
         for dictionary in dictionaries {
-            if let body = dictionary["body"] as? String,
+            if let text = dictionary["text"] as? String,
                let date = dictionary["date"] as? String,
-               let title = dictionary["title"] as? String,
                let type = dictionary["type"] as? String
             {
-                let alarmDTO = AlarmDTO(body: body, date: date, title: title, type: type)
+                let alarmDTO = AlarmDTO(text: text, date: date, type: type)
                 alarmDTOArray.append(alarmDTO)
             }
         }
-        print("🟢2222",alarmDTOArray)
         return alarmDTOArray
     }
 }
