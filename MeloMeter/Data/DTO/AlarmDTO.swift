@@ -10,9 +10,8 @@ import Foundation
 struct AlarmDTO {
     
     // MARK: - Properties
-    let body: String
+    let text: String
     let date: String
-    let title: String
     let type: String
     
     
@@ -20,10 +19,11 @@ struct AlarmDTO {
     func toModel() -> AlarmModel {
         let alarmType = AlarmType(rawValue: type) ?? AlarmType.chat
         
+        print("@@@@@@@@ : ",Date.stringToDate(dateString: date, type: .yearToDay))
+        
         return AlarmModel(
-            body: body,
-            date: Date.fromStringOrNow(date, .yearToDay),
-            title: title,
+            text: text,
+            date: Date.stringToDate(dateString: date, type: .yearToDay) ?? Date(),
             type: alarmType)
     }
 }

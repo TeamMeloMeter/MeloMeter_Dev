@@ -111,19 +111,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         
         let userInfo = notification.request.content.userInfo
         
-        print("🟢🟢🟢",userInfo)
-        
-        if let title = notification.request.content.title as? String,
-           let date = Date().toString() as? String,
-           let body = notification.request.content.body as? String
+        if let date = Date().toString(type: .yearToDay) as? String,
+           let text = notification.request.content.body as? String
         {
 
-            print("보낸사람 : \(title)")
-            print("내용 : \((body))")
+            print("내용 : \((text))")
             print("시간 : \(date)")
 //            print("타입 : \(type)")
             
-            PushNotificationService.shared.addAlarm(title: title, body: body, date: date, type: "type")
+            PushNotificationService.shared.addAlarm(text: text, date: date, type: "type")
         } else { print( "파멸이다!!!!!!!") }
 //        UNUserNotificationCenter.current()
         

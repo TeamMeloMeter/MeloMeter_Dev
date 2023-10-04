@@ -14,6 +14,7 @@ class AlarmVC: UIViewController {
     
     private let viewModel: AlarmVM?
     let disposeBag = DisposeBag()
+    var alarmDataList: [AlarmData] = []
     
     init(viewModel: AlarmVM) {
         self.viewModel = viewModel
@@ -47,7 +48,13 @@ class AlarmVC: UIViewController {
         
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else { return }
       
-
+        output.alarmList
+            .asDriver(onErrorJustReturn: [])
+            .drive(onNext: { alarmList in
+                self.alarmDataList = alarmList
+                print("🟢🟢🟢🟢🟢🟢🟢",alarmList)
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: Configure

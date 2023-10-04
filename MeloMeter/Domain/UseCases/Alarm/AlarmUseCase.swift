@@ -24,9 +24,13 @@ class AlarmUseCase {
         self.alarmRepository = alarmRepository
     }
     
-    // MARK: - Methods
-    func getAlarmService() -> Single<[AlarmDTO]>{
+//     MARK: - Methods
+    func getAlarmService() -> Observable<[AlarmModel]>{
         return self.alarmRepository.getAlarm()
+            .map { alarmDTOList in
+                
+                return alarmDTOList.map { $0.toModel() }
+            }
     }
-    
+  
 }

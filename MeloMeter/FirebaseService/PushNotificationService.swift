@@ -103,15 +103,14 @@ final class PushNotificationService {
     }
     
     //받은 알람을 자신의 데이터베이스에 추가
-    func addAlarm(title: String, body: String, date: String, type: String) -> Void {
+    func addAlarm(text: String, date: String, type: String) -> Void {
         
         print("🟢 add알림 함수 실행")
         
         guard let uid = UserDefaults.standard.string(forKey: "uid") else { return }
         
         let values = [
-            "title" : title,
-            "body" : body,
+            "text" : text,
             "date" : date,
             "type" : type
         ]
