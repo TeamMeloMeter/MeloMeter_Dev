@@ -37,16 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         
         // Request permission for remote notifications
         UNUserNotificationCenter.current().delegate = self
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            if granted {
-                DispatchQueue.main.async {
-                    application.registerForRemoteNotifications()
-                }
-            } else {
-                // Handle the case where permission is not granted
-                print("Remote notification permission denied.")
-            }
-        }
         
         if (launchOptions?[.remoteNotification]) != nil {
             //여기서 처리
@@ -110,20 +100,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         print("🟢 인앱 : ", #function)
         
         let userInfo = notification.request.content.userInfo
+        let date = Date().toString(type: .yearToDay)
+        let text = notification.request.content.body
+        print("타입 🟢🟢🟢: \(userInfo["type"] as! String)")
         
-        if let date = Date().toString(type: .yearToDay) as? String,
-           let text = notification.request.content.body as? String
-        {
+        PushNotificationService.shared.addAlarm(text: text, date: date, type: "type")
 
-            print("내용 : \((text))")
-            print("시간 : \(date)")
-//            print("타입 : \(type)")
-            
-            PushNotificationService.shared.addAlarm(text: text, date: date, type: "type")
-        } else { print( "파멸이다!!!!!!!") }
-//        UNUserNotificationCenter.current()
-        
-        
+
         return [.sound, .banner, .list]
     }
     

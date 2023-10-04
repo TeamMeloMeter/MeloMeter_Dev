@@ -30,9 +30,7 @@ final class PushNotificationService {
     
     func sendPushNotification(title: String, body: String, type: AlarmType) {
         
-        let userInfo: [String: Any] = [
-            "type": "테스트!!!!!"
-        ]
+        print("🟢 type : ", type)
         
         let message = [
             "to": UserDefaults.standard.string(forKey: "otherFcmToken") ?? "",
@@ -42,8 +40,11 @@ final class PushNotificationService {
                 "title": title,
                 "body": body
             ],
-            "data" : userInfo
+            "data" : [
+                "type" : type.stringType,
+              ]
         ] as [String : Any]
+        
             //사일런트 푸시
 //              "to": UserDefaults.standard.string(forKey: "otherFcmToken") ?? "",
 //              "content_available": true,

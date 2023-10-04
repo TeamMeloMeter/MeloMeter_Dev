@@ -75,7 +75,7 @@ class AlarmVM {
                 case .profile,.hundredQA:
                     icon = "alarmIcon"
                 default:
-                    icon = ""
+                    icon = "alarmIcon"
                 }
                 
             // date기준으로, 몇일남았는지 ( 하루전, 7일까지는 일단위, 7일 이후부터 30일 사이까지는 주단위, 이후 달단위.)

@@ -18,9 +18,7 @@ struct AlarmDTO {
     // MARK: - Methods
     func toModel() -> AlarmModel {
         let alarmType = AlarmType(rawValue: type) ?? AlarmType.chat
-        
-        print("@@@@@@@@ : ",Date.stringToDate(dateString: date, type: .yearToDay))
-        
+                
         return AlarmModel(
             text: text,
             date: Date.stringToDate(dateString: date, type: .yearToDay) ?? Date(),
