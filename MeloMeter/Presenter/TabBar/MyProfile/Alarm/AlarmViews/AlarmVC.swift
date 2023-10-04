@@ -51,8 +51,8 @@ class AlarmVC: UIViewController {
         output.alarmList
             .asDriver(onErrorJustReturn: [])
             .drive(onNext: { alarmList in
-                self.alarmDataList = alarmList
-                print("🟢🟢🟢🟢🟢🟢🟢",alarmList)
+                self.alarmDataList = alarmList.reversed()
+                self.alarmTableView.reloadData()
             })
             .disposed(by: disposeBag)
     }
@@ -109,7 +109,7 @@ class AlarmVC: UIViewController {
 extension AlarmVC: UITableViewDataSource, UITableViewDelegate {
     // 셀 개수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return self.alarmDataList.count
     }
     // 셀에 데이터넣기
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -120,6 +120,11 @@ extension AlarmVC: UITableViewDataSource, UITableViewDelegate {
         }else {
             cell.alarmView.layer.applyShadow(color: #colorLiteral(red: 0.5137254902, green: 0.5058823529, blue: 0.5058823529, alpha: 1), alpha: 0.1, x: 0, y: 2, blur: 20)
         }
+        
+        cell.alarmTitleLabel.text = self.alarmDataList[indexPath.row].day
+        cell.alarmSubtitleLabel.text = self.alarmDataList[indexPath.row].text
+        cell.alarmImageView.image = UIImage(named: self.alarmDataList[indexPath.row].icon)
+        
         return cell
     }
 }
