@@ -66,23 +66,15 @@ class MapVM {
                             
                             for item in notifications {
                                 print("🟢 읽지않은 노티 : ",item.request.content.body)
+                                let userInfo = item.request.content.userInfo
                                 let date = Date().toString(type: .yearToDay)
                                 let text = item.request.content.body
-
-                        //       print("타입 : \(type)")
-                                
-                                PushNotificationService.shared.addAlarm(text: text, date: date, type: "type")
+                                if let type = userInfo["type"] { PushNotificationService.shared.addAlarm(text: text, date: date, type: type as! String )
+                                }
                             }
                         }
                     }
-                    
-                    print("🟢🟢 🟢 🟢 ", UserDefaults.standard.string(forKey: "uid"))
-                    print("🟢🟢 🟢 🟢 ", UserDefaults.standard.string(forKey: "otherUid"))
-                    print("🟢🟢 🟢 🟢 ", UserDefaults.standard.string(forKey: "otherFcmToken"))
-                    print("🟢🟢 🟢 🟢 ", UserDefaults.standard.string(forKey: "fcmToken"))
-                    print("🟢🟢 🟢 🟢 ", UserDefaults.standard.string(forKey: "coupleDocumentID"))
-
-                    
+      
                     //잔여 알림목록 초기화
                     UNUserNotificationCenter.current().removeAllDeliveredNotifications()
                     UNUserNotificationCenter.current().setBadgeCount(0)
@@ -155,7 +147,7 @@ class MapVM {
                                     output.endTrigger.onNext(true)
                                     return
                                 }
-                                UserDefaults.standard.set(otherUserModel.otherUid, forKey: "otherUid")
+                                UserDefaults.standard.set(otherUid, forKey: "otherUid")
                                 UserDefaults.standard.set(otherUserModel.name, forKey: "otherUserName")
                                 UserDefaults.standard.set(otherUserModel.fcmToken, forKey: "otherFcmToken")
                                 output.otherStateMessage.onNext(otherUserModel.stateMessage ?? nil)

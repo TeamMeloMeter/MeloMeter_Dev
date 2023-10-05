@@ -124,7 +124,7 @@ class HundredQARepository: HundredQARepositoryP {
                 values: ["answersList" :  [questionNumber: FieldValue.arrayUnion(values)] ]
             )
             .flatMap{ _ in
-                PushNotificationService.shared.sendPushNotification(title: "백문백답", body: "오늘의 질문이 도착했어요!", type: AlarmType.hundredQA)
+                PushNotificationService.shared.sendPushNotification(title: "백문백답", body: "오늘의 질문이 도착했어요!", type: AlarmType.defaultValue)
                 PushNotificationService.shared.localPushNotification(title: "백문백답", body: "오늘의 질문이 도착했어요!")
                 return Single.create{ single in
                     single(.success(()))

@@ -17,7 +17,7 @@ struct AlarmDTO {
     
     // MARK: - Methods
     func toModel() -> AlarmModel {
-        let alarmType = AlarmType(rawValue: type) ?? AlarmType.chat
+        let alarmType = AlarmType(rawValue: type) ?? AlarmType.defaultValue
                 
         return AlarmModel(
             text: text,
