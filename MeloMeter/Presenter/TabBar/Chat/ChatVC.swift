@@ -397,7 +397,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
 
 extension ChatVC: MessageCellDelegate {
     func didTapAvatar(in _: MessageCollectionViewCell) {
-        print("Avatar tapped")
+        print("Avatar tapped", self.messageList.count)
+        
     }
     
     func didTapMessage(in _: MessageCollectionViewCell) {

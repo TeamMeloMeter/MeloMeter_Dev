@@ -33,14 +33,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         // 파이어베이스 연동, 알림설정
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
+        UNUserNotificationCenter.current().delegate = self
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: { _, _ in })
         Messaging.messaging().isAutoInitEnabled = true
+        
+        // device token 요청.
+        application.registerForRemoteNotifications()
         
         // Request permission for remote notifications
         UNUserNotificationCenter.current().delegate = self
         
         if (launchOptions?[.remoteNotification]) != nil {
             //여기서 처리
-            print("🟢 네 ㅋㅋㅋㅋㅋㅋㅋㅋㅋ")
         }
 
         
@@ -97,15 +102,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
 
     // 앱화면 보고있는중에 푸시올 때
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
-        print("🟢 인앱 : ", #function)
-        
         let userInfo = notification.request.content.userInfo
         let date = Date().toString(type: .yearToDay)
         let text = notification.request.content.body
-        print("타입 🟢🟢🟢: \(userInfo["type"] as! String)")
-        
-        PushNotificationService.shared.addAlarm(text: text, date: date, type: "type")
-
+        if let type = userInfo["type"] { PushNotificationService.shared.addAlarm(text: text, date: date, type: type as! String )
+        }
 
         return [.sound, .banner, .list]
     }

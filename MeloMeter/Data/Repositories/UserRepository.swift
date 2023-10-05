@@ -183,7 +183,7 @@ class UserRepository: UserRepositoryP {
                     return
                 }
                 single(.success(()))
-
+                
             }
             return Disposables.create()
         }
@@ -218,5 +218,25 @@ class UserRepository: UserRepositoryP {
                 .disposed(by: self.disposeBag)
             return Disposables.create()
         }
+    }
+    
+    //fcm토큰 업데이트
+    func updateFcmToken(fcmToken: String) {
+        // 🟢 FCM Token 업데이트
+        guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return }
+        guard let otherUid = UserDefaults.standard.string(forKey: "otherUid") else{ return }
+        
+        self.firebaseService.updateDocument(collection: .Users,
+                                            document: uid,
+                                            values: ["fcmToken" : fcmToken])
+        .subscribe(onSuccess: { _ in })
+        .disposed(by: disposeBag)
+        
+        self.firebaseService.updateDocument(collection: .Users,
+                                            document: otherUid,
+                                            values: ["otherFcmToken" : fcmToken])
+        .subscribe(onSuccess: { _ in })
+        .disposed(by: disposeBag)
+        
     }
 }

@@ -4,7 +4,6 @@
 //
 //  Created by 오현택 on 2023/08/24.
 //
-
 import Foundation
 import UserNotifications
 import FirebaseFirestore
@@ -13,7 +12,7 @@ import RxSwift
 import UserNotifications
 
 enum AlarmType: String{
-    case chat, yearAnni, hundredAnni, customAnni, hundredQA, birthDay, profile
+    case defaultValue, yearAnni, hundredAnni, customAnni, hundredQA, birthDay, profile
     
     var stringType: String {
         // rawValue -> 원시타입으로 변경해주는 역할
@@ -29,9 +28,6 @@ final class PushNotificationService {
     private init() {}
     
     func sendPushNotification(title: String, body: String, type: AlarmType) {
-        
-        print("🟢 type : ", type)
-        
         let message = [
             "to": UserDefaults.standard.string(forKey: "otherFcmToken") ?? "",
             "content_available": true,
@@ -106,8 +102,6 @@ final class PushNotificationService {
     //받은 알람을 자신의 데이터베이스에 추가
     func addAlarm(text: String, date: String, type: String) -> Void {
         
-        print("🟢 add알림 함수 실행")
-        
         guard let uid = UserDefaults.standard.string(forKey: "uid") else { return }
         
         let values = [
@@ -115,11 +109,12 @@ final class PushNotificationService {
             "date" : date,
             "type" : type
         ]
-        self.firebaseService.updateDocument(collection: .Alarm, document: uid, values: ["alarmList" : FieldValue.arrayUnion([values]) ]).subscribe(onSuccess: { print("🟢알림저장")})
+        if type != "defaultValue" {
+            self.firebaseService.updateDocument(collection: .Alarm, document: uid, values: ["alarmList" : FieldValue.arrayUnion([values]) ]).subscribe(onSuccess: { print("🟢 알림저장 : ", text)})
+        }
     }
     
     func addRepeatAlarm(_ dataArray: [DdayCellData],_ firstDay: Date) {
-        
         //한명이 생일을 입력하지 않았을 때 예외처리
         guard dataArray.count >= 2 else { return }
         
@@ -158,7 +153,7 @@ final class PushNotificationService {
                 dateComponents.month = components.month
                 dateComponents.day = components.day
                 dateComponents.hour = 10
-                dateComponents.minute = 0
+                dateComponents.minute = 1
                 
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
                 // 알림 요청 생성, 등록
@@ -183,10 +178,11 @@ final class PushNotificationService {
                 content.sound = UNNotificationSound.default
                 content.userInfo = ["type": AlarmType.birthDay.stringType]
                 
+                dateComponents.year = components.year
                 dateComponents.month = components.month
                 dateComponents.day = components.day
                 dateComponents.hour = 10
-                dateComponents.minute = 0
+                dateComponents.minute = 1
                 
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
                 // 알림 요청 생성, 등록
@@ -220,7 +216,7 @@ final class PushNotificationService {
                 dateComponents.month = components.month
                 dateComponents.day = components.day
                 dateComponents.hour = 10
-                dateComponents.minute = 0
+                dateComponents.minute = 1
                 
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
                 // 알림 요청 생성, 등록
@@ -254,15 +250,14 @@ final class PushNotificationService {
                 content.sound = UNNotificationSound.default
                 content.userInfo = ["type": AlarmType.yearAnni.stringType]
                 
-//                dateComponents.year = components.year
-//                dateComponents.month = components.month
-//                dateComponents.day = components.day
-//                dateComponents.hour = 10
-//                dateComponents.minute = 0
-                dateComponents.second = 0
-
+                dateComponents.year = components.year
+                dateComponents.month = components.month
+                dateComponents.day = components.day
+                dateComponents.hour = 10
+                dateComponents.minute = 1
+                
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-                // 알림 요청 생성, 등록
+
                 let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
                 center.add(request)
                 cnt += 1
