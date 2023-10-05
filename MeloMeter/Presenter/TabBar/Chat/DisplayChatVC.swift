@@ -66,6 +66,19 @@ final class DisplayChatVC: ChatVC {
             })
             .disposed(by: disposeBag)
         
+        output.questionComplete
+            .bind(onNext: { text in
+                self.alarmLabel.text = text
+            })
+            .disposed(by: disposeBag)
+        
+        output.questionText
+            .bind(onNext: { text in
+                self.questionLabel.text = text
+            })
+            .disposed(by: disposeBag)
+        
+        
     }
     
     // MARK: Event
