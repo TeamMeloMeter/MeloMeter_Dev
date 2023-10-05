@@ -59,7 +59,6 @@ class HundredQAVM {
                         if let last = topData.last {
                             if !self.datesCompare(date1: last.1, date2: Date()) && topData.count < 2 {
                                 self.hundredQAUseCase.addQuestion(newQuestion: self.answerArray.count-1)
-                                print(topData.map{ $0.0 } + [questionTextArray[self.answerArray.count-1].0], "🟢11")
                                 output.questionTopData.onNext(topData.map{ $0.0 } + [questionTextArray[self.answerArray.count-1].0])
                                 numbers[0].append(String(self.answerArray.count))
                             }else {
@@ -67,7 +66,6 @@ class HundredQAVM {
                             }
                         }else {
                             self.hundredQAUseCase.addQuestion(newQuestion: self.answerArray.count-1)
-                            print(topData.map{ $0.0 } + [questionTextArray[self.answerArray.count-1].0], "🟢2")
                             output.questionTopData.onNext(topData.map{ $0.0 } + [questionTextArray[self.answerArray.count-1].0])
                             numbers[0].append(String(self.answerArray.count))
                         }
@@ -94,6 +92,7 @@ class HundredQAVM {
                 let otherName = UserDefaults.standard.string(forKey: "otherUserName") ?? ""
                 myAnswerInfo.userName = myName
                 otherAnswerInfo.userName = otherName
+                print("🟢🟢aaa", answerArray)
                 self.coordinator?.showReadAnswerVC(questionNumber: String(index),
                                                    question: question,
                                                    myAnswerInfo: myAnswerInfo,
