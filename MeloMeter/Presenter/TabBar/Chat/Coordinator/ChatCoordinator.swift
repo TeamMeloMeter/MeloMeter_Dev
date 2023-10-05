@@ -31,7 +31,11 @@ extension ChatCoordinator {
                               chatUseCase: ChatUseCase(
                                 chatRepository: ChatRepository(firebaseService: firebaseService),
                                 coupleRepository: CoupleRepository(firebaseService: firebaseService),
-                                userRepository: UserRepository(firebaseService: firebaseService))
+                                userRepository: UserRepository(firebaseService: firebaseService)
+                              ),
+                              hundredQAUseCase: HundredQAUseCase(hundredQARepository:
+                                                                    HundredQARepository(firebaseService: firebaseService)
+                                                                )
                              )
         )
         viewController.hidesBottomBarWhenPushed = true
@@ -46,10 +50,22 @@ extension ChatCoordinator {
         hundredQACoordinator.start()
     }
     
-    func showWriteAnswerVC(viewModel: AnswerVM) {
-        let viewController = WriteAnswerVC(viewModel: viewModel)
-
-
+    func showReadAnswerVC(questionNumber: String, question: String, myAnswerInfo: AnswerModel, otherAnswerInfo: AnswerModel) {
+        let firebaseService = DefaultFirebaseService()
+        let hundredQACoordinator = HundredCoordinator(self.navigationController)
+        hundredQACoordinator.delegate = self
+        childCoordinators.append(hundredQACoordinator)
+        let viewModel = AnswerVM(coordinator: hundredQACoordinator,
+                                 hundredQAUseCase: HundredQAUseCase(hundredQARepository: HundredQARepository(
+                                     firebaseService: firebaseService)
+                                 ),
+                                 questionNumber: questionNumber,
+                                 questionText: question,
+                                 myAnswerInfo: myAnswerInfo,
+                                 otherAnswerInfo: otherAnswerInfo
+                              )
+        let viewController = ReadAnswerVC(viewModel: viewModel)
+                
         viewController.hidesBottomBarWhenPushed = true
         self.navigationController.setNavigationBarHidden(false, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
