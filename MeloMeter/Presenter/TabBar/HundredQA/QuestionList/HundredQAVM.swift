@@ -92,7 +92,6 @@ class HundredQAVM {
                 let otherName = UserDefaults.standard.string(forKey: "otherUserName") ?? ""
                 myAnswerInfo.userName = myName
                 otherAnswerInfo.userName = otherName
-                print("🟢🟢aaa", answerArray)
                 self.coordinator?.showReadAnswerVC(questionNumber: String(index),
                                                    question: question,
                                                    myAnswerInfo: myAnswerInfo,

@@ -121,10 +121,10 @@ class ChatVM {
                     })
                     .disposed(by: disposeBag)
                 self.hundredQAUseCase.getAnswerList()
-                    .subscribe(onSuccess: { model in
+                    .subscribe(onSuccess: {[weak self] model in
+                        guard let self = self else{ return }
                         let questionNumber = model.count - 1
                         let answerModel = model.dropLast(1)
-                        
                         var answers = answerModel.map{ $0.answerInfo }
                         var question = answerModel.map{ $0.questionText }
                         if answers.filter({ $0.count < 2 }).count == 0 {
@@ -132,6 +132,11 @@ class ChatVM {
                             self.questionInfo.1 = question.popLast() ?? ""
                             self.questionInfo.0 = String(questionNumber)
                             output.questionComplete.onNext("\(String(questionNumber))번째 백문백답을 완료했어요!")
+                        }else if answers.filter({ $0.count < 2 }).count == 1 {
+                            self.answerArray = answers[1]
+                            self.questionInfo.1 = question[1]
+                            self.questionInfo.0 = String(questionNumber)
+                            output.questionComplete.onNext("\(String(questionNumber))번째 백문백답이 도착했어요!")
                         }else {
                             self.answerArray = answers[0]
                             self.questionInfo.1 = question[0]
