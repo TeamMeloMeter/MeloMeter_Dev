@@ -23,6 +23,7 @@ class ChatUseCase {
     private let disposeBag = DisposeBag()
 
     var recieveChatMessageService = PublishRelay<[MockMessage]?>()
+    var recieveMoreChatMessageService = PublishRelay<[MockMessage]?>()
     var recieveRealTimeMessageService = PublishRelay<[MockMessage]?>()
     
     // MARK: Initializers
@@ -76,6 +77,18 @@ class ChatUseCase {
                     return self.downloadChatImages(DTOArray: DTOArr)
                 }
                 .bind(to: self.recieveChatMessageService)
+                .disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
+    }
+    
+    // 추가메시지 가져오기
+    func getMoreChatMessageService(num: Int) {
+        self.coupleRepository.getCoupleID().subscribe(onSuccess: { coupleID in
+            self.chatRepository.getMoreChatMessage(num : num, coupleID: coupleID)
+                .flatMap { DTOArr -> Single<[MockMessage]> in
+                    return self.downloadChatImages(DTOArray: DTOArr)
+                }
+                .bind(to: self.recieveMoreChatMessageService)
                 .disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
     }

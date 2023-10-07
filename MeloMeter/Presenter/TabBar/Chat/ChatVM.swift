@@ -22,11 +22,13 @@ class ChatVM {
         let backBtnTapEvent: Observable<Void>
         let mySendTextMessage: Observable<MockMessage>
         let mySendImageMessage: Observable<MockMessage>
+        let reloadMessage: Observable<Int>
     }
     
     struct Output {
         var senddSuccess = PublishSubject<Bool>()
         var getMessage = PublishSubject<[MockMessage]>()
+        var getMoreMessage = PublishSubject<[MockMessage]>()
         var getRealTimeMessage = PublishSubject<[MockMessage]>()
     }
     
@@ -63,6 +65,12 @@ class ChatVM {
             })
             .disposed(by: disposeBag)
         
+        input.reloadMessage
+            .subscribe(onNext: { [weak self] num in
+                guard let self = self else{ return }
+                self.chatUseCase.getMoreChatMessageService(num: num)
+            })
+            .disposed(by: disposeBag)
         
         input.mySendTextMessage
             .subscribe(onNext: {[weak self] myMessage in
@@ -91,6 +99,12 @@ class ChatVM {
         self.chatUseCase.recieveChatMessageService
             .subscribe(onNext: {chatMessageList in
                 output.getMessage.onNext(chatMessageList ?? [])
+            })
+            .disposed(by: disposeBag)
+        
+        self.chatUseCase.recieveMoreChatMessageService
+            .subscribe(onNext: {chatMessageList in
+                output.getMoreMessage.onNext(chatMessageList ?? [])
             })
             .disposed(by: disposeBag)
         

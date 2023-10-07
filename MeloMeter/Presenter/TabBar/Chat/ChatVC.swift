@@ -20,6 +20,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     let disposeBag = DisposeBag()
     let tapGesture = UITapGestureRecognizer()
     let viewDidLoadEvent = PublishSubject<Void>()
+    let reloadEvent = PublishSubject<Int>()
     var sendTextMessage = PublishRelay<MockMessage>()
     var sendImageMessage = PublishRelay<MockMessage>()
     lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
@@ -55,7 +56,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     private(set) lazy var refreshControl: UIRefreshControl = {
         let control = UIRefreshControl()
-        control.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
+        control.addTarget(self, action: #selector(reloadMessageEvent), for: .valueChanged)
         return control
     }()
     
@@ -115,16 +116,18 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             }
         }
     }
-    
-    @objc
-    func loadMoreMessages() {
+    // 새로고침 이벤트
+    @objc func reloadMessageEvent() {
+        self.reloadEvent.onNext(self.messageList.count)
+    }
+
+    func loadMoreMessages(_ chatMassageList: [MockMessage]) {
         DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
-            SampleData.shared.getMessages(count: 20) { messages in
-                DispatchQueue.main.async {
-                    self.messageList.insert(contentsOf: messages, at: 0)
-                    self.messagesCollectionView.reloadDataAndKeepOffset()
-                    self.refreshControl.endRefreshing()
-                }
+            //받아온 매시지 리스트를 하나씩 삽입한다,
+            DispatchQueue.main.async {
+                self.messageList.insert(contentsOf: chatMassageList, at: 0)
+                self.messagesCollectionView.reloadDataAndKeepOffset()
+                self.refreshControl.endRefreshing()
             }
         }
     }
@@ -252,6 +255,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             mySendTextMessage: self.sendTextMessage
                 .asObservable(),
             mySendImageMessage: self.sendImageMessage
+                .asObservable(),
+            reloadMessage: self.reloadEvent
                 .asObservable()
         )
         
@@ -267,9 +272,17 @@ class ChatVC: MessagesViewController, MessagesDataSource {
                 }
             })
             .disposed(by: disposeBag)
+        
         output.getMessage
             .bind(onNext: {chatMessageList in
                 self.loadFirstMessages(chatMessageList)
+            })
+            .disposed(by: disposeBag)
+        
+        output.getMoreMessage
+            .bind(onNext: {chatMessageList in
+                // 여기에 메세지를 추가로 늘려주는 함수가 필요하다.
+                self.loadMoreMessages(chatMessageList)
             })
             .disposed(by: disposeBag)
         
@@ -397,7 +410,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
 
 extension ChatVC: MessageCellDelegate {
     func didTapAvatar(in _: MessageCollectionViewCell) {
-        print("Avatar tapped", self.messageList.count)
+        
+        print("Avatar tapped", messageList.count)
         
     }
     
