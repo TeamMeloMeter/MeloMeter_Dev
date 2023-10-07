@@ -111,6 +111,38 @@ class ChatRepository: ChatRepositoryP{
             .asObservable()
     }
     
+    //추가 30개 가져오기
+    func getMoreChatMessage(num: Int, coupleID: String) -> Observable<[ChatDTO]> {
+        return self.firebaseService.getDocument(collection: .Chat, document: coupleID)
+            .compactMap { documentSnapshot in
+                if let chatFields = documentSnapshot["chatField"] as? [[String: Any]],  !chatFields.isEmpty{
+                    // 타임스탬프를 이용하여 날짜 순으로 정렬한다.
+                    let sortedChatFields = chatFields.sorted { (dict1, dict2) -> Bool in
+                        guard let date1 = dict1["date"] as? Timestamp,
+                              let date2 = dict2["date"] as? Timestamp else {
+                            return false
+                        }
+                        return date1.seconds > date2.seconds ||
+                        (date1.seconds == date2.seconds && date1.nanoseconds > date2.nanoseconds)
+                    }
+                    // 최대 20개의 매세지를 가져온다
+                    let numberOfMessagesToRetrieve = min(sortedChatFields.count - 20, 20)
+                    // 추가로 가져올 데이터가 없다면 리턴
+                    if numberOfMessagesToRetrieve < 0 { return [] }
+                    let end = sortedChatFields.count - num // 0 일수도있음
+                    var start = end - 20
+                    if start < 0 { start = 0 }
+                    let recentChatFields = sortedChatFields[start ..< end]
+                    
+                    // DTO타입으로 형변환
+                    return self.convertToChatDTOArray(from: Array(recentChatFields))
+                } else {
+                    return []
+                }
+            }
+            .asObservable()
+    }
+    
     func downloadImage(url: String) -> Single<UIImage?> {
         return self.firebaseService.downloadImage(urlString: url)
     }
