@@ -110,7 +110,9 @@ final class PushNotificationService {
             "type" : type
         ]
         if type != "defaultValue" {
-            self.firebaseService.updateDocument(collection: .Alarm, document: uid, values: ["alarmList" : FieldValue.arrayUnion([values]) ]).subscribe(onSuccess: { print("🟢 알림저장 : ", text)})
+            self.firebaseService.updateDocument(collection: .Alarm, document: uid, values: ["alarmList" : FieldValue.arrayUnion([values]) ])
+                .subscribe(onSuccess: { _ in })
+                .disposed(by: disposeBag)
         }
     }
     

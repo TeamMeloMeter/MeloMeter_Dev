@@ -13,7 +13,9 @@ import CoreImage
 class ReadAnswerVC: UIViewController {
     
     private let viewModel: AnswerVM?
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
+    private var userName = ""
+    private var otherUserName = ""
     
     init(viewModel: AnswerVM) {
         self.viewModel = viewModel
@@ -67,6 +69,7 @@ class ReadAnswerVC: UIViewController {
             .subscribe(onNext: {[weak self] info in
                 guard let self = self else{ return }
                 self.myUserLabel.text = "\(info.userName)님의 답변"
+                self.userName = info.userName
                 if info.answerText.isEmpty {
                     self.myAnswerLabel.text = "서로의 생각을 확인하고 싶다면\n백문백답을 답변해주세요!"
                 }else {
@@ -79,6 +82,7 @@ class ReadAnswerVC: UIViewController {
             .subscribe(onNext: {[weak self] info in
                 guard let self = self else{ return }
                 self.otherUserLabel.text = "\(info.userName)님의 답변"
+                self.otherUserName = info.userName
                 if info.answerText.isEmpty {
                     self.otherAnswerLabel.text = "\(info.userName)님이 아직 답변하지 않으셨어요!"
                 }else {
@@ -119,8 +123,9 @@ class ReadAnswerVC: UIViewController {
         if !mine && other { // 상대만 답변
             self.otherAnswerLabel.textColor = .gray1
             self.lockImageView.image = UIImage(named: "lockImage")
+            self.answerBtn.isHidden = false
             self.myAnswerCompleteLabel.isHidden = true
-            self.otherAnswerLabel.text = "\(self.otherUserLabel.text?.prefix(2) ?? "")님이 답변을 완료했습니다."
+            self.otherAnswerLabel.text = "\(self.otherUserName)님이 답변을 완료했습니다."
             return
         }
         
@@ -416,8 +421,8 @@ class ReadAnswerVC: UIViewController {
             myAnswerLabel.topAnchor.constraint(equalTo: myScrollView.topAnchor, constant: 17),
             myAnswerLabel.trailingAnchor.constraint(equalTo: myScrollView.trailingAnchor),
 
-            lockImageView.leadingAnchor.constraint(equalTo: myScrollView.leadingAnchor),
-            lockImageView.trailingAnchor.constraint(equalTo: myScrollView.trailingAnchor),
+            lockImageView.leadingAnchor.constraint(equalTo: myUserView.leadingAnchor),
+            lockImageView.trailingAnchor.constraint(equalTo: myUserView.trailingAnchor),
             lockImageView.topAnchor.constraint(equalTo: myAnswerLabel.bottomAnchor, constant: 23),
             lockImageView.heightAnchor.constraint(equalToConstant: 131),
 
