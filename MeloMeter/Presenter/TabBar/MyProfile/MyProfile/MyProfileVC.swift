@@ -38,7 +38,7 @@ class MyProfileVC: UIViewController {
     
     // MARK: Binding
     func setBindings() {
-
+        
         self.infoStackView.rx.tapGesture().when(.ended)
             .subscribe(onNext: {[weak self] _ in
                 self?.showInfoAlert()
@@ -68,7 +68,7 @@ class MyProfileVC: UIViewController {
                 .map({ _ in })
                 .asObservable()
         )
-            
+        
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else { return }
         
         output.profileImage
@@ -108,6 +108,22 @@ class MyProfileVC: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
+        
+        output.alarmTitle
+            .bind(onNext: { oldDay in
+                self.alarmTitleLabel.text = oldDay
+            }).disposed(by: disposeBag)
+        
+        output.alarmSubtitle
+            .bind(onNext: { text in
+                self.alarmSubtitleLabel.text = text
+            }).disposed(by: disposeBag)
+        
+        output.alarmImage
+            .bind(onNext: { icon in
+                //birthDay 아이콘 에쎗에 제대로 안들어가짐!!! 밑에 icon변수 넣어라 나중에
+                self.alarmImageView.image = UIImage(named: "alarmIcon")
+            }).disposed(by: disposeBag)
         
         output.coupleUserName
             .asDriver(onErrorJustReturn: "나 & 상대방")

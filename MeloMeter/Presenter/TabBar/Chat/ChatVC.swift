@@ -265,7 +265,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         output.senddSuccess
             .bind(onNext: {result in
                 if result {
-                    //성공
                 }
                 else {
                     self.messageSendfaileAlert()
@@ -297,10 +296,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     
     // MARK: - Helpers
-    //MockMessage 형태로 입력받아 scrollToLastItem(마지막 아이탬에 추가한다)
     func insertMessage(_ message: MockMessage) {
         messageList.append(message)
-        // Reload last section to update header/footer labels and insert a new one
         messagesCollectionView.performBatchUpdates({
             messagesCollectionView.insertSections([messageList.count - 1])
             if messageList.count >= 2 {
@@ -532,33 +529,19 @@ extension ChatVC: InputBarAccessoryViewDelegate {
     }
     
     func processInputBar(_ inputBar: InputBarAccessoryView) {
-        // Here we can parse for which substrings were autocompleted
-        let attributedText = inputBar.inputTextView.attributedText!
-        let range = NSRange(location: 0, length: attributedText.length)
-        attributedText.enumerateAttribute(.autocompleted, in: range, options: []) { _, range, _ in
-            
-            let substring = attributedText.attributedSubstring(from: range)
-            let context = substring.attribute(.autocompletedContext, at: 0, effectiveRange: nil)
-        }
-        
         let components = inputBar.inputTextView.components //String
         inputBar.inputTextView.text = String()
         inputBar.invalidatePlugins()
-        // Send button activity animation
-        inputBar.sendButton.startAnimating()
         inputBar.inputTextView.placeholder = "이것좀 없애자"
-        // Resign first responder for iPad split view
         inputBar.inputTextView.resignFirstResponder()
         DispatchQueue.global(qos: .default).async {
-            // fake send request task
-            sleep(1)
             DispatchQueue.main.async { [weak self] in
-                inputBar.sendButton.stopAnimating()
                 inputBar.inputTextView.placeholder = " 메세지를 입력해주세요."
                 //챗팅창에 보이게 하는 메서드
                 self?.insertMessages(components)
                 //컬렉션 뷰 마지막으로 스크롤 이동
                 self?.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: true)
+                
             }
         }
     }
@@ -568,7 +551,6 @@ extension ChatVC: InputBarAccessoryViewDelegate {
         for component in data {
             //텍스트 타입
             if let str = component as? String {
-                
                 let message = MockMessage(text: str, user: self.mockUser, messageId: UUID().uuidString, date: Date.fromStringOrNow(Date().toString(type: .timeStamp), .timeStamp))
                 sendTextMessage.accept(message)
             }
@@ -595,4 +577,3 @@ extension ChatVC: CameraInputBarAccessoryViewDelegate {
         sendImageMessage.accept(photoMessage)
     }
 }
-
