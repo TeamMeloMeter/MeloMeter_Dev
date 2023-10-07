@@ -15,8 +15,6 @@ class AlarmUseCase {
     // MARK: - Property
     private let alarmRepository: AlarmRepository
     private let disposeBag = DisposeBag()
-
-    var recieveAlarmService = PublishRelay<[AlarmModel]?>()
     
     // MARK: Initializers
     init(alarmRepository: AlarmRepository)
@@ -24,11 +22,10 @@ class AlarmUseCase {
         self.alarmRepository = alarmRepository
     }
     
-//     MARK: - Methods
+    //   MARK: - Methods
     func getAlarmService() -> Observable<[AlarmModel]>{
         return self.alarmRepository.getAlarm()
             .map { alarmDTOList in
-                
                 return alarmDTOList.map { $0.toModel() }
             }
     }

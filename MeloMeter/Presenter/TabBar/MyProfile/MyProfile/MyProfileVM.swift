@@ -14,6 +14,7 @@ class MyProfileVM {
 
     weak var coordinator: MyProfileCoordinator?
     private var myProfileUseCase: MyProfileUseCase
+    private var alarmUseCase: AlarmUseCase
 
     struct Input {
         let viewWillApearEvent: Observable<Void>
@@ -33,12 +34,16 @@ class MyProfileVM {
         var stateMessage = PublishRelay<String?>()
         var sinceFirstDay = PublishRelay<String>()
         var lastHundredQA = PublishRelay<String>()
+        var alarmTitle = PublishRelay<String>()
+        var alarmSubtitle = PublishRelay<String>()
+        var alarmImage = PublishRelay<String>()
     }
     
     
-    init(coordinator: MyProfileCoordinator, myProfileUseCase: MyProfileUseCase) {
+    init(coordinator: MyProfileCoordinator, myProfileUseCase: MyProfileUseCase, alarmUseCase: AlarmUseCase) {
         self.coordinator = coordinator
         self.myProfileUseCase = myProfileUseCase
+        self.alarmUseCase = alarmUseCase
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -73,6 +78,29 @@ class MyProfileVM {
                         output.userPhoneNumber.accept(number.joined())
                         output.stateMessage.accept(user.stateMessage)
                         
+                    })
+                    .disposed(by: disposeBag)
+                
+                self.alarmUseCase.getAlarmService()
+                    .subscribe(onNext: { alarmList in
+            
+                        output.alarmSubtitle.accept(alarmList.last?.text ?? "아직 추가된 알림이 없어요!")
+                        
+                        output.alarmTitle.accept(self.daysPassedSinceDate(alarmList.last?.date ?? Date()))
+                        
+                        // 아이콘은 type을 기준으로 (생일) / (주년/100일단위/기념일) / 프로필
+                        let icon: String
+                        switch alarmList.last?.type {
+                        case .birthDay:
+                            icon = "cakeIcon"
+                        case .hundredAnni,.yearAnni,.customAnni:
+                            icon = "heartIcon"
+                        case .profile,.hundredQA:
+                            icon = "alarmIcon"
+                        default:
+                            icon = "alarmIcon"
+                        }
+                        output.alarmImage.accept(icon)
                     })
                     .disposed(by: disposeBag)
             })
@@ -121,6 +149,36 @@ class MyProfileVM {
             .disposed(by: disposeBag)
         
         return output
+    }
+    
+    func daysPassedSinceDate(_ inputDate: Date) -> String {
+        let calendar = Calendar.current
+        let currentDate = Date()
+        var oldDay = 0
+        var day = ""
+        // 입력받은 날짜와 현재 날짜 사이의 날짜 차이 계산
+        let components = calendar.dateComponents([.day], from: inputDate, to: currentDate)
+        
+        // 날짜 차이를 Int로 반환
+        if let days = components.day {
+            oldDay = days
+        } else {
+            oldDay = 0
+        }
+        
+        if oldDay == 0 {
+            day = "오늘"
+        }else if oldDay == 1 {
+            day = "하루전"
+        }else if 1 < oldDay && oldDay < 7 {
+            day = "\(oldDay)일전"
+        }else if 7 <= oldDay && oldDay < 30 {
+            day = "\(oldDay / 7)주전"
+        }else if 30 <= oldDay{
+            day = "\(oldDay / 30)달전"
+        }
+        
+        return day
     }
     
 }
