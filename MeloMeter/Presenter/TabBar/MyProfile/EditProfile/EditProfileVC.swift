@@ -89,7 +89,15 @@ class EditProfileVC: UIViewController {
                         .flatMap{[weak self] _ in
                             guard let self = self else{ return Single.just(()) }
                             return AlertManager(viewController: self)
-                                .showLogoutAlert()
+                                .setTitle("로그아웃")
+                                .setMessage(
+                                    """
+                                    로그아웃 하시겠습니까? 추후 같은 아이디로
+                                    로그인하면 상대방과 연결을 다시 진행할 수 있
+                                    습니다.
+                                    """
+                                )
+                                .showYNAlert()
                         },
             withdrawalEvent: self.withdrawalLabel.rx.tapGesture().when(.ended)
                 .map({ _ in })

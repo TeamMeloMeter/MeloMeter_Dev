@@ -7,12 +7,13 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 
 class WithdrawalVC: UIViewController {
     
     private let viewModel: AccountsVM?
     private let disposeBag = DisposeBag()
-
+    private var withAlertTapEvent = PublishSubject<Bool>()
     init(viewModel: AccountsVM) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -35,13 +36,33 @@ class WithdrawalVC: UIViewController {
     
     // MARK: Bindings
     func setBindings() {
+        self.withdrawalBtn.rx.tap
+            .subscribe(onNext: {[weak self] _ in
+                if let self = self {
+                    AlertManager(viewController: self)
+                        .setTitle("탈퇴하기")
+                        .setMessage("정말 탈퇴하시겠습니까? \n상대방과의 연결과 모든 정보가 삭제됩니다🥲")
+                        .showYNAlert()
+                        .subscribe(onSuccess: { _ in
+                            self.withAlertTapEvent.onNext(true)
+                        }, onFailure: { error in
+                            self.withAlertTapEvent.onNext(false)
+                        })
+                        .disposed(by: disposeBag)
+                }
+            })
+            .disposed(by: disposeBag)
         let input = AccountsVM.Input(
             backBtnTapEvent: self.backBarButton.rx.tap
                 .map({ _ in })
                 .asObservable(),
-            excuteBtnEvent: self.withdrawalBtn.rx.tap
-                .map({ .withdrawal })
-                .asObservable()
+            excuteBtnEvent: self.withAlertTapEvent
+                .map({ result in
+                    if result {
+                        return .withdrawal
+                    }
+                    return .cencel
+                })
         )
         
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else{ return }
@@ -62,6 +83,12 @@ class WithdrawalVC: UIViewController {
     }
     
     // MARK: Event
+    func withdrawalAlert() -> Single<Void> {
+        return AlertManager(viewController: self)
+            .setTitle("탈퇴하기")
+            .setMessage("정말 탈퇴하시겠습니까?/n상대방과의 연결과 모든 정보가 삭제됩니다🥲")
+            .showYNAlert()
+    }
     func withdrawalErrorAlert() {
         AlertManager(viewController: self)
             .setTitle("탈퇴 오류")

@@ -239,7 +239,7 @@ extension DefaultFirebaseService {
         }
     }
     
-    public func deleteImageFromStorage(imageURL: String) -> Single<Void> {
+    public func deleteImageFromProfileStorage(imageURL: String) -> Single<Void> {
         return Single.create { single in
             let storage = Storage.storage()
             let storageReference = storage.reference(forURL: imageURL)
@@ -250,6 +250,24 @@ extension DefaultFirebaseService {
                 } else {
                     single(.success(()))
                     ImageCacheManager.shared.removeObject(forKey: cachedKey)
+                }
+            }
+            return Disposables.create()
+        }
+        
+    }
+    
+    public func deleteImageFromChatStorage(filePath: String) -> Single<Void> {
+        return Single.create { single in
+            let storage = Storage.storage()
+            let storageReference = storage.reference().child(filePath)
+            
+            storageReference.delete { error in
+                if let error = error {
+                    single(.failure(error))
+                } else {
+                    single(.success(()))
+                    ImageCacheManager.shared.removeAllObjects()
                 }
             }
             return Disposables.create()

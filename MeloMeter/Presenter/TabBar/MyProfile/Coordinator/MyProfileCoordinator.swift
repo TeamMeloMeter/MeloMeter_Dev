@@ -223,6 +223,7 @@ extension MyProfileCoordinator {
     }
     
     func finish() {
+        print("🟢🟢🟢myProfile코디네이터 피니쉬")
         self.delegate?.didFinish(childCoordinator: self)
     }
     
