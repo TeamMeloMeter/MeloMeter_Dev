@@ -65,7 +65,7 @@ class MapVM {
                         DispatchQueue.main.sync {
                             
                             for item in notifications {
-                                print("🟢 읽지않은 노티 : ",item.request.content.body)
+//                                print("읽지않은 노티 : ",item.request.content.body)
                                 let userInfo = item.request.content.userInfo
                                 let date = Date().toString(type: .yearToDay)
                                 let text = item.request.content.body
