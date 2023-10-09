@@ -26,6 +26,14 @@ class AlarmRepository: AlarmRepositoryP {
             .map { documentSnapshot -> [AlarmDTO] in
                 
                 if let alarmList = documentSnapshot["alarmList"] as? [[String: Any]],  !alarmList.isEmpty{
+                    
+                    //300개 넘어가면 오래된 순으로 삭제
+                    if alarmList.count > 200{
+                        let values = Array(alarmList[1..<alarmList.count])
+                        self.firebaseService.updateDocument(collection: .Alarm, document: UserDefaults.standard.string(forKey: "uid") ?? "", values: ["alarmList" : values] )
+                            .subscribe(onSuccess: {})
+                            .disposed(by: self.disposeBag)
+                    }
                     return self.convertToAlarmDTOArray(from: alarmList)
                 } else {
                     return []

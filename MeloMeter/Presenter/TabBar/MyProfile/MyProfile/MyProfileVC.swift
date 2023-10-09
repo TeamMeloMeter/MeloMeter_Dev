@@ -121,7 +121,7 @@ class MyProfileVC: UIViewController {
         
         output.alarmImage
             .bind(onNext: { icon in
-                self.alarmImageView.image = UIImage(named: "alarmIcon")
+                self.alarmImageView.image = UIImage(named: icon)
             }).disposed(by: disposeBag)
         
         output.coupleUserName

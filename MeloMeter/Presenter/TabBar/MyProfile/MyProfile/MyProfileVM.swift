@@ -92,7 +92,7 @@ class MyProfileVM {
                         let icon: String
                         switch alarmList.last?.type {
                         case .birthDay:
-                            icon = "cakeIcon"
+                            icon = "birthDayIcon"
                         case .hundredAnni,.yearAnni,.customAnni:
                             icon = "heartIcon"
                         case .profile,.hundredQA:
