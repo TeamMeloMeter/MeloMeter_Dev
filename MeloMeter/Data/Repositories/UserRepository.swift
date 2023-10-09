@@ -193,13 +193,16 @@ class UserRepository: UserRepositoryP {
         return Single.create{ single in
             self.getUserInfo(uid)
                 .subscribe(onNext: { userInfo in
-                    self.firebaseService.deleteImageFromStorage(imageURL: userInfo.profileImage ?? "")
+                    self.firebaseService.deleteImageFromProfileStorage(imageURL: userInfo.profileImage ?? "")
                         .subscribe(onSuccess: {
                             self.firebaseService.deleteDocuments(
-                                collections: [(.Users, uid),
-                                              (.Locations, uid),
-                                              (.Couples, coupleID),
-                                              (.Chat, coupleID)]
+                                collections: [
+                                    (.Users, uid),
+                                    (.Locations, uid),
+                                    (.Couples, coupleID),
+                                    (.Chat, coupleID),
+                                    (.Alarm, uid)
+                                ]
                             )
                             .subscribe(onSuccess: {
                                 if let appDomain = Bundle.main.bundleIdentifier {
@@ -220,6 +223,43 @@ class UserRepository: UserRepositoryP {
         }
     }
     
+    func removeOtherData(uid: String) -> Single<Void> {
+        return Single.create{ single in
+            self.getUserInfo(uid)
+                .subscribe(onNext: { userInfo in
+                    let deleteProfileImage = self.firebaseService.deleteImageFromProfileStorage(imageURL: userInfo.profileImage ?? "")
+                    let filePath = "chat/\(userInfo.coupleID ?? "")/"
+                    let deleteChatImages = self.firebaseService.deleteImageFromChatStorage(filePath: filePath)
+                    
+                    Single.zip(deleteProfileImage, deleteChatImages)
+                        .subscribe(onSuccess: { _,_ in
+                            self.firebaseService.deleteDocuments(
+                                collections: [
+                                    (.Users, uid),
+                                    (.Locations, uid),
+                                    (.Alarm, uid)
+                                ]
+                            )
+                            .subscribe(onSuccess: {
+                                let data = ["otherUid", "otherUserName", "coupleDocumentID", "otherInviteCode", "otherFcmToken"]
+                                
+                                for key in data {
+                                    UserDefaults.standard.removeObject(forKey: key)
+                                }
+                                single(.success(()))
+                            }, onFailure: { error in
+                                single(.failure(error))
+                            })
+                            .disposed(by: self.disposeBag)
+                        }, onFailure: { error in
+                            single(.failure(error))
+                        })
+                        .disposed(by: self.disposeBag)
+                })
+                .disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
+    }
     //fcm토큰 업데이트
     func updateFcmToken(fcmToken: String) {
         // 🟢 FCM Token 업데이트
@@ -238,5 +278,19 @@ class UserRepository: UserRepositoryP {
         .subscribe(onSuccess: { _ in })
         .disposed(by: disposeBag)
         
+    }
+    
+    func changeAccessLevel(otherUid: String) -> Single<Void> {
+        let myAccessLevel = self.firebaseService
+            .setAccessLevel(.start)
+        let otherAccessLevel = self.firebaseService
+            .updateDocument(
+                collection: .Users,
+                document: otherUid,
+                values: ["accessLevel": AccessLevel.authenticated.rawValue]
+            )
+        
+        return Single.zip(myAccessLevel, otherAccessLevel)
+            .map({ _ in })
     }
 }

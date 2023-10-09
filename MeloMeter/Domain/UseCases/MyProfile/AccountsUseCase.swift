@@ -67,7 +67,10 @@ class AccountsUseCase {
     }
     
     func excuteWithdrawal() -> Single<Bool> {
-        guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return Single.just(false)}
+        guard let uid = UserDefaults.standard.string(forKey: "uid"),
+              let otherUid = UserDefaults.standard.string(forKey: "otherUid")
+        else{ return Single.just(false) }
+        
         return self.userRepository.getUserInfo(uid)
             .asSingle()
             .flatMap{[weak self] userInfo in
@@ -84,6 +87,17 @@ class AccountsUseCase {
                     }
                     .catchAndReturn(false)
             }
+            .catchAndReturn(false)
+    }
+    
+    func excuteChangeAccessLevel() -> Single<Bool> {
+        guard let otherUid = UserDefaults.standard.string(forKey: "otherUid")
+        else{ return Single.just(false) }
+        
+        return self.userRepository.changeAccessLevel(otherUid: otherUid)
+            .map({ _ in
+                return true
+            })
             .catchAndReturn(false)
     }
     

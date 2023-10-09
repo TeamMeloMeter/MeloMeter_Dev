@@ -66,16 +66,11 @@ class AlertManager {
         }
     }
     
-    func showLogoutAlert() -> Single<Void> {
-        let message =   """
-                        로그아웃 하시겠습니까? 추후 같은 아이디로
-                        로그인하면 상대방과 연결을 다시 진행할 수 있
-                        습니다.
-                        """
+    func showYNAlert() -> Single<Void> {
         
         return Single.create{ single in
-            let alertController = UIAlertController(title: "로그아웃", message: message, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "로그아웃", style: .destructive) { _ in
+            let alertController = UIAlertController(title: self.alertTitle, message: self.message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: self.alertTitle, style: .destructive) { _ in
                 single(.success(()))
             }
             let cancelAction = UIAlertAction(title: "취소", style: .default, handler: nil)

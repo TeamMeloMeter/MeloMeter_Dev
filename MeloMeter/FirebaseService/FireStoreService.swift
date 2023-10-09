@@ -23,7 +23,8 @@ public protocol FireStoreService {
     
     func uploadImage(filePath: String, image: UIImage) -> Single<String>
     func downloadImage(urlString: String) -> Single<UIImage?>
-    func deleteImageFromStorage(imageURL: String) -> Single<Void>
+    func deleteImageFromProfileStorage(imageURL: String) -> Single<Void>
+    func deleteImageFromChatStorage(filePath: String) -> Single<Void>
     func setAccessLevel(_ level: AccessLevel) -> Single<Void>
 
 }

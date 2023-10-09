@@ -121,7 +121,6 @@ class MyProfileVC: UIViewController {
         
         output.alarmImage
             .bind(onNext: { icon in
-                //birthDay 아이콘 에쎗에 제대로 안들어가짐!!! 밑에 icon변수 넣어라 나중에
                 self.alarmImageView.image = UIImage(named: "alarmIcon")
             }).disposed(by: disposeBag)
         

@@ -10,7 +10,7 @@ import RxSwift
 import RxRelay
 
 enum AccountsButton {
-    case disconnect, recovery, withdrawal
+    case disconnect, recovery, withdrawal, cencel
 }
 
 class AccountsVM {
@@ -94,7 +94,7 @@ class AccountsVM {
                             .disposed(by: disposeBag)
                         
                     case .withdrawal:
-                        self.accountsUseCase.excuteWithdrawal()
+                        self.accountsUseCase.excuteChangeAccessLevel()
                             .subscribe(onSuccess: { result in
                                 if result {
                                     self.coordinator?.finish()
@@ -103,6 +103,8 @@ class AccountsVM {
                                 }
                             })
                             .disposed(by: disposeBag)
+                    case .cencel:
+                        print("취소")
                     }
                     
                 })
