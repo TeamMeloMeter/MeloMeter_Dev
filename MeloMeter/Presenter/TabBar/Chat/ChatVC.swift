@@ -533,7 +533,8 @@ extension ChatVC: InputBarAccessoryViewDelegate {
         inputBar.inputTextView.text = String()
         inputBar.invalidatePlugins()
         inputBar.inputTextView.placeholder = "이것좀 없애자"
-        inputBar.inputTextView.resignFirstResponder()
+        //키보드 내리기
+//        inputBar.inputTextView.resignFirstResponder()
         DispatchQueue.global(qos: .default).async {
             DispatchQueue.main.async { [weak self] in
                 inputBar.inputTextView.placeholder = " 메세지를 입력해주세요."

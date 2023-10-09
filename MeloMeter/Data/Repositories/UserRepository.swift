@@ -96,6 +96,11 @@ class UserRepository: UserRepositoryP {
     
     func updateProfileImage(image: UIImage) -> Single<Void> {
         guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return Single.just(()) }
+        
+        guard let name = UserDefaults.standard.string(forKey: "userName") else{ return Single.just(())}
+        
+            PushNotificationService.shared.sendPushNotification(title: "MeloMeter", body: "\(name)님이 프로필사진을 변경했어요", type: .profile)
+        
         return self.firebaseService.uploadImage(filePath: uid, image: image)
             .flatMap{ url in
                 return self.firebaseService.updateDocument(collection: .Users, document: uid, values: ["profileImagePath": url] as? [String: Any] ?? [:])
@@ -117,6 +122,14 @@ class UserRepository: UserRepositoryP {
                 }
             
         }else {
+            //상태메시지 변경시
+            guard let name = UserDefaults.standard.string(forKey: "userName") else{ return Single.just(())}
+            if value.first?.key == "stateMessage" {
+                PushNotificationService.shared.sendPushNotification(title: "MeloMeter", body: "\(name)님이 상태메세지를 업데이트 했어요", type: .profile)
+            }else if value.first?.key == "name" {
+                PushNotificationService.shared.sendPushNotification(title: "MeloMeter", body: "\(name)님이 이름을 업데이트 했어요", type: .profile)
+            }
+            
             return self.firebaseService.updateDocument(collection: .Users,
                                                        document: uid,
                                                        values: value.asDictionary ?? [:])
@@ -178,7 +191,6 @@ class UserRepository: UserRepositoryP {
         return Single.create { single in
             user.delete { error in
                 if let error = error {
-                    print("dropoutError", error.localizedDescription)
                     single(.failure(error))
                     return
                 }

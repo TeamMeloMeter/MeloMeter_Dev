@@ -69,7 +69,7 @@ class AlarmVM {
                 
                 switch alarmModel.type {
                 case .birthDay:
-                    icon = "cakeIcon"
+                    icon = "birthDayIcon"
                 case .hundredAnni,.yearAnni,.customAnni:
                     icon = "heartIcon"
                 case .profile,.hundredQA:

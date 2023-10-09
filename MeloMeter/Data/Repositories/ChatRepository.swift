@@ -72,9 +72,19 @@ class ChatRepository: ChatRepositoryP{
                         return date1.seconds > date2.seconds ||
                         (date1.seconds == date2.seconds && date1.nanoseconds > date2.nanoseconds)
                     }
-                    let numberOfMessagesToRetrieve = 1
-                    let recentChatFields = Array(sortedChatFields.suffix(numberOfMessagesToRetrieve))
-                    self.recieveChatMessage.accept(self.convertToChatDTOArray(from: recentChatFields))
+                    
+                    //300개 넘어가면 오래된 순으로 삭제
+                    if sortedChatFields.count > 300{
+                        let values = Array(sortedChatFields[1..<sortedChatFields.count])
+                        self.firebaseService.updateDocument(collection: .Chat, document: coupleID, values: ["chatField" : values] )
+                            .subscribe(onSuccess: {})
+                            .disposed(by: self.disposeBag)
+                    }
+                    else {
+                        let numberOfMessagesToRetrieve = 1
+                        let recentChatFields = Array(sortedChatFields.suffix(numberOfMessagesToRetrieve))
+                        self.recieveChatMessage.accept(self.convertToChatDTOArray(from: recentChatFields))
+                    }
                 } else {
                     self.recieveChatMessage.accept([])
                 }
@@ -125,11 +135,17 @@ class ChatRepository: ChatRepositoryP{
                         return date1.seconds > date2.seconds ||
                         (date1.seconds == date2.seconds && date1.nanoseconds > date2.nanoseconds)
                     }
+                    
+                    var myChatCount = num
+                    //내화면에 채팅개수가 데이터 베이스를 초과하지 않게 만듬
+                    if sortedChatFields.count < myChatCount {
+                        myChatCount = sortedChatFields.count
+                    }
                     // 최대 20개의 매세지를 가져온다
                     let numberOfMessagesToRetrieve = min(sortedChatFields.count - 20, 20)
                     // 추가로 가져올 데이터가 없다면 리턴
                     if numberOfMessagesToRetrieve < 0 { return [] }
-                    let end = sortedChatFields.count - num // 0 일수도있음
+                    let end = sortedChatFields.count - myChatCount // 0 일수도있음
                     var start = end - 20
                     if start < 0 { start = 0 }
                     let recentChatFields = sortedChatFields[start ..< end]
