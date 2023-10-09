@@ -18,7 +18,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     private let viewModel: ChatVM?
     let disposeBag = DisposeBag()
-    let tapGesture = UITapGestureRecognizer()
     let viewDidLoadEvent = PublishSubject<Void>()
     let reloadEvent = PublishSubject<Int>()
     var sendTextMessage = PublishRelay<MockMessage>()
@@ -244,7 +243,12 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     
     // MARK: - Binding
-    func setBindings() {        
+    func setBindings() {
+        self.view.rx.tapGesture().when(.ended)
+            .subscribe(onNext: { _ in
+                self.inputContainerView.endEditing(true)
+            })
+            .disposed(by: disposeBag)
         let input = ChatVM.Input(
             viewDidLoadEvent: self.viewDidLoadEvent
                 .map({ _ in })
@@ -533,8 +537,6 @@ extension ChatVC: InputBarAccessoryViewDelegate {
         inputBar.inputTextView.text = String()
         inputBar.invalidatePlugins()
         inputBar.inputTextView.placeholder = "이것좀 없애자"
-        //키보드 내리기
-//        inputBar.inputTextView.resignFirstResponder()
         DispatchQueue.global(qos: .default).async {
             DispatchQueue.main.async { [weak self] in
                 inputBar.inputTextView.placeholder = " 메세지를 입력해주세요."
