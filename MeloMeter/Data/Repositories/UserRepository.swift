@@ -16,12 +16,17 @@ class UserRepository: UserRepositoryP {
     private var firebaseService: FireStoreService
     private var disposeBag: DisposeBag
     var accessLevelCheck: PublishSubject<AccessLevel>
+    private var chatRepository: ChatRepositoryP
     
-    init(firebaseService: FireStoreService) {
+    init(firebaseService: FireStoreService,
+         chatRepository: ChatRepositoryP)
+    {
         self.firebaseService = firebaseService
         self.disposeBag = DisposeBag()
         self.accessLevelCheck = PublishSubject()
+        self.chatRepository = chatRepository
     }
+    
     
     func presetUserInfo(user: UserModel, dDay: CoupleModel) -> Single<Void> {
         return Single.create { [weak self] single in
@@ -201,7 +206,7 @@ class UserRepository: UserRepositoryP {
         }
     }
     
-    func withdrawal(uid: String, coupleID: String) -> Single<Void> {
+    func withdrawal(uid: String) -> Single<Void> {
         return Single.create{ single in
             self.getUserInfo(uid)
                 .subscribe(onNext: { userInfo in
@@ -211,8 +216,6 @@ class UserRepository: UserRepositoryP {
                                 collections: [
                                     (.Users, uid),
                                     (.Locations, uid),
-                                    (.Couples, coupleID),
-                                    (.Chat, coupleID),
                                     (.Alarm, uid)
                                 ]
                             )
@@ -238,40 +241,78 @@ class UserRepository: UserRepositoryP {
     func removeOtherData(uid: String) -> Single<Void> {
         return Single.create{ single in
             self.getUserInfo(uid)
-                .subscribe(onNext: { userInfo in
-                    let deleteProfileImage = self.firebaseService.deleteImageFromProfileStorage(imageURL: userInfo.profileImage ?? "")
-                    let filePath = "chat/\(userInfo.coupleID ?? "")/"
-                    let deleteChatImages = self.firebaseService.deleteImageFromChatStorage(filePath: filePath)
+                .withUnretained(self)
+                .subscribe(onNext: { owner, userInfo in
+                    let coupleID = userInfo.coupleID ?? ""
+                    let data = ["userName", "otherUid", "otherUserName", "coupleDocumentID", "otherInviteCode", "otherFcmToken"]
+                    for key in data {
+                        UserDefaults.standard.removeObject(forKey: key)
+                    }
+                    let deleteProfileImage = owner.firebaseService
+                        .deleteImageFromProfileStorage(imageURL: userInfo.profileImage ?? "")
+
+                    var updateData: [String: Any] = [:]
+                    let fieldsToDelete = ["coupleID",
+                                          "name",
+                                          "otherFcmToken",
+                                          "otherUid",
+                                          "profileImagePath",
+                                          ]
+                    for field in fieldsToDelete {
+                        updateData[field] = FieldValue.delete()
+                    }
+                    updateData.updateValue("", forKey: "stateMessage")
                     
-                    Single.zip(deleteProfileImage, deleteChatImages)
-                        .subscribe(onSuccess: { _,_ in
-                            self.firebaseService.deleteDocuments(
-                                collections: [
-                                    (.Users, uid),
-                                    (.Locations, uid),
-                                    (.Alarm, uid)
-                                ]
-                            )
-                            .subscribe(onSuccess: {
-                                let data = ["otherUid", "otherUserName", "coupleDocumentID", "otherInviteCode", "otherFcmToken"]
-                                
-                                for key in data {
-                                    UserDefaults.standard.removeObject(forKey: key)
-                                }
-                                single(.success(()))
-                            }, onFailure: { error in
-                                single(.failure(error))
-                            })
-                            .disposed(by: self.disposeBag)
+                    let updateUserInfo = owner.firebaseService
+                        .updateDocument(collection: .Users,
+                                        document: uid,
+                                        values: updateData
+                        )
+
+                    let filePathArray = owner.chatRepository
+                        .getChatImagesURL(coupleID: coupleID)
+
+                    owner.chatRepository
+                        .getChatImagesURL(coupleID: coupleID)
+                        .subscribe(onSuccess: { st in
+                        }, onFailure: { error in
+                        })
+                        .disposed(by: owner.disposeBag)
+
+                    Single.zip(deleteProfileImage, updateUserInfo, filePathArray)
+                        .subscribe(onSuccess: { _, _, filePathArray in
+                            self.firebaseService.deleteImageFromChatStorage(filePath: filePathArray)
+                                .subscribe(onSuccess: { _ in
+                                    self.firebaseService
+                                        .deleteDocuments(
+                                            collections: [
+                                                (.Locations, uid),
+                                                (.Alarm, uid),
+                                                (.Couples, coupleID),
+                                                (.Chat, coupleID),
+                                            ]
+                                        )
+                                        .subscribe(onSuccess: {
+                                            single(.success(()))
+                                        }, onFailure: { error in
+                                            single(.failure(error))
+                                        })
+                                        .disposed(by: self.disposeBag)
+                                }, onFailure: { error in
+                                    single(.failure(error))
+                                })
+                                .disposed(by: self.disposeBag)
                         }, onFailure: { error in
                             single(.failure(error))
                         })
-                        .disposed(by: self.disposeBag)
+                        .disposed(by: owner.disposeBag)
                 })
                 .disposed(by: self.disposeBag)
             return Disposables.create()
         }
+
     }
+
     //fcm토큰 업데이트
     func updateFcmToken(fcmToken: String) {
         // 🟢 FCM Token 업데이트

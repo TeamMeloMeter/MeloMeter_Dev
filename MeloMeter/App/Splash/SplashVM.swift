@@ -13,16 +13,18 @@ import RxSwift
 
 final class SplashVM {
 
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     weak var coordinator: AppCoordinator?
-    var firebaseService: FireStoreService
-
+    private var firebaseService: FireStoreService
+    private var userRepository: UserRepositoryP
     init(
         coordinator: AppCoordinator,
-        firebaseService: FireStoreService
+        firebaseService: FireStoreService,
+        userRepository: UserRepositoryP
     ) {
         self.coordinator = coordinator
         self.firebaseService = firebaseService
+        self.userRepository = userRepository
     }
     
     func selectFlow() {
@@ -49,9 +51,11 @@ final class SplashVM {
     func getAccessLevel() -> Single<AccessLevel> {
         return Single.create { single in
             self.firebaseService.getCurrentUser()
-                .subscribe(onSuccess: { user in
+                .subscribe(onSuccess: {[weak self] user in
+                    guard let self = self else{ return }
                     self.firebaseService.getDocument(collection: .Users, document: user.uid)
-                        .subscribe(onSuccess: { data in
+                        .subscribe(onSuccess: {[weak self] data in
+                            guard let self = self else{ return }
                             guard let accessLevel = data["accessLevel"] as? String else{ single(.success(.none)); return}
                             switch accessLevel {
                             case "authenticated":
@@ -60,8 +64,18 @@ final class SplashVM {
                                 single(.success(.coupleCombined))
                             case "complete":
                                 single(.success(.complete))
+                            case "start":
+                                let deleteData = self.userRepository.withdrawal(uid: user.uid)
+                                let dropOut = self.userRepository.dropOut()
+                                Single.zip(deleteData, dropOut)
+                                    .subscribe(onSuccess: { _, _ in
+                                        single(.success(.start))
+                                    }, onFailure: { error in
+                                        single(.failure(error))
+                                    })
+                                    .disposed(by: self.disposeBag)
                             default:
-                                single(.success(.start))
+                                single(.success(.none))
                             }
                         }, onFailure: { _ in
                             single(.success(.none))

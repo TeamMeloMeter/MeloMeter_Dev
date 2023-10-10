@@ -57,9 +57,6 @@ extension MainCoordinator {
     }
     
     func finish() {
-        UserDefaults.standard.removeObject(forKey: "otherUid")
-        UserDefaults.standard.removeObject(forKey: "coupleDocumentID")
-        UserDefaults.standard.removeObject(forKey: "userName")
         self.delegate?.didFinish(childCoordinator: self)
     }
 }
@@ -67,7 +64,6 @@ extension MainCoordinator {
 extension MainCoordinator: CoordinatorDelegate {
     func didFinish(childCoordinator: Coordinator) {
         self.childCoordinators = []
-        print("main", childCoordinators)
         if childCoordinator is DdayCoordinator || childCoordinator is AlarmCoordinator {
             self.navigationController.popViewController(animated: true)
         }

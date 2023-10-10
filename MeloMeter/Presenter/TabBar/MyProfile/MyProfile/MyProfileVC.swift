@@ -99,7 +99,7 @@ class MyProfileVC: UIViewController {
         output.stateMessage
             .asDriver(onErrorJustReturn: "상태메세지를 변경해보세요!")
             .drive(onNext: { [weak self] message in
-                if let text = message {
+                if let text = message, text != "" {
                     self?.stateMessageLabel.textColor = .gray1
                     self?.stateMessageLabel.text = text
                 }else {

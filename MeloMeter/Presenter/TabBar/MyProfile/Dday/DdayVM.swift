@@ -98,7 +98,6 @@ class DdayVM {
         input.backBtnTapEvent
             .subscribe(onNext: {[weak self] _ in
                 guard let self = self else{ return }
-                print("ddaty", self.coordinator)
                 self.coordinator?.finish()
             })
             .disposed(by: disposeBag)

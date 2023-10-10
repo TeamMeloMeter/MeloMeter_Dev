@@ -100,7 +100,8 @@ class LogInRepository: LogInRepositoryP {
                                        uid: uid,
                                        phoneNumber: phoneNumber,
                                        createdAt: createdAt.toString(type: Date.Format.timeStamp),
-                                       inviteCode: inviteCode)
+                                       inviteCode: inviteCode,
+                                       stateMessage: "")
                     
                     self.firebaseService.getDocument(collection: .Users, document: uid)
                         .subscribe(onSuccess: { user in

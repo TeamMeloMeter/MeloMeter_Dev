@@ -105,7 +105,6 @@ extension TabBarCoordinator: CoordinatorDelegate {
             self.selectPage(.main)
         }else {
             self.childCoordinators.removeAll()
-            self.navigationController.popToRootViewController(animated: false)
             self.finish()
         }
         

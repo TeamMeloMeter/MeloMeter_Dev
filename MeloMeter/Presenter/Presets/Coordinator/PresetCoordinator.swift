@@ -26,11 +26,13 @@ final class PresetCoordinator: Coordinator {
 extension PresetCoordinator {
     
     func showProfileInsertVC() {
+        let firebaseService = DefaultFirebaseService()
         let viewController = ProfileInsertVC(
             viewModel: ProfileInsertVM(
                 coordinator: self,
                 profileInsertUseCase: ProfileInsertUseCase(
-                    userRepository: UserRepository(firebaseService: DefaultFirebaseService()))
+                    userRepository: UserRepository(firebaseService: firebaseService,
+                                                   chatRepository: ChatRepository(firebaseService: firebaseService)))
             )
         )
         

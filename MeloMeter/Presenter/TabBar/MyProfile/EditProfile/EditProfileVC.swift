@@ -134,7 +134,11 @@ class EditProfileVC: UIViewController {
         
         output.stateMessage
             .bind(onNext: {[weak self] stateMessage in
-                self?.userStateMessageLabel.text = stateMessage
+                if stateMessage == "" {
+                    self?.userStateMessageLabel.text = "상태메세지를 변경해보세요!"
+                }else {
+                    self?.userStateMessageLabel.text = stateMessage
+                }
             })
             .disposed(by: disposeBag)
         

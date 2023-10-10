@@ -31,7 +31,8 @@ class MainUseCase {
     required init(locationService: DefaultLocationService, firebaseService: DefaultFirebaseService) {
         self.locationService = locationService
         self.firebaseService = firebaseService
-        self.userRepository = UserRepository(firebaseService: self.firebaseService)
+        self.userRepository = UserRepository(firebaseService: self.firebaseService,
+                                             chatRepository: ChatRepository(firebaseService: self.firebaseService))
         self.coupleRepository = CoupleRepository(firebaseService: self.firebaseService)
         
         self.updatedLocation = BehaviorRelay(value: CLLocation(latitude: 0, longitude: 0))
@@ -167,5 +168,11 @@ extension MainUseCase {
             return Disposables.create()
         }
         
+    }
+    
+    func excuteRemoveData() -> Single<Void> {
+        guard let uid = UserDefaults.standard.string(forKey: "uid")
+        else{ return Single.just(()) }
+        return self.userRepository.removeOtherData(uid: uid)
     }
 }

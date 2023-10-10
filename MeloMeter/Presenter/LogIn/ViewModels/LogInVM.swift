@@ -62,7 +62,6 @@ class LogInVM {
                             self.coordinator?.showCoupleComvineVC(inviteCode: code)
                         }
                     }else {
-                        print("인증번호 입력-> 로그인플로우 finish()")
                         self.coordinator?.finish()
                     }
                     

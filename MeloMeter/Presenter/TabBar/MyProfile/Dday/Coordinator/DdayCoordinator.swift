@@ -49,7 +49,6 @@ extension DdayCoordinator {
 extension DdayCoordinator: CoordinatorDelegate {
     func didFinish(childCoordinator: Coordinator) {
         self.childCoordinators = []
-        print("ddayCodi", childCoordinator)
         if childCoordinator is DdayCoordinator {
             self.navigationController.popViewController(animated: false)
         }

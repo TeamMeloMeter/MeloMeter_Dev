@@ -6,10 +6,9 @@
 //
 
 import UIKit
-
+import RxSwift
 final class SplashVC: UIViewController {
     private let viewModel: SplashVM
-    
     init(viewModel: SplashVM) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
