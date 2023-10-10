@@ -26,12 +26,13 @@ extension ChatCoordinator {
     
     func showChatVC() {
         let firebaseService = DefaultFirebaseService()
+        let chatRepository = ChatRepository(firebaseService: firebaseService)
         let viewController = DisplayChatVC(
             viewModel: ChatVM(coordinator: self,
                               chatUseCase: ChatUseCase(
-                                chatRepository: ChatRepository(firebaseService: firebaseService),
+                                chatRepository: chatRepository,
                                 coupleRepository: CoupleRepository(firebaseService: firebaseService),
-                                userRepository: UserRepository(firebaseService: firebaseService)
+                                userRepository: UserRepository(firebaseService: firebaseService, chatRepository: chatRepository)
                               ),
                               hundredQAUseCase: HundredQAUseCase(hundredQARepository:
                                                                     HundredQARepository(firebaseService: firebaseService)

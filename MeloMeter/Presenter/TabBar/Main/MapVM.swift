@@ -124,7 +124,14 @@ class MapVM {
         
         input.endTriggerAlertTapEvent
             .subscribe(onNext: {[weak self] _ in
-                self?.coordinator?.finish()
+                guard let self = self else{ return }
+                self.mainUseCase.excuteRemoveData()
+                    .subscribe(onSuccess: {
+                        self.coordinator?.finish()
+                    }, onFailure: { error in
+                        self.coordinator?.finish()
+                    })
+                    .disposed(by: disposeBag)
             })
             .disposed(by: disposeBag)
         

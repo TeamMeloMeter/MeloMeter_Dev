@@ -48,7 +48,8 @@ extension LogInCoordinator {
             viewModel: LogInVM(
                 coordinator: self,
                 logInUseCase: LogInUseCase(logInRepository: LogInRepository(firebaseService: firebaseService),
-                                           userRepository: UserRepository(firebaseService: firebaseService))
+                                           userRepository: UserRepository(firebaseService: firebaseService,
+                                                                          chatRepository: ChatRepository(firebaseService: firebaseService)))
             )
         )
         
@@ -60,7 +61,8 @@ extension LogInCoordinator {
         let viewModel = LogInVM(
             coordinator: self,
             logInUseCase: LogInUseCase(logInRepository: LogInRepository(firebaseService: firebaseService),
-                                       userRepository: UserRepository(firebaseService: firebaseService)
+                                       userRepository: UserRepository(firebaseService: firebaseService,
+                                                                      chatRepository: ChatRepository(firebaseService: firebaseService))
                                       )
         )
         viewModel.phoneNumber = phoneNumber
@@ -75,7 +77,8 @@ extension LogInCoordinator {
             viewModel: LogInVM(
                 coordinator: self,
                 logInUseCase: LogInUseCase(logInRepository: LogInRepository(firebaseService: firebaseService),
-                                           userRepository: UserRepository(firebaseService: firebaseService)
+                                           userRepository: UserRepository(firebaseService: firebaseService,
+                                                                          chatRepository: ChatRepository(firebaseService: firebaseService))
                                           )
             ),
             inviteCode: inviteCode,

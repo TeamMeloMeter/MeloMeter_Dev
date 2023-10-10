@@ -182,6 +182,19 @@ class ChatRepository: ChatRepositoryP{
         }
         return chatDTOArray
     }
+    
+    func getChatImagesURL(coupleID: String) -> Single<[String]> {
+        return self.firebaseService.getDocument(collection: .Chat, document: coupleID)
+            .map { documentSnapshot in
+                if let chatFields = documentSnapshot["chatField"] as? [[String: Any]], !chatFields.isEmpty{
+                    let chatArray = self.convertToChatDTOArray(from: chatFields)
+                    return chatArray.filter({ $0.chatType == ChatType.image.stringType }).compactMap({ $0.contents })
+                } else {
+                    return []
+                }
+            }
+            
+    }
         
 }
 

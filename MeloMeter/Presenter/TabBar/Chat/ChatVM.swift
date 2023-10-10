@@ -43,6 +43,7 @@ class ChatVM {
         var questionComplete = PublishSubject<String>()
         var questionText = PublishSubject<String>()
         var otherProfileImage = PublishSubject<UIImage>()
+        var questionEmpty = PublishSubject<Bool>()
     }
     
     // MARK: Input
@@ -140,25 +141,35 @@ class ChatVM {
                         let questionNumber = model.count - 1
                         let answerModel = model.dropLast(1)
                         var answers = answerModel.map{ $0.answerInfo }
-                        var question = answerModel.map{ $0.questionText }
-                        if answers.filter({ $0.count < 2 }).count == 0 {
+                        let question = answerModel.map{ $0.questionText }
+                        let beforeAnswers = answers.filter({ $0.count < 2 }).flatMap({$0})
+                        if beforeAnswers.isEmpty {
+                            self.questionInfo.1 = question[0]
+                            self.questionInfo.0 = String(questionNumber)
+                            if (answers.count == 1 && answers[0].count == 2) || (answers.count == 2 && answers[1].count == 2) {
+                                output.questionComplete.onNext("오늘의 질문을 완료했어요!")
+                                output.questionText.onNext(question[0])
+                            }else {
+                                output.questionComplete.onNext("백문백답 질문을 받아보세요!")
+                                output.questionText.onNext("새로운 질문을 받아보세요!")
+                            }
                             self.answerArray = answers.popLast() ?? []
-                            self.questionInfo.1 = question.popLast() ?? ""
-                            self.questionInfo.0 = String(questionNumber)
-                            output.questionComplete.onNext("\(String(questionNumber))번째 백문백답을 완료했어요!")
-                        }else if answers.filter({ $0.count < 2 }).count == 1 {
-                            self.answerArray = answers[1]
-                            self.questionInfo.1 = question[1]
-                            self.questionInfo.0 = String(questionNumber)
-                            output.questionComplete.onNext("\(String(questionNumber))번째 백문백답이 도착했어요!")
-                        }else {
+                            
+                        }else if beforeAnswers.count == 1 {
                             self.answerArray = answers[0]
                             self.questionInfo.1 = question[0]
+                            self.questionInfo.0 = String(questionNumber)
+                            output.questionComplete.onNext("\(String(questionNumber))번째 백문백답이 도착했어요!")
+                            output.questionText.onNext(self.questionInfo.1)
+                        }else {
+                            self.answerArray = answers[1]
+                            self.questionInfo.1 = question[1]
                             self.questionInfo.0 = String(questionNumber - 1)
                             output.questionComplete.onNext("\(String(questionNumber - 1))번째 백문백답이 도착했어요!")
+                            output.questionText.onNext(self.questionInfo.1)
                         }
                         
-                        output.questionText.onNext(self.questionInfo.1)
+                        
                     })
                     .disposed(by: disposeBag)
             })
@@ -179,7 +190,7 @@ class ChatVM {
                 let otherName = UserDefaults.standard.string(forKey: "otherUserName") ?? ""
                 myAnswerInfo.userName = myName
                 otherAnswerInfo.userName = otherName
-                self.coordinator?.showReadAnswerVC(questionNumber: String(Int(self.questionInfo.0)!-1),
+                self.coordinator?.showReadAnswerVC(questionNumber: String(Int(self.questionInfo.0) ?? 2 - 1),
                                                    question: self.questionInfo.1,
                                                    myAnswerInfo: myAnswerInfo,
                                                    otherAnswerInfo: otherAnswerInfo)

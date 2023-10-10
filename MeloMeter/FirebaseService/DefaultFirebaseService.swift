@@ -20,7 +20,7 @@ public final class DefaultFirebaseService: FireStoreService {
     
     
     private let database: Firestore
-    
+    private var disposeBag = DisposeBag()
     public init(
         firestore: Firestore = Firestore.firestore(),
         allowsCaching: Bool = true
@@ -257,22 +257,31 @@ extension DefaultFirebaseService {
         
     }
     
-    public func deleteImageFromChatStorage(filePath: String) -> Single<Void> {
+    public func deleteImageFromChatStorage(filePath: [String]) -> Single<Void> {
         return Single.create { single in
-            let storage = Storage.storage()
-            let storageReference = storage.reference().child(filePath)
-            
-            storageReference.delete { error in
-                if let error = error {
-                    single(.failure(error))
-                } else {
-                    single(.success(()))
-                    ImageCacheManager.shared.removeAllObjects()
-                }
+            guard !filePath.isEmpty else{
+                single(.success(()))
+                return Disposables.create()
+            }
+            var resultCount = 0
+
+            for path in filePath {
+                self.deleteImageFromProfileStorage(imageURL: path)
+                    .subscribe(onSuccess: { _ in
+                        resultCount += 1
+                        if resultCount == filePath.count {
+                            single(.success(()))
+                            return
+                        }
+                    }, onFailure: { error in
+                        single(.failure(error))
+                        return
+                    })
+                    .disposed(by: self.disposeBag)
             }
             return Disposables.create()
         }
-        
+
     }
     
 }

@@ -37,7 +37,8 @@ extension MyProfileCoordinator {
             coordinator: self,
             myProfileUseCase: MyProfileUseCase(
                         userRepository: UserRepository(
-                            firebaseService: firebaseService
+                            firebaseService: firebaseService,
+                            chatRepository: ChatRepository(firebaseService: firebaseService)
                         ),
                         coupleRepository: CoupleRepository(firebaseService: firebaseService),
                         hundredQARepository: HundredQARepository(firebaseService: firebaseService)
@@ -73,7 +74,8 @@ extension MyProfileCoordinator {
     func showEditProfileVC() {
         let firebaseService = DefaultFirebaseService()
         let userRepository = UserRepository(
-            firebaseService: firebaseService
+            firebaseService: firebaseService,
+            chatRepository: ChatRepository(firebaseService: firebaseService)
         )
         let viewController = EditProfileVC(viewModel: EditProfileVM(
             coordinator: self,
@@ -88,10 +90,12 @@ extension MyProfileCoordinator {
     }
     
     func showEditNameVC(name: String) {
+        let firebaseService = DefaultFirebaseService()
         let viewModel = DetailEditVM(coordinator: self,
                               editProfileUseCase: EditProfileUseCase(
                                           userRepository: UserRepository(
-                                              firebaseService: DefaultFirebaseService()
+                                            firebaseService: firebaseService,
+                                            chatRepository: ChatRepository(firebaseService: firebaseService)
                                           )
                                       )
                               )
@@ -105,10 +109,12 @@ extension MyProfileCoordinator {
     }
     
     func showEditStateMessageVC(stateMessage: String) {
+        let firebaseService = DefaultFirebaseService()
         let viewModel = DetailEditVM(coordinator: self,
                               editProfileUseCase: EditProfileUseCase(
                                           userRepository: UserRepository(
-                                              firebaseService: DefaultFirebaseService()
+                                            firebaseService: firebaseService,
+                                            chatRepository: ChatRepository(firebaseService: firebaseService)
                                           )
                                       )
                               )
@@ -122,10 +128,12 @@ extension MyProfileCoordinator {
     }
     
     func showEditBirthVC(birth: String) {
+        let firebaseService = DefaultFirebaseService()
         let viewModel = DetailEditVM(coordinator: self,
                               editProfileUseCase: EditProfileUseCase(
                                           userRepository: UserRepository(
-                                              firebaseService: DefaultFirebaseService()
+                                            firebaseService: firebaseService,
+                                            chatRepository: ChatRepository(firebaseService: firebaseService)
                                           )
                                       )
                               )
@@ -175,7 +183,8 @@ extension MyProfileCoordinator {
         let viewController = DisconnectVC(viewModel: AccountsVM(
             coordinator: self,
             accountsUseCase: AccountsUseCase(
-                userRepository: UserRepository(firebaseService: firebaseService),
+                userRepository: UserRepository(firebaseService: firebaseService,
+                                               chatRepository: ChatRepository(firebaseService: firebaseService)),
                 coupleRepository: CoupleRepository(firebaseService: firebaseService)
             ))
         )
@@ -190,7 +199,8 @@ extension MyProfileCoordinator {
         let viewController = RecoveryVC(viewModel: AccountsVM(
             coordinator: self,
             accountsUseCase: AccountsUseCase(
-                userRepository: UserRepository(firebaseService: firebaseService),
+                userRepository: UserRepository(firebaseService: firebaseService,
+                                               chatRepository: ChatRepository(firebaseService: firebaseService)),
                 coupleRepository: CoupleRepository(firebaseService: firebaseService)
             )),
                                         date: date,
@@ -207,7 +217,8 @@ extension MyProfileCoordinator {
         let viewController = WithdrawalVC(viewModel: AccountsVM(
             coordinator: self,
             accountsUseCase: AccountsUseCase(
-                userRepository: UserRepository(firebaseService: DefaultFirebaseService()),
+                userRepository: UserRepository(firebaseService: firebaseService,
+                                               chatRepository: ChatRepository(firebaseService: firebaseService)),
                 coupleRepository: CoupleRepository(firebaseService: firebaseService)
             ))
         )
@@ -223,7 +234,6 @@ extension MyProfileCoordinator {
     }
     
     func finish() {
-        print("🟢🟢🟢myProfile코디네이터 피니쉬")
         self.delegate?.didFinish(childCoordinator: self)
     }
     

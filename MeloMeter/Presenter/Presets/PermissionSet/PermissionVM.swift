@@ -58,11 +58,8 @@ class PermissionVM {
     }
     
     func registerForPushNotifications() {
-        // 1 - UNUserNotificationCenter는 푸시 알림을 포함하여 앱의 모든 알림 관련 활동을 처리합니다.
         UNUserNotificationCenter.current()
-        // 2 -알림을 표시하기 위한 승인을 요청합니다. 전달된 옵션은 앱에서 사용하려는 알림 유형을 나타냅니다. 여기에서 알림(alert), 소리(sound) 및 배지(badge)를 요청합니다.
             .requestAuthorization(options: [.alert, .sound, .badge]) { granted, _ in
-                // 3 - 완료 핸들러는 인증이 성공했는지 여부를 나타내는 Bool을 수신합니다. 인증 결과를 표시합니다.
                 print("Permission granted: \(granted)")
             }
     }
@@ -70,10 +67,8 @@ class PermissionVM {
     func requestCameraPermission() {
         AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
             if response {
-                // 카메라 권한이 허용된 경우
                 print("카메라 권한이 허용되었습니다.")
             } else {
-                // 카메라 권한이 거부된 경우
                 print("카메라 권한이 거부되었습니다.")
             }
         }

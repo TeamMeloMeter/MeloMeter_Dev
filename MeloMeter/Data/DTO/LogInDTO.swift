@@ -15,7 +15,7 @@ struct LogInDTO: Codable {
     let phoneNumber: String
     let createdAt: String
     let inviteCode: String
-    
+    var stateMessage = ""
     // MARK: - Methods
     func toModel() -> LogInModel {
         return LogInModel(

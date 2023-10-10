@@ -94,10 +94,15 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             .drive(onNext: {[weak self] text in
                 guard let self = self else { return }
                 if let message = text {
-                    self.myInfoWindowLabel.text = message
-                    self.myInfoWindowLabel.layoutIfNeeded()
-                    self.myInfoWindowView.layoutIfNeeded()
-                    self.infoWindow1.open(with: self.myMarker)
+                    if message == "" {
+                        self.myInfoWindowLabel.text = text
+                        self.infoWindow1.close()
+                    }else {
+                        self.myInfoWindowLabel.text = message
+                        self.myInfoWindowLabel.layoutIfNeeded()
+                        self.myInfoWindowView.layoutIfNeeded()
+                        self.infoWindow1.open(with: self.myMarker)
+                    }
                 }else {
                     self.myInfoWindowLabel.text = text
                     self.infoWindow1.close()
@@ -110,10 +115,15 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             .drive(onNext: {[weak self] text in
                 guard let self = self else { return }
                 if let message = text {
-                    self.otherInfoWindowLabel.text = message
-                    self.otherInfoWindowLabel.layoutIfNeeded()
-                    self.otherInfoWindowView.layoutIfNeeded()
-                    self.infoWindow2.open(with: self.otherMarker)
+                    if message == "" {
+                        self.otherInfoWindowLabel.text = text
+                        self.infoWindow2.close()
+                    }else {
+                        self.otherInfoWindowLabel.text = message
+                        self.otherInfoWindowLabel.layoutIfNeeded()
+                        self.otherInfoWindowView.layoutIfNeeded()
+                        self.infoWindow2.open(with: self.otherMarker)
+                    }
                 } else {
                     self.otherInfoWindowLabel.text = text
                     self.infoWindow2.close()
@@ -200,16 +210,18 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     // MARK: Event
     func endTriggerAlert() {
         AlertManager(viewController: self)
-            .setTitle("연결 종료")
-            .setMessage("""
-                        상대방과의 연결이 종료되었습니다.
-                        새로운 커플 연결을 통해
-                        멜로미터를 다시 이용하실 수
-                        있습니다.
-                        """
+            .showNomalAlert(title: "연결 종료",
+                            message: """
+                                    상대방과의 연결이 종료되었습니다.
+                                    새로운 커플 연결을 통해
+                                    멜로미터를 다시 이용하실 수
+                                    있습니다.
+                                    """
             )
-            .addActionConfirm("확인", action: { self.endTriggerAlertEvent.onNext(()) })
-            .showCustomAlert()
+            .subscribe(onSuccess: {
+                self.endTriggerAlertEvent.onNext(())
+            })
+            .disposed(by: disposeBag)
     }
     
     func changedMarkerIcon(isMine: Bool, profileImage: UIImage) {

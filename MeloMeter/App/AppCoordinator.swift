@@ -14,7 +14,7 @@ public enum AccessLevel: String {
     var toString: String {
         switch self {
         case .start:
-            return "none"
+            return "start"
         case .authenticated:
             return "authenticated"
         case .coupleCombined:
@@ -54,8 +54,14 @@ final class AppCoordinator: Coordinator {
 extension AppCoordinator {
     
     func showSplashVC() {
-        let splashVC = SplashVC(viewModel: SplashVM(coordinator: self,
-                                                   firebaseService: DefaultFirebaseService()))
+        let firebaseService = DefaultFirebaseService()
+        let splashVC = SplashVC(
+            viewModel: SplashVM(coordinator: self,
+                                firebaseService: firebaseService,
+                                userRepository: UserRepository(firebaseService: firebaseService,
+                                                               chatRepository: ChatRepository(firebaseService: firebaseService))
+                               )
+        )
         navigationController.setNavigationBarHidden(true, animated: false)
         navigationController.pushViewController(splashVC, animated: false)
     }

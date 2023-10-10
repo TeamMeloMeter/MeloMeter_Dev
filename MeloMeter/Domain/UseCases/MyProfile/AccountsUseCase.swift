@@ -67,8 +67,7 @@ class AccountsUseCase {
     }
     
     func excuteWithdrawal() -> Single<Bool> {
-        guard let uid = UserDefaults.standard.string(forKey: "uid"),
-              let otherUid = UserDefaults.standard.string(forKey: "otherUid")
+        guard let uid = UserDefaults.standard.string(forKey: "uid")
         else{ return Single.just(false) }
         
         return self.userRepository.getUserInfo(uid)
@@ -77,7 +76,7 @@ class AccountsUseCase {
                 guard let self = self else{ return Single.just(false)}
                 return self.coupleRepository.withdrawalAlarm(otherUid: userInfo.otherUid ?? "")
                     .flatMap{ _ in
-                        return self.userRepository.withdrawal(uid: userInfo.uid ?? "", coupleID: userInfo.coupleID ?? "")
+                        return self.userRepository.withdrawal(uid: userInfo.uid ?? "")
                             .flatMap{
                                 return self.userRepository.dropOut()
                                     .map{ true }
@@ -93,11 +92,21 @@ class AccountsUseCase {
     func excuteChangeAccessLevel() -> Single<Bool> {
         guard let otherUid = UserDefaults.standard.string(forKey: "otherUid")
         else{ return Single.just(false) }
-        
-        return self.userRepository.changeAccessLevel(otherUid: otherUid)
+        let changedMine = self.userRepository.changeAccessLevel(otherUid: otherUid)
             .map({ _ in
                 return true
             })
+            .catchAndReturn(false)
+        let changedOther = self.userRepository.changeAccessLevel(otherUid: otherUid)
+            .map({ _ in
+                return true
+            })
+            .catchAndReturn(false)
+        return Single.zip(changedMine, changedOther)
+            .map{ mine, other in
+                if mine && other { return true }
+                else{ return false }
+            }
             .catchAndReturn(false)
     }
     
