@@ -28,8 +28,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let url = URLContexts.first?.url else { return }
         if let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
             let queryItems = components.queryItems ?? []
+            
             for queryItem in queryItems {
-                if queryItem.name == "appBtnTapped", let otherCode = queryItem.value {
+                if queryItem.name == "inviteCode", let otherCode = queryItem.value {
+                    let otherInviteCode = otherCode.components(separatedBy: " ")
                     UserDefaults.standard.set(otherCode, forKey: "otherInviteCode")
                     appCoordinator?.start()
                 }
