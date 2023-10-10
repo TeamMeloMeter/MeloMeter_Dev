@@ -17,5 +17,8 @@ protocol UserRepositoryP {
     func userAccessLevelObserver()
     func signOut() -> Single<Void>
     func dropOut() -> Single<Void>
-    func withdrawal(uid: String, coupleID: String) -> Single<Void>
+    func withdrawal(uid: String) -> Single<Void>
+    func removeOtherData(uid: String) -> Single<Void>
+    func updateFcmToken(fcmToken: String)
+    func changeAccessLevel(otherUid: String) -> Single<Void>
 }
