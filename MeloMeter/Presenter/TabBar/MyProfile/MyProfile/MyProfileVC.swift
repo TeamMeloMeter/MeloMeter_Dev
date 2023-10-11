@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import RxGesture
 
-class MyProfileVC: UIViewController {
+class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
     
     private let viewModel: MyProfileVM?
     let disposeBag = DisposeBag()
@@ -29,6 +29,7 @@ class MyProfileVC: UIViewController {
         configure()
         setAutoLayout()
         setBindings()
+        setNavigationBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,7 +39,6 @@ class MyProfileVC: UIViewController {
     
     // MARK: Binding
     func setBindings() {
-        
         self.infoStackView.rx.tapGesture().when(.ended)
             .subscribe(onNext: {[weak self] _ in
                 self?.showInfoAlert()
@@ -160,10 +160,19 @@ class MyProfileVC: UIViewController {
         AlertManager(viewController: self)
             .setTitle("정보")
             .setMessage("버전 정보: 1.0.0\n현택 / 지우 / 솔님 / 태성")
-            .addActionConfirm("확인")
+            .addActionConfirm("확인", action: { self.tabBarController?.tabBar.isUserInteractionEnabled = true })
             .showCustomAlert()
     }
-    
+    // MARK: navigationBar
+    func setNavigationBar() {
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        self.navigationController?.navigationBar.isHidden = true
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: FontManager.shared.medium(ofSize: 18)]
+
+        navigationController?.navigationBar.standardAppearance = appearance
+    }
     // MARK: UI
     lazy var topView: UIImageView = {
         let view = UIImageView()

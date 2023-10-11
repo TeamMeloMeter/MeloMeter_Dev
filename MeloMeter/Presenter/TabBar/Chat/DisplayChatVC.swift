@@ -32,7 +32,6 @@ final class DisplayChatVC: ChatVC {
     
     // MARK: Bindings
     func setBinding() {
-        
         self.downBtn.rx.tap
             .subscribe(onNext: { _ in
                 if self.downBtnToggle {
@@ -415,12 +414,6 @@ extension DisplayChatVC: MessagesDisplayDelegate {
         isFromCurrentSender(message: message) ? .white : UIColor(red: 15 / 255, green: 135 / 255, blue: 255 / 255, alpha: 1.0)
     }
     
-    func configureAudioCell(_ cell: AudioMessageCell, message: MessageType) {
-        audioController
-            .configureAudioCell(
-                cell,
-                message: message) // this is needed especially when the cell is reconfigure while is playing sound
-    }
 }
 
 // MARK: MessagesLayoutDelegate
