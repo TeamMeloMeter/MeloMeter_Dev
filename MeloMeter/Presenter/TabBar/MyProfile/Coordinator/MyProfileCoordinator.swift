@@ -241,7 +241,7 @@ extension MyProfileCoordinator {
 
 extension MyProfileCoordinator: CoordinatorDelegate {
     func didFinish(childCoordinator: Coordinator) {
-            
+        
         if childCoordinator is DdayCoordinator || childCoordinator is AlarmCoordinator || childCoordinator is HundredCoordinator {
             self.navigationController.popViewController(animated: true)
             self.childCoordinators.removeLast()
