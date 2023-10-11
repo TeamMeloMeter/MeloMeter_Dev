@@ -22,7 +22,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     let reloadEvent = PublishSubject<Int>()
     var sendTextMessage = PublishRelay<MockMessage>()
     var sendImageMessage = PublishRelay<MockMessage>()
-    lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
+//    lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
     lazy var messageList: [MockMessage] = []
 
     // 백그라운드 이미지
@@ -67,7 +67,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         self.viewDidLoadEvent.onNext(())
         setNavigationBar()
         configureMessageCollectionView()
-        configureMessageInputBar()
         
         self.view.addSubview(backgroundImageView)
         self.view.sendSubviewToBack(backgroundImageView)
@@ -102,7 +101,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        audioController.stopAnyOngoingPlaying()
     }
     
     // MARK: - 처음 로딩시 채팅 리스트 가져오는곳
@@ -448,23 +446,6 @@ extension ChatVC: MessageCellDelegate {
             print("Failed to identify message when audio cell receive tap gesture")
             return
         }
-        guard audioController.state != .stopped else {
-            // There is no audio sound playing - prepare to start playing for given audio message
-            audioController.playSound(for: message, in: cell)
-            return
-        }
-        if audioController.playingMessage?.messageId == message.messageId {
-            // tap occur in the current cell that is playing audio sound
-            if audioController.state == .playing {
-                audioController.pauseSound(for: message, in: cell)
-            } else {
-                audioController.resumeSound()
-            }
-        } else {
-            // tap occur in a difference cell that the one is currently playing sound. First stop currently playing and start the sound for given message
-            audioController.stopAnyOngoingPlaying()
-            audioController.playSound(for: message, in: cell)
-        }
     }
     
     func didStartAudio(in _: AudioMessageCell) {
@@ -564,6 +545,10 @@ extension ChatVC: InputBarAccessoryViewDelegate {
 // MARK: CameraInputBarAccessoryViewDelegate
 
 extension ChatVC: CameraInputBarAccessoryViewDelegate {
+    func sendCameraImage(_ image: UIImage) {
+        self.sendImageMessageEvent(photo: image)
+    }
+    
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith attachments: [AttachmentManager.Attachment]) {
         for item in attachments {
             if case .image(let image) = item {
@@ -575,8 +560,8 @@ extension ChatVC: CameraInputBarAccessoryViewDelegate {
     
     //이미지타입 전송
     func sendImageMessageEvent(photo: UIImage) {
-        
         let photoMessage = MockMessage(image: photo, user: currentSender as! MockUser, messageId: UUID().uuidString, date: Date())
         sendImageMessage.accept(photoMessage)
     }
+    
 }
