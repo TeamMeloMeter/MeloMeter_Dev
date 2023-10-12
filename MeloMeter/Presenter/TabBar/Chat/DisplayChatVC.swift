@@ -63,6 +63,9 @@ final class DisplayChatVC: ChatVC {
         output.otherProfileImage
             .bind(onNext: {[weak self] image in
                 self?.otherProfileImage = image
+                self?.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: true)
+                self?.messagesCollectionView.reloadData()
+                self?.view.layoutIfNeeded()
             })
             .disposed(by: disposeBag)
         
@@ -407,19 +410,6 @@ extension DisplayChatVC: MessagesDisplayDelegate {
             showsBuildings: true,
             showsPointsOfInterest: true,
             span: MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10))
-    }
-    
-    // MARK: - Audio Messages
-    
-    func audioTintColor(for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> UIColor {
-        isFromCurrentSender(message: message) ? .white : UIColor(red: 15 / 255, green: 135 / 255, blue: 255 / 255, alpha: 1.0)
-    }
-    
-    func configureAudioCell(_ cell: AudioMessageCell, message: MessageType) {
-        audioController
-            .configureAudioCell(
-                cell,
-                message: message) // this is needed especially when the cell is reconfigure while is playing sound
     }
 }
 

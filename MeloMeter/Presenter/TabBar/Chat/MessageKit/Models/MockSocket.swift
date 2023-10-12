@@ -21,12 +21,6 @@ final class MockSocket {
   func connect(with senders: [MockUser]) -> Self {
     disconnect()
     connectedUsers = senders
-    timer = Timer.scheduledTimer(
-      timeInterval: 2.5,
-      target: self,
-      selector: #selector(handleTimer),
-      userInfo: nil,
-      repeats: true)
     return self
   }
 
@@ -63,16 +57,4 @@ final class MockSocket {
 
   private var connectedUsers: [MockUser] = []
 
-  @objc
-  private func handleTimer() {
-    if let message = queuedMessage {
-      onNewMessageCode?(message)
-      queuedMessage = nil
-    } else {
-      let sender = connectedUsers.random()!
-      let message = SampleData.shared.randomMessage(allowedSenders: [sender])
-      queuedMessage = message
-      onTypingStatusCode?()
-    }
-  }
 }

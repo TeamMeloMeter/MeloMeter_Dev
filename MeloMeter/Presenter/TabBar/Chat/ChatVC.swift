@@ -22,7 +22,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     let reloadEvent = PublishSubject<Int>()
     var sendTextMessage = PublishRelay<MockMessage>()
     var sendImageMessage = PublishRelay<MockMessage>()
-    lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
     lazy var messageList: [MockMessage] = []
 
     // 백그라운드 이미지
@@ -95,14 +94,13 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         DispatchQueue.main.async {
             if !self.messageList.isEmpty {
                 self.messagesCollectionView.reloadDataAndKeepOffset()
-                self.messagesCollectionView.scrollToItem(at: IndexPath(row: 0, section: self.messageList.count-1), at: .centeredVertically, animated: false)
+                self.messagesCollectionView.scrollToItem(at: IndexPath(row: 0, section: self.messageList.count-1), at: .centeredVertically, animated: true)
             }
         }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        audioController.stopAnyOngoingPlaying()
     }
     
     // MARK: - 처음 로딩시 채팅 리스트 가져오는곳
@@ -278,13 +276,13 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         
         output.getMessage
             .bind(onNext: {chatMessageList in
+                self.messageList = chatMessageList
                 self.loadFirstMessages(chatMessageList)
             })
             .disposed(by: disposeBag)
         
         output.getMoreMessage
             .bind(onNext: {chatMessageList in
-                // 여기에 메세지를 추가로 늘려주는 함수가 필요하다.
                 self.loadMoreMessages(chatMessageList)
             })
             .disposed(by: disposeBag)
@@ -331,8 +329,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         messageList[indexPath.section]
     }
     
-    //여기에서 일이 넘어갈때만 출력하도록 ( 00,00,00 시에 가장 가까운 매세지에 한번 출력 )
-    // 인덱스패스를 통해 바로 이전 메세지에서 데이트 차이가 -가 되는 경우에만 출력
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         guard self.messageList.last != nil else{ return nil }
         
@@ -411,7 +407,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
 
 extension ChatVC: MessageCellDelegate {
     func didTapAvatar(in _: MessageCollectionViewCell) {
-        
+        self.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: true)
         print("Avatar tapped", messageList.count)
         
     }
@@ -438,33 +434,6 @@ extension ChatVC: MessageCellDelegate {
     
     func didTapMessageBottomLabel(in a: MessageCollectionViewCell) {
         print("Bottom label tapped")
-    }
-    
-    func didTapPlayButton(in cell: AudioMessageCell) {
-        guard
-            let indexPath = messagesCollectionView.indexPath(for: cell),
-            let message = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView)
-        else {
-            print("Failed to identify message when audio cell receive tap gesture")
-            return
-        }
-        guard audioController.state != .stopped else {
-            // There is no audio sound playing - prepare to start playing for given audio message
-            audioController.playSound(for: message, in: cell)
-            return
-        }
-        if audioController.playingMessage?.messageId == message.messageId {
-            // tap occur in the current cell that is playing audio sound
-            if audioController.state == .playing {
-                audioController.pauseSound(for: message, in: cell)
-            } else {
-                audioController.resumeSound()
-            }
-        } else {
-            // tap occur in a difference cell that the one is currently playing sound. First stop currently playing and start the sound for given message
-            audioController.stopAnyOngoingPlaying()
-            audioController.playSound(for: message, in: cell)
-        }
     }
     
     func didStartAudio(in _: AudioMessageCell) {
