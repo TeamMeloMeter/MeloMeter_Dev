@@ -369,54 +369,6 @@ extension DisplayChatVC: MessagesDisplayDelegate {
         }
     }
 
-    // MARK: - Location Messages
-    
-    func annotationViewForLocation(message _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> MKAnnotationView? {
-        let annotationView = MKAnnotationView(annotation: nil, reuseIdentifier: nil)
-        let pinImage = #imageLiteral(resourceName: "myMarkerDot")
-        annotationView.image = pinImage
-        annotationView.centerOffset = CGPoint(x: 0, y: -pinImage.size.height / 2)
-        return annotationView
-    }
-    
-    func animationBlockForLocation(
-        message _: MessageType,
-        at _: IndexPath,
-        in _: MessagesCollectionView) -> ((UIImageView) -> Void)?
-    {
-        { view in
-            view.layer.transform = CATransform3DMakeScale(2, 2, 2)
-            UIView.animate(
-                withDuration: 0.6,
-                delay: 0,
-                usingSpringWithDamping: 0.9,
-                initialSpringVelocity: 0,
-                options: [],
-                animations: {
-                    view.layer.transform = CATransform3DIdentity
-                },
-                completion: nil)
-        }
-    }
-    
-    func snapshotOptionsForLocation(
-        message _: MessageType,
-        at _: IndexPath,
-        in _: MessagesCollectionView)
-    -> LocationMessageSnapshotOptions
-    {
-        LocationMessageSnapshotOptions(
-            showsBuildings: true,
-            showsPointsOfInterest: true,
-            span: MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10))
-    }
-    
-    // MARK: - Audio Messages
-    
-    func audioTintColor(for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> UIColor {
-        isFromCurrentSender(message: message) ? .white : UIColor(red: 15 / 255, green: 135 / 255, blue: 255 / 255, alpha: 1.0)
-    }
-    
 }
 
 // MARK: MessagesLayoutDelegate

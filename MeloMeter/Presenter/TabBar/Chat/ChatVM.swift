@@ -20,16 +20,16 @@ class ChatVM {
     struct Input {
         let viewDidLoadEvent: Observable<Void>
         let backBtnTapEvent: Observable<Void>
-        let mySendTextMessage: Observable<MockMessage>
-        let mySendImageMessage: Observable<MockMessage>
+        let mySendTextMessage: Observable<ChatModel>
+        let mySendImageMessage: Observable<ChatModel>
         let reloadMessage: Observable<Int>
     }
     
     struct Output {
         var senddSuccess = PublishSubject<Bool>()
-        var getMessage = PublishSubject<[MockMessage]>()
-        var getMoreMessage = PublishSubject<[MockMessage]>()
-        var getRealTimeMessage = PublishSubject<[MockMessage]>()
+        var getMessage = PublishSubject<[ChatModel]>()
+        var getMoreMessage = PublishSubject<[ChatModel]>()
+        var getRealTimeMessage = PublishSubject<[ChatModel]>()
     }
     
     
@@ -76,7 +76,7 @@ class ChatVM {
         input.mySendTextMessage
             .subscribe(onNext: {[weak self] myMessage in
                 guard let self = self else{ return }
-                self.chatUseCase.sendMessageService(mockMessage: myMessage, chatType: .text)
+                self.chatUseCase.sendMessageService(chatModel: myMessage, chatType: .text)
                     .subscribe(onSuccess: {
                         output.senddSuccess.onNext(true)
                     },onFailure: { error in
@@ -88,7 +88,7 @@ class ChatVM {
         input.mySendImageMessage
             .subscribe(onNext: {[weak self] myMessage in
                 guard let self = self else{ return }
-                self.chatUseCase.sendMessageService(mockMessage: myMessage, chatType: .image)
+                self.chatUseCase.sendMessageService(chatModel: myMessage, chatType: .image)
                     .subscribe(onSuccess: {
                         output.senddSuccess.onNext(true)
                     },onFailure: { error in

@@ -20,10 +20,9 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     let disposeBag = DisposeBag()
     let viewDidLoadEvent = PublishSubject<Void>()
     let reloadEvent = PublishSubject<Int>()
-    var sendTextMessage = PublishRelay<MockMessage>()
-    var sendImageMessage = PublishRelay<MockMessage>()
-//    lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
-    lazy var messageList: [MockMessage] = []
+    var sendTextMessage = PublishRelay<ChatModel>()
+    var sendImageMessage = PublishRelay<ChatModel>()
+    lazy var messageList: [ChatModel] = []
 
     // 백그라운드 이미지
     let backgroundImageView: UIImageView = {
@@ -32,15 +31,11 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         return imageView
     }()
     
-    //자기 자신이 될 MockUser셋팅
-    let mockUser = MockUser(senderId: UserDefaults.standard.string(forKey: "uid") ?? "", displayName: UserDefaults.standard.string(forKey: "userName") ?? "")
+    //자기 자신이 될 ChatUser셋팅
+    let chatUser = ChatUserModel(senderId: UserDefaults.standard.string(forKey: "uid") ?? "", displayName: UserDefaults.standard.string(forKey: "userName") ?? "")
     var currentSender: SenderType {
-        self.mockUser
+        self.chatUser
     }
-    
-    let mockUser2 = MockUser(senderId: "test1", displayName: "test2")
-    
-    
     
     init(viewModel: ChatVM) {
         self.viewModel = viewModel
@@ -104,7 +99,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     }
     
     // MARK: - 처음 로딩시 채팅 리스트 가져오는곳
-    func loadFirstMessages(_ chatMassageList: [MockMessage]) {
+    func loadFirstMessages(_ chatMassageList: [ChatModel]) {
         DispatchQueue.global(qos: .userInitiated).async {
             DispatchQueue.main.async {
                 self.messageList = chatMassageList // DB에서 받아온 메세지 배열 삽입
@@ -118,7 +113,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         self.reloadEvent.onNext(self.messageList.count)
     }
 
-    func loadMoreMessages(_ chatMassageList: [MockMessage]) {
+    func loadMoreMessages(_ chatMassageList: [ChatModel]) {
         DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
             //받아온 매시지 리스트를 하나씩 삽입한다,
             DispatchQueue.main.async {
@@ -147,7 +142,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     // MARK: Configure
     func configureMessageCollectionView() {
         messagesCollectionView.messagesDataSource = self
-        messagesCollectionView.messageCellDelegate = self
         messagesCollectionView.backgroundView = backgroundImageView
         scrollsToLastItemOnKeyboardBeginsEditing = true // default false
         maintainPositionOnInputBarHeightChanged = true // default false
@@ -298,7 +292,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     
     // MARK: - Helpers
-    func insertMessage(_ message: MockMessage) {
+    func insertMessage(_ message: ChatModel) {
         messageList.append(message)
         messagesCollectionView.performBatchUpdates({
             messagesCollectionView.insertSections([messageList.count - 1])
@@ -403,103 +397,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
 }
 
-// MARK: MessageCellDelegate
-
-extension ChatVC: MessageCellDelegate {
-    func didTapAvatar(in _: MessageCollectionViewCell) {
-        self.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: true)
-        print("Avatar tapped", messageList.count)
-        
-    }
-    
-    func didTapMessage(in _: MessageCollectionViewCell) {
-        print("Message tapped")
-    }
-    
-    func didTapImage(in _: MessageCollectionViewCell) {
-        print("Image tapped")
-    }
-    
-    func didTapCellTopLabel(in _: MessageCollectionViewCell) {
-        print("Top cell label tapped")
-    }
-    
-    func didTapCellBottomLabel(in _: MessageCollectionViewCell) {
-        print("Bottom cell label tapped")
-    }
-    
-    func didTapMessageTopLabel(in _: MessageCollectionViewCell) {
-        print("Top message label tapped")
-    }
-    
-    func didTapMessageBottomLabel(in a: MessageCollectionViewCell) {
-        print("Bottom label tapped")
-    }
-    
-    func didTapPlayButton(in cell: AudioMessageCell) {
-        guard
-            let indexPath = messagesCollectionView.indexPath(for: cell),
-            let message = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView)
-        else {
-            print("Failed to identify message when audio cell receive tap gesture")
-            return
-        }
-    }
-    
-    func didStartAudio(in _: AudioMessageCell) {
-        print("Did start playing audio sound")
-    }
-    
-    func didPauseAudio(in _: AudioMessageCell) {
-        print("Did pause audio sound")
-    }
-    
-    func didStopAudio(in _: AudioMessageCell) {
-        print("Did stop audio sound")
-    }
-    
-    func didTapAccessoryView(in _: MessageCollectionViewCell) {
-        print("Accessory view tapped")
-    }
-    
-}
-
-// MARK: MessageLabelDelegate
-
-extension ChatVC: MessageLabelDelegate {
-    func didSelectAddress(_ addressComponents: [String: String]) {
-        print("Address Selected: \(addressComponents)")
-    }
-    
-    func didSelectDate(_ date: Date) {
-        print("Date Selected: \(date)")
-    }
-    
-    func didSelectPhoneNumber(_ phoneNumber: String) {
-        print("Phone Number Selected: \(phoneNumber)")
-    }
-    
-    func didSelectURL(_ url: URL) {
-        print("URL Selected: \(url)")
-    }
-    
-    func didSelectTransitInformation(_ transitInformation: [String: String]) {
-        print("TransitInformation Selected: \(transitInformation)")
-    }
-    
-    func didSelectHashtag(_ hashtag: String) {
-        print("Hashtag selected: \(hashtag)")
-    }
-    
-    func didSelectMention(_ mention: String) {
-        print("Mention selected: \(mention)")
-    }
-    
-    func didSelectCustom(_ pattern: String, match _: String?) {
-        print("Custom data detector patter selected: \(pattern)")
-    }
-}
-
 // MARK: InputBarAccessoryViewDelegate
 
 extension ChatVC: InputBarAccessoryViewDelegate {
@@ -519,9 +416,7 @@ extension ChatVC: InputBarAccessoryViewDelegate {
         DispatchQueue.global(qos: .default).async {
             DispatchQueue.main.async { [weak self] in
                 inputBar.inputTextView.placeholder = " 메세지를 입력해주세요."
-                //챗팅창에 보이게 하는 메서드
                 self?.insertMessages(components)
-                //컬렉션 뷰 마지막으로 스크롤 이동
                 self?.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: true)
                 
             }
@@ -533,7 +428,7 @@ extension ChatVC: InputBarAccessoryViewDelegate {
         for component in data {
             //텍스트 타입
             if let str = component as? String {
-                let message = MockMessage(text: str, user: self.mockUser, messageId: UUID().uuidString, date: Date.fromStringOrNow(Date().toString(type: .timeStamp), .timeStamp))
+                let message = ChatModel(text: str, user: self.chatUser, messageId: UUID().uuidString, date: Date.fromStringOrNow(Date().toString(type: .timeStamp), .timeStamp))
                 sendTextMessage.accept(message)
             }
         }
@@ -558,7 +453,7 @@ extension ChatVC: CameraInputBarAccessoryViewDelegate {
     
     //이미지타입 전송
     func sendImageMessageEvent(photo: UIImage) {
-        let photoMessage = MockMessage(image: photo, user: currentSender as! MockUser, messageId: UUID().uuidString, date: Date())
+        let photoMessage = ChatModel(image: photo, user: currentSender as! ChatUserModel, messageId: UUID().uuidString, date: Date())
         sendImageMessage.accept(photoMessage)
     }
     

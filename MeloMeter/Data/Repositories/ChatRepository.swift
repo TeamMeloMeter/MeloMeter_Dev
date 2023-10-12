@@ -25,8 +25,8 @@ class ChatRepository: ChatRepositoryP{
         self.disposeBag = DisposeBag()
     }
     
-    // MockMessage타입을 인자로 받아서 fireBase에 insert하는 함수 / 리턴 t/f
-    func addChatMessage(message: MockMessage, coupleID: String) -> Single<Void> {
+    // ChatModel타입을 인자로 받아서 fireBase에 insert하는 함수 / 리턴 t/f
+    func addChatMessage(message: ChatModel, coupleID: String) -> Single<Void> {
         let dto = message.toDTO()
         let values = dto.asDictionary ?? [:]
         let userName = UserDefaults.standard.string(forKey: "userName") ?? "상대방"
@@ -37,14 +37,14 @@ class ChatRepository: ChatRepositoryP{
     }
     
     // 이미지 메세지 처리
-    func addImageMessage(mockMessage: MockMessage, coupleID: String) -> Single<Void> {
-        switch mockMessage.kind {
+    func addImageMessage(chatModel: ChatModel, coupleID: String) -> Single<Void> {
+        switch chatModel.kind {
         case .photo(let photo):
             guard let image = photo.image else{ return Single.error(FireStoreError.unknown)}
             let uuidData = UUID().uuidString
             return self.firebaseService.uploadImage(filePath: "chat/"+coupleID+"/"+uuidData, image: image)
                 .flatMap{ url in
-                    let dto = mockMessage.toDTO(url: url)
+                    let dto = chatModel.toDTO(url: url)
                     let values = dto.asDictionary ?? [:]
                     let userName = UserDefaults.standard.string(forKey: "userName") ?? "상대방"
                     //푸시노티

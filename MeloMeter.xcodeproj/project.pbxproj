@@ -18,15 +18,13 @@
 		210BAFC62AC88DF70012B786 /* AlarmDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210BAFC52AC88DF70012B786 /* AlarmDTO.swift */; };
 		210BAFC92AC896D70012B786 /* AlarmUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210BAFC82AC896D70012B786 /* AlarmUseCase.swift */; };
 		2124EC872A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2124EC862A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift */; };
+		212F4B152AD8445D000C0A73 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 212F4B142AD8445D000C0A73 /* GoogleService-Info.plist */; };
 		214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */; };
 		2185C4CE2A83F13B00F99795 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4B72A83F13B00F99795 /* ChatVC.swift */; };
 		2185C4CF2A83F13B00F99795 /* ChatCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4B82A83F13B00F99795 /* ChatCoordinator.swift */; };
 		2185C4D02A83F13B00F99795 /* ChatVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4B92A83F13B00F99795 /* ChatVM.swift */; };
-		2185C4D72A83F13B00F99795 /* MockMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4C62A83F13B00F99795 /* MockMessage.swift */; };
-		2185C4D82A83F13B00F99795 /* CustomTextLayoutSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4C72A83F13B00F99795 /* CustomTextLayoutSizeCalculator.swift */; };
-		2185C4D92A83F13B00F99795 /* MockUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4C82A83F13B00F99795 /* MockUser.swift */; };
-		2185C4DA2A83F13B00F99795 /* CustomLayoutSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4C92A83F13B00F99795 /* CustomLayoutSizeCalculator.swift */; };
-		2185C4DB2A83F13B00F99795 /* MockSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4CA2A83F13B00F99795 /* MockSocket.swift */; };
+		2185C4D72A83F13B00F99795 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4C62A83F13B00F99795 /* ChatModel.swift */; };
+		2185C4D92A83F13B00F99795 /* ChatUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4C82A83F13B00F99795 /* ChatUserModel.swift */; };
 		2185C4DC2A83F13B00F99795 /* DisplayChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4CB2A83F13B00F99795 /* DisplayChatVC.swift */; };
 		2185C4E12A83F31900F99795 /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2185C4E02A83F31900F99795 /* MessageKit */; };
 		21C3821D2A87F778003638E1 /* ChatRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C3821C2A87F778003638E1 /* ChatRepositoryP.swift */; };
@@ -168,15 +166,13 @@
 		210BAFC52AC88DF70012B786 /* AlarmDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDTO.swift; sourceTree = "<group>"; };
 		210BAFC82AC896D70012B786 /* AlarmUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmUseCase.swift; sourceTree = "<group>"; };
 		2124EC862A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraInputBarAccessoryView.swift; sourceTree = "<group>"; };
+		212F4B142AD8445D000C0A73 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardStatusDetector.swift; sourceTree = "<group>"; };
 		2185C4B72A83F13B00F99795 /* ChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		2185C4B82A83F13B00F99795 /* ChatCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatCoordinator.swift; sourceTree = "<group>"; };
 		2185C4B92A83F13B00F99795 /* ChatVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVM.swift; sourceTree = "<group>"; };
-		2185C4C62A83F13B00F99795 /* MockMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMessage.swift; sourceTree = "<group>"; };
-		2185C4C72A83F13B00F99795 /* CustomTextLayoutSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextLayoutSizeCalculator.swift; sourceTree = "<group>"; };
-		2185C4C82A83F13B00F99795 /* MockUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockUser.swift; sourceTree = "<group>"; };
-		2185C4C92A83F13B00F99795 /* CustomLayoutSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLayoutSizeCalculator.swift; sourceTree = "<group>"; };
-		2185C4CA2A83F13B00F99795 /* MockSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSocket.swift; sourceTree = "<group>"; };
+		2185C4C62A83F13B00F99795 /* ChatModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
+		2185C4C82A83F13B00F99795 /* ChatUserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUserModel.swift; sourceTree = "<group>"; };
 		2185C4CB2A83F13B00F99795 /* DisplayChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayChatVC.swift; sourceTree = "<group>"; };
 		21C3821C2A87F778003638E1 /* ChatRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRepositoryP.swift; sourceTree = "<group>"; };
 		21C3821E2A87F7B1003638E1 /* ChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRepository.swift; sourceTree = "<group>"; };
@@ -344,12 +340,10 @@
 			isa = PBXGroup;
 			children = (
 				2185C4B62A83F13B00F99795 /* Coordinator */,
-				2185C4BA2A83F13B00F99795 /* MessageKit */,
+				2185C4BA2A83F13B00F99795 /* Custom */,
 				2185C4CB2A83F13B00F99795 /* DisplayChatVC.swift */,
-				2124EC862A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift */,
 				2185C4B72A83F13B00F99795 /* ChatVC.swift */,
 				2185C4B92A83F13B00F99795 /* ChatVM.swift */,
-				525694802AA2371F00821B20 /* ChatCustomCells.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -362,46 +356,13 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
-		2185C4BA2A83F13B00F99795 /* MessageKit */ = {
+		2185C4BA2A83F13B00F99795 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
-				2185C4C52A83F13B00F99795 /* Models */,
-				2185C4BB2A83F13B00F99795 /* Extensions */,
+				525694802AA2371F00821B20 /* ChatCustomCells.swift */,
+				2124EC862A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift */,
 			);
-			path = MessageKit;
-			sourceTree = "<group>";
-		};
-		2185C4BB2A83F13B00F99795 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		2185C4BD2A83F13B00F99795 /* Audio */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Audio;
-			sourceTree = "<group>";
-		};
-		2185C4C22A83F13B00F99795 /* DataGeneration */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DataGeneration;
-			sourceTree = "<group>";
-		};
-		2185C4C52A83F13B00F99795 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				2185C4C62A83F13B00F99795 /* MockMessage.swift */,
-				2185C4C72A83F13B00F99795 /* CustomTextLayoutSizeCalculator.swift */,
-				2185C4C82A83F13B00F99795 /* MockUser.swift */,
-				2185C4C92A83F13B00F99795 /* CustomLayoutSizeCalculator.swift */,
-				2185C4CA2A83F13B00F99795 /* MockSocket.swift */,
-			);
-			path = Models;
+			path = Custom;
 			sourceTree = "<group>";
 		};
 		21C382202A87F7F9003638E1 /* Chat */ = {
@@ -705,7 +666,7 @@
 				5290BFB82A72792A00D734EE /* Presenter */,
 				5271D4282A5FCFEF00FC7606 /* Utils */,
 				5290BFA22A703A1500D734EE /* Info.plist */,
-				214185D72AD470B4000A2ADC /* GoogleService-Info.plist */,
+				212F4B142AD8445D000C0A73 /* GoogleService-Info.plist */,
 			);
 			path = MeloMeter;
 			sourceTree = "<group>";
@@ -979,6 +940,8 @@
 			children = (
 				5271D4142A55C9DD00FC7606 /* LogInModel.swift */,
 				2108F0482A6EC565002EED7A /* UserModel.swift */,
+				2185C4C62A83F13B00F99795 /* ChatModel.swift */,
+				2185C4C82A83F13B00F99795 /* ChatUserModel.swift */,
 				521D41EB2A801D1200E5CCDA /* CoupleModel.swift */,
 				52F739542A94E6DB00D46FBB /* HundredQAModel.swift */,
 				210BAFC32AC88B610012B786 /* AlarmModel.swift */,
@@ -1107,7 +1070,7 @@
 				5230B26B2A72859200781623 /* Pretendard-ExtraBold.otf in Resources */,
 				5230B26D2A72859200781623 /* Pretendard-Regular.otf in Resources */,
 				5230B2682A72859200781623 /* Pretendard-ExtraLight.otf in Resources */,
-				214185D82AD470B4000A2ADC /* GoogleService-Info.plist in Resources */,
+				212F4B152AD8445D000C0A73 /* GoogleService-Info.plist in Resources */,
 				5230B26C2A72859200781623 /* Pretendard-SemiBold.otf in Resources */,
 				5230B26A2A72859200781623 /* Pretendard-Bold.otf in Resources */,
 				5230B2672A72859200781623 /* Pretendard-Thin.otf in Resources */,
@@ -1207,7 +1170,6 @@
 				52AEAD052A93DA050097930E /* HundredQAVC.swift in Sources */,
 				5271D4172A5841E500FC7606 /* FireStoreService.swift in Sources */,
 				52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */,
-				2185C4DA2A83F13B00F99795 /* CustomLayoutSizeCalculator.swift in Sources */,
 				214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */,
 				521D41E72A7FFD5F00E5CCDA /* DdayUseCase.swift in Sources */,
 				5230B27A2A7790A300781623 /* DefaultLocationService.swift in Sources */,
@@ -1231,7 +1193,6 @@
 				52AEAD002A93D6250097930E /* HundredQACoordinator.swift in Sources */,
 				52AEAD0A2A93EAB20097930E /* HundredQATableViewCell.swift in Sources */,
 				5230B2842A7D029200781623 /* MyProfileUseCase.swift in Sources */,
-				2185C4DB2A83F13B00F99795 /* MockSocket.swift in Sources */,
 				52F010222A0ADD500014FC01 /* EditStateMessageVC.swift in Sources */,
 				521D41F42A814FFA00E5CCDA /* PresetCoordinator.swift in Sources */,
 				52F010002A094B550014FC01 /* QnAVC.swift in Sources */,
@@ -1239,7 +1200,7 @@
 				521D42102A89C2DF00E5CCDA /* ImageCacheManager.swift in Sources */,
 				521D42122A8A106700E5CCDA /* DdayCoordinator.swift in Sources */,
 				52AEAD032A93D9770097930E /* HundredQAVM.swift in Sources */,
-				2185C4D92A83F13B00F99795 /* MockUser.swift in Sources */,
+				2185C4D92A83F13B00F99795 /* ChatUserModel.swift in Sources */,
 				5230B27C2A77926A00781623 /* MainUseCase.swift in Sources */,
 				2185C4DC2A83F13B00F99795 /* DisplayChatVC.swift in Sources */,
 				5271D4112A5580F200FC7606 /* Permission2VC.swift in Sources */,
@@ -1253,13 +1214,12 @@
 				5290BFAC2A70F46C00D734EE /* MainCoordinator.swift in Sources */,
 				52AEAD082A93DAEF0097930E /* HundredQAUseCase.swift in Sources */,
 				2124EC872A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift in Sources */,
-				2185C4D72A83F13B00F99795 /* MockMessage.swift in Sources */,
+				2185C4D72A83F13B00F99795 /* ChatModel.swift in Sources */,
 				5270EC042A445077007FF444 /* StartVC.swift in Sources */,
 				521D42052A8552E300E5CCDA /* EditProfileUseCase.swift in Sources */,
 				5290BF972A6D983A00D734EE /* ColorAssets.swift in Sources */,
 				52F00FF62A0930FF0014FC01 /* AddDdayModal.swift in Sources */,
 				2185C4CF2A83F13B00F99795 /* ChatCoordinator.swift in Sources */,
-				2185C4D82A83F13B00F99795 /* CustomTextLayoutSizeCalculator.swift in Sources */,
 				21C382222A87F812003638E1 /* ChatUseCase.swift in Sources */,
 				525694812AA2371F00821B20 /* ChatCustomCells.swift in Sources */,
 				52F0100B2A0A493C0014FC01 /* QnATableViewCell.swift in Sources */,
@@ -1489,7 +1449,7 @@
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1536,7 +1496,7 @@
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
