@@ -156,7 +156,7 @@ final class PushNotificationService {
                 dateComponents.day = components.day
                 dateComponents.hour = 10
                 dateComponents.minute = 1
-                
+            
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
                 // 알림 요청 생성, 등록
                 let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
@@ -185,7 +185,7 @@ final class PushNotificationService {
                 dateComponents.day = components.day
                 dateComponents.hour = 10
                 dateComponents.minute = 1
-                
+
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
                 // 알림 요청 생성, 등록
                 let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
@@ -199,7 +199,7 @@ final class PushNotificationService {
         for i in stride(from: 100, to: 10001, by: 100) {
             let repeatDay = [-1, 0]
             for item in repeatDay{
-                guard let hundred_date = calendar.date(byAdding: .day, value: item + i, to: firstDay ) else{ return }
+                guard let hundred_date = calendar.date(byAdding: .day, value: item + i - 1, to: firstDay ) else{ return }
                 let components = calendar.dateComponents([.year, .month, .day], from: hundred_date)
                 
                 //지난 기념을은 continue 처리
@@ -219,7 +219,6 @@ final class PushNotificationService {
                 dateComponents.day = components.day
                 dateComponents.hour = 10
                 dateComponents.minute = 1
-                
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
                 // 알림 요청 생성, 등록
                 let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
@@ -257,7 +256,7 @@ final class PushNotificationService {
                 dateComponents.day = components.day
                 dateComponents.hour = 10
                 dateComponents.minute = 1
-                
+            
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
 
                 let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
@@ -267,17 +266,6 @@ final class PushNotificationService {
             
             if cnt == 2 { break }
         }
-
-//        개수 가져오기
-//        UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { notiList in
-//
-//            print("🟢등록된 개수 : ", notiList.count)
-//
-//            notiList.map { noti in
-//                print("🟢등록된 내용 : ", noti.content.body)
-//                print("🟢등록된 유저인포 : ", noti.content.userInfo["type"] ?? "")
-//            }
-//        })
         
     }
     

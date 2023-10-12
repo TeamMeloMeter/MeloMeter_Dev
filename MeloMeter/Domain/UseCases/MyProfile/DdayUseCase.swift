@@ -67,7 +67,7 @@ class DdayUseCase {
         resultArray.append(DdayCellData(dateName: "첫 만남🫣", date: firstDay, countDdays: firstDayCount))
         for i in 1...182 {
             //시작일부터 100일 단위 기념일 날짜
-            guard let ani = calendar.date(byAdding: .day, value: (i * 100), to: firstDay) else{return resultArray}
+            guard let ani = calendar.date(byAdding: .day, value: (i * 100)-1, to: firstDay) else{return resultArray}
             if sinceDday(from: ani) > 0 {
                 countDday = "\(sinceDday(from: ani))일 남음"
             }else if sinceDday(from: ani) == 0 {
