@@ -18,13 +18,6 @@ final class MockSocket {
   static var shared = MockSocket()
 
   @discardableResult
-  func connect(with senders: [MockUser]) -> Self {
-    disconnect()
-    connectedUsers = senders
-    return self
-  }
-
-  @discardableResult
   func disconnect() -> Self {
     timer?.invalidate()
     timer = nil

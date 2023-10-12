@@ -47,7 +47,7 @@ class AlertManager {
         alertViewController.alertTitle = alertTitle
         alertViewController.message = message
         alertViewController.addActionConfirm = addActionConfirm
-        
+        baseViewController.tabBarController?.tabBar.isUserInteractionEnabled = false
         baseViewController.present(alertViewController, animated: true)
         return self
     }
@@ -169,5 +169,32 @@ class AlertManager {
                 alertController.dismiss(animated: true, completion: nil)
             }
         }
+    }
+}
+
+// MARK: Chat Alert
+extension AlertManager {
+    static func showAlert(
+        style: UIAlertController.Style,
+        title: String?,
+        message: String?,
+        actions: [UIAlertAction] = [UIAlertAction(title: "Ok", style: .cancel, handler: nil)],
+        completion: (() -> Swift.Void)? = nil)
+    {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: style)
+        for action in actions {
+            alert.addAction(action)
+        }
+        
+        self.getTopViewController()?.present(alert, animated: true, completion: completion)
+    }
+    static func getTopViewController() -> UIViewController? {
+        var topViewController = UIApplication.shared.keyWindow?.rootViewController
+        
+        while let presentedViewController = topViewController?.presentedViewController {
+            topViewController = presentedViewController
+        }
+        
+        return topViewController
     }
 }

@@ -24,6 +24,7 @@ class MyProfileVM {
         let hundredQAViewTapEvent: Observable<Void>
         let noticeViewTapEvent: Observable<Void>
         let qnAViewTapEvent: Observable<Void>
+        //let viewSwipeEvent: Observable<Void>
     }
     
     struct Output {
@@ -147,6 +148,13 @@ class MyProfileVM {
                 self.coordinator?.showQnAVC()
             })
             .disposed(by: disposeBag)
+        
+//        input.viewSwipeEvent
+//            .subscribe(onNext: {
+//                print("스와이프 뷰모델")
+//                self.coordinator?.popViewController()
+//            })
+//            .disposed(by: disposeBag)
         
         return output
     }

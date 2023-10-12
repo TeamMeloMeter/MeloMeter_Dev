@@ -22,6 +22,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     let reloadEvent = PublishSubject<Int>()
     var sendTextMessage = PublishRelay<MockMessage>()
     var sendImageMessage = PublishRelay<MockMessage>()
+//    lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
     lazy var messageList: [MockMessage] = []
 
     // 백그라운드 이미지
@@ -66,7 +67,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         self.viewDidLoadEvent.onNext(())
         setNavigationBar()
         configureMessageCollectionView()
-        configureMessageInputBar()
         
         self.view.addSubview(backgroundImageView)
         self.view.sendSubviewToBack(backgroundImageView)
@@ -436,6 +436,16 @@ extension ChatVC: MessageCellDelegate {
         print("Bottom label tapped")
     }
     
+    func didTapPlayButton(in cell: AudioMessageCell) {
+        guard
+            let indexPath = messagesCollectionView.indexPath(for: cell),
+            let message = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView)
+        else {
+            print("Failed to identify message when audio cell receive tap gesture")
+            return
+        }
+    }
+    
     func didStartAudio(in _: AudioMessageCell) {
         print("Did start playing audio sound")
     }
@@ -533,6 +543,10 @@ extension ChatVC: InputBarAccessoryViewDelegate {
 // MARK: CameraInputBarAccessoryViewDelegate
 
 extension ChatVC: CameraInputBarAccessoryViewDelegate {
+    func sendCameraImage(_ image: UIImage) {
+        self.sendImageMessageEvent(photo: image)
+    }
+    
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith attachments: [AttachmentManager.Attachment]) {
         for item in attachments {
             if case .image(let image) = item {
@@ -544,8 +558,8 @@ extension ChatVC: CameraInputBarAccessoryViewDelegate {
     
     //이미지타입 전송
     func sendImageMessageEvent(photo: UIImage) {
-        
         let photoMessage = MockMessage(image: photo, user: currentSender as! MockUser, messageId: UUID().uuidString, date: Date())
         sendImageMessage.accept(photoMessage)
     }
+    
 }

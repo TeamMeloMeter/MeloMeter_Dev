@@ -12,16 +12,18 @@ import UIKit
 
 protocol CameraInputBarAccessoryViewDelegate: InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith attachments: [AttachmentManager.Attachment])
+    func sendCameraImage(_ image: UIImage)
 }
 
 extension CameraInputBarAccessoryViewDelegate {
     func inputBar(_: InputBarAccessoryView, didPressSendButtonWith _: [AttachmentManager.Attachment]) { }
+    func sendCameraImage(_: UIImage) {}
 }
 
 // MARK: - CameraInputBarAccessoryView
 
 class CameraInputBarAccessoryView: InputBarAccessoryView {
-    // MARK: Lifecycle
+    private var imageSourceType: Bool = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -96,7 +98,7 @@ extension CameraInputBarAccessoryView: UIImagePickerControllerDelegate, UINaviga
         
         let cancelAction = UIAlertAction(title: "취소", style: .destructive, handler: nil)
         
-        AlertService.showAlert(
+        AlertManager.showAlert(
             style: .actionSheet,
             title: "사진",
             message: nil,
@@ -108,6 +110,11 @@ extension CameraInputBarAccessoryView: UIImagePickerControllerDelegate, UINaviga
         let imgPicker = UIImagePickerController()
         imgPicker.delegate = self
         imgPicker.allowsEditing = true
+        if sourceType == .camera {
+            self.imageSourceType = true
+        }else {
+            self.imageSourceType = false
+        }
         imgPicker.sourceType = sourceType
         imgPicker.presentationController?.delegate = self
         inputAccessoryView?.isHidden = true
@@ -118,13 +125,17 @@ extension CameraInputBarAccessoryView: UIImagePickerControllerDelegate, UINaviga
         _: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any])
     {
+        if self.imageSourceType {
+            if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+                (delegate as? CameraInputBarAccessoryViewDelegate)?
+                    .sendCameraImage(image)
+            }
+        }
         if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            //self.sendImageMessage(photo: editedImage)
             inputPlugins.forEach { _ = $0.handleInput(of: editedImage) }
         }
         else if let originImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             inputPlugins.forEach { _ = $0.handleInput(of: originImage) }
-            //self.sendImageMessage(photo: originImage)
         }
         getTopViewController()?.dismiss(animated: true, completion: nil)
         inputAccessoryView?.isHidden = false
@@ -165,7 +176,6 @@ extension CameraInputBarAccessoryView: AttachmentManagerDelegate {
     func attachmentManager(_ manager: AttachmentManager, didInsert cell: AttachmentManager.Attachment, at index: Int) {
         manager.dataSource?.attachmentManager(manager, cellFor: cell, at: index)
             .deleteButton.setImage(UIImage(named: "cancel"), for: .normal)
-
         sendButton.isEnabled = manager.attachments.count > 0
     }
     

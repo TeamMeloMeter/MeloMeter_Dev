@@ -32,7 +32,6 @@ final class DisplayChatVC: ChatVC {
     
     // MARK: Bindings
     func setBinding() {
-        
         self.downBtn.rx.tap
             .subscribe(onNext: { _ in
                 if self.downBtnToggle {
@@ -411,6 +410,13 @@ extension DisplayChatVC: MessagesDisplayDelegate {
             showsPointsOfInterest: true,
             span: MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10))
     }
+    
+    // MARK: - Audio Messages
+    
+    func audioTintColor(for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> UIColor {
+        isFromCurrentSender(message: message) ? .white : UIColor(red: 15 / 255, green: 135 / 255, blue: 255 / 255, alpha: 1.0)
+    }
+    
 }
 
 // MARK: MessagesLayoutDelegate
