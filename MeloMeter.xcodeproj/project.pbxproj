@@ -19,14 +19,11 @@
 		210BAFC92AC896D70012B786 /* AlarmUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210BAFC82AC896D70012B786 /* AlarmUseCase.swift */; };
 		2124EC872A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2124EC862A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift */; };
 		2124EC892A97BB1300FC6C0B /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2124EC882A97BB1300FC6C0B /* AlertService.swift */; };
+		214185D82AD470B4000A2ADC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 214185D72AD470B4000A2ADC /* GoogleService-Info.plist */; };
 		214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */; };
 		2185C4CE2A83F13B00F99795 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4B72A83F13B00F99795 /* ChatVC.swift */; };
 		2185C4CF2A83F13B00F99795 /* ChatCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4B82A83F13B00F99795 /* ChatCoordinator.swift */; };
 		2185C4D02A83F13B00F99795 /* ChatVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4B92A83F13B00F99795 /* ChatVM.swift */; };
-		2185C4D12A83F13B00F99795 /* SettingUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4BC2A83F13B00F99795 /* SettingUserDefaults.swift */; };
-		2185C4D22A83F13B00F99795 /* BasicAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4BE2A83F13B00F99795 /* BasicAudioController.swift */; };
-		2185C4D52A83F13B00F99795 /* Lorem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4C32A83F13B00F99795 /* Lorem.swift */; };
-		2185C4D62A83F13B00F99795 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4C42A83F13B00F99795 /* SampleData.swift */; };
 		2185C4D72A83F13B00F99795 /* MockMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4C62A83F13B00F99795 /* MockMessage.swift */; };
 		2185C4D82A83F13B00F99795 /* CustomTextLayoutSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4C72A83F13B00F99795 /* CustomTextLayoutSizeCalculator.swift */; };
 		2185C4D92A83F13B00F99795 /* MockUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4C82A83F13B00F99795 /* MockUser.swift */; };
@@ -134,7 +131,6 @@
 		52CE6EA12A01875C00E43D39 /* AlarmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA02A01875C00E43D39 /* AlarmVC.swift */; };
 		52CE6EA72A02571E00E43D39 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EA62A02571E00E43D39 /* MapVC.swift */; };
 		52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE6EAC2A02C0B800E43D39 /* DdayTableViewCell.swift */; };
-		52D9D3A12AD40E84005D22F4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52D9D3A02AD40E84005D22F4 /* GoogleService-Info.plist */; };
 		52E0CDF02A4B091600E4A182 /* CoupleCombineVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0CDEF2A4B091600E4A182 /* CoupleCombineVC.swift */; };
 		52F00FF62A0930FF0014FC01 /* AddDdayModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FF52A0930FF0014FC01 /* AddDdayModal.swift */; };
 		52F00FFA2A0938480014FC01 /* NoticeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F00FF92A0938480014FC01 /* NoticeVC.swift */; };
@@ -175,14 +171,11 @@
 		210BAFC82AC896D70012B786 /* AlarmUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmUseCase.swift; sourceTree = "<group>"; };
 		2124EC862A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraInputBarAccessoryView.swift; sourceTree = "<group>"; };
 		2124EC882A97BB1300FC6C0B /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
+		214185D72AD470B4000A2ADC /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardStatusDetector.swift; sourceTree = "<group>"; };
 		2185C4B72A83F13B00F99795 /* ChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		2185C4B82A83F13B00F99795 /* ChatCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatCoordinator.swift; sourceTree = "<group>"; };
 		2185C4B92A83F13B00F99795 /* ChatVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVM.swift; sourceTree = "<group>"; };
-		2185C4BC2A83F13B00F99795 /* SettingUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingUserDefaults.swift; sourceTree = "<group>"; };
-		2185C4BE2A83F13B00F99795 /* BasicAudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicAudioController.swift; sourceTree = "<group>"; };
-		2185C4C32A83F13B00F99795 /* Lorem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lorem.swift; sourceTree = "<group>"; };
-		2185C4C42A83F13B00F99795 /* SampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		2185C4C62A83F13B00F99795 /* MockMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMessage.swift; sourceTree = "<group>"; };
 		2185C4C72A83F13B00F99795 /* CustomTextLayoutSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextLayoutSizeCalculator.swift; sourceTree = "<group>"; };
 		2185C4C82A83F13B00F99795 /* MockUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockUser.swift; sourceTree = "<group>"; };
@@ -285,7 +278,6 @@
 		52CE6EA02A01875C00E43D39 /* AlarmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmVC.swift; sourceTree = "<group>"; };
 		52CE6EA62A02571E00E43D39 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		52CE6EAC2A02C0B800E43D39 /* DdayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayTableViewCell.swift; sourceTree = "<group>"; };
-		52D9D3A02AD40E84005D22F4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		52E0CDEF2A4B091600E4A182 /* CoupleCombineVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleCombineVC.swift; sourceTree = "<group>"; };
 		52F00FF52A0930FF0014FC01 /* AddDdayModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDdayModal.swift; sourceTree = "<group>"; };
 		52F00FF92A0938480014FC01 /* NoticeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeVC.swift; sourceTree = "<group>"; };
@@ -358,6 +350,7 @@
 				2185C4B62A83F13B00F99795 /* Coordinator */,
 				2185C4BA2A83F13B00F99795 /* MessageKit */,
 				2185C4CB2A83F13B00F99795 /* DisplayChatVC.swift */,
+				2124EC862A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift */,
 				2185C4B72A83F13B00F99795 /* ChatVC.swift */,
 				2185C4B92A83F13B00F99795 /* ChatVM.swift */,
 				525694802AA2371F00821B20 /* ChatCustomCells.swift */,
@@ -378,9 +371,6 @@
 			children = (
 				2185C4C52A83F13B00F99795 /* Models */,
 				2185C4BB2A83F13B00F99795 /* Extensions */,
-				2185C4BD2A83F13B00F99795 /* Audio */,
-				2185C4C22A83F13B00F99795 /* DataGeneration */,
-				2124EC862A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift */,
 			);
 			path = MessageKit;
 			sourceTree = "<group>";
@@ -388,27 +378,9 @@
 		2185C4BB2A83F13B00F99795 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				2185C4BC2A83F13B00F99795 /* SettingUserDefaults.swift */,
 				2124EC882A97BB1300FC6C0B /* AlertService.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		2185C4BD2A83F13B00F99795 /* Audio */ = {
-			isa = PBXGroup;
-			children = (
-				2185C4BE2A83F13B00F99795 /* BasicAudioController.swift */,
-			);
-			path = Audio;
-			sourceTree = "<group>";
-		};
-		2185C4C22A83F13B00F99795 /* DataGeneration */ = {
-			isa = PBXGroup;
-			children = (
-				2185C4C32A83F13B00F99795 /* Lorem.swift */,
-				2185C4C42A83F13B00F99795 /* SampleData.swift */,
-			);
-			path = DataGeneration;
 			sourceTree = "<group>";
 		};
 		2185C4C52A83F13B00F99795 /* Models */ = {
@@ -724,7 +696,7 @@
 				5290BFB82A72792A00D734EE /* Presenter */,
 				5271D4282A5FCFEF00FC7606 /* Utils */,
 				5290BFA22A703A1500D734EE /* Info.plist */,
-				52D9D3A02AD40E84005D22F4 /* GoogleService-Info.plist */,
+				214185D72AD470B4000A2ADC /* GoogleService-Info.plist */,
 			);
 			path = MeloMeter;
 			sourceTree = "<group>";
@@ -1121,12 +1093,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52D9D3A12AD40E84005D22F4 /* GoogleService-Info.plist in Resources */,
 				5230B2652A72859200781623 /* Pretendard-Light.otf in Resources */,
 				5230B2692A72859200781623 /* Pretendard-Black.otf in Resources */,
 				5230B26B2A72859200781623 /* Pretendard-ExtraBold.otf in Resources */,
 				5230B26D2A72859200781623 /* Pretendard-Regular.otf in Resources */,
 				5230B2682A72859200781623 /* Pretendard-ExtraLight.otf in Resources */,
+				214185D82AD470B4000A2ADC /* GoogleService-Info.plist in Resources */,
 				5230B26C2A72859200781623 /* Pretendard-SemiBold.otf in Resources */,
 				5230B26A2A72859200781623 /* Pretendard-Bold.otf in Resources */,
 				5230B2672A72859200781623 /* Pretendard-Thin.otf in Resources */,
@@ -1255,7 +1227,6 @@
 				52F010222A0ADD500014FC01 /* EditStateMessageVC.swift in Sources */,
 				521D41F42A814FFA00E5CCDA /* PresetCoordinator.swift in Sources */,
 				52F010002A094B550014FC01 /* QnAVC.swift in Sources */,
-				2185C4D12A83F13B00F99795 /* SettingUserDefaults.swift in Sources */,
 				52F2083A29FBB31D0043BCA4 /* MyProfileVC.swift in Sources */,
 				521D42102A89C2DF00E5CCDA /* ImageCacheManager.swift in Sources */,
 				521D42122A8A106700E5CCDA /* DdayCoordinator.swift in Sources */,
@@ -1275,7 +1246,6 @@
 				52AEAD082A93DAEF0097930E /* HundredQAUseCase.swift in Sources */,
 				2124EC872A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift in Sources */,
 				2185C4D72A83F13B00F99795 /* MockMessage.swift in Sources */,
-				2185C4D62A83F13B00F99795 /* SampleData.swift in Sources */,
 				5270EC042A445077007FF444 /* StartVC.swift in Sources */,
 				521D42052A8552E300E5CCDA /* EditProfileUseCase.swift in Sources */,
 				5290BF972A6D983A00D734EE /* ColorAssets.swift in Sources */,
@@ -1288,7 +1258,6 @@
 				5290BFB42A7270DF00D734EE /* LogInRepositoryP.swift in Sources */,
 				52F305362A16B7F500112A04 /* RecoveryVC.swift in Sources */,
 				52CE6EA72A02571E00E43D39 /* MapVC.swift in Sources */,
-				2185C4D52A83F13B00F99795 /* Lorem.swift in Sources */,
 				52F739572A94E71500D46FBB /* HundredQADTO.swift in Sources */,
 				521D41F62A81C71F00E5CCDA /* CoupleRepository.swift in Sources */,
 				5230B2862A7D048400781623 /* MyProfileVM.swift in Sources */,
@@ -1301,7 +1270,6 @@
 				521D42152A8A6E7300E5CCDA /* NoticeVM.swift in Sources */,
 				52F010082A097D120014FC01 /* AlarmTableViewCell.swift in Sources */,
 				521D42172A8A839D00E5CCDA /* DetailNoticeVC.swift in Sources */,
-				2185C4D22A83F13B00F99795 /* BasicAudioController.swift in Sources */,
 				521D420A2A85CCEE00E5CCDA /* DetailEditVM.swift in Sources */,
 				5290BFAE2A71F8FB00D734EE /* TabBarPageType.swift in Sources */,
 				2108F0472A6EC48B002EED7A /* UserDTO.swift in Sources */,
