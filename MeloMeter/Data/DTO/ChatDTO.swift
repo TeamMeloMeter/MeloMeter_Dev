@@ -36,20 +36,20 @@ struct ChatDTO: Codable {
 
     
 //     MARK: - Date 형을 firestore에 입력하면 Unix Time Stamp형으로 변환하는 작업
-    func toModel() ->MockMessage {
+    func toModel() ->ChatModel {
         
-        return MockMessage(
+        return ChatModel(
             text: contents ?? "",
-            user: MockUser(senderId: userId, displayName: ""),
+            user: ChatUserModel(senderId: userId, displayName: ""),
             messageId: messageId,
             date: date.dateValue()
         )
     }
     
-    func toModel(image: UIImage) ->MockMessage {
-        return MockMessage(
+    func toModel(image: UIImage) ->ChatModel {
+        return ChatModel(
             image: image,
-            user: MockUser(senderId: userId, displayName: ""),
+            user: ChatUserModel(senderId: userId, displayName: ""),
             messageId: messageId,
             date: date.dateValue()
         )

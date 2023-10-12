@@ -34,8 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
-        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: { _, _ in })
         Messaging.messaging().isAutoInitEnabled = true
         
         // device token 요청.
@@ -73,7 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     //완전종료 알림 처리
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
-        //사일런트 푸시 받는 용도
+        //silentPush
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
 //
 //
@@ -92,15 +90,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         
      }
     
-    // 푸시클릭시
+    // 푸시클릭이벤트
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
-        
-        print("🟢 클릭 : ", #function)
     }
     
 
-    // 앱화면 보고있는중에 푸시올 때
+    // 인앱푸시이벤트
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
         let userInfo = notification.request.content.userInfo
         let date = Date().toString(type: .yearToDay)

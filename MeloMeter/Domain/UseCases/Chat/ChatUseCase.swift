@@ -22,9 +22,9 @@ class ChatUseCase {
     private let userRepository: UserRepository
     private let disposeBag = DisposeBag()
 
-    var recieveChatMessageService = PublishRelay<[MockMessage]?>()
-    var recieveMoreChatMessageService = PublishRelay<[MockMessage]?>()
-    var recieveRealTimeMessageService = PublishRelay<[MockMessage]?>()
+    var recieveChatMessageService = PublishRelay<[ChatModel]?>()
+    var recieveMoreChatMessageService = PublishRelay<[ChatModel]?>()
+    var recieveRealTimeMessageService = PublishRelay<[ChatModel]?>()
     
     // MARK: Initializers
     init(chatRepository: ChatRepository,
@@ -38,14 +38,14 @@ class ChatUseCase {
     
     // MARK: - Methods
     //메세지 전송 서비스
-    func sendMessageService(mockMessage: MockMessage, chatType: ChatType) -> Single<Void> {
+    func sendMessageService(chatModel: ChatModel, chatType: ChatType) -> Single<Void> {
         return Single<Void>.create { [weak self] single in
             guard let self = self else{ return Disposables.create() }
             self.coupleRepository.getCoupleID().subscribe(onSuccess: { coupleID in
                 switch chatType{
                 case .text:
                     //레파지토리로 넘기기
-                    self.chatRepository.addChatMessage(message: mockMessage, coupleID: coupleID)
+                    self.chatRepository.addChatMessage(message: chatModel, coupleID: coupleID)
                         .subscribe(onSuccess: {
                             single(.success(()))
                         },onFailure: { error in
@@ -54,7 +54,7 @@ class ChatUseCase {
                         }).disposed(by: self.disposeBag)
                 case .image:
                     //레파지토리로 넘기기
-                    self.chatRepository.addImageMessage(mockMessage: mockMessage, coupleID: coupleID)
+                    self.chatRepository.addImageMessage(chatModel: chatModel, coupleID: coupleID)
                         .subscribe(onSuccess: {
                             //데이터베이스 입력성공
                             single(.success(()))
@@ -73,7 +73,7 @@ class ChatUseCase {
     func getChatMessageService() {
         self.coupleRepository.getCoupleID().subscribe(onSuccess: { coupleID in
             self.chatRepository.getChatMessage(coupleID: coupleID)
-                .flatMap { DTOArr -> Single<[MockMessage]> in
+                .flatMap { DTOArr -> Single<[ChatModel]> in
                     return self.downloadChatImages(DTOArray: DTOArr)
                 }
                 .bind(to: self.recieveChatMessageService)
@@ -85,7 +85,7 @@ class ChatUseCase {
     func getMoreChatMessageService(num: Int) {
         self.coupleRepository.getCoupleID().subscribe(onSuccess: { coupleID in
             self.chatRepository.getMoreChatMessage(num : num, coupleID: coupleID)
-                .flatMap { DTOArr -> Single<[MockMessage]> in
+                .flatMap { DTOArr -> Single<[ChatModel]> in
                     return self.downloadChatImages(DTOArray: DTOArr)
                 }
                 .bind(to: self.recieveMoreChatMessageService)
@@ -93,23 +93,23 @@ class ChatUseCase {
         }).disposed(by: disposeBag)
     }
     
-    func downloadChatImages(DTOArray: [ChatDTO]) -> Single<[MockMessage]> {
+    func downloadChatImages(DTOArray: [ChatDTO]) -> Single<[ChatModel]> {
         return Single.create{ single in
-            var resultMockMessageArray: [MockMessage] = []
+            var resultChatModelArray: [ChatModel] = []
             let textTypeArray = DTOArray.filter{ $0.chatType == "text" }.map{ $0.toModel() }
-            resultMockMessageArray = textTypeArray
+            resultChatModelArray = textTypeArray
             let imageTypeArray = DTOArray.filter{ $0.chatType == "image" }
             if imageTypeArray.isEmpty {
-                single(.success(resultMockMessageArray))
+                single(.success(resultChatModelArray))
             }
             for dto in imageTypeArray {
                 self.chatRepository.downloadImage(url: dto.contents ?? "")
                     .subscribe(onSuccess: { getimage in
                         guard let getimage = getimage else{ return }
                         let imageMessageModel = dto.toModel(image: getimage)
-                        resultMockMessageArray.append(imageMessageModel)
-                        if resultMockMessageArray.count == DTOArray.count {
-                            let result = resultMockMessageArray.sorted(by: { $0.sentDate < $1.sentDate })
+                        resultChatModelArray.append(imageMessageModel)
+                        if resultChatModelArray.count == DTOArray.count {
+                            let result = resultChatModelArray.sorted(by: { $0.sentDate < $1.sentDate })
                             single(.success(result))
                             return
                         }
