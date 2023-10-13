@@ -54,7 +54,7 @@ final class AppCoordinator: Coordinator {
 extension AppCoordinator {
     
     func showSplashVC() {
-        let firebaseService = DefaultFirebaseService()
+        let firebaseService = self.firebaseService
         let splashVC = SplashVC(
             viewModel: SplashVM(coordinator: self,
                                 firebaseService: firebaseService,

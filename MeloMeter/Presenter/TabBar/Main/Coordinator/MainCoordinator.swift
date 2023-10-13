@@ -12,6 +12,7 @@ final class MainCoordinator: Coordinator {
     
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
+    let firebaseService = DefaultFirebaseService()
     
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -27,7 +28,7 @@ final class MainCoordinator: Coordinator {
 extension MainCoordinator {
     
     func showMapVC() {
-        let firebaseService = DefaultFirebaseService()
+        let firebaseService = self.firebaseService
         let viewController = MapVC(viewModel: MapVM(
             coordinator: self,
             mainUseCase: MainUseCase(

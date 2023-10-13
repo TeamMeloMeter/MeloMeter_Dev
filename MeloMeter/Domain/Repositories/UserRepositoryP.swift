@@ -9,6 +9,8 @@ import Foundation
 import RxSwift
 
 protocol UserRepositoryP {
+    var accessLevelCheck: PublishSubject<AccessLevel> {get set}
+    
     func presetUserInfo(user: UserModel, dDay: CoupleModel) -> Single<Void>
     func getUserInfo(_ uid: String) -> Observable<UserModel>
     func updateUserInfo(value: [String: String]) -> Single<Void>

@@ -19,13 +19,13 @@ enum LogInServiceError: Error {
 class LogInUseCase {
     
     // MARK: - Property
-    private let logInRepository: LogInRepository
+    private let logInRepository: LogInRepositoryP
     private let disposeBag = DisposeBag()
-    private let userRepository: UserRepository
+    private let userRepository: UserRepositoryP
     var accessLevel: PublishRelay<AccessLevel>
     
     // MARK: Initializers
-    init(logInRepository: LogInRepository, userRepository: UserRepository) {
+    init(logInRepository: LogInRepositoryP, userRepository: UserRepositoryP) {
         self.logInRepository = logInRepository
         self.userRepository = userRepository
         self.accessLevel = PublishRelay()
