@@ -17,9 +17,9 @@ enum ChatServiceError: Error {
 class ChatUseCase {
     
     // MARK: - Property
-    private let chatRepository: ChatRepository
-    private let coupleRepository: CoupleRepository
-    private let userRepository: UserRepository
+    private let chatRepository: ChatRepositoryP
+    private let coupleRepository: CoupleRepositoryP
+    private let userRepository: UserRepositoryP
     private let disposeBag = DisposeBag()
 
     var recieveChatMessageService = PublishRelay<[ChatModel]?>()
@@ -27,9 +27,9 @@ class ChatUseCase {
     var recieveRealTimeMessageService = PublishRelay<[ChatModel]?>()
     
     // MARK: Initializers
-    init(chatRepository: ChatRepository,
-         coupleRepository: CoupleRepository,
-         userRepository: UserRepository)
+    init(chatRepository: ChatRepositoryP,
+         coupleRepository: CoupleRepositoryP,
+         userRepository: UserRepositoryP)
     {
         self.chatRepository = chatRepository
         self.coupleRepository = coupleRepository

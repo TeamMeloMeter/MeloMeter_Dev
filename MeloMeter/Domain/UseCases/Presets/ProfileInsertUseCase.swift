@@ -11,11 +11,11 @@ import RxSwift
 class ProfileInsertUseCase {
     
     // MARK: - Property
-    private let userRepository: UserRepository
+    private let userRepository: UserRepositoryP
     private let disposeBag = DisposeBag()
     
     // MARK: Initializers
-    init(userRepository: UserRepository) {
+    init(userRepository: UserRepositoryP) {
         self.userRepository = userRepository
     }
     

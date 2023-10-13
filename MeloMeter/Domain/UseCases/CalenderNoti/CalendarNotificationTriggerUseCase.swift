@@ -13,12 +13,12 @@ import RxRelay
 class CalendarNotificationTriggerUseCase {
     
     // MARK: - Property
-    private let userRepository: UserRepository
+    private let userRepository: UserRepositoryP
     private let coupleRepository: CoupleRepository
     private let disposeBag = DisposeBag()
     
     // MARK: Initializers
-    init(userRepository: UserRepository, coupleRepository: CoupleRepository) {
+    init(userRepository: UserRepositoryP, coupleRepository: CoupleRepository) {
         self.userRepository = userRepository
         self.coupleRepository = coupleRepository
     }

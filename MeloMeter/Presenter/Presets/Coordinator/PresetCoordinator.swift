@@ -11,6 +11,7 @@ final class PresetCoordinator: Coordinator {
     
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
+    let firebaseService = DefaultFirebaseService()
     
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -26,7 +27,7 @@ final class PresetCoordinator: Coordinator {
 extension PresetCoordinator {
     
     func showProfileInsertVC() {
-        let firebaseService = DefaultFirebaseService()
+        let firebaseService = self.firebaseService
         let viewController = ProfileInsertVC(
             viewModel: ProfileInsertVM(
                 coordinator: self,
@@ -41,7 +42,7 @@ extension PresetCoordinator {
     }
     
     func showPermissionVC1() {
-        let firebaseService = DefaultFirebaseService()
+        let firebaseService = self.firebaseService
         let viewController = PermissionVC(
             viewModel: PermissionVM(
                 coordinator: self,
@@ -54,7 +55,7 @@ extension PresetCoordinator {
     }
     
     func showPermissionVC2() {
-        let firebaseService = DefaultFirebaseService()
+        let firebaseService = self.firebaseService
         let viewController = Permission2VC(
             viewModel: PermissionVM(
                 coordinator: self,
