@@ -13,11 +13,7 @@ import UIKit
 protocol CameraInputBarAccessoryViewDelegate: InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith attachments: [AttachmentManager.Attachment])
     func sendCameraImage(_ image: UIImage)
-}
-
-extension CameraInputBarAccessoryViewDelegate {
-    func inputBar(_: InputBarAccessoryView, didPressSendButtonWith _: [AttachmentManager.Attachment]) { }
-    func sendCameraImage(_: UIImage) {}
+    func downKeyboard()
 }
 
 // MARK: - CameraInputBarAccessoryView
@@ -60,6 +56,8 @@ class CameraInputBarAccessoryView: InputBarAccessoryView {
         if attachmentManager.attachments.count > 0 {
             (delegate as? CameraInputBarAccessoryViewDelegate)?
                 .inputBar(self, didPressSendButtonWith: attachmentManager.attachments)
+            for _ in 0..<attachmentManager.attachments.count { attachmentManager.removeAttachment(at: 0) }
+            setAttachmentManager(active: false)
         }
         else {
             delegate?.inputBar(self, didPressSendButtonWith: inputTextView.text)
@@ -137,10 +135,12 @@ extension CameraInputBarAccessoryView: UIImagePickerControllerDelegate, UINaviga
         else if let originImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             inputPlugins.forEach { _ = $0.handleInput(of: originImage) }
         }
+        
         getTopViewController()?.dismiss(animated: true, completion: nil)
         inputAccessoryView?.isHidden = false
+        (delegate as? CameraInputBarAccessoryViewDelegate)?.downKeyboard()
     }
-    
+
     func imagePickerControllerDidCancel(_: UIImagePickerController) {
         getTopViewController()?.dismiss(animated: true, completion: nil)
         inputAccessoryView?.isHidden = false
