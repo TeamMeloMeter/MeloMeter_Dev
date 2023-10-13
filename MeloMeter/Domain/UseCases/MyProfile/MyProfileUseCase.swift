@@ -10,15 +10,15 @@ import RxSwift
 import RxRelay
 
 class MyProfileUseCase {
-    private let userRepository: UserRepository
-    private let coupleRepository: CoupleRepository
-    private let hundredQARepository: HundredQARepository
+    private let userRepository: UserRepositoryP
+    private let coupleRepository: CoupleRepositoryP
+    private let hundredQARepository: HundredQARepositoryP
     private var disposeBag: DisposeBag
     private var uid: String = ""
     
-    required init(userRepository: UserRepository,
-                  coupleRepository: CoupleRepository,
-                  hundredQARepository: HundredQARepository)
+    required init(userRepository: UserRepositoryP,
+                  coupleRepository: CoupleRepositoryP,
+                  hundredQARepository: HundredQARepositoryP)
     {
         self.userRepository = userRepository
         self.coupleRepository = coupleRepository

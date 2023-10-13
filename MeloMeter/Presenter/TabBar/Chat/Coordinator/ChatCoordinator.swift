@@ -10,6 +10,7 @@ final class ChatCoordinator: Coordinator {
     var delegate: CoordinatorDelegate?
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
+    let firebaseService = DefaultFirebaseService()
     
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -25,7 +26,7 @@ final class ChatCoordinator: Coordinator {
 extension ChatCoordinator {
     
     func showChatVC() {
-        let firebaseService = DefaultFirebaseService()
+        let firebaseService = self.firebaseService
         let chatRepository = ChatRepository(firebaseService: firebaseService)
         let viewController = DisplayChatVC(
             viewModel: ChatVM(coordinator: self,
@@ -52,7 +53,7 @@ extension ChatCoordinator {
     }
     
     func showReadAnswerVC(questionNumber: String, question: String, myAnswerInfo: AnswerModel, otherAnswerInfo: AnswerModel) {
-        let firebaseService = DefaultFirebaseService()
+        let firebaseService = self.firebaseService
         let hundredQACoordinator = HundredCoordinator(self.navigationController)
         hundredQACoordinator.delegate = self
         childCoordinators.append(hundredQACoordinator)

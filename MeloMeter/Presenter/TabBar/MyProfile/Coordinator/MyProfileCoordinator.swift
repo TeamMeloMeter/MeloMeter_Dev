@@ -11,6 +11,7 @@ final class MyProfileCoordinator: Coordinator {
     
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
+    let firebaseService = DefaultFirebaseService()
     
     init(_ navigationController: UINavigationController) {
         let appearance = UINavigationBarAppearance()
@@ -32,7 +33,7 @@ final class MyProfileCoordinator: Coordinator {
 extension MyProfileCoordinator {
     
     func showMyProfileVC() {
-    let firebaseService = DefaultFirebaseService()
+        let firebaseService = self.firebaseService
         let viewController = MyProfileVC(viewModel: MyProfileVM(
             coordinator: self,
             myProfileUseCase: MyProfileUseCase(
@@ -72,7 +73,7 @@ extension MyProfileCoordinator {
     }
     
     func showEditProfileVC() {
-        let firebaseService = DefaultFirebaseService()
+        let firebaseService = self.firebaseService
         let userRepository = UserRepository(
             firebaseService: firebaseService,
             chatRepository: ChatRepository(firebaseService: firebaseService)
@@ -90,7 +91,7 @@ extension MyProfileCoordinator {
     }
     
     func showEditNameVC(name: String) {
-        let firebaseService = DefaultFirebaseService()
+        let firebaseService = self.firebaseService
         let viewModel = DetailEditVM(coordinator: self,
                               editProfileUseCase: EditProfileUseCase(
                                           userRepository: UserRepository(
@@ -109,7 +110,7 @@ extension MyProfileCoordinator {
     }
     
     func showEditStateMessageVC(stateMessage: String) {
-        let firebaseService = DefaultFirebaseService()
+        let firebaseService = self.firebaseService
         let viewModel = DetailEditVM(coordinator: self,
                               editProfileUseCase: EditProfileUseCase(
                                           userRepository: UserRepository(
@@ -128,7 +129,7 @@ extension MyProfileCoordinator {
     }
     
     func showEditBirthVC(birth: String) {
-        let firebaseService = DefaultFirebaseService()
+        let firebaseService = self.firebaseService
         let viewModel = DetailEditVM(coordinator: self,
                               editProfileUseCase: EditProfileUseCase(
                                           userRepository: UserRepository(
@@ -179,7 +180,7 @@ extension MyProfileCoordinator {
     }
     
     func showDisconnectVC() {
-        let firebaseService = DefaultFirebaseService()
+        let firebaseService = self.firebaseService
         let viewController = DisconnectVC(viewModel: AccountsVM(
             coordinator: self,
             accountsUseCase: AccountsUseCase(
@@ -195,7 +196,7 @@ extension MyProfileCoordinator {
     }
     
     func showRecoveryVC(date: (String, String), names: (String, String)) {
-        let firebaseService = DefaultFirebaseService()
+        let firebaseService = self.firebaseService
         let viewController = RecoveryVC(viewModel: AccountsVM(
             coordinator: self,
             accountsUseCase: AccountsUseCase(
@@ -213,7 +214,7 @@ extension MyProfileCoordinator {
     }
     
     func showWithdrawalVC() {
-        let firebaseService = DefaultFirebaseService()
+        let firebaseService = self.firebaseService
         let viewController = WithdrawalVC(viewModel: AccountsVM(
             coordinator: self,
             accountsUseCase: AccountsUseCase(

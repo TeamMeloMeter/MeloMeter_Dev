@@ -18,7 +18,6 @@
 		210BAFC62AC88DF70012B786 /* AlarmDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210BAFC52AC88DF70012B786 /* AlarmDTO.swift */; };
 		210BAFC92AC896D70012B786 /* AlarmUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210BAFC82AC896D70012B786 /* AlarmUseCase.swift */; };
 		2124EC872A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2124EC862A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift */; };
-		212F4B152AD8445D000C0A73 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 212F4B142AD8445D000C0A73 /* GoogleService-Info.plist */; };
 		214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */; };
 		2185C4CE2A83F13B00F99795 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4B72A83F13B00F99795 /* ChatVC.swift */; };
 		2185C4CF2A83F13B00F99795 /* ChatCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185C4B82A83F13B00F99795 /* ChatCoordinator.swift */; };
@@ -62,6 +61,7 @@
 		5230B2822A7CFF6F00781623 /* MyProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2812A7CFF6F00781623 /* MyProfileCoordinator.swift */; };
 		5230B2842A7D029200781623 /* MyProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2832A7D029200781623 /* MyProfileUseCase.swift */; };
 		5230B2862A7D048400781623 /* MyProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2852A7D048400781623 /* MyProfileVM.swift */; };
+		523EF6412AD8CDFF0079E7AE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 523EF6402AD8CDFF0079E7AE /* GoogleService-Info.plist */; };
 		5241382A2A62EB95002AADA6 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524138292A62EB95002AADA6 /* Coordinator.swift */; };
 		5241382C2A62F240002AADA6 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5241382B2A62F240002AADA6 /* AppCoordinator.swift */; };
 		5241382E2A62F2ED002AADA6 /* LogInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5241382D2A62F2ED002AADA6 /* LogInCoordinator.swift */; };
@@ -166,7 +166,6 @@
 		210BAFC52AC88DF70012B786 /* AlarmDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDTO.swift; sourceTree = "<group>"; };
 		210BAFC82AC896D70012B786 /* AlarmUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmUseCase.swift; sourceTree = "<group>"; };
 		2124EC862A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraInputBarAccessoryView.swift; sourceTree = "<group>"; };
-		212F4B142AD8445D000C0A73 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		214750FE2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardStatusDetector.swift; sourceTree = "<group>"; };
 		2185C4B72A83F13B00F99795 /* ChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		2185C4B82A83F13B00F99795 /* ChatCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatCoordinator.swift; sourceTree = "<group>"; };
@@ -212,6 +211,7 @@
 		5230B2812A7CFF6F00781623 /* MyProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileCoordinator.swift; sourceTree = "<group>"; };
 		5230B2832A7D029200781623 /* MyProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileUseCase.swift; sourceTree = "<group>"; };
 		5230B2852A7D048400781623 /* MyProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileVM.swift; sourceTree = "<group>"; };
+		523EF6402AD8CDFF0079E7AE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		524138292A62EB95002AADA6 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		5241382B2A62F240002AADA6 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		5241382D2A62F2ED002AADA6 /* LogInCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInCoordinator.swift; sourceTree = "<group>"; };
@@ -666,7 +666,7 @@
 				5290BFB82A72792A00D734EE /* Presenter */,
 				5271D4282A5FCFEF00FC7606 /* Utils */,
 				5290BFA22A703A1500D734EE /* Info.plist */,
-				212F4B142AD8445D000C0A73 /* GoogleService-Info.plist */,
+				523EF6402AD8CDFF0079E7AE /* GoogleService-Info.plist */,
 			);
 			path = MeloMeter;
 			sourceTree = "<group>";
@@ -1042,7 +1042,6 @@
 			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
 				ko,
 			);
@@ -1065,12 +1064,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				523EF6412AD8CDFF0079E7AE /* GoogleService-Info.plist in Resources */,
 				5230B2652A72859200781623 /* Pretendard-Light.otf in Resources */,
 				5230B2692A72859200781623 /* Pretendard-Black.otf in Resources */,
 				5230B26B2A72859200781623 /* Pretendard-ExtraBold.otf in Resources */,
 				5230B26D2A72859200781623 /* Pretendard-Regular.otf in Resources */,
 				5230B2682A72859200781623 /* Pretendard-ExtraLight.otf in Resources */,
-				212F4B152AD8445D000C0A73 /* GoogleService-Info.plist in Resources */,
 				5230B26C2A72859200781623 /* Pretendard-SemiBold.otf in Resources */,
 				5230B26A2A72859200781623 /* Pretendard-Bold.otf in Resources */,
 				5230B2672A72859200781623 /* Pretendard-Thin.otf in Resources */,

@@ -12,6 +12,7 @@ final class HundredCoordinator: Coordinator {
     
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
+    let firebaseService = DefaultFirebaseService()
     
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -27,7 +28,7 @@ final class HundredCoordinator: Coordinator {
 extension HundredCoordinator {
     
     func showHundredQAVC() {
-        let firebaseService = DefaultFirebaseService()
+        let firebaseService = self.firebaseService
         let viewController = HundredQAVC(viewModel: HundredQAVM(coordinator: self,
                                                                 hundredQAUseCase: HundredQAUseCase(hundredQARepository: HundredQARepository(
                                                                     firebaseService: firebaseService)
@@ -41,7 +42,7 @@ extension HundredCoordinator {
     }
     
     func showReadAnswerVC(questionNumber: String, question: String, myAnswerInfo: AnswerModel, otherAnswerInfo: AnswerModel) {
-        let firebaseService = DefaultFirebaseService()
+        let firebaseService = self.firebaseService
         let viewModel = AnswerVM(coordinator: self,
                                  hundredQAUseCase: HundredQAUseCase(hundredQARepository: HundredQARepository(
                                      firebaseService: firebaseService)

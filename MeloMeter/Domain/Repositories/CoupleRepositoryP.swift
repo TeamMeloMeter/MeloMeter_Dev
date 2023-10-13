@@ -10,6 +10,7 @@ import RxSwift
 
 protocol CoupleRepositoryP {
     func getCoupleID() -> Single<String>
+    func getCoupleDocument() -> Single<CoupleModel>
     func setAnniversaries(data: [String]) -> Single<Void>
     func disconnect() -> Single<Date>
     func recovery(deadlineDate: Date) -> Single<Bool>

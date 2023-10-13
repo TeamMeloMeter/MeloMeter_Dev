@@ -9,12 +9,12 @@ import UIKit
 import RxSwift
 
 class AccountsUseCase {
-    private let userRepository: UserRepository
-    private let coupleRepository: CoupleRepository
+    private let userRepository: UserRepositoryP
+    private let coupleRepository: CoupleRepositoryP
     
     private var disposeBag: DisposeBag
     
-    required init(userRepository: UserRepository, coupleRepository: CoupleRepository) {
+    required init(userRepository: UserRepositoryP, coupleRepository: CoupleRepositoryP) {
         self.userRepository = userRepository
         self.coupleRepository = coupleRepository
         self.disposeBag = DisposeBag()

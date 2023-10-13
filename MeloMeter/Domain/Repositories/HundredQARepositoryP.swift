@@ -9,5 +9,9 @@ import Foundation
 import RxSwift
 
 protocol HundredQARepositoryP {
-    
+    func getCoupleID() -> Single<String>
+    func getAnswerList(coupleID: String) -> Single<[AnswerInfoDTO]>
+    func getQusestionList() -> Single<[String]>
+    func setAnswerList(questionNumber: String, answerData: AnswerModel?, coupleID: String) -> Single<Void>
+    func answerListObserver()
 }
