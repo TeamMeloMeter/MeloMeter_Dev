@@ -605,7 +605,8 @@
 				5230B2772A77907500781623 /* LocationService.swift */,
 				5230B2792A7790A300781623 /* DefaultLocationService.swift */,
 			);
-			path = LocationService;
+			name = LocationService;
+			path = ../../../LocationService;
 			sourceTree = "<group>";
 		};
 		524138312A63208C002AADA6 /* Coordinator */ = {
@@ -619,6 +620,8 @@
 		524138322A63213D002AADA6 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				527547F52A6D23EE00313EFC /* KakaoService */,
+				5230B2762A77906000781623 /* LocationService */,
 				5290BFB12A726ED400D734EE /* DTO */,
 				5271D41D2A5886FB00FC7606 /* Repositories */,
 			);
@@ -637,6 +640,7 @@
 		52697B6629EEB7B2002BDD04 = {
 			isa = PBXGroup;
 			children = (
+				5271D41A2A58429D00FC7606 /* FirebaseService */,
 				52697B7129EEB7B2002BDD04 /* MeloMeter */,
 				52697B7029EEB7B2002BDD04 /* Products */,
 				F436958110A740287E251D09 /* Pods */,
@@ -655,20 +659,25 @@
 		52697B7129EEB7B2002BDD04 /* MeloMeter */ = {
 			isa = PBXGroup;
 			children = (
-				5230B25A2A727DC300781623 /* Resources */,
 				B61B0F5A29F7A5F500E25EEF /* MeloMeter.entitlements */,
-				527547F52A6D23EE00313EFC /* KakaoService */,
-				5271D41A2A58429D00FC7606 /* FirebaseService */,
-				5230B2762A77906000781623 /* LocationService */,
+				5230B25A2A727DC300781623 /* Resources */,
+				526D645D2AD8E12500A1B4B6 /* Sources */,
+				5290BFA22A703A1500D734EE /* Info.plist */,
+				523EF6402AD8CDFF0079E7AE /* GoogleService-Info.plist */,
+			);
+			path = MeloMeter;
+			sourceTree = "<group>";
+		};
+		526D645D2AD8E12500A1B4B6 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
 				5230B2522A727B2F00781623 /* App */,
 				524138322A63213D002AADA6 /* Data */,
 				5271D4262A5CD3CA00FC7606 /* Domain */,
 				5290BFB82A72792A00D734EE /* Presenter */,
 				5271D4282A5FCFEF00FC7606 /* Utils */,
-				5290BFA22A703A1500D734EE /* Info.plist */,
-				523EF6402AD8CDFF0079E7AE /* GoogleService-Info.plist */,
 			);
-			path = MeloMeter;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		5271D41A2A58429D00FC7606 /* FirebaseService */ = {
@@ -719,6 +728,7 @@
 		5271D4282A5FCFEF00FC7606 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				52CE6E8229FEBC0200E43D39 /* FontManager.swift */,
 				527547EC2A68FB5600313EFC /* Alert */,
 				5271D42D2A604BF400FC7606 /* Date+.swift */,
 				5271D42F2A605B0900FC7606 /* Encodable+.swift */,
@@ -745,7 +755,8 @@
 			children = (
 				527547F32A6D23E400313EFC /* KakaoService.swift */,
 			);
-			path = KakaoService;
+			name = KakaoService;
+			path = ../../../KakaoService;
 			sourceTree = "<group>";
 		};
 		5290BFB12A726ED400D734EE /* DTO */ = {
@@ -858,7 +869,6 @@
 		52CE6E8D29FEBD5700E43D39 /* Font */ = {
 			isa = PBXGroup;
 			children = (
-				52CE6E8229FEBC0200E43D39 /* FontManager.swift */,
 				5230B2602A72859200781623 /* Pretendard-Black.otf */,
 				5230B2612A72859200781623 /* Pretendard-Bold.otf */,
 				5230B2622A72859200781623 /* Pretendard-ExtraBold.otf */,
@@ -1430,7 +1440,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = CH496725K5;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1477,7 +1487,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = CH496725K5;
 				GENERATE_INFOPLIST_FILE = YES;

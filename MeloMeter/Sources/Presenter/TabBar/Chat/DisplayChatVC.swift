@@ -282,7 +282,7 @@ final class DisplayChatVC: ChatVC {
             lastAnswerBtn.heightAnchor.constraint(equalToConstant: 38),
             
             goAnswerBtn.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 24),
-            goAnswerBtn.leadingAnchor.constraint(equalTo: lastAnswerBtn.trailingAnchor, constant: 7),
+            goAnswerBtn.trailingAnchor.constraint(equalTo: noticeView.trailingAnchor, constant: -18),
             goAnswerBtn.widthAnchor.constraint(equalToConstant: 150),
             goAnswerBtn.heightAnchor.constraint(equalToConstant: 38),
         ])
