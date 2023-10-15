@@ -233,7 +233,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         return components1.year == components2.year && components1.month == components2.month && components1.day == components2.day && components1.minute == components2.minute
     }
     
-    
     // MARK: - Binding
     func setBindings() {
         self.view.rx.tapGesture().when(.ended)
@@ -448,7 +447,11 @@ extension ChatVC: CameraInputBarAccessoryViewDelegate {
                 self.sendImageMessageEvent(photo: image)
             }
         }
-        inputBar.invalidatePlugins()
+    }
+    
+    func downKeyboard() {
+        print("🟢챗")
+        self.inputContainerView.endEditing(true)
     }
     
     //이미지타입 전송

@@ -133,7 +133,7 @@ final class DisplayChatVC: ChatVC {
             layout.setMessageOutgoingMessagePadding(UIEdgeInsets(top: 0, left: self.view.frame.width / 3, bottom: 0, right: 10))
             layout.setMessageIncomingMessagePadding(UIEdgeInsets(top: 0, left: 10, bottom: 0, right: self.view.frame.width / 3))
             
-            layout.textMessageSizeCalculator.incomingAvatarPosition.vertical = .messageCenter
+            layout.textMessageSizeCalculator.incomingAvatarPosition.vertical = .messageTop
             layout.textMessageSizeCalculator.incomingMessageBottomLabelAlignment.textInsets.left = 6
             layout.textMessageSizeCalculator.outgoingMessageBottomLabelAlignment.textInsets.right = 6
             
