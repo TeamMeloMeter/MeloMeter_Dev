@@ -16,7 +16,7 @@ enum ChatMessageError: Error {
 
 class ChatRepository: ChatRepositoryP{
     
-    var recieveChatMessage = PublishRelay<[ChatDTO]?>()
+    var recieveChatMessage = PublishSubject<[ChatDTO]?>()
     var firebaseService: FireStoreService
     var disposeBag: DisposeBag
     
@@ -83,13 +83,13 @@ class ChatRepository: ChatRepositoryP{
                     else {
                         let numberOfMessagesToRetrieve = 1
                         let recentChatFields = Array(sortedChatFields.suffix(numberOfMessagesToRetrieve))
-                        self.recieveChatMessage.accept(self.convertToChatDTOArray(from: recentChatFields))
+                        self.recieveChatMessage.onNext(self.convertToChatDTOArray(from: recentChatFields))
                     }
                 } else {
-                    self.recieveChatMessage.accept([])
+                    self.recieveChatMessage.onNext([])
                 }
             }) { error in
-                self.recieveChatMessage.accept(nil)
+                self.recieveChatMessage.onNext(nil)
             }
             .disposed(by: disposeBag)
     }

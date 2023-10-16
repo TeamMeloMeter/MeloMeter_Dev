@@ -49,7 +49,7 @@ class PermissionVC: UIViewController {
     let background: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "permissionBackG")
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     

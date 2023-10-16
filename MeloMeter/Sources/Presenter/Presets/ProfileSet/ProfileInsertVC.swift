@@ -8,13 +8,13 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import RxGesture
 import AnyFormatKit
 
 final class ProfileInsertVC: UIViewController {
     
     private let viewModel: ProfileInsertVM
     let disposeBag = DisposeBag()
-    let tapGesture = UITapGestureRecognizer()
     let progressDialog: ProgressDialogView = ProgressDialogView()
     
     //텍스트필드 유효입력 확인
@@ -49,7 +49,6 @@ final class ProfileInsertVC: UIViewController {
     
     // MARK: - Binding
     func setBindings() {
-        view.addGestureRecognizer(tapGesture)
         
         //다음버튼 터치이벤트
         nextBtn.rx.tap
@@ -79,12 +78,11 @@ final class ProfileInsertVC: UIViewController {
             }).disposed(by: disposeBag)
         
         //화면터치 이벤트
-        tapGesture.rx.event
+        self.view.rx.tapGesture().when(.ended)
             .subscribe(onNext: { [weak self] _ in
                 self?.view.endEditing(true)
             })
             .disposed(by: disposeBag)
-        
         //키보드 show/hide 감지
         keyboardDetector.keyboardStatusSubject
             .subscribe(onNext: { [weak self] isKeyboardShown in
@@ -266,7 +264,7 @@ final class ProfileInsertVC: UIViewController {
             .font: FontManager.shared.medium(ofSize: 18),
             .foregroundColor: UIColor.gray2
         ]
-        let attributedPlaceholder = NSAttributedString(string: "만 14세 이상 입력이 가능합니다", attributes: attributes)
+        let attributedPlaceholder = NSAttributedString(string: "ex) 1888-02-25", attributes: attributes)
         tv.attributedPlaceholder = attributedPlaceholder
         tv.keyboardType = .numberPad
         tv.tintColor = .gray1
@@ -297,7 +295,7 @@ final class ProfileInsertVC: UIViewController {
             .font: FontManager.shared.medium(ofSize: 18),
             .foregroundColor: UIColor.gray2
         ]
-        let attributedPlaceholder = NSAttributedString(string: "처음 만난 날을 입력해주세요", attributes: attributes)
+        let attributedPlaceholder = NSAttributedString(string: "ex) 2023-02-25", attributes: attributes)
         tv.attributedPlaceholder = attributedPlaceholder
         tv.keyboardType = .numberPad
         tv.tintColor = .gray1
@@ -376,7 +374,7 @@ final class ProfileInsertVC: UIViewController {
             //상
             insertSubViwes.topAnchor.constraint(equalTo: self.view.topAnchor),
             //하
-            insertSubViwes.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -212)
+            insertSubViwes.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
     }
     
@@ -475,7 +473,6 @@ extension ProfileInsertVC: UITextFieldDelegate {
 
     //번호 입력 포멧, 길이 제한
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        cancelBtn.isHidden = false
         guard let text = textField.text else {
             return false
         }

@@ -8,12 +8,12 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxGesture
 
 class AddDdayModal: UIViewController, UITextFieldDelegate {
     
     var viewModel: DdayVM?
     private let disposeBag = DisposeBag()
-    private let tapGesture = UITapGestureRecognizer()
     let progressDialog: ProgressDialogView = ProgressDialogView()
     
     init(viewModel: DdayVM) {
@@ -36,8 +36,7 @@ class AddDdayModal: UIViewController, UITextFieldDelegate {
     }
     // MARK: Bindings
     func setBindings() {
-        view.addGestureRecognizer(tapGesture)
-        tapGesture.rx.event
+        self.view.rx.tapGesture().when(.ended)
             .subscribe(onNext: { [weak self] _ in
                 self?.view.endEditing(true)
             })
