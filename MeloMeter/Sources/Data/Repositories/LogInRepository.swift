@@ -154,7 +154,6 @@ class LogInRepository: LogInRepositoryP {
     func combineCouple(code: String) -> Single<Void> {
         return Single.create{ [weak self] single in
             guard let self = self else { return Disposables.create() }
-            
             let inviteCode = code.components(separatedBy: " ").joined()
             let currentDate = Date().toString(type: .yearToHour)
             firebaseService.getCurrentUser()
@@ -162,10 +161,11 @@ class LogInRepository: LogInRepositoryP {
                     return self.firebaseService.getDocument(collection: .Users, field: "inviteCode", values: [inviteCode])
                         .flatMap{ data -> Single<Void> in
                             guard !data.isEmpty else{ return Single.error(FireStoreError.unknown) }
-                            guard let otherUid = data.last?["uid"] as? String else{ return Single.just(()) }
-                            guard let otherFcmToken = data.last?["fcmToken"] as? String else{ return Single.just(()) }
+                            guard let otherUid = data.last?["uid"] as? String else{ return Single.error(FireStoreError.unknown) }
+                            if otherUid == user.uid { return Single.error(FireStoreError.unknown) }
+                            guard let otherFcmToken = data.last?["fcmToken"] as? String else{ return Single.error(FireStoreError.unknown) }
                             UserDefaults.standard.set("\(otherUid)", forKey: "otherUid")
-                            guard let myFcmToken = UserDefaults.standard.string(forKey: "fcmToken") else{ return Single.just(()) }
+                            guard let myFcmToken = UserDefaults.standard.string(forKey: "fcmToken") else{ return Single.error(FireStoreError.unknown) }
                             let updateMyDB = self.firebaseService.updateDocument(collection: .Users, document: user.uid, values: ["otherFcmToken": otherFcmToken, "otherUid": otherUid])
                             let updateOtherDB = self.firebaseService.updateDocument(collection: .Users, document: otherUid, values: ["otherFcmToken": myFcmToken, "otherUid": user.uid])
                             

@@ -71,8 +71,8 @@ extension AppCoordinator {
         let logInCoordinator = LogInCoordinator(self.navigationController)
         logInCoordinator.delegate = self
         logInCoordinator.isLogin = accessLevel
-        logInCoordinator.start()
         self.childCoordinators.append(logInCoordinator)
+        logInCoordinator.start()
     }
 
     func connectPresetFlow() {
