@@ -450,7 +450,6 @@ extension ChatVC: CameraInputBarAccessoryViewDelegate {
     }
     
     func downKeyboard() {
-        print("🟢챗")
         self.inputContainerView.endEditing(true)
     }
     

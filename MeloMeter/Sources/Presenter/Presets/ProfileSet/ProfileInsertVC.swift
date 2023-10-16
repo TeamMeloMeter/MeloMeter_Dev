@@ -80,7 +80,6 @@ final class ProfileInsertVC: UIViewController {
         //화면터치 이벤트
         self.view.rx.tapGesture().when(.ended)
             .subscribe(onNext: { [weak self] _ in
-                print("view tt")
                 self?.view.endEditing(true)
             })
             .disposed(by: disposeBag)
@@ -474,7 +473,6 @@ extension ProfileInsertVC: UITextFieldDelegate {
 
     //번호 입력 포멧, 길이 제한
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        print("textField", textField.tag)
         guard let text = textField.text else {
             return false
         }

@@ -10,7 +10,7 @@ import RxSwift
 import RxRelay
 
 protocol ChatRepositoryP {
-    var recieveChatMessage: PublishRelay<[ChatDTO]?> { get set }
+    var recieveChatMessage: PublishSubject<[ChatDTO]?> { get set }
     
     func addChatMessage(message: ChatModel, coupleID: String) -> Single<Void>
     func addImageMessage(chatModel: ChatModel, coupleID: String) -> Single<Void>
