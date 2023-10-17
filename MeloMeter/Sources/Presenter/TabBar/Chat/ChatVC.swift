@@ -445,6 +445,7 @@ extension ChatVC: CameraInputBarAccessoryViewDelegate {
         //텍스트도 함께 입력된 경우
         if inputBar.inputTextView.text != "" {
             self.insertMessages([inputBar.inputTextView.text ?? ""])
+            inputBar.inputTextView.text = ""
         }
         
         for item in attachments {
