@@ -196,7 +196,7 @@ extension CameraInputBarAccessoryView: AttachmentManagerDelegate {
             topStackView.layoutIfNeeded()
         } else if !active, topStackView.arrangedSubviews.contains(attachmentManager.attachmentView) {
             topStackView.removeArrangedSubview(attachmentManager.attachmentView)
-            topStackView.layoutIfNeeded()
+            invalidateIntrinsicContentSize()
         }
     }
 }
