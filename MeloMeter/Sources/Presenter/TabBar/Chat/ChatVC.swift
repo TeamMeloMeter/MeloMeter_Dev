@@ -235,11 +235,12 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     // MARK: - Binding
     func setBindings() {
-        self.view.rx.tapGesture().when(.ended)
+        self.messagesCollectionView.rx.tapGesture().when(.ended)
             .subscribe(onNext: { _ in
                 self.inputContainerView.endEditing(true)
             })
             .disposed(by: disposeBag)
+        
         let input = ChatVM.Input(
             viewDidLoadEvent: self.viewDidLoadEvent
                 .map({ _ in })
@@ -411,7 +412,6 @@ extension ChatVC: InputBarAccessoryViewDelegate {
         let components = inputBar.inputTextView.components //String
         inputBar.inputTextView.text = String()
         inputBar.invalidatePlugins()
-        inputBar.inputTextView.placeholder = "이것좀 없애자"
         DispatchQueue.global(qos: .default).async {
             DispatchQueue.main.async { [weak self] in
                 inputBar.inputTextView.placeholder = " 메세지를 입력해주세요."
@@ -442,6 +442,13 @@ extension ChatVC: CameraInputBarAccessoryViewDelegate {
     }
     
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith attachments: [AttachmentManager.Attachment]) {
+        
+        //텍스트도 함께 입력된 경우
+        if inputBar.inputTextView.text != "" {
+            self.insertMessages([inputBar.inputTextView.text ?? ""])
+            inputBar.inputTextView.text = ""
+        }
+        
         for item in attachments {
             if case .image(let image) = item {
                 self.sendImageMessageEvent(photo: image)
