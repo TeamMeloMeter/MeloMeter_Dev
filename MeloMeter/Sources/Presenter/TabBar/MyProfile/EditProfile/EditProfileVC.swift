@@ -189,6 +189,22 @@ class EditProfileVC: UIViewController {
 
     
     // MARK: UI
+    lazy var scrollView: UIScrollView = {
+        let scView = UIScrollView()
+        scView.backgroundColor = .white
+        scView.indicatorStyle = .black
+        [profileImageView,
+         cameraButton,
+         nameLabel,
+         nameView,
+         stateMessageLabel,
+         stateMessageView,
+         birthGenderView,
+         bottomView].forEach { scView.addSubview($0) }
+
+        return scView
+    }()
+    
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -360,18 +376,12 @@ class EditProfileVC: UIViewController {
     // MARK: Configure
     func configure() {
         view.backgroundColor = .white
-        [profileImageView,
-         cameraButton,
-         nameLabel,
-         nameView,
-         stateMessageLabel,
-         stateMessageView,
-         birthGenderView,
-         bottomView].forEach { view.addSubview($0) }
+        [scrollView].forEach { view.addSubview($0) }
     }
     
     // MARK: 오토레이아웃
     private func setAutoLayout() {
+        scrollViewConstraint()
         profileImageViewConstraint()
         cameraButtonConstraint()
         nameStateMessageConstraint()
@@ -382,12 +392,20 @@ class EditProfileVC: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    private func scrollViewConstraint() {
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+        ])
+    }
     private func profileImageViewConstraint() {
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            profileImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 37),
-            profileImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            profileImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 37),
+            profileImageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             profileImageView.widthAnchor.constraint(equalToConstant: 118),
             profileImageView.heightAnchor.constraint(equalToConstant: 118),
         ])
@@ -413,7 +431,7 @@ class EditProfileVC: UIViewController {
 
         NSLayoutConstraint.activate([
             nameLabel.leadingAnchor.constraint(equalTo: nameView.leadingAnchor),
-            nameLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 185),
+            nameLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 30),
             
             nameView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             nameView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 17),
@@ -482,8 +500,9 @@ class EditProfileVC: UIViewController {
         withdrawalLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            bottomView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
+            bottomView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor),
             bottomView.topAnchor.constraint(equalTo: birthGenderView.bottomAnchor, constant: 36),
+            bottomView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20),
             bottomView.widthAnchor.constraint(equalToConstant: 343),
             bottomView.heightAnchor.constraint(equalToConstant: 132),
             
