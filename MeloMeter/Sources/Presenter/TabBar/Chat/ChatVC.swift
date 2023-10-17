@@ -235,11 +235,12 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     // MARK: - Binding
     func setBindings() {
-        self.view.rx.tapGesture().when(.ended)
-            .subscribe(onNext: { _ in
-                self.inputContainerView.endEditing(true)
-            })
-            .disposed(by: disposeBag)
+//        self.view.rx.tapGesture().when(.ended)
+//            .subscribe(onNext: { _ in
+//                self.inputContainerView.endEditing(true)
+//            })
+//            .disposed(by: disposeBag)
+        
         let input = ChatVM.Input(
             viewDidLoadEvent: self.viewDidLoadEvent
                 .map({ _ in })
