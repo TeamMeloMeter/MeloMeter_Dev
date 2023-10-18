@@ -16,7 +16,7 @@ public enum FireStoreError: Error, LocalizedError {
     case decodeError
 }
 
-public final class DefaultFirebaseService: FireStoreService {
+public final class DefaultFirebaseService: FirebaseService {
     
     
     private let database: Firestore

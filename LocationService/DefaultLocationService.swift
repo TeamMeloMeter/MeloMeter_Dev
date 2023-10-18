@@ -14,14 +14,14 @@ import RxCocoa
 
 final class DefaultLocationService: NSObject, LocationService {
     var locationManager = CLLocationManager()
-    var firebaseService: FireStoreService
+    var firebaseService: FirebaseService
     var disposeBag: DisposeBag = DisposeBag()
     
     var authorizationStatus = BehaviorRelay<CLAuthorizationStatus>(value: .notDetermined)
     var currentLocation = PublishSubject<CLLocation>()
     
     private let uid = UserDefaults.standard.string(forKey: "uid")
-    init(firebaseService: FireStoreService) {
+    init(firebaseService: FirebaseService) {
         self.firebaseService = firebaseService
         super.init()
         self.locationManager.delegate = self

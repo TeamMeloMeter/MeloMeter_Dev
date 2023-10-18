@@ -13,12 +13,12 @@ import FirebaseFirestore
 
 class UserRepository: UserRepositoryP {
     
-    private var firebaseService: FireStoreService
+    private var firebaseService: FirebaseService
     private var disposeBag: DisposeBag
     var accessLevelCheck: PublishSubject<AccessLevel>
     private var chatRepository: ChatRepositoryP
     
-    init(firebaseService: FireStoreService,
+    init(firebaseService: FirebaseService,
          chatRepository: ChatRepositoryP)
     {
         self.firebaseService = firebaseService

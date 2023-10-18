@@ -432,7 +432,7 @@ class ReadAnswerVC: UIViewController {
             answerBtn.topAnchor.constraint(equalTo: lockImageView.bottomAnchor, constant: 25),
 
             myAnswerCompleteLabel.topAnchor.constraint(equalTo: lockImageView.bottomAnchor, constant: 20),
-            myAnswerCompleteLabel.bottomAnchor.constraint(equalTo: myScrollView.bottomAnchor, constant: -20),
+            myAnswerCompleteLabel.bottomAnchor.constraint(equalTo: myScrollView.bottomAnchor, constant: -30),
             myAnswerCompleteLabel.centerXAnchor.constraint(equalTo: lockImageView.centerXAnchor),
             myAnswerCompleteLabel.widthAnchor.constraint(equalToConstant: 308),
             myAnswerCompleteLabel.heightAnchor.constraint(equalToConstant: 53),

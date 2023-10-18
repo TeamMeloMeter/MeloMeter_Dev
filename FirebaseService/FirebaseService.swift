@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import Firebase
 
-public protocol FireStoreService {
+public protocol FirebaseService {
     
     typealias FirebaseData = [String: Any]
     

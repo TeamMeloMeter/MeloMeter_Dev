@@ -205,6 +205,7 @@ extension HundredQAVC: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "HundredQATableViewCell", for: indexPath) as? HundredQATableViewCell else { return UITableViewCell() }
+        cell.selectionStyle = .none
         if indexPath.section == 0 {
             cell.questionLabel.text = self.questionTopData[indexPath.row]
             cell.numberLabel.text = self.questionNumbers[0][indexPath.row]

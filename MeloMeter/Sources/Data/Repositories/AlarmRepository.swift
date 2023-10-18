@@ -12,10 +12,10 @@ import RxRelay
 
 class AlarmRepository: AlarmRepositoryP {
     
-    var firebaseService: FireStoreService
+    var firebaseService: FirebaseService
     var disposeBag: DisposeBag
     
-    init(firebaseService: FireStoreService) {
+    init(firebaseService: FirebaseService) {
         self.firebaseService = firebaseService
         self.disposeBag = DisposeBag()
     }
