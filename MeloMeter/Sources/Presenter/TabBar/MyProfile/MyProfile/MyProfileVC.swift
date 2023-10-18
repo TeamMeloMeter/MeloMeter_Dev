@@ -149,8 +149,7 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
     // MARK: configure
     func configure() {
         view.backgroundColor = .white
-        [topView, nameLabel, phoneNumLabel, stateMessageView, stateMessageLabel, profileEditButton, topStackView,
-         bottomStackView].forEach { view.addSubview($0) }
+        [scrollView].forEach { view.addSubview($0) }
     }
     
 
@@ -174,6 +173,17 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
         navigationController?.navigationBar.standardAppearance = appearance
     }
     // MARK: UI
+    
+    lazy var scrollView: UIScrollView = {
+        let scView = UIScrollView()
+        scView.backgroundColor = .white
+        scView.indicatorStyle = .black
+        [topView, nameLabel, phoneNumLabel, stateMessageView, stateMessageLabel, profileEditButton, topStackView,
+         bottomStackView].forEach { scView.addSubview($0) }
+
+        return scView
+    }()
+    
     lazy var topView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "topView")
@@ -472,13 +482,13 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
         let stview = UIStackView(arrangedSubviews: [noticeStackView, lineView1, qnAStackView, lineView2, infoStackView])
         stview.backgroundColor = .white
         stview.axis = .vertical
-        //stview.spacing = 16
         return stview
     }()
     
     
     // MARK: 오토레이아웃
     private func setAutoLayout() {
+        scrollViewConstraint()
         topViewConstraints()
         nameLabelConstraints()
         phoneNumLabelConstraints()
@@ -496,13 +506,22 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
         bottomStackViewConstraints()
     }
     
+    private func scrollViewConstraint() {
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+        ])
+    }
     
     private func topViewConstraints() {
         topView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            topView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            topView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            topView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            topView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            topView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            topView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             topView.heightAnchor.constraint(equalToConstant: 444)
            
         ])
@@ -511,8 +530,8 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
     private func nameLabelConstraints() {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            nameLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 25),
-            nameLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 47),
+            nameLabel.leadingAnchor.constraint(equalTo: topView.leadingAnchor, constant: 25),
+            nameLabel.topAnchor.constraint(equalTo: topView.topAnchor, constant: 47),
             nameLabel.heightAnchor.constraint(equalToConstant: 28)
         ])
     }
@@ -520,15 +539,15 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
     private func phoneNumLabelConstraints() {
         phoneNumLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            phoneNumLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 25),
-            phoneNumLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 70),
+            phoneNumLabel.leadingAnchor.constraint(equalTo: topView.leadingAnchor, constant: 25),
+            phoneNumLabel.topAnchor.constraint(equalTo: topView.topAnchor, constant: 70),
             phoneNumLabel.heightAnchor.constraint(equalToConstant: 28)
         ])
     }
     private func stateMessageViewConstraints() {
         stateMessageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            stateMessageView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 25),
+            stateMessageView.leadingAnchor.constraint(equalTo: topView.leadingAnchor, constant: 25),
             stateMessageView.trailingAnchor.constraint(equalTo: stateMessageLabel.trailingAnchor, constant: 19),
             stateMessageView.topAnchor.constraint(equalTo: stateMessageLabel.topAnchor, constant: -1),
             stateMessageView.bottomAnchor.constraint(equalTo: stateMessageLabel.bottomAnchor, constant: 1),
@@ -548,7 +567,7 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
     private func profileImageViewConstraints() {
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            profileImageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            profileImageView.trailingAnchor.constraint(equalTo: topView.trailingAnchor, constant: -16),
             profileImageView.topAnchor.constraint(equalTo: topView.topAnchor, constant: 43),
             profileImageView.widthAnchor.constraint(equalToConstant: 90),
             profileImageView.heightAnchor.constraint(equalToConstant: 90)
@@ -634,10 +653,10 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
     private func topStackViewConstraints() {
         topStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            topStackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            topStackView.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
             topStackView.topAnchor.constraint(equalTo: topView.topAnchor, constant: 171),
-            topStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            topStackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            topStackView.leadingAnchor.constraint(equalTo: topView.leadingAnchor, constant: 16),
+            topStackView.trailingAnchor.constraint(equalTo: topView.trailingAnchor, constant: -16),
             topStackView.heightAnchor.constraint(equalToConstant: 236)
         ])
     }
@@ -702,9 +721,9 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
         bottomStackView.translatesAutoresizingMaskIntoConstraints = false
         lineView1.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-
             bottomStackView.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 29),
-            bottomStackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            bottomStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -10),
+            bottomStackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             bottomStackView.widthAnchor.constraint(equalToConstant: 343),
             bottomStackView.heightAnchor.constraint(equalToConstant: 168),
             
