@@ -114,7 +114,7 @@ extension AlarmVC: UITableViewDataSource, UITableViewDelegate {
     // 셀에 데이터넣기
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "AlarmTableViewCell", for: indexPath) as? AlarmTableViewCell else { return UITableViewCell() }
-        
+        cell.selectionStyle = .none
         if indexPath.row == 0 {
             cell.alarmView.layer.applyShadow(color: UIColor.primary1, alpha: 0.25, x: 0, y: 2, blur: 18)
         }else {

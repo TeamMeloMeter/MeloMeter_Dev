@@ -262,6 +262,7 @@ extension QnAVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         self.selectedRadioBtn.take(1)
             .subscribe(onNext: { btn in
                 self.selectedCellIndex.accept((btn, indexPath.row))
