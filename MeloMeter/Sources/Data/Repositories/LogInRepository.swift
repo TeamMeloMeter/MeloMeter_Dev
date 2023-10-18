@@ -11,11 +11,11 @@ import RxSwift
 import FirebaseFirestore
 class LogInRepository: LogInRepositoryP {
     
-    private let firebaseService: FireStoreService
+    private let firebaseService: FirebaseService
     private var logInStatus: LogInStatus = .none
     private let disposeBag = DisposeBag()
     
-    init(firebaseService: FireStoreService) {
+    init(firebaseService: FirebaseService) {
         self.firebaseService = firebaseService
     }
     

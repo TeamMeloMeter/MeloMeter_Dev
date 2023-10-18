@@ -12,10 +12,10 @@ import RxRelay
 
 class CoupleRepository: CoupleRepositoryP {
     
-    var firebaseService: FireStoreService
+    var firebaseService: FirebaseService
     var disposeBag: DisposeBag
     var coupleModel: PublishSubject<CoupleModel?>
-    init(firebaseService: FireStoreService) {
+    init(firebaseService: FirebaseService) {
         self.firebaseService = firebaseService
         self.coupleModel = PublishSubject()
         self.disposeBag = DisposeBag()

@@ -86,7 +86,7 @@
 		5271D4112A5580F200FC7606 /* Permission2VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271D4102A5580F200FC7606 /* Permission2VC.swift */; };
 		5271D4132A55BF1B00FC7606 /* LogInUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271D4122A55BF1B00FC7606 /* LogInUseCase.swift */; };
 		5271D4152A55C9DD00FC7606 /* LogInModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271D4142A55C9DD00FC7606 /* LogInModel.swift */; };
-		5271D4172A5841E500FC7606 /* FireStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271D4162A5841E500FC7606 /* FireStoreService.swift */; };
+		5271D4172A5841E500FC7606 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271D4162A5841E500FC7606 /* FirebaseService.swift */; };
 		5271D4192A58429000FC7606 /* FireStoreCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271D4182A58429000FC7606 /* FireStoreCollection.swift */; };
 		5271D41C2A58435A00FC7606 /* DefaultFirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271D41B2A58435A00FC7606 /* DefaultFirebaseService.swift */; };
 		5271D41F2A5887E500FC7606 /* LogInRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271D41E2A5887E500FC7606 /* LogInRepository.swift */; };
@@ -237,7 +237,7 @@
 		5271D4102A5580F200FC7606 /* Permission2VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Permission2VC.swift; sourceTree = "<group>"; };
 		5271D4122A55BF1B00FC7606 /* LogInUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInUseCase.swift; sourceTree = "<group>"; };
 		5271D4142A55C9DD00FC7606 /* LogInModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInModel.swift; sourceTree = "<group>"; };
-		5271D4162A5841E500FC7606 /* FireStoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreService.swift; sourceTree = "<group>"; };
+		5271D4162A5841E500FC7606 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		5271D4182A58429000FC7606 /* FireStoreCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreCollection.swift; sourceTree = "<group>"; };
 		5271D41B2A58435A00FC7606 /* DefaultFirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFirebaseService.swift; sourceTree = "<group>"; };
 		5271D41E2A5887E500FC7606 /* LogInRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInRepository.swift; sourceTree = "<group>"; };
@@ -684,7 +684,7 @@
 			isa = PBXGroup;
 			children = (
 				5271D4182A58429000FC7606 /* FireStoreCollection.swift */,
-				5271D4162A5841E500FC7606 /* FireStoreService.swift */,
+				5271D4162A5841E500FC7606 /* FirebaseService.swift */,
 				5271D41B2A58435A00FC7606 /* DefaultFirebaseService.swift */,
 				5256947C2A97608200821B20 /* PushNotificationService.swift */,
 			);
@@ -1177,7 +1177,7 @@
 				2103690A2AA772BA00A5EEB5 /* CalendarNotificationTriggerUseCase.swift in Sources */,
 				52B7EBCB2A8F2E79008F5F53 /* AccountsVM.swift in Sources */,
 				52AEAD052A93DA050097930E /* HundredQAVC.swift in Sources */,
-				5271D4172A5841E500FC7606 /* FireStoreService.swift in Sources */,
+				5271D4172A5841E500FC7606 /* FirebaseService.swift in Sources */,
 				52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */,
 				214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */,
 				521D41E72A7FFD5F00E5CCDA /* DdayUseCase.swift in Sources */,

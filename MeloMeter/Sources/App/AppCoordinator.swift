@@ -33,7 +33,7 @@ final class AppCoordinator: Coordinator {
     weak var delegate: CoordinatorDelegate?
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
-    var firebaseService: FireStoreService
+    var firebaseService: FirebaseService
     var disposeBag = DisposeBag()
     var accessLevel: AccessLevel = .none
     // MARK: - Initializers

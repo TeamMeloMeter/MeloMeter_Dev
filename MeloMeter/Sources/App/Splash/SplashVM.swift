@@ -15,11 +15,11 @@ final class SplashVM {
 
     private let disposeBag = DisposeBag()
     weak var coordinator: AppCoordinator?
-    private var firebaseService: FireStoreService
+    private var firebaseService: FirebaseService
     private var userRepository: UserRepositoryP
     init(
         coordinator: AppCoordinator,
-        firebaseService: FireStoreService,
+        firebaseService: FirebaseService,
         userRepository: UserRepositoryP
     ) {
         self.coordinator = coordinator

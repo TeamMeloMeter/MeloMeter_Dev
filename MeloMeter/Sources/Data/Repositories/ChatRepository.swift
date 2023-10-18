@@ -17,10 +17,10 @@ enum ChatMessageError: Error {
 class ChatRepository: ChatRepositoryP{
     
     var recieveChatMessage = PublishSubject<[ChatDTO]?>()
-    var firebaseService: FireStoreService
+    var firebaseService: FirebaseService
     var disposeBag: DisposeBag
     
-    init(firebaseService: FireStoreService) {
+    init(firebaseService: FirebaseService) {
         self.firebaseService = firebaseService
         self.disposeBag = DisposeBag()
     }

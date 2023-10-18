@@ -18,7 +18,7 @@ enum LocationAuthorizationStatus {
 class MainUseCase {
     var authorizationStatus = BehaviorSubject<LocationAuthorizationStatus?>(value: nil)
     private var locationService: DefaultLocationService
-    private var firebaseService: FireStoreService
+    private var firebaseService: FirebaseService
     private var userRepository: UserRepositoryP
     private var coupleRepository: CoupleRepositoryP
     
@@ -28,7 +28,7 @@ class MainUseCase {
     var otherUserData: PublishRelay<UserModel?>
     var disposeBag: DisposeBag
     
-    required init(locationService: DefaultLocationService, firebaseService: FireStoreService) {
+    required init(locationService: DefaultLocationService, firebaseService: FirebaseService) {
         self.locationService = locationService
         self.firebaseService = firebaseService
         self.userRepository = UserRepository(firebaseService: self.firebaseService,
