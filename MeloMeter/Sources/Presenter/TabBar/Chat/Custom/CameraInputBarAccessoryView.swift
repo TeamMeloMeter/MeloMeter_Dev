@@ -170,17 +170,23 @@ extension CameraInputBarAccessoryView: AttachmentManagerDelegate {
     }
     
     func attachmentManager(_ manager: AttachmentManager, didReloadTo _: [AttachmentManager.Attachment]) {
-        sendButton.isEnabled = manager.attachments.count > 0
+        if manager.attachments.count > 0 {
+            sendButton.isEnabled = true
+        }
     }
     
     func attachmentManager(_ manager: AttachmentManager, didInsert cell: AttachmentManager.Attachment, at index: Int) {
         manager.dataSource?.attachmentManager(manager, cellFor: cell, at: index)
             .deleteButton.setImage(UIImage(named: "cancel"), for: .normal)
-        sendButton.isEnabled = manager.attachments.count > 0
+        if manager.attachments.count > 0 {
+            sendButton.isEnabled = true
+        }
     }
     
     func attachmentManager(_ manager: AttachmentManager, didRemove _: AttachmentManager.Attachment, at _: Int) {
-        sendButton.isEnabled = manager.attachments.count > 0
+        if manager.attachments.count > 0 {
+            sendButton.isEnabled = true
+        }
     }
 
     func attachmentManager(_ manager: AttachmentManager, didSelectAddAttachmentAt index: Int) {
@@ -196,6 +202,7 @@ extension CameraInputBarAccessoryView: AttachmentManagerDelegate {
             topStackView.layoutIfNeeded()
         } else if !active, topStackView.arrangedSubviews.contains(attachmentManager.attachmentView) {
             topStackView.removeArrangedSubview(attachmentManager.attachmentView)
+            topStackView.layoutIfNeeded()
             invalidateIntrinsicContentSize()
         }
     }
