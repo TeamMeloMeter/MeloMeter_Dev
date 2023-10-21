@@ -1,5 +1,6 @@
 # <img width="40" alt="coord" src="https://github.com/TeamMeloMeter/MeloMeter/assets/111224287/5529e8cf-69f0-4562-a246-5b7730251e9a">  MeloMeter App(*iOS 15.0)
-### 멜로미터 - 커플 위치 공유 서비스 
+### 멜로미터 - 커플 위치 공유 서비스
+### AppStore: https://apps.apple.com/kr/app/melometer/id6450677988
 
 <img width="300" alt="coord" src="https://github.com/TeamMeloMeter/MeloMeter/assets/111224287/0681dc27-3bf8-4b84-bd92-475494aab429">
 
