@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import RxSwift
 final class LogInCoordinator: Coordinator {
     var delegate: CoordinatorDelegate?
     let firebaseService = DefaultFirebaseService()
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
+    let disposeBag = DisposeBag()
     var isLogin: Bool = false
     
     init(_ navigationController: UINavigationController) {
@@ -29,6 +31,26 @@ final class LogInCoordinator: Coordinator {
                 }else {
                     showCoupleComvineVC(inviteCode: code)
                 }
+            }else {
+                self.firebaseService.getCurrentUser()
+                    .subscribe(onSuccess: {[weak self] user in
+                        guard let self = self else{ return }
+                        self.firebaseService.getDocument(collection: .Users, document: user.uid)
+                            .subscribe(onSuccess: {[weak self] userInfo in
+                                guard let self = self else{ return }
+                                if let inviteCode = userInfo["inviteCode"] as? String {
+                                    showCoupleComvineVC(inviteCode: inviteCode)
+                                }else {
+                                    showStartVC()
+                                }
+                            }, onFailure: { error in
+                                self.showStartVC()
+                            })
+                            .disposed(by: disposeBag)
+                    }, onFailure: { error in
+                        self.showStartVC()
+                    })
+                    .disposed(by: disposeBag)
             }
         }
 
