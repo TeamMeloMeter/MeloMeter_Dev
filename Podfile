@@ -30,5 +30,8 @@ target 'MeloMeter' do
   pod 'RxGesture'
   pod 'KakaoSDK'
   pod 'Kingfisher', '~> 5.0'
-
+  
+  target 'MeloMeterTests' do
+    inherit! :search_paths
+  end
 end
