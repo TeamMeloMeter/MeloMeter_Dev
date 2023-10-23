@@ -157,6 +157,8 @@ class MapVM {
                                 UserDefaults.standard.set(otherUid, forKey: "otherUid")
                                 UserDefaults.standard.set(otherUserModel.name, forKey: "otherUserName")
                                 UserDefaults.standard.set(otherUserModel.fcmToken, forKey: "otherFcmToken")
+                                UserDefaults.standard.set(userInfo.coupleID, forKey: "coupleDocumentID")
+                                
                                 output.otherStateMessage.onNext(otherUserModel.stateMessage ?? nil)
                             })
                             .disposed(by: disposeBag)
