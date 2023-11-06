@@ -1,63 +1,63 @@
 PODS:
   - Alamofire (5.8.0)
   - AnyFormatKit (2.5.2)
-  - KakaoSDK (2.17.0):
-    - KakaoSDKAuth (= 2.17.0)
-    - KakaoSDKCert (= 2.17.0)
-    - KakaoSDKCommon (= 2.17.0)
-    - KakaoSDKFriend (= 2.17.0)
-    - KakaoSDKNavi (= 2.17.0)
-    - KakaoSDKShare (= 2.17.0)
-    - KakaoSDKStory (= 2.17.0)
-    - KakaoSDKTalk (= 2.17.0)
-    - KakaoSDKTemplate (= 2.17.0)
-    - KakaoSDKUser (= 2.17.0)
-  - KakaoSDKAuth (2.17.0):
-    - KakaoSDKCommon (= 2.17.0)
-  - KakaoSDKCert (2.17.0):
-    - KakaoSDKCertCore (= 2.17.0)
-    - KakaoSDKUser (= 2.17.0)
-  - KakaoSDKCertCore (2.17.0)
-  - KakaoSDKCommon (2.17.0):
-    - KakaoSDKCommon/Common (= 2.17.0)
-    - KakaoSDKCommon/Network (= 2.17.0)
-  - KakaoSDKCommon/Common (2.17.0)
-  - KakaoSDKCommon/Network (2.17.0):
+  - KakaoSDK (2.18.0):
+    - KakaoSDKAuth (= 2.18.0)
+    - KakaoSDKCert (= 2.18.0)
+    - KakaoSDKCommon (= 2.18.0)
+    - KakaoSDKFriend (= 2.18.0)
+    - KakaoSDKNavi (= 2.18.0)
+    - KakaoSDKShare (= 2.18.0)
+    - KakaoSDKStory (= 2.18.0)
+    - KakaoSDKTalk (= 2.18.0)
+    - KakaoSDKTemplate (= 2.18.0)
+    - KakaoSDKUser (= 2.18.0)
+  - KakaoSDKAuth (2.18.0):
+    - KakaoSDKCommon (= 2.18.0)
+  - KakaoSDKCert (2.18.0):
+    - KakaoSDKCertCore (= 2.18.0)
+    - KakaoSDKUser (= 2.18.0)
+  - KakaoSDKCertCore (2.18.0)
+  - KakaoSDKCommon (2.18.0):
+    - KakaoSDKCommon/Common (= 2.18.0)
+    - KakaoSDKCommon/Network (= 2.18.0)
+  - KakaoSDKCommon/Common (2.18.0)
+  - KakaoSDKCommon/Network (2.18.0):
     - Alamofire (~> 5.1)
-    - KakaoSDKCommon/Common (= 2.17.0)
-  - KakaoSDKFriend (2.17.0):
-    - KakaoSDKFriendCore (= 2.17.0)
-    - KakaoSDKUser (= 2.17.0)
-  - KakaoSDKFriendCore (2.17.0)
-  - KakaoSDKNavi (2.17.0):
-    - KakaoSDKCommon/Common (= 2.17.0)
-  - KakaoSDKShare (2.17.0):
-    - KakaoSDKCommon (= 2.17.0)
-    - KakaoSDKTemplate (= 2.17.0)
-  - KakaoSDKStory (2.17.0):
-    - KakaoSDKUser (= 2.17.0)
-  - KakaoSDKTalk (2.17.0):
-    - KakaoSDKTemplate (= 2.17.0)
-    - KakaoSDKUser (= 2.17.0)
-  - KakaoSDKTemplate (2.17.0):
-    - KakaoSDKCommon/Common (= 2.17.0)
-  - KakaoSDKUser (2.17.0):
-    - KakaoSDKAuth (= 2.17.0)
+    - KakaoSDKCommon/Common (= 2.18.0)
+  - KakaoSDKFriend (2.18.0):
+    - KakaoSDKFriendCore (= 2.18.0)
+    - KakaoSDKUser (= 2.18.0)
+  - KakaoSDKFriendCore (2.18.0)
+  - KakaoSDKNavi (2.18.0):
+    - KakaoSDKCommon/Common (= 2.18.0)
+  - KakaoSDKShare (2.18.0):
+    - KakaoSDKCommon (= 2.18.0)
+    - KakaoSDKTemplate (= 2.18.0)
+  - KakaoSDKStory (2.18.0):
+    - KakaoSDKUser (= 2.18.0)
+  - KakaoSDKTalk (2.18.0):
+    - KakaoSDKTemplate (= 2.18.0)
+    - KakaoSDKUser (= 2.18.0)
+  - KakaoSDKTemplate (2.18.0):
+    - KakaoSDKCommon/Common (= 2.18.0)
+  - KakaoSDKUser (2.18.0):
+    - KakaoSDKAuth (= 2.18.0)
   - Kingfisher (5.15.8):
     - Kingfisher/Core (= 5.15.8)
   - Kingfisher/Core (5.15.8)
   - NMapsGeometry (1.0.1)
   - NMapsMap (3.17.0):
     - NMapsGeometry
-  - RxCocoa (6.5.0):
-    - RxRelay (= 6.5.0)
-    - RxSwift (= 6.5.0)
+  - RxCocoa (6.6.0):
+    - RxRelay (= 6.6.0)
+    - RxSwift (= 6.6.0)
   - RxGesture (4.0.4):
     - RxCocoa (~> 6.0)
     - RxSwift (~> 6.0)
-  - RxRelay (6.5.0):
-    - RxSwift (= 6.5.0)
-  - RxSwift (6.5.0)
+  - RxRelay (6.6.0):
+    - RxSwift (= 6.6.0)
+  - RxSwift (6.6.0)
 
 DEPENDENCIES:
   - AnyFormatKit
@@ -96,27 +96,27 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: 0e92e751b3e9e66d7982db43919d01f313b8eb91
   AnyFormatKit: b0dbb2a5f2fe7a0fc97f401f8a219a47ee63a335
-  KakaoSDK: c8852fff8cf7faa8445ca390a6f7aee5f0012eb7
-  KakaoSDKAuth: 85c1d89f16b8be3bf266a0c77dff8b5438696b43
-  KakaoSDKCert: e20bb4e79cb350bf9c8e17ebd2b83dee85473b6d
-  KakaoSDKCertCore: 9a8d9904e11d8ed118c8decf58590d7ec131a798
-  KakaoSDKCommon: 194ccea3710f30036ee63d79cf524ed7ae6c1595
-  KakaoSDKFriend: 964e9dcb555725c4787228bde367c52a7081bc9a
-  KakaoSDKFriendCore: b85665aaee4281191b89ce99c7b1f9e69ef7e86c
-  KakaoSDKNavi: 2842aed422c957c2ac3ccb34d8fc1699244c0dea
-  KakaoSDKShare: 7597a40a9351977199741199ae9327d6f87a0662
-  KakaoSDKStory: 25dad15b5b4ad03b28cd6f158f28c5f3f3b31545
-  KakaoSDKTalk: 07b16eaac3e9e4082bab1af271fb3b707804a16c
-  KakaoSDKTemplate: 1e8bd0070e455c5e9a24a4920e6a532130581933
-  KakaoSDKUser: f37e67aebf9061698462eabcb6860c1e750d3b35
+  KakaoSDK: eed7b394384fbcc6ce6da81fb77d6c26c7b2e197
+  KakaoSDKAuth: 17becef98c04ce53d2e81081c3d0903f7cda2b0d
+  KakaoSDKCert: 394de2d24cd631f42e0b2921447ef7a247dc5186
+  KakaoSDKCertCore: 04a29d65d03f15d87568b10dcff0a102686174cf
+  KakaoSDKCommon: 41d97223aece4275d142c03d8a4e47a91d8122f1
+  KakaoSDKFriend: 7c4ed929903cb8b3cf43482f4ca30ee24ee15f72
+  KakaoSDKFriendCore: e97ba0b211562eb3b4198d34b6120ec6473d7a41
+  KakaoSDKNavi: 15ac55b0c05985d43fdd53924c41a5094e140b2e
+  KakaoSDKShare: 72de82ca761c0edf572ec7586762b485c8aa848c
+  KakaoSDKStory: 6ea5c800fd0a35ae7177f0ffa6b14699403979d5
+  KakaoSDKTalk: efb8f4cc85749a1afb9500c1c39465e40062289c
+  KakaoSDKTemplate: 47cec57175fb5451d3cb6d38dea7cb3a6a718977
+  KakaoSDKUser: 1cd1f31d8be7de1460320737674a7022ab25c257
   Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
   NMapsMap: a5b909a31b6f3d27a670f6eb2ddc913c38975474
-  RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
+  RxCocoa: 44a80de90e25b739b5aeaae3c8c371a32e3343cc
   RxGesture: f3efb47ed2d26a8082f7b660d4a59970e275a7f8
-  RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
-  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  RxRelay: 45eaa5db8ee4fb50e5ebd57deec0159e97fa51e6
+  RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
 
-PODFILE CHECKSUM: 7a98572b7f92141832adc91507313415e354b342
+PODFILE CHECKSUM: b816b68db8bcf9a4ea3cd3890db9348887c19ba2
 
 COCOAPODS: 1.12.1
