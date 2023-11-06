@@ -188,7 +188,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     //인풋바 아이탬 설정
     private func configureInputBarItems() {
-        messageInputBar.setRightStackViewWidthConstant(to: 56, animated: false)
+        messageInputBar.setRightStackViewWidthConstant(to: 52, animated: false)
         messageInputBar.sendButton.backgroundColor = .gray5
         messageInputBar.sendButton.setSize(CGSize(width: 44, height: 44), animated: false)
         messageInputBar.sendButton.title = "전송"
