@@ -56,6 +56,8 @@ class LogInRepository: LogInRepositoryP {
                 withVerificationID: verificationID,
                 verificationCode: code
             )
+            
+            print("들어오나?")
             Auth.auth().signIn(with: credential) { authResult, error in
                 if let error = error {
                     single(.failure(error))

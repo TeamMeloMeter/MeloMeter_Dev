@@ -27,8 +27,7 @@ final class MeloMeterTests: XCTestCase {
 
     func testCoupleCombined_WhenInput_ShouldReturnTrue() throws {
         
-        
-        XCTAssertTrue(
+   
     }
 
     func testPerformanceExample() throws {

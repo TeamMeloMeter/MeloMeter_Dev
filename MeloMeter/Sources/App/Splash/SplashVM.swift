@@ -55,12 +55,27 @@ final class SplashVM {
                     guard let self = self else{ return }
                     self.firebaseService.getDocument(collection: .Users, document: user.uid)
                         .subscribe(onSuccess: {[weak self] data in
+
                             guard let self = self else{ return }
                             guard let accessLevel = data["accessLevel"] as? String else{ single(.success(.none)); return}
                             switch accessLevel {
                             case "authenticated":
+                                
                                 single(.success(.authenticated))
                             case "coupleCombined":
+                                
+                                let fcmToken = data["fcmToken"]
+                                let otherUid = data["otherUid"]
+                                let coupleID = data["coupleID"]
+                                let phoneNumber = data["phoneNumber"]
+                                let uid = data["uid"]
+                                
+                                UserDefaults.standard.set(fcmToken, forKey: "fcmToken")
+                                UserDefaults.standard.set(otherUid, forKey: "otherUid")
+                                UserDefaults.standard.set(coupleID, forKey: "coupleID")
+                                UserDefaults.standard.set(uid, forKey: "uid")
+                                UserDefaults.standard.set(phoneNumber, forKey: "phoneNumber")
+                                
                                 single(.success(.coupleCombined))
                             case "complete":
                                 single(.success(.complete))
