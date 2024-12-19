@@ -129,9 +129,20 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     // MARK: NavigationBar
     private func setNavigationBar() {
-        navigationController?.navigationBar.backgroundColor = .white
         
-        navigationController?.navigationBar.addSubview(UITextField())
+        let textField = UITextField().then {
+            $0.textColor = .gray1
+            $0.backgroundColor = .black
+        }
+        
+        self.navigationController?.navigationBar.addSubview(textField)
+        textField.snp.makeConstraints {
+            $0.top.bottom.leading.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-50)
+        }
+        
+        
+        navigationController?.navigationBar.backgroundColor = .white
         
         navigationItem.title = "채팅"
         navigationItem.leftBarButtonItem = backBarButton
