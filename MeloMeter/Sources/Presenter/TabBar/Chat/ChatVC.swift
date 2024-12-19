@@ -11,6 +11,8 @@ import UIKit
 import RxCocoa
 import RxSwift
 import RxGesture
+import SnapKit
+import Then
 // MARK: - ChatViewController
 
 /// A base class for the example controllers
@@ -81,6 +83,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
         configureMessageInputBar()
     }
     
@@ -126,13 +129,28 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     // MARK: NavigationBar
     private func setNavigationBar() {
+        navigationController?.navigationBar.backgroundColor = .white
+        
+        navigationController?.navigationBar.addSubview(UITextField())
+        
         navigationItem.title = "채팅"
         navigationItem.leftBarButtonItem = backBarButton
-        navigationItem.leftBarButtonItem?.tintColor = .black
+        navigationItem.leftBarButtonItem?.tintColor = .black 
+       
+        navigationItem.rightBarButtonItem = searchBarButton
+        navigationItem.rightBarButtonItem?.tintColor = .black
     }
     
     private lazy var backBarButton: UIBarButtonItem = {
         let button = UIBarButtonItem(image: UIImage(named: "backIcon"),
+                                     style: .plain,
+                                     target: self,
+                                     action: nil)
+        return button
+    }()
+    
+    private lazy var searchBarButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"),
                                      style: .plain,
                                      target: self,
                                      action: nil)
@@ -248,6 +266,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             backBtnTapEvent: self.backBarButton.rx.tap
                 .map({ _ in })
                 .asObservable(),
+            searchBtnTapEvent: self.searchBarButton.rx.tap.map({ $0 }).asObservable(),
             mySendTextMessage: self.sendTextMessage
                 .asObservable(),
             mySendImageMessage: self.sendImageMessage
@@ -409,8 +428,9 @@ extension ChatVC: InputBarAccessoryViewDelegate {
     }
     
     func processInputBar(_ inputBar: InputBarAccessoryView) {
+        // 전송 탭 시
         let components = inputBar.inputTextView.components //String
-        inputBar.inputTextView.text = String()
+        inputBar.inputTextView.text = String() // 왜한거지
         inputBar.invalidatePlugins()
         DispatchQueue.global(qos: .default).async {
             DispatchQueue.main.async { [weak self] in
@@ -429,6 +449,8 @@ extension ChatVC: InputBarAccessoryViewDelegate {
             if let str = component as? String {
                 let message = ChatModel(text: str, user: self.chatUser, messageId: UUID().uuidString, date: Date.fromStringOrNow(Date().toString(type: .timeStamp), .timeStamp))
                 sendTextMessage.accept(message)
+                
+                // 뷰모델 메시지 전송
             }
         }
     }

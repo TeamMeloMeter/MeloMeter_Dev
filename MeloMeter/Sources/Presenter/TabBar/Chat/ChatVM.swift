@@ -20,7 +20,8 @@ class ChatVM {
     struct Input {
         let viewDidLoadEvent: Observable<Void>
         let backBtnTapEvent: Observable<Void>
-        let mySendTextMessage: Observable<ChatModel>
+        let searchBtnTapEvent: Observable<Void>
+        let mySendTextMessage: Observable<ChatModel> // 이미지 전송 누르고 나서 데이터
         let mySendImageMessage: Observable<ChatModel>
         let reloadMessage: Observable<Int>
     }
@@ -120,6 +121,12 @@ class ChatVM {
                 self.coordinator?.finish()
             })
             .disposed(by: disposeBag)
+        
+        input.backBtnTapEvent.subscribe(onNext: { [weak self] _ in
+            guard let self else { return }
+            
+            
+        }).disposed(by: disposeBag)
         
         return output
     }

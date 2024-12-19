@@ -29,6 +29,7 @@ class ChatRepository: ChatRepositoryP{
     func addChatMessage(message: ChatModel, coupleID: String) -> Single<Void> {
         let dto = message.toDTO()
         let values = dto.asDictionary ?? [:]
+        // 왜 dic 으로 바꾸는거..
         let userName = UserDefaults.standard.string(forKey: "userName") ?? "상대방"
         //푸시노티
         PushNotificationService.shared.sendPushNotification(title: userName, body: values["contents"] as? String ?? "메세지가 도착했어요!", type: AlarmType.defaultValue)
