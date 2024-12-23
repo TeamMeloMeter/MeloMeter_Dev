@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import MessageKit
 
 // MARK: - LoginViewModel
 class ChatVM {
@@ -16,6 +17,7 @@ class ChatVM {
     private var hundredQAUseCase: HundredQAUseCase
     private var answerArray: [AnswerModel] = []
     private var questionInfo: (String, String) = ("", "")
+    private var nowChatList : [ChatModel] = []
     
     struct Input {
         let viewDidLoadEvent: Observable<Void>
@@ -101,17 +103,20 @@ class ChatVM {
         self.chatUseCase.recieveChatMessageService
             .subscribe(onNext: {chatMessageList in
                 output.getMessage.onNext(chatMessageList ?? [])
+                self.nowChatList = chatMessageList ?? []
+
             })
             .disposed(by: disposeBag)
         
+        
         self.chatUseCase.recieveMoreChatMessageService
-            .subscribe(onNext: {chatMessageList in
+            .subscribe(onNext: { chatMessageList in
                 output.getMoreMessage.onNext(chatMessageList ?? [])
             })
             .disposed(by: disposeBag)
         
         self.chatUseCase.recieveRealTimeMessageService
-            .subscribe(onNext: {chatMessageList in
+            .subscribe(onNext: { chatMessageList in
                 output.getRealTimeMessage.onNext(chatMessageList ?? [])
             })
             .disposed(by: disposeBag)
@@ -123,11 +128,18 @@ class ChatVM {
             .disposed(by: disposeBag)
         
         input.backBtnTapEvent.subscribe(onNext: { [weak self] _ in
-            guard let self else { return }
+            guard self != nil else { return }
             
             
         }).disposed(by: disposeBag)
         
+        input.searchBtnTapEvent.subscribe({ [weak self] _ in
+            guard let self else {return}
+            
+            //messageID 로 해서 넘겨와야될듯.
+            
+            
+        }).disposed(by: disposeBag)
         return output
     }
     

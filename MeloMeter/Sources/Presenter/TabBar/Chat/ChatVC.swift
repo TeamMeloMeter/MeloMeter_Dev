@@ -130,15 +130,27 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     // MARK: NavigationBar
     private func setNavigationBar() {
         
-        let textField = UITextField().then {
-            $0.textColor = .gray1
-            $0.backgroundColor = .black
+       
+        
+        let cusSearchBar = UIView().then {
+            $0.backgroundColor = .lightGray.withAlphaComponent(0.2)
+            
+            let textField = UITextField()
+            $0.addSubview(textField)
+
+            textField.snp.makeConstraints {
+                $0.top.bottom.trailing.equalToSuperview()
+                $0.leading.equalToSuperview().inset(50)
+            }
+            
+            
+            
         }
         
-        self.navigationController?.navigationBar.addSubview(textField)
-        textField.snp.makeConstraints {
+        self.navigationController?.navigationBar.addSubview(cusSearchBar)
+        cusSearchBar.snp.makeConstraints {
             $0.top.bottom.leading.equalToSuperview()
-            $0.trailing.equalToSuperview().offset(-50)
+            $0.trailing.leading.equalToSuperview().inset(50)
         }
         
         
