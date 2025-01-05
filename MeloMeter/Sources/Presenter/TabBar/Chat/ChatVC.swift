@@ -20,7 +20,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     private let viewModel: ChatVM?
     let disposeBag = DisposeBag()
-    let viewDidLoadEvent = PublishSubject<Void>()
     let reloadEvent = PublishSubject<Int>()
     var sendTextMessage = PublishRelay<ChatModel>()
     var sendImageMessage = PublishRelay<ChatModel>()
@@ -33,7 +32,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         return imageView
     }()
     
-    //자기 자신이 될 ChatUser셋팅
+    // 자기 자신이 될 ChatUser셋팅
     let chatUser = ChatUserModel(senderId: UserDefaults.standard.string(forKey: "uid") ?? "", displayName: UserDefaults.standard.string(forKey: "userName") ?? "")
     var currentSender: SenderType {
         self.chatUser
@@ -61,7 +60,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         setBindings()
-        self.viewDidLoadEvent.onNext(())
         setNavigationBar()
         configureMessageCollectionView()
         
@@ -85,16 +83,19 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         super.viewWillAppear(true)
         
         configureMessageInputBar()
+        DispatchQueue.main.async {
+            if !self.messageList.isEmpty {
+                self.messagesCollectionView.reloadDataAndKeepOffset()
+                self.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: false)
+            }
+        }
+  
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        DispatchQueue.main.async {
-            if !self.messageList.isEmpty {
-                self.messagesCollectionView.reloadDataAndKeepOffset()
-                self.messagesCollectionView.scrollToItem(at: IndexPath(row: 0, section: self.messageList.count-1), at: .centeredVertically, animated: true)
-            }
-        }
+   
+   
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -103,13 +104,13 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     // MARK: - 처음 로딩시 채팅 리스트 가져오는곳
     func loadFirstMessages(_ chatMassageList: [ChatModel]) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            DispatchQueue.main.async {
-                self.messageList = chatMassageList // DB에서 받아온 메세지 배열 삽입
-                self.messagesCollectionView.reloadData()
-                self.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: false)
-            }
-        }
+//        DispatchQueue.global(qos: .userInitiated).async {
+//            DispatchQueue.main.async {
+//                self.messageList = chatMassageList // DB에서 받아온 메세지 배열 삽입
+//                self.messagesCollectionView.reloadData()
+//                self.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: false)
+//            }
+//        }
     }
     // 새로고침 이벤트
     @objc func reloadMessageEvent() {
@@ -127,6 +128,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         }
     }
     
+    // by seungwan
+    let testTextField = UITextField()
     // MARK: NavigationBar
     private func setNavigationBar() {
         
@@ -135,10 +138,10 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         let cusSearchBar = UIView().then {
             $0.backgroundColor = .lightGray.withAlphaComponent(0.2)
             
-            let textField = UITextField()
-            $0.addSubview(textField)
+          
+            $0.addSubview(testTextField)
 
-            textField.snp.makeConstraints {
+            testTextField.snp.makeConstraints {
                 $0.top.bottom.trailing.equalToSuperview()
                 $0.leading.equalToSuperview().inset(50)
             }
@@ -147,10 +150,11 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             
         }
         
-        self.navigationController?.navigationBar.addSubview(cusSearchBar)
+        self.navigationController?.view.addSubview(cusSearchBar)
         cusSearchBar.snp.makeConstraints {
-            $0.top.bottom.leading.equalToSuperview()
-            $0.trailing.leading.equalToSuperview().inset(50)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(40)
+            $0.top.equalToSuperview().inset(240)
         }
         
         
@@ -245,7 +249,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         messageInputBar.inputTextView.textContainerInset.bottom = 8
     }
   
-    @objc func viewDidLoadEventMethod(){}
     
     
     // MARK: - Helpers
@@ -283,7 +286,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             .disposed(by: disposeBag)
         
         let input = ChatVM.Input(
-            viewDidLoadEvent: self.viewDidLoadEvent
+            viewDidLoadEvent: self.rx.methodInvoked(#selector(viewDidLoad)).map { $0 }.asObservable()
                 .map({ _ in })
                 .asObservable(),
             backBtnTapEvent: self.backBarButton.rx.tap
@@ -295,7 +298,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             mySendImageMessage: self.sendImageMessage
                 .asObservable(),
             reloadMessage: self.reloadEvent
-                .asObservable()
+                .asObservable(),
+            searchTextMessage: self.testTextField.rx.text.orEmpty.asObservable()
         )
         
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else{ return }
@@ -311,14 +315,15 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             .disposed(by: disposeBag)
         
         output.getMessage
-            .bind(onNext: {chatMessageList in
+            .bind(onNext: { chatMessageList in
+                print("getMessage")
                 self.messageList = chatMessageList
                 self.loadFirstMessages(chatMessageList)
             })
             .disposed(by: disposeBag)
         
         output.getMoreMessage
-            .bind(onNext: {chatMessageList in
+            .bind(onNext: { chatMessageList in
                 self.loadMoreMessages(chatMessageList)
             })
             .disposed(by: disposeBag)
@@ -327,9 +332,19 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             .bind(onNext: {chatMessageList in
                 chatMessageList.forEach{ chatMessage in
                     self.insertMessage(chatMessage)
+                    
                 }
             })
             .disposed(by: disposeBag)
+        
+        
+        // by seungwan
+        output.searchedIndex.subscribe(onNext: { searched in
+            
+//            self.messagesCollectionView.scrollToItem(at: IndexPath(row: searched, section: 0), at: .centeredVertically, animated: true)
+            
+            
+        }).disposed(by: disposeBag)
     }
     
     
@@ -343,6 +358,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             }
         }, completion: { [weak self] _ in
             if self?.isLastSectionVisible() == true {
+                
                 self?.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: true)
             }
         })
@@ -351,7 +367,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     func isLastSectionVisible() -> Bool {
         guard !messageList.isEmpty else { return false }
-        
         let lastIndexPath = IndexPath(item: 0, section: messageList.count - 1)
         
         return messagesCollectionView.indexPathsForVisibleItems.contains(lastIndexPath)

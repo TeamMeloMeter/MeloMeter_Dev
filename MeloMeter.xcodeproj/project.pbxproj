@@ -154,6 +154,7 @@
 		52F739552A94E6DB00D46FBB /* HundredQAModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F739542A94E6DB00D46FBB /* HundredQAModel.swift */; };
 		52F739572A94E71500D46FBB /* HundredQADTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F739562A94E71500D46FBB /* HundredQADTO.swift */; };
 		5E96546393FD50C9C5E5E5EF /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A9432E8BBDB9FBE10412467 /* Pods_MeloMeter.framework */; };
+		60697AC82D2A5B4C00693990 /* CustomChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60697AC72D2A5B4600693990 /* CustomChatModel.swift */; };
 		60A351962D119EB000BB1A6F /* UserDefaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A351952D119EA800BB1A6F /* UserDefaultService.swift */; };
 		A1A09EE6F75F34CF5776C85D /* Pods_MeloMeterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13D1B0A4DD104367DA0E817D /* Pods_MeloMeterTests.framework */; };
 /* End PBXBuildFile section */
@@ -312,6 +313,7 @@
 		52F739522A94DE7800D46FBB /* HundredQARepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQARepositoryP.swift; sourceTree = "<group>"; };
 		52F739542A94E6DB00D46FBB /* HundredQAModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQAModel.swift; sourceTree = "<group>"; };
 		52F739562A94E71500D46FBB /* HundredQADTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQADTO.swift; sourceTree = "<group>"; };
+		60697AC72D2A5B4600693990 /* CustomChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomChatModel.swift; sourceTree = "<group>"; };
 		60A351952D119EA800BB1A6F /* UserDefaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultService.swift; sourceTree = "<group>"; };
 		A9E69982DC824C86B28E4115 /* Pods-MeloMeterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeterTests.debug.xcconfig"; path = "Target Support Files/Pods-MeloMeterTests/Pods-MeloMeterTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B61B0F5A29F7A5F500E25EEF /* MeloMeter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeloMeter.entitlements; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 		2185C4BA2A83F13B00F99795 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				60697AC72D2A5B4600693990 /* CustomChatModel.swift */,
 				525694802AA2371F00821B20 /* ChatCustomCells.swift */,
 				2124EC862A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift */,
 			);
@@ -1350,6 +1353,7 @@
 				52F00FF62A0930FF0014FC01 /* AddDdayModal.swift in Sources */,
 				2185C4CF2A83F13B00F99795 /* ChatCoordinator.swift in Sources */,
 				21C382222A87F812003638E1 /* ChatUseCase.swift in Sources */,
+				60697AC82D2A5B4C00693990 /* CustomChatModel.swift in Sources */,
 				525694812AA2371F00821B20 /* ChatCustomCells.swift in Sources */,
 				52F0100B2A0A493C0014FC01 /* QnATableViewCell.swift in Sources */,
 				5290BFB42A7270DF00D734EE /* LogInRepositoryP.swift in Sources */,

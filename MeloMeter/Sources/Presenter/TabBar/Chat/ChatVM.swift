@@ -26,6 +26,9 @@ class ChatVM {
         let mySendTextMessage: Observable<ChatModel> // 이미지 전송 누르고 나서 데이터
         let mySendImageMessage: Observable<ChatModel>
         let reloadMessage: Observable<Int>
+        
+        // by seungwan
+        let searchTextMessage: Observable<String>
     }
     
     struct Output {
@@ -33,6 +36,10 @@ class ChatVM {
         var getMessage = PublishSubject<[ChatModel]>()
         var getMoreMessage = PublishSubject<[ChatModel]>()
         var getRealTimeMessage = PublishSubject<[ChatModel]>()
+        
+        // by seungwan
+        
+        var searchedIndex = PublishSubject<ChatModel>()
     }
     
     
@@ -73,6 +80,7 @@ class ChatVM {
             .subscribe(onNext: { [weak self] num in
                 guard let self = self else{ return }
                 self.chatUseCase.getMoreChatMessageService(num: num)
+                
             })
             .disposed(by: disposeBag)
         
@@ -101,9 +109,11 @@ class ChatVM {
             .disposed(by: disposeBag)
         
         self.chatUseCase.recieveChatMessageService
-            .subscribe(onNext: {chatMessageList in
+            .subscribe(onNext: { [weak self] chatMessageList in
+                guard let self else {return}
                 output.getMessage.onNext(chatMessageList ?? [])
                 self.nowChatList = chatMessageList ?? []
+         
 
             })
             .disposed(by: disposeBag)
@@ -112,6 +122,11 @@ class ChatVM {
         self.chatUseCase.recieveMoreChatMessageService
             .subscribe(onNext: { chatMessageList in
                 output.getMoreMessage.onNext(chatMessageList ?? [])
+                self.nowChatList += chatMessageList ?? []
+                
+                
+            
+                
             })
             .disposed(by: disposeBag)
         
@@ -133,13 +148,30 @@ class ChatVM {
             
         }).disposed(by: disposeBag)
         
-        input.searchBtnTapEvent.subscribe({ [weak self] _ in
+        input.searchBtnTapEvent.withLatestFrom(input.searchTextMessage).subscribe(onNext: { [weak self] searchText in
             guard let self else {return}
             
-            //messageID 로 해서 넘겨와야될듯.
-            
+            _ = self.nowChatList.map {
+
+                switch $0.kind {
+                case .text(let text):
+                    
+                    output.searchedIndex.onNext($0)
+                    
+                case .attributedText(let attributedText):
+                    break
+                case .photo(let mediaItem):
+                    break
+                case .custom(let customItem):
+                    break
+                default:
+                    break
+                }
+
+                }
             
         }).disposed(by: disposeBag)
+
         return output
     }
     
@@ -148,7 +180,7 @@ class ChatVM {
 
         input.viewWillApearEvent
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self else{ return }
+                guard let self = self else { return }
                 self.chatUseCase.getProfileImage()
                     .subscribe(onSuccess: { image in
                         output.otherProfileImage.onNext(image)
@@ -174,13 +206,13 @@ class ChatVM {
                             }
                             self.answerArray = answers.popLast() ?? []
                             
-                        }else if beforeAnswers.count == 1 {
+                        } else if beforeAnswers.count == 1 {
                             self.answerArray = answers[0]
                             self.questionInfo.1 = question[0]
                             self.questionInfo.0 = String(questionNumber)
                             output.questionComplete.onNext("\(String(questionNumber))번째 백문백답이 도착했어요!")
                             output.questionText.onNext(self.questionInfo.1)
-                        }else {
+                        } else {
                             self.answerArray = answers[1]
                             self.questionInfo.1 = question[1]
                             self.questionInfo.0 = String(questionNumber - 1)
@@ -213,8 +245,7 @@ class ChatVM {
                                                    question: self.questionInfo.1,
                                                    myAnswerInfo: myAnswerInfo,
                                                    otherAnswerInfo: otherAnswerInfo)
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         return output
     }
