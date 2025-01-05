@@ -20,6 +20,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     private let viewModel: ChatVM?
     let disposeBag = DisposeBag()
+    let viewDidLoadEvent = PublishSubject<Void>()
     let reloadEvent = PublishSubject<Int>()
     var sendTextMessage = PublishRelay<ChatModel>()
     var sendImageMessage = PublishRelay<ChatModel>()
@@ -60,6 +61,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         setBindings()
+        self.viewDidLoadEvent.onNext(())
         setNavigationBar()
         configureMessageCollectionView()
         
@@ -249,6 +251,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         messageInputBar.inputTextView.textContainerInset.bottom = 8
     }
   
+    @objc func viewDidLoadEventMethod(){}
     
     
     // MARK: - Helpers
@@ -286,7 +289,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             .disposed(by: disposeBag)
         
         let input = ChatVM.Input(
-            viewDidLoadEvent: self.rx.methodInvoked(#selector(viewDidLoad)).map { $0 }.asObservable()
+            viewDidLoadEvent: self.viewDidLoadEvent
                 .map({ _ in })
                 .asObservable(),
             backBtnTapEvent: self.backBarButton.rx.tap
@@ -337,11 +340,14 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             })
             .disposed(by: disposeBag)
         
-        
         // by seungwan
         output.searchedIndex.subscribe(onNext: { searched in
             
-//            self.messagesCollectionView.scrollToItem(at: IndexPath(row: searched, section: 0), at: .centeredVertically, animated: true)
+          guard let firstIndex = self.messageList.firstIndex(where: {
+                $0.messageId == searched.messageId
+          }) else {return}
+
+            self.messagesCollectionView.scrollToItem(at: IndexPath(row: 0, section: firstIndex), at: .centeredVertically, animated: true)
             
             
         }).disposed(by: disposeBag)

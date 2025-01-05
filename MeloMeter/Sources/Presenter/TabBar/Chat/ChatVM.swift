@@ -155,15 +155,14 @@ class ChatVM {
 
                 switch $0.kind {
                 case .text(let text):
-                    
-                    output.searchedIndex.onNext($0)
-                    
-                case .attributedText(let attributedText):
+                    if text == searchText {
+                        print("text \(text) searchText \(searchText) model \($0)")
+                        
+                        output.searchedIndex.onNext($0)
+                        
+                    }
                     break
-                case .photo(let mediaItem):
-                    break
-                case .custom(let customItem):
-                    break
+               
                 default:
                     break
                 }
