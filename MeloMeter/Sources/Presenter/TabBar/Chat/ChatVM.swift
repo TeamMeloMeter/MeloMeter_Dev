@@ -18,6 +18,7 @@ class ChatVM {
     private var answerArray: [AnswerModel] = []
     private var questionInfo: (String, String) = ("", "")
     private var nowChatList : [ChatModel] = []
+    private var alreadySearchedId: [String] = []
     
     struct Input {
         let viewDidLoadEvent: Observable<Void>
@@ -124,17 +125,14 @@ class ChatVM {
                 output.getMoreMessage.onNext(chatMessageList ?? [])
                 self.nowChatList += chatMessageList ?? []
                 
-                
-            
-                
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
+        
+        
         
         self.chatUseCase.recieveRealTimeMessageService
             .subscribe(onNext: { chatMessageList in
                 output.getRealTimeMessage.onNext(chatMessageList ?? [])
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         input.backBtnTapEvent
             .subscribe(onNext: {
@@ -142,32 +140,45 @@ class ChatVM {
             })
             .disposed(by: disposeBag)
         
-        input.backBtnTapEvent.subscribe(onNext: { [weak self] _ in
-            guard self != nil else { return }
-            
-            
-        }).disposed(by: disposeBag)
+    
+        
+        
+        self.chatUseCase.recieveChatForSearch
+            .subscribe(onNext: { chatMessageList in
+                
+                self.nowChatList += chatMessageList ?? []
+                
+            }).disposed(by: disposeBag)
         
         input.searchBtnTapEvent.withLatestFrom(input.searchTextMessage).subscribe(onNext: { [weak self] searchText in
             guard let self else {return}
             
-            _ = self.nowChatList.map {
-
-                switch $0.kind {
+            var count = 0
+            
+            
+            
+            chatLoop: for chat in self.nowChatList.reversed() {
+                
+                switch chat.kind {
                 case .text(let text):
-                    if text == searchText {
-                        print("text \(text) searchText \(searchText) model \($0)")
+                    if text.contains(searchText) && !self.alreadySearchedId.contains(chat.messageId) {
                         
-                        output.searchedIndex.onNext($0)
-                        
+                        output.searchedIndex.onNext(chat)
+                        self.alreadySearchedId.append(chat.messageId)
+                        break chatLoop
                     }
-                    break
-               
+                    count += 1
+                    if count == nowChatList.count {
+                        self.chatUseCase.getMoreChatMessageService(num: count)
+
+                    }
+                    
                 default:
                     break
                 }
-
-                }
+            }
+            
+            
             
         }).disposed(by: disposeBag)
 

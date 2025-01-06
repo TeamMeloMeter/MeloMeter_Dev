@@ -26,6 +26,9 @@ class ChatUseCase {
     var recieveMoreChatMessageService = PublishRelay<[ChatModel]?>()
     var recieveRealTimeMessageService = PublishRelay<[ChatModel]?>()
     
+    //by seungwan
+    var recieveChatForSearch = PublishRelay<[ChatModel]?>()
+    
     // MARK: Initializers
     init(chatRepository: ChatRepositoryP,
          coupleRepository: CoupleRepositoryP,
@@ -92,6 +95,21 @@ class ChatUseCase {
                 .disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
     }
+    
+    // by seungwan
+    // 추가메시지 가져오기 for search
+    func getMoreChatForSearch(num: Int) {
+        self.coupleRepository.getCoupleID().subscribe(onSuccess: { coupleID in
+            self.chatRepository.getMoreChatMessage(num : num, coupleID: coupleID)
+                .flatMap { DTOArr -> Single<[ChatModel]> in
+                    return self.downloadChatImages(DTOArray: DTOArr)
+                }
+                .bind(to: self.recieveChatForSearch)
+                .disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
+    }
+    
+    
     
     func downloadChatImages(DTOArray: [ChatDTO]) -> Single<[ChatModel]> {
         return Single.create{ single in

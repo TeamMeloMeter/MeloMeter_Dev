@@ -85,17 +85,18 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         super.viewWillAppear(true)
         
         configureMessageInputBar()
+     
+  
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         DispatchQueue.main.async {
             if !self.messageList.isEmpty {
                 self.messagesCollectionView.reloadDataAndKeepOffset()
                 self.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: false)
             }
         }
-  
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
    
    
     }
@@ -319,11 +320,9 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         
         output.getMessage
             .bind(onNext: { chatMessageList in
-                print("getMessage")
                 self.messageList = chatMessageList
                 self.loadFirstMessages(chatMessageList)
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         output.getMoreMessage
             .bind(onNext: { chatMessageList in
@@ -347,6 +346,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
                 $0.messageId == searched.messageId
           }) else {return}
 
+            print("messageId \(firstIndex)")
             self.messagesCollectionView.scrollToItem(at: IndexPath(row: 0, section: firstIndex), at: .centeredVertically, animated: true)
             
             
