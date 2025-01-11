@@ -39,7 +39,6 @@ class ChatVM {
         var getRealTimeMessage = PublishSubject<[ChatModel]>()
         
         // by seungwan
-        
         var searchedIndex = PublishSubject<ChatModel>()
     }
     
@@ -96,6 +95,7 @@ class ChatVM {
                     }).disposed(by: disposeBag)
             })
             .disposed(by: disposeBag)
+        
         
         input.mySendImageMessage
             .subscribe(onNext: {[weak self] myMessage in

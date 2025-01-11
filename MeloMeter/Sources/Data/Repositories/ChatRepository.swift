@@ -123,11 +123,14 @@ class ChatRepository: ChatRepositoryP{
     }
     
     //추가 30개 가져오기
-    func getMoreChatMessage(num: Int, coupleID: String) -> Observable<[ChatDTO]> {
+    func getMoreChatMessage(num: Int, coupleID: String, searchText searchGText: String?) -> Observable<[ChatDTO]> {
         return self.firebaseService.getDocument(collection: .Chat, document: coupleID)
             .compactMap { documentSnapshot in
-                if let chatFields = documentSnapshot["chatField"] as? [[String: Any]],  !chatFields.isEmpty{
+                if let chatFields = documentSnapshot["chatField"] as? [[String: Any]], !chatFields.isEmpty{
                     // 타임스탬프를 이용하여 날짜 순으로 정렬한다.
+                    
+                    print("\(self.convertToChatDTOArray(from: chatFields ).count) convertTo Chat®")
+
                     let sortedChatFields = chatFields.sorted { (dict1, dict2) -> Bool in
                         guard let date1 = dict1["date"] as? Timestamp,
                               let date2 = dict2["date"] as? Timestamp else {
@@ -150,6 +153,7 @@ class ChatRepository: ChatRepositoryP{
                     var start = end - 20
                     if start < 0 { start = 0 }
                     let recentChatFields = sortedChatFields[start ..< end]
+                    
                     
                     // DTO타입으로 형변환
                     return self.convertToChatDTOArray(from: Array(recentChatFields))

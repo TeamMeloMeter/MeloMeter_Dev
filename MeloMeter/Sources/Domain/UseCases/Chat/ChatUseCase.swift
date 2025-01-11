@@ -87,7 +87,7 @@ class ChatUseCase {
     // 추가메시지 가져오기
     func getMoreChatMessageService(num: Int) {
         self.coupleRepository.getCoupleID().subscribe(onSuccess: { coupleID in
-            self.chatRepository.getMoreChatMessage(num : num, coupleID: coupleID)
+            self.chatRepository.getMoreChatMessage(num : num, coupleID: coupleID, searchText: nil)
                 .flatMap { DTOArr -> Single<[ChatModel]> in
                     return self.downloadChatImages(DTOArray: DTOArr)
                 }
@@ -97,16 +97,21 @@ class ChatUseCase {
     }
     
     // by seungwan
-    // 추가메시지 가져오기 for search
-    func getMoreChatForSearch(num: Int) {
-        self.coupleRepository.getCoupleID().subscribe(onSuccess: { coupleID in
-            self.chatRepository.getMoreChatMessage(num : num, coupleID: coupleID)
-                .flatMap { DTOArr -> Single<[ChatModel]> in
-                    return self.downloadChatImages(DTOArray: DTOArr)
-                }
-                .bind(to: self.recieveChatForSearch)
-                .disposed(by: self.disposeBag)
-        }).disposed(by: disposeBag)
+    //MARK: 추가메시지 가져오기 for search
+    //TODO: 추가메시지 보낸 후 바로 VC로 전송하지 말고 먼저 평가 후 있다면 VC로 전송.
+    func getMoreChatForSearch(num: Int, searchText: String?) {
+        if let searchText = searchText, !searchText.isEmpty {
+            self.coupleRepository.getCoupleID().subscribe(onSuccess: { coupleID in
+                
+                self.chatRepository.getMoreChatMessage(num : num, coupleID: coupleID, searchText: searchText)
+                    .flatMap { DTOArr -> Single<[ChatModel]> in
+                        return self.downloadChatImages(DTOArray: DTOArr)
+                    }
+                    .bind(to: self.recieveChatForSearch)
+                    .disposed(by: self.disposeBag)
+            }).disposed(by: disposeBag)
+        }
+    
     }
     
     
@@ -168,7 +173,7 @@ class ChatUseCase {
                     .map{ image in
                         if let image = image {
                             return image
-                        }else {
+                        } else {
                             return UIImage(named: "defaultProfileImage")!
                         }
                     }
