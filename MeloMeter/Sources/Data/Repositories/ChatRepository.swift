@@ -129,7 +129,11 @@ class ChatRepository: ChatRepositoryP{
                 if let chatFields = documentSnapshot["chatField"] as? [[String: Any]], !chatFields.isEmpty{
                     // 타임스탬프를 이용하여 날짜 순으로 정렬한다.
                     
+                    var count = 0
                     print("\(self.convertToChatDTOArray(from: chatFields ).count) convertTo Chat®")
+                    self.convertToChatDTOArray(from: chatFields).enumerated().forEach {_ in 
+                        print(searchGText)
+                    }
 
                     let sortedChatFields = chatFields.sorted { (dict1, dict2) -> Bool in
                         guard let date1 = dict1["date"] as? Timestamp,

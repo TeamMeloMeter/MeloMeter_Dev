@@ -114,8 +114,8 @@ class ChatVM {
                 guard let self else {return}
                 output.getMessage.onNext(chatMessageList ?? [])
                 self.nowChatList = chatMessageList ?? []
-         
-
+                
+                
             })
             .disposed(by: disposeBag)
         
@@ -140,7 +140,7 @@ class ChatVM {
             })
             .disposed(by: disposeBag)
         
-    
+        
         
         
         self.chatUseCase.recieveChatForSearch
@@ -169,8 +169,8 @@ class ChatVM {
                     }
                     count += 1
                     if count == nowChatList.count {
-                        self.chatUseCase.getMoreChatMessageService(num: count)
-
+                        self.chatUseCase.getMoreChatForSearch(num: count, searchText: searchText)
+                        
                     }
                     
                 default:
@@ -181,13 +181,13 @@ class ChatVM {
             
             
         }).disposed(by: disposeBag)
-
+        
         return output
     }
     
     func noticeTransform(input: DisplayInput, disposeBag: DisposeBag) -> DisplayOutput {
         let output = DisplayOutput()
-
+        
         input.viewWillApearEvent
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
@@ -268,4 +268,4 @@ class ChatVM {
         return components1.year == components2.year && components1.month == components2.month && components1.day == components2.day
     }
 }
-    
+

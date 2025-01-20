@@ -233,60 +233,65 @@ final class DisplayChatVC: ChatVC {
     
     // MARK: 오토레이아웃
     func setAutoLayout() {
-        noticeView.translatesAutoresizingMaskIntoConstraints = false
-        letterImageView.translatesAutoresizingMaskIntoConstraints = false
-        alarmLabel.translatesAutoresizingMaskIntoConstraints = false
-        downBtn.translatesAutoresizingMaskIntoConstraints = false
+        noticeView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(16)
+            $0.trailing.equalToSuperview().offset(-16)
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(9)
+        }
         
-        lineView.translatesAutoresizingMaskIntoConstraints = false
-        qLabel.translatesAutoresizingMaskIntoConstraints = false
-        questionLabel.translatesAutoresizingMaskIntoConstraints = false
-        lastAnswerBtn.translatesAutoresizingMaskIntoConstraints = false
-        goAnswerBtn.translatesAutoresizingMaskIntoConstraints = false
+        letterImageView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(30)
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(24)
+            $0.width.equalTo(20)
+            $0.height.equalTo(18)
+        }
         
-        NSLayoutConstraint.activate([
-            noticeView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            noticeView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
-            noticeView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 9),
-            
-            letterImageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 30),
-            letterImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 24),
-            letterImageView.widthAnchor.constraint(equalToConstant: 20),
-            letterImageView.heightAnchor.constraint(equalToConstant: 18),
-            
-            alarmLabel.leadingAnchor.constraint(equalTo: letterImageView.trailingAnchor, constant: 16),
-            alarmLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 23),
-            alarmLabel.heightAnchor.constraint(equalToConstant: 21),
-            
-            downBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -17),
-            downBtn.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 9),
-            downBtn.widthAnchor.constraint(equalToConstant: 48),
-            downBtn.heightAnchor.constraint(equalToConstant: 48),
-            
-            lineView.topAnchor.constraint(equalTo: noticeView.topAnchor, constant: 48),
-            lineView.centerXAnchor.constraint(equalTo: noticeView.centerXAnchor),
-            lineView.widthAnchor.constraint(equalToConstant: 308),
-            lineView.heightAnchor.constraint(equalToConstant: 1),
-            
-            qLabel.topAnchor.constraint(equalTo: lineView.bottomAnchor, constant: 22),
-            qLabel.leadingAnchor.constraint(equalTo: noticeView.leadingAnchor, constant: 18),
-            qLabel.heightAnchor.constraint(equalToConstant: 22),
-            
-            questionLabel.topAnchor.constraint(equalTo: lineView.bottomAnchor, constant: 22),
-            questionLabel.leadingAnchor.constraint(equalTo: qLabel.trailingAnchor, constant: 18),
-            questionLabel.heightAnchor.constraint(equalToConstant: 22),
-            
-            lastAnswerBtn.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 24),
-            lastAnswerBtn.leadingAnchor.constraint(equalTo: noticeView.leadingAnchor, constant: 18),
-            lastAnswerBtn.widthAnchor.constraint(equalToConstant: 150),
-            lastAnswerBtn.heightAnchor.constraint(equalToConstant: 38),
-            
-            goAnswerBtn.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 24),
-            goAnswerBtn.trailingAnchor.constraint(equalTo: noticeView.trailingAnchor, constant: -18),
-            goAnswerBtn.widthAnchor.constraint(equalToConstant: 150),
-            goAnswerBtn.heightAnchor.constraint(equalToConstant: 38),
-        ])
+        alarmLabel.snp.makeConstraints {
+            $0.leading.equalTo(letterImageView.snp.trailing).offset(16)
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(23)
+            $0.height.equalTo(21)
+        }
+        
+        downBtn.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(-17)
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(9)
+            $0.width.height.equalTo(48)
+        }
+        
+        lineView.snp.makeConstraints {
+            $0.top.equalTo(noticeView.snp.top).offset(48)
+            $0.centerX.equalTo(noticeView)
+            $0.width.equalTo(308)
+            $0.height.equalTo(1)
+        }
+        
+        qLabel.snp.makeConstraints {
+            $0.top.equalTo(lineView.snp.bottom).offset(22)
+            $0.leading.equalTo(noticeView).offset(18)
+            $0.height.equalTo(22)
+        }
+        
+        questionLabel.snp.makeConstraints {
+            $0.top.equalTo(lineView.snp.bottom).offset(22)
+            $0.leading.equalTo(qLabel.snp.trailing).offset(18)
+            $0.height.equalTo(22)
+        }
+        
+        lastAnswerBtn.snp.makeConstraints {
+            $0.top.equalTo(questionLabel.snp.bottom).offset(24)
+            $0.leading.equalTo(noticeView).offset(18)
+            $0.width.equalTo(150)
+            $0.height.equalTo(38)
+        }
+        
+        goAnswerBtn.snp.makeConstraints {
+            $0.top.equalTo(questionLabel.snp.bottom).offset(24)
+            $0.trailing.equalTo(noticeView).offset(-18)
+            $0.width.equalTo(150)
+            $0.height.equalTo(38)
+        }
     }
+
 }
 
 // MARK: MessagesDisplayDelegate
@@ -309,7 +314,6 @@ extension DisplayChatVC: MessagesDisplayDelegate {
     }
 
     // MARK: - All Messages
-    
     func backgroundColor(for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> UIColor {
         isFromCurrentSender(message: message) ? UIColor.primary1.withAlphaComponent(0.22) : .white
     }
