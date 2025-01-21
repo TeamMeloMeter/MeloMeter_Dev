@@ -166,7 +166,7 @@ class ChatRepository: ChatRepositoryP {
     }
     
     // MARK: by seungwan
-    func getMessageSearch(coupleID: String, searchGText: String, num: Int) -> Observable<[ChatDTO]> {
+    func getMessageSearch(coupleID: String, searchGText: String, num: Int) -> Observable<([ChatDTO],String)> {
         return self.firebaseService.getDocument(collection: .Chat, document: coupleID)
             .compactMap { documentSnapshot in
                 var findChatFields: [ChatDTO] = []
@@ -194,7 +194,6 @@ class ChatRepository: ChatRepositoryP {
                                 findChatFields = Array(converted[ num ..< index + num ])
                                 
                             } else {
-                                print("index \(index) num \(num)")
                                 findChatFields = Array(converted[ num ..< index + num + 5 ])
 
                             }
@@ -205,11 +204,9 @@ class ChatRepository: ChatRepositoryP {
                     }
                 
                     
-                    print(findChatFields.count)
-                    return findChatFields
-                } else {
-                    return []
                 }
+                return (findChatFields, self.lastSearchedMessageID ?? "")
+
             }
             .asObservable()
     }

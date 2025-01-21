@@ -143,11 +143,30 @@ class ChatVM {
         
         
         
-        self.chatUseCase.recieveChatForSearch
-            .subscribe(onNext: { chatMessageList in
+        Observable.zip(self.chatUseCase.recieveChatForSearch.asObservable(), self.chatUseCase.recieveMessageId.asObservable())
+            .subscribe(onNext: { chatMessageList, messageId in
+             
+                    output.getMoreMessage.onNext(chatMessageList ?? [])
+
+                    let searchedModel = chatMessageList?.filter {
+                        $0.messageId == messageId
+                    }.first
+                    
+                    if let searchedModel = searchedModel {
+                        
+                        output.searchedIndex.onNext(searchedModel)
+                        self.alreadySearchedId.append(messageId)
+                        
+                    }
+                    
+                    self.nowChatList += chatMessageList ?? []
+
                 
-                self.nowChatList += chatMessageList ?? []
+              
                 
+                
+                
+
             }).disposed(by: disposeBag)
         
         input.searchBtnTapEvent.withLatestFrom(input.searchTextMessage).subscribe(onNext: { [weak self] searchText in

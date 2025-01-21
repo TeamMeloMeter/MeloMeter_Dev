@@ -20,5 +20,5 @@ protocol ChatRepositoryP {
     func downloadImage(url: String) -> Single<UIImage?>
     func convertToChatDTOArray(from dictionaries: [[String: Any]]) -> [ChatDTO]
     func getChatImagesURL(coupleID: String) -> Single<[String]>
-    func getMessageSearch(coupleID: String, searchGText: String, num: Int) -> Observable<[ChatDTO]>
+    func getMessageSearch(coupleID: String, searchGText: String, num: Int) -> Observable<([ChatDTO],String)>
 }

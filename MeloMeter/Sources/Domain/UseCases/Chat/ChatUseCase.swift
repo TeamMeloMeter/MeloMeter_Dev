@@ -25,6 +25,7 @@ class ChatUseCase {
     var recieveChatMessageService = PublishRelay<[ChatModel]?>()
     var recieveMoreChatMessageService = PublishRelay<[ChatModel]?>()
     var recieveRealTimeMessageService = PublishRelay<[ChatModel]?>()
+    var recieveMessageId = PublishRelay<String>()
     
     //by seungwan
     var recieveChatForSearch = PublishRelay<[ChatModel]?>()
@@ -104,11 +105,15 @@ class ChatUseCase {
             self.coupleRepository.getCoupleID().subscribe(onSuccess: { coupleID in
                 
                 self.chatRepository.getMessageSearch(coupleID: coupleID, searchGText: searchText, num: num)
-                    .flatMap { DTOArr -> Single<[ChatModel]> in
+                    .flatMap { DTOArr, messageId -> Single<[ChatModel]> in
+                      
+                        self.recieveMessageId.accept(messageId)
                         return self.downloadChatImages(DTOArray: DTOArr)
                     }
                     .bind(to: self.recieveChatForSearch)
                     .disposed(by: self.disposeBag)
+                
+                
             }).disposed(by: disposeBag)
         }
     

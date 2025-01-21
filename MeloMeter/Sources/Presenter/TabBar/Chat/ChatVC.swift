@@ -121,12 +121,18 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     }
 
     func loadMoreMessages(_ chatMassageList: [ChatModel]) {
+        print("load")
+
         DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
             //받아온 매시지 리스트를 하나씩 삽입한다,
             DispatchQueue.main.async {
+                print("load async")
+
                 self.messageList.insert(contentsOf: chatMassageList, at: 0)
                 self.messagesCollectionView.reloadDataAndKeepOffset()
                 self.refreshControl.endRefreshing()
+                
+                
             }
         }
     }
@@ -340,16 +346,24 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             .disposed(by: disposeBag)
         
         // by seungwan
+        // TODO: 다 돌았을때도 없을때 빈배열 넘기기 + 이미 스캔된거 다시 돌아옴 (왜??)
         output.searchedIndex.subscribe(onNext: { searched in
-            
-          guard let firstIndex = self.messageList.firstIndex(where: {
-                $0.messageId == searched.messageId
-          }) else {return}
+            print("searhced")
+       
 
-            print("messageId \(firstIndex)")
-            self.messagesCollectionView.scrollToItem(at: IndexPath(row: 0, section: firstIndex), at: .centeredVertically, animated: true)
             
-            
+            DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 2) {
+                guard let firstIndex = self.messageList.firstIndex(where: {
+                      $0.messageId == searched.messageId
+                }) else {return}
+                DispatchQueue.main.async {
+                    self.messagesCollectionView.scrollToItem(at: IndexPath(row: 0, section: firstIndex), at: .centeredVertically, animated: true)
+
+                    
+                    
+                }
+            }
+          
         }).disposed(by: disposeBag)
     }
     
