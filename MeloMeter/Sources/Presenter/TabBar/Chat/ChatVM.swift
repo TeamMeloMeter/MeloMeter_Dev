@@ -152,13 +152,12 @@ class ChatVM {
         
         input.searchBtnTapEvent.withLatestFrom(input.searchTextMessage).subscribe(onNext: { [weak self] searchText in
             guard let self else {return}
-            
             var count = 0
             
             
             
             chatLoop: for chat in self.nowChatList.reversed() {
-                
+
                 switch chat.kind {
                 case .text(let text):
                     if text.contains(searchText) && !self.alreadySearchedId.contains(chat.messageId) {
@@ -168,8 +167,9 @@ class ChatVM {
                         break chatLoop
                     }
                     count += 1
+                    
                     if count == nowChatList.count {
-                        self.chatUseCase.getMoreChatForSearch(num: count, searchText: searchText)
+                        self.chatUseCase.getMoreChatForSearch(num: self.nowChatList.count, searchText: searchText)
                         
                     }
                     

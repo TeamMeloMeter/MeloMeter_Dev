@@ -98,12 +98,12 @@ class ChatUseCase {
     
     // by seungwan
     //MARK: 추가메시지 가져오기 for search
-    //TODO: 추가메시지 보낸 후 바로 VC로 전송하지 말고 먼저 평가 후 있다면 VC로 전송.
+    //TODO: 추가메시지 보낸 후 바로 VC로 전송하지 말고 먼저 평가 후 있다면 VC로 전송.(V2)
     func getMoreChatForSearch(num: Int, searchText: String?) {
         if let searchText = searchText, !searchText.isEmpty {
             self.coupleRepository.getCoupleID().subscribe(onSuccess: { coupleID in
                 
-                self.chatRepository.getMoreChatMessage(num : num, coupleID: coupleID, searchText: searchText)
+                self.chatRepository.getMessageSearch(coupleID: coupleID, searchGText: searchText, num: num)
                     .flatMap { DTOArr -> Single<[ChatModel]> in
                         return self.downloadChatImages(DTOArray: DTOArr)
                     }

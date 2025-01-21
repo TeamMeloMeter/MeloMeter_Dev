@@ -14,8 +14,9 @@ enum ChatMessageError: Error {
     case emptyDocument
 }
 
-class ChatRepository: ChatRepositoryP{
+class ChatRepository: ChatRepositoryP {
     
+    var lastSearchedMessageID: String?
     var recieveChatMessage = PublishSubject<[ChatDTO]?>()
     var firebaseService: FirebaseService
     var disposeBag: DisposeBag
@@ -129,11 +130,7 @@ class ChatRepository: ChatRepositoryP{
                 if let chatFields = documentSnapshot["chatField"] as? [[String: Any]], !chatFields.isEmpty{
                     // 타임스탬프를 이용하여 날짜 순으로 정렬한다.
                     
-                    var count = 0
-                    print("\(self.convertToChatDTOArray(from: chatFields ).count) convertTo Chat®")
-                    self.convertToChatDTOArray(from: chatFields).enumerated().forEach {_ in 
-                        print(searchGText)
-                    }
+                
 
                     let sortedChatFields = chatFields.sorted { (dict1, dict2) -> Bool in
                         guard let date1 = dict1["date"] as? Timestamp,
@@ -161,6 +158,55 @@ class ChatRepository: ChatRepositoryP{
                     
                     // DTO타입으로 형변환
                     return self.convertToChatDTOArray(from: Array(recentChatFields))
+                } else {
+                    return []
+                }
+            }
+            .asObservable()
+    }
+    
+    // MARK: by seungwan
+    func getMessageSearch(coupleID: String, searchGText: String, num: Int) -> Observable<[ChatDTO]> {
+        return self.firebaseService.getDocument(collection: .Chat, document: coupleID)
+            .compactMap { documentSnapshot in
+                var findChatFields: [ChatDTO] = []
+                if let chatFields = documentSnapshot["chatField"] as? [[String: Any]], !chatFields.isEmpty{
+                    // 타임스탬프를 이용하여 날짜 순으로 정렬한다.
+                   
+                
+
+                    let sortedChatFields = chatFields.sorted { (dict1, dict2) -> Bool in
+                        guard let date1 = dict1["date"] as? Timestamp,
+                              let date2 = dict2["date"] as? Timestamp else {
+                            return false
+                        }
+                        return date1.seconds > date2.seconds ||
+                        (date1.seconds == date2.seconds && date1.nanoseconds > date2.nanoseconds)
+                    }
+                    
+
+                    //TODO: num ..< sortedChatFields.count 했는데 index 가 index 보다 큼. -> + num
+                    //MARK: DTO타입으로 형변환
+                    let converted = self.convertToChatDTOArray(from: sortedChatFields)[ num ..< sortedChatFields.count ]
+                    for (index, element) in converted.enumerated() {
+                        if let text = element.contents, text.contains(searchGText) {
+                            if index + num + 5 >= converted.count {
+                                findChatFields = Array(converted[ num ..< index + num ])
+                                
+                            } else {
+                                print("index \(index) num \(num)")
+                                findChatFields = Array(converted[ num ..< index + num + 5 ])
+
+                            }
+                            self.lastSearchedMessageID = element.messageId
+                            break
+                            
+                        }
+                    }
+                
+                    
+                    print(findChatFields.count)
+                    return findChatFields
                 } else {
                     return []
                 }
