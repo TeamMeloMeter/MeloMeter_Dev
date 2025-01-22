@@ -172,7 +172,7 @@ class ChatRepository: ChatRepositoryP {
                 var findChatFields: [ChatDTO] = []
                 if let chatFields = documentSnapshot["chatField"] as? [[String: Any]], !chatFields.isEmpty{
                     // 타임스탬프를 이용하여 날짜 순으로 정렬한다.
-                   
+                    self.lastSearchedMessageID = ""
                 
 
                     let sortedChatFields = chatFields.sorted { (dict1, dict2) -> Bool in
@@ -187,19 +187,25 @@ class ChatRepository: ChatRepositoryP {
 
                     //TODO: num ..< sortedChatFields.count 했는데 index 가 index 보다 큼. -> + num
                     //MARK: DTO타입으로 형변환
-                    let converted = self.convertToChatDTOArray(from: sortedChatFields)[ num ..< sortedChatFields.count ]
+                    let converted = Array(self.convertToChatDTOArray(from: sortedChatFields.reversed())[ num ..< sortedChatFields.count ])
+                    
+
                     for (index, element) in converted.enumerated() {
+                        
+                    
+                        
                         if let text = element.contents, text.contains(searchGText) {
-                            if index + num + 5 >= converted.count {
-                                findChatFields = Array(converted[ num ..< index + num ])
+                            if 5 >= converted.count - index {
+                                findChatFields = Array(converted[ 0 ..< index + 1 ].reversed())
                                 
                             } else {
-                                findChatFields = Array(converted[ num ..< index + num + 5 ])
+                                findChatFields = Array(converted[ 0 ..< index + 1 ].reversed())
 
                             }
+                       
                             self.lastSearchedMessageID = element.messageId
                             break
-                            
+
                         }
                     }
                 
@@ -238,7 +244,7 @@ class ChatRepository: ChatRepositoryP {
     func getChatImagesURL(coupleID: String) -> Single<[String]> {
         return self.firebaseService.getDocument(collection: .Chat, document: coupleID)
             .map { documentSnapshot in
-                if let chatFields = documentSnapshot["chatField"] as? [[String: Any]], !chatFields.isEmpty{
+                if let chatFields = documentSnapshot["chatField"] as? [[String: Any]], !chatFields.isEmpty {
                     let chatArray = self.convertToChatDTOArray(from: chatFields)
                     return chatArray.filter({ $0.chatType == ChatType.image.stringType }).compactMap({ $0.contents })
                 } else {

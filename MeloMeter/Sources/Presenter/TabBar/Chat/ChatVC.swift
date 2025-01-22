@@ -348,8 +348,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         // by seungwan
         // TODO: 다 돌았을때도 없을때 빈배열 넘기기 + 이미 스캔된거 다시 돌아옴 (왜??)
         output.searchedIndex.subscribe(onNext: { searched in
-            print("searhced")
        
+            
 
             
             DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 2) {
@@ -358,6 +358,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
                 }) else {return}
                 DispatchQueue.main.async {
                     self.messagesCollectionView.scrollToItem(at: IndexPath(row: 0, section: firstIndex), at: .centeredVertically, animated: true)
+                    
 
                     
                     

@@ -146,6 +146,9 @@ class ChatVM {
         Observable.zip(self.chatUseCase.recieveChatForSearch.asObservable(), self.chatUseCase.recieveMessageId.asObservable())
             .subscribe(onNext: { chatMessageList, messageId in
              
+                print("chatMessageList \(chatMessageList) messageId \(messageId)")
+                
+                
                     output.getMoreMessage.onNext(chatMessageList ?? [])
 
                     let searchedModel = chatMessageList?.filter {
@@ -153,7 +156,7 @@ class ChatVM {
                     }.first
                     
                     if let searchedModel = searchedModel {
-                        
+                        print(searchedModel)
                         output.searchedIndex.onNext(searchedModel)
                         self.alreadySearchedId.append(messageId)
                         
