@@ -81,8 +81,7 @@ class ChatVM {
                 guard let self = self else{ return }
                 self.chatUseCase.getMoreChatMessageService(num: num)
                 
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         input.mySendTextMessage
             .subscribe(onNext: {[weak self] myMessage in
@@ -93,8 +92,7 @@ class ChatVM {
                     },onFailure: { error in
                         output.senddSuccess.onNext(false)
                     }).disposed(by: disposeBag)
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         
         input.mySendImageMessage
@@ -142,11 +140,10 @@ class ChatVM {
         
         
         
-        
+        //TODO: clean code (VC 코드 VM 에서 처리)
         Observable.zip(self.chatUseCase.recieveChatForSearch.asObservable(), self.chatUseCase.recieveMessageId.asObservable())
             .subscribe(onNext: { chatMessageList, messageId in
              
-                print("chatMessageList \(chatMessageList) messageId \(messageId)")
                 
                 
                     output.getMoreMessage.onNext(chatMessageList ?? [])
@@ -156,7 +153,7 @@ class ChatVM {
                     }.first
                     
                     if let searchedModel = searchedModel {
-                        print(searchedModel)
+                        
                         output.searchedIndex.onNext(searchedModel)
                         self.alreadySearchedId.append(messageId)
                         
@@ -199,9 +196,6 @@ class ChatVM {
                     break
                 }
             }
-            
-            
-            
         }).disposed(by: disposeBag)
         
         return output

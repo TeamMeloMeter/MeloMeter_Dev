@@ -121,19 +121,28 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     }
 
     func loadMoreMessages(_ chatMassageList: [ChatModel]) {
-        print("load")
 
-        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.2) {
             //받아온 매시지 리스트를 하나씩 삽입한다,
             DispatchQueue.main.async {
-                print("load async")
 
                 self.messageList.insert(contentsOf: chatMassageList, at: 0)
                 self.messagesCollectionView.reloadDataAndKeepOffset()
                 self.refreshControl.endRefreshing()
                 
+                print("ASYNC END \(self.messagesCollectionView)")
                 
+//                self.messagesCollectionView.visibleCells.forEach { cell in
+//                    if let pickedCell = cell as? TextMessageCell, let fieldText = self.testTextField.text, let cellText = pickedCell.messageLabel.text, cellText.contains(fieldText) {
+//                        pickedCell.messageLabel.highlightText(fieldText)
+//                        print(pickedCell.messageLabel.text)
+//                    }
+//                }
             }
+
+       
+            
+            
         }
     }
     
@@ -262,9 +271,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     
     // MARK: - Helpers
-    
-    
-    func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
+        func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
         guard indexPath.section - 1 >= 0 else { return false }
         return messageList[indexPath.section].user == messageList[indexPath.section - 1].user
     }
@@ -289,6 +296,9 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     // MARK: - Binding
     func setBindings() {
+        
+        
+        
         self.messagesCollectionView.rx.tapGesture().when(.ended)
             .subscribe(onNext: { _ in
                 self.inputContainerView.endEditing(true)
@@ -345,18 +355,26 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             })
             .disposed(by: disposeBag)
         
-        // by seungwan
+        // MARK: by seungwan
         // TODO: 다 돌았을때도 없을때 빈배열 넘기기 + 이미 스캔된거 다시 돌아옴 (왜??)
         output.searchedIndex.subscribe(onNext: { searched in
        
             
-
+            print("searched \(searched)")
             
-            DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 2) {
+            DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
                 guard let firstIndex = self.messageList.firstIndex(where: {
+                    
                       $0.messageId == searched.messageId
                 }) else {return}
                 DispatchQueue.main.async {
+                  
+                    
+                    // MARK: - 하나씩 형광펜
+//                    if let pickedCell = self.messagesCollectionView.cellForItem(at:  IndexPath(row: 0, section: firstIndex)) as? TextMessageCell {
+//                     
+//                        pickedCell.messageLabel.highlightText(self.testTextField.text ?? "")
+//                    }
                     self.messagesCollectionView.scrollToItem(at: IndexPath(row: 0, section: firstIndex), at: .centeredVertically, animated: true)
                     
 
@@ -434,7 +452,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
                     NSAttributedString.Key.font: FontManager.shared.medium(ofSize: 10),
                     NSAttributedString.Key.foregroundColor: UIColor.gray2
                 ])
-        }else if isNextMessageSameSender(at: indexPath) {
+        } else if isNextMessageSameSender(at: indexPath) {
             if !isNextMessageSameDate(at: indexPath) {
                 return NSAttributedString(
                     string: dateString,
@@ -455,8 +473,13 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     // MARK: TextCustomCell
     func textCell(for message: MessageType, at indexPath: IndexPath, in messageView: MessagesCollectionView) -> UICollectionViewCell? {
         let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: "CustomMessageCell", for: indexPath) as! CustomMessageCell
+        
         cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-
+        
+        //TODO: 나중에 검색창 열기 닫기로 해야될듯 -> 열어놓는 동안은 검색
+        if let text = self.testTextField.text {
+            cell.messageLabel.highlightText(text)
+        }
         return cell
     }
     // MARK: PhotoCustomCell
@@ -476,7 +499,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
 }
 
 // MARK: InputBarAccessoryViewDelegate
-
 extension ChatVC: InputBarAccessoryViewDelegate {
     // MARK: Internal
     
@@ -541,7 +563,7 @@ extension ChatVC: CameraInputBarAccessoryViewDelegate {
         self.inputContainerView.endEditing(true)
     }
     
-    //이미지타입 전송
+    //MARK: 이미지타입 전송
     func sendImageMessageEvent(photo: UIImage) {
         let photoMessage = ChatModel(image: photo, user: currentSender as! ChatUserModel, messageId: UUID().uuidString, date: Date())
         sendImageMessage.accept(photoMessage)

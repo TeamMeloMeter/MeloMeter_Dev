@@ -61,6 +61,7 @@ internal struct ChatModel: MessageType {
     var sentDate: Date
     var kind: MessageKind
     
+    var targetText: String?
     var user: ChatUserModel
     
     var sender: SenderType {

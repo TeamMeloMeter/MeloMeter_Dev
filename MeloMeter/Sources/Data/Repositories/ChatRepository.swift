@@ -185,7 +185,7 @@ class ChatRepository: ChatRepositoryP {
                     }
                     
 
-                    //TODO: num ..< sortedChatFields.count 했는데 index 가 index 보다 큼. -> + num
+                    //TODO: clean code
                     //MARK: DTO타입으로 형변환
                     let converted = Array(self.convertToChatDTOArray(from: sortedChatFields.reversed())[ num ..< sortedChatFields.count ])
                     
