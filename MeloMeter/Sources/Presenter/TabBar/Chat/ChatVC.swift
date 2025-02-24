@@ -17,7 +17,7 @@ import Then
 
 /// A base class for the example controllers
 class ChatVC: MessagesViewController, MessagesDataSource {
-    
+  
     private let viewModel: ChatVM?
     let disposeBag = DisposeBag()
     let viewDidLoadEvent = PublishSubject<Void>()
@@ -83,6 +83,9 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        
+        self.navigationController?.view.backgroundColor = .white
         
         configureMessageInputBar()
      
@@ -154,9 +157,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
        
         
         let cusSearchBar = UIView().then {
-            $0.backgroundColor = .lightGray.withAlphaComponent(0.2)
             
-          
+            $0.backgroundColor = .lightGray.withAlphaComponent(0.2)
             $0.addSubview(testTextField)
 
             testTextField.snp.makeConstraints {

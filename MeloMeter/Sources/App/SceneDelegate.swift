@@ -8,6 +8,22 @@
 import UIKit
 import CoreLocation
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    
+    // MARK: by seungwan
+    private func configureNavigationBarAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground() // 불투명하게 설정
+        appearance.backgroundColor = .white        // 원하는 배경색 지정
+
+        // 타이틀 텍스트 색상 (선택 사항)
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+
+        // 네비게이션 바에 적용
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+    }
+    
 
     var window: UIWindow?
     var appCoordinator: AppCoordinator?
