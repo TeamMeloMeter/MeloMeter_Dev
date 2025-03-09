@@ -170,7 +170,8 @@ class ChatVM {
             }).disposed(by: disposeBag)
         
         input.searchBtnTapEvent.withLatestFrom(input.searchTextMessage).subscribe(onNext: { [weak self] searchText in
-            guard let self else {return}
+            guard let self else { return }
+            
             var count = 0
             
             

@@ -8,7 +8,7 @@
 import UIKit
 
 extension UILabel {
-    func highlightText(_ targetText: String, highlightColor: UIColor = .yellow) {
+    func highlightText(_ targetText: String, highlightColor: UIColor = .primary1) {
             guard let fullText = self.text else { return }
             
             let attributedString = NSMutableAttributedString(string: fullText)
@@ -17,7 +17,9 @@ extension UILabel {
             if let range = fullText.range(of: targetText) {
                 let nsRange = NSRange(range, in: fullText)
                 attributedString.addAttributes([
-                    .backgroundColor: highlightColor // 형광펜 효과 (배경색)
+                    .underlineStyle: NSUnderlineStyle.single.rawValue,
+                    .underlineColor: highlightColor,
+                    .foregroundColor: highlightColor
                 ], range: nsRange)
                 
             }

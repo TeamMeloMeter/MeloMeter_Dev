@@ -17,7 +17,21 @@ import Then
 
 /// A base class for the example controllers
 class ChatVC: MessagesViewController, MessagesDataSource {
-  
+    // MARK: by seungwan
+    private func configureNavigationBarAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground() // 불투명하게 설정
+        appearance.backgroundColor = .white        // 원하는 배경색 지정
+
+        // 타이틀 텍스트 색상 (선택 사항)
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+
+        // 네비게이션 바에 적용
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+    }
+    
     private let viewModel: ChatVM?
     let disposeBag = DisposeBag()
     let viewDidLoadEvent = PublishSubject<Void>()
@@ -60,6 +74,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNavigationBarAppearance()
         setBindings()
         self.viewDidLoadEvent.onNext(())
         setNavigationBar()
@@ -126,14 +141,13 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     func loadMoreMessages(_ chatMassageList: [ChatModel]) {
 
         DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.2) {
-            //받아온 매시지 리스트를 하나씩 삽입한다,
+            // 받아온 매시지 리스트를 하나씩 삽입한다,
             DispatchQueue.main.async {
 
                 self.messageList.insert(contentsOf: chatMassageList, at: 0)
                 self.messagesCollectionView.reloadDataAndKeepOffset()
                 self.refreshControl.endRefreshing()
                 
-                print("ASYNC END \(self.messagesCollectionView)")
                 
 //                self.messagesCollectionView.visibleCells.forEach { cell in
 //                    if let pickedCell = cell as? TextMessageCell, let fieldText = self.testTextField.text, let cellText = pickedCell.messageLabel.text, cellText.contains(fieldText) {
@@ -150,7 +164,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     }
     
     // by seungwan
-    let testTextField = UITextField()
+    let messageSearchTextField = UITextField()
     // MARK: NavigationBar
     private func setNavigationBar() {
         
@@ -159,22 +173,25 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         let cusSearchBar = UIView().then {
             
             $0.backgroundColor = .lightGray.withAlphaComponent(0.2)
-            $0.addSubview(testTextField)
+            $0.addSubview(messageSearchTextField)
 
-            testTextField.snp.makeConstraints {
-                $0.top.bottom.trailing.equalToSuperview()
-                $0.leading.equalToSuperview().inset(50)
+            messageSearchTextField.snp.makeConstraints {
+                $0.top.bottom.trailing.leading.equalToSuperview()
             }
             
             
             
         }
         
-        self.navigationController?.view.addSubview(cusSearchBar)
+        // self.navigationController?.view.addSubview(cusSearchBar)
+//
+       
+        navigationItem.titleView = cusSearchBar
+
+        
         cusSearchBar.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
+            $0.width.equalTo(250)
             $0.height.equalTo(40)
-            $0.top.equalToSuperview().inset(240)
         }
         
         
@@ -321,7 +338,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
                 .asObservable(),
             reloadMessage: self.reloadEvent
                 .asObservable(),
-            searchTextMessage: self.testTextField.rx.text.orEmpty.asObservable()
+            searchTextMessage: self.messageSearchTextField.rx.text.orEmpty.asObservable()
         )
         
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else{ return }
@@ -362,7 +379,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         output.searchedIndex.subscribe(onNext: { searched in
        
             
-            print("searched \(searched)")
             
             DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
                 guard let firstIndex = self.messageList.firstIndex(where: {
@@ -479,7 +495,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         cell.configure(with: message, at: indexPath, and: messagesCollectionView)
         
         //TODO: 나중에 검색창 열기 닫기로 해야될듯 -> 열어놓는 동안은 검색
-        if let text = self.testTextField.text {
+        if let text = self.messageSearchTextField.text {
             cell.messageLabel.highlightText(text)
         }
         return cell
