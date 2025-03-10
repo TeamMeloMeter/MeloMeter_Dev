@@ -163,34 +163,49 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         }
     }
     
-    // by seungwan
-    let messageSearchTextField = UITextField()
+    // MARK: by seungwan
+    let messageSearchTextField = UITextField().then {
+        $0.placeholder = "메세지 검색"
+        $0.font = FontManager.shared.regular(ofSize: 16)
+        $0.returnKeyType = .search
+        $0.isHidden = true
+    }
+    let chatLabel = UILabel().then {
+        $0.text = "채팅"
+        $0.font = FontManager.shared.semiBold(ofSize: 16)
+        $0.textAlignment = .center
+    }
+    
     // MARK: NavigationBar
     private func setNavigationBar() {
         
-       
         
-        let cusSearchBar = UIView().then {
+        let searchTextBar = UIView().then {
             
-            $0.backgroundColor = .lightGray.withAlphaComponent(0.2)
+            
+            
             $0.addSubview(messageSearchTextField)
+            $0.addSubview(chatLabel)
 
+            chatLabel.snp.makeConstraints {
+                $0.top.bottom.trailing.leading.equalToSuperview()
+            }
+            
             messageSearchTextField.snp.makeConstraints {
                 $0.top.bottom.trailing.leading.equalToSuperview()
             }
             
             
             
+            
         }
         
-        // self.navigationController?.view.addSubview(cusSearchBar)
-//
        
-        navigationItem.titleView = cusSearchBar
+        navigationItem.titleView = searchTextBar
 
         
-        cusSearchBar.snp.makeConstraints {
-            $0.width.equalTo(250)
+        searchTextBar.snp.makeConstraints {
+            $0.width.equalTo(240)
             $0.height.equalTo(40)
         }
         
@@ -213,13 +228,21 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         return button
     }()
     
-    private lazy var searchBarButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"),
-                                     style: .plain,
-                                     target: self,
-                                     action: nil)
-        return button
-    }()
+    
+    
+    private lazy var searchBarButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"),
+                                                      style: .plain,
+                                                      target: self,
+                                                       action: nil)
+    
+    private lazy var exitBarButton =  UIBarButtonItem(customView: UILabel().then {
+        $0.text = "취소"
+        $0.font = FontManager.shared.regular(ofSize: 16)
+    })
+    
+    private lazy var leftSearchIcon = UIBarButtonItem(customView: UIImageView(image: UIImage(systemName: "magnifyingglass")))
+    
+    
     
     // MARK: Configure
     func configureMessageCollectionView() {
@@ -277,6 +300,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         messageInputBar.sendButton.layer.cornerRadius = 8
         messageInputBar.sendButton.layer.masksToBounds = true
         configureInputBarPadding()
+        
+ 
         
     }
     
@@ -338,7 +363,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
                 .asObservable(),
             reloadMessage: self.reloadEvent
                 .asObservable(),
-            searchTextMessage: self.messageSearchTextField.rx.text.orEmpty.asObservable()
+            searchTextMessage: self.messageSearchTextField.rx.text.orEmpty.asObservable(),
+            exitBarButton: self.exitBarButton.rx.tap.map({ $0 }).asObservable()
         )
         
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else{ return }
@@ -374,10 +400,9 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             })
             .disposed(by: disposeBag)
         
-        // MARK: by seungwan
         // TODO: 다 돌았을때도 없을때 빈배열 넘기기 + 이미 스캔된거 다시 돌아옴 (왜??)
-        output.searchedIndex.subscribe(onNext: { searched in
-       
+        output.searchedIndex.subscribe(onNext: { [weak self] searched in
+            guard let self else {return}
             
             
             DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
@@ -401,6 +426,29 @@ class ChatVC: MessagesViewController, MessagesDataSource {
                 }
             }
           
+        }).disposed(by: disposeBag)
+        
+        output.setChatingView.subscribe(onNext: { [weak self] in
+            guard let self else {return}
+            
+            if $0 {
+                // Search 필드 ON
+                navigationItem.rightBarButtonItem = exitBarButton
+                navigationItem.leftBarButtonItem = leftSearchIcon
+            } else {
+                // Search 필드 OFF
+                navigationItem.rightBarButtonItem = searchBarButton
+                navigationItem.leftBarButtonItem = backBarButton
+                
+                
+            }
+            
+            chatLabel.isHidden = $0
+            messageSearchTextField.isHidden = !$0
+
+       
+            
+            
         }).disposed(by: disposeBag)
     }
     
