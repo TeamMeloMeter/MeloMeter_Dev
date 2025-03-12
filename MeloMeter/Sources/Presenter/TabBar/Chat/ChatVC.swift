@@ -38,6 +38,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     let reloadEvent = PublishSubject<Int>()
     var sendTextMessage = PublishRelay<ChatModel>()
     var sendImageMessage = PublishRelay<ChatModel>()
+    var searchBtnTappedEvent = PublishSubject<Void>()
     lazy var messageList: [ChatModel] = []
 
     // 백그라운드 이미지
@@ -79,7 +80,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         self.viewDidLoadEvent.onNext(())
         setNavigationBar()
         configureMessageCollectionView()
-        
         self.view.addSubview(backgroundImageView)
         self.view.sendSubviewToBack(backgroundImageView)
         setBgAutoLayout()
@@ -123,8 +123,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         super.viewDidDisappear(animated)
     }
     
-    // MARK: - 처음 로딩시 채팅 리스트 가져오는곳
-    func loadFirstMessages(_ chatMassageList: [ChatModel]) {
+    // MARK: - 처음 로딩시 채팅 리스트 가져오는곳 -> 필요 없을 듯 (seungwan)
+//    func loadFirstMessages(_ chatMassageList: [ChatModel]) {
 //        DispatchQueue.global(qos: .userInitiated).async {
 //            DispatchQueue.main.async {
 //                self.messageList = chatMassageList // DB에서 받아온 메세지 배열 삽입
@@ -132,7 +132,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
 //                self.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: false)
 //            }
 //        }
-    }
+//    }
     // 새로고침 이벤트
     @objc func reloadMessageEvent() {
         self.reloadEvent.onNext(self.messageList.count)
@@ -176,6 +176,13 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         $0.textAlignment = .center
     }
     
+    // TODO: - 맨 밑으로 내려오는 이미지 custom
+    let moveLastBtn = UIImageView().then {
+        $0.image = UIImage(named: "message_search_lastDown")
+        $0.isHidden = true
+        $0.backgroundColor = .red
+    }
+    
     // MARK: NavigationBar
     private func setNavigationBar() {
         
@@ -194,6 +201,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             messageSearchTextField.snp.makeConstraints {
                 $0.top.bottom.trailing.leading.equalToSuperview()
             }
+            
+      
             
             
             
@@ -218,6 +227,9 @@ class ChatVC: MessagesViewController, MessagesDataSource {
        
         navigationItem.rightBarButtonItem = searchBarButton
         navigationItem.rightBarButtonItem?.tintColor = .black
+        
+        leftSearchIcon.tintColor = .black
+        exitBarButton.tintColor = .black
     }
     
     private lazy var backBarButton: UIBarButtonItem = {
@@ -229,19 +241,14 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     }()
     
     
-    
     private lazy var searchBarButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"),
                                                       style: .plain,
                                                       target: self,
                                                        action: nil)
     
-    private lazy var exitBarButton =  UIBarButtonItem(customView: UILabel().then {
-        $0.text = "취소"
-        $0.font = FontManager.shared.regular(ofSize: 16)
-    })
+    private lazy var exitBarButton =  UIBarButtonItem(title: "취소", style: .plain, target: self, action: nil)
     
-    private lazy var leftSearchIcon = UIBarButtonItem(customView: UIImageView(image: UIImage(systemName: "magnifyingglass")))
-    
+    private lazy var leftSearchIcon = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: nil)
     
     
     // MARK: Configure
@@ -255,8 +262,20 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         self.messageInputBar.inputTextView.placeholder = " 메세지를 입력해주세요."
         
     }
+    private let bottomPickerBar = UIView().then {
+        $0.backgroundColor = .white
+        $0.isHidden = true
+    }
+    private let pickerLeftBtn = UIImageView().then {
+        $0.image = UIImage(named: "message_search_up")
+    }
+    private let pickerRightBtn = UIImageView().then {
+        $0.image = UIImage(named: "message_search_down")
+    }
     
     func configureMessageInputBar() {
+        
+       
         
         messageInputBar = CameraInputBarAccessoryView()
         messageInputBar.delegate = self
@@ -280,6 +299,42 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         messageInputBar.inputTextView.placeholder = " 메세지를 입력해주세요."
         configureInputBarItems()
         inputBarType = .custom(messageInputBar)
+        
+       
+        configureBottomPickerBar()
+    }
+    
+    // MARK: - 바텀 검색 메시지 탐색 버튼 바
+    func configureBottomPickerBar() {
+        
+        messageInputBar.addSubview(moveLastBtn)
+        messageInputBar.addSubview(bottomPickerBar)
+        
+        bottomPickerBar.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        bottomPickerBar.addSubview(pickerLeftBtn)
+        bottomPickerBar.addSubview(pickerRightBtn)
+        
+        
+        pickerRightBtn.snp.makeConstraints {
+            $0.trailing.top.equalToSuperview().inset(14)
+            $0.width.height.equalTo(28)
+        }
+        pickerLeftBtn.snp.makeConstraints {
+            $0.trailing.equalTo(pickerRightBtn.snp.leading).offset(-10)
+            $0.top.equalTo(pickerRightBtn)
+            $0.width.height.equalTo(28)
+
+        }
+        
+        moveLastBtn.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(14)
+            $0.bottom.equalTo(bottomPickerBar.snp.top).offset(-10)
+            $0.width.height.equalTo(40)
+
+        }
     }
     
     // MARK: - EVENT
@@ -346,6 +401,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         self.messagesCollectionView.rx.tapGesture().when(.ended)
             .subscribe(onNext: { _ in
                 self.inputContainerView.endEditing(true)
+                self.messageSearchTextField.endEditing(true)
             })
             .disposed(by: disposeBag)
         
@@ -364,6 +420,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             reloadMessage: self.reloadEvent
                 .asObservable(),
             searchTextMessage: self.messageSearchTextField.rx.text.orEmpty.asObservable(),
+            keyboardSearchBtnTapped: messageSearchTextField.rx.controlEvent(.editingDidEndOnExit).asObservable(),
             exitBarButton: self.exitBarButton.rx.tap.map({ $0 }).asObservable()
         )
         
@@ -382,7 +439,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         output.getMessage
             .bind(onNext: { chatMessageList in
                 self.messageList = chatMessageList
-                self.loadFirstMessages(chatMessageList)
+                // self.loadFirstMessages(chatMessageList)
             }).disposed(by: disposeBag)
         
         output.getMoreMessage
@@ -395,7 +452,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             .bind(onNext: {chatMessageList in
                 chatMessageList.forEach{ chatMessage in
                     self.insertMessage(chatMessage)
-                    
                 }
             })
             .disposed(by: disposeBag)
@@ -431,10 +487,14 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         output.setChatingView.subscribe(onNext: { [weak self] in
             guard let self else {return}
             
+            
+            print("setChating View \($0)")
             if $0 {
                 // Search 필드 ON
                 navigationItem.rightBarButtonItem = exitBarButton
                 navigationItem.leftBarButtonItem = leftSearchIcon
+                messageSearchTextField.text = ""
+                
             } else {
                 // Search 필드 OFF
                 navigationItem.rightBarButtonItem = searchBarButton
@@ -444,8 +504,10 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             }
             
             chatLabel.isHidden = $0
+            
             messageSearchTextField.isHidden = !$0
-
+            bottomPickerBar.isHidden = !$0
+            moveLastBtn.isHidden = !$0
        
             
             

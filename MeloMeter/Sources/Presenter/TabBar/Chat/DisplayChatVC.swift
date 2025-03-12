@@ -98,6 +98,7 @@ final class DisplayChatVC: ChatVC {
         self.lineView.isHidden = false
         
         self.view.layoutIfNeeded()
+        
     }
     func noticeUp() {
         self.qLabel.isHidden = true

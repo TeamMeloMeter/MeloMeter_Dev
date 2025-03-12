@@ -30,6 +30,7 @@ class ChatVM {
         
         // by seungwan
         let searchTextMessage: Observable<String>
+        let keyboardSearchBtnTapped: Observable<Void>
         let exitBarButton: Observable<Void>
     }
     
@@ -174,40 +175,39 @@ class ChatVM {
         
         
         // MARK: 검색 시 by Seungwan
-//        input.searchBtnTapEvent.withLatestFrom(input.searchTextMessage).subscribe(onNext: { [weak self] searchText in
-//            guard let self else { return }
-//            
-//            var count = 0
-//            
-//            
-//            
-//            chatLoop: for chat in self.nowChatList.reversed() {
-//
-//                switch chat.kind {
-//                case .text(let text):
-//                    if text.contains(searchText) && !self.alreadySearchedId.contains(chat.messageId) {
-//                        
-//                        output.searchedIndex.onNext(chat)
-//                        self.alreadySearchedId.append(chat.messageId)
-//                        break chatLoop
-//                    }
-//                    count += 1
-//                    
-//                    if count == nowChatList.count {
-//                        self.chatUseCase.getMoreChatForSearch(num: self.nowChatList.count, searchText: searchText)
-//                        
-//                    }
-//                    
-//                default:
-//                    break
-//                }
-//            }
-//        }).disposed(by: disposeBag)
+        input.keyboardSearchBtnTapped.withLatestFrom(input.searchTextMessage).subscribe(onNext: { [weak self] searchText in
+            guard let self else { return }
+            
+            var count = 0
+            
+            
+            
+            chatLoop: for chat in self.nowChatList.reversed() {
+
+                switch chat.kind {
+                case .text(let text):
+                    if text.contains(searchText) && !self.alreadySearchedId.contains(chat.messageId) {
+                        
+                        output.searchedIndex.onNext(chat)
+                        self.alreadySearchedId.append(chat.messageId)
+                        break chatLoop
+                    }
+                    count += 1
+                    
+                    if count == nowChatList.count {
+                        self.chatUseCase.getMoreChatForSearch(num: self.nowChatList.count, searchText: searchText)
+                        
+                    }
+                    
+                default:
+                    break
+                }
+            }
+        }).disposed(by: disposeBag)
         
         
         input.exitBarButton.subscribe(onNext:{ [weak self] in
             guard let self else {return}
-            print("tapped")
             output.setChatingView.onNext(false)
             
             
