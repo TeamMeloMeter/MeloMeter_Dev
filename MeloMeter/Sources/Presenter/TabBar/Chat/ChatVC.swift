@@ -115,6 +115,16 @@ class ChatVC: MessagesViewController, MessagesDataSource {
                 self.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: false)
             }
         }
+        
+        
+        self.view.addSubview(moveLastBtn)
+
+        moveLastBtn.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(0)
+            $0.bottom.equalTo(messageInputBar.snp.top)
+            $0.width.height.equalTo(50)
+
+        }
    
    
     }
@@ -180,7 +190,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     let moveLastBtn = UIImageView().then {
         $0.image = UIImage(named: "message_search_lastDown")
         $0.isHidden = true
-        $0.backgroundColor = .red
+        $0.isUserInteractionEnabled = true
     }
     
     // MARK: NavigationBar
@@ -265,6 +275,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     private let bottomPickerBar = UIView().then {
         $0.backgroundColor = .white
         $0.isHidden = true
+        $0.clipsToBounds = false
     }
     private let pickerLeftBtn = UIImageView().then {
         $0.image = UIImage(named: "message_search_up")
@@ -275,7 +286,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     func configureMessageInputBar() {
         
-       
+   
         
         messageInputBar = CameraInputBarAccessoryView()
         messageInputBar.delegate = self
@@ -306,8 +317,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     // MARK: - 바텀 검색 메시지 탐색 버튼 바
     func configureBottomPickerBar() {
-        
-        messageInputBar.addSubview(moveLastBtn)
+  
         messageInputBar.addSubview(bottomPickerBar)
         
         bottomPickerBar.snp.makeConstraints {
@@ -317,7 +327,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         bottomPickerBar.addSubview(pickerLeftBtn)
         bottomPickerBar.addSubview(pickerRightBtn)
         
-        
+                
         pickerRightBtn.snp.makeConstraints {
             $0.trailing.top.equalToSuperview().inset(14)
             $0.width.height.equalTo(28)
@@ -328,13 +338,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             $0.width.height.equalTo(28)
 
         }
+      
         
-        moveLastBtn.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(14)
-            $0.bottom.equalTo(bottomPickerBar.snp.top).offset(-10)
-            $0.width.height.equalTo(40)
-
-        }
     }
     
     // MARK: - EVENT
@@ -342,6 +347,14 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         AlertManager(viewController: self)
             .setTitle("전송실패")
             .setMessage("서버와 연결에 실패했습니다.\n잠시후에 다시 시도해주세요. ")
+            .addActionConfirm("확인")
+            .showCustomAlert()
+    }
+    
+    func searchMessageIsNotExistAlert(){
+        //TODO: CustomAlert 추가 해야함.
+        AlertManager(viewController: self).setTitle("")
+            .setMessage("검색 결과가 없습니다.")
             .addActionConfirm("확인")
             .showCustomAlert()
     }
@@ -396,7 +409,10 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     // MARK: - Binding
     func setBindings() {
         
-        
+        self.moveLastBtn.rx.tapGesture().when(.recognized).subscribe({ _ in
+            self.messagesCollectionView.scrollToLastItem()
+
+        }).disposed(by: disposeBag)
         
         self.messagesCollectionView.rx.tapGesture().when(.ended)
             .subscribe(onNext: { _ in
@@ -474,6 +490,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
 //                     
 //                        pickedCell.messageLabel.highlightText(self.testTextField.text ?? "")
 //                    }
+                    self.messagesCollectionView.reloadDataAndKeepOffset()
                     self.messagesCollectionView.scrollToItem(at: IndexPath(row: 0, section: firstIndex), at: .centeredVertically, animated: true)
                     
 
@@ -486,21 +503,20 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         
         output.setChatingView.subscribe(onNext: { [weak self] in
             guard let self else {return}
+            messageSearchTextField.text = ""
+
             
-            
-            print("setChating View \($0)")
             if $0 {
                 // Search 필드 ON
                 navigationItem.rightBarButtonItem = exitBarButton
                 navigationItem.leftBarButtonItem = leftSearchIcon
-                messageSearchTextField.text = ""
                 
             } else {
                 // Search 필드 OFF
                 navigationItem.rightBarButtonItem = searchBarButton
                 navigationItem.leftBarButtonItem = backBarButton
                 
-                
+                self.messagesCollectionView.reloadDataAndKeepOffset()
             }
             
             chatLabel.isHidden = $0
@@ -512,6 +528,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             
             
         }).disposed(by: disposeBag)
+        
+        output.notExistAlert.bind(onNext: { self.searchMessageIsNotExistAlert()  }).disposed(by: disposeBag)
     }
     
     

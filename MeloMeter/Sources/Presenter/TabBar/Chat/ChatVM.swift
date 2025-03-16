@@ -43,6 +43,7 @@ class ChatVM {
         // by seungwan
         var searchedIndex = PublishSubject<ChatModel>()
         var setChatingView = PublishSubject<Bool>()
+        var notExistAlert = PublishSubject<Void>()
     }
     
     
@@ -140,17 +141,17 @@ class ChatVM {
             })
             .disposed(by: disposeBag)
         
-        
+   
         
         //TODO: clean code (VC 코드 VM 에서 처리)
         Observable.zip(self.chatUseCase.recieveChatForSearch.asObservable(), self.chatUseCase.recieveMessageId.asObservable())
             .subscribe(onNext: { chatMessageList, messageId in
              
                 
-                
-                    output.getMoreMessage.onNext(chatMessageList ?? [])
+                if let chatMessageList, !chatMessageList.isEmpty {
+                    output.getMoreMessage.onNext(chatMessageList)
 
-                    let searchedModel = chatMessageList?.filter {
+                    let searchedModel = chatMessageList.filter {
                         $0.messageId == messageId
                     }.first
                     
@@ -161,7 +162,12 @@ class ChatVM {
                         
                     }
                     
-                    self.nowChatList += chatMessageList ?? []
+                    self.nowChatList += chatMessageList
+                } else {
+                    output.notExistAlert.onNext(())
+                }
+                
+                  
 
                 
             }).disposed(by: disposeBag)
@@ -177,26 +183,23 @@ class ChatVM {
         // MARK: 검색 시 by Seungwan
         input.keyboardSearchBtnTapped.withLatestFrom(input.searchTextMessage).subscribe(onNext: { [weak self] searchText in
             guard let self else { return }
-            
             var count = 0
             
             
-            
-            chatLoop: for chat in self.nowChatList.reversed() {
-
+            for i in stride(from: nowChatList.count - 1, to: -1, by: -1) {
+                let chat = nowChatList[i]
                 switch chat.kind {
                 case .text(let text):
                     if text.contains(searchText) && !self.alreadySearchedId.contains(chat.messageId) {
                         
                         output.searchedIndex.onNext(chat)
                         self.alreadySearchedId.append(chat.messageId)
-                        break chatLoop
+                        break
                     }
                     count += 1
                     
                     if count == nowChatList.count {
                         self.chatUseCase.getMoreChatForSearch(num: self.nowChatList.count, searchText: searchText)
-                        
                     }
                     
                 default:
