@@ -14,6 +14,7 @@ struct AddAction {
 }
 // MARK: - Alert 싱글톤 클래스
 class AlertManager {
+        
     private let baseViewController: UIViewController
     private let alertViewController = CustomAlertVC()
     private var alertTitle: String?
@@ -196,5 +197,20 @@ extension AlertManager {
         }
         
         return topViewController
+    }
+    
+    static func showNotExist(
+        style: UIAlertController.Style,
+        title: String?,
+        message: String?
+    )
+    {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: style)
+        let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+        action.setValue(UIColor.black, forKey: "titleTextColor")
+        alert.addAction(action)
+        
+        self.getTopViewController()?.present(alert, animated: true, completion: nil)
     }
 }

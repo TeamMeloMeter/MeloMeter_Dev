@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import MessageKit
+import RxCocoa
 
 // MARK: - LoginViewModel
 class ChatVM {
@@ -19,6 +20,8 @@ class ChatVM {
     private var questionInfo: (String, String) = ("", "")
     private var nowChatList : [ChatModel] = []
     private var alreadySearchedId: [String] = []
+    private var searchingText: String?
+    private var searchingIndex: Int?
     
     struct Input {
         let viewDidLoadEvent: Observable<Void>
@@ -32,6 +35,8 @@ class ChatVM {
         let searchTextMessage: Observable<String>
         let keyboardSearchBtnTapped: Observable<Void>
         let exitBarButton: Observable<Void>
+        let pickerLeftBtnTap: Observable<Void>
+        let pickerRightBtnTap: Observable<Void>
     }
     
     struct Output {
@@ -141,16 +146,16 @@ class ChatVM {
             })
             .disposed(by: disposeBag)
         
-   
+        
         
         //TODO: clean code (VC 코드 VM 에서 처리)
         Observable.zip(self.chatUseCase.recieveChatForSearch.asObservable(), self.chatUseCase.recieveMessageId.asObservable())
             .subscribe(onNext: { chatMessageList, messageId in
-             
+                
                 
                 if let chatMessageList, !chatMessageList.isEmpty {
                     output.getMoreMessage.onNext(chatMessageList)
-
+                    
                     let searchedModel = chatMessageList.filter {
                         $0.messageId == messageId
                     }.first
@@ -167,8 +172,8 @@ class ChatVM {
                     output.notExistAlert.onNext(())
                 }
                 
-                  
-
+                
+                
                 
             }).disposed(by: disposeBag)
         
@@ -179,12 +184,22 @@ class ChatVM {
             
         }).disposed(by: disposeBag)
         
-        
+//        input.pickerLeftBtnTap.subscribe({ [weak self] _ in
+//            guard let self else {return}
+//            
+//            
+//        }).disposed(by: disposeBag)
         // MARK: 검색 시 by Seungwan
-        input.keyboardSearchBtnTapped.withLatestFrom(input.searchTextMessage).subscribe(onNext: { [weak self] searchText in
+        Observable.merge(input.pickerLeftBtnTap.asObservable(), input.keyboardSearchBtnTapped.asObservable()).withLatestFrom(input.searchTextMessage).subscribe(onNext: { [weak self] searchText in
             guard let self else { return }
-            var count = 0
             
+            
+            if searchText != self.searchingText {
+                self.alreadySearchedId = []
+                self.searchingText = searchText
+            }
+            
+            var count = 0
             
             for i in stride(from: nowChatList.count - 1, to: -1, by: -1) {
                 let chat = nowChatList[i]

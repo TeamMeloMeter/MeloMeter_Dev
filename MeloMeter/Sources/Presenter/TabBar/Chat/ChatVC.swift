@@ -284,6 +284,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         $0.image = UIImage(named: "message_search_down")
     }
     
+
+    
     func configureMessageInputBar() {
         
    
@@ -353,10 +355,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     func searchMessageIsNotExistAlert(){
         //TODO: CustomAlert 추가 해야함.
-        AlertManager(viewController: self).setTitle("")
-            .setMessage("검색 결과가 없습니다.")
-            .addActionConfirm("확인")
-            .showCustomAlert()
+        AlertManager.showNotExist(style: .alert, title: nil, message: "검색결과가 없습니다.")
     }
     
     //인풋바 아이탬 설정
@@ -437,8 +436,12 @@ class ChatVC: MessagesViewController, MessagesDataSource {
                 .asObservable(),
             searchTextMessage: self.messageSearchTextField.rx.text.orEmpty.asObservable(),
             keyboardSearchBtnTapped: messageSearchTextField.rx.controlEvent(.editingDidEndOnExit).asObservable(),
-            exitBarButton: self.exitBarButton.rx.tap.map({ $0 }).asObservable()
+            exitBarButton: self.exitBarButton.rx.tap.map({ $0 }).asObservable(),
+            pickerLeftBtnTap: pickerLeftBtn.rx.tapGesture().when(.recognized).map{ _ in }.asObservable() ,
+            pickerRightBtnTap: pickerRightBtn.rx.tapGesture().when(.recognized).map { _ in }.asObservable()
         )
+        
+        
         
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else{ return }
           
@@ -477,7 +480,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             guard let self else {return}
             
             
-            DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.5) {
                 guard let firstIndex = self.messageList.firstIndex(where: {
                     
                       $0.messageId == searched.messageId
