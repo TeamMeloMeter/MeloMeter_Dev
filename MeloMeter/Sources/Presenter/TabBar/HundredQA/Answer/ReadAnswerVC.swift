@@ -9,8 +9,9 @@ import UIKit
 import RxSwift
 import RxCocoa
 import CoreImage
-
 class ReadAnswerVC: UIViewController {
+
+
     
     private let viewModel: AnswerVM?
     private let disposeBag = DisposeBag()
@@ -343,106 +344,112 @@ class ReadAnswerVC: UIViewController {
     
     // MARK: 오토레이아웃
     private func setAutoLayout() {
-        questionView.translatesAutoresizingMaskIntoConstraints = false
-        questionImageView.translatesAutoresizingMaskIntoConstraints = false
-        questionLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        otherUserView.translatesAutoresizingMaskIntoConstraints = false
-        otherAnswerLabel.translatesAutoresizingMaskIntoConstraints = false
-        lineView1.translatesAutoresizingMaskIntoConstraints = false
-        otherScrollView.translatesAutoresizingMaskIntoConstraints = false
-        otherUserLabel.translatesAutoresizingMaskIntoConstraints = false
+        questionView.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(16)
+            $0.trailing.equalToSuperview().inset(16)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(28)
+            $0.height.equalTo(48)
+        }
 
-        myUserView.translatesAutoresizingMaskIntoConstraints = false
-        lineView2.translatesAutoresizingMaskIntoConstraints = false
-        myUserLabel.translatesAutoresizingMaskIntoConstraints = false
-        myScrollView.translatesAutoresizingMaskIntoConstraints = false
-        lockImageView.translatesAutoresizingMaskIntoConstraints = false
-        myAnswerLabel.translatesAutoresizingMaskIntoConstraints = false
-        unlockImageView.translatesAutoresizingMaskIntoConstraints = false
-        myAnswerCompleteLabel.translatesAutoresizingMaskIntoConstraints = false
+        questionImageView.snp.makeConstraints {
+            $0.leading.equalTo(questionView).offset(14)
+            $0.centerY.equalTo(questionView)
+            $0.width.equalTo(20)
+            $0.height.equalTo(18)
+        }
 
-        answerBtn.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            questionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            questionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
-            questionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 28),
-            questionView.heightAnchor.constraint(equalToConstant: 48),
+        questionLabel.snp.makeConstraints {
+            $0.leading.equalTo(questionImageView.snp.trailing).offset(12)
+            $0.centerY.equalTo(questionView)
+        }
 
-            questionImageView.leadingAnchor.constraint(equalTo: questionView.leadingAnchor, constant: 14),
-            questionImageView.centerYAnchor.constraint(equalTo: questionView.centerYAnchor),
-            questionImageView.widthAnchor.constraint(equalToConstant: 20),
-            questionImageView.heightAnchor.constraint(equalToConstant: 18),
-            
-            questionLabel.leadingAnchor.constraint(equalTo: questionImageView.trailingAnchor, constant: 12),
-            questionLabel.centerYAnchor.constraint(equalTo: questionView.centerYAnchor),
+        otherUserView.snp.makeConstraints {
+            $0.top.equalTo(questionView.snp.bottom).offset(27)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(158)
+        }
 
-            otherUserView.topAnchor.constraint(equalTo: questionView.bottomAnchor, constant: 27),
-            otherUserView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            otherUserView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
-            otherUserView.heightAnchor.constraint(equalToConstant: 158),
+        otherUserLabel.snp.makeConstraints {
+            $0.top.equalTo(otherUserView).offset(18)
+            $0.leading.equalTo(otherUserView).offset(17)
+        }
 
-            otherUserLabel.topAnchor.constraint(equalTo: otherUserView.topAnchor, constant: 18),
-            otherUserLabel.leadingAnchor.constraint(equalTo: otherUserView.leadingAnchor, constant: 17),
+        lineView1.snp.makeConstraints {
+            $0.top.equalTo(otherUserLabel.snp.bottom).offset(8)
+            $0.leading.trailing.equalTo(otherUserView).inset(16)
+            $0.height.equalTo(1)
+        }
 
-            lineView1.topAnchor.constraint(equalTo: otherUserLabel.bottomAnchor, constant: 8),
-            lineView1.leadingAnchor.constraint(equalTo: otherUserView.leadingAnchor, constant: 16),
-            lineView1.trailingAnchor.constraint(equalTo: otherUserView.trailingAnchor, constant: -16),
-            lineView1.heightAnchor.constraint(equalToConstant: 1),
+        otherScrollView.snp.makeConstraints {
+            $0.top.equalTo(lineView1.snp.bottom)
+            $0.width.equalTo(otherUserView)
+            $0.centerX.equalTo(otherUserView)
+            $0.bottom.equalTo(otherUserView)
+        }
 
-            otherScrollView.topAnchor.constraint(equalTo: lineView1.bottomAnchor),
-            otherScrollView.widthAnchor.constraint(equalTo: otherUserView.widthAnchor),
-            otherScrollView.centerXAnchor.constraint(equalTo: otherUserView.centerXAnchor),
-            otherScrollView.bottomAnchor.constraint(equalTo: otherUserView.bottomAnchor),
-       
-            otherAnswerLabel.leadingAnchor.constraint(equalTo: otherScrollView.leadingAnchor, constant: 17),
-            otherAnswerLabel.topAnchor.constraint(equalTo: otherScrollView.topAnchor, constant: 17),
-            otherAnswerLabel.trailingAnchor.constraint(equalTo: otherScrollView.trailingAnchor, constant: -17),
-            otherAnswerLabel.bottomAnchor.constraint(equalTo: otherScrollView.bottomAnchor, constant: -5),
+        otherAnswerLabel.snp.makeConstraints {
+            $0.top.equalTo(otherScrollView).offset(17)
+            $0.leading.equalTo(otherScrollView).offset(17)
+            $0.trailing.equalTo(otherScrollView).inset(17)
+            $0.bottom.equalTo(otherScrollView).inset(5)
+        }
 
-            myUserView.topAnchor.constraint(equalTo: otherUserView.bottomAnchor, constant: 26),
-            myUserView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            myUserView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+        myUserView.snp.makeConstraints {
+            $0.top.equalTo(otherUserView.snp.bottom).offset(26)
+            $0.leading.trailing.equalToSuperview().inset(16)
+        }
 
-            myUserLabel.topAnchor.constraint(equalTo: myUserView.topAnchor, constant: 18),
-            myUserLabel.leadingAnchor.constraint(equalTo: myUserView.leadingAnchor, constant: 17),
+        myUserLabel.snp.makeConstraints {
+            $0.top.equalTo(myUserView).offset(18)
+            $0.leading.equalTo(myUserView).offset(17)
+        }
 
-            lineView2.topAnchor.constraint(equalTo: myUserLabel.bottomAnchor, constant: 8),
-            lineView2.leadingAnchor.constraint(equalTo: otherUserView.leadingAnchor, constant: 16),
-            lineView2.trailingAnchor.constraint(equalTo: otherUserView.trailingAnchor, constant: -16),
-            lineView2.heightAnchor.constraint(equalToConstant: 1),
+        lineView2.snp.makeConstraints {
+            $0.top.equalTo(myUserLabel.snp.bottom).offset(8)
+            $0.leading.trailing.equalTo(otherUserView).inset(16)
+            $0.height.equalTo(1)
+        }
 
-            myScrollView.topAnchor.constraint(equalTo: lineView2.bottomAnchor),
-            myScrollView.widthAnchor.constraint(equalTo: lineView2.widthAnchor),
-            myScrollView.centerXAnchor.constraint(equalTo: myUserView.centerXAnchor),
-            myScrollView.bottomAnchor.constraint(equalTo: myUserView.bottomAnchor, constant: -5),
-       
-            myAnswerLabel.leadingAnchor.constraint(equalTo: myScrollView.leadingAnchor),
-            myAnswerLabel.topAnchor.constraint(equalTo: myScrollView.topAnchor, constant: 17),
-            myAnswerLabel.trailingAnchor.constraint(equalTo: myScrollView.trailingAnchor),
+        myScrollView.snp.makeConstraints {
+            $0.top.equalTo(lineView2.snp.bottom)
+            $0.width.equalTo(lineView2)
+            $0.centerX.equalTo(myUserView)
+            $0.bottom.equalTo(myUserView).inset(5)
+        }
 
-            lockImageView.leadingAnchor.constraint(equalTo: myUserView.leadingAnchor),
-            lockImageView.trailingAnchor.constraint(equalTo: myUserView.trailingAnchor),
-            lockImageView.topAnchor.constraint(equalTo: myAnswerLabel.bottomAnchor, constant: 23),
-            lockImageView.heightAnchor.constraint(equalToConstant: 131),
+        myAnswerLabel.snp.makeConstraints {
+            $0.top.equalTo(myScrollView).offset(17)
+            $0.leading.equalTo(myScrollView)
+            $0.trailing.equalTo(myScrollView)
+        }
 
-            answerBtn.centerXAnchor.constraint(equalTo: myUserView.centerXAnchor),
-            answerBtn.widthAnchor.constraint(equalToConstant: 320),
-            answerBtn.heightAnchor.constraint(equalToConstant: 48),
-            answerBtn.topAnchor.constraint(equalTo: lockImageView.bottomAnchor, constant: 25),
+        lockImageView.snp.makeConstraints {
+            $0.leading.trailing.equalTo(myUserView)
+            $0.top.equalTo(myAnswerLabel.snp.bottom).offset(23)
+            $0.height.equalTo(131)
+        }
 
-            myAnswerCompleteLabel.topAnchor.constraint(equalTo: lockImageView.bottomAnchor, constant: 20),
-            myAnswerCompleteLabel.bottomAnchor.constraint(equalTo: myScrollView.bottomAnchor, constant: -30),
-            myAnswerCompleteLabel.centerXAnchor.constraint(equalTo: lockImageView.centerXAnchor),
-            myAnswerCompleteLabel.widthAnchor.constraint(equalToConstant: 308),
-            myAnswerCompleteLabel.heightAnchor.constraint(equalToConstant: 53),
-            
-            
-            unlockImageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            unlockImageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
-            unlockImageView.topAnchor.constraint(equalTo: myUserView.bottomAnchor, constant: 24),
-            unlockImageView.heightAnchor.constraint(equalToConstant: 131),
-        ])
+        answerBtn.snp.makeConstraints {
+            $0.centerX.equalTo(myUserView)
+            $0.width.equalTo(320)
+            $0.height.equalTo(48)
+            $0.top.equalTo(lockImageView.snp.bottom).offset(25)
+        }
+
+        myAnswerCompleteLabel.snp.makeConstraints {
+            $0.top.equalTo(lockImageView.snp.bottom).offset(20)
+            $0.bottom.equalTo(myScrollView).inset(30)
+            $0.centerX.equalTo(lockImageView)
+            $0.width.equalTo(308)
+            $0.height.equalTo(53)
+        }
+
+        unlockImageView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.top.equalTo(myUserView.snp.bottom).offset(24)
+            $0.height.equalTo(131)
+        }
+
     }
     
 }

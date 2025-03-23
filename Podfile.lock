@@ -1,6 +1,9 @@
 PODS:
   - Alamofire (5.9.1)
   - AnyFormatKit (2.5.2)
+  - Google-Mobile-Ads-SDK (12.2.0):
+    - GoogleUserMessagingPlatform (>= 1.1)
+  - GoogleUserMessagingPlatform (2.7.0)
   - KakaoSDK (2.22.7):
     - KakaoSDKAuth (= 2.22.7)
     - KakaoSDKCert (= 2.22.7)
@@ -60,6 +63,7 @@ PODS:
 
 DEPENDENCIES:
   - AnyFormatKit
+  - Google-Mobile-Ads-SDK
   - KakaoSDK
   - Kingfisher (~> 5.0)
   - NMapsMap
@@ -73,6 +77,8 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - AnyFormatKit
+    - Google-Mobile-Ads-SDK
+    - GoogleUserMessagingPlatform
     - KakaoSDK
     - KakaoSDKAuth
     - KakaoSDKCert
@@ -98,6 +104,8 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   AnyFormatKit: b0dbb2a5f2fe7a0fc97f401f8a219a47ee63a335
+  Google-Mobile-Ads-SDK: 1dfb0c3cb46c7e2b00b0f4de74a1e06d9ea25d67
+  GoogleUserMessagingPlatform: a8b56893477f67212fbc8411c139e61d463349f5
   KakaoSDK: dc4f9062a42e6f7e8e2aacb620a0480996dcb62b
   KakaoSDKAuth: 45204252ff7c379c0f86c5573f97ec36885afca0
   KakaoSDKCert: 0e0d2a278731676c566a4bd2da4c0febf1c2d54d
@@ -120,6 +128,6 @@ SPEC CHECKSUMS:
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: 505fe4d3ed9326cb52fed1e32d7d30d516562e31
+PODFILE CHECKSUM: 3bea3115b238275f8c22078c1541b724c2309bf2
 
 COCOAPODS: 1.16.2

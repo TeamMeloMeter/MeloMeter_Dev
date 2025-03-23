@@ -38,6 +38,8 @@ class AnswerVM {
     struct WriteOutput {
         var questionText = PublishSubject<String>()
         var myName = PublishSubject<String>()
+        var loadAdmob = PublishSubject<Void>()
+
     }
     
     init(coordinator: HundredCoordinator,
@@ -137,7 +139,9 @@ class AnswerVM {
                 )
                 self.hundredQAUseCase.addAnswer(questionNumber: self.questionNumber, answerInfo: answerInfo)
                     .subscribe(onSuccess: {
-                        self.coordinator?.popViewController()
+//                        self.coordinator?.popViewController()
+                        output.loadAdmob.onNext(())
+
                     })
                     .disposed(by: disposeBag)
             })

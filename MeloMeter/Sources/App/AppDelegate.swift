@@ -13,7 +13,7 @@ import FirebaseMessaging
 import UserNotifications
 import FirebaseAppCheck
 import KakaoSDKCommon
-
+import GoogleMobileAds
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
     
@@ -24,6 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        // 구글 애드모
+        MobileAds.shared.start(completionHandler: nil)
         
         // Override point for customization after application launch.
         // 네이버 지도 초기화

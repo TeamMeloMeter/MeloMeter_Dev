@@ -32,6 +32,7 @@ target 'MeloMeter' do
   pod 'Kingfisher', '~> 5.0'
   pod 'Then'
   pod 'SnapKit'
+  pod 'Google-Mobile-Ads-SDK'
   
   target 'MeloMeterTests' do
     inherit! :search_paths

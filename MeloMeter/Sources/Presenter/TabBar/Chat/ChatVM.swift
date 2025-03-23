@@ -20,8 +20,9 @@ class ChatVM {
     private var questionInfo: (String, String) = ("", "")
     private var nowChatList : [ChatModel] = []
     private var alreadySearchedId: [String] = []
+    private var alreadySearchedModel: [ChatModel] = []
     private var searchingText: String?
-    private var searchingIndex: Int?
+    private var searchingIndex: Int = 0
     
     struct Input {
         let viewDidLoadEvent: Observable<Void>
@@ -162,9 +163,11 @@ class ChatVM {
                     
                     if let searchedModel = searchedModel {
                         
+                        
                         output.searchedIndex.onNext(searchedModel)
                         self.alreadySearchedId.append(messageId)
-                        
+                        self.alreadySearchedModel.append(searchedModel)
+                        self.searchingIndex = self.alreadySearchedModel.count - 1
                     }
                     
                     self.nowChatList += chatMessageList
@@ -184,43 +187,56 @@ class ChatVM {
             
         }).disposed(by: disposeBag)
         
-//        input.pickerLeftBtnTap.subscribe({ [weak self] _ in
-//            guard let self else {return}
-//            
-//            
-//        }).disposed(by: disposeBag)
+
+        //MARK: right (아래 화살표) tap 시
+        input.pickerRightBtnTap.subscribe(onNext: { [weak self] _ in
+            guard let self else {return}
+            self.searchingIndex = searchingIndex > 0 ? searchingIndex - 1 : searchingIndex
+            output.searchedIndex.onNext(alreadySearchedModel[searchingIndex])
+
+        }).disposed(by: disposeBag)
+        
         // MARK: 검색 시 by Seungwan
         Observable.merge(input.pickerLeftBtnTap.asObservable(), input.keyboardSearchBtnTapped.asObservable()).withLatestFrom(input.searchTextMessage).subscribe(onNext: { [weak self] searchText in
             guard let self else { return }
             
-            
-            if searchText != self.searchingText {
-                self.alreadySearchedId = []
-                self.searchingText = searchText
-            }
-            
-            var count = 0
-            
-            for i in stride(from: nowChatList.count - 1, to: -1, by: -1) {
-                let chat = nowChatList[i]
-                switch chat.kind {
-                case .text(let text):
-                    if text.contains(searchText) && !self.alreadySearchedId.contains(chat.messageId) {
+            if searchingIndex < alreadySearchedModel.count - 1 {
+                searchingIndex = searchingIndex + 1
+                output.searchedIndex.onNext(alreadySearchedModel[searchingIndex])
+            } else {
+                if searchText != self.searchingText {
+                    self.alreadySearchedId = []
+                    self.searchingText = searchText
+                    searchingIndex = 0
+                }
+                
+                var count = 0
+                
+                for i in stride(from: nowChatList.count - 1, to: -1, by: -1) {
+                    let chat = nowChatList[i]
+                    switch chat.kind {
+                    case .text(let text):
+                        if text.contains(searchText) && !self.alreadySearchedId.contains(chat.messageId) {
+                            
+                            output.searchedIndex.onNext(chat)
+                            self.alreadySearchedModel.append(chat)
+                            self.searchingIndex = alreadySearchedModel.count - 1
+                            self.alreadySearchedId.append(chat.messageId)
+                            break
+                        }
+                        count += 1
                         
-                        output.searchedIndex.onNext(chat)
-                        self.alreadySearchedId.append(chat.messageId)
+                        if count == nowChatList.count {
+                            self.chatUseCase.getMoreChatForSearch(num: self.nowChatList.count, searchText: searchText)
+                        }
+                        
+                    default:
                         break
                     }
-                    count += 1
-                    
-                    if count == nowChatList.count {
-                        self.chatUseCase.getMoreChatForSearch(num: self.nowChatList.count, searchText: searchText)
-                    }
-                    
-                default:
-                    break
                 }
             }
+            
+          
         }).disposed(by: disposeBag)
         
         

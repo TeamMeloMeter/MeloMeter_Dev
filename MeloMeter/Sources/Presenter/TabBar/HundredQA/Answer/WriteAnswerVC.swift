@@ -8,8 +8,13 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import GoogleMobileAds
 
-class WriteAnswerVC: UIViewController {
+class WriteAnswerVC: UIViewController, FullScreenContentDelegate {
+    
+    //admob
+    private var interstitial: InterstitialAd?
+    
     
     private let viewModel: AnswerVM?
     let disposeBag = DisposeBag()
@@ -27,6 +32,9 @@ class WriteAnswerVC: UIViewController {
     // MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        //admob
+        loadInterstitial()
+
         configure()
         setAutoLayout()
         setBindings()
@@ -71,6 +79,16 @@ class WriteAnswerVC: UIViewController {
                 self.myUserLabel.text = "\(text)님의 답변"
             })
             .disposed(by: disposeBag)
+        
+        output.loadAdmob.subscribe(onNext: { [weak self] _ in
+            guard let self else {return}
+            if let ad = self.interstitial {
+                        ad.present(from: self)
+                    } else {
+                        print("광고 아직 준비 안 됨")
+                    }
+                
+        }).disposed(by: disposeBag)
     }
     
     // MARK: Configure
@@ -263,4 +281,27 @@ extension WriteAnswerVC: UITextViewDelegate {
         return newText.count <= 100
     }
     
+}
+
+//MARK: for admob
+extension WriteAnswerVC {
+    
+    func loadInterstitial() {
+        let request = Request()
+        InterstitialAd.load(
+            with: "ca-app-pub-5763713982294456~2816054387", // 테스트 ID
+               request: request
+           ) { [weak self] ad, error in
+               if let error = error {
+                   print("전면 광고 로딩 실패: \(error.localizedDescription)")
+                   return
+               }
+               self?.interstitial = ad
+           }
+       }
+    
+    func adDidDismissFullScreenContent(_ ad: FullScreenPresentingAd) {
+        self.navigationController?.popViewController(animated: true)
+    }
+
 }

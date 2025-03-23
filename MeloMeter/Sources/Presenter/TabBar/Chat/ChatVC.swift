@@ -103,6 +103,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         self.navigationController?.view.backgroundColor = .white
         
         configureMessageInputBar()
+        
      
   
     }
@@ -134,15 +135,15 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     }
     
     // MARK: - 처음 로딩시 채팅 리스트 가져오는곳 -> 필요 없을 듯 (seungwan)
-//    func loadFirstMessages(_ chatMassageList: [ChatModel]) {
-//        DispatchQueue.global(qos: .userInitiated).async {
-//            DispatchQueue.main.async {
-//                self.messageList = chatMassageList // DB에서 받아온 메세지 배열 삽입
-//                self.messagesCollectionView.reloadData()
-//                self.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: false)
-//            }
-//        }
-//    }
+    func loadFirstMessages(_ chatMassageList: [ChatModel]) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            DispatchQueue.main.async {
+                self.messageList = chatMassageList // DB에서 받아온 메세지 배열 삽입
+                self.messagesCollectionView.reloadData()
+                self.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: false)
+            }
+        }
+    }
     // 새로고침 이벤트
     @objc func reloadMessageEvent() {
         self.reloadEvent.onNext(self.messageList.count)

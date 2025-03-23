@@ -10,10 +10,14 @@ import NMapsMap
 import RxCocoa
 import RxSwift
 import CoreLocation
+import GoogleMobileAds
 
 //메인 지도 화면
 class MapVC: UIViewController, UIGestureRecognizerDelegate{
 
+    var bannerView: BannerView!
+
+    
     let infoWindow1 = NMFInfoWindow()
     let infoWindow2 = NMFInfoWindow()
     var endTriggerAlertEvent = PublishSubject<Void>()
@@ -31,6 +35,11 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+     
+
+
+        addBannerViewToView()
+        
         configure()
         setAutoLayout()
         setBindings()
@@ -434,6 +443,27 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         button.layer.masksToBounds = false
         return button
     }()
+    
+    //MARK: adMob
+    private func addBannerViewToView() {
+        let viewWidth = view.frame.inset(by: view.safeAreaInsets).width
+        let adaptiveSize = currentOrientationAnchoredAdaptiveBanner(width: viewWidth)
+        bannerView = BannerView(adSize: adaptiveSize)
+        bannerView.adUnitID = "ca-app-pub-5763713982294456~2816054387"
+        //실제
+//        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        //테스트
+        bannerView.rootViewController = self
+        bannerView.load(Request())
+
+        view.addSubview(bannerView)
+        
+        bannerView.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            $0.centerX.equalTo(view.snp.centerX)
+        }
+
+    }
     
     
     
