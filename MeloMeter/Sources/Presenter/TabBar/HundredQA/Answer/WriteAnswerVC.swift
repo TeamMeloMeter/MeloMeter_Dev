@@ -289,7 +289,8 @@ extension WriteAnswerVC {
     func loadInterstitial() {
         let request = Request()
         InterstitialAd.load(
-            with: "ca-app-pub-5763713982294456~2816054387", // 테스트 ID
+//            with: "ca-app-pub-3940256099942544/4411468910", // test ID
+            with: "ca-app-pub-5763713982294456/4004346694", // real ID
                request: request
            ) { [weak self] ad, error in
                if let error = error {

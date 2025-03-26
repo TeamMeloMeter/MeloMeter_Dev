@@ -449,8 +449,10 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         let viewWidth = view.frame.inset(by: view.safeAreaInsets).width
         let adaptiveSize = currentOrientationAnchoredAdaptiveBanner(width: viewWidth)
         bannerView = BannerView(adSize: adaptiveSize)
-        bannerView.adUnitID = "ca-app-pub-5763713982294456~2816054387"
+        bannerView.adUnitID = "ca-app-pub-5763713982294456/4052448154"
         //실제
+        
+        
 //        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
         //테스트
         bannerView.rootViewController = self
