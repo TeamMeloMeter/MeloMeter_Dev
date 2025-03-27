@@ -22,11 +22,13 @@ class LogInRepository: LogInRepositoryP {
     //전화번호 전송, 인증ID 저장
     func sendNumber(phoneNumber: String?) -> Single<LogInStatus> {
         return Single.create { single in
+            
             guard let number = phoneNumber else { return Disposables.create() }
             let authPhoneNumber = "+82 \(number.components(separatedBy: "-").joined())"
+
             PhoneAuthProvider.provider()
                 .verifyPhoneNumber(authPhoneNumber, uiDelegate: nil) { (verificationID, error) in
-                    if let error = error {
+                    if let error {
                         single(.failure(error))
                         return
                     }
@@ -34,7 +36,7 @@ class LogInRepository: LogInRepositoryP {
                         if id.isEmpty {
                             single(.success(.validationFailed))
                             return
-                        }else {
+                        } else {
                             UserDefaults.standard.set("\(id)", forKey: "verificationID")
                             single(.success(.requestCompleted))
                             return

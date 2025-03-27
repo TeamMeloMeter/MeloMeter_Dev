@@ -39,8 +39,8 @@ class LogInVM {
         self.logInUseCase = logInUseCase
         
         //전화번호 입력 -> 인증 요청 -> 응답
-        phoneNumberInput.bind(onNext: { [weak self] text in
-            guard let self = self else{ return }
+        phoneNumberInput.subscribe(onNext: { [weak self] text in
+            guard let self else{ return }
             self.phoneNumber = text
             self.logInUseCase.sendNumberService(text: text)
                 .subscribe(onSuccess: {
