@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 final class SplashVC: UIViewController {
     private let viewModel: SplashVM
+    private var disposeBag = DisposeBag()
     init(viewModel: SplashVM) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -23,7 +24,42 @@ final class SplashVC: UIViewController {
         setAutoLayout()
         startAnimation()
         
+
+        
+       
         viewModel.selectFlow()
+        viewModel.setNotification()
+       
+        
+        viewModel.alert.subscribe(onNext: { [weak self] alertType in
+            guard let self else {return}
+            
+            if alertType == "appStore" {
+                DispatchQueue.main.async {
+                    AlertManager(viewController: self)
+                        .setAppStoreAlert()
+                }
+   
+            } else if alertType == "offLine" {
+                DispatchQueue.main.async {
+                    
+                    AlertManager(viewController: self)
+                        .showNomalAlert(title: "네트워크 오류", message: "네트워크 연결을 확인해주세요").subscribe({ com in
+                            switch com {
+                                
+                            case .success():
+                                exit(0)
+                            case .failure(_):
+                                exit(0)
+                            }
+                            
+                        }).disposed(by: self.disposeBag)
+                }
+            }
+            
+            
+        }).disposed(by: disposeBag)
+        
     }
     
     private lazy var logoImageView: UIImageView = {

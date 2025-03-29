@@ -123,7 +123,7 @@ extension MainUseCase {
     }
     
     func getUserData() {
-        guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return }
+        guard let uid = UserDefaults.standard.string(forKey: "uid") else { return }
         self.userRepository.getUserInfo(uid)
             .catchAndReturn(UserModel(name: nil, birth: nil))
             .bind(to: self.userData)

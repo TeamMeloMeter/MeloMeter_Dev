@@ -17,42 +17,82 @@ final class SplashVM {
     weak var coordinator: AppCoordinator?
     private var firebaseService: FirebaseService
     private var userRepository: UserRepositoryP
+    private var versionRepository: VersionRepositoryP
     init(
         coordinator: AppCoordinator,
         firebaseService: FirebaseService,
-        userRepository: UserRepositoryP
+        userRepository: UserRepositoryP,
+        versionRepository: VersionRepositoryP
     ) {
         self.coordinator = coordinator
         self.firebaseService = firebaseService
         self.userRepository = userRepository
+        self.versionRepository = versionRepository
+        
     }
     
+    var alert = PublishSubject<String>()
+  
+    func setNotification() {
+        NotificationCenter.default.addObserver(
+                    self,
+                    selector: #selector(selectFlow),
+                    name: UIApplication.willEnterForegroundNotification,
+                    object: nil
+                )
+    }
+    
+    
+    
+    
+    
+    @objc
     func selectFlow() {
-        self.getAccessLevel()
-            .subscribe(onSuccess: {[weak self] state in
-                guard let self = self else{ return }
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
-                    switch state {
-                    case .none, .start:
+        let device = versionRepository.getDeviceVersion()
+        versionRepository.getAppStoreVersion(completion: { [weak self] appStoreVer in
+            guard let self else {return}
+            if appStoreVer != device {
+                print("appStoreVer\(appStoreVer)")
+                print("device\(device)")
+                alert.onNext("appStore")
+            } else if appStoreVer == "offLine" {
+                alert.onNext("offLine")
+            } else {
+                self.getAccessLevel()
+                    .subscribe(onSuccess: {[weak self] state in
+                        guard let self = self else{ return }
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                            switch state {
+                            case .none, .start:
+                                self.coordinator?.connectLogInFlow(accessLevel: false)
+                            case .authenticated:
+                                self.coordinator?.connectLogInFlow(accessLevel: true)
+                            case .coupleCombined:
+                                self.coordinator?.connectPresetFlow()
+                            case .complete:
+                                self.coordinator?.connectTabBarFlow()
+                            }
+                        }
+                    }, onFailure: { _ in
                         self.coordinator?.connectLogInFlow(accessLevel: false)
-                    case .authenticated:
-                        self.coordinator?.connectLogInFlow(accessLevel: true)
-                    case .coupleCombined:
-                        self.coordinator?.connectPresetFlow()
-                    case .complete:
-                        self.coordinator?.connectTabBarFlow()
-                    }
-                }
-            }, onFailure: { _ in
-                self.coordinator?.connectLogInFlow(accessLevel: false)
-            })
-            .disposed(by: disposeBag)
+                    })
+                    .disposed(by: disposeBag)
+            }
+            
+            
+        })
+        
+     
     }
     func getAccessLevel() -> Single<AccessLevel> {
         return Single.create { single in
             self.firebaseService.getCurrentUser()
                 .subscribe(onSuccess: {[weak self] user in
                     guard let self = self else{ return }
+                    
+                    
+                    
+                    
                     self.firebaseService.getDocument(collection: .Users, document: user.uid)
                         .subscribe(onSuccess: {[weak self] data in
 
@@ -78,6 +118,17 @@ final class SplashVM {
                                 
                                 single(.success(.coupleCombined))
                             case "complete":
+                                let fcmToken = data["fcmToken"]
+                                let otherUid = data["otherUid"]
+                                let coupleID = data["coupleID"]
+                                let phoneNumber = data["phoneNumber"]
+                                let uid = data["uid"]
+                                
+                                UserDefaults.standard.set(fcmToken, forKey: "fcmToken")
+                                UserDefaults.standard.set(otherUid, forKey: "otherUid")
+                                UserDefaults.standard.set(coupleID, forKey: "coupleID")
+                                UserDefaults.standard.set(uid, forKey: "uid")
+                                UserDefaults.standard.set(phoneNumber, forKey: "phoneNumber")
                                 single(.success(.complete))
                             case "start":
                                 let deleteData = self.userRepository.withdrawal(uid: user.uid)

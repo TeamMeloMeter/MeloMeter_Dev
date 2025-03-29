@@ -106,7 +106,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
                     if message == "" {
                         self.myInfoWindowLabel.text = text
                         self.infoWindow1.close()
-                    }else {
+                    } else {
                         self.myInfoWindowLabel.text = message
                         self.myInfoWindowLabel.layoutIfNeeded()
                         self.myInfoWindowView.layoutIfNeeded()
@@ -449,11 +449,14 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         let viewWidth = view.frame.inset(by: view.safeAreaInsets).width
         let adaptiveSize = currentOrientationAnchoredAdaptiveBanner(width: viewWidth)
         bannerView = BannerView(adSize: adaptiveSize)
+        
+        
+#if DEBUG
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+#else
         bannerView.adUnitID = "ca-app-pub-5763713982294456/4052448154"
-        //실제
+#endif
         
-        
-//        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
         //테스트
         bannerView.rootViewController = self
         bannerView.load(Request())

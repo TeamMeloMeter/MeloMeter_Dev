@@ -59,7 +59,7 @@ extension AppCoordinator {
             viewModel: SplashVM(coordinator: self,
                                 firebaseService: firebaseService,
                                 userRepository: UserRepository(firebaseService: firebaseService,
-                                                               chatRepository: ChatRepository(firebaseService: firebaseService))
+                                                               chatRepository: ChatRepository(firebaseService: firebaseService)), versionRepository: VersionRepository()
                                )
         )
         navigationController.setNavigationBarHidden(true, animated: false)

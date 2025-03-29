@@ -171,6 +171,31 @@ class AlertManager {
             }
         }
     }
+    
+    func setAppStoreAlert() {
+        let authAlertController: UIAlertController
+        authAlertController = UIAlertController(
+            title: "앱 스토어로 이동",
+            message: "새로운 버전이 출시되어 앱스토어로 이동합니다",
+            preferredStyle: .alert
+        )
+        
+        let getAuthAction: UIAlertAction
+        getAuthAction = UIAlertAction(
+            title: "이동하기",
+            style: .default,
+            handler: { _ in
+                if let url = URL(string: "itms-apps://itunes.apple.com/app/apple-store/6450677988") {
+           
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+
+                }
+            }
+        )
+        
+        authAlertController.addAction(getAuthAction)
+        self.baseViewController.present(authAlertController, animated: true, completion: nil)
+    }
 }
 
 // MARK: Chat Alert

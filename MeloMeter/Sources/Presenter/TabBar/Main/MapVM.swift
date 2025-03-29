@@ -47,18 +47,20 @@ class MapVM {
         if #available(iOS 16.0, *) {
             input.viewWillApearEvent
                 .subscribe(onNext: { [weak self] _ in
-                    self?.mainUseCase.disconnectionObserver()
+                    guard let self else {return}
+                    self.mainUseCase.disconnectionObserver()
                         .subscribe(onSuccess: { result in
                             if result {
                                 output.endTrigger.onNext(true)
                             }
                         })
                         .disposed(by: disposeBag)
+                    
                     setInfo()
-                    self?.mainUseCase.checkAuthorization()
-                    self?.mainUseCase.requestAuthorization()
-                    self?.mainUseCase.requestLocation()
-                    self?.mainUseCase.requestOtherLocation()
+                    self.mainUseCase.checkAuthorization()
+                    self.mainUseCase.requestAuthorization()
+                    self.mainUseCase.requestLocation()
+                    self.mainUseCase.requestOtherLocation()
                     
                     //잔여 알림 가져오기
                     UNUserNotificationCenter.current().getDeliveredNotifications { notifications in
@@ -140,6 +142,7 @@ class MapVM {
             self.mainUseCase.userData
                 .subscribe(onNext: { userInfo in
                     guard let userInfo = userInfo else{ return }
+                    print("userInfouserInfo \(userInfo)")
                     output.myStateMessage.onNext(userInfo.stateMessage ?? nil)
                     self.mainUseCase.getMyProfileImage(url: userInfo.profileImage ?? "")
                         .subscribe(onSuccess: { image in
@@ -171,6 +174,7 @@ class MapVM {
                     
                     self.mainUseCase.getSinceFirstDay(coupleID: userInfo.coupleID ?? "")
                         .subscribe(onSuccess: { date in
+                            
                             output.daySince.onNext("D+\(date)")
                         })
                         .disposed(by: disposeBag)

@@ -139,8 +139,9 @@ class AnswerVM {
                 )
                 self.hundredQAUseCase.addAnswer(questionNumber: self.questionNumber, answerInfo: answerInfo)
                     .subscribe(onSuccess: {
-//                        self.coordinator?.popViewController()
                         output.loadAdmob.onNext(())
+                        self.coordinator?.popViewController()
+
 
                     })
                     .disposed(by: disposeBag)

@@ -158,6 +158,8 @@
 		6097C9F52D538C0600895B63 /* Label+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6097C9F42D538C0100895B63 /* Label+.swift */; };
 		60A351962D119EB000BB1A6F /* UserDefaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A351952D119EA800BB1A6F /* UserDefaultService.swift */; };
 		60E0EE002D9025F000E6E2A2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E0EDFF2D9025E800E6E2A2 /* Constants.swift */; };
+		60E9F8172D98189B00201201 /* VersionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9F8162D98189200201201 /* VersionRepository.swift */; };
+		60E9F8192D9818DB00201201 /* VersionRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9F8182D9818DA00201201 /* VersionRepositoryP.swift */; };
 		A1A09EE6F75F34CF5776C85D /* Pods_MeloMeterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13D1B0A4DD104367DA0E817D /* Pods_MeloMeterTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -320,6 +322,8 @@
 		60A351952D119EA800BB1A6F /* UserDefaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultService.swift; sourceTree = "<group>"; };
 		60E0EDFF2D9025E800E6E2A2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		60E0EE332D95724200E6E2A2 /* MeloMeterDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeloMeterDebug.entitlements; sourceTree = "<group>"; };
+		60E9F8162D98189200201201 /* VersionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionRepository.swift; sourceTree = "<group>"; };
+		60E9F8182D9818DA00201201 /* VersionRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionRepositoryP.swift; sourceTree = "<group>"; };
 		A9E69982DC824C86B28E4115 /* Pods-MeloMeterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeterTests.debug.xcconfig"; path = "Target Support Files/Pods-MeloMeterTests/Pods-MeloMeterTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B61B0F5A29F7A5F500E25EEF /* MeloMeter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeloMeter.entitlements; sourceTree = "<group>"; };
 		D6C8C150060E7CCA73BAD48D /* Pods-MeloMeter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.release.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.release.xcconfig"; sourceTree = "<group>"; };
@@ -735,6 +739,7 @@
 		5271D41D2A5886FB00FC7606 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				60E9F8162D98189200201201 /* VersionRepository.swift */,
 				5271D41E2A5887E500FC7606 /* LogInRepository.swift */,
 				526EB85D2A7D5992005B1940 /* UserRepository.swift */,
 				521D41F52A81C71F00E5CCDA /* CoupleRepository.swift */,
@@ -818,6 +823,7 @@
 		5290BFB22A7270B200D734EE /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				60E9F8182D9818DA00201201 /* VersionRepositoryP.swift */,
 				5290BFB32A7270DF00D734EE /* LogInRepositoryP.swift */,
 				526EB85F2A7D59A4005B1940 /* UserRepositoryP.swift */,
 				521D41F72A81C75100E5CCDA /* CoupleRepositoryP.swift */,
@@ -1305,6 +1311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60E9F8172D98189B00201201 /* VersionRepository.swift in Sources */,
 				2103690A2AA772BA00A5EEB5 /* CalendarNotificationTriggerUseCase.swift in Sources */,
 				52B7EBCB2A8F2E79008F5F53 /* AccountsVM.swift in Sources */,
 				52AEAD052A93DA050097930E /* HundredQAVC.swift in Sources */,
@@ -1409,6 +1416,7 @@
 				5270EC102A460354007FF444 /* AuthNumVC.swift in Sources */,
 				5271D4062A51DBDD00FC7606 /* ProfileInsertVC.swift in Sources */,
 				5271D4302A605B0900FC7606 /* Encodable+.swift in Sources */,
+				60E9F8192D9818DB00201201 /* VersionRepositoryP.swift in Sources */,
 				210BAFC62AC88DF70012B786 /* AlarmDTO.swift in Sources */,
 				5270EC0C2A44614A007FF444 /* PhoneCertifiedVC.swift in Sources */,
 				5230B2822A7CFF6F00781623 /* MyProfileCoordinator.swift in Sources */,
@@ -1614,7 +1622,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.6;
+				MARKETING_VERSION = 1.0.8;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.teamMeloMeter.-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1659,7 +1668,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.6;
+				MARKETING_VERSION = 1.0.8;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.teamMeloMeter.-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
