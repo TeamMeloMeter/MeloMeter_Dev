@@ -190,7 +190,7 @@ class ChatVM {
 
         //MARK: right (아래 화살표) tap 시
         input.pickerRightBtnTap.subscribe(onNext: { [weak self] _ in
-            guard let self else {return}
+            guard let self, !alreadySearchedModel.isEmpty else {return}
             self.searchingIndex = searchingIndex > 0 ? searchingIndex - 1 : searchingIndex
             output.searchedIndex.onNext(alreadySearchedModel[searchingIndex])
 

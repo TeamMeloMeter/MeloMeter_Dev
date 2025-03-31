@@ -51,9 +51,8 @@ final class SplashVM {
         let device = versionRepository.getDeviceVersion()
         versionRepository.getAppStoreVersion(completion: { [weak self] appStoreVer in
             guard let self else {return}
-            if appStoreVer != device {
-                print("appStoreVer\(appStoreVer)")
-                print("device\(device)")
+            if let appStoreVer, Float(device) ?? -0.0 < Float(appStoreVer) ?? 0.0  {
+                
                 alert.onNext("appStore")
             } else if appStoreVer == "offLine" {
                 alert.onNext("offLine")

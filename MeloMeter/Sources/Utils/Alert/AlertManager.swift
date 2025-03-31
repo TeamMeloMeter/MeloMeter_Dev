@@ -176,7 +176,7 @@ class AlertManager {
         let authAlertController: UIAlertController
         authAlertController = UIAlertController(
             title: "앱 스토어로 이동",
-            message: "새로운 버전이 출시되어 앱스토어로 이동합니다",
+            message: "최신 버전이 아닙니다\n앱 스토어로 이동합니다",
             preferredStyle: .alert
         )
         

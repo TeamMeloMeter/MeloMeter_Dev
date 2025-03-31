@@ -122,7 +122,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
 
         moveLastBtn.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(0)
-            $0.bottom.equalTo(messageInputBar.snp.top)
+            $0.bottom.equalTo(inputContainerView.snp.top)
             $0.width.height.equalTo(50)
 
         }
@@ -196,30 +196,18 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     // MARK: NavigationBar
     private func setNavigationBar() {
-        
-        
         let searchTextBar = UIView().then {
-            
-            
-            
             $0.addSubview(messageSearchTextField)
             $0.addSubview(chatLabel)
 
             chatLabel.snp.makeConstraints {
                 $0.top.bottom.trailing.leading.equalToSuperview()
             }
-            
             messageSearchTextField.snp.makeConstraints {
                 $0.top.bottom.trailing.leading.equalToSuperview()
             }
-            
-      
-            
-            
-            
-            
+
         }
-        
        
         navigationItem.titleView = searchTextBar
 
@@ -322,6 +310,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     func configureBottomPickerBar() {
   
         messageInputBar.addSubview(bottomPickerBar)
+    
         
         bottomPickerBar.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
