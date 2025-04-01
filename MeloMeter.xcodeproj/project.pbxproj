@@ -157,6 +157,8 @@
 		60697AC82D2A5B4C00693990 /* CustomChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60697AC72D2A5B4600693990 /* CustomChatModel.swift */; };
 		6097C9F52D538C0600895B63 /* Label+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6097C9F42D538C0100895B63 /* Label+.swift */; };
 		60A351962D119EB000BB1A6F /* UserDefaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A351952D119EA800BB1A6F /* UserDefaultService.swift */; };
+		60D913522D9C0AD60033EB95 /* AdmobRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D913512D9C0ACD0033EB95 /* AdmobRepository.swift */; };
+		60D913542D9C0AF60033EB95 /* AdmobRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D913532D9C0AEE0033EB95 /* AdmobRepositoryP.swift */; };
 		60E0EE002D9025F000E6E2A2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E0EDFF2D9025E800E6E2A2 /* Constants.swift */; };
 		60E9F8172D98189B00201201 /* VersionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9F8162D98189200201201 /* VersionRepository.swift */; };
 		60E9F8192D9818DB00201201 /* VersionRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9F8182D9818DA00201201 /* VersionRepositoryP.swift */; };
@@ -320,6 +322,8 @@
 		60697AC72D2A5B4600693990 /* CustomChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomChatModel.swift; sourceTree = "<group>"; };
 		6097C9F42D538C0100895B63 /* Label+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Label+.swift"; sourceTree = "<group>"; };
 		60A351952D119EA800BB1A6F /* UserDefaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultService.swift; sourceTree = "<group>"; };
+		60D913512D9C0ACD0033EB95 /* AdmobRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdmobRepository.swift; sourceTree = "<group>"; };
+		60D913532D9C0AEE0033EB95 /* AdmobRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdmobRepositoryP.swift; sourceTree = "<group>"; };
 		60E0EDFF2D9025E800E6E2A2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		60E0EE332D95724200E6E2A2 /* MeloMeterDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeloMeterDebug.entitlements; sourceTree = "<group>"; };
 		60E9F8162D98189200201201 /* VersionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionRepository.swift; sourceTree = "<group>"; };
@@ -739,6 +743,7 @@
 		5271D41D2A5886FB00FC7606 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				60D913512D9C0ACD0033EB95 /* AdmobRepository.swift */,
 				60E9F8162D98189200201201 /* VersionRepository.swift */,
 				5271D41E2A5887E500FC7606 /* LogInRepository.swift */,
 				526EB85D2A7D5992005B1940 /* UserRepository.swift */,
@@ -823,6 +828,7 @@
 		5290BFB22A7270B200D734EE /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				60D913532D9C0AEE0033EB95 /* AdmobRepositoryP.swift */,
 				60E9F8182D9818DA00201201 /* VersionRepositoryP.swift */,
 				5290BFB32A7270DF00D734EE /* LogInRepositoryP.swift */,
 				526EB85F2A7D59A4005B1940 /* UserRepositoryP.swift */,
@@ -1386,6 +1392,7 @@
 				5230B2782A77907500781623 /* LocationService.swift in Sources */,
 				5271D42E2A604BF400FC7606 /* Date+.swift in Sources */,
 				521D42152A8A6E7300E5CCDA /* NoticeVM.swift in Sources */,
+				60D913522D9C0AD60033EB95 /* AdmobRepository.swift in Sources */,
 				52F010082A097D120014FC01 /* AlarmTableViewCell.swift in Sources */,
 				521D42172A8A839D00E5CCDA /* DetailNoticeVC.swift in Sources */,
 				60A351962D119EB000BB1A6F /* UserDefaultService.swift in Sources */,
@@ -1400,6 +1407,7 @@
 				2185C4CE2A83F13B00F99795 /* ChatVC.swift in Sources */,
 				52F739552A94E6DB00D46FBB /* HundredQAModel.swift in Sources */,
 				52AEACFD2A9337F40097930E /* AlarmVM.swift in Sources */,
+				60D913542D9C0AF60033EB95 /* AdmobRepositoryP.swift in Sources */,
 				52AEACFA2A9335810097930E /* AlarmCoordinator.swift in Sources */,
 				521D42022A8551E900E5CCDA /* EditProfileVM.swift in Sources */,
 				52F010142A0AAD380014FC01 /* EditProfileVC.swift in Sources */,

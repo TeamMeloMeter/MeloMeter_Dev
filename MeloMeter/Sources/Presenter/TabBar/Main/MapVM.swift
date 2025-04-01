@@ -10,6 +10,7 @@ import RxSwift
 import RxRelay
 import CoreLocation
 import RxCocoa
+import GoogleMobileAds
 
 class MapVM {
 
@@ -33,6 +34,7 @@ class MapVM {
         var currentLocation = PublishSubject<CLLocation?>()
         var currentOtherLocation = PublishSubject<CLLocation?>()
         var endTrigger = PublishSubject<Bool>()
+        var getBottomBannerAd = BehaviorSubject<BannerView?>(value: nil)
     }
     
     
@@ -48,6 +50,10 @@ class MapVM {
             input.viewWillApearEvent
                 .subscribe(onNext: { [weak self] _ in
                     guard let self else {return}
+                    
+                    output.getBottomBannerAd.onNext(mainUseCase.getBottomBannerAd()) 
+                    
+                    
                     self.mainUseCase.disconnectionObserver()
                         .subscribe(onSuccess: { result in
                             if result {

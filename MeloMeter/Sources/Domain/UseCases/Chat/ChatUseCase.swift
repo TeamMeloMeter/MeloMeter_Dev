@@ -154,7 +154,8 @@ class ChatUseCase {
     // 메시지 가져오는 기능 시작
     func startRealTimeChatMassage() {
         self.coupleRepository.getCoupleID()
-            .subscribe(onSuccess: { coupleID in
+            .subscribe(onSuccess: { [weak self] coupleID in
+                guard let self else {return}
                 //실시간 메세지 감시 시작
                 self.chatRepository.getRealTimeChat(coupleID: coupleID)
                 //변경된 값 받아오기

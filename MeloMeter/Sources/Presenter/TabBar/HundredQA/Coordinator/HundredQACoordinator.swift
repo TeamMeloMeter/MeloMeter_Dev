@@ -13,6 +13,7 @@ final class HundredCoordinator: Coordinator {
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
     let firebaseService = DefaultFirebaseService()
+    let admobRepo = AdmobRepository()
     
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -31,7 +32,7 @@ extension HundredCoordinator {
         let firebaseService = self.firebaseService
         let viewController = HundredQAVC(viewModel: HundredQAVM(coordinator: self,
                                                                 hundredQAUseCase: HundredQAUseCase(hundredQARepository: HundredQARepository(
-                                                                    firebaseService: firebaseService)
+                                                                    firebaseService: firebaseService), admobRepo: admobRepo
                                                                 ))
         )
                                                         
@@ -45,7 +46,7 @@ extension HundredCoordinator {
         let firebaseService = self.firebaseService
         let viewModel = AnswerVM(coordinator: self,
                                  hundredQAUseCase: HundredQAUseCase(hundredQARepository: HundredQARepository(
-                                     firebaseService: firebaseService)
+                                    firebaseService: firebaseService), admobRepo: admobRepo
                                  ),
                                  questionNumber: questionNumber,
                                  questionText: question,

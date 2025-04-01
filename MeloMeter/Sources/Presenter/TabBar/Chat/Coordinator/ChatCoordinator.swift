@@ -11,6 +11,7 @@ final class ChatCoordinator: Coordinator {
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
     let firebaseService = DefaultFirebaseService()
+    let admobRepo = AdmobRepository()
     
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -36,7 +37,7 @@ extension ChatCoordinator {
                                 userRepository: UserRepository(firebaseService: firebaseService, chatRepository: chatRepository)
                               ),
                               hundredQAUseCase: HundredQAUseCase(hundredQARepository:
-                                                                    HundredQARepository(firebaseService: firebaseService)
+                                                                    HundredQARepository(firebaseService: firebaseService), admobRepo: admobRepo
                                                                 )
                              )
         )
@@ -59,7 +60,7 @@ extension ChatCoordinator {
         childCoordinators.append(hundredQACoordinator)
         let viewModel = AnswerVM(coordinator: hundredQACoordinator,
                                  hundredQAUseCase: HundredQAUseCase(hundredQARepository: HundredQARepository(
-                                     firebaseService: firebaseService)
+                                    firebaseService: firebaseService), admobRepo: admobRepo
                                  ),
                                  questionNumber: questionNumber,
                                  questionText: question,

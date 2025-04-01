@@ -9,10 +9,11 @@ import UIKit
 final class MainCoordinator: Coordinator {
     
     var delegate: CoordinatorDelegate?
-    
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
-    let firebaseService = DefaultFirebaseService()
+    
+    private let firebaseService = DefaultFirebaseService()
+    private let adMobRepo = AdmobRepository()
     
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -35,7 +36,7 @@ extension MainCoordinator {
                 locationService: DefaultLocationService(
                     firebaseService: firebaseService
                 ),
-                firebaseService: firebaseService
+                firebaseService: firebaseService, adMobRepo: self.adMobRepo
             )
         )
         )

@@ -37,8 +37,6 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         super.viewDidLoad()
      
 
-
-        addBannerViewToView()
         
         configure()
         setAutoLayout()
@@ -69,6 +67,8 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         )
             
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else { return }
+        
+        output.getBottomBannerAd.bind(onNext: addBannerViewToView ).disposed(by: disposeBag)
         
         output.daySince
             .bind(onNext: { text in
@@ -445,24 +445,16 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     }()
     
     //MARK: adMob
-    private func addBannerViewToView() {
+    private func addBannerViewToView(bannerView: BannerView?) {
+        
+        guard let bannerView else {return}
+        
         let viewWidth = view.frame.inset(by: view.safeAreaInsets).width
         let adaptiveSize = currentOrientationAnchoredAdaptiveBanner(width: viewWidth)
-        bannerView = BannerView(adSize: adaptiveSize)
-        
-        
-#if DEBUG
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
-#else
-        bannerView.adUnitID = "ca-app-pub-5763713982294456/4052448154"
-#endif
-        
-        //테스트
+        bannerView.adSize = adaptiveSize
         bannerView.rootViewController = self
-        bannerView.load(Request())
-
-        view.addSubview(bannerView)
         
+        view.addSubview(bannerView)
         bannerView.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             $0.centerX.equalTo(view.snp.centerX)

@@ -10,11 +10,9 @@ import RxSwift
 import RxCocoa
 import GoogleMobileAds
 
-class WriteAnswerVC: UIViewController, FullScreenContentDelegate {
+class WriteAnswerVC: UIViewController {
     
-    //admob
-    private var interstitial: InterstitialAd?
-    
+
     
     private let viewModel: AnswerVM?
     let disposeBag = DisposeBag()
@@ -32,8 +30,8 @@ class WriteAnswerVC: UIViewController, FullScreenContentDelegate {
     // MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        //admob
-        loadInterstitial()
+
+//        loadInterstitial()
 
         configure()
         setAutoLayout()
@@ -80,13 +78,9 @@ class WriteAnswerVC: UIViewController, FullScreenContentDelegate {
             })
             .disposed(by: disposeBag)
         
-        output.loadAdmob.subscribe(onNext: { [weak self] _ in
-            guard let self else {return}
-            if let ad = self.interstitial {
-                        ad.present(from: self)
-                    } else {
-                        print("광고 아직 준비 안 됨")
-                    }
+        output.loadAdmob.subscribe(onNext: { [weak self] ad in
+            guard let self, let ad else {return}
+            ad.present(from: self)
                 
         }).disposed(by: disposeBag)
     }
@@ -283,33 +277,3 @@ extension WriteAnswerVC: UITextViewDelegate {
     
 }
 
-//MARK: for admob
-extension WriteAnswerVC {
-    
-    func loadInterstitial() {
-        let request = Request()
-        
-#if DEBUG
-        let id = "ca-app-pub-3940256099942544/4411468910" // test ID
-#else
-        let id = "ca-app-pub-3940256099942544/4411468910"  // real ID
-#endif
-        
-        InterstitialAd.load(
-            with: id,
-            
-               request: request
-           ) { [weak self] ad, error in
-               if let error = error {
-                   print("전면 광고 로딩 실패: \(error.localizedDescription)")
-                   return
-               }
-               self?.interstitial = ad
-           }
-       }
-    
-    func adDidDismissFullScreenContent(_ ad: FullScreenPresentingAd) {
-        self.navigationController?.popViewController(animated: true)
-    }
-
-}

@@ -48,7 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         if (launchOptions?[.remoteNotification]) != nil {
             //여기서 처리
         }
-
+    
+            
         
         return true
     }

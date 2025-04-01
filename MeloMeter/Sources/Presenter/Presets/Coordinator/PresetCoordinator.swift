@@ -12,6 +12,7 @@ final class PresetCoordinator: Coordinator {
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
     let firebaseService = DefaultFirebaseService()
+    let adMobRepo = AdmobRepository()
     
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -47,7 +48,7 @@ extension PresetCoordinator {
             viewModel: PermissionVM(
                 coordinator: self,
                 mainUseCase: MainUseCase(locationService: DefaultLocationService(firebaseService: firebaseService),
-                                         firebaseService: firebaseService))
+                                         firebaseService: firebaseService, adMobRepo: self.adMobRepo))
         )
         
         self.navigationController.setNavigationBarHidden(true, animated: false)
@@ -60,7 +61,7 @@ extension PresetCoordinator {
             viewModel: PermissionVM(
                 coordinator: self,
                 mainUseCase: MainUseCase(locationService: DefaultLocationService(firebaseService: firebaseService),
-                                         firebaseService: firebaseService))
+                                         firebaseService: firebaseService, adMobRepo: self.adMobRepo))
         )
         
         self.navigationController.setNavigationBarHidden(true, animated: false)

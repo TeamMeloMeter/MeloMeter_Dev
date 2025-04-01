@@ -10,6 +10,7 @@ import RxSwift
 import RxRelay
 import CoreLocation
 import FirebaseFirestore
+import GoogleMobileAds
 
 enum LocationAuthorizationStatus {
     case allowed, halfallowed, disallowed, notDetermined
@@ -21,6 +22,7 @@ class MainUseCase {
     private var firebaseService: FirebaseService
     private var userRepository: UserRepositoryP
     private var coupleRepository: CoupleRepositoryP
+    private var adMobRepo: AdmobRepositoryP
     
     var updatedLocation: BehaviorRelay<CLLocation?>
     var updatedOtherLocation: BehaviorRelay<CLLocation?>
@@ -28,12 +30,13 @@ class MainUseCase {
     var otherUserData: PublishRelay<UserModel?>
     var disposeBag: DisposeBag
     
-    required init(locationService: DefaultLocationService, firebaseService: FirebaseService) {
+    required init(locationService: DefaultLocationService, firebaseService: FirebaseService, adMobRepo: AdmobRepositoryP) {
         self.locationService = locationService
         self.firebaseService = firebaseService
         self.userRepository = UserRepository(firebaseService: self.firebaseService,
                                              chatRepository: ChatRepository(firebaseService: self.firebaseService))
         self.coupleRepository = CoupleRepository(firebaseService: self.firebaseService)
+        self.adMobRepo = adMobRepo
         
         self.updatedLocation = BehaviorRelay(value: CLLocation(latitude: 0, longitude: 0))
         self.updatedOtherLocation = BehaviorRelay(value: CLLocation(latitude: 0, longitude: 0))
@@ -175,4 +178,12 @@ extension MainUseCase {
         else{ return Single.just(()) }
         return self.userRepository.removeOtherData(uid: uid)
     }
+}
+//MARK: AdMob
+extension MainUseCase {
+    
+    func getBottomBannerAd() -> BannerView {
+        return adMobRepo.loadBottomBanner()
+    }
+    
 }

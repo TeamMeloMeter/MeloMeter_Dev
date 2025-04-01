@@ -59,7 +59,6 @@ class LogInRepository: LogInRepositoryP {
                 verificationCode: code
             )
             
-            print("들어오나?")
             Auth.auth().signIn(with: credential) { authResult, error in
                 if let error = error {
                     single(.failure(error))
@@ -162,10 +161,11 @@ class LogInRepository: LogInRepositoryP {
             let currentDate = Date().toString(type: .yearToHour)
             firebaseService.getCurrentUser()
                 .flatMap{ user -> Single<Void> in
+                    UserDefaults.standard.set(user.uid, forKey: "uid")
                     return self.firebaseService.getDocument(collection: .Users, field: "inviteCode", values: [inviteCode])
-                        .flatMap{ data -> Single<Void> in
+                        .flatMap{ [weak self] data -> Single<Void> in
                             guard !data.isEmpty else{ return Single.error(FireStoreError.unknown) }
-                            guard let otherUid = data.last?["uid"] as? String else{ return Single.error(FireStoreError.unknown) }
+                            guard let self,let otherUid = data.last?["uid"] as? String else{ return Single.error(FireStoreError.unknown) }
                             if otherUid == user.uid { return Single.error(FireStoreError.unknown) }
                             guard let otherFcmToken = data.last?["fcmToken"] as? String else{ return Single.error(FireStoreError.unknown) }
                             UserDefaults.standard.set("\(otherUid)", forKey: "otherUid")
@@ -186,9 +186,9 @@ class LogInRepository: LogInRepositoryP {
                         }
                 }
                 .subscribe(onSuccess: {
-                    guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return }
-                    guard let otherUid = UserDefaults.standard.string(forKey: "otherUid") else{ return }
-                    guard let coupleDocumentID = UserDefaults.standard.string(forKey: "coupleDocumentID") else{ return }
+                    guard let uid = UserDefaults.standard.string(forKey: "uid") else { return }
+                    guard let otherUid = UserDefaults.standard.string(forKey: "otherUid") else { return }
+                    guard let coupleDocumentID = UserDefaults.standard.string(forKey: "coupleDocumentID") else { return }
                     let defaultProfileImage = UIImage(named: "defaultProfileImage")!
                     let uploadDefaultImage = self.firebaseService.uploadImage(filePath: uid, image: defaultProfileImage)
                     let uploadDefaultImage2 = self.firebaseService.uploadImage(filePath: otherUid, image: defaultProfileImage)
@@ -211,7 +211,7 @@ class LogInRepository: LogInRepositoryP {
                             let updateOtherAccessLevel = self.firebaseService.updateDocument(collection: .Users, document: otherUid, values: ["accessLevel" : "coupleCombined"])
                             
                             Single.zip(update1, update2, chatDocumentCreate, myAlarmDocumentCreate, otherAlarmDocumentCreate, updateAccessLevel, updateOtherAccessLevel)
-                                .subscribe(onSuccess: { _, _, _, _, _, _, _ in
+                                .subscribe(onSuccess: { a, b, c, d, e, f, g in
                                     single(.success(()))
                                 }, onFailure: { error in
                                     single(.failure(error))

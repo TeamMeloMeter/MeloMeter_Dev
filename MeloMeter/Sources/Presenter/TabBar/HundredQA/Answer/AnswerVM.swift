@@ -9,11 +9,13 @@ import UIKit
 import RxSwift
 import RxRelay
 import RxCocoa
+import GoogleMobileAds
 
-class AnswerVM {
+class AnswerVM: NSObject, FullScreenContentDelegate {
 
     weak var coordinator: HundredCoordinator?
     private var hundredQAUseCase: HundredQAUseCase
+    
     var questionNumber: String
     var questionText: String
     var myAnswerInfo: AnswerModel
@@ -38,7 +40,7 @@ class AnswerVM {
     struct WriteOutput {
         var questionText = PublishSubject<String>()
         var myName = PublishSubject<String>()
-        var loadAdmob = PublishSubject<Void>()
+        var loadAdmob = BehaviorSubject<InterstitialAd?>(value: nil)
 
     }
     
@@ -63,6 +65,9 @@ class AnswerVM {
         input.viewWillApearEvent
             .subscribe(onNext: {[weak self] _ in
                 guard let self = self else{ return }
+               
+                
+                
                 self.hundredQAUseCase.getAnswerList()
                     .subscribe(onSuccess: { answerInfoModel in
                         let answersArray = answerInfoModel.map{ $0.answerInfo }
@@ -139,8 +144,17 @@ class AnswerVM {
                 )
                 self.hundredQAUseCase.addAnswer(questionNumber: self.questionNumber, answerInfo: answerInfo)
                     .subscribe(onSuccess: {
-                        output.loadAdmob.onNext(())
-                        self.coordinator?.popViewController()
+                        
+                        self.hundredQAUseCase.loadInterstitial().subscribe ({ [weak self] single in
+                            guard let self else {return}
+                            switch single {
+                            case .success(let interstitialAd):
+                                interstitialAd.fullScreenContentDelegate = self
+                                output.loadAdmob.onNext(interstitialAd)
+                            case .failure(let err):
+                                coordinator?.popViewController()
+                            }
+                        }).disposed(by: disposeBag)
 
 
                     })
@@ -153,3 +167,8 @@ class AnswerVM {
     }
 }
 
+extension AnswerVM {
+    func adWillDismissFullScreenContent(_ ad: FullScreenPresentingAd) {
+        self.coordinator?.popViewController()
+    }
+}
