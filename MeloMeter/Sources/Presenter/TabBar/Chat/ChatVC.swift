@@ -40,6 +40,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     var sendImageMessage = PublishRelay<ChatModel>()
     var searchBtnTappedEvent = PublishSubject<Void>()
     lazy var messageList: [ChatModel] = []
+    private var firstLoaded = false
 
     // 백그라운드 이미지
     let backgroundImageView: UIImageView = {
@@ -110,12 +111,12 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        DispatchQueue.main.async {
-            if !self.messageList.isEmpty {
-                self.messagesCollectionView.reloadDataAndKeepOffset()
-                self.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: false)
-            }
-        }
+//        DispatchQueue.main.async {
+//            if !self.messageList.isEmpty {
+//                self.messagesCollectionView.reloadDataAndKeepOffset()
+//                self.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: false)
+//            }
+//        }
         
         
         self.view.addSubview(moveLastBtn)
@@ -138,9 +139,11 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     func loadFirstMessages(_ chatMassageList: [ChatModel]) {
         DispatchQueue.global(qos: .userInitiated).async {
             DispatchQueue.main.async {
+                
                 self.messageList = chatMassageList // DB에서 받아온 메세지 배열 삽입
                 self.messagesCollectionView.reloadData()
                 self.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: false)
+                self.firstLoaded = true
             }
         }
     }
@@ -435,9 +438,10 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else{ return }
           
-        output.senddSuccess
+        output.sendSuccess
             .bind(onNext: {result in
                 if result {
+                    
                 }
                 else {
                     self.messageSendfaileAlert()
@@ -446,22 +450,29 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             .disposed(by: disposeBag)
         
         output.getMessage
-            .bind(onNext: { chatMessageList in
+            .bind(onNext: { [weak self] chatMessageList in
+                guard let self else {return}
                 self.messageList = chatMessageList
-                // self.loadFirstMessages(chatMessageList)
+                self.loadFirstMessages(chatMessageList)
             }).disposed(by: disposeBag)
         
         output.getMoreMessage
-            .bind(onNext: { chatMessageList in
+            .bind(onNext: { [weak self] chatMessageList in
+                guard let self else {return}
                 self.loadMoreMessages(chatMessageList)
             })
             .disposed(by: disposeBag)
         
         output.getRealTimeMessage
-            .bind(onNext: {chatMessageList in
-                chatMessageList.forEach{ chatMessage in
-                    self.insertMessage(chatMessage)
+            .bind(onNext: { [weak self] chatMessageList in
+                guard let self else {return}
+                if self.firstLoaded {
+                    chatMessageList.forEach{ chatMessage in
+                        
+                        self.insertOnceMessage(chatMessage)
+                    }
                 }
+                
             })
             .disposed(by: disposeBag)
         
@@ -497,6 +508,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         output.setChatingView.subscribe(onNext: { [weak self] in
             guard let self else {return}
             messageSearchTextField.text = ""
+            
+        
 
             
             if $0 {
@@ -522,22 +535,24 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             
         }).disposed(by: disposeBag)
         
-        output.notExistAlert.bind(onNext: { self.searchMessageIsNotExistAlert()  }).disposed(by: disposeBag)
+        output.notExistAlert.bind(onNext: searchMessageIsNotExistAlert  ).disposed(by: disposeBag)
     }
     
     
     // MARK: - Helpers
-    func insertMessage(_ message: ChatModel) {
+    func insertOnceMessage(_ message: ChatModel) {
         messageList.append(message)
+        print("message \(message)")
+        
         messagesCollectionView.performBatchUpdates({
             messagesCollectionView.insertSections([messageList.count - 1])
             if messageList.count >= 2 {
                 messagesCollectionView.reloadSections([messageList.count - 2])
             }
         }, completion: { [weak self] _ in
-            if self?.isLastSectionVisible() == true {
-                
-                self?.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: true)
+            guard let self else {return}
+            if self.isLastSectionVisible() == true {
+                self.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: true)
             }
         })
     }

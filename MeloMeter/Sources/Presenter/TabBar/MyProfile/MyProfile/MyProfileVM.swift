@@ -11,11 +11,11 @@ import RxRelay
 import RxCocoa
 
 class MyProfileVM {
-
+    
     weak var coordinator: MyProfileCoordinator?
     private var myProfileUseCase: MyProfileUseCase
     private var alarmUseCase: AlarmUseCase
-
+    
     struct Input {
         let viewWillApearEvent: Observable<Void>
         let editProfileBtnTapEvent: Observable<Void>
@@ -67,9 +67,13 @@ class MyProfileVM {
                             .disposed(by: disposeBag)
                         output.userName.accept(name)
                         var number = phoneNumber.map{ String($0) }
+                        
+                        
                         number.insert(" 0", at: 3)
                         number.insert("-", at: 6)
                         number.insert("-", at: 11)
+                        
+                        
                         self.myProfileUseCase.getLastHundredQA()
                             .subscribe(onSuccess: { number in
                                 output.lastHundredQA.accept("\(number)번째 백문백답 완료!")
@@ -83,7 +87,7 @@ class MyProfileVM {
                 
                 self.alarmUseCase.getAlarmService()
                     .subscribe(onNext: { alarmList in
-            
+                        
                         output.alarmSubtitle.accept(alarmList.last?.text ?? "아직 추가된 알림이 없어요!")
                         
                         output.alarmTitle.accept(self.daysPassedSinceDate(alarmList.last?.date ?? Date()))

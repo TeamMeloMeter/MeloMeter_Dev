@@ -29,6 +29,11 @@ class LogInRepository: LogInRepositoryP {
             PhoneAuthProvider.provider()
                 .verifyPhoneNumber(authPhoneNumber, uiDelegate: nil) { (verificationID, error) in
                     if let error {
+                        if let error = error as NSError? {
+                                if error.code == AuthErrorCode.tooManyRequests.rawValue {
+                                    print("요청이 너무 많습니다. 잠시 후 다시 시도하세요.")
+                                }
+                            }
                         single(.failure(error))
                         return
                     }

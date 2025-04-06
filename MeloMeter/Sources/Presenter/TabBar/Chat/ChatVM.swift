@@ -41,7 +41,7 @@ class ChatVM {
     }
     
     struct Output {
-        var senddSuccess = PublishSubject<Bool>()
+        var sendSuccess = PublishSubject<Bool>()
         var getMessage = PublishSubject<[ChatModel]>()
         var getMoreMessage = PublishSubject<[ChatModel]>()
         var getRealTimeMessage = PublishSubject<[ChatModel]>()
@@ -81,7 +81,7 @@ class ChatVM {
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else{ return }
                 self.chatUseCase.getChatMessageService()
-                self.chatUseCase.startRealTimeChatMassage()
+                self.chatUseCase.startRealTimeChatMessage()
             })
             .disposed(by: disposeBag)
         
@@ -97,9 +97,9 @@ class ChatVM {
                 guard let self = self else{ return }
                 self.chatUseCase.sendMessageService(chatModel: myMessage, chatType: .text)
                     .subscribe(onSuccess: {
-                        output.senddSuccess.onNext(true)
+                        output.sendSuccess.onNext(true)
                     },onFailure: { error in
-                        output.senddSuccess.onNext(false)
+                        output.sendSuccess.onNext(false)
                     }).disposed(by: disposeBag)
             }).disposed(by: disposeBag)
         
@@ -109,9 +109,9 @@ class ChatVM {
                 guard let self = self else{ return }
                 self.chatUseCase.sendMessageService(chatModel: myMessage, chatType: .image)
                     .subscribe(onSuccess: {
-                        output.senddSuccess.onNext(true)
+                        output.sendSuccess.onNext(true)
                     },onFailure: { error in
-                        output.senddSuccess.onNext(false)
+                        output.sendSuccess.onNext(false)
                     }).disposed(by: disposeBag)
             })
             .disposed(by: disposeBag)
@@ -138,6 +138,7 @@ class ChatVM {
         
         self.chatUseCase.recieveRealTimeMessageService
             .subscribe(onNext: { chatMessageList in
+             
                 output.getRealTimeMessage.onNext(chatMessageList ?? [])
             }).disposed(by: disposeBag)
         
