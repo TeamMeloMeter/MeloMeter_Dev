@@ -190,10 +190,12 @@ class LogInRepository: LogInRepositoryP {
                     guard let otherUid = UserDefaults.standard.string(forKey: "otherUid") else { return }
                     guard let coupleDocumentID = UserDefaults.standard.string(forKey: "coupleDocumentID") else { return }
                     let defaultProfileImage = UIImage(named: "defaultProfileImage")!
+                    print(defaultProfileImage)
                     let uploadDefaultImage = self.firebaseService.uploadImage(filePath: uid, image: defaultProfileImage)
                     let uploadDefaultImage2 = self.firebaseService.uploadImage(filePath: otherUid, image: defaultProfileImage)
                     Single.zip(uploadDefaultImage, uploadDefaultImage2)
                         .subscribe(onSuccess: { user1, user2 in
+                            
                             let update1 = self.firebaseService.updateDocument(collection: .Users,
                                                                               document: uid,
                                                                               values: ["coupleID": coupleDocumentID,

@@ -7,16 +7,78 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6C4BC137-8483-4F73-8AF4-B921071FAE38"
+            uuid = "0F5B2216-FD46-43DD-BA77-1F472B0FD770"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MeloMeter/Sources/App/Splash/SplashVC.swift"
+            filePath = "MeloMeter/Sources/Data/Repositories/LogInRepository.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "inputVerificationCode(verificationCode:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0F5B2216-FD46-43DD-BA77-1F472B0FD770 - f6b3a3a3042ca107"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 ((Swift.Result&lt;Swift.Optional&lt;Swift.String&gt;, Swift.Error&gt;) -&gt; ()) -&gt; RxSwift.Disposable in MeloMeter.LogInRepository.inputVerificationCode(verificationCode: Swift.Optional&lt;Swift.String&gt;) -&gt; RxSwift.PrimitiveSequence&lt;RxSwift.SingleTrait, Swift.Optional&lt;Swift.String&gt;&gt;"
+                  moduleName = "MeloMeter.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/seungwan/xcode/Melometer/MeloMeter/Sources/Data/Repositories/LogInRepository.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "62"
+                  endingLineNumber = "62">
+               </Location>
+               <Location
+                  uuid = "0F5B2216-FD46-43DD-BA77-1F472B0FD770 - c560e13fa406bf38"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRAuthDataResult&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 ((Swift.Result&lt;Swift.Optional&lt;Swift.String&gt;, Swift.Error&gt;) -&gt; ()) -&gt; RxSwift.Disposable in MeloMeter.LogInRepository.inputVerificationCode(verificationCode: Swift.Optional&lt;Swift.String&gt;) -&gt; RxSwift.PrimitiveSequence&lt;RxSwift.SingleTrait, Swift.Optional&lt;Swift.String&gt;&gt;"
+                  moduleName = "MeloMeter.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/seungwan/xcode/Melometer/MeloMeter/Sources/Data/Repositories/LogInRepository.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "62"
+                  endingLineNumber = "62">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "584EEEB3-61AD-442F-BCB9-20379DC5A5AF"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MeloMeter/Sources/Data/Repositories/LogInRepository.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "194"
+            endingLineNumber = "194"
+            landmarkName = "combineCouple(code:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "51B735B5-402B-4F34-9BB7-E6D6C9679532"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MeloMeter/Sources/Data/Repositories/LogInRepository.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
+            landmarkName = "combineCouple(code:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

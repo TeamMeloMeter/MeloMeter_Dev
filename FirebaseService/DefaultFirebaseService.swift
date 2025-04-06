@@ -187,7 +187,9 @@ public extension DefaultFirebaseService {
 extension DefaultFirebaseService {
     public func uploadImage(filePath: String, image: UIImage) -> Single<String> {
         return Single.create { single in
-            guard let imageData = image.jpegData(compressionQuality: 0.4) else { return Disposables.create() }
+           
+            guard let imageData = image.normalizedImage()?.jpegData(compressionQuality: 0.4) else {
+                return Disposables.create() }
             let metaData = StorageMetadata()
             metaData.contentType = "image/jpeg"
             
