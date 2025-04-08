@@ -74,8 +74,9 @@ class LogInVM {
         resendBtnTapped.subscribe(onNext: {
             self.logInUseCase.sendNumberService(text: self.phoneNumber)
                 .subscribe(onSuccess: {[weak self] _ in
-                    self?.stopTimer()
-                    self?.verificationCodeTimer()
+                    guard let self else {return}
+                    self.stopTimer()
+                    self.verificationCodeTimer()
                 }, onFailure: {[weak self] error in
                     self?.sendNumRequest.onNext(false)
                 }).disposed(by: self.disposeBag)

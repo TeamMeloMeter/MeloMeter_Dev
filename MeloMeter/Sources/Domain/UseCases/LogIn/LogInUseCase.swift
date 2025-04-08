@@ -37,7 +37,8 @@ class LogInUseCase {
         return Single<Void>.create { [weak self] single in
             guard let self = self else{ return Disposables.create() }
             self.logInRepository.sendNumber(phoneNumber: text)
-                .subscribe(onSuccess: { result in
+                .subscribe(onSuccess: { [weak self] result in
+                    guard let self else {return}
                     switch result {
                     case .requestCompleted:
                         single(.success(()))

@@ -95,15 +95,17 @@ class LogInRepository: LogInRepositoryP {
             var uid = ""
             var phoneNumber = ""
             self.firebaseService.getCurrentUser()
-                .subscribe(onSuccess: { user in
+                .subscribe(onSuccess: { [weak self] user in
                     uid = user.uid
                     UserDefaults.standard.set("\(uid)", forKey: "uid")
-                    guard let number = user.phoneNumber else{ return }
+                    guard let self, let number = user.phoneNumber, !uid.isEmpty, !number.isEmpty else { return  single(.success((AccessLevel.none, nil))) }
                     phoneNumber = number
                     UserDefaults.standard.set("\(phoneNumber)", forKey: "phoneNumber")
-                    guard let fcmToken = UserDefaults.standard.string(forKey: "fcmToken") else{ return }
+                    guard let fcmToken = UserDefaults.standard.string(forKey: "fcmToken") else { return single(.success((AccessLevel.none, nil)))}
                     let createdAt = Date()
                     let inviteCode = "\(phoneNumber.suffix(4) + createdAt.toString(type: Date.Format.timeStamp).filter{ $0.isNumber }.map{ String($0) }.suffix(4).joined())"
+                    
+                    //MARK: make LogInDTO
                     let dto = LogInDTO(fcmToken: fcmToken,
                                        uid: uid,
                                        phoneNumber: phoneNumber,
@@ -112,22 +114,23 @@ class LogInRepository: LogInRepositoryP {
                                        stateMessage: "")
                     
                     self.firebaseService.getDocument(collection: .Users, document: uid)
-                        .subscribe(onSuccess: { user in
-                            guard let userModel = user.toObject(UserDTO.self)?.toModel() else{ return }
+                        .subscribe(onSuccess: { [weak self] user in
+                            guard let self, let userModel = user.toObject(UserDTO.self)?.toModel() else { return single(.success((AccessLevel.none, nil)))}
                             if let name = userModel.name {
                                 UserDefaults.standard.set(name, forKey: "userName")
                                 single(.success((AccessLevel.complete, nil)))
-                            }else if let coupleID = userModel.coupleID {
+                            } else if let coupleID = userModel.coupleID {
                                 UserDefaults.standard.set(coupleID, forKey: "coupleDocumentID")
                                 single(.success((AccessLevel.coupleCombined, nil)))
                             }
                         },onFailure: {[weak self] error in
-                            guard let values = dto.asDictionary, let self = self else { return }
+                            guard let values = dto.asDictionary, let self else { return }
                             
                             self.firebaseService.createDocument(collection: .Users,
                                                                 document: dto.uid,
                                                                 values: values)
-                            .subscribe(onSuccess: { _ in
+                            .subscribe(onSuccess: { [weak self] _ in
+                                guard let self else {return}
                                 UserDefaults.standard.set("\(inviteCode)", forKey: "inviteCode")
                                 single(.success((.authenticated, inviteCode)))
                             })

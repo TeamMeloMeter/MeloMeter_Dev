@@ -34,6 +34,7 @@ final class AppCoordinator: Coordinator {
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
     var firebaseService: FirebaseService
+    var userDefaultsRepo: UserDefaultsRepoP
     var disposeBag = DisposeBag()
     var accessLevel: AccessLevel = .none
     // MARK: - Initializers
@@ -41,6 +42,7 @@ final class AppCoordinator: Coordinator {
         self.navigationController = navigationController
         self.childCoordinators = []
         self.firebaseService = DefaultFirebaseService()
+        self.userDefaultsRepo = UserDefaultsRepo()
     }
     
     // MARK: - Methods
@@ -59,7 +61,7 @@ extension AppCoordinator {
             viewModel: SplashVM(coordinator: self,
                                 firebaseService: firebaseService,
                                 userRepository: UserRepository(firebaseService: firebaseService,
-                                                               chatRepository: ChatRepository(firebaseService: firebaseService)), versionRepository: VersionRepository()
+                                                               chatRepository: ChatRepository(firebaseService: firebaseService)), versionRepository: VersionRepository(), userDefaultsRepo: userDefaultsRepo
                                )
         )
         navigationController.setNavigationBarHidden(true, animated: false)

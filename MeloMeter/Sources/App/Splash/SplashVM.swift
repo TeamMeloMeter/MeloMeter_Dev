@@ -18,17 +18,19 @@ final class SplashVM {
     private var firebaseService: FirebaseService
     private var userRepository: UserRepositoryP
     private var versionRepository: VersionRepositoryP
+    private var userDefaultsRepo: UserDefaultsRepoP
     init(
         coordinator: AppCoordinator,
         firebaseService: FirebaseService,
         userRepository: UserRepositoryP,
-        versionRepository: VersionRepositoryP
+        versionRepository: VersionRepositoryP,
+        userDefaultsRepo: UserDefaultsRepoP
     ) {
         self.coordinator = coordinator
         self.firebaseService = firebaseService
         self.userRepository = userRepository
         self.versionRepository = versionRepository
-        
+        self.userDefaultsRepo = userDefaultsRepo
     }
     
     var alert = PublishSubject<String>()
@@ -57,6 +59,7 @@ final class SplashVM {
             } else if appStoreVer == "offLine" {
                 alert.onNext("offLine")
             } else {
+                
                 self.getAccessLevel()
                     .subscribe(onSuccess: {[weak self] state in
                         guard let self = self else{ return }
@@ -88,13 +91,9 @@ final class SplashVM {
             self.firebaseService.getCurrentUser()
                 .subscribe(onSuccess: {[weak self] user in
                     guard let self = self else{ return }
-                    
-                    
-                    
-                    
                     self.firebaseService.getDocument(collection: .Users, document: user.uid)
                         .subscribe(onSuccess: {[weak self] data in
-
+                            
                             guard let self = self else{ return }
                             guard let accessLevel = data["accessLevel"] as? String else{ single(.success(.none)); return}
                             switch accessLevel {
@@ -103,32 +102,25 @@ final class SplashVM {
                                 single(.success(.authenticated))
                             case "coupleCombined":
                                 
-                                let fcmToken = data["fcmToken"]
-                                let otherUid = data["otherUid"]
-                                let coupleID = data["coupleID"]
-                                let phoneNumber = data["phoneNumber"]
-                                let uid = data["uid"]
+                                if userDefaultsRepo.persistUserSessionData(fcmToken: data["fcmToken"], otherUid: data["otherUid"], coupleID: data["coupleID"], phoneNumber: data["phoneNumber"], uid: data["uid"]) {
+                                    single(.success(.coupleCombined))
+
+                                } else {
+                                    single(.success(.none))
+
+                                }
                                 
-                                UserDefaults.standard.set(fcmToken, forKey: "fcmToken")
-                                UserDefaults.standard.set(otherUid, forKey: "otherUid")
-                                UserDefaults.standard.set(coupleID, forKey: "coupleID")
-                                UserDefaults.standard.set(uid, forKey: "uid")
-                                UserDefaults.standard.set(phoneNumber, forKey: "phoneNumber")
+                              
                                 
                                 single(.success(.coupleCombined))
                             case "complete":
-                                let fcmToken = data["fcmToken"]
-                                let otherUid = data["otherUid"]
-                                let coupleID = data["coupleID"]
-                                let phoneNumber = data["phoneNumber"]
-                                let uid = data["uid"]
-                                
-                                UserDefaults.standard.set(fcmToken, forKey: "fcmToken")
-                                UserDefaults.standard.set(otherUid, forKey: "otherUid")
-                                UserDefaults.standard.set(coupleID, forKey: "coupleID")
-                                UserDefaults.standard.set(uid, forKey: "uid")
-                                UserDefaults.standard.set(phoneNumber, forKey: "phoneNumber")
-                                single(.success(.complete))
+                                if userDefaultsRepo.persistUserSessionData(fcmToken: data["fcmToken"], otherUid: data["otherUid"], coupleID: data["coupleID"], phoneNumber: data["phoneNumber"], uid: data["uid"]) {
+                                    single(.success(.coupleCombined))
+
+                                } else {
+                                    single(.success(.none))
+
+                                }
                             case "start":
                                 let deleteData = self.userRepository.withdrawal(uid: user.uid)
                                 let dropOut = self.userRepository.dropOut()

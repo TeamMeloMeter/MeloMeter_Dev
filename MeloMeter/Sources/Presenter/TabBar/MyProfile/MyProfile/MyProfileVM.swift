@@ -50,7 +50,7 @@ class MyProfileVM {
         let output = Output()
         input.viewWillApearEvent
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self else{ return }
+                guard let self else{ return }
                 self.myProfileUseCase.getUserInfo()
                     .subscribe(onNext: { user in
                         self.myProfileUseCase.getProfileImage(url: user.profileImage ?? "")
@@ -58,7 +58,7 @@ class MyProfileVM {
                                 output.profileImage.accept(image)
                             })
                             .disposed(by: disposeBag)
-                        guard let name = user.name, let phoneNumber = user.phoneNumber, let otherUid = user.otherUid else{ return }
+                        guard let name = user.name, let phoneNumber = user.phoneNumber, let otherUid = user.otherUid else { return }
                         self.myProfileUseCase.getDdayInfo(otherUid: otherUid)
                             .subscribe(onSuccess: { dDayInfo in
                                 output.coupleUserName.accept("\(name) & \(dDayInfo[0])")
