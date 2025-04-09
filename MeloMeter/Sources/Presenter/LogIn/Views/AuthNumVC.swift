@@ -58,6 +58,7 @@ final class AuthNumVC: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        //MARK: 인증번호 누른 후 tap
         nextBtn.rx.tap
             .bind(onNext: { [weak self] in
                 guard let self = self else{ return }

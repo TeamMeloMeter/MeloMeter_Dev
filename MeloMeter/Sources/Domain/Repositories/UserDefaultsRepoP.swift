@@ -7,5 +7,6 @@
 
 protocol UserDefaultsRepoP {
     func persistUserSessionData(fcmToken: Any?, otherUid: Any?, coupleID: Any?, phoneNumber: Any?, uid: Any?) -> Bool
+    func resetAllUserDefaults()
     
 }

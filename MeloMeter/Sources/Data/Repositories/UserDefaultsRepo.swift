@@ -8,6 +8,18 @@
 import Foundation
 
 class UserDefaultsRepo: UserDefaultsRepoP {
+    
+    private let userDefaultsStrings = ["fcmToken", "otherUid", "coupleID", "uid", "phoneNumber","userName","coupleDocumentID","inviteCode","otherFcmToken"]
+    
+    func resetAllUserDefaults() {
+        
+        userDefaultsStrings.forEach {
+            UserDefaults.standard.set(nil, forKey: $0)
+
+        }
+        
+    }
+    
     func persistUserSessionData(fcmToken: Any?, otherUid: Any?, coupleID: Any?, phoneNumber: Any?, uid: Any?) -> Bool {
         
         guard let fcmToken = fcmToken as? String,let otherUid = otherUid as? String, let coupleID = coupleID as? String, let phoneNumber = phoneNumber as? String, let uid = uid as? String else {return false}

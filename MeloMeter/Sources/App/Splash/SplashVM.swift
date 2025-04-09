@@ -59,7 +59,9 @@ final class SplashVM {
             } else if appStoreVer == "offLine" {
                 alert.onNext("offLine")
             } else {
-                
+                //MARK: 초기에 UserDefaults 다 지우고 시작
+                //TODO: 이후 로직 개선 시 이전 빌드 시 APP Crash 등으로 문제가 있을 때 지우도록 개선할 수 있을듯.
+                userDefaultsRepo.resetAllUserDefaults()
                 self.getAccessLevel()
                     .subscribe(onSuccess: {[weak self] state in
                         guard let self = self else{ return }
@@ -91,8 +93,10 @@ final class SplashVM {
             self.firebaseService.getCurrentUser()
                 .subscribe(onSuccess: {[weak self] user in
                     guard let self = self else{ return }
+                    
                     self.firebaseService.getDocument(collection: .Users, document: user.uid)
                         .subscribe(onSuccess: {[weak self] data in
+
                             
                             guard let self = self else{ return }
                             guard let accessLevel = data["accessLevel"] as? String else{ single(.success(.none)); return}

@@ -50,18 +50,19 @@ class LogInVM {
                 }).disposed(by: disposeBag)
         }).disposed(by: disposeBag)
         
-        //인증번호 입력 -> 로그인 요청 -> 응답
+        //MARK: 인증번호 입력 -> 로그인 요청 -> 응답
         verificationCode.bind(onNext: { [weak self] text in
             guard let self = self else{ return }
             self.logInUseCase.inputVerificationCodeService(code: text)
-                .subscribe(onSuccess: { inviteCode in
+                .subscribe(onSuccess: { [weak self] inviteCode in
+                    guard let self else {return}
                     if let code = inviteCode {
                         if let otherInviteCode = UserDefaults.standard.string(forKey: "otherInviteCode") {
                             self.coordinator?.showCoupleComvineVC(inviteCode: code, otherInviteCode: otherInviteCode)
-                        }else {
+                        } else {
                             self.coordinator?.showCoupleComvineVC(inviteCode: code)
                         }
-                    }else {
+                    } else {
                         self.coordinator?.finish()
                     }
                     

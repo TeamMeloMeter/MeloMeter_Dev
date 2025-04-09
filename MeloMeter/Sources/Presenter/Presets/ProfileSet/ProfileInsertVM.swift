@@ -36,6 +36,7 @@ class ProfileInsertVM {
 //                    self.dDayUseCase?.createDdayList
                     self.coordinator?.showPermissionVC1()
                 }, onFailure: { error in
+                    
                     self.sendProfileInsertRequest.onNext(false)
                 }).disposed(by: disposeBag)
         }).disposed(by: disposeBag)

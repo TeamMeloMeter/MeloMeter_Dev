@@ -21,6 +21,8 @@ class ProfileInsertUseCase {
     
     
     // 프로필 정보 입력 후 firebase
+    
+    //TODO: 계속 통신실패
     func insertUserInfoService(userInfo: [String?]) -> Single<Void> {
         return Single<Void>.create { [weak self] single in
             guard let self = self else{ return Disposables.create() }

@@ -67,7 +67,7 @@ class LogInRepository: LogInRepositoryP {
             Auth.auth().signIn(with: credential) { authResult, error in
                 if let error = error {
                     single(.failure(error))
-                }else {
+                } else {
                     self.userInFirestore().subscribe(onSuccess: { state in
                         self.firebaseService.setAccessLevel(state.0)
                             .subscribe(onSuccess: {
@@ -98,9 +98,9 @@ class LogInRepository: LogInRepositoryP {
                 .subscribe(onSuccess: { [weak self] user in
                     uid = user.uid
                     UserDefaults.standard.set("\(uid)", forKey: "uid")
-                    guard let self, let number = user.phoneNumber, !uid.isEmpty, !number.isEmpty else { return  single(.success((AccessLevel.none, nil))) }
+                    guard let self, let number = user.phoneNumber else { return single(.success((AccessLevel.none, nil))) }
                     phoneNumber = number
-                    UserDefaults.standard.set("\(phoneNumber)", forKey: "phoneNumber")
+                    
                     guard let fcmToken = UserDefaults.standard.string(forKey: "fcmToken") else { return single(.success((AccessLevel.none, nil)))}
                     let createdAt = Date()
                     let inviteCode = "\(phoneNumber.suffix(4) + createdAt.toString(type: Date.Format.timeStamp).filter{ $0.isNumber }.map{ String($0) }.suffix(4).joined())"
@@ -198,7 +198,6 @@ class LogInRepository: LogInRepositoryP {
                     guard let otherUid = UserDefaults.standard.string(forKey: "otherUid") else { return }
                     guard let coupleDocumentID = UserDefaults.standard.string(forKey: "coupleDocumentID") else { return }
                     let defaultProfileImage = UIImage(named: "defaultProfileImage")!
-                    print(defaultProfileImage)
                     let uploadDefaultImage = self.firebaseService.uploadImage(filePath: uid, image: defaultProfileImage)
                     let uploadDefaultImage2 = self.firebaseService.uploadImage(filePath: otherUid, image: defaultProfileImage)
                     Single.zip(uploadDefaultImage, uploadDefaultImage2)

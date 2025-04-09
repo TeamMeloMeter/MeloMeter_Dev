@@ -102,17 +102,17 @@ extension AppCoordinator: CoordinatorDelegate {
         self.childCoordinators = []
         self.navigationController.viewControllers.removeAll()
         if childCoordinator is LogInCoordinator {
+            //TODO: UserDefaults로 하면안될듯
             if UserDefaults.standard.string(forKey: "userName") != nil {
                 self.connectTabBarFlow()
             }else {
                 self.connectPresetFlow()
             }
-        }else if childCoordinator is PresetCoordinator {
+        } else if childCoordinator is PresetCoordinator {
             self.connectTabBarFlow()
-        }else if childCoordinator is TabBarCoordinator {
+        } else if childCoordinator is TabBarCoordinator {
             self.showSplashVC()
-        }
-        else {
+        } else {
             self.connectLogInFlow()
         }
     }

@@ -99,6 +99,8 @@ class EditProfileVC: UIViewController {
                                 )
                                 .showYNAlert()
                         },
+            
+            //MARK: 회원탈퇴 tapped
             withdrawalEvent: self.withdrawalLabel.rx.tapGesture().when(.ended)
                 .map({ _ in })
                 .asObservable()

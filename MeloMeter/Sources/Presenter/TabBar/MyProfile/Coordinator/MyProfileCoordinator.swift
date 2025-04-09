@@ -213,6 +213,7 @@ extension MyProfileCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
+    //MARK: 회원탈퇴 VC
     func showWithdrawalVC() {
         let firebaseService = self.firebaseService
         let viewController = WithdrawalVC(viewModel: AccountsVM(
