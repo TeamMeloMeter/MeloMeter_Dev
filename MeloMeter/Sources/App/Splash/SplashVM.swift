@@ -18,19 +18,16 @@ final class SplashVM {
     private var firebaseService: FirebaseService
     private var userRepository: UserRepositoryP
     private var versionRepository: VersionRepositoryP
-    private var userDefaultsRepo: UserDefaultsRepoP
     init(
         coordinator: AppCoordinator,
         firebaseService: FirebaseService,
         userRepository: UserRepositoryP,
-        versionRepository: VersionRepositoryP,
-        userDefaultsRepo: UserDefaultsRepoP
+        versionRepository: VersionRepositoryP
     ) {
         self.coordinator = coordinator
         self.firebaseService = firebaseService
         self.userRepository = userRepository
         self.versionRepository = versionRepository
-        self.userDefaultsRepo = userDefaultsRepo
     }
     
     var alert = PublishSubject<String>()
@@ -59,9 +56,7 @@ final class SplashVM {
             } else if appStoreVer == "offLine" {
                 alert.onNext("offLine")
             } else {
-                //MARK: 초기에 UserDefaults 다 지우고 시작
-                //TODO: 이후 로직 개선 시 이전 빌드 시 APP Crash 등으로 문제가 있을 때 지우도록 개선할 수 있을듯.
-                userDefaultsRepo.resetAllUserDefaults()
+             
                 self.getAccessLevel()
                     .subscribe(onSuccess: {[weak self] state in
                         guard let self = self else{ return }
@@ -91,12 +86,13 @@ final class SplashVM {
     func getAccessLevel() -> Single<AccessLevel> {
         return Single.create { single in
             self.firebaseService.getCurrentUser()
-                .subscribe(onSuccess: {[weak self] user in
+                .subscribe(onSuccess: { [weak self] user in
                     guard let self = self else{ return }
-                    
+                
                     self.firebaseService.getDocument(collection: .Users, document: user.uid)
                         .subscribe(onSuccess: {[weak self] data in
 
+                        
                             
                             guard let self = self else{ return }
                             guard let accessLevel = data["accessLevel"] as? String else{ single(.success(.none)); return}
@@ -106,7 +102,7 @@ final class SplashVM {
                                 single(.success(.authenticated))
                             case "coupleCombined":
                                 
-                                if userDefaultsRepo.persistUserSessionData(fcmToken: data["fcmToken"], otherUid: data["otherUid"], coupleID: data["coupleID"], phoneNumber: data["phoneNumber"], uid: data["uid"]) {
+                                if UserDefaultsRepo.shared.persistUserSessionData(fcmToken: data["fcmToken"], otherUid: data["otherUid"], coupleID: data["coupleID"], phoneNumber: data["phoneNumber"], uid: data["uid"]) {
                                     single(.success(.coupleCombined))
 
                                 } else {
@@ -118,8 +114,8 @@ final class SplashVM {
                                 
                                 single(.success(.coupleCombined))
                             case "complete":
-                                if userDefaultsRepo.persistUserSessionData(fcmToken: data["fcmToken"], otherUid: data["otherUid"], coupleID: data["coupleID"], phoneNumber: data["phoneNumber"], uid: data["uid"]) {
-                                    single(.success(.coupleCombined))
+                                if UserDefaultsRepo.shared.persistUserSessionData(fcmToken: data["fcmToken"], otherUid: data["otherUid"], coupleID: data["coupleID"], phoneNumber: data["phoneNumber"], uid: data["uid"]) {
+                                    single(.success(.complete))
 
                                 } else {
                                     single(.success(.none))

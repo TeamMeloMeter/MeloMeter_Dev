@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+        UserDefaultsRepo.shared.resetAllUserDefaults()
         // 구글 애드모
         MobileAds.shared.start(completionHandler: nil)
         

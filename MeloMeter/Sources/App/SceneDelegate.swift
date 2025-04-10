@@ -32,6 +32,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     //카카오톡 링크를 통해 앱 진입 시
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        UserDefaultsRepo.shared.resetAllUserDefaults()
+
         guard let url = URLContexts.first?.url else { return }
         if let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
             let queryItems = components.queryItems ?? []

@@ -23,12 +23,12 @@ final class LogInCoordinator: Coordinator {
     func start() {
         if !isLogin {
             showStartVC()
-        }else {
+        } else {
             if let inviteCode = UserDefaults.standard.string(forKey: "inviteCode") {
                 let code = "\(inviteCode.prefix(4)) \(inviteCode.suffix(4))"
                 if let otherInviteCode = UserDefaults.standard.string(forKey: "otherInviteCode") {
                     showCoupleComvineVC(inviteCode: code, otherInviteCode: otherInviteCode)
-                }else {
+                } else {
                     showCoupleComvineVC(inviteCode: code)
                 }
             }else {

@@ -7,9 +7,11 @@
 
 import Foundation
 
-class UserDefaultsRepo: UserDefaultsRepoP {
+class UserDefaultsRepo {
     
-    private let userDefaultsStrings = ["fcmToken", "otherUid", "coupleID", "uid", "phoneNumber","userName","coupleDocumentID","inviteCode","otherFcmToken"]
+    static let shared = UserDefaultsRepo()
+    
+    private let userDefaultsStrings = ["fcmToken", "otherUid", "coupleID", "uid", "phoneNumber","userName","coupleDocumentID","inviteCode","otherFcmToken","stateMessage","accessLevel","createdAt"]
     
     func resetAllUserDefaults() {
         
