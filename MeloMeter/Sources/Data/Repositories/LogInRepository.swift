@@ -63,18 +63,26 @@ class LogInRepository: LogInRepositoryP {
                 withVerificationID: verificationID,
                 verificationCode: code
             )
-            
+            print("로그인 요청1")
+
             Auth.auth().signIn(with: credential) { authResult, error in
                 if let error = error {
+                    print("로그인 요청2 \(error)")
+
                     single(.failure(error))
                 } else {
                     self.userInFirestore().subscribe(onSuccess: { state in
                         self.firebaseService.setAccessLevel(state.0)
                             .subscribe(onSuccess: {
                                 single(.success(state.1))
+                            }, onError: { err in
+                                print("error\(err)")
+                                
                             })
                             .disposed(by: self.disposeBag)
                     }, onFailure: { error in
+                        print("로그인 요청3 \(error)")
+
                         self.firebaseService.setAccessLevel(.none)
                             .subscribe(onSuccess: {
                                 single(.success(nil))
@@ -106,6 +114,7 @@ class LogInRepository: LogInRepositoryP {
                     let inviteCode = "\(phoneNumber.suffix(4) + createdAt.toString(type: Date.Format.timeStamp).filter{ $0.isNumber }.map{ String($0) }.suffix(4).joined())"
                     
                     //MARK: make LogInDTO
+                    //MARK: 인증번호 전송 후 createDoc
                     let dto = LogInDTO(fcmToken: fcmToken,
                                        uid: uid,
                                        phoneNumber: phoneNumber,
@@ -170,6 +179,8 @@ class LogInRepository: LogInRepositoryP {
             firebaseService.getCurrentUser()
                 .flatMap{ user -> Single<Void> in
                     UserDefaults.standard.set(user.uid, forKey: "uid")
+                    UserDefaults.standard.set(user.phoneNumber, forKey: "phoneNumber")
+                    
                     return self.firebaseService.getDocument(collection: .Users, field: "inviteCode", values: [inviteCode])
                         .flatMap{ [weak self] data -> Single<Void> in
                             guard !data.isEmpty else{ return Single.error(FireStoreError.unknown) }

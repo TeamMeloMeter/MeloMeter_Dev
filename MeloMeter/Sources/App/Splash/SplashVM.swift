@@ -13,6 +13,8 @@ import RxSwift
 
 final class SplashVM {
 
+    
+    
     private let disposeBag = DisposeBag()
     weak var coordinator: AppCoordinator?
     private var firebaseService: FirebaseService
@@ -47,10 +49,21 @@ final class SplashVM {
     
     @objc
     func selectFlow() {
-        let device = versionRepository.getDeviceVersion()
+        
+        let hasLaunchedBefore = UserDefaults.standard.bool(forKey: "hasLaunchedBefore")
+        
+        if !hasLaunchedBefore {
+            // 앱이 삭제되었거나 처음 설치된 상태
+            UserDefaults.standard.set(true, forKey: "hasLaunchedBefore")
+            
+            if let user = Auth.auth().currentUser {
+                try? Auth.auth().signOut()
+            }
+        }
+
         versionRepository.getAppStoreVersion(completion: { [weak self] appStoreVer in
             guard let self else {return}
-            if let appStoreVer, Float(device) ?? -0.0 < Float(appStoreVer) ?? 0.0  {
+            if let appStoreVer, Float(versionRepository.getDeviceVersion()) ?? -0.0 < Float(appStoreVer) ?? 0.0  {
                 
                 alert.onNext("appStore")
             } else if appStoreVer == "offLine" {
@@ -88,38 +101,33 @@ final class SplashVM {
             self.firebaseService.getCurrentUser()
                 .subscribe(onSuccess: { [weak self] user in
                     guard let self = self else{ return }
-                
+
                     self.firebaseService.getDocument(collection: .Users, document: user.uid)
                         .subscribe(onSuccess: {[weak self] data in
 
-                        
+                            
                             
                             guard let self = self else{ return }
                             guard let accessLevel = data["accessLevel"] as? String else{ single(.success(.none)); return}
                             switch accessLevel {
                             case "authenticated":
-                                
                                 single(.success(.authenticated))
                             case "coupleCombined":
-                                
-                                if UserDefaultsRepo.shared.persistUserSessionData(fcmToken: data["fcmToken"], otherUid: data["otherUid"], coupleID: data["coupleID"], phoneNumber: data["phoneNumber"], uid: data["uid"]) {
+                                if UserDefaultsRepo.shared.persistCoupleCombined(fcmToken: data["fcmToken"], coupleID: data["coupleID"], phoneNumber: data["phoneNumber"], uid: data["uid"]) {
                                     single(.success(.coupleCombined))
 
                                 } else {
-                                    single(.success(.none))
-
+                                    single(.success(.authenticated))
                                 }
-                                
-                              
-                                
-                                single(.success(.coupleCombined))
                             case "complete":
-                                if UserDefaultsRepo.shared.persistUserSessionData(fcmToken: data["fcmToken"], otherUid: data["otherUid"], coupleID: data["coupleID"], phoneNumber: data["phoneNumber"], uid: data["uid"]) {
+                                if UserDefaultsRepo.shared.persistCompleted(fcmToken: data["fcmToken"], otherUid: data["otherUid"], coupleID: data["coupleID"], phoneNumber: data["phoneNumber"], uid: data["uid"]) {
                                     single(.success(.complete))
 
-                                } else {
-                                    single(.success(.none))
+                                } else if UserDefaultsRepo.shared.persistCoupleCombined(fcmToken: data["fcmToken"], coupleID: data["coupleID"], phoneNumber: data["phoneNumber"], uid: data["uid"]) {
+                                    single(.success(.coupleCombined))
 
+                                } else {
+                                    single(.success(.authenticated))
                                 }
                             case "start":
                                 let deleteData = self.userRepository.withdrawal(uid: user.uid)

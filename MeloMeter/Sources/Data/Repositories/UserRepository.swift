@@ -32,6 +32,8 @@ class UserRepository: UserRepositoryP {
         return Single.create { [weak self] single in
             guard let self = self else { return Disposables.create() }
             var coupleDocumentID = ""
+            
+            //TODO: ?? "" toProfileInsertDTO 에서 바꿔야됌
             let userDTO = user.toProfileInsertDTO()
             let dDayDTO = dDay.toDTO()
             UserDefaults.standard.set(userDTO.name, forKey: "userName")

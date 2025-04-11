@@ -174,6 +174,8 @@ public extension DefaultFirebaseService {
         }
     }
     
+    
+    //MARK: defaultFirebase setAccessLevel
     func setAccessLevel(_ level: AccessLevel) -> Single<Void> {
         return self.getCurrentUser()
             .flatMap({ user -> Single<Void> in
