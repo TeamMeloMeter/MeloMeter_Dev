@@ -15,7 +15,7 @@ class AdmobRepository: AdmobRepositoryP {
     private let bannerRelease = "ca-app-pub-5763713982294456/4052448154"
     
     private let fullScreenDebug = "ca-app-pub-3940256099942544/4411468910"
-    private let fullScreenRelease = "ca-app-pub-3940256099942544/4411468910"
+    private let fullScreenRelease = "ca-app-pub-5763713982294456/4004346694"
     
     func loadBottomBanner() -> BannerView {
     let bannerView = BannerView()
