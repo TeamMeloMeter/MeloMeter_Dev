@@ -27,19 +27,35 @@ final class LogInCoordinator: Coordinator {
             if let inviteCode = UserDefaults.standard.string(forKey: "inviteCode") {
                 let code = "\(inviteCode.prefix(4)) \(inviteCode.suffix(4))"
                 if let otherInviteCode = UserDefaults.standard.string(forKey: "otherInviteCode") {
-                    showCoupleComvineVC(inviteCode: code, otherInviteCode: otherInviteCode)
+                    showCoupleCombineVC(inviteCode: code, otherInviteCode: otherInviteCode)
                 } else {
-                    showCoupleComvineVC(inviteCode: code)
+                    showCoupleCombineVC(inviteCode: code)
                 }
-            }else {
+            } else {
                 self.firebaseService.getCurrentUser()
                     .subscribe(onSuccess: {[weak self] user in
                         guard let self = self else{ return }
                         self.firebaseService.getDocument(collection: .Users, document: user.uid)
                             .subscribe(onSuccess: {[weak self] userInfo in
-                                guard let self = self else{ return }
+                                guard let self else {return}
+                                
+                                if let phoneNumber = userInfo["phoneNumber"] as? String, let currentPhoneNumber = user.phoneNumber {
+                                    if phoneNumber.isEmpty {
+                                        firebaseService.updateDocument(collection: .Users, document: user.uid, values: ["phoneNumber": currentPhoneNumber]).subscribe({ single in
+                                            switch single {
+                                            case .success(_):
+                                                break
+                                            case .failure(_):
+                                                break
+                                            }
+                                        }).disposed(by: self.disposeBag)
+                                    }
+                                }
+                                
+                                
+                                
                                 if let inviteCode = userInfo["inviteCode"] as? String {
-                                    showCoupleComvineVC(inviteCode: inviteCode)
+                                    showCoupleCombineVC(inviteCode: inviteCode)
                                 }else {
                                     showStartVC()
                                 }
@@ -94,7 +110,7 @@ extension LogInCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
-    func showCoupleComvineVC(inviteCode: String, otherInviteCode: String? = nil) {
+    func showCoupleCombineVC(inviteCode: String, otherInviteCode: String? = nil) {
         let viewController = CoupleCombineVC(
             viewModel: LogInVM(
                 coordinator: self,

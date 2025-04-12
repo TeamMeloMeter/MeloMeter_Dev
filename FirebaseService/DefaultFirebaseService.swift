@@ -41,6 +41,7 @@ public final class DefaultFirebaseService: FirebaseService {
                 return Disposables.create()
             }
             single(.success(currentUser))
+            
             return Disposables.create()
         }
     }

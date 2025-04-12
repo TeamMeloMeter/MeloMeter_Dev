@@ -62,13 +62,13 @@ struct UserModel: Equatable, Hashable {
     }
 
     // MARK: - Methods
-    func toProfileInsertDTO() -> UserDTO {
+    func toProfileInsertDTO(uid: String, phoneNumber: String) -> UserDTO {
         return UserDTO(
             fcmToken: fcmToken,
-            uid: UserDefaults.standard.string(forKey: "uid") ?? "",
+            uid: uid,
             otherUid: otherUid,
             coupleID: coupleID,
-            phoneNumber: UserDefaults.standard.string(forKey: "phoneNumber") ?? "",
+            phoneNumber: phoneNumber,
             profileImagePath: profileImage,
             name: name ?? "",
             birth: birth?.toString(type: .yearToDay) ?? "",

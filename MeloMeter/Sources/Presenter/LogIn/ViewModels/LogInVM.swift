@@ -58,9 +58,9 @@ class LogInVM {
                     guard let self else {return}
                     if let code = inviteCode {
                         if let otherInviteCode = UserDefaults.standard.string(forKey: "otherInviteCode") {
-                            self.coordinator?.showCoupleComvineVC(inviteCode: code, otherInviteCode: otherInviteCode)
+                            self.coordinator?.showCoupleCombineVC(inviteCode: code, otherInviteCode: otherInviteCode)
                         } else {
-                            self.coordinator?.showCoupleComvineVC(inviteCode: code)
+                            self.coordinator?.showCoupleCombineVC(inviteCode: code)
                         }
                     } else {
                         self.coordinator?.finish()

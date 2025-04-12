@@ -28,47 +28,102 @@ class UserRepository: UserRepositoryP {
     }
     
     
-    func presetUserInfo(user: UserModel, dDay: CoupleModel) -> Single<Void> {
-        return Single.create { [weak self] single in
-            guard let self = self else { return Disposables.create() }
-            var coupleDocumentID = ""
-            
-            //TODO: ?? "" toProfileInsertDTO 에서 바꿔야됌
-            let userDTO = user.toProfileInsertDTO()
-            let dDayDTO = dDay.toDTO()
-            UserDefaults.standard.set(userDTO.name, forKey: "userName")
-            guard let userValues = userDTO.asDictionary, var coupleValues = dDayDTO.asDictionary else { return Disposables.create() }
-            coupleValues["anniName"] = FieldValue.arrayUnion(coupleValues["anniName"] as! [Any])
-            coupleValues["anniDate"] = FieldValue.arrayUnion(coupleValues["anniDate"] as! [Any])
-            self.firebaseService.getDocument(collection: .Users, document: userDTO.uid)
-                .subscribe(onSuccess: { userInfo in
-                    guard let coupleID = userInfo["coupleID"] as? String else{ single(.failure(FireStoreError.unknown)); return }
-                    coupleDocumentID = coupleID
-                    let couplesUpdate = self.firebaseService.updateDocument(collection: .Couples,
-                                                                            document: coupleDocumentID,
-                                                                            values: coupleValues)
-                    let usersUpdate = self.firebaseService.createDocument(collection: .Users,
-                                                                          document: userDTO.uid,
-                                                                          values: userValues)
-                    Single.zip(couplesUpdate, usersUpdate)
-                        .subscribe(onSuccess: { _,_ in
-                            self.firebaseService.setAccessLevel(.complete)
-                                .subscribe(onSuccess: {
-                                    single(.success(()) )
-                                })
-                                .disposed(by: self.disposeBag)
-                        }, onFailure: { error in
-                            single(.failure(error))
-                        })
-                        .disposed(by: self.disposeBag)
-                })
-                .disposed(by: disposeBag)
-            
-            return Disposables.create()
-        }
-        
-    }
+//    func presetUserInfo(user: UserModel, dDay: CoupleModel) -> Single<Void> {
+//        return Single.create { [weak self] single in
+//            guard let self = self else { return Disposables.create() }
+//            var coupleDocumentID = ""
+//            
+//            firebaseService.getCurrentUser().subscribe({ single in
+//                switch single {
+//                case .success(let susccessUser):
+//                    //
+//                    break
+//                case .failure(let err):
+//                    //
+//                    break
+//                }
+//                
+//                
+//            }).disposed(by: disposeBag)
+//            
+//            let userDTO = user.toProfileInsertDTO(uid: <#String#>, phoneNumber: <#String#>)
+//            let dDayDTO = dDay.toDTO()
+//            UserDefaults.standard.set(userDTO.name, forKey: "userName")
+//            guard let userValues = userDTO.asDictionary, var coupleValues = dDayDTO.asDictionary else { return Disposables.create() }
+//            coupleValues["anniName"] = FieldValue.arrayUnion(coupleValues["anniName"] as! [Any])
+//            coupleValues["anniDate"] = FieldValue.arrayUnion(coupleValues["anniDate"] as! [Any])
+//            self.firebaseService.getDocument(collection: .Users, document: userDTO.uid)
+//                .subscribe(onSuccess: { userInfo in
+//                    guard let coupleID = userInfo["coupleID"] as? String else{ single(.failure(FireStoreError.unknown)); return }
+//                    coupleDocumentID = coupleID
+//                    let couplesUpdate = self.firebaseService.updateDocument(collection: .Couples,
+//                                                                            document: coupleDocumentID,
+//                                                                            values: coupleValues)
+//                    let usersUpdate = self.firebaseService.createDocument(collection: .Users,
+//                                                                          document: userDTO.uid,
+//                                                                          values: userValues)
+//                    Single.zip(couplesUpdate, usersUpdate)
+//                        .subscribe(onSuccess: { _,_ in
+//                            self.firebaseService.setAccessLevel(.complete)
+//                                .subscribe(onSuccess: {
+//                                    single(.success(()) )
+//                                })
+//                                .disposed(by: self.disposeBag)
+//                        }, onFailure: { error in
+//                            single(.failure(error))
+//                        })
+//                        .disposed(by: self.disposeBag)
+//                })
+//                .disposed(by: disposeBag)
+//            
+//            return Disposables.create()
+//        }
+//        
+//    }
     
+    func presetUserInfo(user: UserModel, dDay: CoupleModel) -> Single<Void> {
+        return firebaseService.getCurrentUser()
+            .flatMap { [weak self] successUser -> Single<Void> in
+                guard let self else { return .error(FireStoreError.unknown) }
+
+                let userDTO = user.toProfileInsertDTO(uid: successUser.uid, phoneNumber: successUser.phoneNumber ?? "" )
+                let dDayDTO = dDay.toDTO()
+
+                UserDefaults.standard.set(userDTO.name, forKey: "userName")
+                guard let userValues = userDTO.asDictionary,
+                      var coupleValues = dDayDTO.asDictionary else {
+                    return .error(FireStoreError.unknown)
+                }
+
+                coupleValues["anniName"] = FieldValue.arrayUnion(coupleValues["anniName"] as? [Any] ?? [])
+                coupleValues["anniDate"] = FieldValue.arrayUnion(coupleValues["anniDate"] as? [Any] ?? [])
+
+                return self.firebaseService.getDocument(collection: .Users, document: userDTO.uid)
+                    .flatMap { userInfo in
+                        guard let coupleID = userInfo["coupleID"] as? String else {
+                            return .error(FireStoreError.unknown)
+                        }
+
+                        let couplesUpdate = self.firebaseService.updateDocument(
+                            collection: .Couples,
+                            document: coupleID,
+                            values: coupleValues
+                        )
+
+                        let usersUpdate = self.firebaseService.createDocument(
+                            collection: .Users,
+                            document: userDTO.uid,
+                            values: userValues
+                        )
+
+                        return Single.zip(couplesUpdate, usersUpdate)
+                            .flatMap { _, _ in
+                                return self.firebaseService.setAccessLevel(.complete)
+                            }
+                    }
+            }
+    }
+
     func getUserInfo(_ uid: String) -> Observable<UserModel> {
         return self.firebaseService.getDocument(collection: .Users, document: uid)
             .compactMap{ $0.toObject(UserDTO.self)?.toModel() }
