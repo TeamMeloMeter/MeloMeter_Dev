@@ -9,6 +9,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 import RxGesture
+import GoogleMobileAds
 
 class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
     
@@ -144,6 +145,9 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
                 self.hundredQnASubtitleLabel.text = "1번째 백문백답 완료!"// lastNumberString
             })
             .disposed(by: disposeBag)
+        
+        output.getBottomBannerAd.bind(onNext: addBannerViewToView ).disposed(by: disposeBag)
+
     }
     
     // MARK: configure
@@ -736,5 +740,23 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
             lineView2.heightAnchor.constraint(equalToConstant: 1)
 
         ])
+    }
+    
+    //MARK: adMob
+    private func addBannerViewToView(bannerView: BannerView?) {
+        
+        guard let bannerView else {return}
+        
+        let viewWidth = view.frame.inset(by: view.safeAreaInsets).width
+        let adaptiveSize = currentOrientationAnchoredAdaptiveBanner(width: viewWidth)
+        bannerView.adSize = adaptiveSize
+        bannerView.rootViewController = self
+        
+        view.addSubview(bannerView)
+        bannerView.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            $0.centerX.equalTo(view.snp.centerX)
+        }
+
     }
 }

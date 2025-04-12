@@ -42,7 +42,7 @@ extension MyProfileCoordinator {
                             chatRepository: ChatRepository(firebaseService: firebaseService)
                         ),
                         coupleRepository: CoupleRepository(firebaseService: firebaseService),
-                        hundredQARepository: HundredQARepository(firebaseService: firebaseService)
+                        hundredQARepository: HundredQARepository(firebaseService: firebaseService), adMobRepo: AdmobRepository()
             ), alarmUseCase: AlarmUseCase(alarmRepository: AlarmRepository(firebaseService: firebaseService))
             )
         )

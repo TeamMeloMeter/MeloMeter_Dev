@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxRelay
 import RxCocoa
+import GoogleMobileAds
 
 class MyProfileVM {
     
@@ -37,6 +38,7 @@ class MyProfileVM {
         var alarmTitle = PublishRelay<String>()
         var alarmSubtitle = PublishRelay<String>()
         var alarmImage = PublishRelay<String>()
+        var getBottomBannerAd = BehaviorSubject<BannerView?>(value: nil)
     }
     
     
@@ -51,6 +53,9 @@ class MyProfileVM {
         input.viewWillApearEvent
             .subscribe(onNext: { [weak self] _ in
                 guard let self else{ return }
+                
+                output.getBottomBannerAd.onNext(self.myProfileUseCase.getBottomBannerAd())
+                
                 self.myProfileUseCase.getUserInfo()
                     .subscribe(onNext: { user in
                         self.myProfileUseCase.getProfileImage(url: user.profileImage ?? "")

@@ -15,7 +15,6 @@ import GoogleMobileAds
 //메인 지도 화면
 class MapVC: UIViewController, UIGestureRecognizerDelegate{
 
-    var bannerView: BannerView!
 
     
     let infoWindow1 = NMFInfoWindow()

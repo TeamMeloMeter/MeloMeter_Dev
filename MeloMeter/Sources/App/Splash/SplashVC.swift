@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import GoogleMobileAds
 final class SplashVC: UIViewController {
     private let viewModel: SplashVM
     private var disposeBag = DisposeBag()
@@ -18,18 +19,19 @@ final class SplashVC: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         setAutoLayout()
         startAnimation()
         
-
-        
-       
         viewModel.selectFlow()
         viewModel.setNotification()
        
+        viewModel.loadAdmob.subscribe(onNext: { [weak self] ad in
+            guard let self, let ad else {return}
+            ad.present(from: self)
+        }).disposed(by: disposeBag)
         
         viewModel.alert.subscribe(onNext: { [weak self] alertType in
             guard let self else {return}
@@ -82,5 +84,23 @@ final class SplashVC: UIViewController {
             logoImageView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             logoImageView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor)
         ])
+    }
+    
+    //MARK: adMob
+    private func addBannerViewToView(bannerView: BannerView?) {
+        
+        guard let bannerView else {return}
+        
+        let viewWidth = view.frame.inset(by: view.safeAreaInsets).width
+        let adaptiveSize = currentOrientationAnchoredAdaptiveBanner(width: viewWidth)
+        bannerView.adSize = adaptiveSize
+        bannerView.rootViewController = self
+        
+        view.addSubview(bannerView)
+        bannerView.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            $0.centerX.equalTo(view.snp.centerX)
+        }
+
     }
 }
