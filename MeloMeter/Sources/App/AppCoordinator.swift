@@ -101,6 +101,8 @@ extension AppCoordinator: CoordinatorDelegate {
         self.navigationController.viewControllers.removeAll()
         if childCoordinator is LogInCoordinator {
             //TODO: UserDefaults로 하면안될듯
+            
+            
             if UserDefaults.standard.string(forKey: "userName") != nil {
                 self.connectTabBarFlow()
             }else {

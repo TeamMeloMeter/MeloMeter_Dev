@@ -63,25 +63,23 @@ class LogInRepository: LogInRepositoryP {
                 withVerificationID: verificationID,
                 verificationCode: code
             )
-            print("로그인 요청1")
 
             Auth.auth().signIn(with: credential) { authResult, error in
                 if let error = error {
-                    print("로그인 요청2 \(error)")
 
                     single(.failure(error))
                 } else {
                     self.userInFirestore().subscribe(onSuccess: { state in
                         self.firebaseService.setAccessLevel(state.0)
                             .subscribe(onSuccess: {
+                                
                                 single(.success(state.1))
-                            }, onError: { err in
+                            }, onFailure: { err in
                                 print("error\(err)")
                                 
                             })
                             .disposed(by: self.disposeBag)
                     }, onFailure: { error in
-                        print("로그인 요청3 \(error)")
 
                         self.firebaseService.setAccessLevel(.none)
                             .subscribe(onSuccess: {

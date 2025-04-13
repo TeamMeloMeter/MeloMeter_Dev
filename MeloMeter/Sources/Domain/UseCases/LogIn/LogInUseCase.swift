@@ -57,7 +57,6 @@ class LogInUseCase {
     func inputVerificationCodeService(code: String?) -> Single<String?> {
         return Single.create { [weak self] single in
             guard let self = self else{ return Disposables.create() }
-            print("로그인 요청")
             self.logInRepository.inputVerificationCode(verificationCode: code)
                 .subscribe(onSuccess: { code in
 
