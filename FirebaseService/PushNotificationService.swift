@@ -289,9 +289,9 @@ final class PushNotificationService {
         
         if todayYear < componentsYear {
                 return true
-            }else if todayYear == componentsYear && todayMonth < componentsMonth {
+            } else if todayYear == componentsYear && todayMonth < componentsMonth {
                 return true
-            }else if todayYear == componentsYear && todayMonth == componentsMonth && todayDay < componentsDay {
+            } else if todayYear == componentsYear && todayMonth == componentsMonth && todayDay < componentsDay {
                 return true
             }
         

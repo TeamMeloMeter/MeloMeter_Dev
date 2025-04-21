@@ -43,14 +43,8 @@ class MainUseCase {
         self.disposeBag = DisposeBag()
     }
     
-    func locationStart() {
-        DefaultLocationService.shared.start()
-    }
     
-    func locationStop() {
-        DefaultLocationService.shared.stop()
-    }
-    
+
     func requestAuthorization() {
         DefaultLocationService.shared.requestAuthorization()
     }

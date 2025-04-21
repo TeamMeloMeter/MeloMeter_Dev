@@ -73,12 +73,15 @@ final class SplashVM : NSObject, FullScreenContentDelegate {
             } else if appStoreVer == "offLine" {
                 alert.onNext("offLine")
             } else {
+                PushNotificationService.shared.setupAppStateNotifications()
+
                 adMobRepo.loadInterstitial().subscribe({ single in
                         switch single {
                         case .success(let interstitialAd):
                             interstitialAd.fullScreenContentDelegate = self
                             self.loadAdmob.onNext(interstitialAd)
-                        case .failure(let err):
+                            
+                        case .failure(_):
                             self.flowPick()
                         }
                     
