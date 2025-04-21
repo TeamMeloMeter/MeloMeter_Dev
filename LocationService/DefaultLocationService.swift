@@ -57,6 +57,8 @@ final class DefaultLocationService: NSObject, LocationService {
 }
 
 extension DefaultLocationService: CLLocationManagerDelegate {
+    
+    //MARK: 위치 주기적으로 업데이트.
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         self.currentLocation.onNext(location)
@@ -66,7 +68,11 @@ extension DefaultLocationService: CLLocationManagerDelegate {
             self.firebaseService.updateDocument(collection: .Locations,
                                                 document: uid,
                                                 values: ["location": geopoint])
-            .subscribe(onSuccess: {}).disposed(by: disposeBag)
+            .subscribe(onSuccess: {
+                
+                print("location Updated")
+                
+            }).disposed(by: disposeBag)
             
         }
         

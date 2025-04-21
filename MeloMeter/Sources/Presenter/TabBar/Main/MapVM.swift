@@ -18,7 +18,7 @@ class MapVM {
     private var mainUseCase: MainUseCase
     
     struct Input {
-        let viewWillApearEvent: Observable<Void>
+        let viewWillAppear: Observable<Void>
         let dDayBtnTapEvent: Observable<Void>
         let alarmBtnTapEvent: Observable<Void>
         let endTriggerAlertTapEvent: Observable<Void>
@@ -47,7 +47,7 @@ class MapVM {
         let output = Output()
         
         if #available(iOS 16.0, *) {
-            input.viewWillApearEvent
+            input.viewWillAppear
                 .subscribe(onNext: { [weak self] _ in
                     guard let self else {return}
                     
@@ -111,10 +111,14 @@ class MapVM {
             .disposed(by: disposeBag)
         
         self.mainUseCase.updatedLocation
-            .subscribe(onNext: { location in
+            .subscribe(onNext: { [weak self] location in
+                guard let self else {return}
+                
                 if let location = location {
                     output.currentLocation.onNext(location)
-                }else {
+       
+                } else {
+                    coordinator?.finish()
                     output.currentLocation.onNext(CLLocation(latitude: 0, longitude: 0))
                 }
             })

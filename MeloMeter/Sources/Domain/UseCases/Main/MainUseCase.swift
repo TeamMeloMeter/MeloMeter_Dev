@@ -89,7 +89,10 @@ class MainUseCase {
     func requestOtherLocation() {
         self.userData
             .subscribe(onNext: { userInfo in
-                self.firebaseService.observer(collection: .Locations, document: userInfo?.otherUid ?? "")
+                guard let userInfo, let otherUid = userInfo.otherUid else {
+                    self.updatedLocation.accept(nil)
+                    return }
+                self.firebaseService.observer(collection: .Locations, document: otherUid)
                     .map{ firebaseData -> CLLocation? in
                         guard let geopoint = firebaseData["location"] as? GeoPoint else { return nil }
                         return CLLocation(latitude: geopoint.latitude, longitude: geopoint.longitude)

@@ -19,6 +19,8 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     
     let infoWindow1 = NMFInfoWindow()
     let infoWindow2 = NMFInfoWindow()
+    private var bannerView: BannerView?
+    
     var endTriggerAlertEvent = PublishSubject<Void>()
     private var viewModel: MapVM?
     let disposeBag = DisposeBag()
@@ -34,9 +36,6 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     
-
-        
         configure()
         setAutoLayout()
         setBindings()
@@ -52,7 +51,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     // MARK: Binding
     func setBindings() {
         let input = MapVM.Input(
-            viewWillApearEvent: self.rx.methodInvoked(#selector(viewWillAppear(_:)))
+            viewWillAppear: self.rx.methodInvoked(#selector(viewWillAppear(_:)))
                 .map({ _ in })
                 .asObservable(),
             dDayBtnTapEvent: self.dDayButton.rx.tap
@@ -445,7 +444,6 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     
     //MARK: adMob
     private func addBannerViewToView(bannerView: BannerView?) {
-        
         guard let bannerView else {return}
         
         let viewWidth = view.frame.inset(by: view.safeAreaInsets).width
@@ -458,6 +456,10 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             $0.centerX.equalTo(view.snp.centerX)
         }
+        
+        self.bannerView = bannerView
+        
+        currentLocationBtnConstraints()
 
     }
     
@@ -504,11 +506,20 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         ])
         
     }
+    
+    private func currentLocationBtnConstraints() {
+
+        currentLocationButton.snp.makeConstraints {
+            $0.trailing.equalTo(naverMapView.snp.trailing).inset(16)
+            $0.bottom.equalTo(bannerView!.snp.top).offset(-16)
+            $0.width.height.equalTo(48)
+        }
+    }
+    
     private func mapViewElementConstraints() {
         dDayButton.translatesAutoresizingMaskIntoConstraints = false
         dDayLabel.translatesAutoresizingMaskIntoConstraints = false
         alarmButton.translatesAutoresizingMaskIntoConstraints = false
-        currentLocationButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             dDayButton.leadingAnchor.constraint(equalTo: dDayLabel.leadingAnchor, constant: -20),
             dDayButton.trailingAnchor.constraint(equalTo: dDayLabel.trailingAnchor, constant: 20),
@@ -523,10 +534,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             alarmButton.widthAnchor.constraint(equalToConstant: 48),
             alarmButton.heightAnchor.constraint(equalToConstant: 48),
 
-            currentLocationButton.trailingAnchor.constraint(equalTo: naverMapView.trailingAnchor, constant: -16),
-            currentLocationButton.bottomAnchor.constraint(equalTo: naverMapView.bottomAnchor, constant: -16),
-            currentLocationButton.widthAnchor.constraint(equalToConstant: 48),
-            currentLocationButton.heightAnchor.constraint(equalToConstant: 48),
+         
                         
         ])
     }

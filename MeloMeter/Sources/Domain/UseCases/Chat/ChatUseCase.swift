@@ -48,7 +48,6 @@ class ChatUseCase {
             self.coupleRepository.getCoupleID().subscribe(onSuccess: { coupleID in
                 switch chatType{
                 case .text:
-                    //레파지토리로 넘기기
                     self.chatRepository.addChatMessage(message: chatModel, coupleID: coupleID)
                         .subscribe(onSuccess: {
                             single(.success(()))
