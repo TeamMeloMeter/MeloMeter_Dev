@@ -48,8 +48,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         if (launchOptions?[.remoteNotification]) != nil {
             //여기서 처리
         }
+        
+        if launchOptions?[.location] != nil {
+            PushNotificationService.shared.localPushNotification(title: "위치 업데이트", body: "위치 업데이트 성공!")
+           }
     
-            
+        // 위치 관련 addObserver 활성화
+        PushNotificationService.shared.setupAppStateNotifications()
         
         return true
     }

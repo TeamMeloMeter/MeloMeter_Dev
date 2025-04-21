@@ -32,12 +32,7 @@ extension MainCoordinator {
         let firebaseService = self.firebaseService
         let viewController = MapVC(viewModel: MapVM(
             coordinator: self,
-            mainUseCase: MainUseCase(
-                locationService: DefaultLocationService(
-                    firebaseService: firebaseService
-                ),
-                firebaseService: firebaseService, adMobRepo: self.adMobRepo
-            )
+            mainUseCase: MainUseCase(firebaseService: firebaseService, adMobRepo: self.adMobRepo)
         )
         )
         self.navigationController.setNavigationBarHidden(true, animated: false)

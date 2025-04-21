@@ -13,6 +13,7 @@ import RxSwift
 import RxCocoa
 
 final class DefaultLocationService: NSObject, LocationService {
+    static var shared = DefaultLocationService()
     var locationManager = CLLocationManager()
     var firebaseService: FirebaseService
     var disposeBag: DisposeBag = DisposeBag()
@@ -21,22 +22,34 @@ final class DefaultLocationService: NSObject, LocationService {
     var currentLocation = PublishSubject<CLLocation>()
     
     private let uid = UserDefaults.standard.string(forKey: "uid")
-    init(firebaseService: FirebaseService) {
-        self.firebaseService = firebaseService
+    override init() {
+        self.firebaseService = DefaultFirebaseService()
         super.init()
         self.locationManager.delegate = self
-        self.locationManager.distanceFilter = CLLocationDistance(5)
+        self.locationManager.distanceFilter = CLLocationDistance(50)
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.locationManager.allowsBackgroundLocationUpdates = true
+        self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.pausesLocationUpdatesAutomatically = false
         
     }
     
+ 
+
+    func switchToSignificant() {
+        print("📦 startMonitoringSignificantLocationChanges 시작")
+        locationManager.stopUpdatingLocation()
+        locationManager.startMonitoringSignificantLocationChanges()
+    }
+    
     func start() {
-        DispatchQueue.global().async {
-            if CLLocationManager.locationServicesEnabled() {
-                self.locationManager.startUpdatingLocation()
-            }
-        }
-        //startMonitoringSignificantLocationChanges() // 종료 시, 백그라운드 시에도 위치 업데이트받기
+//        DispatchQueue.global().async {
+//            if CLLocationManager.locationServicesEnabled() {
+//                self.locationManager.startUpdatingLocation()
+//            }
+//        }
+        locationManager.stopMonitoringSignificantLocationChanges()
+        locationManager.startUpdatingLocation()
     }
     
     func stop() {
@@ -54,9 +67,12 @@ final class DefaultLocationService: NSObject, LocationService {
     func observeUpdatedLocation() -> Observable<CLLocation> {
         return currentLocation.asObservable()
     }
+    
+
 }
 
 extension DefaultLocationService: CLLocationManagerDelegate {
+    
     
     //MARK: 위치 주기적으로 업데이트.
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -65,13 +81,12 @@ extension DefaultLocationService: CLLocationManagerDelegate {
         if let uid = self.uid {
             let geopoint = GeoPoint(latitude: location.coordinate.latitude,
                                     longitude: location.coordinate.longitude)
+    
             self.firebaseService.updateDocument(collection: .Locations,
                                                 document: uid,
                                                 values: ["location": geopoint])
             .subscribe(onSuccess: {
-                
-                print("location Updated")
-                
+                print("success")
             }).disposed(by: disposeBag)
             
         }

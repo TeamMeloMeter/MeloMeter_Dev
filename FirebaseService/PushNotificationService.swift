@@ -297,6 +297,32 @@ final class PushNotificationService {
         
         return false
     }
+    
+    func setupAppStateNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(appDidEnterBackground),
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil
+        )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(appDidBecomeActive),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
+    }
+    
+    @objc func appDidEnterBackground() {
+        print("📦 백그라운드 진입 → 저전력 모드로 전환")
+        DefaultLocationService.shared.switchToSignificant()
+    }
+    
+    @objc func appDidBecomeActive() {
+        print("📡 앱 복귀 → 정밀 추적 재시작")
+        DefaultLocationService.shared.start()
+    }
 
     
 }

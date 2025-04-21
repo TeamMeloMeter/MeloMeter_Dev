@@ -47,8 +47,7 @@ extension PresetCoordinator {
         let viewController = PermissionVC(
             viewModel: PermissionVM(
                 coordinator: self,
-                mainUseCase: MainUseCase(locationService: DefaultLocationService(firebaseService: firebaseService),
-                                         firebaseService: firebaseService, adMobRepo: self.adMobRepo))
+                mainUseCase: MainUseCase(firebaseService: firebaseService, adMobRepo: self.adMobRepo))
         )
         
         self.navigationController.setNavigationBarHidden(true, animated: false)
@@ -60,8 +59,7 @@ extension PresetCoordinator {
         let viewController = Permission2VC(
             viewModel: PermissionVM(
                 coordinator: self,
-                mainUseCase: MainUseCase(locationService: DefaultLocationService(firebaseService: firebaseService),
-                                         firebaseService: firebaseService, adMobRepo: self.adMobRepo))
+                mainUseCase: MainUseCase(firebaseService: firebaseService, adMobRepo: self.adMobRepo))
         )
         
         self.navigationController.setNavigationBarHidden(true, animated: false)

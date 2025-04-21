@@ -18,7 +18,6 @@ enum LocationAuthorizationStatus {
 
 class MainUseCase {
     var authorizationStatus = BehaviorSubject<LocationAuthorizationStatus?>(value: nil)
-    private var locationService: DefaultLocationService
     private var firebaseService: FirebaseService
     private var userRepository: UserRepositoryP
     private var coupleRepository: CoupleRepositoryP
@@ -30,8 +29,7 @@ class MainUseCase {
     var otherUserData: PublishRelay<UserModel?>
     var disposeBag: DisposeBag
     
-    required init(locationService: DefaultLocationService, firebaseService: FirebaseService, adMobRepo: AdmobRepositoryP) {
-        self.locationService = locationService
+    required init( firebaseService: FirebaseService, adMobRepo: AdmobRepositoryP) {
         self.firebaseService = firebaseService
         self.userRepository = UserRepository(firebaseService: self.firebaseService,
                                              chatRepository: ChatRepository(firebaseService: self.firebaseService))
@@ -46,28 +44,28 @@ class MainUseCase {
     }
     
     func locationStart() {
-        self.locationService.start()
+        DefaultLocationService.shared.start()
     }
     
     func locationStop() {
-        self.locationService.stop()
+        DefaultLocationService.shared.stop()
     }
     
     func requestAuthorization() {
-        self.locationService.requestAuthorization()
+        DefaultLocationService.shared.requestAuthorization()
     }
 
     func checkAuthorization() {
-        self.locationService.observeUpdatedAuthorization()
+        DefaultLocationService.shared.observeUpdatedAuthorization()
             .subscribe(onNext: { [weak self] status in
                 guard let self = self else{ return }
                 switch status {
                 case .authorizedAlways:
                     self.authorizationStatus.onNext(.allowed)
-                    self.locationService.start()
+                    DefaultLocationService.shared.start()
                 case .authorizedWhenInUse:
                     self.authorizationStatus.onNext(.halfallowed)
-                    self.locationService.start()
+                    DefaultLocationService.shared.start()
                 case .notDetermined:
                     self.authorizationStatus.onNext(.notDetermined)
                 case .denied, .restricted:
@@ -81,7 +79,7 @@ class MainUseCase {
     }
     
     func requestLocation() {
-        self.locationService.observeUpdatedLocation()
+        DefaultLocationService.shared.observeUpdatedLocation()
             .bind(to: self.updatedLocation)
             .disposed(by: disposeBag)
     }
