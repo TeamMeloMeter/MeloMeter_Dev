@@ -314,14 +314,21 @@ final class PushNotificationService {
         )
     }
     
-    @objc func appDidEnterBackground() {
+    @objc private func appDidEnterBackground() {
         print("📦 백그라운드 진입 → 저전력 모드로 전환")
         DefaultLocationService.shared.switchToSignificant()
     }
     
-    @objc func appDidBecomeActive() {
+    @objc private func appDidBecomeActive() {
         print("📡 앱 복귀 → 정밀 추적 재시작")
         DefaultLocationService.shared.start()
+    }
+    
+    func registerForPushNotifications() {
+        UNUserNotificationCenter.current()
+            .requestAuthorization(options: [.alert, .sound, .badge]) { granted, _ in
+                print("Permission granted: \(granted)")
+            }
     }
 
     

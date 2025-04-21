@@ -44,7 +44,7 @@ class PermissionVM {
         input.viewDidApearEvent
             .subscribe(onNext: { [weak self] _ in
                 self?.mainUseCase.requestAuthorization()
-                self?.registerForPushNotifications()
+                PushNotificationService.shared.registerForPushNotifications()
                 self?.requestCameraPermission()
             })
             .disposed(by: disposeBag)
@@ -57,12 +57,7 @@ class PermissionVM {
     
     }
     
-    func registerForPushNotifications() {
-        UNUserNotificationCenter.current()
-            .requestAuthorization(options: [.alert, .sound, .badge]) { granted, _ in
-                print("Permission granted: \(granted)")
-            }
-    }
+  
     
     func requestCameraPermission() {
         AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in

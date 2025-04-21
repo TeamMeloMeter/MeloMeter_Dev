@@ -64,7 +64,6 @@ class MapVM {
                     
                     setInfo()
                     self.mainUseCase.checkAuthorization()
-                    self.mainUseCase.requestAuthorization()
                     self.mainUseCase.requestLocation()
                     self.mainUseCase.requestOtherLocation()
                     

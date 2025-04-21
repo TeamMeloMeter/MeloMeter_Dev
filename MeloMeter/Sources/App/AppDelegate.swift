@@ -42,8 +42,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         // device token 요청.
         application.registerForRemoteNotifications()
         
+        PushNotificationService.shared.registerForPushNotifications()
         // Request permission for remote notifications
         UNUserNotificationCenter.current().delegate = self
+        
+      
         
         if (launchOptions?[.remoteNotification]) != nil {
             //여기서 처리
@@ -52,6 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         if launchOptions?[.location] != nil {
             PushNotificationService.shared.localPushNotification(title: "위치 업데이트", body: "위치 업데이트 성공!")
            }
+
     
         // 위치 관련 addObserver 활성화
         PushNotificationService.shared.setupAppStateNotifications()
@@ -101,21 +105,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     
     // 푸시클릭이벤트
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
         let userInfo = response.notification.request.content.userInfo
     }
     
 
+    
+
     // 인앱푸시이벤트
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+    // iOS 14 이하 또는 AppDelegate에서 확실히 동작하기 위해 수정
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
         let userInfo = notification.request.content.userInfo
         let date = Date().toString(type: .yearToDay)
         let text = notification.request.content.body
-        if let type = userInfo["type"] { PushNotificationService.shared.addAlarm(text: text, date: date, type: type as! String )
+        if let type = userInfo["type"] {
+            PushNotificationService.shared.addAlarm(text: text, date: date, type: type as! String)
         }
 
-        return [.sound, .banner, .list]
+        completionHandler([.sound, .banner, .list])
     }
-    
+
     
     // MARK: UISceneSession Lifecycle
     
