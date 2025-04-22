@@ -160,10 +160,10 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: Event
     func showInfoAlert() {
-        
+        let deviceVersion = VersionService.shared.getDeviceVersion()
         AlertManager(viewController: self)
             .setTitle("정보")
-            .setMessage("버전 정보: 1.0.0\n현택 / 지우 / 솔님 / 태성")
+            .setMessage("버전 정보: \(deviceVersion)\nTeamMelometer")
             .addActionConfirm("확인", action: { self.tabBarController?.tabBar.isUserInteractionEnabled = true })
             .showCustomAlert()
     }

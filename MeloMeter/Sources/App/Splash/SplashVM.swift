@@ -18,19 +18,16 @@ final class SplashVM : NSObject, FullScreenContentDelegate {
     weak var coordinator: AppCoordinator?
     private var firebaseService: FirebaseService
     private var userRepository: UserRepositoryP
-    private var versionRepository: VersionRepositoryP
     private var adMobRepo: AdmobRepository
     init(
         coordinator: AppCoordinator,
         firebaseService: FirebaseService,
         userRepository: UserRepositoryP,
-        versionRepository: VersionRepositoryP,
         adMobRepo: AdmobRepository
     ) {
         self.coordinator = coordinator
         self.firebaseService = firebaseService
         self.userRepository = userRepository
-        self.versionRepository = versionRepository
         self.adMobRepo = adMobRepo
     }
     
@@ -61,9 +58,9 @@ final class SplashVM : NSObject, FullScreenContentDelegate {
             }
         }
 
-        versionRepository.getAppStoreVersion(completion: { [weak self] appStoreVer in
+        VersionService.shared.getAppStoreVersion(completion: { [weak self] appStoreVer in
             guard let self else {return}
-            if let appStoreVer, Float(versionRepository.getDeviceVersion()) ?? -0.0 < Float(appStoreVer) ?? 0.0 {
+            if let appStoreVer, Float(VersionService.shared.getDeviceVersion()) ?? -0.0 < Float(appStoreVer) ?? 0.0 {
                 
                 alert.onNext("appStore")
             } else if appStoreVer == "offLine" {

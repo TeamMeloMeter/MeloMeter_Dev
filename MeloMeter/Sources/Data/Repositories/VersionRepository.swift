@@ -7,7 +7,10 @@
 
 import Foundation
 
-class VersionRepository: VersionRepositoryP {
+class VersionService {
+    
+    static let shared = VersionService()
+    private init() {}
     
     func getAppStoreVersion(completion: @escaping (String?) -> Void) {
         let bundleID = Bundle.main.bundleIdentifier
