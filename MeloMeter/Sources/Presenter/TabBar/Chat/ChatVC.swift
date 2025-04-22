@@ -50,7 +50,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     }()
     
     // 자기 자신이 될 ChatUser셋팅
-    let chatUser = ChatUserModel(senderId: UserDefaults.standard.string(forKey: "uid") ?? "", displayName: UserDefaults.standard.string(forKey: "userName") ?? "")
+    let chatUser = ChatUserModel(senderId: UserDefaults.standard.string(forKey: "uid") ?? "", displayName: UserDefaults.standard.string(forKey: "name") ?? "")
     var currentSender: SenderType {
         self.chatUser
     }

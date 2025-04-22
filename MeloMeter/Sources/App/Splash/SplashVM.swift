@@ -47,10 +47,6 @@ final class SplashVM : NSObject, FullScreenContentDelegate {
                 )
     }
     
-    
-    
-    
-    
     @objc
     func selectFlow() {
         
@@ -110,42 +106,44 @@ final class SplashVM : NSObject, FullScreenContentDelegate {
                                     .disposed(by: disposeBag)
                             }
                             
+                           
                             
+                            single(.success(UserDefaultsRepo.shared.persistent(document: data)))
                             
-                            guard let accessLevel = data["accessLevel"] as? String else{ single(.success(.none)); return}
-                            switch accessLevel {
-                            case "authenticated":
-                                single(.success(.authenticated))
-                            case "coupleCombined":
-                                if UserDefaultsRepo.shared.persistCoupleCombined(fcmToken: data["fcmToken"], coupleID: data["coupleID"], phoneNumber: user.phoneNumber, uid: data["uid"]) {
-                                    single(.success(.coupleCombined))
-
-                                } else {
-                                    single(.success(.authenticated))
-                                }
-                            case "complete":
-                                if UserDefaultsRepo.shared.persistCompleted(fcmToken: data["fcmToken"], otherUid: data["otherUid"], coupleID: data["coupleID"], phoneNumber: user.phoneNumber, uid: data["uid"]) {
-                                    single(.success(.complete))
-
-                                } else if UserDefaultsRepo.shared.persistCoupleCombined(fcmToken: data["fcmToken"], coupleID: data["coupleID"], phoneNumber: data["phoneNumber"], uid: data["uid"]) {
-                                    single(.success(.coupleCombined))
-
-                                } else {
-                                    single(.success(.authenticated))
-                                }
-                            case "start":
-                                let deleteData = self.userRepository.withdrawal(uid: user.uid)
-                                let dropOut = self.userRepository.dropOut()
-                                Single.zip(deleteData, dropOut)
-                                    .subscribe(onSuccess: { _, _ in
-                                        single(.success(.start))
-                                    }, onFailure: { error in
-                                        single(.failure(error))
-                                    })
-                                    .disposed(by: self.disposeBag)
-                            default:
-                                single(.success(.none))
-                            }
+//                            guard let accessLevel = data["accessLevel"] as? String else{ single(.success(.none)); return}
+//                            switch accessLevel {
+//                            case "authenticated":
+//                                single(.success(.authenticated))
+//                            case "coupleCombined":
+//                                if UserDefaultsRepo.shared.persistCoupleCombined(fcmToken: data["fcmToken"], coupleID: data["coupleID"], phoneNumber: user.phoneNumber, uid: data["uid"]) {
+//                                    single(.success(.coupleCombined))
+//
+//                                } else {
+//                                    single(.success(.authenticated))
+//                                }
+//                            case "complete":
+//                                if UserDefaultsRepo.shared.persistCompleted(fcmToken: data["fcmToken"], otherUid: data["otherUid"], coupleID: data["coupleID"], phoneNumber: user.phoneNumber, uid: data["uid"]) {
+//                                    single(.success(.complete))
+//
+//                                } else if UserDefaultsRepo.shared.persistCoupleCombined(fcmToken: data["fcmToken"], coupleID: data["coupleID"], phoneNumber: data["phoneNumber"], uid: data["uid"]) {
+//                                    single(.success(.coupleCombined))
+//
+//                                } else {
+//                                    single(.success(.authenticated))
+//                                }
+//                            case "start":
+//                                let deleteData = self.userRepository.withdrawal(uid: user.uid)
+//                                let dropOut = self.userRepository.dropOut()
+//                                Single.zip(deleteData, dropOut)
+//                                    .subscribe(onSuccess: { _, _ in
+//                                        single(.success(.start))
+//                                    }, onFailure: { error in
+//                                        single(.failure(error))
+//                                    })
+//                                    .disposed(by: self.disposeBag)
+//                            default:
+//                                single(.success(.none))
+//                            }
                         }, onFailure: { _ in
                             single(.success(.none))
                         })

@@ -169,7 +169,7 @@ class MapVM {
                                 UserDefaults.standard.set(otherUid, forKey: "otherUid")
                                 UserDefaults.standard.set(otherUserModel.name, forKey: "otherUserName")
                                 UserDefaults.standard.set(otherUserModel.fcmToken, forKey: "otherFcmToken")
-                                UserDefaults.standard.set(userInfo.coupleID, forKey: "coupleDocumentID")
+                                UserDefaults.standard.set(userInfo.coupleID, forKey: "coupleID")
                                 
                                 output.otherStateMessage.onNext(otherUserModel.stateMessage ?? nil)
                             })

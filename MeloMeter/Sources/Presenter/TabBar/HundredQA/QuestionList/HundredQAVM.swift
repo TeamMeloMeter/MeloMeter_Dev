@@ -88,7 +88,7 @@ class HundredQAVM {
                 guard let self = self else{ return }
                 var myAnswerInfo = answerArray[index].filter{ $0.userId == .mine }.last ?? AnswerModel(userId: .mine, answerText: "", userName: "")
                 var otherAnswerInfo = answerArray[index].filter{ $0.userId == .other }.last ?? AnswerModel(userId: .other, answerText: "", userName: "")
-                let myName = UserDefaults.standard.string(forKey: "userName") ?? ""
+                let myName = UserDefaults.standard.string(forKey: "name") ?? ""
                 let otherName = UserDefaults.standard.string(forKey: "otherUserName") ?? ""
                 myAnswerInfo.userName = myName
                 otherAnswerInfo.userName = otherName

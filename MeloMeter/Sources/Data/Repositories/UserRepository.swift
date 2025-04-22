@@ -89,7 +89,7 @@ class UserRepository: UserRepositoryP {
                 let userDTO = user.toProfileInsertDTO(uid: successUser.uid, phoneNumber: successUser.phoneNumber ?? "" )
                 let dDayDTO = dDay.toDTO()
 
-                UserDefaults.standard.set(userDTO.name, forKey: "userName")
+                UserDefaults.standard.set(userDTO.name, forKey: "name")
                 guard let userValues = userDTO.asDictionary,
                       var coupleValues = dDayDTO.asDictionary else {
                     return .error(FireStoreError.unknown)
@@ -159,7 +159,7 @@ class UserRepository: UserRepositoryP {
     func updateProfileImage(image: UIImage) -> Single<Void> {
         guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return Single.just(()) }
         
-        guard let name = UserDefaults.standard.string(forKey: "userName") else{ return Single.just(())}
+        guard let name = UserDefaults.standard.string(forKey: "name") else{ return Single.just(())}
         
             PushNotificationService.shared.sendPushNotification(title: "MeloMeter", body: "\(name)님이 프로필사진을 변경했어요", type: .profile)
         
@@ -185,7 +185,7 @@ class UserRepository: UserRepositoryP {
             
         }else {
             //상태메시지 변경시
-            guard let name = UserDefaults.standard.string(forKey: "userName") else{ return Single.just(())}
+            guard let name = UserDefaults.standard.string(forKey: "name") else{ return Single.just(())}
             if value.first?.key == "stateMessage" {
                 PushNotificationService.shared.sendPushNotification(title: "MeloMeter", body: "\(name)님이 상태메세지를 업데이트 했어요", type: .profile)
             }else if value.first?.key == "name" {
@@ -200,7 +200,7 @@ class UserRepository: UserRepositoryP {
     
     private func setAnniversaries(uid: String, birth: String) -> Single<Void> {
         return Single.create{ single in
-            guard let userName = UserDefaults.standard.string(forKey: "userName") else{ return Disposables.create()}
+            guard let userName = UserDefaults.standard.string(forKey: "name") else{ return Disposables.create()}
             let coupleRepository = CoupleRepository(firebaseService: self.firebaseService)
             coupleRepository.getCoupleID()
                 .subscribe(onSuccess: { coupleID in
@@ -301,7 +301,7 @@ class UserRepository: UserRepositoryP {
                 .withUnretained(self)
                 .subscribe(onNext: { owner, userInfo in
                     let coupleID = userInfo.coupleID ?? ""
-                    let data = ["userName", "otherUid", "otherUserName", "coupleDocumentID", "otherInviteCode", "otherFcmToken"]
+                    let data = ["name", "otherUid", "otherUserName", "coupleID", "otherInviteCode", "otherFcmToken"]
                     for key in data {
                         UserDefaults.standard.removeObject(forKey: key)
                     }

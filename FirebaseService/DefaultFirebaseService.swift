@@ -95,7 +95,7 @@ public final class DefaultFirebaseService: FirebaseService {
             if document == "" { //문서ID 자동생성
                 newDocument = self.database.collection(collection.name)
                     .document()
-                UserDefaults.standard.set(newDocument.documentID, forKey: "coupleDocumentID")
+                UserDefaults.standard.set(newDocument.documentID, forKey: "coupleID")
             }else { //문서ID 지정생성
                 newDocument = self.database.collection(collection.name)
                     .document(document)

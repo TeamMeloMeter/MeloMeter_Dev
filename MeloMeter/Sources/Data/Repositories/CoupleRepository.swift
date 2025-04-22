@@ -22,7 +22,7 @@ class CoupleRepository: CoupleRepositoryP {
     }
     
     func getCoupleID() -> Single<String> {
-        if let coupleID = UserDefaults.standard.string(forKey: "coupleDocumentID") {
+        if let coupleID = UserDefaults.standard.string(forKey: "coupleID") {
             return Single.just(coupleID)
         }else {
             return self.firebaseService.getCurrentUser()
@@ -30,7 +30,7 @@ class CoupleRepository: CoupleRepositoryP {
                     return self.firebaseService.getDocument(collection: .Users, document: user.uid)
                         .flatMap{ data -> Single<String> in
                             guard let id = data["coupleID"] as? String else{ return Single.just("") }
-                            UserDefaults.standard.set(id, forKey: "coupleDocumentID")
+                            UserDefaults.standard.set(id, forKey: "coupleID")
                             return Single.just(id)
                         }    
                 }

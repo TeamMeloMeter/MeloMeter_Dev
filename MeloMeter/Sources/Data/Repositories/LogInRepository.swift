@@ -124,10 +124,10 @@ class LogInRepository: LogInRepositoryP {
                         .subscribe(onSuccess: { [weak self] user in
                             guard let self, let userModel = user.toObject(UserDTO.self)?.toModel() else { return single(.success((AccessLevel.none, nil)))}
                             if let name = userModel.name {
-                                UserDefaults.standard.set(name, forKey: "userName")
+                                UserDefaults.standard.set(name, forKey: "name")
                                 single(.success((AccessLevel.complete, nil)))
                             } else if let coupleID = userModel.coupleID {
-                                UserDefaults.standard.set(coupleID, forKey: "coupleDocumentID")
+                                UserDefaults.standard.set(coupleID, forKey: "coupleID")
                                 single(.success((AccessLevel.coupleCombined, nil)))
                             }
                         },onFailure: {[weak self] error in
@@ -205,7 +205,7 @@ class LogInRepository: LogInRepositoryP {
                 .subscribe(onSuccess: {
                     guard let uid = UserDefaults.standard.string(forKey: "uid") else { return }
                     guard let otherUid = UserDefaults.standard.string(forKey: "otherUid") else { return }
-                    guard let coupleDocumentID = UserDefaults.standard.string(forKey: "coupleDocumentID") else { return }
+                    guard let coupleDocumentID = UserDefaults.standard.string(forKey: "coupleID") else { return }
                     let defaultProfileImage = UIImage(named: "defaultProfileImage")!
                     let uploadDefaultImage = self.firebaseService.uploadImage(filePath: uid, image: defaultProfileImage)
                     let uploadDefaultImage2 = self.firebaseService.uploadImage(filePath: otherUid, image: defaultProfileImage)

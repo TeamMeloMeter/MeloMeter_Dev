@@ -103,7 +103,7 @@ extension AppCoordinator: CoordinatorDelegate {
             //TODO: UserDefaults로 하면안될듯
             
             
-            if UserDefaults.standard.string(forKey: "userName") != nil {
+            if UserDefaults.standard.string(forKey: "name") != nil {
                 self.connectTabBarFlow()
             }else {
                 self.connectPresetFlow()

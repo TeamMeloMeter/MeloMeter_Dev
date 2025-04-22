@@ -23,7 +23,7 @@ class HundredQARepository: HundredQARepositoryP {
     }
     
     func getCoupleID() -> Single<String> {
-        if let coupleID = UserDefaults.standard.string(forKey: "coupleDocumentID") {
+        if let coupleID = UserDefaults.standard.string(forKey: "coupleID") {
             return Single.just(coupleID)
         }else {
             return self.firebaseService.getCurrentUser()
@@ -31,7 +31,7 @@ class HundredQARepository: HundredQARepositoryP {
                     return self.firebaseService.getDocument(collection: .Users, document: user.uid)
                         .flatMap{ data -> Single<String> in
                             guard let id = data["coupleID"] as? String else{ return Single.just("") }
-                            UserDefaults.standard.set(id, forKey: "coupleDocumentID")
+                            UserDefaults.standard.set(id, forKey: "coupleID")
                             return Single.just(id)
                         }
                         
@@ -108,7 +108,7 @@ class HundredQARepository: HundredQARepositoryP {
                 values: ["answersList" :  [questionNumber: FieldValue.arrayUnion([values])] ]
             )
             .flatMap{ _ in
-                let userName = UserDefaults.standard.string(forKey: "userName") ?? "상대방"
+                let userName = UserDefaults.standard.string(forKey: "name") ?? "상대방"
                 PushNotificationService.shared.sendPushNotification(title: "MeloMeter", body: "\(userName)님이 \((Int(questionNumber) ?? 0)+1)번째 백문백답에 답변했어요!", type: AlarmType.hundredQA)
                 return Single.create{ single in
                     single(.success(()))

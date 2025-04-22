@@ -8,10 +8,12 @@
 import Foundation
 
 class UserDefaultsRepo {
-    
     static let shared = UserDefaultsRepo()
+
+    private init() {}
     
-    private let userDefaultsStrings = ["fcmToken", "otherUid", "coupleID", "uid", "phoneNumber","userName","coupleDocumentID","inviteCode","otherFcmToken","stateMessage","accessLevel","createdAt"]
+    
+    private let userDefaultsStrings = ["fcmToken", "otherUid", "uid", "phoneNumber","name","coupleID","inviteCode","otherFcmToken","accessLevel","createdAt","birth", "name"]
     
     func resetAllUserDefaults() {
         
@@ -23,42 +25,46 @@ class UserDefaultsRepo {
     }
     
     
-    func persistCoupleCombined(fcmToken: Any?, coupleID: Any?, phoneNumber: Any?, uid: Any?) -> Bool {
-        
-        guard let fcmToken = fcmToken as? String, let phoneNumber = phoneNumber as? String, let uid = uid as? String else {return false}
-        
-        if fcmToken.isEmpty || phoneNumber.isEmpty || uid.isEmpty {
-            
-            return false
-        } else {
-            UserDefaults.standard.set(fcmToken, forKey: "fcmToken")
-            UserDefaults.standard.set(coupleID, forKey: "coupleID")
-            UserDefaults.standard.set(uid, forKey: "uid")
-            UserDefaults.standard.set(phoneNumber, forKey: "phoneNumber")
-            
-            return true
-        }
-        
-       
-    }
+
     
-    func persistCompleted(fcmToken: Any?, otherUid: Any?, coupleID: Any?, phoneNumber: Any?, uid: Any?) -> Bool {
-        
-        guard let fcmToken = fcmToken as? String,let otherUid = otherUid as? String, let coupleID = coupleID as? String, let phoneNumber = phoneNumber as? String, let uid = uid as? String else {return false}
-        
-        if fcmToken.isEmpty || otherUid.isEmpty || coupleID.isEmpty || phoneNumber.isEmpty || uid.isEmpty {
-            
-            return false
-        } else {
-            UserDefaults.standard.set(fcmToken, forKey: "fcmToken")
-            UserDefaults.standard.set(otherUid, forKey: "otherUid")
-            UserDefaults.standard.set(coupleID, forKey: "coupleID")
-            UserDefaults.standard.set(uid, forKey: "uid")
-            UserDefaults.standard.set(phoneNumber, forKey: "phoneNumber")
-            
-            return true
-        }
-        
-       
+    func persistent(document: [String: Any?]) -> AccessLevel {
+        let userDefaults = UserDefaults.standard
+
+            let authenticatedKeys = [
+                "accessLevel", "createdAt", "fcmToken", "inviteCode", "phoneNumber", "uid"
+            ]
+            let coupleCombinedKeys = ["coupleID", "otherFcmToken", "otherUid"]
+            let completeOnlyKeys = ["birth", "name"]
+            let allKeys = authenticatedKeys + coupleCombinedKeys + completeOnlyKeys + ["profileImagePath"]
+
+            var missingKeys: [String] = []
+
+            for key in allKeys {
+                if let value = document[key], let strdValue = value as? String , !strdValue.isEmpty {
+                    userDefaults.set(value, forKey: key)
+                } else {
+                    missingKeys.append(key)
+                    print("nil or empty \(key)")
+
+                }
+            }
+
+            // 1. Authenticated 항목이 누락되어 있으면 → authenticated
+            if missingKeys.contains(where: { authenticatedKeys.contains($0) }) {
+                return .none
+            }
+
+            // 2. CoupleCombined 항목이 누락되어 있으면 → coupleCombined
+            if missingKeys.contains(where: { coupleCombinedKeys.contains($0) }) {
+                return .authenticated
+            }
+
+            // 3. Complete 전용 항목이 누락되어 있으면 → complete 불가능
+            if missingKeys.contains(where: { completeOnlyKeys.contains($0) }) {
+                return .coupleCombined
+            }
+
+            // 4. 아무 것도 누락된 게 없으면 → complete
+            return .complete
     }
 }

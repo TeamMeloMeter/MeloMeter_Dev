@@ -160,6 +160,7 @@ class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: Event
     func showInfoAlert() {
+        
         AlertManager(viewController: self)
             .setTitle("정보")
             .setMessage("버전 정보: 1.0.0\n현택 / 지우 / 솔님 / 태성")

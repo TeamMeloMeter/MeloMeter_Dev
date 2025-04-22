@@ -9,8 +9,6 @@ import Foundation
 
 class VersionRepository: VersionRepositoryP {
     
-    
-    
     func getAppStoreVersion(completion: @escaping (String?) -> Void) {
         let bundleID = Bundle.main.bundleIdentifier
         guard let url = URL(string: "http://itunes.apple.com/kr/lookup?bundleId=\(bundleID ?? "")") else {
