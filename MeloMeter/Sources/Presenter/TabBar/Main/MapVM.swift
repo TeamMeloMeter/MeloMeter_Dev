@@ -150,8 +150,7 @@ class MapVM {
             self.mainUseCase.getUserData()
             self.mainUseCase.userData
                 .subscribe(onNext: { userInfo in
-                    guard let userInfo = userInfo else{ return }
-                    print("userInfouserInfo \(userInfo)")
+                    guard let userInfo else{ return }
                     output.myStateMessage.onNext(userInfo.stateMessage ?? nil)
                     self.mainUseCase.getMyProfileImage(url: userInfo.profileImage ?? "")
                         .subscribe(onSuccess: { image in
@@ -170,6 +169,8 @@ class MapVM {
                                 UserDefaults.standard.set(otherUserModel.name, forKey: "otherUserName")
                                 UserDefaults.standard.set(otherUserModel.fcmToken, forKey: "otherFcmToken")
                                 UserDefaults.standard.set(userInfo.coupleID, forKey: "coupleID")
+                                
+                                
                                 
                                 output.otherStateMessage.onNext(otherUserModel.stateMessage ?? nil)
                             })

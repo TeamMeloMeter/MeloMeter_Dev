@@ -14,10 +14,12 @@ final class MainCoordinator: Coordinator {
     
     private let firebaseService = DefaultFirebaseService()
     private let adMobRepo = AdmobRepository()
+    private let sharedDataRepo: SharedDataRepoP
     
-    init(_ navigationController: UINavigationController) {
+    init(_ navigationController: UINavigationController, sharedDataRepo: SharedDataRepoP) {
         self.navigationController = navigationController
         self.childCoordinators = []
+        self.sharedDataRepo = sharedDataRepo
     }
     
     func start() {
@@ -32,7 +34,7 @@ extension MainCoordinator {
         let firebaseService = self.firebaseService
         let viewController = MapVC(viewModel: MapVM(
             coordinator: self,
-            mainUseCase: MainUseCase(firebaseService: firebaseService, adMobRepo: self.adMobRepo)
+            mainUseCase: MainUseCase(firebaseService: firebaseService, adMobRepo: self.adMobRepo, sharedDataRepo: self.sharedDataRepo)
         )
         )
         self.navigationController.setNavigationBarHidden(true, animated: false)

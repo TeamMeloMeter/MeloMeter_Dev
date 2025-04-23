@@ -154,12 +154,14 @@
 		52F739552A94E6DB00D46FBB /* HundredQAModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F739542A94E6DB00D46FBB /* HundredQAModel.swift */; };
 		52F739572A94E71500D46FBB /* HundredQADTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F739562A94E71500D46FBB /* HundredQADTO.swift */; };
 		5E96546393FD50C9C5E5E5EF /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A9432E8BBDB9FBE10412467 /* Pods_MeloMeter.framework */; };
+		60453EA52DB882B40053859F /* SharedDataRepoP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60453EA42DB882AC0053859F /* SharedDataRepoP.swift */; };
+		60453EA72DB883770053859F /* SharedDataRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60453EA62DB8836C0053859F /* SharedDataRepo.swift */; };
 		60697AC82D2A5B4C00693990 /* CustomChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60697AC72D2A5B4600693990 /* CustomChatModel.swift */; };
 		6084BC9A2DB7610F005F9B2C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6084BC992DB7610F005F9B2C /* WidgetKit.framework */; };
 		6084BC9C2DB7610F005F9B2C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6084BC9B2DB7610F005F9B2C /* SwiftUI.framework */; };
 		6084BCA72DB76110005F9B2C /* MelometerWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6084BC982DB7610F005F9B2C /* MelometerWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6097C9F52D538C0600895B63 /* Label+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6097C9F42D538C0100895B63 /* Label+.swift */; };
-		60A351962D119EB000BB1A6F /* UserDefaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A351952D119EA800BB1A6F /* UserDefaultService.swift */; };
+		60A351962D119EB000BB1A6F /* WidgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A351952D119EA800BB1A6F /* WidgetService.swift */; };
 		60D067762DA2AB3200CFD06C /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D067752DA2AB2C00CFD06C /* UIImage+.swift */; };
 		60D913522D9C0AD60033EB95 /* AdmobRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D913512D9C0ACD0033EB95 /* AdmobRepository.swift */; };
 		60D913542D9C0AF60033EB95 /* AdmobRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D913532D9C0AEE0033EB95 /* AdmobRepositoryP.swift */; };
@@ -345,12 +347,15 @@
 		52F739522A94DE7800D46FBB /* HundredQARepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQARepositoryP.swift; sourceTree = "<group>"; };
 		52F739542A94E6DB00D46FBB /* HundredQAModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQAModel.swift; sourceTree = "<group>"; };
 		52F739562A94E71500D46FBB /* HundredQADTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQADTO.swift; sourceTree = "<group>"; };
+		60453EA42DB882AC0053859F /* SharedDataRepoP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataRepoP.swift; sourceTree = "<group>"; };
+		60453EA62DB8836C0053859F /* SharedDataRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataRepo.swift; sourceTree = "<group>"; };
+		60453EAC2DB8A1A30053859F /* MelometerWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MelometerWidgetExtension.entitlements; sourceTree = "<group>"; };
 		60697AC72D2A5B4600693990 /* CustomChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomChatModel.swift; sourceTree = "<group>"; };
 		6084BC982DB7610F005F9B2C /* MelometerWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MelometerWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6084BC992DB7610F005F9B2C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		6084BC9B2DB7610F005F9B2C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		6097C9F42D538C0100895B63 /* Label+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Label+.swift"; sourceTree = "<group>"; };
-		60A351952D119EA800BB1A6F /* UserDefaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultService.swift; sourceTree = "<group>"; };
+		60A351952D119EA800BB1A6F /* WidgetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetService.swift; sourceTree = "<group>"; };
 		60D067752DA2AB2C00CFD06C /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		60D913512D9C0ACD0033EB95 /* AdmobRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdmobRepository.swift; sourceTree = "<group>"; };
 		60D913532D9C0AEE0033EB95 /* AdmobRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdmobRepositoryP.swift; sourceTree = "<group>"; };
@@ -719,7 +724,7 @@
 		524138322A63213D002AADA6 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				60A351952D119EA800BB1A6F /* UserDefaultService.swift */,
+				60A351952D119EA800BB1A6F /* WidgetService.swift */,
 				527547F52A6D23EE00313EFC /* KakaoService */,
 				5230B2762A77906000781623 /* LocationService */,
 				5290BFB12A726ED400D734EE /* DTO */,
@@ -740,6 +745,7 @@
 		52697B6629EEB7B2002BDD04 = {
 			isa = PBXGroup;
 			children = (
+				60453EAC2DB8A1A30053859F /* MelometerWidgetExtension.entitlements */,
 				5271D41A2A58429D00FC7606 /* FirebaseService */,
 				52697B7129EEB7B2002BDD04 /* MeloMeter */,
 				52E2B5E32AE580F00037FBB3 /* MeloMeterTests */,
@@ -799,6 +805,7 @@
 		5271D41D2A5886FB00FC7606 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				60453EA62DB8836C0053859F /* SharedDataRepo.swift */,
 				60F7DEB92DA5703E00EB0279 /* UserDefaultsRepo.swift */,
 				60D913512D9C0ACD0033EB95 /* AdmobRepository.swift */,
 				60E9F8162D98189200201201 /* VersionRepository.swift */,
@@ -886,6 +893,7 @@
 		5290BFB22A7270B200D734EE /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				60453EA42DB882AC0053859F /* SharedDataRepoP.swift */,
 				60F7DEB72DA5700800EB0279 /* UserDefaultsRepoP.swift */,
 				60D913532D9C0AEE0033EB95 /* AdmobRepositoryP.swift */,
 				5290BFB32A7270DF00D734EE /* LogInRepositoryP.swift */,
@@ -1430,6 +1438,7 @@
 				5241382C2A62F240002AADA6 /* AppCoordinator.swift in Sources */,
 				521D41F82A81C75100E5CCDA /* CoupleRepositoryP.swift in Sources */,
 				524138302A62F943002AADA6 /* StartVM.swift in Sources */,
+				60453EA72DB883770053859F /* SharedDataRepo.swift in Sources */,
 				527547F42A6D23E400313EFC /* KakaoService.swift in Sources */,
 				52F305302A168CE900112A04 /* DisconnectVC.swift in Sources */,
 				521D41EC2A801D1200E5CCDA /* CoupleModel.swift in Sources */,
@@ -1491,7 +1500,7 @@
 				60D913522D9C0AD60033EB95 /* AdmobRepository.swift in Sources */,
 				52F010082A097D120014FC01 /* AlarmTableViewCell.swift in Sources */,
 				521D42172A8A839D00E5CCDA /* DetailNoticeVC.swift in Sources */,
-				60A351962D119EB000BB1A6F /* UserDefaultService.swift in Sources */,
+				60A351962D119EB000BB1A6F /* WidgetService.swift in Sources */,
 				521D420A2A85CCEE00E5CCDA /* DetailEditVM.swift in Sources */,
 				5290BFAE2A71F8FB00D734EE /* TabBarPageType.swift in Sources */,
 				2108F0472A6EC48B002EED7A /* UserDTO.swift in Sources */,
@@ -1500,6 +1509,7 @@
 				526EB8602A7D59A4005B1940 /* UserRepositoryP.swift in Sources */,
 				5241382E2A62F2ED002AADA6 /* LogInCoordinator.swift in Sources */,
 				5271D40F2A5576E500FC7606 /* PermissionVC.swift in Sources */,
+				60453EA52DB882B40053859F /* SharedDataRepoP.swift in Sources */,
 				2185C4CE2A83F13B00F99795 /* ChatVC.swift in Sources */,
 				52F739552A94E6DB00D46FBB /* HundredQAModel.swift in Sources */,
 				52AEACFD2A9337F40097930E /* AlarmVM.swift in Sources */,
@@ -1717,7 +1727,7 @@
 				CODE_SIGN_ENTITLEMENTS = MeloMeter/MeloMeterDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 20250423;
 				DEVELOPMENT_TEAM = YH4A87H8M4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MeloMeter/Info.plist;
@@ -1763,7 +1773,7 @@
 				CODE_SIGN_ENTITLEMENTS = MeloMeter/MeloMeter.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 20250423;
 				DEVELOPMENT_TEAM = YH4A87H8M4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MeloMeter/Info.plist;
@@ -1846,6 +1856,7 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MelometerWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1857,7 +1868,7 @@
 				INFOPLIST_FILE = MelometerWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MelometerWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1885,6 +1896,7 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MelometerWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1895,7 +1907,7 @@
 				INFOPLIST_FILE = MelometerWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MelometerWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

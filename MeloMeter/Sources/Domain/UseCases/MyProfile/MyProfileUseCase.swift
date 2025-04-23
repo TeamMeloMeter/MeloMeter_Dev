@@ -42,7 +42,7 @@ class MyProfileUseCase {
         self.coupleRepository.getCoupleDocument()
             .flatMap{ coupleData -> Single<[String]> in
                 let currentDate = Date.fromStringOrNow(Date().toString(type: .yearToDay), .yearToDay)
-                let sinceDay = Calendar.current.dateComponents([.day], from: coupleData.firstDay, to: currentDate).day ?? 0
+                let sinceDay = Calendar.current.dateComponents([.day], from: coupleData.firstDay, to: currentDate).day ?? 0 + 1
                 return self.userRepository.getUserInfo(otherUid)
                     .asSingle()
                     .map{ userInfo -> [String] in

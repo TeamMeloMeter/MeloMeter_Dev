@@ -22,6 +22,7 @@ class MainUseCase {
     private var userRepository: UserRepositoryP
     private var coupleRepository: CoupleRepositoryP
     private var adMobRepo: AdmobRepositoryP
+    private var sharedDataRepo: SharedDataRepoP
     
     var updatedLocation: BehaviorRelay<CLLocation?>
     var updatedOtherLocation: BehaviorRelay<CLLocation?>
@@ -29,7 +30,7 @@ class MainUseCase {
     var otherUserData: PublishRelay<UserModel?>
     var disposeBag: DisposeBag
     
-    required init( firebaseService: FirebaseService, adMobRepo: AdmobRepositoryP) {
+    required init( firebaseService: FirebaseService, adMobRepo: AdmobRepositoryP, sharedDataRepo: SharedDataRepoP) {
         self.firebaseService = firebaseService
         self.userRepository = UserRepository(firebaseService: self.firebaseService,
                                              chatRepository: ChatRepository(firebaseService: self.firebaseService))
@@ -41,6 +42,7 @@ class MainUseCase {
         self.userData = PublishRelay()
         self.otherUserData = PublishRelay()
         self.disposeBag = DisposeBag()
+        self.sharedDataRepo = sharedDataRepo
     }
     
     
@@ -105,7 +107,15 @@ extension MainUseCase {
         let calendar = Calendar.current
         return self.firebaseService.getDocument(collection: .Couples, document: coupleID)
             .flatMap{ source in
+                
+                guard let dto = source.toObject(CoupleDTO.self) else  {return Single.just("")}
+                
+                self.sharedDataRepo.saveStartDate(startDate: dto.firstDay)
+
+                
                 guard let coupleModel = source.toObject(CoupleDTO.self)?.toModel() else{ return Single.just("")}
+                
+                
                 
                 //주기적 알림 등록
                 PushNotificationService.shared.addRepeatAlarm(coupleModel.anniversaries, coupleModel.firstDay)
@@ -114,7 +124,7 @@ extension MainUseCase {
                 self.userRepository.updateFcmToken(fcmToken: fcmToken)
 
                 let currentDate = Date.fromStringOrNow(Date().toString(type: .yearToDay), .yearToDay)
-                let sinceDay = calendar.dateComponents([.day], from: currentDate, to: coupleModel.firstDay).day ?? 0
+                let sinceDay = ( calendar.dateComponents([.day], from: currentDate, to: coupleModel.firstDay).day ?? 0 ) - 1
                 return Single.just(String(abs(sinceDay)))
             }
             .catchAndReturn("")
@@ -130,9 +140,16 @@ extension MainUseCase {
     
     func getOtherUserData(uid: String) {
         self.userRepository.getUserInfo(uid)
-            .catchAndReturn(UserModel(name: nil, birth: nil))
+            .catchAndReturn(UserModel(name: nil, birth: nil)).map { [weak self] result in
+                guard let self else {return result}
+                let otherName = result.name ?? ""
+                self.sharedDataRepo.saveOthersName(othersName: otherName)
+                return result
+            }
             .bind(to: self.otherUserData)
             .disposed(by: disposeBag)
+        
+        
     }
     
     func getMyProfileImage(url: String) -> Single<UIImage?> {

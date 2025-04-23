@@ -8,36 +8,52 @@
 import WidgetKit
 import SwiftUI
 
-func convertDate(date: Date) -> String {
-    let date = Date()
-    let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy.MM.dd (E)" // 원하는 형식
-    let result = formatter.string(from: date)
-    return result
+
+func getDayCount(dateString: String) -> Int {
+    
+    let dateDate = Date.stringToDate(dateString: dateString, type: .yearToDay) ?? Date.now
+    
+    let currentDate = Date.fromStringOrNow(Date().toString(type: .yearToDay), .yearToDay)
+    let sinceDay = ( Calendar.current.dateComponents([.day], from: dateDate, to: currentDate).day ?? 0 ) + 1
+    return sinceDay
+}
+
+func getEntry() -> SimpleEntry {
+    let userDefaults = UserDefaults(suiteName: "group.com.teamMelometer.widget")
+    
+    let startDate = userDefaults!.string(forKey: "startDate") ?? ""
+    let othersName = userDefaults!.string(forKey: "othersName") ?? ""
+
+    let dDay = getDayCount(dateString: startDate)
+    
+    let entry = SimpleEntry(date: .now, startDate: startDate, couplesName: othersName, dDay: dDay)
+    
+    return entry
+    
 }
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: .now, startDate: convertDate(date: .now), couplesName: "김유미", dDay: 222)
+        return getEntry()
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: .now, startDate: convertDate(date: .now), couplesName: "김유미",  dDay: 222)
-        completion(entry)
+        completion(getEntry())
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> ())  {
-        var entries: [SimpleEntry] = []
+    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> ()) {
+        let now = Date()
+            let calendar = Calendar.current
+            var nextUpdate = calendar.date(bySettingHour: 0, minute: 0, second: 1, of: now)!
 
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: .now, startDate: convertDate(date: .now), couplesName: "김유미",  dDay: 222)
-            entries.append(entry)
-        }
+//            // 지금이 12시 이후면 내일로 넘김
+//            if nextUpdate <= now {
+//                nextUpdate = calendar.date(byAdding: .day, value: 1, to: nextUpdate)!
+//            }
 
-        let timeline = Timeline(entries: entries, policy: .atEnd)
+        let entry = getEntry()
+
+        let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
         completion(timeline)
     }
 
@@ -56,7 +72,6 @@ struct SimpleEntry: TimelineEntry {
 
 struct MelometerWidgetEntryView : View {
     var entry: Provider.Entry
-    
 
     var body: some View {
         VStack {
@@ -106,6 +121,6 @@ struct MelometerWidget: Widget {
 #Preview(as: .systemSmall) {
     MelometerWidget()
 } timeline: {
-    SimpleEntry(date: .now, startDate: convertDate(date: .now), couplesName: "김유미", dDay: 222)
+    getEntry()
     
 }

@@ -36,11 +36,15 @@ final class AppCoordinator: Coordinator {
     var firebaseService: FirebaseService
     var disposeBag = DisposeBag()
     var accessLevel: AccessLevel = .none
+    
+    private var sharedDataRepo: SharedDataRepoP
     // MARK: - Initializers
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
         self.childCoordinators = []
         self.firebaseService = DefaultFirebaseService()
+        
+        self.sharedDataRepo = SharedDataRepo()
     }
     
     // MARK: - Methods
@@ -77,14 +81,14 @@ extension AppCoordinator {
 
     func connectPresetFlow() {
         self.navigationController.viewControllers.removeAll()
-        let presetCoordinator = PresetCoordinator(self.navigationController)
+        let presetCoordinator = PresetCoordinator(self.navigationController, sharedDataRepo: self.sharedDataRepo)
         presetCoordinator.delegate = self
         presetCoordinator.start()
         self.childCoordinators.append(presetCoordinator)
     }
     
     func connectTabBarFlow() {
-        let tabBarCoordinator = TabBarCoordinator(self.navigationController)
+        let tabBarCoordinator = TabBarCoordinator(self.navigationController, sharedDataRepo: self.sharedDataRepo)
         tabBarCoordinator.delegate = self
         tabBarCoordinator.start()
         self.childCoordinators.append(tabBarCoordinator)

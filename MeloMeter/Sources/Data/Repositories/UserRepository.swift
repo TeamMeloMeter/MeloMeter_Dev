@@ -94,6 +94,7 @@ class UserRepository: UserRepositoryP {
                       var coupleValues = dDayDTO.asDictionary else {
                     return .error(FireStoreError.unknown)
                 }
+                
 
                 coupleValues["anniName"] = FieldValue.arrayUnion(coupleValues["anniName"] as? [Any] ?? [])
                 coupleValues["anniDate"] = FieldValue.arrayUnion(coupleValues["anniDate"] as? [Any] ?? [])
