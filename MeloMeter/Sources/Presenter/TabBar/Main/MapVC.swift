@@ -14,8 +14,6 @@ import GoogleMobileAds
 
 //메인 지도 화면
 class MapVC: UIViewController, UIGestureRecognizerDelegate{
-
-
     
     let infoWindow1 = NMFInfoWindow()
     let infoWindow2 = NMFInfoWindow()
@@ -149,9 +147,12 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             })
             .disposed(by: disposeBag)
         
+        
+
         output.currentLocation
             .asDriver(onErrorJustReturn: CLLocation(latitude: 0, longitude: 0))
             .drive(onNext: { [weak self] current in
+
                 self?.updateMyMarker(current ?? CLLocation(latitude: 0, longitude: 0))
             })
             .disposed(by: disposeBag)
@@ -160,6 +161,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             .take(1)
             .asDriver(onErrorJustReturn: CLLocation(latitude: 37.541, longitude: 126.986))
             .drive(onNext: { [weak self] current in
+
                 self?.updateCamera(current ?? CLLocation(latitude: 0, longitude: 0))
             })
             .disposed(by: disposeBag)

@@ -87,8 +87,8 @@ final class PushNotificationService {
                 
                 //트리거 생성
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-                
-                let request = UNNotificationRequest(identifier: "dipose", content: content, trigger: trigger)
+                    
+                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
                 
                 //발송을 위한 센터에 추가
                 UNUserNotificationCenter.current().add(request)
@@ -299,6 +299,7 @@ final class PushNotificationService {
     }
     
     func setupAppStateNotifications() {
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(appDidEnterBackground),
@@ -316,12 +317,12 @@ final class PushNotificationService {
     
     @objc private func appDidEnterBackground() {
         print("📦 백그라운드 진입 → 저전력 모드로 전환")
-        DefaultLocationService.shared.switchToSignificant()
+        LocationService.shared.switchToSignificant()
     }
     
     @objc private func appDidBecomeActive() {
         print("📡 앱 복귀 → 정밀 추적 재시작")
-        DefaultLocationService.shared.start()
+        LocationService.shared.start()
     }
     
     func registerForPushNotifications() {

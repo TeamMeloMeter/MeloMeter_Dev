@@ -55,8 +55,7 @@
 		5230B26B2A72859200781623 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B2622A72859200781623 /* Pretendard-ExtraBold.otf */; };
 		5230B26C2A72859200781623 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B2632A72859200781623 /* Pretendard-SemiBold.otf */; };
 		5230B26D2A72859200781623 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B2642A72859200781623 /* Pretendard-Regular.otf */; };
-		5230B2782A77907500781623 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2772A77907500781623 /* LocationService.swift */; };
-		5230B27A2A7790A300781623 /* DefaultLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2792A7790A300781623 /* DefaultLocationService.swift */; };
+		5230B27A2A7790A300781623 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2792A7790A300781623 /* LocationService.swift */; };
 		5230B27C2A77926A00781623 /* MainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B27B2A77926A00781623 /* MainUseCase.swift */; };
 		5230B2822A7CFF6F00781623 /* MyProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2812A7CFF6F00781623 /* MyProfileCoordinator.swift */; };
 		5230B2842A7D029200781623 /* MyProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2832A7D029200781623 /* MyProfileUseCase.swift */; };
@@ -256,8 +255,7 @@
 		5230B2622A72859200781623 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
 		5230B2632A72859200781623 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		5230B2642A72859200781623 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
-		5230B2772A77907500781623 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
-		5230B2792A7790A300781623 /* DefaultLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLocationService.swift; sourceTree = "<group>"; };
+		5230B2792A7790A300781623 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		5230B27B2A77926A00781623 /* MainUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUseCase.swift; sourceTree = "<group>"; };
 		5230B2812A7CFF6F00781623 /* MyProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileCoordinator.swift; sourceTree = "<group>"; };
 		5230B2832A7D029200781623 /* MyProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileUseCase.swift; sourceTree = "<group>"; };
@@ -706,8 +704,7 @@
 		5230B2762A77906000781623 /* LocationService */ = {
 			isa = PBXGroup;
 			children = (
-				5230B2772A77907500781623 /* LocationService.swift */,
-				5230B2792A7790A300781623 /* DefaultLocationService.swift */,
+				5230B2792A7790A300781623 /* LocationService.swift */,
 			);
 			name = LocationService;
 			path = ../../../LocationService;
@@ -1429,7 +1426,7 @@
 				214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */,
 				521D41E72A7FFD5F00E5CCDA /* DdayUseCase.swift in Sources */,
 				6097C9F52D538C0600895B63 /* Label+.swift in Sources */,
-				5230B27A2A7790A300781623 /* DefaultLocationService.swift in Sources */,
+				5230B27A2A7790A300781623 /* LocationService.swift in Sources */,
 				521D41FD2A843EB100E5CCDA /* TextField+.swift in Sources */,
 				2108F0412A6EC1F0002EED7A /* ProfileInsertUseCase.swift in Sources */,
 				52E0CDF02A4B091600E4A182 /* CoupleCombineVC.swift in Sources */,
@@ -1494,7 +1491,6 @@
 				527547EE2A68FC9000313EFC /* CustomAlertVC.swift in Sources */,
 				210BAFC42AC88B610012B786 /* AlarmModel.swift in Sources */,
 				5256947D2A97608200821B20 /* PushNotificationService.swift in Sources */,
-				5230B2782A77907500781623 /* LocationService.swift in Sources */,
 				5271D42E2A604BF400FC7606 /* Date+.swift in Sources */,
 				521D42152A8A6E7300E5CCDA /* NoticeVM.swift in Sources */,
 				60D913522D9C0AD60033EB95 /* AdmobRepository.swift in Sources */,

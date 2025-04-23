@@ -68,7 +68,8 @@ final class SplashVM : NSObject, FullScreenContentDelegate {
             } else {
                 PushNotificationService.shared.setupAppStateNotifications()
 
-                adMobRepo.loadInterstitial().subscribe({ single in
+                adMobRepo.loadInterstitial().subscribe({ [weak self] single in
+                    guard let self else {return}
                         switch single {
                         case .success(let interstitialAd):
                             interstitialAd.fullScreenContentDelegate = self

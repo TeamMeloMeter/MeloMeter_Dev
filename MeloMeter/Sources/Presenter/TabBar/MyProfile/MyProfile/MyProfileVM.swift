@@ -65,7 +65,8 @@ class MyProfileVM {
                             .disposed(by: disposeBag)
                         guard let name = user.name, let phoneNumber = user.phoneNumber, let otherUid = user.otherUid else { return }
                         self.myProfileUseCase.getDdayInfo(otherUid: otherUid)
-                            .subscribe(onSuccess: { dDayInfo in
+                            .subscribe(onSuccess: { [weak self] dDayInfo in
+                                guard let self else {return}
                                 output.coupleUserName.accept("\(name) & \(dDayInfo[0])")
                                 output.sinceFirstDay.accept("\(dDayInfo[1])일째 함께하는 중")
                             })

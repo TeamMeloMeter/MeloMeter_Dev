@@ -48,20 +48,21 @@ class MainUseCase {
     
 
     func requestAuthorization() {
-        DefaultLocationService.shared.requestAuthorization()
+        LocationService.shared.requestAuthorization()
     }
 
     func checkAuthorization() {
-        DefaultLocationService.shared.observeUpdatedAuthorization()
+        LocationService.shared.observeUpdatedAuthorization()
             .subscribe(onNext: { [weak self] status in
-                guard let self = self else{ return }
+                guard let self else {return }
+
                 switch status {
                 case .authorizedAlways:
                     self.authorizationStatus.onNext(.allowed)
-                    DefaultLocationService.shared.start()
+                    LocationService.shared.start()
                 case .authorizedWhenInUse:
                     self.authorizationStatus.onNext(.halfallowed)
-                    DefaultLocationService.shared.start()
+                    LocationService.shared.start()
                 case .notDetermined:
                     self.authorizationStatus.onNext(.notDetermined)
                 case .denied, .restricted:
@@ -75,14 +76,15 @@ class MainUseCase {
     }
     
     func requestLocation() {
-        DefaultLocationService.shared.observeUpdatedLocation()
+        LocationService.shared.observeUpdatedLocation()
             .bind(to: self.updatedLocation)
             .disposed(by: disposeBag)
     }
     
     func requestOtherLocation() {
         self.userData
-            .subscribe(onNext: { userInfo in
+            .subscribe(onNext: { [weak self] userInfo in
+                guard let self else {return}
                 guard let userInfo, let otherUid = userInfo.otherUid else {
                     self.updatedLocation.accept(nil)
                     return }

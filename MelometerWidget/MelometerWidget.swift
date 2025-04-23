@@ -43,18 +43,19 @@ struct Provider: TimelineProvider {
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> ()) {
         let now = Date()
-            let calendar = Calendar.current
-            var nextUpdate = calendar.date(bySettingHour: 0, minute: 0, second: 1, of: now)!
+           let calendar = Calendar.current
 
-//            // 지금이 12시 이후면 내일로 넘김
-//            if nextUpdate <= now {
-//                nextUpdate = calendar.date(byAdding: .day, value: 1, to: nextUpdate)!
-//            }
+           var nextUpdate = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: now)!
 
-        let entry = getEntry()
+           // 이미 자정 지났으면 → 내일 자정으로 설정
+           if nextUpdate <= now {
+               nextUpdate = calendar.date(byAdding: .day, value: 1, to: nextUpdate)!
+           }
 
-        let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
-        completion(timeline)
+           let entry = getEntry()
+
+           let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
+           completion(timeline)
     }
 
 //    func relevances() async -> WidgetRelevances<Void> {
