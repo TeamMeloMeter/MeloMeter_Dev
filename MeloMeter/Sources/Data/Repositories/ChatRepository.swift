@@ -14,8 +14,9 @@ enum ChatMessageError: Error {
     case emptyDocument
 }
 
-class ChatRepository: ChatRepositoryP{
+class ChatRepository: ChatRepositoryP {
     
+    var lastSearchedMessageID: String?
     var recieveChatMessage = PublishSubject<[ChatDTO]?>()
     var firebaseService: FirebaseService
     var disposeBag: DisposeBag
@@ -29,7 +30,8 @@ class ChatRepository: ChatRepositoryP{
     func addChatMessage(message: ChatModel, coupleID: String) -> Single<Void> {
         let dto = message.toDTO()
         let values = dto.asDictionary ?? [:]
-        let userName = UserDefaults.standard.string(forKey: "userName") ?? "상대방"
+        // 왜 dic 으로 바꾸는거..
+        let userName = UserDefaults.standard.string(forKey: "name") ?? "상대방"
         //푸시노티
         PushNotificationService.shared.sendPushNotification(title: userName, body: values["contents"] as? String ?? "메세지가 도착했어요!", type: AlarmType.defaultValue)
         
@@ -46,7 +48,7 @@ class ChatRepository: ChatRepositoryP{
                 .flatMap{ url in
                     let dto = chatModel.toDTO(url: url)
                     let values = dto.asDictionary ?? [:]
-                    let userName = UserDefaults.standard.string(forKey: "userName") ?? "상대방"
+                    let userName = UserDefaults.standard.string(forKey: "name") ?? "상대방"
                     //푸시노티
                     PushNotificationService.shared.sendPushNotification(title: userName, body: "(사진)", type: AlarmType.defaultValue)
                     
@@ -122,11 +124,14 @@ class ChatRepository: ChatRepositoryP{
     }
     
     //추가 30개 가져오기
-    func getMoreChatMessage(num: Int, coupleID: String) -> Observable<[ChatDTO]> {
+    func getMoreChatMessage(num: Int, coupleID: String, searchText searchGText: String?) -> Observable<[ChatDTO]> {
         return self.firebaseService.getDocument(collection: .Chat, document: coupleID)
             .compactMap { documentSnapshot in
-                if let chatFields = documentSnapshot["chatField"] as? [[String: Any]],  !chatFields.isEmpty{
+                if let chatFields = documentSnapshot["chatField"] as? [[String: Any]], !chatFields.isEmpty{
                     // 타임스탬프를 이용하여 날짜 순으로 정렬한다.
+                    
+                
+
                     let sortedChatFields = chatFields.sorted { (dict1, dict2) -> Bool in
                         guard let date1 = dict1["date"] as? Timestamp,
                               let date2 = dict2["date"] as? Timestamp else {
@@ -150,11 +155,64 @@ class ChatRepository: ChatRepositoryP{
                     if start < 0 { start = 0 }
                     let recentChatFields = sortedChatFields[start ..< end]
                     
+                    
                     // DTO타입으로 형변환
                     return self.convertToChatDTOArray(from: Array(recentChatFields))
                 } else {
                     return []
                 }
+            }
+            .asObservable()
+    }
+    
+    // MARK: by seungwan
+    func getMessageSearch(coupleID: String, searchGText: String, num: Int) -> Observable<([ChatDTO],String)> {
+        return self.firebaseService.getDocument(collection: .Chat, document: coupleID)
+            .compactMap { documentSnapshot in
+                var findChatFields: [ChatDTO] = []
+                if let chatFields = documentSnapshot["chatField"] as? [[String: Any]], !chatFields.isEmpty{
+                    // 타임스탬프를 이용하여 날짜 순으로 정렬한다.
+                    self.lastSearchedMessageID = ""
+                
+
+                    let sortedChatFields = chatFields.sorted { (dict1, dict2) -> Bool in
+                        guard let date1 = dict1["date"] as? Timestamp,
+                              let date2 = dict2["date"] as? Timestamp else {
+                            return false
+                        }
+                        return date1.seconds > date2.seconds ||
+                        (date1.seconds == date2.seconds && date1.nanoseconds > date2.nanoseconds)
+                    }
+                    
+
+                    //TODO: clean code
+                    //MARK: DTO타입으로 형변환
+                    let converted = Array(self.convertToChatDTOArray(from: sortedChatFields.reversed())[ num ..< sortedChatFields.count ])
+                    
+
+                    for (index, element) in converted.enumerated() {
+                        
+                    
+                        
+                        if let text = element.contents, text.contains(searchGText) {
+                            if 5 >= converted.count - index {
+                                findChatFields = Array(converted[ 0 ..< index + 1 ].reversed())
+                                
+                            } else {
+                                findChatFields = Array(converted[ 0 ..< index + 1 ].reversed())
+
+                            }
+                       
+                            self.lastSearchedMessageID = element.messageId
+                            break
+
+                        }
+                    }
+                
+                    
+                }
+                return (findChatFields, self.lastSearchedMessageID ?? "")
+
             }
             .asObservable()
     }
@@ -186,7 +244,7 @@ class ChatRepository: ChatRepositoryP{
     func getChatImagesURL(coupleID: String) -> Single<[String]> {
         return self.firebaseService.getDocument(collection: .Chat, document: coupleID)
             .map { documentSnapshot in
-                if let chatFields = documentSnapshot["chatField"] as? [[String: Any]], !chatFields.isEmpty{
+                if let chatFields = documentSnapshot["chatField"] as? [[String: Any]], !chatFields.isEmpty {
                     let chatArray = self.convertToChatDTOArray(from: chatFields)
                     return chatArray.filter({ $0.chatType == ChatType.image.stringType }).compactMap({ $0.contents })
                 } else {

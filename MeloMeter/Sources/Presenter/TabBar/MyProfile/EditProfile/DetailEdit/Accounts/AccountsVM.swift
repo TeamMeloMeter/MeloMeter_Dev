@@ -46,6 +46,8 @@ class AccountsVM {
             })
             .disposed(by: disposeBag)
         
+        
+        //MARK: 회원탈퇴 탭 IN VM
             input.excuteBtnEvent
                 .subscribe(onNext: {[weak self] btnType in
                     guard let self = self else{ return }
@@ -98,7 +100,7 @@ class AccountsVM {
                             .subscribe(onSuccess: { result in
                                 if result {
                                     self.coordinator?.finish()
-                                }else {
+                                } else {
                                     output.withdrawalFailed.onNext(true)
                                 }
                             })

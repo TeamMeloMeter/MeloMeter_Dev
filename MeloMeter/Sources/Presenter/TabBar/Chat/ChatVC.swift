@@ -11,10 +11,26 @@ import UIKit
 import RxCocoa
 import RxSwift
 import RxGesture
+import SnapKit
+import Then
 // MARK: - ChatViewController
 
 /// A base class for the example controllers
 class ChatVC: MessagesViewController, MessagesDataSource {
+    // MARK: by seungwan
+    private func configureNavigationBarAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground() // 불투명하게 설정
+        appearance.backgroundColor = .white        // 원하는 배경색 지정
+
+        // 타이틀 텍스트 색상 (선택 사항)
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+
+        // 네비게이션 바에 적용
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+    }
     
     private let viewModel: ChatVM?
     let disposeBag = DisposeBag()
@@ -22,7 +38,9 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     let reloadEvent = PublishSubject<Int>()
     var sendTextMessage = PublishRelay<ChatModel>()
     var sendImageMessage = PublishRelay<ChatModel>()
+    var searchBtnTappedEvent = PublishSubject<Void>()
     lazy var messageList: [ChatModel] = []
+    private var firstLoaded = false
 
     // 백그라운드 이미지
     let backgroundImageView: UIImageView = {
@@ -31,8 +49,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         return imageView
     }()
     
-    //자기 자신이 될 ChatUser셋팅
-    let chatUser = ChatUserModel(senderId: UserDefaults.standard.string(forKey: "uid") ?? "", displayName: UserDefaults.standard.string(forKey: "userName") ?? "")
+    // 자기 자신이 될 ChatUser셋팅
+    let chatUser = ChatUserModel(senderId: UserDefaults.standard.string(forKey: "uid") ?? "", displayName: UserDefaults.standard.string(forKey: "name") ?? "")
     var currentSender: SenderType {
         self.chatUser
     }
@@ -58,11 +76,11 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNavigationBarAppearance()
         setBindings()
         self.viewDidLoadEvent.onNext(())
         setNavigationBar()
         configureMessageCollectionView()
-        
         self.view.addSubview(backgroundImageView)
         self.view.sendSubviewToBack(backgroundImageView)
         setBgAutoLayout()
@@ -81,30 +99,51 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        
+        self.navigationController?.view.backgroundColor = .white
+        
         configureMessageInputBar()
+        
+     
+  
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        DispatchQueue.main.async {
-            if !self.messageList.isEmpty {
-                self.messagesCollectionView.reloadDataAndKeepOffset()
-                self.messagesCollectionView.scrollToItem(at: IndexPath(row: 0, section: self.messageList.count-1), at: .centeredVertically, animated: true)
-            }
+//        DispatchQueue.main.async {
+//            if !self.messageList.isEmpty {
+//                self.messagesCollectionView.reloadDataAndKeepOffset()
+//                self.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: false)
+//            }
+//        }
+        
+        
+        self.view.addSubview(moveLastBtn)
+
+        moveLastBtn.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(0)
+            $0.bottom.equalTo(inputContainerView.snp.top)
+            $0.width.height.equalTo(50)
+
         }
+   
+   
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
     }
     
-    // MARK: - 처음 로딩시 채팅 리스트 가져오는곳
+    // MARK: - 처음 로딩시 채팅 리스트 가져오는곳 -> 필요 없을 듯 (seungwan)
     func loadFirstMessages(_ chatMassageList: [ChatModel]) {
         DispatchQueue.global(qos: .userInitiated).async {
             DispatchQueue.main.async {
+                
                 self.messageList = chatMassageList // DB에서 받아온 메세지 배열 삽입
                 self.messagesCollectionView.reloadData()
                 self.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: false)
+                self.firstLoaded = true
             }
         }
     }
@@ -114,21 +153,85 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     }
 
     func loadMoreMessages(_ chatMassageList: [ChatModel]) {
-        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
-            //받아온 매시지 리스트를 하나씩 삽입한다,
+
+        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.2) {
+            // 받아온 매시지 리스트를 하나씩 삽입한다,
             DispatchQueue.main.async {
+
                 self.messageList.insert(contentsOf: chatMassageList, at: 0)
                 self.messagesCollectionView.reloadDataAndKeepOffset()
                 self.refreshControl.endRefreshing()
+                
+                
+//                self.messagesCollectionView.visibleCells.forEach { cell in
+//                    if let pickedCell = cell as? TextMessageCell, let fieldText = self.testTextField.text, let cellText = pickedCell.messageLabel.text, cellText.contains(fieldText) {
+//                        pickedCell.messageLabel.highlightText(fieldText)
+//                        print(pickedCell.messageLabel.text)
+//                    }
+//                }
             }
+
+       
+            
+            
         }
+    }
+    
+    // MARK: by seungwan
+    let messageSearchTextField = UITextField().then {
+        $0.placeholder = "메세지 검색"
+        $0.font = FontManager.shared.regular(ofSize: 16)
+        $0.returnKeyType = .search
+        $0.isHidden = true
+    }
+    let chatLabel = UILabel().then {
+        $0.text = "채팅"
+        $0.font = FontManager.shared.semiBold(ofSize: 16)
+        $0.textAlignment = .center
+    }
+    
+    // TODO: - 맨 밑으로 내려오는 이미지 custom
+    let moveLastBtn = UIImageView().then {
+        $0.image = UIImage(named: "message_search_lastDown")
+        $0.isHidden = true
+        $0.isUserInteractionEnabled = true
     }
     
     // MARK: NavigationBar
     private func setNavigationBar() {
+        let searchTextBar = UIView().then {
+            $0.addSubview(messageSearchTextField)
+            $0.addSubview(chatLabel)
+
+            chatLabel.snp.makeConstraints {
+                $0.top.bottom.trailing.leading.equalToSuperview()
+            }
+            messageSearchTextField.snp.makeConstraints {
+                $0.top.bottom.trailing.leading.equalToSuperview()
+            }
+
+        }
+       
+        navigationItem.titleView = searchTextBar
+
+        
+        searchTextBar.snp.makeConstraints {
+            $0.width.equalTo(240)
+            $0.height.equalTo(40)
+        }
+        
+        
+        navigationController?.navigationBar.backgroundColor = .white
+        
         navigationItem.title = "채팅"
         navigationItem.leftBarButtonItem = backBarButton
-        navigationItem.leftBarButtonItem?.tintColor = .black
+        navigationItem.leftBarButtonItem?.tintColor = .black 
+       
+        navigationItem.rightBarButtonItem = searchBarButton
+        navigationItem.rightBarButtonItem?.tintColor = .black
+        
+        leftSearchIcon.tintColor = .black
+        exitBarButton.tintColor = .black
     }
     
     private lazy var backBarButton: UIBarButtonItem = {
@@ -138,6 +241,17 @@ class ChatVC: MessagesViewController, MessagesDataSource {
                                      action: nil)
         return button
     }()
+    
+    
+    private lazy var searchBarButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"),
+                                                      style: .plain,
+                                                      target: self,
+                                                       action: nil)
+    
+    private lazy var exitBarButton =  UIBarButtonItem(title: "취소", style: .plain, target: self, action: nil)
+    
+    private lazy var leftSearchIcon = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: nil)
+    
     
     // MARK: Configure
     func configureMessageCollectionView() {
@@ -150,8 +264,23 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         self.messageInputBar.inputTextView.placeholder = " 메세지를 입력해주세요."
         
     }
+    private let bottomPickerBar = UIView().then {
+        $0.backgroundColor = .white
+        $0.isHidden = true
+        $0.clipsToBounds = false
+    }
+    private let pickerLeftBtn = UIImageView().then {
+        $0.image = UIImage(named: "message_search_up")
+    }
+    private let pickerRightBtn = UIImageView().then {
+        $0.image = UIImage(named: "message_search_down")
+    }
+    
+
     
     func configureMessageInputBar() {
+        
+   
         
         messageInputBar = CameraInputBarAccessoryView()
         messageInputBar.delegate = self
@@ -175,6 +304,37 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         messageInputBar.inputTextView.placeholder = " 메세지를 입력해주세요."
         configureInputBarItems()
         inputBarType = .custom(messageInputBar)
+        
+       
+        configureBottomPickerBar()
+    }
+    
+    // MARK: - 바텀 검색 메시지 탐색 버튼 바
+    func configureBottomPickerBar() {
+  
+        messageInputBar.addSubview(bottomPickerBar)
+    
+        
+        bottomPickerBar.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        bottomPickerBar.addSubview(pickerLeftBtn)
+        bottomPickerBar.addSubview(pickerRightBtn)
+        
+                
+        pickerRightBtn.snp.makeConstraints {
+            $0.trailing.top.equalToSuperview().inset(14)
+            $0.width.height.equalTo(28)
+        }
+        pickerLeftBtn.snp.makeConstraints {
+            $0.trailing.equalTo(pickerRightBtn.snp.leading).offset(-10)
+            $0.top.equalTo(pickerRightBtn)
+            $0.width.height.equalTo(28)
+
+        }
+      
+        
     }
     
     // MARK: - EVENT
@@ -186,6 +346,11 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             .showCustomAlert()
     }
     
+    func searchMessageIsNotExistAlert(){
+        //TODO: CustomAlert 추가 해야함.
+        AlertManager.showNotExist(style: .alert, title: nil, message: "검색결과가 없습니다.")
+    }
+    
     //인풋바 아이탬 설정
     private func configureInputBarItems() {
         messageInputBar.setRightStackViewWidthConstant(to: 52, animated: false)
@@ -195,6 +360,8 @@ class ChatVC: MessagesViewController, MessagesDataSource {
         messageInputBar.sendButton.layer.cornerRadius = 8
         messageInputBar.sendButton.layer.masksToBounds = true
         configureInputBarPadding()
+        
+ 
         
     }
     
@@ -208,9 +375,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     
     // MARK: - Helpers
-    
-    
-    func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
+        func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
         guard indexPath.section - 1 >= 0 else { return false }
         return messageList[indexPath.section].user == messageList[indexPath.section - 1].user
     }
@@ -235,9 +400,16 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     // MARK: - Binding
     func setBindings() {
+        
+        self.moveLastBtn.rx.tapGesture().when(.recognized).subscribe({ _ in
+            self.messagesCollectionView.scrollToLastItem()
+
+        }).disposed(by: disposeBag)
+        
         self.messagesCollectionView.rx.tapGesture().when(.ended)
             .subscribe(onNext: { _ in
                 self.inputContainerView.endEditing(true)
+                self.messageSearchTextField.endEditing(true)
             })
             .disposed(by: disposeBag)
         
@@ -248,19 +420,28 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             backBtnTapEvent: self.backBarButton.rx.tap
                 .map({ _ in })
                 .asObservable(),
+            searchBtnTapEvent: self.searchBarButton.rx.tap.map({ $0 }).asObservable(),
             mySendTextMessage: self.sendTextMessage
                 .asObservable(),
             mySendImageMessage: self.sendImageMessage
                 .asObservable(),
             reloadMessage: self.reloadEvent
-                .asObservable()
+                .asObservable(),
+            searchTextMessage: self.messageSearchTextField.rx.text.orEmpty.asObservable(),
+            keyboardSearchBtnTapped: messageSearchTextField.rx.controlEvent(.editingDidEndOnExit).asObservable(),
+            exitBarButton: self.exitBarButton.rx.tap.map({ $0 }).asObservable(),
+            pickerLeftBtnTap: pickerLeftBtn.rx.tapGesture().when(.recognized).map{ _ in }.asObservable() ,
+            pickerRightBtnTap: pickerRightBtn.rx.tapGesture().when(.recognized).map { _ in }.asObservable()
         )
+        
+        
         
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else{ return }
           
-        output.senddSuccess
+        output.sendSuccess
             .bind(onNext: {result in
                 if result {
+                    
                 }
                 else {
                     self.messageSendfaileAlert()
@@ -269,39 +450,109 @@ class ChatVC: MessagesViewController, MessagesDataSource {
             .disposed(by: disposeBag)
         
         output.getMessage
-            .bind(onNext: {chatMessageList in
+            .bind(onNext: { [weak self] chatMessageList in
+                guard let self else {return}
                 self.messageList = chatMessageList
                 self.loadFirstMessages(chatMessageList)
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         output.getMoreMessage
-            .bind(onNext: {chatMessageList in
+            .bind(onNext: { [weak self] chatMessageList in
+                guard let self else {return}
                 self.loadMoreMessages(chatMessageList)
             })
             .disposed(by: disposeBag)
         
         output.getRealTimeMessage
-            .bind(onNext: {chatMessageList in
-                chatMessageList.forEach{ chatMessage in
-                    self.insertMessage(chatMessage)
+            .bind(onNext: { [weak self] chatMessageList in
+                guard let self else {return}
+                if self.firstLoaded {
+                    chatMessageList.forEach{ chatMessage in
+                        
+                        self.insertOnceMessage(chatMessage)
+                    }
                 }
+                
             })
             .disposed(by: disposeBag)
+        
+        // TODO: 다 돌았을때도 없을때 빈배열 넘기기 + 이미 스캔된거 다시 돌아옴 (왜??)
+        output.searchedIndex.subscribe(onNext: { [weak self] searched in
+            guard let self else {return}
+            
+            
+            DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.5) {
+                guard let firstIndex = self.messageList.firstIndex(where: {
+                    
+                      $0.messageId == searched.messageId
+                }) else {return}
+                DispatchQueue.main.async {
+                  
+                    
+                    // MARK: - 하나씩 형광펜
+//                    if let pickedCell = self.messagesCollectionView.cellForItem(at:  IndexPath(row: 0, section: firstIndex)) as? TextMessageCell {
+//                     
+//                        pickedCell.messageLabel.highlightText(self.testTextField.text ?? "")
+//                    }
+                    self.messagesCollectionView.reloadDataAndKeepOffset()
+                    self.messagesCollectionView.scrollToItem(at: IndexPath(row: 0, section: firstIndex), at: .centeredVertically, animated: true)
+                    
+
+                    
+                    
+                }
+            }
+          
+        }).disposed(by: disposeBag)
+        
+        output.setChatingView.subscribe(onNext: { [weak self] in
+            guard let self else {return}
+            messageSearchTextField.text = ""
+            
+        
+
+            
+            if $0 {
+                // Search 필드 ON
+                navigationItem.rightBarButtonItem = exitBarButton
+                navigationItem.leftBarButtonItem = leftSearchIcon
+                
+            } else {
+                // Search 필드 OFF
+                navigationItem.rightBarButtonItem = searchBarButton
+                navigationItem.leftBarButtonItem = backBarButton
+                
+                self.messagesCollectionView.reloadDataAndKeepOffset()
+            }
+            
+            chatLabel.isHidden = $0
+            
+            messageSearchTextField.isHidden = !$0
+            bottomPickerBar.isHidden = !$0
+            moveLastBtn.isHidden = !$0
+       
+            
+            
+        }).disposed(by: disposeBag)
+        
+        output.notExistAlert.bind(onNext: searchMessageIsNotExistAlert  ).disposed(by: disposeBag)
     }
     
     
     // MARK: - Helpers
-    func insertMessage(_ message: ChatModel) {
+    func insertOnceMessage(_ message: ChatModel) {
         messageList.append(message)
+        print("message \(message)")
+        
         messagesCollectionView.performBatchUpdates({
             messagesCollectionView.insertSections([messageList.count - 1])
             if messageList.count >= 2 {
                 messagesCollectionView.reloadSections([messageList.count - 2])
             }
         }, completion: { [weak self] _ in
-            if self?.isLastSectionVisible() == true {
-                self?.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: true)
+            guard let self else {return}
+            if self.isLastSectionVisible() == true {
+                self.messagesCollectionView.scrollToLastItem(at: .centeredVertically, animated: true)
             }
         })
     }
@@ -309,7 +560,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     
     func isLastSectionVisible() -> Bool {
         guard !messageList.isEmpty else { return false }
-        
         let lastIndexPath = IndexPath(item: 0, section: messageList.count - 1)
         
         return messagesCollectionView.indexPathsForVisibleItems.contains(lastIndexPath)
@@ -356,7 +606,7 @@ class ChatVC: MessagesViewController, MessagesDataSource {
                     NSAttributedString.Key.font: FontManager.shared.medium(ofSize: 10),
                     NSAttributedString.Key.foregroundColor: UIColor.gray2
                 ])
-        }else if isNextMessageSameSender(at: indexPath) {
+        } else if isNextMessageSameSender(at: indexPath) {
             if !isNextMessageSameDate(at: indexPath) {
                 return NSAttributedString(
                     string: dateString,
@@ -377,8 +627,13 @@ class ChatVC: MessagesViewController, MessagesDataSource {
     // MARK: TextCustomCell
     func textCell(for message: MessageType, at indexPath: IndexPath, in messageView: MessagesCollectionView) -> UICollectionViewCell? {
         let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: "CustomMessageCell", for: indexPath) as! CustomMessageCell
+        
         cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-
+        
+        //TODO: 나중에 검색창 열기 닫기로 해야될듯 -> 열어놓는 동안은 검색
+        if let text = self.messageSearchTextField.text {
+            cell.messageLabel.highlightText(text)
+        }
         return cell
     }
     // MARK: PhotoCustomCell
@@ -398,7 +653,6 @@ class ChatVC: MessagesViewController, MessagesDataSource {
 }
 
 // MARK: InputBarAccessoryViewDelegate
-
 extension ChatVC: InputBarAccessoryViewDelegate {
     // MARK: Internal
     
@@ -409,8 +663,9 @@ extension ChatVC: InputBarAccessoryViewDelegate {
     }
     
     func processInputBar(_ inputBar: InputBarAccessoryView) {
+        // 전송 탭 시
         let components = inputBar.inputTextView.components //String
-        inputBar.inputTextView.text = String()
+        inputBar.inputTextView.text = String() // 왜한거지
         inputBar.invalidatePlugins()
         DispatchQueue.global(qos: .default).async {
             DispatchQueue.main.async { [weak self] in
@@ -429,6 +684,8 @@ extension ChatVC: InputBarAccessoryViewDelegate {
             if let str = component as? String {
                 let message = ChatModel(text: str, user: self.chatUser, messageId: UUID().uuidString, date: Date.fromStringOrNow(Date().toString(type: .timeStamp), .timeStamp))
                 sendTextMessage.accept(message)
+                
+                // 뷰모델 메시지 전송
             }
         }
     }
@@ -460,7 +717,7 @@ extension ChatVC: CameraInputBarAccessoryViewDelegate {
         self.inputContainerView.endEditing(true)
     }
     
-    //이미지타입 전송
+    //MARK: 이미지타입 전송
     func sendImageMessageEvent(photo: UIImage) {
         let photoMessage = ChatModel(image: photo, user: currentSender as! ChatUserModel, messageId: UUID().uuidString, date: Date())
         sendImageMessage.accept(photoMessage)

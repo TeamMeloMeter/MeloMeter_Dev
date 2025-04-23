@@ -10,6 +10,7 @@ import RxSwift
 import RxRelay
 import CoreLocation
 import FirebaseFirestore
+import GoogleMobileAds
 
 enum LocationAuthorizationStatus {
     case allowed, halfallowed, disallowed, notDetermined
@@ -17,10 +18,11 @@ enum LocationAuthorizationStatus {
 
 class MainUseCase {
     var authorizationStatus = BehaviorSubject<LocationAuthorizationStatus?>(value: nil)
-    private var locationService: DefaultLocationService
     private var firebaseService: FirebaseService
     private var userRepository: UserRepositoryP
     private var coupleRepository: CoupleRepositoryP
+    private var adMobRepo: AdmobRepositoryP
+    private var sharedDataRepo: SharedDataRepoP
     
     var updatedLocation: BehaviorRelay<CLLocation?>
     var updatedOtherLocation: BehaviorRelay<CLLocation?>
@@ -28,43 +30,39 @@ class MainUseCase {
     var otherUserData: PublishRelay<UserModel?>
     var disposeBag: DisposeBag
     
-    required init(locationService: DefaultLocationService, firebaseService: FirebaseService) {
-        self.locationService = locationService
+    required init( firebaseService: FirebaseService, adMobRepo: AdmobRepositoryP, sharedDataRepo: SharedDataRepoP) {
         self.firebaseService = firebaseService
         self.userRepository = UserRepository(firebaseService: self.firebaseService,
                                              chatRepository: ChatRepository(firebaseService: self.firebaseService))
         self.coupleRepository = CoupleRepository(firebaseService: self.firebaseService)
+        self.adMobRepo = adMobRepo
         
         self.updatedLocation = BehaviorRelay(value: CLLocation(latitude: 0, longitude: 0))
         self.updatedOtherLocation = BehaviorRelay(value: CLLocation(latitude: 0, longitude: 0))
         self.userData = PublishRelay()
         self.otherUserData = PublishRelay()
         self.disposeBag = DisposeBag()
+        self.sharedDataRepo = sharedDataRepo
     }
     
-    func locationStart() {
-        self.locationService.start()
-    }
     
-    func locationStop() {
-        self.locationService.stop()
-    }
-    
+
     func requestAuthorization() {
-        self.locationService.requestAuthorization()
+        LocationService.shared.requestAuthorization()
     }
 
     func checkAuthorization() {
-        self.locationService.observeUpdatedAuthorization()
+        LocationService.shared.observeUpdatedAuthorization()
             .subscribe(onNext: { [weak self] status in
-                guard let self = self else{ return }
+                guard let self else {return }
+
                 switch status {
                 case .authorizedAlways:
                     self.authorizationStatus.onNext(.allowed)
-                    self.locationService.start()
+                    LocationService.shared.start()
                 case .authorizedWhenInUse:
                     self.authorizationStatus.onNext(.halfallowed)
-                    self.locationService.start()
+                    LocationService.shared.start()
                 case .notDetermined:
                     self.authorizationStatus.onNext(.notDetermined)
                 case .denied, .restricted:
@@ -78,15 +76,19 @@ class MainUseCase {
     }
     
     func requestLocation() {
-        self.locationService.observeUpdatedLocation()
+        LocationService.shared.observeUpdatedLocation()
             .bind(to: self.updatedLocation)
             .disposed(by: disposeBag)
     }
     
     func requestOtherLocation() {
         self.userData
-            .subscribe(onNext: { userInfo in
-                self.firebaseService.observer(collection: .Locations, document: userInfo?.otherUid ?? "")
+            .subscribe(onNext: { [weak self] userInfo in
+                guard let self else {return}
+                guard let userInfo, let otherUid = userInfo.otherUid else {
+                    self.updatedLocation.accept(nil)
+                    return }
+                self.firebaseService.observer(collection: .Locations, document: otherUid)
                     .map{ firebaseData -> CLLocation? in
                         guard let geopoint = firebaseData["location"] as? GeoPoint else { return nil }
                         return CLLocation(latitude: geopoint.latitude, longitude: geopoint.longitude)
@@ -107,7 +109,15 @@ extension MainUseCase {
         let calendar = Calendar.current
         return self.firebaseService.getDocument(collection: .Couples, document: coupleID)
             .flatMap{ source in
+                
+                guard let dto = source.toObject(CoupleDTO.self) else  {return Single.just("")}
+                
+                self.sharedDataRepo.saveStartDate(startDate: dto.firstDay)
+
+                
                 guard let coupleModel = source.toObject(CoupleDTO.self)?.toModel() else{ return Single.just("")}
+                
+                
                 
                 //주기적 알림 등록
                 PushNotificationService.shared.addRepeatAlarm(coupleModel.anniversaries, coupleModel.firstDay)
@@ -116,14 +126,14 @@ extension MainUseCase {
                 self.userRepository.updateFcmToken(fcmToken: fcmToken)
 
                 let currentDate = Date.fromStringOrNow(Date().toString(type: .yearToDay), .yearToDay)
-                let sinceDay = calendar.dateComponents([.day], from: currentDate, to: coupleModel.firstDay).day ?? 0
+                let sinceDay = ( calendar.dateComponents([.day], from: currentDate, to: coupleModel.firstDay).day ?? 0 ) - 1
                 return Single.just(String(abs(sinceDay)))
             }
             .catchAndReturn("")
     }
     
     func getUserData() {
-        guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return }
+        guard let uid = UserDefaults.standard.string(forKey: "uid") else { return }
         self.userRepository.getUserInfo(uid)
             .catchAndReturn(UserModel(name: nil, birth: nil))
             .bind(to: self.userData)
@@ -132,9 +142,16 @@ extension MainUseCase {
     
     func getOtherUserData(uid: String) {
         self.userRepository.getUserInfo(uid)
-            .catchAndReturn(UserModel(name: nil, birth: nil))
+            .catchAndReturn(UserModel(name: nil, birth: nil)).map { [weak self] result in
+                guard let self else {return result}
+                let otherName = result.name ?? ""
+                self.sharedDataRepo.saveOthersName(othersName: otherName)
+                return result
+            }
             .bind(to: self.otherUserData)
             .disposed(by: disposeBag)
+        
+        
     }
     
     func getMyProfileImage(url: String) -> Single<UIImage?> {
@@ -175,4 +192,12 @@ extension MainUseCase {
         else{ return Single.just(()) }
         return self.userRepository.removeOtherData(uid: uid)
     }
+}
+//MARK: AdMob
+extension MainUseCase {
+    
+    func getBottomBannerAd() -> BannerView {
+        return adMobRepo.loadBottomBanner()
+    }
+    
 }

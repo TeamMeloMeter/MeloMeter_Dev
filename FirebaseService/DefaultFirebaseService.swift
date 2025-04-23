@@ -41,6 +41,7 @@ public final class DefaultFirebaseService: FirebaseService {
                 return Disposables.create()
             }
             single(.success(currentUser))
+            
             return Disposables.create()
         }
     }
@@ -94,7 +95,7 @@ public final class DefaultFirebaseService: FirebaseService {
             if document == "" { //문서ID 자동생성
                 newDocument = self.database.collection(collection.name)
                     .document()
-                UserDefaults.standard.set(newDocument.documentID, forKey: "coupleDocumentID")
+                UserDefaults.standard.set(newDocument.documentID, forKey: "coupleID")
             }else { //문서ID 지정생성
                 newDocument = self.database.collection(collection.name)
                     .document(document)
@@ -174,6 +175,8 @@ public extension DefaultFirebaseService {
         }
     }
     
+    
+    //MARK: defaultFirebase setAccessLevel
     func setAccessLevel(_ level: AccessLevel) -> Single<Void> {
         return self.getCurrentUser()
             .flatMap({ user -> Single<Void> in
@@ -187,7 +190,9 @@ public extension DefaultFirebaseService {
 extension DefaultFirebaseService {
     public func uploadImage(filePath: String, image: UIImage) -> Single<String> {
         return Single.create { single in
-            guard let imageData = image.jpegData(compressionQuality: 0.4) else { return Disposables.create() }
+           
+            guard let imageData = image.normalizedImage()?.jpegData(compressionQuality: 0.4) else {
+                return Disposables.create() }
             let metaData = StorageMetadata()
             metaData.contentType = "image/jpeg"
             

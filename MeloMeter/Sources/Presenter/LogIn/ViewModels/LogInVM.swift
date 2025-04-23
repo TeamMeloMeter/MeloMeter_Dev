@@ -39,8 +39,8 @@ class LogInVM {
         self.logInUseCase = logInUseCase
         
         //전화번호 입력 -> 인증 요청 -> 응답
-        phoneNumberInput.bind(onNext: { [weak self] text in
-            guard let self = self else{ return }
+        phoneNumberInput.subscribe(onNext: { [weak self] text in
+            guard let self else{ return }
             self.phoneNumber = text
             self.logInUseCase.sendNumberService(text: text)
                 .subscribe(onSuccess: {
@@ -50,18 +50,19 @@ class LogInVM {
                 }).disposed(by: disposeBag)
         }).disposed(by: disposeBag)
         
-        //인증번호 입력 -> 로그인 요청 -> 응답
+        //MARK: 인증번호 입력 -> 로그인 요청 -> 응답
         verificationCode.bind(onNext: { [weak self] text in
             guard let self = self else{ return }
             self.logInUseCase.inputVerificationCodeService(code: text)
-                .subscribe(onSuccess: { inviteCode in
+                .subscribe(onSuccess: { [weak self] inviteCode in
+                    guard let self else {return}
                     if let code = inviteCode {
                         if let otherInviteCode = UserDefaults.standard.string(forKey: "otherInviteCode") {
-                            self.coordinator?.showCoupleComvineVC(inviteCode: code, otherInviteCode: otherInviteCode)
-                        }else {
-                            self.coordinator?.showCoupleComvineVC(inviteCode: code)
+                            self.coordinator?.showCoupleCombineVC(inviteCode: code, otherInviteCode: otherInviteCode)
+                        } else {
+                            self.coordinator?.showCoupleCombineVC(inviteCode: code)
                         }
-                    }else {
+                    } else {
                         self.coordinator?.finish()
                     }
                     
@@ -74,8 +75,9 @@ class LogInVM {
         resendBtnTapped.subscribe(onNext: {
             self.logInUseCase.sendNumberService(text: self.phoneNumber)
                 .subscribe(onSuccess: {[weak self] _ in
-                    self?.stopTimer()
-                    self?.verificationCodeTimer()
+                    guard let self else {return}
+                    self.stopTimer()
+                    self.verificationCodeTimer()
                 }, onFailure: {[weak self] error in
                     self?.sendNumRequest.onNext(false)
                 }).disposed(by: self.disposeBag)

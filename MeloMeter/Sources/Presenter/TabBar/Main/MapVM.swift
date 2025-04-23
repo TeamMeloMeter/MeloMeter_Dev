@@ -10,6 +10,7 @@ import RxSwift
 import RxRelay
 import CoreLocation
 import RxCocoa
+import GoogleMobileAds
 
 class MapVM {
 
@@ -17,7 +18,7 @@ class MapVM {
     private var mainUseCase: MainUseCase
     
     struct Input {
-        let viewWillApearEvent: Observable<Void>
+        let viewWillAppear: Observable<Void>
         let dDayBtnTapEvent: Observable<Void>
         let alarmBtnTapEvent: Observable<Void>
         let endTriggerAlertTapEvent: Observable<Void>
@@ -33,6 +34,7 @@ class MapVM {
         var currentLocation = PublishSubject<CLLocation?>()
         var currentOtherLocation = PublishSubject<CLLocation?>()
         var endTrigger = PublishSubject<Bool>()
+        var getBottomBannerAd = BehaviorSubject<BannerView?>(value: nil)
     }
     
     
@@ -45,20 +47,25 @@ class MapVM {
         let output = Output()
         
         if #available(iOS 16.0, *) {
-            input.viewWillApearEvent
+            input.viewWillAppear
                 .subscribe(onNext: { [weak self] _ in
-                    self?.mainUseCase.disconnectionObserver()
+                    guard let self else {return}
+                    
+                    output.getBottomBannerAd.onNext(mainUseCase.getBottomBannerAd()) 
+                    
+                    
+                    self.mainUseCase.disconnectionObserver()
                         .subscribe(onSuccess: { result in
                             if result {
                                 output.endTrigger.onNext(true)
                             }
                         })
                         .disposed(by: disposeBag)
+                    
                     setInfo()
-                    self?.mainUseCase.checkAuthorization()
-                    self?.mainUseCase.requestAuthorization()
-                    self?.mainUseCase.requestLocation()
-                    self?.mainUseCase.requestOtherLocation()
+                    self.mainUseCase.checkAuthorization()
+                    self.mainUseCase.requestLocation()
+                    self.mainUseCase.requestOtherLocation()
                     
                     //잔여 알림 가져오기
                     UNUserNotificationCenter.current().getDeliveredNotifications { notifications in
@@ -103,10 +110,14 @@ class MapVM {
             .disposed(by: disposeBag)
         
         self.mainUseCase.updatedLocation
-            .subscribe(onNext: { location in
+            .subscribe(onNext: { [weak self] location in
+                guard let self else {return}
+                
                 if let location = location {
                     output.currentLocation.onNext(location)
-                }else {
+       
+                } else {
+                    coordinator?.finish()
                     output.currentLocation.onNext(CLLocation(latitude: 0, longitude: 0))
                 }
             })
@@ -139,7 +150,7 @@ class MapVM {
             self.mainUseCase.getUserData()
             self.mainUseCase.userData
                 .subscribe(onNext: { userInfo in
-                    guard let userInfo = userInfo else{ return }
+                    guard let userInfo else{ return }
                     output.myStateMessage.onNext(userInfo.stateMessage ?? nil)
                     self.mainUseCase.getMyProfileImage(url: userInfo.profileImage ?? "")
                         .subscribe(onSuccess: { image in
@@ -157,7 +168,9 @@ class MapVM {
                                 UserDefaults.standard.set(otherUid, forKey: "otherUid")
                                 UserDefaults.standard.set(otherUserModel.name, forKey: "otherUserName")
                                 UserDefaults.standard.set(otherUserModel.fcmToken, forKey: "otherFcmToken")
-                                UserDefaults.standard.set(userInfo.coupleID, forKey: "coupleDocumentID")
+                                UserDefaults.standard.set(userInfo.coupleID, forKey: "coupleID")
+                                
+                                
                                 
                                 output.otherStateMessage.onNext(otherUserModel.stateMessage ?? nil)
                             })
@@ -171,6 +184,7 @@ class MapVM {
                     
                     self.mainUseCase.getSinceFirstDay(coupleID: userInfo.coupleID ?? "")
                         .subscribe(onSuccess: { date in
+                            
                             output.daySince.onNext("D+\(date)")
                         })
                         .disposed(by: disposeBag)

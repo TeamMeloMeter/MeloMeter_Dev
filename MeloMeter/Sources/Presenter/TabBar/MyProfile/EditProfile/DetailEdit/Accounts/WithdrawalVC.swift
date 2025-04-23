@@ -44,6 +44,7 @@ class WithdrawalVC: UIViewController {
                         .setMessage("정말 탈퇴하시겠습니까? \n상대방과의 연결과 모든 정보가 삭제됩니다🥲")
                         .showYNAlert()
                         .subscribe(onSuccess: { _ in
+                            
                             self.withAlertTapEvent.onNext(true)
                         }, onFailure: { error in
                             self.withAlertTapEvent.onNext(false)

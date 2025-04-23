@@ -19,6 +19,10 @@ class ProfileInsertUseCase {
         self.userRepository = userRepository
     }
     
+    
+    // 프로필 정보 입력 후 firebase
+    
+    //TODO: 계속 통신실패
     func insertUserInfoService(userInfo: [String?]) -> Single<Void> {
         return Single<Void>.create { [weak self] single in
             guard let self = self else{ return Disposables.create() }
@@ -28,11 +32,13 @@ class ProfileInsertUseCase {
                 
                 let userModel = UserModel(name: name, birth: birthD)
                 let ddayModel = CoupleModel(firstDay: firstDayD, anniversaries: [DdayCellData(dateName: "\(name) 생일", date: birthD, countDdays: "")])
-                
+                print("userModel \(userModel), ddayModel \(ddayModel)")
                 self.userRepository.presetUserInfo(user: userModel, dDay: ddayModel)
                     .subscribe(onSuccess: {
+                        print("success")
                         single(.success(()))
                     },onFailure: { error in
+                        print("error \(error)")
                         single(.failure(error))
                     }).disposed(by: disposeBag)
                                   

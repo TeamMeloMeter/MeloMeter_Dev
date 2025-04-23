@@ -36,11 +36,15 @@ final class AppCoordinator: Coordinator {
     var firebaseService: FirebaseService
     var disposeBag = DisposeBag()
     var accessLevel: AccessLevel = .none
+    
+    private var sharedDataRepo: SharedDataRepoP
     // MARK: - Initializers
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
         self.childCoordinators = []
         self.firebaseService = DefaultFirebaseService()
+        
+        self.sharedDataRepo = SharedDataRepo()
     }
     
     // MARK: - Methods
@@ -59,7 +63,7 @@ extension AppCoordinator {
             viewModel: SplashVM(coordinator: self,
                                 firebaseService: firebaseService,
                                 userRepository: UserRepository(firebaseService: firebaseService,
-                                                               chatRepository: ChatRepository(firebaseService: firebaseService))
+                                                               chatRepository: ChatRepository(firebaseService: firebaseService)), adMobRepo: AdmobRepository()
                                )
         )
         navigationController.setNavigationBarHidden(true, animated: false)
@@ -77,14 +81,14 @@ extension AppCoordinator {
 
     func connectPresetFlow() {
         self.navigationController.viewControllers.removeAll()
-        let presetCoordinator = PresetCoordinator(self.navigationController)
+        let presetCoordinator = PresetCoordinator(self.navigationController, sharedDataRepo: self.sharedDataRepo)
         presetCoordinator.delegate = self
         presetCoordinator.start()
         self.childCoordinators.append(presetCoordinator)
     }
     
     func connectTabBarFlow() {
-        let tabBarCoordinator = TabBarCoordinator(self.navigationController)
+        let tabBarCoordinator = TabBarCoordinator(self.navigationController, sharedDataRepo: self.sharedDataRepo)
         tabBarCoordinator.delegate = self
         tabBarCoordinator.start()
         self.childCoordinators.append(tabBarCoordinator)
@@ -100,17 +104,19 @@ extension AppCoordinator: CoordinatorDelegate {
         self.childCoordinators = []
         self.navigationController.viewControllers.removeAll()
         if childCoordinator is LogInCoordinator {
-            if UserDefaults.standard.string(forKey: "userName") != nil {
+            //TODO: UserDefaults로 하면안될듯
+            
+            
+            if UserDefaults.standard.string(forKey: "name") != nil {
                 self.connectTabBarFlow()
             }else {
                 self.connectPresetFlow()
             }
-        }else if childCoordinator is PresetCoordinator {
+        } else if childCoordinator is PresetCoordinator {
             self.connectTabBarFlow()
-        }else if childCoordinator is TabBarCoordinator {
+        } else if childCoordinator is TabBarCoordinator {
             self.showSplashVC()
-        }
-        else {
+        } else {
             self.connectLogInFlow()
         }
     }

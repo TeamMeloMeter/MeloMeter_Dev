@@ -16,8 +16,9 @@ protocol ChatRepositoryP {
     func addImageMessage(chatModel: ChatModel, coupleID: String) -> Single<Void>
     func getRealTimeChat(coupleID: String)
     func getChatMessage(coupleID: String) -> Observable<[ChatDTO]>
-    func getMoreChatMessage(num: Int, coupleID: String) -> Observable<[ChatDTO]>
+    func getMoreChatMessage(num: Int, coupleID: String, searchText: String?) -> Observable<[ChatDTO]>
     func downloadImage(url: String) -> Single<UIImage?>
     func convertToChatDTOArray(from dictionaries: [[String: Any]]) -> [ChatDTO]
     func getChatImagesURL(coupleID: String) -> Single<[String]>
+    func getMessageSearch(coupleID: String, searchGText: String, num: Int) -> Observable<([ChatDTO],String)>
 }

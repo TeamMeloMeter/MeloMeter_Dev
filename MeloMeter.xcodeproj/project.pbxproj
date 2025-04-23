@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -55,8 +55,7 @@
 		5230B26B2A72859200781623 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B2622A72859200781623 /* Pretendard-ExtraBold.otf */; };
 		5230B26C2A72859200781623 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B2632A72859200781623 /* Pretendard-SemiBold.otf */; };
 		5230B26D2A72859200781623 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5230B2642A72859200781623 /* Pretendard-Regular.otf */; };
-		5230B2782A77907500781623 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2772A77907500781623 /* LocationService.swift */; };
-		5230B27A2A7790A300781623 /* DefaultLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2792A7790A300781623 /* DefaultLocationService.swift */; };
+		5230B27A2A7790A300781623 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2792A7790A300781623 /* LocationService.swift */; };
 		5230B27C2A77926A00781623 /* MainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B27B2A77926A00781623 /* MainUseCase.swift */; };
 		5230B2822A7CFF6F00781623 /* MyProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2812A7CFF6F00781623 /* MyProfileCoordinator.swift */; };
 		5230B2842A7D029200781623 /* MyProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230B2832A7D029200781623 /* MyProfileUseCase.swift */; };
@@ -154,6 +153,21 @@
 		52F739552A94E6DB00D46FBB /* HundredQAModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F739542A94E6DB00D46FBB /* HundredQAModel.swift */; };
 		52F739572A94E71500D46FBB /* HundredQADTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F739562A94E71500D46FBB /* HundredQADTO.swift */; };
 		5E96546393FD50C9C5E5E5EF /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A9432E8BBDB9FBE10412467 /* Pods_MeloMeter.framework */; };
+		60453EA52DB882B40053859F /* SharedDataRepoP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60453EA42DB882AC0053859F /* SharedDataRepoP.swift */; };
+		60453EA72DB883770053859F /* SharedDataRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60453EA62DB8836C0053859F /* SharedDataRepo.swift */; };
+		60697AC82D2A5B4C00693990 /* CustomChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60697AC72D2A5B4600693990 /* CustomChatModel.swift */; };
+		6084BC9A2DB7610F005F9B2C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6084BC992DB7610F005F9B2C /* WidgetKit.framework */; };
+		6084BC9C2DB7610F005F9B2C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6084BC9B2DB7610F005F9B2C /* SwiftUI.framework */; };
+		6084BCA72DB76110005F9B2C /* MelometerWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6084BC982DB7610F005F9B2C /* MelometerWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6097C9F52D538C0600895B63 /* Label+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6097C9F42D538C0100895B63 /* Label+.swift */; };
+		60A351962D119EB000BB1A6F /* WidgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A351952D119EA800BB1A6F /* WidgetService.swift */; };
+		60D067762DA2AB3200CFD06C /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D067752DA2AB2C00CFD06C /* UIImage+.swift */; };
+		60D913522D9C0AD60033EB95 /* AdmobRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D913512D9C0ACD0033EB95 /* AdmobRepository.swift */; };
+		60D913542D9C0AF60033EB95 /* AdmobRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D913532D9C0AEE0033EB95 /* AdmobRepositoryP.swift */; };
+		60E0EE002D9025F000E6E2A2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E0EDFF2D9025E800E6E2A2 /* Constants.swift */; };
+		60E9F8172D98189B00201201 /* VersionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9F8162D98189200201201 /* VersionRepository.swift */; };
+		60F7DEB82DA5701100EB0279 /* UserDefaultsRepoP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F7DEB72DA5700800EB0279 /* UserDefaultsRepoP.swift */; };
+		60F7DEBA2DA5704100EB0279 /* UserDefaultsRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F7DEB92DA5703E00EB0279 /* UserDefaultsRepo.swift */; };
 		A1A09EE6F75F34CF5776C85D /* Pods_MeloMeterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13D1B0A4DD104367DA0E817D /* Pods_MeloMeterTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -165,7 +179,28 @@
 			remoteGlobalIDString = 52697B6E29EEB7B2002BDD04;
 			remoteInfo = MeloMeter;
 		};
+		6084BCA52DB76110005F9B2C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52697B6729EEB7B2002BDD04 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6084BC972DB7610F005F9B2C;
+			remoteInfo = MelometerWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6084BCA82DB76110005F9B2C /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				6084BCA72DB76110005F9B2C /* MelometerWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1208ADFA108AB451A3A77C67 /* Pods-MeloMeterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeterTests.release.xcconfig"; path = "Target Support Files/Pods-MeloMeterTests/Pods-MeloMeterTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -220,8 +255,7 @@
 		5230B2622A72859200781623 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
 		5230B2632A72859200781623 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		5230B2642A72859200781623 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
-		5230B2772A77907500781623 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
-		5230B2792A7790A300781623 /* DefaultLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLocationService.swift; sourceTree = "<group>"; };
+		5230B2792A7790A300781623 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		5230B27B2A77926A00781623 /* MainUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUseCase.swift; sourceTree = "<group>"; };
 		5230B2812A7CFF6F00781623 /* MyProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileCoordinator.swift; sourceTree = "<group>"; };
 		5230B2832A7D029200781623 /* MyProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileUseCase.swift; sourceTree = "<group>"; };
@@ -230,7 +264,7 @@
 		5241382B2A62F240002AADA6 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		5241382D2A62F2ED002AADA6 /* LogInCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInCoordinator.swift; sourceTree = "<group>"; };
 		5241382F2A62F943002AADA6 /* StartVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartVM.swift; sourceTree = "<group>"; };
-		524448C02C49667300A02863 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		524448C02C49667300A02863 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "MeloMeter/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5256947C2A97608200821B20 /* PushNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationService.swift; sourceTree = "<group>"; };
 		525694802AA2371F00821B20 /* ChatCustomCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCustomCells.swift; sourceTree = "<group>"; };
 		5262BB772A8C809A003EB016 /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
@@ -311,10 +345,41 @@
 		52F739522A94DE7800D46FBB /* HundredQARepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQARepositoryP.swift; sourceTree = "<group>"; };
 		52F739542A94E6DB00D46FBB /* HundredQAModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQAModel.swift; sourceTree = "<group>"; };
 		52F739562A94E71500D46FBB /* HundredQADTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQADTO.swift; sourceTree = "<group>"; };
+		60453EA42DB882AC0053859F /* SharedDataRepoP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataRepoP.swift; sourceTree = "<group>"; };
+		60453EA62DB8836C0053859F /* SharedDataRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataRepo.swift; sourceTree = "<group>"; };
+		60453EAC2DB8A1A30053859F /* MelometerWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MelometerWidgetExtension.entitlements; sourceTree = "<group>"; };
+		60697AC72D2A5B4600693990 /* CustomChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomChatModel.swift; sourceTree = "<group>"; };
+		6084BC982DB7610F005F9B2C /* MelometerWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MelometerWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		6084BC992DB7610F005F9B2C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		6084BC9B2DB7610F005F9B2C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		6097C9F42D538C0100895B63 /* Label+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Label+.swift"; sourceTree = "<group>"; };
+		60A351952D119EA800BB1A6F /* WidgetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetService.swift; sourceTree = "<group>"; };
+		60D067752DA2AB2C00CFD06C /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
+		60D913512D9C0ACD0033EB95 /* AdmobRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdmobRepository.swift; sourceTree = "<group>"; };
+		60D913532D9C0AEE0033EB95 /* AdmobRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdmobRepositoryP.swift; sourceTree = "<group>"; };
+		60E0EDFF2D9025E800E6E2A2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		60E0EE332D95724200E6E2A2 /* MeloMeterDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeloMeterDebug.entitlements; sourceTree = "<group>"; };
+		60E9F8162D98189200201201 /* VersionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionRepository.swift; sourceTree = "<group>"; };
+		60F7DEB72DA5700800EB0279 /* UserDefaultsRepoP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRepoP.swift; sourceTree = "<group>"; };
+		60F7DEB92DA5703E00EB0279 /* UserDefaultsRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRepo.swift; sourceTree = "<group>"; };
 		A9E69982DC824C86B28E4115 /* Pods-MeloMeterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeterTests.debug.xcconfig"; path = "Target Support Files/Pods-MeloMeterTests/Pods-MeloMeterTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B61B0F5A29F7A5F500E25EEF /* MeloMeter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeloMeter.entitlements; sourceTree = "<group>"; };
 		D6C8C150060E7CCA73BAD48D /* Pods-MeloMeter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.release.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		6084BCAB2DB76110005F9B2C /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 6084BC972DB7610F005F9B2C /* MelometerWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		6084BC9D2DB7610F005F9B2C /* MelometerWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (6084BCAB2DB76110005F9B2C /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = MelometerWidget; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		52697B6C29EEB7B2002BDD04 /* Frameworks */ = {
@@ -341,6 +406,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1A09EE6F75F34CF5776C85D /* Pods_MeloMeterTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6084BC952DB7610F005F9B2C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6084BC9C2DB7610F005F9B2C /* SwiftUI.framework in Frameworks */,
+				6084BC9A2DB7610F005F9B2C /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,6 +460,7 @@
 		2185C4BA2A83F13B00F99795 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				60697AC72D2A5B4600693990 /* CustomChatModel.swift */,
 				525694802AA2371F00821B20 /* ChatCustomCells.swift */,
 				2124EC862A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift */,
 			);
@@ -629,8 +704,7 @@
 		5230B2762A77906000781623 /* LocationService */ = {
 			isa = PBXGroup;
 			children = (
-				5230B2772A77907500781623 /* LocationService.swift */,
-				5230B2792A7790A300781623 /* DefaultLocationService.swift */,
+				5230B2792A7790A300781623 /* LocationService.swift */,
 			);
 			name = LocationService;
 			path = ../../../LocationService;
@@ -647,6 +721,7 @@
 		524138322A63213D002AADA6 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				60A351952D119EA800BB1A6F /* WidgetService.swift */,
 				527547F52A6D23EE00313EFC /* KakaoService */,
 				5230B2762A77906000781623 /* LocationService */,
 				5290BFB12A726ED400D734EE /* DTO */,
@@ -667,9 +742,11 @@
 		52697B6629EEB7B2002BDD04 = {
 			isa = PBXGroup;
 			children = (
+				60453EAC2DB8A1A30053859F /* MelometerWidgetExtension.entitlements */,
 				5271D41A2A58429D00FC7606 /* FirebaseService */,
 				52697B7129EEB7B2002BDD04 /* MeloMeter */,
 				52E2B5E32AE580F00037FBB3 /* MeloMeterTests */,
+				6084BC9D2DB7610F005F9B2C /* MelometerWidget */,
 				52697B7029EEB7B2002BDD04 /* Products */,
 				F436958110A740287E251D09 /* Pods */,
 				E0A6B633DFC36A6F26FCC1E8 /* Frameworks */,
@@ -681,6 +758,7 @@
 			children = (
 				52697B6F29EEB7B2002BDD04 /* MeloMeter.app */,
 				52E2B5E22AE580F00037FBB3 /* MeloMeterTests.xctest */,
+				6084BC982DB7610F005F9B2C /* MelometerWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -688,6 +766,7 @@
 		52697B7129EEB7B2002BDD04 /* MeloMeter */ = {
 			isa = PBXGroup;
 			children = (
+				60E0EE332D95724200E6E2A2 /* MeloMeterDebug.entitlements */,
 				B61B0F5A29F7A5F500E25EEF /* MeloMeter.entitlements */,
 				5230B25A2A727DC300781623 /* Resources */,
 				526D645D2AD8E12500A1B4B6 /* Sources */,
@@ -723,6 +802,10 @@
 		5271D41D2A5886FB00FC7606 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				60453EA62DB8836C0053859F /* SharedDataRepo.swift */,
+				60F7DEB92DA5703E00EB0279 /* UserDefaultsRepo.swift */,
+				60D913512D9C0ACD0033EB95 /* AdmobRepository.swift */,
+				60E9F8162D98189200201201 /* VersionRepository.swift */,
 				5271D41E2A5887E500FC7606 /* LogInRepository.swift */,
 				526EB85D2A7D5992005B1940 /* UserRepository.swift */,
 				521D41F52A81C71F00E5CCDA /* CoupleRepository.swift */,
@@ -757,8 +840,11 @@
 		5271D4282A5FCFEF00FC7606 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				52CE6E8229FEBC0200E43D39 /* FontManager.swift */,
+				60D067752DA2AB2C00CFD06C /* UIImage+.swift */,
+				60E0EDFF2D9025E800E6E2A2 /* Constants.swift */,
 				527547EC2A68FB5600313EFC /* Alert */,
+				52CE6E8229FEBC0200E43D39 /* FontManager.swift */,
+				6097C9F42D538C0100895B63 /* Label+.swift */,
 				5271D42D2A604BF400FC7606 /* Date+.swift */,
 				5271D42F2A605B0900FC7606 /* Encodable+.swift */,
 				5271D4312A606D0B00FC7606 /* Dictionary+.swift */,
@@ -804,6 +890,9 @@
 		5290BFB22A7270B200D734EE /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				60453EA42DB882AC0053859F /* SharedDataRepoP.swift */,
+				60F7DEB72DA5700800EB0279 /* UserDefaultsRepoP.swift */,
+				60D913532D9C0AEE0033EB95 /* AdmobRepositoryP.swift */,
 				5290BFB32A7270DF00D734EE /* LogInRepositoryP.swift */,
 				526EB85F2A7D59A4005B1940 /* UserRepositoryP.swift */,
 				521D41F72A81C75100E5CCDA /* CoupleRepositoryP.swift */,
@@ -1021,6 +1110,8 @@
 			children = (
 				4A9432E8BBDB9FBE10412467 /* Pods_MeloMeter.framework */,
 				13D1B0A4DD104367DA0E817D /* Pods_MeloMeterTests.framework */,
+				6084BC992DB7610F005F9B2C /* WidgetKit.framework */,
+				6084BC9B2DB7610F005F9B2C /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1047,6 +1138,7 @@
 				52697B6B29EEB7B2002BDD04 /* Sources */,
 				52697B6C29EEB7B2002BDD04 /* Frameworks */,
 				52697B6D29EEB7B2002BDD04 /* Resources */,
+				6084BCA82DB76110005F9B2C /* Embed Foundation Extensions */,
 				5270EC192A49D0AA007FF444 /* ShellScript */,
 				E365C59633B1CAEA4BA0C355 /* [CP] Embed Pods Frameworks */,
 				1DE6CA72A9AEA166B216BBB0 /* [CP] Copy Pods Resources */,
@@ -1055,6 +1147,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				6084BCA62DB76110005F9B2C /* PBXTargetDependency */,
 			);
 			name = MeloMeter;
 			packageProductDependencies = (
@@ -1093,6 +1186,28 @@
 			productReference = 52E2B5E22AE580F00037FBB3 /* MeloMeterTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		6084BC972DB7610F005F9B2C /* MelometerWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6084BCAC2DB76110005F9B2C /* Build configuration list for PBXNativeTarget "MelometerWidgetExtension" */;
+			buildPhases = (
+				6084BC942DB7610F005F9B2C /* Sources */,
+				6084BC952DB7610F005F9B2C /* Frameworks */,
+				6084BC962DB7610F005F9B2C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				6084BC9D2DB7610F005F9B2C /* MelometerWidget */,
+			);
+			name = MelometerWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = MelometerWidgetExtension;
+			productReference = 6084BC982DB7610F005F9B2C /* MelometerWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1100,7 +1215,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1430;
+				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					52697B6E29EEB7B2002BDD04 = {
@@ -1109,6 +1224,9 @@
 					52E2B5E12AE580F00037FBB3 = {
 						CreatedOnToolsVersion = 14.3.1;
 						TestTargetID = 52697B6E29EEB7B2002BDD04;
+					};
+					6084BC972DB7610F005F9B2C = {
+						CreatedOnToolsVersion = 16.1;
 					};
 				};
 			};
@@ -1131,6 +1249,7 @@
 			targets = (
 				52697B6E29EEB7B2002BDD04 /* MeloMeter */,
 				52E2B5E12AE580F00037FBB3 /* MeloMeterTests */,
+				6084BC972DB7610F005F9B2C /* MelometerWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -1156,6 +1275,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		52E2B5E02AE580F00037FBB3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6084BC962DB7610F005F9B2C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1291,6 +1417,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60E9F8172D98189B00201201 /* VersionRepository.swift in Sources */,
 				2103690A2AA772BA00A5EEB5 /* CalendarNotificationTriggerUseCase.swift in Sources */,
 				52B7EBCB2A8F2E79008F5F53 /* AccountsVM.swift in Sources */,
 				52AEAD052A93DA050097930E /* HundredQAVC.swift in Sources */,
@@ -1298,7 +1425,8 @@
 				52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */,
 				214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */,
 				521D41E72A7FFD5F00E5CCDA /* DdayUseCase.swift in Sources */,
-				5230B27A2A7790A300781623 /* DefaultLocationService.swift in Sources */,
+				6097C9F52D538C0600895B63 /* Label+.swift in Sources */,
+				5230B27A2A7790A300781623 /* LocationService.swift in Sources */,
 				521D41FD2A843EB100E5CCDA /* TextField+.swift in Sources */,
 				2108F0412A6EC1F0002EED7A /* ProfileInsertUseCase.swift in Sources */,
 				52E0CDF02A4B091600E4A182 /* CoupleCombineVC.swift in Sources */,
@@ -1307,6 +1435,7 @@
 				5241382C2A62F240002AADA6 /* AppCoordinator.swift in Sources */,
 				521D41F82A81C75100E5CCDA /* CoupleRepositoryP.swift in Sources */,
 				524138302A62F943002AADA6 /* StartVM.swift in Sources */,
+				60453EA72DB883770053859F /* SharedDataRepo.swift in Sources */,
 				527547F42A6D23E400313EFC /* KakaoService.swift in Sources */,
 				52F305302A168CE900112A04 /* DisconnectVC.swift in Sources */,
 				521D41EC2A801D1200E5CCDA /* CoupleModel.swift in Sources */,
@@ -1333,6 +1462,7 @@
 				5271D41C2A58435A00FC7606 /* DefaultFirebaseService.swift in Sources */,
 				52F0100F2A0A55470014FC01 /* DetailQnAVC.swift in Sources */,
 				5271D41F2A5887E500FC7606 /* LogInRepository.swift in Sources */,
+				60D067762DA2AB3200CFD06C /* UIImage+.swift in Sources */,
 				21C3821D2A87F778003638E1 /* ChatRepositoryP.swift in Sources */,
 				21C3821F2A87F7B1003638E1 /* ChatRepository.swift in Sources */,
 				5271D42A2A5FD02900FC7606 /* AlertManager.swift in Sources */,
@@ -1343,10 +1473,12 @@
 				2185C4D72A83F13B00F99795 /* ChatModel.swift in Sources */,
 				5270EC042A445077007FF444 /* StartVC.swift in Sources */,
 				521D42052A8552E300E5CCDA /* EditProfileUseCase.swift in Sources */,
+				60E0EE002D9025F000E6E2A2 /* Constants.swift in Sources */,
 				5290BF972A6D983A00D734EE /* ColorAssets.swift in Sources */,
 				52F00FF62A0930FF0014FC01 /* AddDdayModal.swift in Sources */,
 				2185C4CF2A83F13B00F99795 /* ChatCoordinator.swift in Sources */,
 				21C382222A87F812003638E1 /* ChatUseCase.swift in Sources */,
+				60697AC82D2A5B4C00693990 /* CustomChatModel.swift in Sources */,
 				525694812AA2371F00821B20 /* ChatCustomCells.swift in Sources */,
 				52F0100B2A0A493C0014FC01 /* QnATableViewCell.swift in Sources */,
 				5290BFB42A7270DF00D734EE /* LogInRepositoryP.swift in Sources */,
@@ -1359,11 +1491,12 @@
 				527547EE2A68FC9000313EFC /* CustomAlertVC.swift in Sources */,
 				210BAFC42AC88B610012B786 /* AlarmModel.swift in Sources */,
 				5256947D2A97608200821B20 /* PushNotificationService.swift in Sources */,
-				5230B2782A77907500781623 /* LocationService.swift in Sources */,
 				5271D42E2A604BF400FC7606 /* Date+.swift in Sources */,
 				521D42152A8A6E7300E5CCDA /* NoticeVM.swift in Sources */,
+				60D913522D9C0AD60033EB95 /* AdmobRepository.swift in Sources */,
 				52F010082A097D120014FC01 /* AlarmTableViewCell.swift in Sources */,
 				521D42172A8A839D00E5CCDA /* DetailNoticeVC.swift in Sources */,
+				60A351962D119EB000BB1A6F /* WidgetService.swift in Sources */,
 				521D420A2A85CCEE00E5CCDA /* DetailEditVM.swift in Sources */,
 				5290BFAE2A71F8FB00D734EE /* TabBarPageType.swift in Sources */,
 				2108F0472A6EC48B002EED7A /* UserDTO.swift in Sources */,
@@ -1372,9 +1505,11 @@
 				526EB8602A7D59A4005B1940 /* UserRepositoryP.swift in Sources */,
 				5241382E2A62F2ED002AADA6 /* LogInCoordinator.swift in Sources */,
 				5271D40F2A5576E500FC7606 /* PermissionVC.swift in Sources */,
+				60453EA52DB882B40053859F /* SharedDataRepoP.swift in Sources */,
 				2185C4CE2A83F13B00F99795 /* ChatVC.swift in Sources */,
 				52F739552A94E6DB00D46FBB /* HundredQAModel.swift in Sources */,
 				52AEACFD2A9337F40097930E /* AlarmVM.swift in Sources */,
+				60D913542D9C0AF60033EB95 /* AdmobRepositoryP.swift in Sources */,
 				52AEACFA2A9335810097930E /* AlarmCoordinator.swift in Sources */,
 				521D42022A8551E900E5CCDA /* EditProfileVM.swift in Sources */,
 				52F010142A0AAD380014FC01 /* EditProfileVC.swift in Sources */,
@@ -1402,7 +1537,9 @@
 				521D41E52A7FFAD200E5CCDA /* DdayVM.swift in Sources */,
 				52F7394D2A94058500D46FBB /* WriteAnswerVC.swift in Sources */,
 				521D41EE2A801D5700E5CCDA /* CoupleDTO.swift in Sources */,
+				60F7DEBA2DA5704100EB0279 /* UserDefaultsRepo.swift in Sources */,
 				52697B7529EEB7B2002BDD04 /* SceneDelegate.swift in Sources */,
+				60F7DEB82DA5701100EB0279 /* UserDefaultsRepoP.swift in Sources */,
 				5262BB7A2A8C80DB003EB016 /* SplashVM.swift in Sources */,
 				52B7EBCD2A8F2F05008F5F53 /* AccountsUseCase.swift in Sources */,
 				52F739532A94DE7800D46FBB /* HundredQARepositoryP.swift in Sources */,
@@ -1424,6 +1561,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6084BC942DB7610F005F9B2C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1431,6 +1575,11 @@
 			isa = PBXTargetDependency;
 			target = 52697B6E29EEB7B2002BDD04 /* MeloMeter */;
 			targetProxy = 52E2B5E62AE580F00037FBB3 /* PBXContainerItemProxy */;
+		};
+		6084BCA62DB76110005F9B2C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6084BC972DB7610F005F9B2C /* MelometerWidgetExtension */;
+			targetProxy = 6084BCA52DB76110005F9B2C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1480,6 +1629,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: HYUNTAEK OH (CH496725K5)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1541,6 +1691,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: HYUNTAEK OH (CH496725K5)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1569,13 +1720,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = MeloMeter/MeloMeter.entitlements;
+				CODE_SIGN_ENTITLEMENTS = MeloMeter/MeloMeterDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = CH496725K5;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20250423;
+				DEVELOPMENT_TEAM = YH4A87H8M4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MeloMeter/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "멜로미터";
@@ -1596,14 +1745,15 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.2;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.teamMeloMeter.-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Dev_MeloMeter;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1618,11 +1768,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MeloMeter/MeloMeter.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = CH496725K5;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20250423;
+				DEVELOPMENT_TEAM = YH4A87H8M4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MeloMeter/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "멜로미터";
@@ -1643,14 +1791,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.teamMeloMeter.-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Dist_MeloMeter;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1698,6 +1846,84 @@
 			};
 			name = Release;
 		};
+		6084BCA92DB76110005F9B2C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MelometerWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = YH4A87H8M4;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MelometerWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MelometerWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.teamMeloMeter.-.MelometerWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		6084BCAA2DB76110005F9B2C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MelometerWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YH4A87H8M4;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MelometerWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MelometerWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.teamMeloMeter.-.MelometerWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1728,6 +1954,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		6084BCAC2DB76110005F9B2C /* Build configuration list for PBXNativeTarget "MelometerWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6084BCA92DB76110005F9B2C /* Debug */,
+				6084BCAA2DB76110005F9B2C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -1743,8 +1978,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 10.8.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.22.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

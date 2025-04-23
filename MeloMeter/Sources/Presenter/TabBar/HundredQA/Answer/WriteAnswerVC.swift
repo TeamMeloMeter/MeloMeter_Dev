@@ -8,8 +8,11 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import GoogleMobileAds
 
 class WriteAnswerVC: UIViewController {
+    
+
     
     private let viewModel: AnswerVM?
     let disposeBag = DisposeBag()
@@ -27,6 +30,9 @@ class WriteAnswerVC: UIViewController {
     // MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+
+//        loadInterstitial()
+
         configure()
         setAutoLayout()
         setBindings()
@@ -71,6 +77,12 @@ class WriteAnswerVC: UIViewController {
                 self.myUserLabel.text = "\(text)님의 답변"
             })
             .disposed(by: disposeBag)
+        
+        output.loadAdmob.subscribe(onNext: { [weak self] ad in
+            guard let self, let ad else {return}
+            ad.present(from: self)
+                
+        }).disposed(by: disposeBag)
     }
     
     // MARK: Configure
@@ -264,3 +276,4 @@ extension WriteAnswerVC: UITextViewDelegate {
     }
     
 }
+

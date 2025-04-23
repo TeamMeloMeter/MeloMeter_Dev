@@ -12,11 +12,14 @@ final class TabBarCoordinator: Coordinator {
     var tabBarController: UITabBarController
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
+    private var sharedDataRepo: SharedDataRepoP
     
-    init(_ navigationController: UINavigationController) {
+    init(_ navigationController: UINavigationController, sharedDataRepo: SharedDataRepoP) {
         self.navigationController = navigationController
         self.tabBarController = UITabBarController()
         self.childCoordinators = []
+        
+        self.sharedDataRepo = sharedDataRepo
     }
     
     func start() {
@@ -72,7 +75,7 @@ extension TabBarCoordinator {
     }
     
     func connectMainFlow(to tabNavigationController: UINavigationController) {
-        let mainCoordinator = MainCoordinator(tabNavigationController)
+        let mainCoordinator = MainCoordinator(tabNavigationController, sharedDataRepo: self.sharedDataRepo)
         mainCoordinator.delegate = self
         mainCoordinator.start()
         childCoordinators.append(mainCoordinator)

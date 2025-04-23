@@ -61,7 +61,7 @@ final class ProfileInsertVC: UIViewController {
                     .subscribe(onSuccess: { check in
                         if check {
                             self.viewModel.userInput.onNext([self.nameTF.text, self.birthTF.text, self.firstDayTF.text])
-                        }else {
+                        } else {
                             self.dateFormatError()
                         }
                     }).disposed(by: disposeBag)

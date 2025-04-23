@@ -42,7 +42,7 @@ extension MyProfileCoordinator {
                             chatRepository: ChatRepository(firebaseService: firebaseService)
                         ),
                         coupleRepository: CoupleRepository(firebaseService: firebaseService),
-                        hundredQARepository: HundredQARepository(firebaseService: firebaseService)
+                        hundredQARepository: HundredQARepository(firebaseService: firebaseService), adMobRepo: AdmobRepository()
             ), alarmUseCase: AlarmUseCase(alarmRepository: AlarmRepository(firebaseService: firebaseService))
             )
         )
@@ -213,6 +213,7 @@ extension MyProfileCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
+    //MARK: 회원탈퇴 VC
     func showWithdrawalVC() {
         let firebaseService = self.firebaseService
         let viewController = WithdrawalVC(viewModel: AccountsVM(

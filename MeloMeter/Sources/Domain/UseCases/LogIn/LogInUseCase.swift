@@ -31,13 +31,13 @@ class LogInUseCase {
         self.accessLevel = PublishRelay()
     }
     
-    // MARK: - Methods
-    //전화번호 전송->인증번호 요청 서비스
+    // MARK: - 전화번호 전송 -> 인증번호 요청 서비스
     func sendNumberService(text: String?) -> Single<Void> {
         return Single<Void>.create { [weak self] single in
             guard let self = self else{ return Disposables.create() }
             self.logInRepository.sendNumber(phoneNumber: text)
-                .subscribe(onSuccess: { result in
+                .subscribe(onSuccess: { [weak self] result in
+                    guard self != nil else {return}
                     switch result {
                     case .requestCompleted:
                         single(.success(()))
@@ -59,10 +59,11 @@ class LogInUseCase {
             guard let self = self else{ return Disposables.create() }
             self.logInRepository.inputVerificationCode(verificationCode: code)
                 .subscribe(onSuccess: { code in
+
                     if let inviteCode = code {
                         let code = "\(inviteCode.prefix(4)) \(inviteCode.suffix(4))"
                         single(.success(code))
-                    }else {
+                    } else {
                         single(.success(nil))
                     }
                 }, onFailure: { error in

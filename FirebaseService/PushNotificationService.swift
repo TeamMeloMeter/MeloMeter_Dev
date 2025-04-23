@@ -87,8 +87,8 @@ final class PushNotificationService {
                 
                 //트리거 생성
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-                
-                let request = UNNotificationRequest(identifier: "dipose", content: content, trigger: trigger)
+                    
+                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
                 
                 //발송을 위한 센터에 추가
                 UNUserNotificationCenter.current().add(request)
@@ -289,13 +289,47 @@ final class PushNotificationService {
         
         if todayYear < componentsYear {
                 return true
-            }else if todayYear == componentsYear && todayMonth < componentsMonth {
+            } else if todayYear == componentsYear && todayMonth < componentsMonth {
                 return true
-            }else if todayYear == componentsYear && todayMonth == componentsMonth && todayDay < componentsDay {
+            } else if todayYear == componentsYear && todayMonth == componentsMonth && todayDay < componentsDay {
                 return true
             }
         
         return false
+    }
+    
+    func setupAppStateNotifications() {
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(appDidEnterBackground),
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil
+        )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(appDidBecomeActive),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
+    }
+    
+    @objc private func appDidEnterBackground() {
+        print("📦 백그라운드 진입 → 저전력 모드로 전환")
+        LocationService.shared.switchToSignificant()
+    }
+    
+    @objc private func appDidBecomeActive() {
+        print("📡 앱 복귀 → 정밀 추적 재시작")
+        LocationService.shared.start()
+    }
+    
+    func registerForPushNotifications() {
+        UNUserNotificationCenter.current()
+            .requestAuthorization(options: [.alert, .sound, .badge]) { granted, _ in
+                print("Permission granted: \(granted)")
+            }
     }
 
     

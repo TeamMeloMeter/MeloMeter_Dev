@@ -68,7 +68,8 @@ class DdayVC: UIViewController {
         output.sinceFirstDay
             .asDriver(onErrorJustReturn: "")
             .drive(onNext: {[weak self] text in
-                self?.countDateLabel.text = text
+                guard let self else {return}
+                self.countDateLabel.text = text
             })
             .disposed(by: disposeBag)
         

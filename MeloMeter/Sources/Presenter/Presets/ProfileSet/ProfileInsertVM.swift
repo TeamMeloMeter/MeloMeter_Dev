@@ -30,11 +30,13 @@ class ProfileInsertVM {
         //nameInput값 변경 감지
         userInput.bind(onNext: { [weak self] info in
             guard let self = self else{ return }
+            // tap 시 여기들어옴.
             self.profileInsertUseCase.insertUserInfoService(userInfo: info)
                 .subscribe(onSuccess: {
 //                    self.dDayUseCase?.createDdayList
                     self.coordinator?.showPermissionVC1()
                 }, onFailure: { error in
+                    
                     self.sendProfileInsertRequest.onNext(false)
                 }).disposed(by: disposeBag)
         }).disposed(by: disposeBag)

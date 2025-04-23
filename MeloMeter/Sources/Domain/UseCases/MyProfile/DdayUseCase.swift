@@ -39,7 +39,7 @@ class DdayUseCase {
     
     func sinceDday(from date: Date) -> Int {
         let currentDate = Date.fromStringOrNow(Date().toString(type: .yearToDay), .yearToDay)
-        let result = calendar.dateComponents([.day], from: currentDate, to: date).day ?? 0
+        let result = ( calendar.dateComponents([.day], from: date, to: currentDate).day ?? 0 ) + 1
 
         return result
     }

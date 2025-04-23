@@ -22,11 +22,18 @@ class LogInRepository: LogInRepositoryP {
     //전화번호 전송, 인증ID 저장
     func sendNumber(phoneNumber: String?) -> Single<LogInStatus> {
         return Single.create { single in
+            
             guard let number = phoneNumber else { return Disposables.create() }
             let authPhoneNumber = "+82 \(number.components(separatedBy: "-").joined())"
+
             PhoneAuthProvider.provider()
                 .verifyPhoneNumber(authPhoneNumber, uiDelegate: nil) { (verificationID, error) in
-                    if let error = error {
+                    if let error {
+                        if let error = error as NSError? {
+                                if error.code == AuthErrorCode.tooManyRequests.rawValue {
+                                    print("요청이 너무 많습니다. 잠시 후 다시 시도하세요.")
+                                }
+                            }
                         single(.failure(error))
                         return
                     }
@@ -34,7 +41,7 @@ class LogInRepository: LogInRepositoryP {
                         if id.isEmpty {
                             single(.success(.validationFailed))
                             return
-                        }else {
+                        } else {
                             UserDefaults.standard.set("\(id)", forKey: "verificationID")
                             single(.success(.requestCompleted))
                             return
@@ -56,17 +63,24 @@ class LogInRepository: LogInRepositoryP {
                 withVerificationID: verificationID,
                 verificationCode: code
             )
+
             Auth.auth().signIn(with: credential) { authResult, error in
                 if let error = error {
+
                     single(.failure(error))
-                }else {
+                } else {
                     self.userInFirestore().subscribe(onSuccess: { state in
                         self.firebaseService.setAccessLevel(state.0)
                             .subscribe(onSuccess: {
+                                
                                 single(.success(state.1))
+                            }, onFailure: { err in
+                                print("error\(err)")
+                                
                             })
                             .disposed(by: self.disposeBag)
                     }, onFailure: { error in
+
                         self.firebaseService.setAccessLevel(.none)
                             .subscribe(onSuccess: {
                                 single(.success(nil))
@@ -87,15 +101,18 @@ class LogInRepository: LogInRepositoryP {
             var uid = ""
             var phoneNumber = ""
             self.firebaseService.getCurrentUser()
-                .subscribe(onSuccess: { user in
+                .subscribe(onSuccess: { [weak self] user in
                     uid = user.uid
                     UserDefaults.standard.set("\(uid)", forKey: "uid")
-                    guard let number = user.phoneNumber else{ return }
+                    guard let self, let number = user.phoneNumber else { return single(.success((AccessLevel.none, nil))) }
                     phoneNumber = number
-                    UserDefaults.standard.set("\(phoneNumber)", forKey: "phoneNumber")
-                    guard let fcmToken = UserDefaults.standard.string(forKey: "fcmToken") else{ return }
+                    
+                    guard let fcmToken = UserDefaults.standard.string(forKey: "fcmToken") else { return single(.success((AccessLevel.none, nil)))}
                     let createdAt = Date()
                     let inviteCode = "\(phoneNumber.suffix(4) + createdAt.toString(type: Date.Format.timeStamp).filter{ $0.isNumber }.map{ String($0) }.suffix(4).joined())"
+                    
+                    //MARK: make LogInDTO
+                    //MARK: 인증번호 전송 후 createDoc
                     let dto = LogInDTO(fcmToken: fcmToken,
                                        uid: uid,
                                        phoneNumber: phoneNumber,
@@ -104,22 +121,23 @@ class LogInRepository: LogInRepositoryP {
                                        stateMessage: "")
                     
                     self.firebaseService.getDocument(collection: .Users, document: uid)
-                        .subscribe(onSuccess: { user in
-                            guard let userModel = user.toObject(UserDTO.self)?.toModel() else{ return }
+                        .subscribe(onSuccess: { [weak self] user in
+                            guard let self, let userModel = user.toObject(UserDTO.self)?.toModel() else { return single(.success((AccessLevel.none, nil)))}
                             if let name = userModel.name {
-                                UserDefaults.standard.set(name, forKey: "userName")
+                                UserDefaults.standard.set(name, forKey: "name")
                                 single(.success((AccessLevel.complete, nil)))
-                            }else if let coupleID = userModel.coupleID {
-                                UserDefaults.standard.set(coupleID, forKey: "coupleDocumentID")
+                            } else if let coupleID = userModel.coupleID {
+                                UserDefaults.standard.set(coupleID, forKey: "coupleID")
                                 single(.success((AccessLevel.coupleCombined, nil)))
                             }
                         },onFailure: {[weak self] error in
-                            guard let values = dto.asDictionary, let self = self else { return }
+                            guard let values = dto.asDictionary, let self else { return }
                             
                             self.firebaseService.createDocument(collection: .Users,
                                                                 document: dto.uid,
                                                                 values: values)
-                            .subscribe(onSuccess: { _ in
+                            .subscribe(onSuccess: { [weak self] _ in
+                                guard let self else {return}
                                 UserDefaults.standard.set("\(inviteCode)", forKey: "inviteCode")
                                 single(.success((.authenticated, inviteCode)))
                             })
@@ -158,10 +176,13 @@ class LogInRepository: LogInRepositoryP {
             let currentDate = Date().toString(type: .yearToHour)
             firebaseService.getCurrentUser()
                 .flatMap{ user -> Single<Void> in
+                    UserDefaults.standard.set(user.uid, forKey: "uid")
+                    UserDefaults.standard.set(user.phoneNumber, forKey: "phoneNumber")
+                    
                     return self.firebaseService.getDocument(collection: .Users, field: "inviteCode", values: [inviteCode])
-                        .flatMap{ data -> Single<Void> in
+                        .flatMap{ [weak self] data -> Single<Void> in
                             guard !data.isEmpty else{ return Single.error(FireStoreError.unknown) }
-                            guard let otherUid = data.last?["uid"] as? String else{ return Single.error(FireStoreError.unknown) }
+                            guard let self,let otherUid = data.last?["uid"] as? String else{ return Single.error(FireStoreError.unknown) }
                             if otherUid == user.uid { return Single.error(FireStoreError.unknown) }
                             guard let otherFcmToken = data.last?["fcmToken"] as? String else{ return Single.error(FireStoreError.unknown) }
                             UserDefaults.standard.set("\(otherUid)", forKey: "otherUid")
@@ -182,14 +203,15 @@ class LogInRepository: LogInRepositoryP {
                         }
                 }
                 .subscribe(onSuccess: {
-                    guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return }
-                    guard let otherUid = UserDefaults.standard.string(forKey: "otherUid") else{ return }
-                    guard let coupleDocumentID = UserDefaults.standard.string(forKey: "coupleDocumentID") else{ return }
+                    guard let uid = UserDefaults.standard.string(forKey: "uid") else { return }
+                    guard let otherUid = UserDefaults.standard.string(forKey: "otherUid") else { return }
+                    guard let coupleDocumentID = UserDefaults.standard.string(forKey: "coupleID") else { return }
                     let defaultProfileImage = UIImage(named: "defaultProfileImage")!
                     let uploadDefaultImage = self.firebaseService.uploadImage(filePath: uid, image: defaultProfileImage)
                     let uploadDefaultImage2 = self.firebaseService.uploadImage(filePath: otherUid, image: defaultProfileImage)
                     Single.zip(uploadDefaultImage, uploadDefaultImage2)
                         .subscribe(onSuccess: { user1, user2 in
+                            
                             let update1 = self.firebaseService.updateDocument(collection: .Users,
                                                                               document: uid,
                                                                               values: ["coupleID": coupleDocumentID,
@@ -207,7 +229,7 @@ class LogInRepository: LogInRepositoryP {
                             let updateOtherAccessLevel = self.firebaseService.updateDocument(collection: .Users, document: otherUid, values: ["accessLevel" : "coupleCombined"])
                             
                             Single.zip(update1, update2, chatDocumentCreate, myAlarmDocumentCreate, otherAlarmDocumentCreate, updateAccessLevel, updateOtherAccessLevel)
-                                .subscribe(onSuccess: { _, _, _, _, _, _, _ in
+                                .subscribe(onSuccess: { a, b, c, d, e, f, g in
                                     single(.success(()))
                                 }, onFailure: { error in
                                     single(.failure(error))

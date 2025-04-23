@@ -9,13 +9,14 @@ import UIKit
 import RxSwift
 import RxRelay
 import RxCocoa
+import GoogleMobileAds
 
 class MyProfileVM {
-
+    
     weak var coordinator: MyProfileCoordinator?
     private var myProfileUseCase: MyProfileUseCase
     private var alarmUseCase: AlarmUseCase
-
+    
     struct Input {
         let viewWillApearEvent: Observable<Void>
         let editProfileBtnTapEvent: Observable<Void>
@@ -37,6 +38,7 @@ class MyProfileVM {
         var alarmTitle = PublishRelay<String>()
         var alarmSubtitle = PublishRelay<String>()
         var alarmImage = PublishRelay<String>()
+        var getBottomBannerAd = BehaviorSubject<BannerView?>(value: nil)
     }
     
     
@@ -50,7 +52,10 @@ class MyProfileVM {
         let output = Output()
         input.viewWillApearEvent
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self else{ return }
+                guard let self else{ return }
+                
+                output.getBottomBannerAd.onNext(self.myProfileUseCase.getBottomBannerAd())
+                
                 self.myProfileUseCase.getUserInfo()
                     .subscribe(onNext: { user in
                         self.myProfileUseCase.getProfileImage(url: user.profileImage ?? "")
@@ -58,18 +63,23 @@ class MyProfileVM {
                                 output.profileImage.accept(image)
                             })
                             .disposed(by: disposeBag)
-                        guard let name = user.name, let phoneNumber = user.phoneNumber, let otherUid = user.otherUid else{ return }
+                        guard let name = user.name, let phoneNumber = user.phoneNumber, let otherUid = user.otherUid else { return }
                         self.myProfileUseCase.getDdayInfo(otherUid: otherUid)
-                            .subscribe(onSuccess: { dDayInfo in
+                            .subscribe(onSuccess: { [weak self] dDayInfo in
+                                guard let self else {return}
                                 output.coupleUserName.accept("\(name) & \(dDayInfo[0])")
                                 output.sinceFirstDay.accept("\(dDayInfo[1])일째 함께하는 중")
                             })
                             .disposed(by: disposeBag)
                         output.userName.accept(name)
                         var number = phoneNumber.map{ String($0) }
+                        
+                        
                         number.insert(" 0", at: 3)
                         number.insert("-", at: 6)
                         number.insert("-", at: 11)
+                        
+                        
                         self.myProfileUseCase.getLastHundredQA()
                             .subscribe(onSuccess: { number in
                                 output.lastHundredQA.accept("\(number)번째 백문백답 완료!")
@@ -83,7 +93,7 @@ class MyProfileVM {
                 
                 self.alarmUseCase.getAlarmService()
                     .subscribe(onNext: { alarmList in
-            
+                        
                         output.alarmSubtitle.accept(alarmList.last?.text ?? "아직 추가된 알림이 없어요!")
                         
                         output.alarmTitle.accept(self.daysPassedSinceDate(alarmList.last?.date ?? Date()))

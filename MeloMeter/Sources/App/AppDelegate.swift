@@ -13,7 +13,7 @@ import FirebaseMessaging
 import UserNotifications
 import FirebaseAppCheck
 import KakaoSDKCommon
-
+import GoogleMobileAds
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
     
@@ -24,6 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        UserDefaultsRepo.shared.resetAllUserDefaults()
+        // 구글 애드모
+        MobileAds.shared.start(completionHandler: nil)
         
         // Override point for customization after application launch.
         // 네이버 지도 초기화
@@ -39,13 +42,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         // device token 요청.
         application.registerForRemoteNotifications()
         
+        PushNotificationService.shared.registerForPushNotifications()
         // Request permission for remote notifications
         UNUserNotificationCenter.current().delegate = self
+        
+      
         
         if (launchOptions?[.remoteNotification]) != nil {
             //여기서 처리
         }
-
+        
+        if launchOptions?[.location] != nil {
+            
+        }
+ 
         
         return true
     }
@@ -92,21 +102,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     
     // 푸시클릭이벤트
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
         let userInfo = response.notification.request.content.userInfo
     }
     
 
+    
+
     // 인앱푸시이벤트
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+    // iOS 14 이하 또는 AppDelegate에서 확실히 동작하기 위해 수정
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
         let userInfo = notification.request.content.userInfo
         let date = Date().toString(type: .yearToDay)
         let text = notification.request.content.body
-        if let type = userInfo["type"] { PushNotificationService.shared.addAlarm(text: text, date: date, type: type as! String )
+        if let type = userInfo["type"] {
+            PushNotificationService.shared.addAlarm(text: text, date: date, type: type as! String)
         }
 
-        return [.sound, .banner, .list]
+        completionHandler([.sound, .banner, .list])
     }
-    
+
     
     // MARK: UISceneSession Lifecycle
     

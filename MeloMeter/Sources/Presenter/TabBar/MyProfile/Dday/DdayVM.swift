@@ -66,7 +66,7 @@ class DdayVM {
             
         self.dDayUseCase.firstDay
             .map{ day -> String in
-                return "\(abs(self.dDayUseCase.sinceDday(from: day)))일"
+                return "\(self.dDayUseCase.sinceDday(from: day))일"
             }
             .asObservable()
             .bind(to: output.sinceFirstDay)

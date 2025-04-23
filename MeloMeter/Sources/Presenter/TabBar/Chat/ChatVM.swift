@@ -7,6 +7,8 @@
 
 import UIKit
 import RxSwift
+import MessageKit
+import RxCocoa
 
 // MARK: - LoginViewModel
 class ChatVM {
@@ -16,20 +18,38 @@ class ChatVM {
     private var hundredQAUseCase: HundredQAUseCase
     private var answerArray: [AnswerModel] = []
     private var questionInfo: (String, String) = ("", "")
+    private var nowChatList : [ChatModel] = []
+    private var alreadySearchedId: [String] = []
+    private var alreadySearchedModel: [ChatModel] = []
+    private var searchingText: String?
+    private var searchingIndex: Int = 0
     
     struct Input {
         let viewDidLoadEvent: Observable<Void>
         let backBtnTapEvent: Observable<Void>
-        let mySendTextMessage: Observable<ChatModel>
+        let searchBtnTapEvent: Observable<Void>
+        let mySendTextMessage: Observable<ChatModel> // 이미지 전송 누르고 나서 데이터
         let mySendImageMessage: Observable<ChatModel>
         let reloadMessage: Observable<Int>
+        
+        // by seungwan
+        let searchTextMessage: Observable<String>
+        let keyboardSearchBtnTapped: Observable<Void>
+        let exitBarButton: Observable<Void>
+        let pickerLeftBtnTap: Observable<Void>
+        let pickerRightBtnTap: Observable<Void>
     }
     
     struct Output {
-        var senddSuccess = PublishSubject<Bool>()
+        var sendSuccess = PublishSubject<Bool>()
         var getMessage = PublishSubject<[ChatModel]>()
         var getMoreMessage = PublishSubject<[ChatModel]>()
         var getRealTimeMessage = PublishSubject<[ChatModel]>()
+        
+        // by seungwan
+        var searchedIndex = PublishSubject<ChatModel>()
+        var setChatingView = PublishSubject<Bool>()
+        var notExistAlert = PublishSubject<Void>()
     }
     
     
@@ -46,7 +66,6 @@ class ChatVM {
         var questionEmpty = PublishSubject<Bool>()
     }
     
-    // MARK: Input
     init(coordinator: ChatCoordinator,
          chatUseCase: ChatUseCase,
          hundredQAUseCase: HundredQAUseCase) {
@@ -62,7 +81,7 @@ class ChatVM {
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else{ return }
                 self.chatUseCase.getChatMessageService()
-                self.chatUseCase.startRealTimeChatMassage()
+                self.chatUseCase.startRealTimeChatMessage()
             })
             .disposed(by: disposeBag)
         
@@ -70,50 +89,58 @@ class ChatVM {
             .subscribe(onNext: { [weak self] num in
                 guard let self = self else{ return }
                 self.chatUseCase.getMoreChatMessageService(num: num)
-            })
-            .disposed(by: disposeBag)
+                
+            }).disposed(by: disposeBag)
         
         input.mySendTextMessage
             .subscribe(onNext: {[weak self] myMessage in
                 guard let self = self else{ return }
                 self.chatUseCase.sendMessageService(chatModel: myMessage, chatType: .text)
                     .subscribe(onSuccess: {
-                        output.senddSuccess.onNext(true)
+                        output.sendSuccess.onNext(true)
                     },onFailure: { error in
-                        output.senddSuccess.onNext(false)
+                        output.sendSuccess.onNext(false)
                     }).disposed(by: disposeBag)
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
+        
         
         input.mySendImageMessage
             .subscribe(onNext: {[weak self] myMessage in
                 guard let self = self else{ return }
                 self.chatUseCase.sendMessageService(chatModel: myMessage, chatType: .image)
                     .subscribe(onSuccess: {
-                        output.senddSuccess.onNext(true)
+                        output.sendSuccess.onNext(true)
                     },onFailure: { error in
-                        output.senddSuccess.onNext(false)
+                        output.sendSuccess.onNext(false)
                     }).disposed(by: disposeBag)
             })
             .disposed(by: disposeBag)
         
         self.chatUseCase.recieveChatMessageService
-            .subscribe(onNext: {chatMessageList in
+            .subscribe(onNext: { [weak self] chatMessageList in
+                guard let self else {return}
                 output.getMessage.onNext(chatMessageList ?? [])
+                self.nowChatList = chatMessageList ?? []
+                
+                
             })
             .disposed(by: disposeBag)
+        
         
         self.chatUseCase.recieveMoreChatMessageService
-            .subscribe(onNext: {chatMessageList in
+            .subscribe(onNext: { chatMessageList in
                 output.getMoreMessage.onNext(chatMessageList ?? [])
-            })
-            .disposed(by: disposeBag)
+                self.nowChatList += chatMessageList ?? []
+                
+            }).disposed(by: disposeBag)
+        
+        
         
         self.chatUseCase.recieveRealTimeMessageService
-            .subscribe(onNext: {chatMessageList in
+            .subscribe(onNext: { chatMessageList in
+             
                 output.getRealTimeMessage.onNext(chatMessageList ?? [])
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         input.backBtnTapEvent
             .subscribe(onNext: {
@@ -121,15 +148,115 @@ class ChatVM {
             })
             .disposed(by: disposeBag)
         
+        
+        
+        //TODO: clean code (VC 코드 VM 에서 처리)
+        Observable.zip(self.chatUseCase.recieveChatForSearch.asObservable(), self.chatUseCase.recieveMessageId.asObservable())
+            .subscribe(onNext: { chatMessageList, messageId in
+                
+                
+                if let chatMessageList, !chatMessageList.isEmpty {
+                    output.getMoreMessage.onNext(chatMessageList)
+                    
+                    let searchedModel = chatMessageList.filter {
+                        $0.messageId == messageId
+                    }.first
+                    
+                    if let searchedModel = searchedModel {
+                        
+                        
+                        output.searchedIndex.onNext(searchedModel)
+                        self.alreadySearchedId.append(messageId)
+                        self.alreadySearchedModel.append(searchedModel)
+                        self.searchingIndex = self.alreadySearchedModel.count - 1
+                    }
+                    
+                    self.nowChatList += chatMessageList
+                } else {
+                    output.notExistAlert.onNext(())
+                }
+                
+                
+                
+                
+            }).disposed(by: disposeBag)
+        
+        input.searchBtnTapEvent.subscribe(onNext: { [weak self] in
+            guard let self else {return}
+            
+            output.setChatingView.onNext(true)
+            
+        }).disposed(by: disposeBag)
+        
+
+        //MARK: right (아래 화살표) tap 시
+        input.pickerRightBtnTap.subscribe(onNext: { [weak self] _ in
+            guard let self, !alreadySearchedModel.isEmpty else {return}
+            self.searchingIndex = searchingIndex > 0 ? searchingIndex - 1 : searchingIndex
+            output.searchedIndex.onNext(alreadySearchedModel[searchingIndex])
+
+        }).disposed(by: disposeBag)
+        
+        // MARK: 검색 시 by Seungwan
+        Observable.merge(input.pickerLeftBtnTap.asObservable(), input.keyboardSearchBtnTapped.asObservable()).withLatestFrom(input.searchTextMessage).subscribe(onNext: { [weak self] searchText in
+            guard let self else { return }
+            
+            if searchingIndex < alreadySearchedModel.count - 1 {
+                searchingIndex = searchingIndex + 1
+                output.searchedIndex.onNext(alreadySearchedModel[searchingIndex])
+            } else {
+                if searchText != self.searchingText {
+                    self.alreadySearchedId = []
+                    self.searchingText = searchText
+                    searchingIndex = 0
+                }
+                
+                var count = 0
+                
+                for i in stride(from: nowChatList.count - 1, to: -1, by: -1) {
+                    let chat = nowChatList[i]
+                    switch chat.kind {
+                    case .text(let text):
+                        if text.contains(searchText) && !self.alreadySearchedId.contains(chat.messageId) {
+                            
+                            output.searchedIndex.onNext(chat)
+                            self.alreadySearchedModel.append(chat)
+                            self.searchingIndex = alreadySearchedModel.count - 1
+                            self.alreadySearchedId.append(chat.messageId)
+                            break
+                        }
+                        count += 1
+                        
+                        if count == nowChatList.count {
+                            self.chatUseCase.getMoreChatForSearch(num: self.nowChatList.count, searchText: searchText)
+                        }
+                        
+                    default:
+                        break
+                    }
+                }
+            }
+            
+          
+        }).disposed(by: disposeBag)
+        
+        
+        input.exitBarButton.subscribe(onNext:{ [weak self] in
+            guard let self else {return}
+            output.setChatingView.onNext(false)
+            
+            
+        }).disposed(by: disposeBag)
+        
         return output
     }
     
     func noticeTransform(input: DisplayInput, disposeBag: DisposeBag) -> DisplayOutput {
         let output = DisplayOutput()
-
+        
         input.viewWillApearEvent
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self else{ return }
+                guard let self = self else { return }
                 self.chatUseCase.getProfileImage()
                     .subscribe(onSuccess: { image in
                         output.otherProfileImage.onNext(image)
@@ -155,13 +282,13 @@ class ChatVM {
                             }
                             self.answerArray = answers.popLast() ?? []
                             
-                        }else if beforeAnswers.count == 1 {
+                        } else if beforeAnswers.count == 1 {
                             self.answerArray = answers[0]
                             self.questionInfo.1 = question[0]
                             self.questionInfo.0 = String(questionNumber)
                             output.questionComplete.onNext("\(String(questionNumber))번째 백문백답이 도착했어요!")
                             output.questionText.onNext(self.questionInfo.1)
-                        }else {
+                        } else {
                             self.answerArray = answers[1]
                             self.questionInfo.1 = question[1]
                             self.questionInfo.0 = String(questionNumber - 1)
@@ -186,7 +313,7 @@ class ChatVM {
                 guard let self = self else{ return }
                 var myAnswerInfo = answerArray.filter{ $0.userId == .mine }.last ?? AnswerModel(userId: .mine, answerText: "", userName: "")
                 var otherAnswerInfo = answerArray.filter{ $0.userId == .other }.last ?? AnswerModel(userId: .other, answerText: "", userName: "")
-                let myName = UserDefaults.standard.string(forKey: "userName") ?? ""
+                let myName = UserDefaults.standard.string(forKey: "name") ?? ""
                 let otherName = UserDefaults.standard.string(forKey: "otherUserName") ?? ""
                 myAnswerInfo.userName = myName
                 otherAnswerInfo.userName = otherName
@@ -194,8 +321,7 @@ class ChatVM {
                                                    question: self.questionInfo.1,
                                                    myAnswerInfo: myAnswerInfo,
                                                    otherAnswerInfo: otherAnswerInfo)
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         return output
     }
@@ -208,4 +334,4 @@ class ChatVM {
         return components1.year == components2.year && components1.month == components2.month && components1.day == components2.day
     }
 }
-    
+
