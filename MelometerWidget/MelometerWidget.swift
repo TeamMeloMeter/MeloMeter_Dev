@@ -89,7 +89,7 @@ struct MelometerWidgetEntryView : View {
             Spacer()
             HStack(alignment: .center, spacing: 1) {
                 Spacer()
-                Text("\(entry.myName) & \(entry.couplesName)").font(FontManager.shared.medium(ofSize: 15)).foregroundColor(Color.black)
+                Text("\(entry.myName) & \(entry.couplesName)").font(FontManager.shared.medium(ofSize: 12)).foregroundColor(Color.black)
                 
             }
             HStack(alignment: .center, spacing: 1) {

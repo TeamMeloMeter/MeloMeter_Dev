@@ -1723,7 +1723,7 @@
 				CODE_SIGN_ENTITLEMENTS = MeloMeter/MeloMeterDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20250423;
+				CURRENT_PROJECT_VERSION = 20250426;
 				DEVELOPMENT_TEAM = YH4A87H8M4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MeloMeter/Info.plist;
@@ -1745,7 +1745,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.1.3;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.teamMeloMeter.-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1769,7 +1769,7 @@
 				CODE_SIGN_ENTITLEMENTS = MeloMeter/MeloMeter.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20250423;
+				CURRENT_PROJECT_VERSION = 20250426;
 				DEVELOPMENT_TEAM = YH4A87H8M4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MeloMeter/Info.plist;
@@ -1791,7 +1791,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.teamMeloMeter.-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1864,7 +1864,7 @@
 				INFOPLIST_FILE = MelometerWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MelometerWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1903,7 +1903,7 @@
 				INFOPLIST_FILE = MelometerWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MelometerWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
