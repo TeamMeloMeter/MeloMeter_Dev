@@ -10,4 +10,5 @@ import Foundation
 protocol SharedDataRepoP {
     func saveOthersName(othersName: String)
     func saveStartDate(startDate: String)
+    func saveMyName(myName: String)
 }

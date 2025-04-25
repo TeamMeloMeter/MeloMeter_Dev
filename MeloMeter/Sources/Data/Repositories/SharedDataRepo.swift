@@ -23,4 +23,10 @@ class SharedDataRepo: SharedDataRepoP {
         userDefaults!.synchronize()
         WidgetService.shared.reloadTimelines()
     }
+    
+    func saveMyName(myName: String) {
+        userDefaults!.set(myName, forKey: "myName")
+        userDefaults!.synchronize()
+        WidgetService.shared.reloadTimelines()
+    }
 }

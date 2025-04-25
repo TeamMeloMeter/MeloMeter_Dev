@@ -135,7 +135,7 @@ extension MainUseCase {
     func getUserData() {
         guard let uid = UserDefaults.standard.string(forKey: "uid") else { return }
         self.userRepository.getUserInfo(uid)
-            .catchAndReturn(UserModel(name: nil, birth: nil))
+            .catchAndReturn(UserModel(name: nil, birth: nil)).map { user in self.sharedDataRepo.saveMyName(myName: user.name ?? ""); return user}
             .bind(to: self.userData)
             .disposed(by: disposeBag)
     }

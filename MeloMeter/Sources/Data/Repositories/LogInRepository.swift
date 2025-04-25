@@ -124,6 +124,7 @@ class LogInRepository: LogInRepositoryP {
                         .subscribe(onSuccess: { [weak self] user in
                             guard let self, let userModel = user.toObject(UserDTO.self)?.toModel() else { return single(.success((AccessLevel.none, nil)))}
                             if let name = userModel.name {
+                                
                                 UserDefaults.standard.set(name, forKey: "name")
                                 single(.success((AccessLevel.complete, nil)))
                             } else if let coupleID = userModel.coupleID {

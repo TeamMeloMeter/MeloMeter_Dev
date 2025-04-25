@@ -23,10 +23,11 @@ func getEntry() -> SimpleEntry {
     
     let startDate = userDefaults!.string(forKey: "startDate") ?? ""
     let othersName = userDefaults!.string(forKey: "othersName") ?? ""
+    let myName = userDefaults!.string(forKey: "myName") ?? ""
 
     let dDay = getDayCount(dateString: startDate)
     
-    let entry = SimpleEntry(date: .now, startDate: startDate, couplesName: othersName, dDay: dDay)
+    let entry = SimpleEntry(date: .now, myName: myName, startDate: startDate, couplesName: othersName, dDay: dDay)
     
     return entry
     
@@ -66,6 +67,7 @@ struct Provider: TimelineProvider {
 struct SimpleEntry: TimelineEntry {
     var date: Date
     
+    let myName: String
     let startDate: String
     let couplesName: String
     let dDay: Int
@@ -78,22 +80,22 @@ struct MelometerWidgetEntryView : View {
         VStack {
             HStack(spacing: 6) {
                 Image("DdayIcon")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit).frame(width: 24, height: 24)
-                
-                VStack(alignment: .leading) {
-                    Text(entry.couplesName).font(.system(size: 10))
-                    Text("\(entry.startDate)").font(.system(size: 10))
-                }
+                    .resizable().scaledToFit()
+             
                 
                 Spacer()
             }.frame(width: .infinity ,height: 40)
- 
+            
             Spacer()
             HStack(alignment: .center, spacing: 1) {
                 Spacer()
-                Text("\(entry.dDay) 일").font(.title)
-          
+                Text("\(entry.myName) & \(entry.couplesName)").font(FontManager.shared.medium(ofSize: 15)).foregroundColor(Color.black)
+                
+            }
+            HStack(alignment: .center, spacing: 1) {
+                Spacer()
+                Text("\(entry.dDay)일").font(FontManager.shared.medium(ofSize: 30)).foregroundColor(Color.black)
+                
             }
         }
        
@@ -107,7 +109,9 @@ struct MelometerWidget: Widget {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             if #available(iOS 17.0, *) {
                 MelometerWidgetEntryView(entry: entry)
-                    .containerBackground(.fill.tertiary, for: .widget)
+                    .widgetBackground(content: {
+                        Image("WidgetbackgroundImg").resizable().scaledToFill().background(Color.white)
+                    })
             } else {
                 MelometerWidgetEntryView(entry: entry)
                     .padding()
@@ -124,4 +128,13 @@ struct MelometerWidget: Widget {
 } timeline: {
     getEntry()
     
+}
+extension View {
+    @ViewBuilder func widgetBackground<T: View>(@ViewBuilder content: () -> T) -> some View {
+        if #available(iOS 17.0, *) {
+            containerBackground(for: .widget, content: content)
+        }else {
+            background(content())
+        }
+    }
 }
