@@ -118,8 +118,7 @@ struct MelometerWidget: Widget {
                     .background()
             }
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("D-Day Widget")
     }
 }
 

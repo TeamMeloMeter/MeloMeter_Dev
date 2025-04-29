@@ -104,6 +104,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         
         let userInfo = response.notification.request.content.userInfo
+        
+        if let link = userInfo["link"] as? String,
+                  let url = URL(string: link) {
+                   DispatchQueue.main.async {
+                       UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                   }
+               }
+        completionHandler()
+
     }
     
 

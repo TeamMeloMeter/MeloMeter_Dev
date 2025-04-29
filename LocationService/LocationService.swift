@@ -15,9 +15,7 @@ import RxCocoa
 final class LocationService: NSObject {
     
     static var shared = LocationService()
-    
-    private var isBack = false
-    private var isFore = true
+  
     
     
     var locationManager = CLLocationManager()
@@ -49,9 +47,7 @@ final class LocationService: NSObject {
         locationManager.stopUpdatingLocation()
         
         locationManager.startMonitoringSignificantLocationChanges()
-        
-        isBack = true
-        isFore = false
+
     }
     
     func start() {
@@ -64,9 +60,7 @@ final class LocationService: NSObject {
                 self.locationManager.stopMonitoringSignificantLocationChanges()
                 
                 self.locationManager.startUpdatingLocation()
-                
-                isFore = true
-                isBack = false
+
             }
         }
     }
@@ -96,12 +90,6 @@ extension LocationService: CLLocationManagerDelegate {
     //MARK: 위치 주기적으로 업데이트.
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let lastLocation = locations.last else { return }
-        
-        if isBack {
-            PushNotificationService.shared.localPushNotification(title: "locaiton Updated", body: " \(locations) location updated")
-        }
-        
-
         
         self.currentLocation.onNext(lastLocation)
         if let uid = UserDefaults.standard.string(forKey: "uid") {

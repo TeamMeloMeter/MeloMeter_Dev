@@ -20,6 +20,34 @@
             landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "A1D17FAC-FF02-4180-B8C6-9D82EEF2957F - fdc354d2fb4d7251"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (MeloMeter.AccountsButton) -&gt; () in MeloMeter.AccountsVM.transform(input: MeloMeter.AccountsVM.Input, disposeBag: RxSwift.DisposeBag) -&gt; MeloMeter.AccountsVM.Output"
+                  moduleName = "MeloMeter"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/seungwan/xcode/Melometer/MeloMeter/Sources/Presenter/TabBar/MyProfile/EditProfile/DetailEdit/Accounts/AccountsVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "57"
+                  endingLineNumber = "57">
+               </Location>
+               <Location
+                  uuid = "A1D17FAC-FF02-4180-B8C6-9D82EEF2957F - ee0fc0dca41c3aef"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Dictionary&lt;Swift.String, Swift.String&gt;) -&gt; () in closure #2 (MeloMeter.AccountsButton) -&gt; () in MeloMeter.AccountsVM.transform(input: MeloMeter.AccountsVM.Input, disposeBag: RxSwift.DisposeBag) -&gt; MeloMeter.AccountsVM.Output"
+                  moduleName = "MeloMeter"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/seungwan/xcode/Melometer/MeloMeter/Sources/Presenter/TabBar/MyProfile/EditProfile/DetailEdit/Accounts/AccountsVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "57"
+                  endingLineNumber = "57">
+               </Location>
+               <Location
                   uuid = "A1D17FAC-FF02-4180-B8C6-9D82EEF2957F - f4f9f80811fc7fd4"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
@@ -64,6 +92,36 @@
             endingLineNumber = "99"
             landmarkName = "transform(input:disposeBag:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D96E4D22-078A-4CF5-87B8-8786405805A7 - fdc354d2fb4d79a7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (MeloMeter.AccountsButton) -&gt; () in MeloMeter.AccountsVM.transform(input: MeloMeter.AccountsVM.Input, disposeBag: RxSwift.DisposeBag) -&gt; MeloMeter.AccountsVM.Output"
+                  moduleName = "MeloMeter"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/seungwan/xcode/Melometer/MeloMeter/Sources/Presenter/TabBar/MyProfile/EditProfile/DetailEdit/Accounts/AccountsVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99">
+               </Location>
+               <Location
+                  uuid = "D96E4D22-078A-4CF5-87B8-8786405805A7 - f4f9f80811fc7422"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (MeloMeter.AccountsButton) -&gt; () in MeloMeter.AccountsVM.transform(input: MeloMeter.AccountsVM.Input, disposeBag: RxSwift.DisposeBag) -&gt; MeloMeter.AccountsVM.Output"
+                  moduleName = "MeloMeter.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/seungwan/xcode/Melometer/MeloMeter/Sources/Presenter/TabBar/MyProfile/EditProfile/DetailEdit/Accounts/AccountsVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
