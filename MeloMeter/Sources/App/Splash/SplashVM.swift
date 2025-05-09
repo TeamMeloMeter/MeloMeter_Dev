@@ -67,20 +67,21 @@ final class SplashVM : NSObject, FullScreenContentDelegate {
                 alert.onNext("offLine")
             } else {
                 PushNotificationService.shared.setupAppStateNotifications()
-
-                adMobRepo.loadInterstitial().subscribe({ [weak self] single in
-                    guard let self else {return}
-                        switch single {
-                        case .success(let interstitialAd):
-                            interstitialAd.fullScreenContentDelegate = self
-                            self.loadAdmob.onNext(interstitialAd)
-                            
-                        case .failure(_):
-                            self.flowPick()
-                        }
-                    
-                    
-                }).disposed(by: disposeBag)
+                self.flowPick()
+                
+// MARK: 초반 애드몹 삭제.
+//                adMobRepo.loadInterstitial().subscribe({ [weak self] single in
+//                    guard let self else {return}
+//                        switch single {
+//                        case .success(let interstitialAd):
+//                            interstitialAd.fullScreenContentDelegate = self
+//                            self.loadAdmob.onNext(interstitialAd)
+//                            
+//                        case .failure(_):
+//                            self.flowPick()
+//                        }
+//                    
+//                }).disposed(by: disposeBag)
                
             }
             
