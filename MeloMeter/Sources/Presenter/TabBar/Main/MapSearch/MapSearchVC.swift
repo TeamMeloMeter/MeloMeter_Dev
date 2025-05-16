@@ -15,6 +15,20 @@ import GoogleMobileAds
 //메인 지도 화면
 class MapSearchVC: UIViewController, UIGestureRecognizerDelegate {
     
+    private var disposeBag = DisposeBag()
+    
+    private var tapIdx = PublishSubject<Int>()
+    
+    init(viewModel: MapSearchVM) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private let viewModel: MapSearchVM
     
     let tableView = UITableView()
     
@@ -37,21 +51,14 @@ class MapSearchVC: UIViewController, UIGestureRecognizerDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        setAutoLayout()
         setBindings()
         setSearchView()
+        setAutoLayout()
+
     }
     
- 
-    
-    func setTableView() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-    }
     
     func setSearchView() {
- 
-        
-        
         view.addSubview(topSearchView)
         
         topSearchView.addSubview(searchBar)
@@ -77,14 +84,43 @@ class MapSearchVC: UIViewController, UIGestureRecognizerDelegate {
         
     }
     func setAutoLayout() {
+        self.view.addSubview(tableView)
         
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(searchBar.snp.bottom).offset(10)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
     }
-
+    
     func setBindings() {
         
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.rx.itemSelected.map { $0.row }.bind(to: tapIdx).disposed(by: disposeBag)
+
+        
+        let input = MapSearchVM.Input(viewWillAppear: self.rx.methodInvoked(#selector(viewWillAppear)).map({ _ in }).asObservable(), searchText: self.searchBar.rx.text.orEmpty.asObservable(), keyBoardBtnTapped:         searchBar.rx.searchButtonClicked.map{ [weak self] _ in
+            guard let self else {return}; self.searchBar.resignFirstResponder() }.asObservable(), tapIdx: tapIdx)
+        
+        
+        let output = viewModel.transform(input: input, disposeBag: disposeBag)
+        
+        output.resultModels
+            .compactMap { $0 }
+            .bind(to: tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { row, model, cell in
+                cell.textLabel?.text = model.title
+            }
+            .disposed(by: disposeBag)
+        
+        output.testingPickMarker.subscribe(onNext: { picked in
+            
+            
+            
+        }).disposed(by: disposeBag)
+        
+        
         
     }
-
-
-
+    
+    
+    
 }

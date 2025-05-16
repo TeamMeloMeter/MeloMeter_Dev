@@ -16,6 +16,7 @@ class MapVM {
 
     weak var coordinator: MainCoordinator?
     private var mainUseCase: MainUseCase
+    private var pickedModel: SearchedModel?
     
     struct Input {
         let viewWillAppear: Observable<Void>
@@ -37,12 +38,14 @@ class MapVM {
         var currentOtherLocation = PublishSubject<CLLocation?>()
         var endTrigger = PublishSubject<Bool>()
         var getBottomBannerAd = BehaviorSubject<BannerView?>(value: nil)
+        var pickerLocations = PublishSubject<[SearchedModel]>()
     }
     
     
-    init(coordinator: MainCoordinator, mainUseCase: MainUseCase) {
+    init(coordinator: MainCoordinator, mainUseCase: MainUseCase, pickedModel: SearchedModel? = nil) {
         self.coordinator = coordinator
         self.mainUseCase = mainUseCase
+        self.pickedModel = pickedModel
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -53,7 +56,11 @@ class MapVM {
                 .subscribe(onNext: { [weak self] _ in
                     guard let self else {return}
                     
-                    output.getBottomBannerAd.onNext(mainUseCase.getBottomBannerAd()) 
+                    if let pickedModel {
+                        output.pickerLocations.onNext([pickedModel])
+                    }
+                    
+                    output.getBottomBannerAd.onNext(mainUseCase.getBottomBannerAd())
                     
                     
                     self.mainUseCase.disconnectionObserver()

@@ -17,15 +17,13 @@ class SearchUseCase {
     private let disposeBag = DisposeBag()
     
     // MARK: Initializers
-    init(searchRepo: SearchRepoP)
-    {
+    init(searchRepo: SearchRepoP) {
         self.searchRepo = searchRepo
     }
     
     
-    func getResults() {
-        
-        searchRepo.searchNaverAPI(text: <#T##String#>)
+    func getResults(text: String) -> Single<[SearchedModel]> {
+        return searchRepo.searchNaverAPI(text: text)
         
     }
     

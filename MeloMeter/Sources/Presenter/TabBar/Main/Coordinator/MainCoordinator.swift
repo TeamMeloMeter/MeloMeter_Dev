@@ -23,18 +23,18 @@ final class MainCoordinator: Coordinator {
     }
     
     func start() {
-        showMapVC()
+        showMapVC(pickedModel: nil)
     }
 
 }
 
 extension MainCoordinator {
     
-    func showMapVC() {
+    func showMapVC(pickedModel: SearchedModel?) {
         let firebaseService = self.firebaseService
         let viewController = MapVC(viewModel: MapVM(
             coordinator: self,
-            mainUseCase: MainUseCase(firebaseService: firebaseService, adMobRepo: self.adMobRepo, sharedDataRepo: self.sharedDataRepo)
+            mainUseCase: MainUseCase(firebaseService: firebaseService, adMobRepo: self.adMobRepo, sharedDataRepo: self.sharedDataRepo), pickedModel: pickedModel
         )
         )
         self.navigationController.setNavigationBarHidden(true, animated: false)
@@ -58,7 +58,7 @@ extension MainCoordinator {
     
     //MARK: Push funcs
     func pushMapSearchVC() {
-        let viewController = MapSearchVC()
+        let viewController = MapSearchVC(viewModel: MapSearchVM(coordinator: self, searchUseCase: SearchUseCase(searchRepo: SearchRepo())))
         self.navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
     }

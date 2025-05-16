@@ -6,7 +6,8 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol SearchRepoP {
-    func searchNaverAPI(text: String)
+    func searchNaverAPI(text: String) -> Single<[SearchedModel]> 
 }

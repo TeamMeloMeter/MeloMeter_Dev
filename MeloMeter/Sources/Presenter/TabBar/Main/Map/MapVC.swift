@@ -190,6 +190,8 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
                 }
             })
             .disposed(by: disposeBag)
+        
+        output.pickerLocations.bind(onNext: self.setPlaceMarkers).disposed(by: disposeBag)
     }
 
     // MARK: Map
@@ -295,6 +297,21 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         let dataSource2 = CustomInfoViewDataSource(customView: otherInfoWindowView)
         infoWindow2.offsetY = 5
         infoWindow2.dataSource = dataSource2
+    }
+    
+    func setPlaceMarkers(models: [SearchedModel]) {
+        models.forEach {
+            let lng = Double($0.mapx)! / 1e7
+            let lat = Double($0.mapy)! / 1e7
+            
+
+            let marker = NMFMarker()
+            marker.position = NMGLatLng(lat: lat, lng: lng)
+            marker.captionText = $0.title
+            marker.mapView = self.naverMapView
+        
+        }
+        
     }
     
     lazy var naverMapView: NMFMapView = {

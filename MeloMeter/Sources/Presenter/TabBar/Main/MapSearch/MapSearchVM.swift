@@ -6,6 +6,8 @@
 //
 
 import RxSwift
+import RxRelay
+import RxCocoa
 
 struct ResultModel {
     let name: String
@@ -16,35 +18,50 @@ struct ResultModel {
 
 class MapSearchVM {
     weak var coordinator: MainCoordinator?
-    private var mainUseCase: MainUseCase
+    private var searchUseCase: SearchUseCase
+    
+    private let searchedModels = BehaviorRelay<[SearchedModel]>(value: [])
     
     struct Input {
         let viewWillAppear: Observable<Void>
         let searchText: Observable<String>
-    
-        
+        let keyBoardBtnTapped: Observable<Void>
+        let tapIdx: Observable<Int>
     }
     
     struct Output {
-        let resultModels = BehaviorSubject<ResultModel?>(value: nil)
+        let resultModels = BehaviorSubject<[SearchedModel]>(value: [])
+        
+        //TODO: 이후에 탭 시 push 할지 pop 해서 처리할지 로직 개선 해야함.
+        let testingPickMarker = BehaviorSubject<SearchedModel?>(value: nil)
     }
     
     
-    init(coordinator: MainCoordinator, mainUseCase: MainUseCase) {
+    init(coordinator: MainCoordinator, searchUseCase: SearchUseCase) {
         self.coordinator = coordinator
-        self.mainUseCase = mainUseCase
+        self.searchUseCase = searchUseCase
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output()
-        input.searchText.subscribe(onNext: { [weak self] text in
+        
+        input.keyBoardBtnTapped.withLatestFrom(input.searchText).subscribe(onNext: { [weak self] text in
             guard let self else {return}
-            
-            
+            searchUseCase.getResults(text: text).subscribe(onSuccess:{ [weak self] in
+                guard let self else {return}
+                searchedModels.accept($0)
+                output.resultModels.onNext($0)
+            }).disposed(by: disposeBag)
         }).disposed(by: disposeBag)
         
-        output.resultModels.onNext(<#T##element: ResultModel?##ResultModel?#>)
-     
+        input.tapIdx.subscribe(onNext: { [weak self] idx in
+            guard let self else {return}
+            let pickedValue = searchedModels.value[idx]
+            output.testingPickMarker.onNext(pickedValue)
+            // TODO: 화면전환 어떻게 할지 개선
+            coordinator?.showMapVC(pickedModel: pickedValue)
+        }).disposed(by: disposeBag)
+        
         return output
     }
     

@@ -7,23 +7,61 @@
 
 import Foundation
 import Alamofire
+import RxSwift
+
+// MARK: - SearchedModel
+struct SearchedDto: Codable {
+    let lastBuildDate: String
+    let total, start, display: Int
+    let items: [SearchedModel]
+    
+}
+
+// MARK: - Item
+struct SearchedModel: Codable {
+    var title: String
+    let link: String
+    let category, description, telephone, address: String
+    let roadAddress, mapx, mapy: String
+    
+}
+
+
+
 
 final class SearchRepo: SearchRepoP {
-    func searchNaverAPI(text: String) {
+    func searchNaverAPI(text: String) -> Single<[SearchedModel]> {
+        
+        return Single.create { single in
+            
             var coordinate = ","
             let header: HTTPHeaders = [
                 "X-Naver-Client-Id": "1S4rXZBd_uSc93aBmW6I",
                 "X-Naver-Client-Secret": "qTh3Hnm6CR",
             ]
-
-            var display = 10
-            let encodedSearchName = text.addingPercentEncoding( withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
-
-        AF.request ("https://openapi.naver.com/v1/search/local.json?query=\(String(describing: encodedSearchName))&display=\(display)", method: .get, encoding: URLEncoding.default, headers: header) .validate(statusCode: 200..<300).responseJSON { (response) -> Void in
-
-            print(response)
+            
+            let display = 10
+            
+            AF.request ("https://openapi.naver.com/v1/search/local.json?query=\(text)&display=\(display)", method: .get, encoding: URLEncoding.default, headers: header) .validate(statusCode: 200..<300).responseDecodable(of: SearchedDto.self) { response in
+                switch response.result {
+                case .success(let dto):
+                    
+                    let models = dto.items.map {
+                        SearchedModel(title: $0.title.replacingOccurrences(of: "<b>", with: "(").replacingOccurrences(of: "</b>", with: ")")
+                                      , link: $0.link, category: $0.category, description: $0.description, telephone: $0.telephone, address: $0.address, roadAddress: $0.roadAddress, mapx: $0.mapx, mapy: $0.mapy)
+                        
+                    }
+                    
+                    single(.success(models))
+                case .failure(let error):
+                    single(.failure(error))
+                }
             }
-
+            
+            return Disposables.create()
         }
+        
+        
+    }
     
 }
