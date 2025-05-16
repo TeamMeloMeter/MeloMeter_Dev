@@ -21,7 +21,9 @@ class MapVM {
         let viewWillAppear: Observable<Void>
         let dDayBtnTapEvent: Observable<Void>
         let alarmBtnTapEvent: Observable<Void>
+        let searchBtnTapEvent: Observable<Void>
         let endTriggerAlertTapEvent: Observable<Void>
+        
     }
     
     struct Output {
@@ -103,6 +105,12 @@ class MapVM {
                 self?.coordinator?.showAlarmFlow()
             }) 
             .disposed(by: disposeBag)
+        
+        input.searchBtnTapEvent.subscribe(onNext: { [weak self] _ in
+            guard let self else {return}
+            self.coordinator?.pushMapSearchVC()
+            
+        }).disposed(by: disposeBag)
         
         self.mainUseCase.authorizationStatus
             .map({ $0 == .halfallowed || $0 == .disallowed || $0 == .notDetermined})

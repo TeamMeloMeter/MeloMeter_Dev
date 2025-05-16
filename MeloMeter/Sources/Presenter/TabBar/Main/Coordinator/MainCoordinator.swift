@@ -55,6 +55,15 @@ extension MainCoordinator {
         dDayCoordinator.start()
     }
     
+    
+    //MARK: Push funcs
+    func pushMapSearchVC() {
+        let viewController = MapSearchVC()
+        self.navigationController.setNavigationBarHidden(true, animated: false)
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    
     func finish() {
         self.delegate?.didFinish(childCoordinator: self)
     }

@@ -165,6 +165,11 @@
 		60D913522D9C0AD60033EB95 /* AdmobRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D913512D9C0ACD0033EB95 /* AdmobRepository.swift */; };
 		60D913542D9C0AF60033EB95 /* AdmobRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D913532D9C0AEE0033EB95 /* AdmobRepositoryP.swift */; };
 		60E0EE002D9025F000E6E2A2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E0EDFF2D9025E800E6E2A2 /* Constants.swift */; };
+		60E5C7572DD7117C00635390 /* MapSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E5C7562DD7117900635390 /* MapSearchVC.swift */; };
+		60E5C7592DD71C2D00635390 /* MapSearchVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E5C7582DD71C2900635390 /* MapSearchVM.swift */; };
+		60E5C75C2DD7377700635390 /* SearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E5C75B2DD7377300635390 /* SearchUseCase.swift */; };
+		60E5C75E2DD7379900635390 /* SearchRepoP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E5C75D2DD7379800635390 /* SearchRepoP.swift */; };
+		60E5C7602DD737D100635390 /* SearchRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E5C75F2DD737CE00635390 /* SearchRepo.swift */; };
 		60E9F8172D98189B00201201 /* VersionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9F8162D98189200201201 /* VersionRepository.swift */; };
 		60F7DEB82DA5701100EB0279 /* UserDefaultsRepoP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F7DEB72DA5700800EB0279 /* UserDefaultsRepoP.swift */; };
 		60F7DEBA2DA5704100EB0279 /* UserDefaultsRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F7DEB92DA5703E00EB0279 /* UserDefaultsRepo.swift */; };
@@ -359,6 +364,11 @@
 		60D913532D9C0AEE0033EB95 /* AdmobRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdmobRepositoryP.swift; sourceTree = "<group>"; };
 		60E0EDFF2D9025E800E6E2A2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		60E0EE332D95724200E6E2A2 /* MeloMeterDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeloMeterDebug.entitlements; sourceTree = "<group>"; };
+		60E5C7562DD7117900635390 /* MapSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchVC.swift; sourceTree = "<group>"; };
+		60E5C7582DD71C2900635390 /* MapSearchVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchVM.swift; sourceTree = "<group>"; };
+		60E5C75B2DD7377300635390 /* SearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUseCase.swift; sourceTree = "<group>"; };
+		60E5C75D2DD7379800635390 /* SearchRepoP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepoP.swift; sourceTree = "<group>"; };
+		60E5C75F2DD737CE00635390 /* SearchRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepo.swift; sourceTree = "<group>"; };
 		60E9F8162D98189200201201 /* VersionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionRepository.swift; sourceTree = "<group>"; };
 		60F7DEB72DA5700800EB0279 /* UserDefaultsRepoP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRepoP.swift; sourceTree = "<group>"; };
 		60F7DEB92DA5703E00EB0279 /* UserDefaultsRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRepo.swift; sourceTree = "<group>"; };
@@ -613,8 +623,8 @@
 			isa = PBXGroup;
 			children = (
 				524138312A63208C002AADA6 /* Coordinator */,
-				52CE6EA62A02571E00E43D39 /* MapVC.swift */,
-				5290BFA72A70F35E00D734EE /* MapVM.swift */,
+				60E5C7552DD7116A00635390 /* Map */,
+				60E5C7542DD7114C00635390 /* MapSearch */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -802,6 +812,7 @@
 		5271D41D2A5886FB00FC7606 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				60E5C75F2DD737CE00635390 /* SearchRepo.swift */,
 				60453EA62DB8836C0053859F /* SharedDataRepo.swift */,
 				60F7DEB92DA5703E00EB0279 /* UserDefaultsRepo.swift */,
 				60D913512D9C0ACD0033EB95 /* AdmobRepository.swift */,
@@ -890,6 +901,7 @@
 		5290BFB22A7270B200D734EE /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				60E5C75D2DD7379800635390 /* SearchRepoP.swift */,
 				60453EA42DB882AC0053859F /* SharedDataRepoP.swift */,
 				60F7DEB72DA5700800EB0279 /* UserDefaultsRepoP.swift */,
 				60D913532D9C0AEE0033EB95 /* AdmobRepositoryP.swift */,
@@ -906,6 +918,7 @@
 		5290BFB52A72712800D734EE /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				60E5C75A2DD7376800635390 /* Search */,
 				210BAFC72AC896B80012B786 /* Alarm */,
 				210369082AA7728400A5EEB5 /* CalenderNoti */,
 				21C382202A87F7F9003638E1 /* Chat */,
@@ -1103,6 +1116,32 @@
 				52F7394C2A94058500D46FBB /* WriteAnswerVC.swift */,
 			);
 			path = Answer;
+			sourceTree = "<group>";
+		};
+		60E5C7542DD7114C00635390 /* MapSearch */ = {
+			isa = PBXGroup;
+			children = (
+				60E5C7562DD7117900635390 /* MapSearchVC.swift */,
+				60E5C7582DD71C2900635390 /* MapSearchVM.swift */,
+			);
+			path = MapSearch;
+			sourceTree = "<group>";
+		};
+		60E5C7552DD7116A00635390 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				52CE6EA62A02571E00E43D39 /* MapVC.swift */,
+				5290BFA72A70F35E00D734EE /* MapVM.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		60E5C75A2DD7376800635390 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				60E5C75B2DD7377300635390 /* SearchUseCase.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		E0A6B633DFC36A6F26FCC1E8 /* Frameworks */ = {
@@ -1421,6 +1460,7 @@
 				2103690A2AA772BA00A5EEB5 /* CalendarNotificationTriggerUseCase.swift in Sources */,
 				52B7EBCB2A8F2E79008F5F53 /* AccountsVM.swift in Sources */,
 				52AEAD052A93DA050097930E /* HundredQAVC.swift in Sources */,
+				60E5C7592DD71C2D00635390 /* MapSearchVM.swift in Sources */,
 				5271D4172A5841E500FC7606 /* FirebaseService.swift in Sources */,
 				52CE6EAD2A02C0B800E43D39 /* DdayTableViewCell.swift in Sources */,
 				214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */,
@@ -1445,6 +1485,7 @@
 				21C382242A87F85F003638E1 /* ChatDTO.swift in Sources */,
 				52CE6E8329FEBC0200E43D39 /* FontManager.swift in Sources */,
 				5271D40B2A544A2D00FC7606 /* LogInVM.swift in Sources */,
+				60E5C75C2DD7377700635390 /* SearchUseCase.swift in Sources */,
 				52AEAD002A93D6250097930E /* HundredQACoordinator.swift in Sources */,
 				52AEAD0A2A93EAB20097930E /* HundredQATableViewCell.swift in Sources */,
 				5230B2842A7D029200781623 /* MyProfileUseCase.swift in Sources */,
@@ -1455,6 +1496,7 @@
 				521D42102A89C2DF00E5CCDA /* ImageCacheManager.swift in Sources */,
 				521D42122A8A106700E5CCDA /* DdayCoordinator.swift in Sources */,
 				52AEAD032A93D9770097930E /* HundredQAVM.swift in Sources */,
+				60E5C75E2DD7379900635390 /* SearchRepoP.swift in Sources */,
 				2185C4D92A83F13B00F99795 /* ChatUserModel.swift in Sources */,
 				5230B27C2A77926A00781623 /* MainUseCase.swift in Sources */,
 				2185C4DC2A83F13B00F99795 /* DisplayChatVC.swift in Sources */,
@@ -1481,6 +1523,7 @@
 				60697AC82D2A5B4C00693990 /* CustomChatModel.swift in Sources */,
 				525694812AA2371F00821B20 /* ChatCustomCells.swift in Sources */,
 				52F0100B2A0A493C0014FC01 /* QnATableViewCell.swift in Sources */,
+				60E5C7602DD737D100635390 /* SearchRepo.swift in Sources */,
 				5290BFB42A7270DF00D734EE /* LogInRepositoryP.swift in Sources */,
 				52F305362A16B7F500112A04 /* RecoveryVC.swift in Sources */,
 				52CE6EA72A02571E00E43D39 /* MapVC.swift in Sources */,
@@ -1492,6 +1535,7 @@
 				210BAFC42AC88B610012B786 /* AlarmModel.swift in Sources */,
 				5256947D2A97608200821B20 /* PushNotificationService.swift in Sources */,
 				5271D42E2A604BF400FC7606 /* Date+.swift in Sources */,
+				60E5C7572DD7117C00635390 /* MapSearchVC.swift in Sources */,
 				521D42152A8A6E7300E5CCDA /* NoticeVM.swift in Sources */,
 				60D913522D9C0AD60033EB95 /* AdmobRepository.swift in Sources */,
 				52F010082A097D120014FC01 /* AlarmTableViewCell.swift in Sources */,

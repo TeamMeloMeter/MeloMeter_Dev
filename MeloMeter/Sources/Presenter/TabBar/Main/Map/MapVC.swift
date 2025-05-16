@@ -58,8 +58,10 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             alarmBtnTapEvent: self.alarmButton.rx.tap
                 .map({ _ in })
                 .asObservable(),
+            searchBtnTapEvent: self.searchBtn.rx.tap.map ({ _ in }).asObservable(),
             endTriggerAlertTapEvent: self.endTriggerAlertEvent
                 .asObserver()
+            
         )
             
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else { return }
@@ -212,7 +214,8 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         [naverMapView,
          currentLocationButton,
          dDayButton,
-         alarmButton].forEach { view.addSubview($0) }
+         alarmButton,
+         searchBtn].forEach { view.addSubview($0) }
         view.sendSubviewToBack(naverMapView)
     }
     
@@ -444,6 +447,14 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         return button
     }()
     
+    let searchBtn = UIButton().then { button in
+        button.setImage(UIImage(systemName: "search"), for: .normal)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 24
+        button.layer.applyShadow(color: #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1), alpha: 0.25, x: 3, y: 3, blur: 8)
+        button.layer.masksToBounds = false
+    }
+    
     //MARK: adMob
     private func addBannerViewToView(bannerView: BannerView?) {
         guard let bannerView else {return}
@@ -539,6 +550,13 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
          
                         
         ])
+        
+        
+        searchBtn.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(16)
+            $0.top.equalToSuperview().inset(60)
+            $0.width.height.equalTo(48)
+        }
     }
     
 }
