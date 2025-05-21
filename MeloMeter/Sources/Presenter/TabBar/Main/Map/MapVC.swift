@@ -154,20 +154,20 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         output.currentLocation
             .asDriver(onErrorJustReturn: CLLocation(latitude: 0, longitude: 0))
             .drive(onNext: { [weak self] current in
-
-                self?.updateMyMarker(current ?? CLLocation(latitude: 0, longitude: 0))
+                guard let self else {return}
+                self.updateMyMarker(current ?? CLLocation(latitude: 0, longitude: 0))
             })
             .disposed(by: disposeBag)
         
-        output.currentLocation
-            .take(1)
-            .asDriver(onErrorJustReturn: CLLocation(latitude: 37.541, longitude: 126.986))
-            .drive(onNext: { [weak self] current in
-
-                self?.updateCamera(current ?? CLLocation(latitude: 0, longitude: 0))
-            })
-            .disposed(by: disposeBag)
-        
+//        output.currentLocation
+//            .take(1)
+//            .asDriver(onErrorJustReturn: CLLocation(latitude: 37.541, longitude: 126.986))
+//            .drive(onNext: { [weak self] current in
+//
+//                self?.updateCamera(current ?? CLLocation(latitude: 0, longitude: 0))
+//            })
+//            .disposed(by: disposeBag)
+//        
         output.currentOtherLocation
             .asDriver(onErrorJustReturn: CLLocation(latitude: 0, longitude: 0))
             .drive(onNext: { [weak self] current in
@@ -192,6 +192,8 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             .disposed(by: disposeBag)
         
         output.pickerLocations.bind(onNext: self.setPlaceMarkers).disposed(by: disposeBag)
+        
+        output.cameraUpdate.bind(onNext: self.updateCamera).disposed(by: disposeBag)
     }
 
     // MARK: Map
@@ -301,12 +303,9 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     
     func setPlaceMarkers(models: [SearchedModel]) {
         models.forEach {
-            let lng = Double($0.mapx)! / 1e7
-            let lat = Double($0.mapy)! / 1e7
-            
-
+           
             let marker = NMFMarker()
-            marker.position = NMGLatLng(lat: lat, lng: lng)
+            marker.position = NMGLatLng(lat: $0.mapy, lng: $0.mapx)
             marker.captionText = $0.title
             marker.mapView = self.naverMapView
         

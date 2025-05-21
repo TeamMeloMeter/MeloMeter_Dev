@@ -39,6 +39,7 @@ class MapVM {
         var endTrigger = PublishSubject<Bool>()
         var getBottomBannerAd = BehaviorSubject<BannerView?>(value: nil)
         var pickerLocations = PublishSubject<[SearchedModel]>()
+        var cameraUpdate = PublishSubject<CLLocation>()
     }
     
     
@@ -130,6 +131,11 @@ class MapVM {
                 
                 if let location = location {
                     output.currentLocation.onNext(location)
+                    if let pickedModel {
+                        output.cameraUpdate.onNext(CLLocation(latitude: pickedModel.mapy, longitude: pickedModel.mapx))
+                    } else {
+                        output.cameraUpdate.onNext(location)
+                    }
        
                 } else {
                     coordinator?.finish()

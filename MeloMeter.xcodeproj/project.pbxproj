@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -153,6 +153,7 @@
 		52F739552A94E6DB00D46FBB /* HundredQAModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F739542A94E6DB00D46FBB /* HundredQAModel.swift */; };
 		52F739572A94E71500D46FBB /* HundredQADTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F739562A94E71500D46FBB /* HundredQADTO.swift */; };
 		5E96546393FD50C9C5E5E5EF /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A9432E8BBDB9FBE10412467 /* Pods_MeloMeter.framework */; };
+		603F49362DDD9CE400B89E6A /* MapSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F49352DDD9CE400B89E6A /* MapSearchCell.swift */; };
 		60453EA52DB882B40053859F /* SharedDataRepoP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60453EA42DB882AC0053859F /* SharedDataRepoP.swift */; };
 		60453EA72DB883770053859F /* SharedDataRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60453EA62DB8836C0053859F /* SharedDataRepo.swift */; };
 		60697AC82D2A5B4C00693990 /* CustomChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60697AC72D2A5B4600693990 /* CustomChatModel.swift */; };
@@ -350,6 +351,7 @@
 		52F739522A94DE7800D46FBB /* HundredQARepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQARepositoryP.swift; sourceTree = "<group>"; };
 		52F739542A94E6DB00D46FBB /* HundredQAModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQAModel.swift; sourceTree = "<group>"; };
 		52F739562A94E71500D46FBB /* HundredQADTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQADTO.swift; sourceTree = "<group>"; };
+		603F49352DDD9CE400B89E6A /* MapSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchCell.swift; sourceTree = "<group>"; };
 		60453EA42DB882AC0053859F /* SharedDataRepoP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataRepoP.swift; sourceTree = "<group>"; };
 		60453EA62DB8836C0053859F /* SharedDataRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataRepo.swift; sourceTree = "<group>"; };
 		60453EAC2DB8A1A30053859F /* MelometerWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MelometerWidgetExtension.entitlements; sourceTree = "<group>"; };
@@ -378,7 +380,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		6084BCAB2DB76110005F9B2C /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		6084BCAB2DB76110005F9B2C /* Exceptions for "MelometerWidget" folder in "MelometerWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -388,7 +390,14 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		6084BC9D2DB7610F005F9B2C /* MelometerWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (6084BCAB2DB76110005F9B2C /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = MelometerWidget; sourceTree = "<group>"; };
+		6084BC9D2DB7610F005F9B2C /* MelometerWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				6084BCAB2DB76110005F9B2C /* Exceptions for "MelometerWidget" folder in "MelometerWidgetExtension" target */,
+			);
+			path = MelometerWidget;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1123,6 +1132,7 @@
 			children = (
 				60E5C7562DD7117900635390 /* MapSearchVC.swift */,
 				60E5C7582DD71C2900635390 /* MapSearchVM.swift */,
+				603F49352DDD9CE400B89E6A /* MapSearchCell.swift */,
 			);
 			path = MapSearch;
 			sourceTree = "<group>";
@@ -1270,7 +1280,6 @@
 				};
 			};
 			buildConfigurationList = 52697B6A29EEB7B2002BDD04 /* Build configuration list for PBXProject "MeloMeter" */;
-			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -1282,6 +1291,7 @@
 				B61B0F4929F7A44700E25EEF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				2185C4DF2A83F31900F99795 /* XCRemoteSwiftPackageReference "MessageKit" */,
 			);
+			preferredProjectObjectVersion = 77;
 			productRefGroup = 52697B7029EEB7B2002BDD04 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1457,6 +1467,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				60E9F8172D98189B00201201 /* VersionRepository.swift in Sources */,
+				603F49362DDD9CE400B89E6A /* MapSearchCell.swift in Sources */,
 				2103690A2AA772BA00A5EEB5 /* CalendarNotificationTriggerUseCase.swift in Sources */,
 				52B7EBCB2A8F2E79008F5F53 /* AccountsVM.swift in Sources */,
 				52AEAD052A93DA050097930E /* HundredQAVC.swift in Sources */,

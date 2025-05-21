@@ -13,16 +13,24 @@ import RxSwift
 struct SearchedDto: Codable {
     let lastBuildDate: String
     let total, start, display: Int
-    let items: [SearchedModel]
+    let items: [SearchedItem]
     
 }
 
 // MARK: - Item
-struct SearchedModel: Codable {
+struct SearchedItem: Codable {
     var title: String
     let link: String
     let category, description, telephone, address: String
     let roadAddress, mapx, mapy: String
+    
+}
+struct SearchedModel {
+    var title: String
+    let link: String
+    let category, description, telephone, address: String
+    let roadAddress: String
+    let mapx, mapy: Double
     
 }
 
@@ -47,8 +55,8 @@ final class SearchRepo: SearchRepoP {
                 case .success(let dto):
                     
                     let models = dto.items.map {
-                        SearchedModel(title: $0.title.replacingOccurrences(of: "<b>", with: "(").replacingOccurrences(of: "</b>", with: ")")
-                                      , link: $0.link, category: $0.category, description: $0.description, telephone: $0.telephone, address: $0.address, roadAddress: $0.roadAddress, mapx: $0.mapx, mapy: $0.mapy)
+                        SearchedModel(title: $0.title.replacingOccurrences(of: "<b>", with: "").replacingOccurrences(of: "</b>", with: "-")
+                                      , link: $0.link, category: $0.category, description: $0.description, telephone: $0.telephone, address: $0.address, roadAddress: $0.roadAddress, mapx: Double($0.mapx)! / 1e7, mapy: Double($0.mapy)! / 1e7 )
                         
                     }
                     

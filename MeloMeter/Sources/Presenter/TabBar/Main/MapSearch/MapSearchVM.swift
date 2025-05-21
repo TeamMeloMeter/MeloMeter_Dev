@@ -27,6 +27,7 @@ class MapSearchVM {
         let searchText: Observable<String>
         let keyBoardBtnTapped: Observable<Void>
         let tapIdx: Observable<Int>
+        let backBtnTapped: Observable<UITapGestureRecognizer>
     }
     
     struct Output {
@@ -44,6 +45,13 @@ class MapSearchVM {
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output()
+        
+        input.backBtnTapped.subscribe(onNext: { [weak self] _ in
+            guard let self else {return}
+            coordinator?.popViewController()
+            
+            
+        }).disposed(by: disposeBag)
         
         input.keyBoardBtnTapped.withLatestFrom(input.searchText).subscribe(onNext: { [weak self] text in
             guard let self else {return}

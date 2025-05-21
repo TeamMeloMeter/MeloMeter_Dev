@@ -12,7 +12,7 @@ import RxSwift
 import CoreLocation
 import GoogleMobileAds
 
-//메인 지도 화면
+//장소 검색 화면
 class MapSearchVC: UIViewController, UIGestureRecognizerDelegate {
     
     private var disposeBag = DisposeBag()
@@ -33,9 +33,9 @@ class MapSearchVC: UIViewController, UIGestureRecognizerDelegate {
     let tableView = UITableView()
     
     let topSearchView = UIView().then {
-        $0.layer.borderColor = UIColor.lightGray.cgColor
+        $0.layer.borderColor = UIColor.gray4.cgColor
         $0.layer.borderWidth = 1
-        $0.layer.cornerRadius = 12
+        $0.layer.cornerRadius = 5
     }
     
     let searchBar = UISearchBar().then {
@@ -51,6 +51,8 @@ class MapSearchVC: UIViewController, UIGestureRecognizerDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+
         setBindings()
         setSearchView()
         setAutoLayout()
@@ -65,7 +67,7 @@ class MapSearchVC: UIViewController, UIGestureRecognizerDelegate {
         topSearchView.addSubview(backIconView)
         
         topSearchView.snp.makeConstraints {
-            $0.height.equalTo(46)
+            $0.height.equalTo(50)
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.top.equalTo(view.safeAreaLayoutGuide)
         }
@@ -94,20 +96,20 @@ class MapSearchVC: UIViewController, UIGestureRecognizerDelegate {
     
     func setBindings() {
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(MapSearchCell.self, forCellReuseIdentifier: "MapSearchCell")
         tableView.rx.itemSelected.map { $0.row }.bind(to: tapIdx).disposed(by: disposeBag)
 
         
         let input = MapSearchVM.Input(viewWillAppear: self.rx.methodInvoked(#selector(viewWillAppear)).map({ _ in }).asObservable(), searchText: self.searchBar.rx.text.orEmpty.asObservable(), keyBoardBtnTapped:         searchBar.rx.searchButtonClicked.map{ [weak self] _ in
-            guard let self else {return}; self.searchBar.resignFirstResponder() }.asObservable(), tapIdx: tapIdx)
+            guard let self else {return}; self.searchBar.resignFirstResponder() }.asObservable(), tapIdx: tapIdx, backBtnTapped: self.backIconView.rx.tapGesture().when(.recognized).asObservable())
         
         
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
         
         output.resultModels
             .compactMap { $0 }
-            .bind(to: tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { row, model, cell in
-                cell.textLabel?.text = model.title
+            .bind(to: tableView.rx.items(cellIdentifier: "MapSearchCell", cellType: MapSearchCell.self)) { row, model, cell in
+                cell.configure(with: model.title)
             }
             .disposed(by: disposeBag)
         
