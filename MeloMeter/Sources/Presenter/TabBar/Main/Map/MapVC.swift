@@ -194,6 +194,8 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         output.pickerLocations.bind(onNext: self.setPlaceMarkers).disposed(by: disposeBag)
         
         output.cameraUpdate.bind(onNext: self.updateCamera).disposed(by: disposeBag)
+        
+        output.setUpBottomSheet.bind(onNext: self.setupSheet).disposed(by: disposeBag)
     }
 
     // MARK: Map
@@ -589,4 +591,45 @@ class CustomInfoViewDataSource: NSObject, NMFOverlayImageDataSource {
         self.customView = customView
     }
     
+}
+
+extension MapVC: UISheetPresentationControllerDelegate {
+    private func setupSheet(pickedModel: SearchedModel) {
+        
+        let bottomSheetVC = BottomSheetVC()
+        
+        bottomSheetVC.configure(pickedModel: pickedModel)
+        
+        bottomSheetVC.modalPresentationStyle = .pageSheet
+        
+        bottomSheetVC.isModalInPresentation = true
+        
+        if let sheet = bottomSheetVC.sheetPresentationController {
+            
+            sheet.delegate = self
+            
+            if #available(iOS 16.0, *) {
+                let customDetent = UISheetPresentationController.Detent.custom(identifier: .init("custom"), resolver: { _ in
+                    
+                    return 150
+                })
+                sheet.largestUndimmedDetentIdentifier = .some(.init("custom"))
+                
+                // 드래그를 멈추면 그 위치에 멈추는 지점: default는 large()
+                sheet.detents = [customDetent]
+                
+                // sheet로 present된 viewController내부를 scroll하면 sheet가 움직이지 않고 내부 컨텐츠를 스크롤되도록 설정
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+                // grabber바 보이도록 설정
+                sheet.prefersGrabberVisible = true
+                // corner 값 설정
+                 sheet.preferredCornerRadius = 16
+            } else {
+                // Fallback on earlier versions
+            }
+          
+        }
+        self.navigationController?.present(bottomSheetVC, animated: false, completion: nil)
+        
+    }
 }

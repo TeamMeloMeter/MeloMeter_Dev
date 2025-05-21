@@ -40,6 +40,7 @@ class MapVM {
         var getBottomBannerAd = BehaviorSubject<BannerView?>(value: nil)
         var pickerLocations = PublishSubject<[SearchedModel]>()
         var cameraUpdate = PublishSubject<CLLocation>()
+        var setUpBottomSheet = PublishSubject<SearchedModel>()
     }
     
     
@@ -58,7 +59,9 @@ class MapVM {
                     guard let self else {return}
                     
                     if let pickedModel {
+                        //TODO: 추후 이미 생성된 데이터 마커
                         output.pickerLocations.onNext([pickedModel])
+                        output.setUpBottomSheet.onNext(pickedModel)
                     }
                     
                     output.getBottomBannerAd.onNext(mainUseCase.getBottomBannerAd())

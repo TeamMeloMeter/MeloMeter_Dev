@@ -30,6 +30,11 @@ class MapSearchVC: UIViewController, UIGestureRecognizerDelegate {
     
     private let viewModel: MapSearchVM
     
+    private let rescentLabel = UILabel().then {
+        $0.text = "최근 검색"
+        $0.font = FontManager.shared.semiBold(ofSize: 16)
+    }
+    
     let tableView = UITableView()
     
     let topSearchView = UIView().then {

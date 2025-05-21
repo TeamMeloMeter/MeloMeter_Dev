@@ -55,7 +55,7 @@ final class SearchRepo: SearchRepoP {
                 case .success(let dto):
                     
                     let models = dto.items.map {
-                        SearchedModel(title: $0.title.replacingOccurrences(of: "<b>", with: "").replacingOccurrences(of: "</b>", with: "-")
+                        SearchedModel(title: $0.title.replacingOccurrences(of: "<b>", with: "").replacingOccurrences(of: "</b>", with: "")
                                       , link: $0.link, category: $0.category, description: $0.description, telephone: $0.telephone, address: $0.address, roadAddress: $0.roadAddress, mapx: Double($0.mapx)! / 1e7, mapy: Double($0.mapy)! / 1e7 )
                         
                     }

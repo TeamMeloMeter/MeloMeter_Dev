@@ -154,6 +154,7 @@
 		52F739572A94E71500D46FBB /* HundredQADTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F739562A94E71500D46FBB /* HundredQADTO.swift */; };
 		5E96546393FD50C9C5E5E5EF /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A9432E8BBDB9FBE10412467 /* Pods_MeloMeter.framework */; };
 		603F49362DDD9CE400B89E6A /* MapSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F49352DDD9CE400B89E6A /* MapSearchCell.swift */; };
+		603F49382DDDABA600B89E6A /* BottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F49372DDDAB9B00B89E6A /* BottomSheetVC.swift */; };
 		60453EA52DB882B40053859F /* SharedDataRepoP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60453EA42DB882AC0053859F /* SharedDataRepoP.swift */; };
 		60453EA72DB883770053859F /* SharedDataRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60453EA62DB8836C0053859F /* SharedDataRepo.swift */; };
 		60697AC82D2A5B4C00693990 /* CustomChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60697AC72D2A5B4600693990 /* CustomChatModel.swift */; };
@@ -352,6 +353,7 @@
 		52F739542A94E6DB00D46FBB /* HundredQAModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQAModel.swift; sourceTree = "<group>"; };
 		52F739562A94E71500D46FBB /* HundredQADTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQADTO.swift; sourceTree = "<group>"; };
 		603F49352DDD9CE400B89E6A /* MapSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchCell.swift; sourceTree = "<group>"; };
+		603F49372DDDAB9B00B89E6A /* BottomSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetVC.swift; sourceTree = "<group>"; };
 		60453EA42DB882AC0053859F /* SharedDataRepoP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataRepoP.swift; sourceTree = "<group>"; };
 		60453EA62DB8836C0053859F /* SharedDataRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataRepo.swift; sourceTree = "<group>"; };
 		60453EAC2DB8A1A30053859F /* MelometerWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MelometerWidgetExtension.entitlements; sourceTree = "<group>"; };
@@ -1140,6 +1142,7 @@
 		60E5C7552DD7116A00635390 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				603F49372DDDAB9B00B89E6A /* BottomSheetVC.swift */,
 				52CE6EA62A02571E00E43D39 /* MapVC.swift */,
 				5290BFA72A70F35E00D734EE /* MapVM.swift */,
 			);
@@ -1575,6 +1578,7 @@
 				5290BFAA2A70F3B700D734EE /* TabBarCoordinator.swift in Sources */,
 				52F3053A2A16BF4700112A04 /* WithdrawalVC.swift in Sources */,
 				5271D42C2A60484300FC7606 /* LogInDTO.swift in Sources */,
+				603F49382DDDABA600B89E6A /* BottomSheetVC.swift in Sources */,
 				5262BB782A8C809A003EB016 /* SplashVC.swift in Sources */,
 				52F010242A0B77ED0014FC01 /* EditBirthVC.swift in Sources */,
 				210BAFC02AC88AEA0012B786 /* AlarmRepository.swift in Sources */,
