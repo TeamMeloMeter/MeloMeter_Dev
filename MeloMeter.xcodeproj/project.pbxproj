@@ -155,6 +155,7 @@
 		5E96546393FD50C9C5E5E5EF /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A9432E8BBDB9FBE10412467 /* Pods_MeloMeter.framework */; };
 		603F49362DDD9CE400B89E6A /* MapSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F49352DDD9CE400B89E6A /* MapSearchCell.swift */; };
 		603F49382DDDABA600B89E6A /* BottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F49372DDDAB9B00B89E6A /* BottomSheetVC.swift */; };
+		603F49FD2DE06AA300B89E6A /* Reactive+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F49FC2DE06AA300B89E6A /* Reactive+.swift */; };
 		60453EA52DB882B40053859F /* SharedDataRepoP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60453EA42DB882AC0053859F /* SharedDataRepoP.swift */; };
 		60453EA72DB883770053859F /* SharedDataRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60453EA62DB8836C0053859F /* SharedDataRepo.swift */; };
 		60697AC82D2A5B4C00693990 /* CustomChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60697AC72D2A5B4600693990 /* CustomChatModel.swift */; };
@@ -354,6 +355,7 @@
 		52F739562A94E71500D46FBB /* HundredQADTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQADTO.swift; sourceTree = "<group>"; };
 		603F49352DDD9CE400B89E6A /* MapSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchCell.swift; sourceTree = "<group>"; };
 		603F49372DDDAB9B00B89E6A /* BottomSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetVC.swift; sourceTree = "<group>"; };
+		603F49FC2DE06AA300B89E6A /* Reactive+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+.swift"; sourceTree = "<group>"; };
 		60453EA42DB882AC0053859F /* SharedDataRepoP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataRepoP.swift; sourceTree = "<group>"; };
 		60453EA62DB8836C0053859F /* SharedDataRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataRepo.swift; sourceTree = "<group>"; };
 		60453EAC2DB8A1A30053859F /* MelometerWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MelometerWidgetExtension.entitlements; sourceTree = "<group>"; };
@@ -862,6 +864,7 @@
 		5271D4282A5FCFEF00FC7606 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				603F49FC2DE06AA300B89E6A /* Reactive+.swift */,
 				60D067752DA2AB2C00CFD06C /* UIImage+.swift */,
 				60E0EDFF2D9025E800E6E2A2 /* Constants.swift */,
 				527547EC2A68FB5600313EFC /* Alert */,
@@ -1491,6 +1494,7 @@
 				524138302A62F943002AADA6 /* StartVM.swift in Sources */,
 				60453EA72DB883770053859F /* SharedDataRepo.swift in Sources */,
 				527547F42A6D23E400313EFC /* KakaoService.swift in Sources */,
+				603F49FD2DE06AA300B89E6A /* Reactive+.swift in Sources */,
 				52F305302A168CE900112A04 /* DisconnectVC.swift in Sources */,
 				521D41EC2A801D1200E5CCDA /* CoupleModel.swift in Sources */,
 				2108F04B2A702A77002EED7A /* PermissionVM.swift in Sources */,
