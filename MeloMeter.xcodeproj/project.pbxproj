@@ -163,6 +163,7 @@
 		6084BC9C2DB7610F005F9B2C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6084BC9B2DB7610F005F9B2C /* SwiftUI.framework */; };
 		6084BCA72DB76110005F9B2C /* MelometerWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6084BC982DB7610F005F9B2C /* MelometerWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6097C9F52D538C0600895B63 /* Label+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6097C9F42D538C0100895B63 /* Label+.swift */; };
+		6099008A2DE45C0E00A43CC5 /* RxNMFMapViewTouchDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609900892DE45BFF00A43CC5 /* RxNMFMapViewTouchDelegateProxy.swift */; };
 		60A351962D119EB000BB1A6F /* WidgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A351952D119EA800BB1A6F /* WidgetService.swift */; };
 		60D067762DA2AB3200CFD06C /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D067752DA2AB2C00CFD06C /* UIImage+.swift */; };
 		60D913522D9C0AD60033EB95 /* AdmobRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D913512D9C0ACD0033EB95 /* AdmobRepository.swift */; };
@@ -364,6 +365,7 @@
 		6084BC992DB7610F005F9B2C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		6084BC9B2DB7610F005F9B2C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		6097C9F42D538C0100895B63 /* Label+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Label+.swift"; sourceTree = "<group>"; };
+		609900892DE45BFF00A43CC5 /* RxNMFMapViewTouchDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxNMFMapViewTouchDelegateProxy.swift; sourceTree = "<group>"; };
 		60A351952D119EA800BB1A6F /* WidgetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetService.swift; sourceTree = "<group>"; };
 		60D067752DA2AB2C00CFD06C /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		60D913512D9C0ACD0033EB95 /* AdmobRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdmobRepository.swift; sourceTree = "<group>"; };
@@ -864,7 +866,7 @@
 		5271D4282A5FCFEF00FC7606 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				603F49FC2DE06AA300B89E6A /* Reactive+.swift */,
+				609900882DE45BF600A43CC5 /* Rx */,
 				60D067752DA2AB2C00CFD06C /* UIImage+.swift */,
 				60E0EDFF2D9025E800E6E2A2 /* Constants.swift */,
 				527547EC2A68FB5600313EFC /* Alert */,
@@ -1130,6 +1132,15 @@
 				52F7394C2A94058500D46FBB /* WriteAnswerVC.swift */,
 			);
 			path = Answer;
+			sourceTree = "<group>";
+		};
+		609900882DE45BF600A43CC5 /* Rx */ = {
+			isa = PBXGroup;
+			children = (
+				609900892DE45BFF00A43CC5 /* RxNMFMapViewTouchDelegateProxy.swift */,
+				603F49FC2DE06AA300B89E6A /* Reactive+.swift */,
+			);
+			path = Rx;
 			sourceTree = "<group>";
 		};
 		60E5C7542DD7114C00635390 /* MapSearch */ = {
@@ -1521,6 +1532,7 @@
 				5271D4112A5580F200FC7606 /* Permission2VC.swift in Sources */,
 				5271D41C2A58435A00FC7606 /* DefaultFirebaseService.swift in Sources */,
 				52F0100F2A0A55470014FC01 /* DetailQnAVC.swift in Sources */,
+				6099008A2DE45C0E00A43CC5 /* RxNMFMapViewTouchDelegateProxy.swift in Sources */,
 				5271D41F2A5887E500FC7606 /* LogInRepository.swift in Sources */,
 				60D067762DA2AB3200CFD06C /* UIImage+.swift in Sources */,
 				21C3821D2A87F778003638E1 /* ChatRepositoryP.swift in Sources */,
@@ -1803,7 +1815,7 @@
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1849,7 +1861,7 @@
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

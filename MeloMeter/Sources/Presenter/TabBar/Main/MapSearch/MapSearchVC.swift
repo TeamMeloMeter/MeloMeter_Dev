@@ -15,7 +15,7 @@ import GoogleMobileAds
 //장소 검색 화면
 class MapSearchVC: UIViewController, UIGestureRecognizerDelegate {
     
-    private var disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     private var tapIdx = PublishSubject<Int>()
     
@@ -103,9 +103,8 @@ class MapSearchVC: UIViewController, UIGestureRecognizerDelegate {
         
         tableView.register(MapSearchCell.self, forCellReuseIdentifier: "MapSearchCell")
         tableView.rx.itemSelected.map { $0.row }.bind(to: tapIdx).disposed(by: disposeBag)
-
         
-        let input = MapSearchVM.Input(viewWillAppear: self.rx.methodInvoked(#selector(viewWillAppear)).map({ _ in }).asObservable(), searchText: self.searchBar.rx.text.orEmpty.asObservable(), keyBoardBtnTapped:         searchBar.rx.searchButtonClicked.map{ [weak self] _ in
+        let input = MapSearchVM.Input(viewWillAppear: self.rx.methodInvoked(#selector(viewWillAppear)).map({ _ in }).asObservable(),searchText: self.searchBar.rx.text.orEmpty.asObservable(), keyBoardBtnTapped:         searchBar.rx.searchButtonClicked.map{ [weak self] _ in
             guard let self else {return}; self.searchBar.resignFirstResponder() }.asObservable(), tapIdx: tapIdx, backBtnTapped: self.backIconView.rx.tapGesture().when(.recognized).asObservable())
         
         
@@ -117,14 +116,6 @@ class MapSearchVC: UIViewController, UIGestureRecognizerDelegate {
                 cell.configure(with: model.title)
             }
             .disposed(by: disposeBag)
-        
-        output.testingPickMarker.subscribe(onNext: { picked in
-            
-            
-            
-        }).disposed(by: disposeBag)
-        
-        
         
     }
     

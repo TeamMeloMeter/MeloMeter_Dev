@@ -14,5 +14,3 @@ extension Reactive where Base: UITextField {
         return  self.text.orEmpty
     }
 }
-
-

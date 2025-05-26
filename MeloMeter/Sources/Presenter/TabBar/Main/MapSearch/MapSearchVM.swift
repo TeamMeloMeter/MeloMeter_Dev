@@ -19,8 +19,8 @@ struct ResultModel {
 class MapSearchVM {
     weak var coordinator: MainCoordinator?
     private var searchUseCase: SearchUseCase
-    
     private let searchedModels = BehaviorRelay<[SearchedModel]>(value: [])
+    var onLocationSelected = PublishSubject<SearchedModel>()
     
     struct Input {
         let viewWillAppear: Observable<Void>
@@ -32,9 +32,7 @@ class MapSearchVM {
     
     struct Output {
         let resultModels = BehaviorSubject<[SearchedModel]>(value: [])
-        
-        //TODO: 이후에 탭 시 push 할지 pop 해서 처리할지 로직 개선 해야함.
-        let testingPickMarker = BehaviorSubject<SearchedModel?>(value: nil)
+    
     }
     
     
@@ -53,21 +51,18 @@ class MapSearchVM {
             
         }).disposed(by: disposeBag)
         
-        input.keyBoardBtnTapped.withLatestFrom(input.searchText).subscribe(onNext: { [weak self] text in
+        input.keyBoardBtnTapped.withLatestFrom(input.searchText).flatMap({ text in
+            self.searchUseCase.getResults(text: text)
+        }).subscribe(onNext: { [weak self] in
             guard let self else {return}
-            searchUseCase.getResults(text: text).subscribe(onSuccess:{ [weak self] in
-                guard let self else {return}
-                searchedModels.accept($0)
-                output.resultModels.onNext($0)
-            }).disposed(by: disposeBag)
+            self.searchedModels.accept($0)
+            output.resultModels.onNext($0)
         }).disposed(by: disposeBag)
         
         input.tapIdx.subscribe(onNext: { [weak self] idx in
             guard let self else {return}
-            let pickedValue = searchedModels.value[idx]
-            output.testingPickMarker.onNext(pickedValue)
-            // TODO: 화면전환 어떻게 할지 개선
-            coordinator?.showMapVC(pickedModel: pickedValue)
+            onLocationSelected.onNext(searchedModels.value[idx])
+            self.coordinator?.navigationController.popViewController(animated: true)
         }).disposed(by: disposeBag)
         
         return output

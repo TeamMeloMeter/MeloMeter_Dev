@@ -16,6 +16,10 @@ final class MainCoordinator: Coordinator {
     private let adMobRepo = AdmobRepository()
     private let sharedDataRepo: SharedDataRepoP
     
+    private var mapSearchVM: MapSearchVM?
+    private var mapVM: MapVM?
+    private var bottomSheet: BottomSheetVC?
+    
     init(_ navigationController: UINavigationController, sharedDataRepo: SharedDataRepoP) {
         self.navigationController = navigationController
         self.childCoordinators = []
@@ -31,11 +35,13 @@ final class MainCoordinator: Coordinator {
 extension MainCoordinator {
     
     func showMapVC(pickedModel: SearchedModel?) {
+        
         let firebaseService = self.firebaseService
-        let viewController = MapVC(viewModel: MapVM(
+        let vm = MapVM(
             coordinator: self,
-            mainUseCase: MainUseCase(firebaseService: firebaseService, adMobRepo: self.adMobRepo, sharedDataRepo: self.sharedDataRepo), pickedModel: pickedModel
-        )
+            mainUseCase: MainUseCase(firebaseService: firebaseService, adMobRepo: self.adMobRepo, sharedDataRepo: self.sharedDataRepo))
+        self.mapVM = vm
+        let viewController = MapVC(viewModel: vm
         )
         self.navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
@@ -58,15 +64,48 @@ extension MainCoordinator {
     
     //MARK: Push funcs
     func pushMapSearchVC() {
-        let viewController = MapSearchVC(viewModel: MapSearchVM(coordinator: self, searchUseCase: SearchUseCase(searchRepo: SearchRepo())))
+        let vm = MapSearchVM(coordinator: self, searchUseCase: SearchUseCase(searchRepo: SearchRepo()))
+        let viewController = MapSearchVC(viewModel: vm)
+        vm.onLocationSelected.bind(to: self.mapVM!.pickedModel).disposed(by: viewController.disposeBag)
         self.navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
     
+    func setupSheet(pickedModel: SearchedModel) {
+        let bottomSheetVC = BottomSheetVC(viewModel: mapVM!)
+        bottomSheetVC.configure(pickedModel: pickedModel)
+        bottomSheetVC.modalPresentationStyle = .pageSheet
+        bottomSheetVC.isModalInPresentation = true
+        if let sheet = bottomSheetVC.sheetPresentationController {
+            if #available(iOS 16.0, *) {
+                let customDetent = UISheetPresentationController.Detent.custom(identifier: .init("custom"), resolver: { _ in
+                    
+                    return 150
+                })
+                sheet.largestUndimmedDetentIdentifier = .some(.init("custom"))
+                // 드래그를 멈추면 그 위치에 멈추는 지점: default는 large()
+                sheet.detents = [customDetent]
+                // sheet로 present된 viewController내부를 scroll하면 sheet가 움직이지 않고 내부 컨텐츠를 스크롤되도록 설정
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+                // grabber바 보이도록 설정
+                sheet.prefersGrabberVisible = true
+                // corner 값 설정
+                 sheet.preferredCornerRadius = 16
+            } else {
+                // Fallback on earlier versions
+            }
+          
+        }
+        self.navigationController.present(bottomSheetVC, animated: false, completion: nil)
+        
+    }
+    
     func finish() {
         self.delegate?.didFinish(childCoordinator: self)
     }
+    
+
 }
 
 extension MainCoordinator: CoordinatorDelegate {

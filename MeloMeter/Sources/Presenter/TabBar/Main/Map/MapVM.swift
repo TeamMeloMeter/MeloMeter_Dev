@@ -11,12 +11,60 @@ import RxRelay
 import CoreLocation
 import RxCocoa
 import GoogleMobileAds
-
 class MapVM {
 
     weak var coordinator: MainCoordinator?
     private var mainUseCase: MainUseCase
-    private var pickedModel: SearchedModel?
+    var pickedModel = BehaviorRelay<SearchedModel?>(value: nil)
+
+    func dissmissBottomSheet() {
+        coordinator?.dismissViewController()
+    }
+    
+    struct BottomSheetInput {
+        let dismissBottomSheet: Observable<Void>
+        let categoryTapped: Observable<Int?>
+        let pictureTapped: Observable<(Int?, Data?)>
+        
+        let loactionTFtexts: Observable<String>
+        let memoTFtexts: Observable<String>
+    }
+    struct BottomSheetOutput {
+        var categoryIsSelected = BehaviorRelay<[Bool]>(value: [false, false, false, false, false])
+        var pictureValues = BehaviorRelay<[Data]>(value: [])
+        var btnEnabled = BehaviorRelay<Bool>(value: false)
+    }
+    func transform(input: BottomSheetInput, disposeBag: DisposeBag) -> BottomSheetOutput {
+        
+        let output = BottomSheetOutput()
+        
+        Observable.combineLatest(input.memoTFtexts.map { !$0.isEmpty } , input.loactionTFtexts.map{ !$0.isEmpty }, output.categoryIsSelected.map { $0.contains(true) }).map { values in
+            (values.0 && values.1 && values.2)
+        }.bind(to: output.btnEnabled).disposed(by: disposeBag)
+        
+        input.categoryTapped.map({ num in
+            guard let num else {return []}
+            var arr = [false, false, false, false, false]
+            arr[num] = true
+            return arr
+        }).bind(to: output.categoryIsSelected).disposed(by: disposeBag)
+        
+        input.pictureTapped.subscribe(onNext: { (idx, data) in
+            var beforePictures = output.pictureValues.value
+            guard let data else {return}
+            if let idx ,beforePictures.count > idx {
+                beforePictures[idx] = data
+            } else {
+                beforePictures.append(data)
+            }
+            output.pictureValues.accept(beforePictures)
+            
+        }).disposed(by: disposeBag)
+        
+        input.dismissBottomSheet.bind(onNext: self.dissmissBottomSheet).disposed(by: disposeBag)
+        
+        return output
+    }
     
     struct Input {
         let viewWillAppear: Observable<Void>
@@ -24,6 +72,7 @@ class MapVM {
         let alarmBtnTapEvent: Observable<Void>
         let searchBtnTapEvent: Observable<Void>
         let endTriggerAlertTapEvent: Observable<Void>
+        let dissmissBottomSheet: Observable<Void>
         
     }
     
@@ -44,10 +93,9 @@ class MapVM {
     }
     
     
-    init(coordinator: MainCoordinator, mainUseCase: MainUseCase, pickedModel: SearchedModel? = nil) {
+    init(coordinator: MainCoordinator, mainUseCase: MainUseCase) {
         self.coordinator = coordinator
         self.mainUseCase = mainUseCase
-        self.pickedModel = pickedModel
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -58,14 +106,12 @@ class MapVM {
                 .subscribe(onNext: { [weak self] _ in
                     guard let self else {return}
                     
-                    if let pickedModel {
+                    if let pickedModel = pickedModel.value {
                         //TODO: 추후 이미 생성된 데이터 마커
                         output.pickerLocations.onNext([pickedModel])
-                        output.setUpBottomSheet.onNext(pickedModel)
+                        coordinator?.setupSheet(pickedModel: pickedModel)
                     }
-                    
                     output.getBottomBannerAd.onNext(mainUseCase.getBottomBannerAd())
-                    
                     
                     self.mainUseCase.disconnectionObserver()
                         .subscribe(onSuccess: { result in
@@ -134,8 +180,8 @@ class MapVM {
                 
                 if let location = location {
                     output.currentLocation.onNext(location)
-                    if let pickedModel {
-                        output.cameraUpdate.onNext(CLLocation(latitude: pickedModel.mapy, longitude: pickedModel.mapx))
+                    if let model = pickedModel.value {
+                        output.cameraUpdate.onNext(CLLocation(latitude: model.mapy, longitude: model.mapx))
                     } else {
                         output.cameraUpdate.onNext(location)
                     }
@@ -151,7 +197,7 @@ class MapVM {
             .subscribe(onNext: { otherLocation in
                 if let location = otherLocation {
                     output.currentOtherLocation.onNext(location)
-                }else {
+                } else {
                     output.currentOtherLocation.onNext(CLLocation(latitude: 0, longitude: 0))
                 }
             })
@@ -169,6 +215,8 @@ class MapVM {
                     .disposed(by: disposeBag)
             })
             .disposed(by: disposeBag)
+        
+        input.dissmissBottomSheet.bind(onNext: self.dissmissBottomSheet).disposed(by: disposeBag)
         
         func setInfo() {
             self.mainUseCase.getUserData()
