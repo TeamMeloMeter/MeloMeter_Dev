@@ -64,7 +64,7 @@ class EditProfileVC: UIViewController {
             backBtnTapEvent: self.backBarButton.rx.tap
                 .map({ _ in })
                 .asObservable(),
-            changedProfileImage: self.selectImage
+            changedProfileImage: self.selectImage.map { $0.jpegData(compressionQuality: 1)! }
                 .asObservable(),
             nameTapEvent: self.nameView.rx.tapGesture().when(.ended)
                 .map({ _ in })

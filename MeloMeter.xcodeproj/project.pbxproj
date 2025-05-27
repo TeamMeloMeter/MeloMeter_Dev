@@ -159,6 +159,11 @@
 		60453EA52DB882B40053859F /* SharedDataRepoP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60453EA42DB882AC0053859F /* SharedDataRepoP.swift */; };
 		60453EA72DB883770053859F /* SharedDataRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60453EA62DB8836C0053859F /* SharedDataRepo.swift */; };
 		60697AC82D2A5B4C00693990 /* CustomChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60697AC72D2A5B4600693990 /* CustomChatModel.swift */; };
+		6076C9572DE5EFF90068E676 /* CouplePlaceDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076C9562DE5EFF90068E676 /* CouplePlaceDto.swift */; };
+		6076C95A2DE5F2B90068E676 /* UploadPlaceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076C9592DE5F2B00068E676 /* UploadPlaceUseCase.swift */; };
+		6076C95C2DE5F38E0068E676 /* UploadPlaceRepoP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076C95B2DE5F3860068E676 /* UploadPlaceRepoP.swift */; };
+		6076C95E2DE5F41B0068E676 /* UploadPlaceRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076C95D2DE5F41B0068E676 /* UploadPlaceRepo.swift */; };
+		6076C9602DE5F5230068E676 /* CouplePlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076C95F2DE5F5230068E676 /* CouplePlaceModel.swift */; };
 		6084BC9A2DB7610F005F9B2C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6084BC992DB7610F005F9B2C /* WidgetKit.framework */; };
 		6084BC9C2DB7610F005F9B2C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6084BC9B2DB7610F005F9B2C /* SwiftUI.framework */; };
 		6084BCA72DB76110005F9B2C /* MelometerWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6084BC982DB7610F005F9B2C /* MelometerWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -361,6 +366,11 @@
 		60453EA62DB8836C0053859F /* SharedDataRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataRepo.swift; sourceTree = "<group>"; };
 		60453EAC2DB8A1A30053859F /* MelometerWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MelometerWidgetExtension.entitlements; sourceTree = "<group>"; };
 		60697AC72D2A5B4600693990 /* CustomChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomChatModel.swift; sourceTree = "<group>"; };
+		6076C9562DE5EFF90068E676 /* CouplePlaceDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplePlaceDto.swift; sourceTree = "<group>"; };
+		6076C9592DE5F2B00068E676 /* UploadPlaceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPlaceUseCase.swift; sourceTree = "<group>"; };
+		6076C95B2DE5F3860068E676 /* UploadPlaceRepoP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPlaceRepoP.swift; sourceTree = "<group>"; };
+		6076C95D2DE5F41B0068E676 /* UploadPlaceRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPlaceRepo.swift; sourceTree = "<group>"; };
+		6076C95F2DE5F5230068E676 /* CouplePlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplePlaceModel.swift; sourceTree = "<group>"; };
 		6084BC982DB7610F005F9B2C /* MelometerWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MelometerWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6084BC992DB7610F005F9B2C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		6084BC9B2DB7610F005F9B2C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -838,6 +848,7 @@
 				21C3821E2A87F7B1003638E1 /* ChatRepository.swift */,
 				52F739502A94DE1D00D46FBB /* HundredQARepository.swift */,
 				210BAFBF2AC88AEA0012B786 /* AlarmRepository.swift */,
+				6076C95D2DE5F41B0068E676 /* UploadPlaceRepo.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -910,6 +921,7 @@
 				21C382232A87F85F003638E1 /* ChatDTO.swift */,
 				52F739562A94E71500D46FBB /* HundredQADTO.swift */,
 				210BAFC52AC88DF70012B786 /* AlarmDTO.swift */,
+				6076C9562DE5EFF90068E676 /* CouplePlaceDto.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -917,6 +929,7 @@
 		5290BFB22A7270B200D734EE /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				6076C95B2DE5F3860068E676 /* UploadPlaceRepoP.swift */,
 				60E5C75D2DD7379800635390 /* SearchRepoP.swift */,
 				60453EA42DB882AC0053859F /* SharedDataRepoP.swift */,
 				60F7DEB72DA5700800EB0279 /* UserDefaultsRepoP.swift */,
@@ -934,6 +947,7 @@
 		5290BFB52A72712800D734EE /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				6076C9582DE5F29F0068E676 /* Upload */,
 				60E5C75A2DD7376800635390 /* Search */,
 				210BAFC72AC896B80012B786 /* Alarm */,
 				210369082AA7728400A5EEB5 /* CalenderNoti */,
@@ -1110,6 +1124,7 @@
 				521D41EB2A801D1200E5CCDA /* CoupleModel.swift */,
 				52F739542A94E6DB00D46FBB /* HundredQAModel.swift */,
 				210BAFC32AC88B610012B786 /* AlarmModel.swift */,
+				6076C95F2DE5F5230068E676 /* CouplePlaceModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1132,6 +1147,14 @@
 				52F7394C2A94058500D46FBB /* WriteAnswerVC.swift */,
 			);
 			path = Answer;
+			sourceTree = "<group>";
+		};
+		6076C9582DE5F29F0068E676 /* Upload */ = {
+			isa = PBXGroup;
+			children = (
+				6076C9592DE5F2B00068E676 /* UploadPlaceUseCase.swift */,
+			);
+			path = Upload;
 			sourceTree = "<group>";
 		};
 		609900882DE45BF600A43CC5 /* Rx */ = {
@@ -1494,6 +1517,7 @@
 				214750FF2A6D9A1A0088C3DE /* KeyboardStatusDetector.swift in Sources */,
 				521D41E72A7FFD5F00E5CCDA /* DdayUseCase.swift in Sources */,
 				6097C9F52D538C0600895B63 /* Label+.swift in Sources */,
+				6076C9602DE5F5230068E676 /* CouplePlaceModel.swift in Sources */,
 				5230B27A2A7790A300781623 /* LocationService.swift in Sources */,
 				521D41FD2A843EB100E5CCDA /* TextField+.swift in Sources */,
 				2108F0412A6EC1F0002EED7A /* ProfileInsertUseCase.swift in Sources */,
@@ -1505,6 +1529,7 @@
 				524138302A62F943002AADA6 /* StartVM.swift in Sources */,
 				60453EA72DB883770053859F /* SharedDataRepo.swift in Sources */,
 				527547F42A6D23E400313EFC /* KakaoService.swift in Sources */,
+				6076C95A2DE5F2B90068E676 /* UploadPlaceUseCase.swift in Sources */,
 				603F49FD2DE06AA300B89E6A /* Reactive+.swift in Sources */,
 				52F305302A168CE900112A04 /* DisconnectVC.swift in Sources */,
 				521D41EC2A801D1200E5CCDA /* CoupleModel.swift in Sources */,
@@ -1532,6 +1557,7 @@
 				5271D4112A5580F200FC7606 /* Permission2VC.swift in Sources */,
 				5271D41C2A58435A00FC7606 /* DefaultFirebaseService.swift in Sources */,
 				52F0100F2A0A55470014FC01 /* DetailQnAVC.swift in Sources */,
+				6076C9572DE5EFF90068E676 /* CouplePlaceDto.swift in Sources */,
 				6099008A2DE45C0E00A43CC5 /* RxNMFMapViewTouchDelegateProxy.swift in Sources */,
 				5271D41F2A5887E500FC7606 /* LogInRepository.swift in Sources */,
 				60D067762DA2AB3200CFD06C /* UIImage+.swift in Sources */,
@@ -1541,6 +1567,7 @@
 				52CE6EA12A01875C00E43D39 /* AlarmVC.swift in Sources */,
 				5290BFAC2A70F46C00D734EE /* MainCoordinator.swift in Sources */,
 				52AEAD082A93DAEF0097930E /* HundredQAUseCase.swift in Sources */,
+				6076C95E2DE5F41B0068E676 /* UploadPlaceRepo.swift in Sources */,
 				2124EC872A97BAEF00FC6C0B /* CameraInputBarAccessoryView.swift in Sources */,
 				2185C4D72A83F13B00F99795 /* ChatModel.swift in Sources */,
 				5270EC042A445077007FF444 /* StartVC.swift in Sources */,
@@ -1597,6 +1624,7 @@
 				603F49382DDDABA600B89E6A /* BottomSheetVC.swift in Sources */,
 				5262BB782A8C809A003EB016 /* SplashVC.swift in Sources */,
 				52F010242A0B77ED0014FC01 /* EditBirthVC.swift in Sources */,
+				6076C95C2DE5F38E0068E676 /* UploadPlaceRepoP.swift in Sources */,
 				210BAFC02AC88AEA0012B786 /* AlarmRepository.swift in Sources */,
 				5270EC102A460354007FF444 /* AuthNumVC.swift in Sources */,
 				5271D4062A51DBDD00FC7606 /* ProfileInsertVC.swift in Sources */,
@@ -1820,7 +1848,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.4;
+				MARKETING_VERSION = 1.1.5;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.teamMeloMeter.-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1866,7 +1894,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.4;
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.teamMeloMeter.-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

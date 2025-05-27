@@ -157,14 +157,14 @@ class UserRepository: UserRepositoryP {
         
     }
     
-    func updateProfileImage(image: UIImage) -> Single<Void> {
+    func updateProfileImage(imageData: Data) -> Single<Void> {
         guard let uid = UserDefaults.standard.string(forKey: "uid") else{ return Single.just(()) }
         
         guard let name = UserDefaults.standard.string(forKey: "name") else{ return Single.just(())}
         
             PushNotificationService.shared.sendPushNotification(title: "MeloMeter", body: "\(name)님이 프로필사진을 변경했어요", type: .profile)
         
-        return self.firebaseService.uploadImage(filePath: uid, image: image)
+        return self.firebaseService.uploadImage(filePath: uid, data: imageData)
             .flatMap{ url in
                 return self.firebaseService.updateDocument(collection: .Users, document: uid, values: ["profileImagePath": url] as? [String: Any] ?? [:])
             }

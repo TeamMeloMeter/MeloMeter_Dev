@@ -18,7 +18,7 @@ class EditProfileVM {
     struct Input {
         let viewWillApearEvent: Observable<Void>
         let backBtnTapEvent: Observable<Void>
-        let changedProfileImage: Observable<UIImage>
+        let changedProfileImage: Observable<Data>
         let nameTapEvent: Observable<Void>
         let stateMessageTapEvent: Observable<Void>
         let birthTapEvent: Observable<Void>
@@ -85,9 +85,9 @@ class EditProfileVM {
             .disposed(by: disposeBag)
         
         input.changedProfileImage
-            .subscribe(onNext: {[weak self] image in
+            .subscribe(onNext: {[weak self] imageData in
                 guard let self = self else{ return }
-                self.editProfileUseCase.editProfileImage(image: image)
+                self.editProfileUseCase.editProfileImage(data: imageData)
                 .subscribe(onSuccess: {
                     output.uploadSuccess.onNext(true)
                 }, onFailure: { error in

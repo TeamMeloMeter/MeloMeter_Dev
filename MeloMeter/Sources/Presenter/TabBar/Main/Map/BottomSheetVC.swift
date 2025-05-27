@@ -110,6 +110,7 @@ class BottomSheetVC: UIViewController {
         $0.contentVerticalAlignment = .center
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -117,6 +118,11 @@ class BottomSheetVC: UIViewController {
         setLargeView()
         setBindings()
 
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
     }
     
     func configure(pickedModel: SearchedModel) {
@@ -274,7 +280,7 @@ class BottomSheetVC: UIViewController {
         let pictureTapped = Observable.zip(selectedImageTag.asObservable(), selectedImage.asObservable())
         
         let output = viewModel.transform(input: MapVM.BottomSheetInput(dismissBottomSheet: xButton.rx.tap.asObservable(), categoryTapped: categoryTapped, pictureTapped:
-                                                                        pictureTapped, loactionTFtexts: largeLocationTF.rx.textOrEmpty.asObservable(), memoTFtexts: largeMemoTF.rx.textOrEmpty.asObservable()
+                                                                        pictureTapped, loactionTFtexts: largeLocationTF.rx.textOrEmpty.asObservable(), memoTFtexts: largeMemoTF.rx.textOrEmpty.asObservable(), viewWillDisappear: self.rx.methodInvoked(#selector(viewWillDisappear(_:))).map { _ in }.asObservable(), largeSaveBtnTapped:largeSaveBtn.rx.tap.map { _ in }.asObservable()
                                                                       ), disposeBag: disposeBag)
         
         output.btnEnabled.bind(onNext: { [weak self] val in
@@ -321,6 +327,7 @@ class BottomSheetVC: UIViewController {
                 view.isHidden = false
             }
         }).disposed(by: disposeBag)
+        
         
         if #available(iOS 16.0, *) {
             addbtn.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in

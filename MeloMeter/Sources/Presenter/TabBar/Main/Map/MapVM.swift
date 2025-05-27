@@ -15,9 +15,18 @@ class MapVM {
 
     weak var coordinator: MainCoordinator?
     private var mainUseCase: MainUseCase
+    private var uploadPlaceUseCase: UploadPlaceUseCase
+    
+    //MARK: Observable
     var pickedModel = BehaviorRelay<SearchedModel?>(value: nil)
+    var couplePlaceModel = BehaviorRelay<CouplePlaceModel?>(value: nil)
+    var bottomSheetDisappear = PublishSubject<Void>()
 
+    //MARK: StaticDatas
+    let categoryLists = ["전체","맛집","전시회","공원","기타"]
+    
     func dissmissBottomSheet() {
+        pickedModel.accept(nil)
         coordinator?.dismissViewController()
     }
     
@@ -28,6 +37,8 @@ class MapVM {
         
         let loactionTFtexts: Observable<String>
         let memoTFtexts: Observable<String>
+        let viewWillDisappear: Observable<Void>
+        let largeSaveBtnTapped: Observable<Void>
     }
     struct BottomSheetOutput {
         var categoryIsSelected = BehaviorRelay<[Bool]>(value: [false, false, false, false, false])
@@ -37,9 +48,15 @@ class MapVM {
     func transform(input: BottomSheetInput, disposeBag: DisposeBag) -> BottomSheetOutput {
         
         let output = BottomSheetOutput()
-        
-        Observable.combineLatest(input.memoTFtexts.map { !$0.isEmpty } , input.loactionTFtexts.map{ !$0.isEmpty }, output.categoryIsSelected.map { $0.contains(true) }).map { values in
-            (values.0 && values.1 && values.2)
+
+        Observable.combineLatest(input.loactionTFtexts, input.memoTFtexts, output.categoryIsSelected ,output.pictureValues).map {
+            values in
+            guard let pickedModel = self.pickedModel.value else {return false}
+            
+            let model = CouplePlaceModel(category: self.categoryLists[values.2.firstIndex(of: true) ?? 0], name: values.1, description: values.0, mapX: pickedModel.mapx, mapY: pickedModel.mapy, images: values.3, roadAddress: pickedModel.roadAddress, address: pickedModel.address)
+            self.couplePlaceModel.accept(model)
+            
+            return (!values.0.isEmpty && !values.1.isEmpty && values.2.contains(true) )
         }.bind(to: output.btnEnabled).disposed(by: disposeBag)
         
         input.categoryTapped.map({ num in
@@ -62,6 +79,17 @@ class MapVM {
         }).disposed(by: disposeBag)
         
         input.dismissBottomSheet.bind(onNext: self.dissmissBottomSheet).disposed(by: disposeBag)
+        
+        input.viewWillDisappear.map{ self.pickedModel.accept(nil); return () }.bind(to: bottomSheetDisappear).disposed(by: disposeBag)
+        
+        input.largeSaveBtnTapped.subscribe(onNext: { [weak self] _ in
+            
+            guard let self, let model = couplePlaceModel.value else {return}
+
+            uploadPlaceUseCase.execute(model: model).subscribe({ com in
+                print(com)
+            }).disposed(by: disposeBag)
+        }).disposed(by: disposeBag)
         
         return output
     }
@@ -90,21 +118,25 @@ class MapVM {
         var pickerLocations = PublishSubject<[SearchedModel]>()
         var cameraUpdate = PublishSubject<CLLocation>()
         var setUpBottomSheet = PublishSubject<SearchedModel>()
+        var deletePickedMarkers = PublishSubject<Void>()
     }
     
     
-    init(coordinator: MainCoordinator, mainUseCase: MainUseCase) {
+    init(coordinator: MainCoordinator, mainUseCase: MainUseCase, uploadPlaceUseCase: UploadPlaceUseCase) {
         self.coordinator = coordinator
         self.mainUseCase = mainUseCase
+        self.uploadPlaceUseCase = uploadPlaceUseCase
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output()
         
         if #available(iOS 16.0, *) {
-            input.viewWillAppear
+            Observable.combineLatest(input.viewWillAppear, self.bottomSheetDisappear.startWith(()))
                 .subscribe(onNext: { [weak self] _ in
                     guard let self else {return}
+                    // 장소 검색 시 잠깐 동안 뜨는 용도의 피커 지움
+                    output.deletePickedMarkers.onNext(())
                     
                     if let pickedModel = pickedModel.value {
                         //TODO: 추후 이미 생성된 데이터 마커

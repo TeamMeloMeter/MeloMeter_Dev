@@ -15,6 +15,7 @@ import GoogleMobileAds
 //메인 지도 화면
 class MapVC: UIViewController, UIGestureRecognizerDelegate{
     
+    var beforePickedMarkers: [NMFMarker] = []
     let infoWindow1 = NMFInfoWindow()
     let infoWindow2 = NMFInfoWindow()
     private var bannerView: BannerView?
@@ -42,6 +43,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         setMarker()
         self.navigationController?.navigationBar.isHidden = true
     }
@@ -197,6 +199,8 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         output.pickerLocations.bind(onNext: self.setPlaceMarkers).disposed(by: disposeBag)
         
         output.cameraUpdate.bind(onNext: self.updateCamera).disposed(by: disposeBag)
+        
+        output.deletePickedMarkers.bind(onNext: self.deletePickedMarkers).disposed(by: disposeBag)
     }
 
     // MARK: Map
@@ -306,14 +310,18 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     
     func setPlaceMarkers(models: [SearchedModel]) {
         models.forEach {
-           
             let marker = NMFMarker()
             marker.position = NMGLatLng(lat: $0.mapy, lng: $0.mapx)
             marker.captionText = $0.title
             marker.mapView = self.naverMapView
-        
+            self.beforePickedMarkers.append(marker)
         }
-        
+    }
+    
+    func deletePickedMarkers() {
+        self.beforePickedMarkers.forEach {
+            $0.mapView = nil
+        }
     }
     
     lazy var naverMapView: NMFMapView = {

@@ -15,6 +15,7 @@ final class MainCoordinator: Coordinator {
     private let firebaseService = DefaultFirebaseService()
     private let adMobRepo = AdmobRepository()
     private let sharedDataRepo: SharedDataRepoP
+    private let uploadPlaceUseCase: UploadPlaceUseCase
     
     private var mapSearchVM: MapSearchVM?
     private var mapVM: MapVM?
@@ -24,6 +25,7 @@ final class MainCoordinator: Coordinator {
         self.navigationController = navigationController
         self.childCoordinators = []
         self.sharedDataRepo = sharedDataRepo
+        self.uploadPlaceUseCase = UploadPlaceUseCaseImpl(repository: UploadPlaceRepo(firebaseService: self.firebaseService))
     }
     
     func start() {
@@ -39,7 +41,7 @@ extension MainCoordinator {
         let firebaseService = self.firebaseService
         let vm = MapVM(
             coordinator: self,
-            mainUseCase: MainUseCase(firebaseService: firebaseService, adMobRepo: self.adMobRepo, sharedDataRepo: self.sharedDataRepo))
+            mainUseCase: MainUseCase(firebaseService: firebaseService, adMobRepo: self.adMobRepo, sharedDataRepo: self.sharedDataRepo), uploadPlaceUseCase: uploadPlaceUseCase)
         self.mapVM = vm
         let viewController = MapVC(viewModel: vm
         )
@@ -76,7 +78,7 @@ extension MainCoordinator {
         let bottomSheetVC = BottomSheetVC(viewModel: mapVM!)
         bottomSheetVC.configure(pickedModel: pickedModel)
         bottomSheetVC.modalPresentationStyle = .pageSheet
-        bottomSheetVC.isModalInPresentation = true
+        bottomSheetVC.isModalInPresentation = false
         if let sheet = bottomSheetVC.sheetPresentationController {
             if #available(iOS 16.0, *) {
                 let customDetent = UISheetPresentationController.Detent.custom(identifier: .init("custom"), resolver: { _ in

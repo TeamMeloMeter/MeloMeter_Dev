@@ -14,7 +14,7 @@ protocol UserRepositoryP {
     func presetUserInfo(user: UserModel, dDay: CoupleModel) -> Single<Void>
     func getUserInfo(_ uid: String) -> Observable<UserModel>
     func updateUserInfo(value: [String: String]) -> Single<Void>
-    func updateProfileImage(image: UIImage) -> Single<Void>
+    func updateProfileImage(imageData: Data) -> Single<Void>
     func downloadImage(url: String) -> Single<UIImage?>
     func userAccessLevelObserver()
     func signOut() -> Single<Void>
