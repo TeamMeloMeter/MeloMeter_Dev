@@ -14,3 +14,13 @@ extension Reactive where Base: UITextField {
         return  self.text.orEmpty
     }
 }
+
+extension ObservableType {
+    func flatMapCompletable(_ selector: @escaping (Element) -> Completable) -> Completable {
+        return self
+            .flatMap { selector($0).asObservable() }
+            .ignoreElements()
+            .asCompletable()
+    }
+}
+

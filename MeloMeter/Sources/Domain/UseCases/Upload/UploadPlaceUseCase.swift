@@ -18,7 +18,6 @@ final class UploadPlaceUseCaseImpl: UploadPlaceUseCase {
     }
 
     func execute(model: CouplePlaceModel) -> Completable {
-        
         return repository.uploadPlace(model: model)
     }
 }

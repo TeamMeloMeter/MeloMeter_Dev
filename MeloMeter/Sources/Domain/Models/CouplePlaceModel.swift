@@ -16,4 +16,6 @@ struct CouplePlaceModel {
     let images: [Data]
     let roadAddress: String
     let address: String
+    
+    
 }

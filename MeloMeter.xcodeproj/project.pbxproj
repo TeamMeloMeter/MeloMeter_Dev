@@ -778,7 +778,6 @@
 			isa = PBXGroup;
 			children = (
 				60453EAC2DB8A1A30053859F /* MelometerWidgetExtension.entitlements */,
-				5271D41A2A58429D00FC7606 /* FirebaseService */,
 				52697B7129EEB7B2002BDD04 /* MeloMeter */,
 				52E2B5E32AE580F00037FBB3 /* MeloMeterTests */,
 				6084BC9D2DB7610F005F9B2C /* MelometerWidget */,
@@ -801,6 +800,7 @@
 		52697B7129EEB7B2002BDD04 /* MeloMeter */ = {
 			isa = PBXGroup;
 			children = (
+				5271D41A2A58429D00FC7606 /* FirebaseService */,
 				60E0EE332D95724200E6E2A2 /* MeloMeterDebug.entitlements */,
 				B61B0F5A29F7A5F500E25EEF /* MeloMeter.entitlements */,
 				5230B25A2A727DC300781623 /* Resources */,

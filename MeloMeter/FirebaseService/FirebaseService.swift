@@ -27,6 +27,9 @@ public protocol FirebaseService {
     func deleteImageFromChatStorage(filePath: [String]) -> Single<Void>
     func setAccessLevel(_ level: AccessLevel) -> Single<Void>
     
+    //MARK: SubCollection
     func createDocToSubcollection(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String ,values: Any) -> Completable
+    
+    func getDocFromSubCollection(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String) -> Single<[FirebaseData]>
 
 }

@@ -6,5 +6,6 @@
 //
 import RxSwift
 protocol UploadPlaceRepoP {
-    func uploadPlace(model: CouplePlaceModel) -> Completable 
+    func uploadPlace(model: CouplePlaceModel) -> Completable
+    func getAllPlaces() -> Single<[CouplePlaceModel]>
 }

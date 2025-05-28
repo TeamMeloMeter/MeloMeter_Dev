@@ -48,7 +48,7 @@ class MapVM {
     func transform(input: BottomSheetInput, disposeBag: DisposeBag) -> BottomSheetOutput {
         
         let output = BottomSheetOutput()
-
+        
         Observable.combineLatest(input.loactionTFtexts, input.memoTFtexts, output.categoryIsSelected ,output.pictureValues).map {
             values in
             guard let pickedModel = self.pickedModel.value else {return false}
@@ -82,15 +82,28 @@ class MapVM {
         
         input.viewWillDisappear.map{ self.pickedModel.accept(nil); return () }.bind(to: bottomSheetDisappear).disposed(by: disposeBag)
         
-        input.largeSaveBtnTapped.subscribe(onNext: { [weak self] _ in
-            
-            guard let self, let model = couplePlaceModel.value else {return}
-
-            uploadPlaceUseCase.execute(model: model).subscribe({ com in
-                print(com)
-            }).disposed(by: disposeBag)
-        }).disposed(by: disposeBag)
         
+        
+        
+        input.largeSaveBtnTapped
+            .flatMap { [weak self] _ -> Observable<Void> in
+                guard let self, let model = self.couplePlaceModel.value else {
+                    return Observable.error(NSError(domain: "", code: -1))
+                }
+                return uploadPlaceUseCase.execute(model: model).andThen(Observable.just(()))
+            }.subscribe(onNext: { [weak self] in
+                guard let self else {return}
+                self.dissmissBottomSheet()
+            }, onError: { err in
+                print(err)
+                //TODO: 에러처리
+            }).disposed(by: disposeBag)
+        
+      
+    
+        
+        
+    
         return output
     }
     
@@ -132,11 +145,14 @@ class MapVM {
         let output = Output()
         
         if #available(iOS 16.0, *) {
-            Observable.combineLatest(input.viewWillAppear, self.bottomSheetDisappear.startWith(()))
+            
+            self.bottomSheetDisappear.bind(to: output.deletePickedMarkers ).disposed(by: disposeBag)
+            
+            input.viewWillAppear
                 .subscribe(onNext: { [weak self] _ in
                     guard let self else {return}
                     // 장소 검색 시 잠깐 동안 뜨는 용도의 피커 지움
-                    output.deletePickedMarkers.onNext(())
+      
                     
                     if let pickedModel = pickedModel.value {
                         //TODO: 추후 이미 생성된 데이터 마커

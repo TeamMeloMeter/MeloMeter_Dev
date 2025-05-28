@@ -277,6 +277,13 @@ class BottomSheetVC: UIViewController {
     
     func setBindings() {
         
+        self.rx
+              .methodInvoked(#selector(UIView.touchesBegan(_:with:)))
+              .subscribe(onNext: { [weak self] _ in
+                self?.view.endEditing(true)
+              })
+              .disposed(by: disposeBag)
+        
         let pictureTapped = Observable.zip(selectedImageTag.asObservable(), selectedImage.asObservable())
         
         let output = viewModel.transform(input: MapVM.BottomSheetInput(dismissBottomSheet: xButton.rx.tap.asObservable(), categoryTapped: categoryTapped, pictureTapped:
@@ -297,7 +304,7 @@ class BottomSheetVC: UIViewController {
         
         output.categoryIsSelected.subscribe(onNext: { [weak self] array in
             for i in 0 ..< array.count {
-                var categoryView = self?.largeCategoryStack.arrangedSubviews[i] as! CategoryView
+                let categoryView = self?.largeCategoryStack.arrangedSubviews[i] as! CategoryView
                 if array[i] {
                     categoryView.backgroundColor = .primary1
                     categoryView.layer.borderColor = UIColor.primary1.cgColor

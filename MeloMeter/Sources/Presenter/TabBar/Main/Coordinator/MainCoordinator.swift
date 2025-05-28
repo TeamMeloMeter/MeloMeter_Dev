@@ -83,9 +83,9 @@ extension MainCoordinator {
             if #available(iOS 16.0, *) {
                 let customDetent = UISheetPresentationController.Detent.custom(identifier: .init("custom"), resolver: { _ in
                     
-                    return 150
+                    return 120
                 })
-                sheet.largestUndimmedDetentIdentifier = .some(.init("custom"))
+                sheet.selectedDetentIdentifier = .some(.init("custom"))
                 // 드래그를 멈추면 그 위치에 멈추는 지점: default는 large()
                 sheet.detents = [customDetent]
                 // sheet로 present된 viewController내부를 scroll하면 sheet가 움직이지 않고 내부 컨텐츠를 스크롤되도록 설정
@@ -93,7 +93,7 @@ extension MainCoordinator {
                 // grabber바 보이도록 설정
                 sheet.prefersGrabberVisible = true
                 // corner 값 설정
-                 sheet.preferredCornerRadius = 16
+                sheet.preferredCornerRadius = 16
             } else {
                 // Fallback on earlier versions
             }

@@ -17,9 +17,7 @@ public enum FireStoreError: Error, LocalizedError {
 }
 
 public final class DefaultFirebaseService: FirebaseService {
-    
-    
-    
+
     private let database: Firestore
     private var disposeBag = DisposeBag()
     public init(
@@ -202,10 +200,7 @@ extension DefaultFirebaseService {
                 if let error = error { single(.failure(error)) }
                 
                 firebaseReference.downloadURL { url, _ in
-                    guard let url = url else {
-                        single(.failure(FireStoreError.unknown))
-                        return
-                    }
+                    guard let url = url else { single(.failure(FireStoreError.unknown)); return }
                     let cachedKey = NSString(string: url.absoluteString)
                     ImageCacheManager.shared.setObject(UIImage(data: data)!, forKey: cachedKey)
                     single(.success(url.absoluteString))
@@ -271,7 +266,6 @@ extension DefaultFirebaseService {
                 return Disposables.create()
             }
             var resultCount = 0
-            
             for path in filePath {
                 self.deleteImageFromProfileStorage(imageURL: path)
                     .subscribe(onSuccess: { _ in
@@ -283,8 +277,7 @@ extension DefaultFirebaseService {
                     }, onFailure: { error in
                         single(.failure(error))
                         return
-                    })
-                    .disposed(by: self.disposeBag)
+                    }).disposed(by: self.disposeBag)
             }
             return Disposables.create()
         }
@@ -296,28 +289,36 @@ extension DefaultFirebaseService {
 //MARK: SubCollection
 extension DefaultFirebaseService {
     public func createDocToSubcollection(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String, values: Any) -> Completable {
-        print("IN?")
         return Completable.create { [weak self] com in
-            print("1")
             guard let self else {return Disposables.create() }
-            print("2")
-            let newDocument = self.database.collection(firstCollection.rawValue).document(document).collection(subCollection.rawValue).document()
-            
+            var newDocument: DocumentReference
             if subCollection == .DatePlaces {
                 let values = values as! CouplePlaceDto
-                
+                newDocument = self.database.collection(firstCollection.rawValue).document(document).collection(subCollection.rawValue).document("\(values.uuid)")
                 newDocument.setData( values.toDictionary(), merge: true) { error in
                     if let error = error { com(.error(error)) }
                     com(.completed)
                 }
-                
             } else {
                 //다른 쪽에서도 서브 컬렉션이 필요할때 사용
             }
-            
-            
             return Disposables.create()
         }
     }
     
+    public func getDocFromSubCollection(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String) -> Single<[FirebaseData]> {
+        return Single.create { [weak self] single in
+            guard let self else { return Disposables.create() }
+            self.database.collection(firstCollection.rawValue).document(document).collection(subCollection.rawValue).getDocuments { snapshot, err in
+                if let err {
+                    single(.failure(err))
+                } else {
+                    guard let snapshot = snapshot else { single(.failure(FireStoreError.unknown)); return }
+                    let data = snapshot.documents.map { $0.data() }
+                    single(.success(data))
+                }
+            }
+            return Disposables.create()
+        }
+    }
 }

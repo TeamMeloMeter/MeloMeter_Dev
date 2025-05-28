@@ -12,12 +12,12 @@ struct CouplePlaceDto: Codable {
     let title: String
     let name: String
     let description: String
-    let latitude: Double
-    let longitude: Double
+    let mapX: Double
+    let mapY: Double
     let imageUrls: [String]
     let createdAt: String
     
     func toDictionary() -> [String: Any] {
-        return ["uuid": uuid,"title":title, "name": name, "description": description,  "latitude": latitude, "longitude": longitude, "imageUrls": imageUrls, "createdAt": createdAt ]
+        return ["uuid": uuid,"title":title, "name": name, "description": description,  "mapX": mapX, "mapY": mapY, "imageUrls": imageUrls, "createdAt": createdAt ]
     }
 }

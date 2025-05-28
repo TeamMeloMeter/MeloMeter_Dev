@@ -9,67 +9,50 @@ import Foundation
 import RxSwift
 
 final class UploadPlaceRepo: UploadPlaceRepoP {
+    
     let firebaseService: FirebaseService
     var disposeBag: DisposeBag
     init(firebaseService: FirebaseService) {
         self.firebaseService = firebaseService
         self.disposeBag = DisposeBag()
     }
+    func getAllPlaces() -> Single<[CouplePlaceModel]> {
+        return Single.create { _ in
+            
+            return Disposables.create()
+        }
+//        guard let coupleDocumentID = UserDefaults.standard.string(forKey: "coupleID") else {return Single.error(NSError(domain: "not", code: 404))}
+//
+//        return self.firebaseService.getDocFromSubCollection(firstCollection: .Couples, subCollection: .DatePlaces, document: coupleDocumentID).map { dic in
+//            return dic.map { value in
+//                if
+//                    let category    = value["category"]    as? String,
+//                    let name        = value["name"]        as? String,
+//                    let desc        = value["description"] as? String,
+//                    let mapX        = value["mapX"]        as? Double,
+//                    let mapY        = value["mapY"]        as? Double,
+//                    let roadAddress = value["roadAddress"] as? String,
+//                    let address     = value["address"]     as? String
+//                {
+//                    let model = CouplePlaceModel(category: category, name: name, description: desc, mapX: mapY, mapY: mapX, images: [], roadAddress: roadAddress, address: address)
+//                }
+//               
+//              
+//               //TODO: Image 가져오기
+//            }
+//        }
+    }
+    
+    
     func uploadPlace(model: CouplePlaceModel) -> Completable {
-        Completable.create { [weak self] completable in
-            guard let self,
-                  let coupleDocumentID = UserDefaults.standard.string(forKey: "coupleID") else {
-                completable(.error(NSError(domain: "MissingCoupleID", code: -1)))
-                return Disposables.create()
-            }
-
-            let disposable = self.uploadMultipleImages(datas: model.images, filePath: "CouplePlaces/\(coupleDocumentID)")
-                .flatMapCompletable { urls in
-                    let dto = CouplePlaceDto(uuid: UUID().uuidString, title: model.category, name: model.name,description: model.description,latitude: model.mapX,longitude: model.mapY,imageUrls: urls,createdAt: Date.now.toString(type: .yearToDay))
-
-                    return self.firebaseService.createDocToSubcollection(
-                        firstCollection: .Couples,
-                        subCollection: .DatePlaces,
-                        document: coupleDocumentID,
-                        values: dto
-                    )
-                }
-                .subscribe(
-                    onCompleted: { completable(.completed) },
-                    onError: { completable(.error($0)) }
-                )
-
-            return Disposables.create {
-                disposable.dispose()
-            }
+        guard let coupleDocumentID = UserDefaults.standard.string(forKey: "coupleID") else {return Completable.error(NSError(domain: "not", code: 404))}
+        return uploadMultipleImages(datas: model.images, filePath: "CouplePlaces/\(coupleDocumentID)").flatMapCompletable { urls in
+             let dto = CouplePlaceDto(uuid: UUID().uuidString, title: model.category, name: model.name, description: model.description, mapX: model.mapX, mapY: model.mapY, imageUrls: urls, createdAt: Date.now.toString(type: .yearToDay))
+             
+            return  self.firebaseService.createDocToSubcollection(firstCollection: .Couples, subCollection: .DatePlaces, document: coupleDocumentID, values: dto)
+             
         }
     }
-
-
-//    func uploadPlace(model: CouplePlaceModel) -> Completable {
-//        
-//        Completable.create { [weak self] completable in
-//            guard let self, let coupleDocumentID = UserDefaults.standard.string(forKey: "coupleID") else {return Disposables.create()}
-//        
-//           
-//            uploadMultipleImages(datas: model.images, filePath: "CouplePlaces/\(coupleDocumentID)").map { urls in
-//                
-//                let dto = CouplePlaceDto(uuid: UUID().uuidString, title: model.category, name: model.name, description: model.description, latitude: model.mapX, longitude: model.mapY, imageUrls: urls, createdAt: Date.now.toString(type: .yearToDay))
-//                
-//                return  self.firebaseService.createDocToSubcollection(firstCollection: .Couples, subCollection: .DatePlaces, document: dto.uuid, values: dto)
-//            }.subscribe(onSuccess: { com in
-//                print("completed??????!??!?!?!?")
-//                completable(.completed)
-//                
-//            }, onFailure: { error in
-//                completable(.error(error))
-//            }).disposed(by: disposeBag)
-//                
-//            return Disposables.create { print("uploadPlace Disposed") }
-//        }
-//        
-//        
-//    }
 }
 
 extension UploadPlaceRepo {
@@ -77,4 +60,6 @@ extension UploadPlaceRepo {
         let uploadSingles = datas.map { firebaseService.uploadImage(filePath: filePath, data: $0) }
         return Single.zip(uploadSingles) // → Single<[String]>
     }
+    
+    
 }
