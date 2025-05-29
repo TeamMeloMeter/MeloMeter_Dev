@@ -496,7 +496,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     }()
     
     let searchBtn = UIButton().then { button in
-        button.setImage(UIImage(systemName: "search"), for: .normal)
+        button.setImage(UIImage(named: "searchIcon"), for: .normal)
         button.backgroundColor = .white
         button.layer.cornerRadius = 24
         button.layer.applyShadow(color: #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1), alpha: 0.25, x: 3, y: 3, blur: 8)

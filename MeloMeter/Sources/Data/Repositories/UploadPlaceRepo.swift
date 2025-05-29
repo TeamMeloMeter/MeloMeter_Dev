@@ -41,8 +41,8 @@ final class UploadPlaceRepo: UploadPlaceRepoP {
 }
 extension UploadPlaceRepo {
     func uploadMultipleImages(datas: [Data], filePath: String) -> Single<[String]> {
-        let uploadSingles = datas.map { firebaseService.uploadImage(filePath: filePath, data: $0) }
-        return Single.zip(uploadSingles) // → Single<[String]>
+        let uploadSingles = datas.map { firebaseService.uploadImage(filePath: "\(filePath)/\(UUID().uuidString)", data: $0) }
+        return Single.zip(uploadSingles)
     }
     
     

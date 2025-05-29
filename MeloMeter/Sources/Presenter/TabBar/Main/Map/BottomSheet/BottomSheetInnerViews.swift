@@ -7,6 +7,8 @@
 
 import Foundation
 import UIKit
+import Kingfisher
+import RxSwift
 class CategoryView: UIView {
     let label = UILabel().then {
         $0.font = FontManager.shared.regular(ofSize: 16)
@@ -30,7 +32,6 @@ class CategoryView: UIView {
 }
 class innerPictureView: UIView {
     private let addImg = UIImageView().then {
-        $0.image = UIImage(systemName: "plus")
         $0.contentMode = .scaleAspectFill
         $0.tintColor = .gray2
     }
@@ -54,7 +55,7 @@ class innerPictureView: UIView {
         
         addImg.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.height.width.equalTo(17)
+            $0.height.width.equalTo(24)
         }
         imageView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
@@ -76,11 +77,10 @@ class BottomSheetSmallView: UIView {
     func configurePickedModel(pickedModel: SearchedModel) {
         locationNameLabel.text = pickedModel.title
         locationLabel.text = pickedModel.roadAddress
-        rightBtn.image = UIImage(systemName: "plus")
+        rightBtn.image = UIImage(named: "addIcon")
         catrgoryLabel.isHidden = true
         dateLabel.isHidden = true
         descriptionLabel.isHidden = true
-        
     }
     func configureCouplePlaceModel(placeModel: CouplePlaceModel) {
         locationNameLabel.text = placeModel.name
@@ -93,7 +93,6 @@ class BottomSheetSmallView: UIView {
         catrgoryLabel.isHidden = false
         descriptionLabel.isHidden = false
         dateLabel.isHidden = false
-        
     }
     let descriptionLabel = UILabel().then {
         $0.textColor = .gray3
@@ -109,7 +108,6 @@ class BottomSheetSmallView: UIView {
         $0.textColor = .gray3
         $0.font = FontManager.shared.medium(ofSize: 16)
     }
-    
     let rightBtn = UIImageView().then {
         $0.tintColor = .black
         $0.contentMode = .scaleAspectFit
@@ -131,11 +129,10 @@ class BottomSheetSmallView: UIView {
         self.addSubview(descriptionLabel)
         
         locationNameLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(50)
+            $0.top.equalToSuperview().inset(26)
             $0.leading.equalToSuperview().inset(18)
-            $0.width.lessThanOrEqualTo(100)
+            $0.width.lessThanOrEqualTo(180)
         }
-        
         locationLabel.snp.makeConstraints {
             $0.top.equalTo(locationNameLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(18)
@@ -147,9 +144,9 @@ class BottomSheetSmallView: UIView {
         
         rightBtn.snp.makeConstraints {
             $0.width.height.equalTo(17)
-            $0.centerY.equalTo(locationNameLabel)
-            $0.trailing.equalToSuperview().inset(32)
-        }   
+            $0.centerY.equalTo(locationNameLabel).offset(-4)
+            $0.trailing.equalToSuperview().inset(18)
+        }
         catrgoryLabel.snp.makeConstraints {
             $0.centerY.equalTo(locationNameLabel)
             $0.leading.equalTo(locationNameLabel.snp.trailing).offset(13)
@@ -231,7 +228,7 @@ class BottomSheetLargeView: UIView {
             let leftPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 0))
             $0.leftView = leftPaddingView
             $0.leftViewMode = .always
-
+            
             let rightPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 0))
             $0.rightView = rightPaddingView
             $0.rightViewMode = .always
@@ -251,7 +248,6 @@ class BottomSheetLargeView: UIView {
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(50)
         }
-        
         largeMemoLabel.snp.makeConstraints {
             $0.top.equalTo(largeLocationTF.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview()
@@ -267,13 +263,11 @@ class BottomSheetLargeView: UIView {
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(20)
         }
-        
         largeCategoryStack.snp.makeConstraints {
             $0.top.equalTo(largeCategoryLabel.snp.bottom).offset(16)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(36)
         }
-        
         largePictureLabel.snp.makeConstraints {
             $0.top.equalTo(largeCategoryStack.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview()
@@ -292,4 +286,93 @@ class BottomSheetLargeView: UIView {
         }
     }
     
+}
+class BottomSheetinformView: UIView, UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+           let page = round(scrollView.contentOffset.x / scrollView.frame.size.width)
+           pageControl.currentPage = Int(page)
+       }
+    
+    var disposeBag = DisposeBag()
+        
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    private var pageCount = 0
+    
+    private let scrollView = UIScrollView().then {
+        $0.isPagingEnabled = true
+        $0.showsHorizontalScrollIndicator = false
+    }
+    private let stackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.distribution = .fillEqually
+    }
+    private let pageControl = UIPageControl()
+
+    let informSmallView = BottomSheetSmallView()
+    
+    func configure(placeModel: CouplePlaceModel, imageExist: Bool) {
+        var imageViewH = 12
+        if imageExist {
+            pageCount = placeModel.imageURLs!.count
+            imageViewH = 160
+        }
+        scrollView.delegate = self
+        informSmallView.configureCouplePlaceModel(placeModel: placeModel)
+        self.addSubview(scrollView)
+        self.addSubview(informSmallView)
+        scrollView.addSubview(stackView)
+        scrollView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(imageViewH)
+        }
+        stackView.snp.makeConstraints {
+            $0.top.bottom.leading.trailing.height.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(pageCount)
+            
+        }
+        informSmallView.snp.makeConstraints {
+            $0.top.equalTo(scrollView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        guard let imageUrls = placeModel.imageURLs else {
+            return
+        }
+        setupPages(imageUrls: imageUrls.compactMap { URL(string: $0)})
+        setupPageControl()
+        
+        
+       
+    }
+    private func setupPages(imageUrls: [URL]) {
+        for i in imageUrls {
+            let page = UIImageView()
+            page.kf.indicatorType = .activity  // indicator 활성화
+            page.kf.setImage(
+                with: i,  // 이미지 불러올 url
+                options: [
+                    .scaleFactor(UIScreen.main.scale),
+                    .transition(.none),
+                    .cacheOriginalImage
+                ])
+            stackView.addArrangedSubview(page)
+        }
+    }
+    private func setupPageControl() {
+        pageControl.numberOfPages = pageCount
+        pageControl.currentPage = 0
+        
+        self.addSubview(pageControl)
+        pageControl.snp.makeConstraints {
+            $0.bottom.equalTo(scrollView.snp.bottom).inset(6)
+            $0.centerX.equalToSuperview()
+        }
+        
+      
+    }
 }

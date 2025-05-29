@@ -35,7 +35,7 @@ class BottomSheetVC: UIViewController {
     
     private var viewModel: MapVM
     
-    let informView = UIView()
+    let informView = BottomSheetinformView()
     
     let smallView = BottomSheetSmallView()
     
@@ -46,8 +46,6 @@ class BottomSheetVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        
-       
         setLargeView()
         setBindings()
 
@@ -103,34 +101,14 @@ class BottomSheetVC: UIViewController {
         }
     }
     
-    let informImageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFill
-        $0.clipsToBounds = true
-    }
-    let informSmallView = BottomSheetSmallView()
+ 
     func setInformView(placeModel: CouplePlaceModel, imageExist: Bool) {
-        var imageViewH = 0
-        if imageExist {
-            imageViewH = 160
-        }
-        informSmallView.configureCouplePlaceModel(placeModel: placeModel)
+        informView.configure(placeModel: placeModel, imageExist: imageExist)
         view.addSubview(informView)
-        informView.addSubview(informImageView)
-        informView.addSubview(informSmallView)
-        if let url = placeModel.imageURLs?.first {
-            informImageView.kf.setImage(with: URL(string: url))
-        }
         informView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
-        informImageView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(imageViewH)
-        }
-        informSmallView.snp.makeConstraints {
-            $0.top.equalTo(informImageView.snp.bottom)
-            $0.leading.trailing.bottom.equalToSuperview()
-        }
+        
     }
     
     func setBindings() {
