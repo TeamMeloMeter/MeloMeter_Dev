@@ -111,6 +111,7 @@ class MapVM {
         let searchBtnTapEvent: Observable<Void>
         let endTriggerAlertTapEvent: Observable<Void>
         let dissmissBottomSheet: Observable<Void>
+        let markerTapped: Observable<CouplePlaceModel>
     }
     struct Output {
         var daySince = PublishSubject<String?>()
@@ -123,7 +124,7 @@ class MapVM {
         var currentOtherLocation = PublishSubject<CLLocation?>()
         var endTrigger = PublishSubject<Bool>()
         var getBottomBannerAd = BehaviorSubject<BannerView?>(value: nil)
-        var pickerLocations = PublishSubject<SearchedModel>()
+        var searchedMarker = PublishSubject<SearchedModel>()
         var cameraUpdate = PublishSubject<CLLocation>()
         var setUpBottomSheet = PublishSubject<SearchedModel>()
         var deletePickedMarkers = PublishSubject<Void>()
@@ -140,24 +141,25 @@ class MapVM {
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output(alreadyPlacesMarkers: alreadyPlacesMarkers)
         
+        input.markerTapped.subscribe(onNext: { model in
+            self.coordinator?.setupSheet(pickedModel: nil, placeModel: model, type: "inform")
+        }).disposed(by: disposeBag)
+        
         self.bottomSheetDisappear.bind(to: output.deletePickedMarkers).disposed(by: disposeBag)
 
         if #available(iOS 16.0, *) {
             input.viewWillAppear
                 .subscribe(onNext: { [weak self] _ in
                     guard let self else {return}
-                    
                     // 장소 검색 시 잠깐 동안 뜨는 용도의 피커 지움
                     if let pickedModel = pickedModel.value {
-                        //TODO: 추후 이미 생성된 데이터 마커
-                        output.pickerLocations.onNext(pickedModel)
-                        coordinator?.setupSheet(pickedModel: pickedModel)
-                    }
+                        output.searchedMarker.onNext(pickedModel)
+                        coordinator?.setupSheet(pickedModel: pickedModel, placeModel: nil, type: "small")                    }
                     placeUseCase.fetchAll().subscribe({ single in
                         switch single {
                         case .success(let places):
                             output.alreadyPlacesMarkers.onNext(places)
-                        case .failure(let err): break
+                        case .failure(_): break
                             //TODO: Error Alert
                         }
                     }).disposed(by: disposeBag)

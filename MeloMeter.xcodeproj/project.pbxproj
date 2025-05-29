@@ -164,6 +164,7 @@
 		6076C95C2DE5F38E0068E676 /* UploadPlaceRepoP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076C95B2DE5F3860068E676 /* UploadPlaceRepoP.swift */; };
 		6076C95E2DE5F41B0068E676 /* UploadPlaceRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076C95D2DE5F41B0068E676 /* UploadPlaceRepo.swift */; };
 		6076C9602DE5F5230068E676 /* CouplePlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076C95F2DE5F5230068E676 /* CouplePlaceModel.swift */; };
+		6076C9C62DE856B00068E676 /* BottomSheetInnerViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076C9C52DE856B00068E676 /* BottomSheetInnerViews.swift */; };
 		6084BC9A2DB7610F005F9B2C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6084BC992DB7610F005F9B2C /* WidgetKit.framework */; };
 		6084BC9C2DB7610F005F9B2C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6084BC9B2DB7610F005F9B2C /* SwiftUI.framework */; };
 		6084BCA72DB76110005F9B2C /* MelometerWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6084BC982DB7610F005F9B2C /* MelometerWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -371,6 +372,7 @@
 		6076C95B2DE5F3860068E676 /* UploadPlaceRepoP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPlaceRepoP.swift; sourceTree = "<group>"; };
 		6076C95D2DE5F41B0068E676 /* UploadPlaceRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPlaceRepo.swift; sourceTree = "<group>"; };
 		6076C95F2DE5F5230068E676 /* CouplePlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplePlaceModel.swift; sourceTree = "<group>"; };
+		6076C9C52DE856B00068E676 /* BottomSheetInnerViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetInnerViews.swift; sourceTree = "<group>"; };
 		6084BC982DB7610F005F9B2C /* MelometerWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MelometerWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6084BC992DB7610F005F9B2C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		6084BC9B2DB7610F005F9B2C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -877,10 +879,10 @@
 		5271D4282A5FCFEF00FC7606 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				527547EC2A68FB5600313EFC /* Alert */,
 				609900882DE45BF600A43CC5 /* Rx */,
 				60D067752DA2AB2C00CFD06C /* UIImage+.swift */,
 				60E0EDFF2D9025E800E6E2A2 /* Constants.swift */,
-				527547EC2A68FB5600313EFC /* Alert */,
 				52CE6E8229FEBC0200E43D39 /* FontManager.swift */,
 				6097C9F42D538C0100895B63 /* Label+.swift */,
 				5271D42D2A604BF400FC7606 /* Date+.swift */,
@@ -1157,6 +1159,15 @@
 			path = Upload;
 			sourceTree = "<group>";
 		};
+		6076C9C42DE856980068E676 /* BottomSheet */ = {
+			isa = PBXGroup;
+			children = (
+				603F49372DDDAB9B00B89E6A /* BottomSheetVC.swift */,
+				6076C9C52DE856B00068E676 /* BottomSheetInnerViews.swift */,
+			);
+			path = BottomSheet;
+			sourceTree = "<group>";
+		};
 		609900882DE45BF600A43CC5 /* Rx */ = {
 			isa = PBXGroup;
 			children = (
@@ -1179,7 +1190,7 @@
 		60E5C7552DD7116A00635390 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				603F49372DDDAB9B00B89E6A /* BottomSheetVC.swift */,
+				6076C9C42DE856980068E676 /* BottomSheet */,
 				52CE6EA62A02571E00E43D39 /* MapVC.swift */,
 				5290BFA72A70F35E00D734EE /* MapVM.swift */,
 			);
@@ -1628,6 +1639,7 @@
 				210BAFC02AC88AEA0012B786 /* AlarmRepository.swift in Sources */,
 				5270EC102A460354007FF444 /* AuthNumVC.swift in Sources */,
 				5271D4062A51DBDD00FC7606 /* ProfileInsertVC.swift in Sources */,
+				6076C9C62DE856B00068E676 /* BottomSheetInnerViews.swift in Sources */,
 				5271D4302A605B0900FC7606 /* Encodable+.swift in Sources */,
 				210BAFC62AC88DF70012B786 /* AlarmDTO.swift in Sources */,
 				5270EC0C2A44614A007FF444 /* PhoneCertifiedVC.swift in Sources */,

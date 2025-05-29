@@ -8,7 +8,6 @@
 import Foundation
 
 struct CouplePlaceModel {
-
     let category: String
     let name: String
     let description: String
@@ -19,8 +18,11 @@ struct CouplePlaceModel {
     
     let imagesDatas: [Data]?
     var imageURLs: [String]?
+    
+    var uuid: String?
+    var createdAt: String?
   
-    init(category: String, name: String, description: String, mapX: Double, mapY: Double, roadAddress: String, address: String, imagesDatas: [Data]? = nil, imageURLs: [String]? = nil) {
+    init(category: String, name: String, description: String, mapX: Double, mapY: Double, roadAddress: String, address: String, imagesDatas: [Data]? = nil, imageURLs: [String]? = nil, uuid: String? = nil, createdAt: String? = nil) {
         self.category = category
         self.name = name
         self.description = description
@@ -30,5 +32,7 @@ struct CouplePlaceModel {
         self.roadAddress = roadAddress
         self.address = address
         self.imageURLs = imageURLs
+        self.uuid = uuid
+        self.createdAt = createdAt
     }
 }

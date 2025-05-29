@@ -21,7 +21,11 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     let infoWindow2 = NMFInfoWindow()
     private var bannerView: BannerView?
     
+    //MARK: Rx
     var endTriggerAlertEvent = PublishSubject<Void>()
+    var markerTapped = PublishSubject<CouplePlaceModel>()
+    
+    
     private var viewModel: MapVM?
     let disposeBag = DisposeBag()
     
@@ -64,10 +68,11 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             searchBtnTapEvent: self.searchBtn.rx.tap.map ({ _ in }).asObservable(),
             endTriggerAlertTapEvent: self.endTriggerAlertEvent
                 .asObserver(),
-            dissmissBottomSheet: self.naverMapView.rx.tap.throttle(.seconds(1), scheduler: MainScheduler.instance).map { _ in print("naverMapView.rx.tap") }.asObservable()
+            dissmissBottomSheet: self.naverMapView.rx.tap.throttle(.seconds(1), scheduler: MainScheduler.instance).map { _ in print("naverMapView.rx.tap") }.asObservable(),
+            markerTapped: markerTapped
             
         )
-            
+        
         guard let output = self.viewModel?.transform(input: input, disposeBag: self.disposeBag) else { return }
         
         output.getBottomBannerAd.bind(onNext: addBannerViewToView ).disposed(by: disposeBag)
@@ -120,7 +125,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
                 }
             })
             .disposed(by: disposeBag)
-
+        
         output.otherStateMessage
             .asDriver(onErrorJustReturn: nil)
             .drive(onNext: {[weak self] text in
@@ -152,8 +157,6 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
                 }
             })
             .disposed(by: disposeBag)
-        
-        
 
         output.currentLocation
             .asDriver(onErrorJustReturn: CLLocation(latitude: 0, longitude: 0))
@@ -162,17 +165,15 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
                 self.updateMyMarker(current ?? CLLocation(latitude: 0, longitude: 0))
             })
             .disposed(by: disposeBag)
-        
-//        output.currentLocation
-//            .take(1)
-//            .asDriver(onErrorJustReturn: CLLocation(latitude: 37.541, longitude: 126.986))
-//            .drive(onNext: { [weak self] current in
-//
-//                self?.updateCamera(current ?? CLLocation(latitude: 0, longitude: 0))
-//            })
-//            .disposed(by: disposeBag)
-//
-        
+        //        output.currentLocation
+        //            .take(1)
+        //            .asDriver(onErrorJustReturn: CLLocation(latitude: 37.541, longitude: 126.986))
+        //            .drive(onNext: { [weak self] current in
+        //
+        //                self?.updateCamera(current ?? CLLocation(latitude: 0, longitude: 0))
+        //            })
+        //            .disposed(by: disposeBag)
+        //
         
         output.currentOtherLocation
             .asDriver(onErrorJustReturn: CLLocation(latitude: 0, longitude: 0))
@@ -197,26 +198,24 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             })
             .disposed(by: disposeBag)
         
-        output.pickerLocations.bind(onNext: self.pickedMarker).disposed(by: disposeBag)
+        output.searchedMarker.bind(onNext: self.pickedMarker).disposed(by: disposeBag)
         
         output.cameraUpdate.bind(onNext: self.updateCamera).disposed(by: disposeBag)
         
         output.deletePickedMarkers.bind(onNext: self.deletePickedMarkers).disposed(by: disposeBag)
         
-        output.alreadyPlacesMarkers.debug().bind(onNext: updatePlaceMarkers).disposed(by: disposeBag)
+        output.alreadyPlacesMarkers.bind(onNext: updatePlaceMarkers).disposed(by: disposeBag)
     }
-
+    
     // MARK: Map
     func updateMyMarker(_ location: CLLocation) {
         myMarker.position = NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
         myMarker.mapView = naverMapView
     }
-    
     func updateOtherMarker(_ location: CLLocation) {
         otherMarker.position = NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
         otherMarker.mapView = naverMapView
     }
-    
     func updatePlaceMarkers(models: [CouplePlaceModel]) {
         beforeAlreadyPlaceMarkers.forEach {
             $0.mapView = nil
@@ -227,6 +226,13 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             marker.position = NMGLatLng(lat: model.mapY, lng: model.mapX)
             marker.captionText = model.name
             marker.mapView = self.naverMapView
+            marker.touchHandler = { [weak self] overlay in
+                guard let tappedMarker = overlay as? NMFMarker, let self else {
+                    return false
+                }
+                self.markerTapped.onNext(model)
+                return true
+            }
             beforeAlreadyPlaceMarkers.append(marker)
         }
     }
@@ -236,7 +242,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         cameraUpdate.animation = .easeIn
         naverMapView.moveCamera(cameraUpdate)
     }
-
+    
     // MARK: Configure
     func configure() {
         [naverMapView,
@@ -282,7 +288,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
                 profileImage.draw(in: CGRect(origin: .zero, size: size))
             }
             roundedProfileImage.draw(in: CGRect(x: 7, y: 7, width: 66, height: 66))
-
+            
             let compositeImage = UIGraphicsGetImageFromCurrentImageContext()
             
             UIGraphicsEndImageContext()
@@ -358,24 +364,24 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         let image1 = UIImage(named: "myMarkerborder")
         let image2 = UIImage(named: "myMarkerDot")
         let defaultProfileImage = UIImage(named: "defaultProfileImage")!
-
+        
         let imageSize = CGSize(width: 80, height: 107)
-
+        
         UIGraphicsBeginImageContextWithOptions(imageSize, false, 0.0)
-
+        
         image1?.draw(in: CGRect(x: 0, y: 0, width: 80, height: 90))
         image2?.draw(in: CGRect(x: 31, y: 89, width: 18, height: 18))
         defaultProfileImage.draw(in: CGRect(x: 7, y: 7, width: 66, height: 66))
         
         let compositeImage = UIGraphicsGetImageFromCurrentImageContext()
-
+        
         UIGraphicsEndImageContext()
-
+        
         if let image = compositeImage {
             return image
         }
         return UIImage(named: "myMarkerDot")!
-
+        
     }()
     lazy var myInfoWindowView: UIView = {
         let view = UIView()
@@ -409,7 +415,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         let image1 = UIImage(named: "otherMarkerborder")
         let image2 = UIImage(named: "otherMarkerDot")
         let defaultProfileImage = UIImage(named: "defaultProfileImage")!
-
+        
         let imageSize = CGSize(width: 80, height: 107)
         
         UIGraphicsBeginImageContextWithOptions(imageSize, false, 0.0)
@@ -417,7 +423,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         image1?.draw(in: CGRect(x: 0, y: 0, width: 80, height: 90))
         image2?.draw(in: CGRect(x: 31, y: 89, width: 18, height: 18))
         defaultProfileImage.draw(in: CGRect(x: 7, y: 7, width: 66, height: 66))
-
+        
         let compositeImage = UIGraphicsGetImageFromCurrentImageContext()
         
         UIGraphicsEndImageContext()
@@ -426,7 +432,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             return image
         }
         return UIImage(named: "otherMarkerDot")!
-    
+        
     }()
     
     lazy var otherInfoWindowView: UIView = {
@@ -515,7 +521,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         self.bannerView = bannerView
         
         currentLocationBtnConstraints()
-
+        
     }
     
     
@@ -557,13 +563,13 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             otherInfoWindowLabel.centerXAnchor.constraint(equalTo: otherInfoWindowView.centerXAnchor),
             otherInfoWindowLabel.centerYAnchor.constraint(equalTo: otherInfoWindowView.centerYAnchor),
             otherInfoWindowLabel.heightAnchor.constraint(equalToConstant: 43)
-        
+            
         ])
         
     }
     
     private func currentLocationBtnConstraints() {
-
+        
         currentLocationButton.snp.makeConstraints {
             $0.trailing.equalTo(naverMapView.snp.trailing).inset(16)
             $0.bottom.equalTo(bannerView!.snp.top).offset(-16)
@@ -588,9 +594,9 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             alarmButton.topAnchor.constraint(equalTo: naverMapView.topAnchor, constant: 60),
             alarmButton.widthAnchor.constraint(equalToConstant: 48),
             alarmButton.heightAnchor.constraint(equalToConstant: 48),
-
-         
-                        
+            
+            
+            
         ])
         
         

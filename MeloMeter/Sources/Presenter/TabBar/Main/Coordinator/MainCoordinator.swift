@@ -74,16 +74,31 @@ extension MainCoordinator {
     }
     
     
-    func setupSheet(pickedModel: SearchedModel) {
-        let bottomSheetVC = BottomSheetVC(viewModel: mapVM!)
-        bottomSheetVC.configure(pickedModel: pickedModel)
-        bottomSheetVC.modalPresentationStyle = .pageSheet
-        bottomSheetVC.isModalInPresentation = false
-        if let sheet = bottomSheetVC.sheetPresentationController {
+    func setupSheet(pickedModel: SearchedModel?, placeModel: CouplePlaceModel?, type:String) {
+        self.bottomSheet = BottomSheetVC(viewModel: mapVM!)
+        guard let bottomSheet else {return}
+        var startingHeight = 0.0
+        bottomSheet.modalPresentationStyle = .pageSheet
+        bottomSheet.isModalInPresentation = false
+        
+        
+        if type == "small", let pickedModel {
+            bottomSheet.setSmallView(pickedModel: pickedModel)
+            startingHeight = 120
+        } else if let placeModel {
+            if let urls = placeModel.imageURLs, urls.isEmpty {
+                startingHeight = 160
+                bottomSheet.setInformView(placeModel: placeModel, imageExist: false)
+            } else {
+                startingHeight = 320
+                bottomSheet.setInformView(placeModel: placeModel, imageExist: true)
+            }
+        }
+  
+        if let sheet = bottomSheet.sheetPresentationController {
             if #available(iOS 16.0, *) {
                 let customDetent = UISheetPresentationController.Detent.custom(identifier: .init("custom"), resolver: { _ in
-                    
-                    return 120
+                    return startingHeight
                 })
                 sheet.selectedDetentIdentifier = .some(.init("custom"))
                 // 드래그를 멈추면 그 위치에 멈추는 지점: default는 large()
@@ -99,7 +114,7 @@ extension MainCoordinator {
             }
           
         }
-        self.navigationController.present(bottomSheetVC, animated: false, completion: nil)
+        self.navigationController.present(bottomSheet, animated: false, completion: nil)
         
     }
     

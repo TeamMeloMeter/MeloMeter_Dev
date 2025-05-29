@@ -21,19 +21,9 @@ final class UploadPlaceRepo: UploadPlaceRepoP {
         
         return self.firebaseService.getDocFromSubCollection(firstCollection: .Couples, subCollection: .DatePlaces, document: coupleDocumentID).map { dic in
             return dic.map { value in
-                
                 guard
-                    let category    = value["category"]    as? String,
-                    let name        = value["name"]        as? String,
-                    let desc        = value["description"] as? String,
-                    let mapX        = value["mapX"]        as? Double,
-                    let mapY        = value["mapY"]        as? Double,
-                    let roadAddress = value["roadAddress"] as? String,
-                    let address     = value["address"]     as? String,
-                    let imagesURLs   = value["imageUrls"]  as? [String]
-                        
-                else { return nil }
-                return CouplePlaceModel(category: category, name: name, description: desc, mapX: mapX, mapY: mapY, roadAddress: roadAddress, address: address, imageURLs: imagesURLs)
+                    let category = value["category"] as? String, let name = value["name"] as? String, let desc = value["description"] as? String, let mapX = value["mapX"] as? Double, let mapY = value["mapY"] as? Double, let roadAddress = value["roadAddress"] as? String, let address = value["address"] as? String, let imagesURLs = value["imageUrls"] as? [String], let uuid = value["uuid"] as? String, let createdAt = value["createdAt"] as? String else { return nil }
+                return CouplePlaceModel(category: category, name: name, description: desc, mapX: mapX, mapY: mapY, roadAddress: roadAddress, address: address, imageURLs: imagesURLs,uuid: uuid,createdAt: createdAt)
             }
         }
     }
