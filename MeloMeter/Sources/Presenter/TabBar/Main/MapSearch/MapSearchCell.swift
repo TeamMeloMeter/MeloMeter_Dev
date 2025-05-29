@@ -14,7 +14,7 @@ class MapSearchCell: UITableViewCell {
     // 1) 왼쪽 아이콘
     private let iconImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(named: "SearchCellIcon")
+        iv.image = UIImage(named: "pickedMarkerIcon")
         iv.contentMode = .scaleAspectFit
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv

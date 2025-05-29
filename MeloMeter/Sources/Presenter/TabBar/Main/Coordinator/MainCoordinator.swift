@@ -15,7 +15,7 @@ final class MainCoordinator: Coordinator {
     private let firebaseService = DefaultFirebaseService()
     private let adMobRepo = AdmobRepository()
     private let sharedDataRepo: SharedDataRepoP
-    private let uploadPlaceUseCase: UploadPlaceUseCase
+    private let uploadPlaceUseCase: PlaceUseCase
     
     private var mapSearchVM: MapSearchVM?
     private var mapVM: MapVM?
@@ -25,7 +25,7 @@ final class MainCoordinator: Coordinator {
         self.navigationController = navigationController
         self.childCoordinators = []
         self.sharedDataRepo = sharedDataRepo
-        self.uploadPlaceUseCase = UploadPlaceUseCaseImpl(repository: UploadPlaceRepo(firebaseService: self.firebaseService))
+        self.uploadPlaceUseCase = PlaceUseCaseImpl(repository: UploadPlaceRepo(firebaseService: self.firebaseService))
     }
     
     func start() {

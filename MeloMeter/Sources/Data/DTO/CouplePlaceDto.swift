@@ -8,6 +8,8 @@
 import Foundation
 
 struct CouplePlaceDto: Codable {
+    let address: String
+    let roadAddress: String
     let uuid: String
     let title: String
     let name: String
@@ -16,8 +18,9 @@ struct CouplePlaceDto: Codable {
     let mapY: Double
     let imageUrls: [String]
     let createdAt: String
+    let category: String
     
     func toDictionary() -> [String: Any] {
-        return ["uuid": uuid,"title":title, "name": name, "description": description,  "mapX": mapX, "mapY": mapY, "imageUrls": imageUrls, "createdAt": createdAt ]
+        return ["uuid": uuid, "title":title, "name": name, "description": description,  "mapX": mapX, "mapY": mapY, "imageUrls": imageUrls, "createdAt": createdAt, "address": address, "roadAddress": roadAddress, "category": category]
     }
 }

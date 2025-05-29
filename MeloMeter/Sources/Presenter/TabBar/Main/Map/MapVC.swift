@@ -15,7 +15,8 @@ import GoogleMobileAds
 //메인 지도 화면
 class MapVC: UIViewController, UIGestureRecognizerDelegate{
     
-    var beforePickedMarkers: [NMFMarker] = []
+    var beforePickedMarkers: NMFMarker?
+    var beforeAlreadyPlaceMarkers: [NMFMarker] = []
     let infoWindow1 = NMFInfoWindow()
     let infoWindow2 = NMFInfoWindow()
     private var bannerView: BannerView?
@@ -196,11 +197,13 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             })
             .disposed(by: disposeBag)
         
-        output.pickerLocations.bind(onNext: self.setPlaceMarkers).disposed(by: disposeBag)
+        output.pickerLocations.bind(onNext: self.pickedMarker).disposed(by: disposeBag)
         
         output.cameraUpdate.bind(onNext: self.updateCamera).disposed(by: disposeBag)
         
         output.deletePickedMarkers.bind(onNext: self.deletePickedMarkers).disposed(by: disposeBag)
+        
+        output.alreadyPlacesMarkers.debug().bind(onNext: updatePlaceMarkers).disposed(by: disposeBag)
     }
 
     // MARK: Map
@@ -212,6 +215,20 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     func updateOtherMarker(_ location: CLLocation) {
         otherMarker.position = NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
         otherMarker.mapView = naverMapView
+    }
+    
+    func updatePlaceMarkers(models: [CouplePlaceModel]) {
+        beforeAlreadyPlaceMarkers.forEach {
+            $0.mapView = nil
+        }
+        models.forEach { model in
+            let marker = NMFMarker()
+            marker.iconImage = NMFOverlayImage(image: UIImage(named: "couplePlaceIcon")!)
+            marker.position = NMGLatLng(lat: model.mapY, lng: model.mapX)
+            marker.captionText = model.name
+            marker.mapView = self.naverMapView
+            beforeAlreadyPlaceMarkers.append(marker)
+        }
     }
     
     func updateCamera(_ location: CLLocation) {
@@ -302,26 +319,24 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         let dataSource1 = CustomInfoViewDataSource(customView: myInfoWindowView)
         infoWindow1.offsetY = 5
         infoWindow1.dataSource = dataSource1
+        
         otherMarker.iconImage = NMFOverlayImage(image: otherMarkerIcon)
         let dataSource2 = CustomInfoViewDataSource(customView: otherInfoWindowView)
         infoWindow2.offsetY = 5
         infoWindow2.dataSource = dataSource2
     }
     
-    func setPlaceMarkers(models: [SearchedModel]) {
-        models.forEach {
-            let marker = NMFMarker()
-            marker.position = NMGLatLng(lat: $0.mapy, lng: $0.mapx)
-            marker.captionText = $0.title
-            marker.mapView = self.naverMapView
-            self.beforePickedMarkers.append(marker)
-        }
+    func pickedMarker(model: SearchedModel) {
+        let marker = NMFMarker()
+        marker.iconImage = NMFOverlayImage(image: UIImage(named: "pickedMarkerIcon")!)
+        marker.position = NMGLatLng(lat: model.mapy, lng: model.mapx)
+        marker.captionText = model.title
+        marker.mapView = self.naverMapView
+        beforePickedMarkers = marker
     }
     
     func deletePickedMarkers() {
-        self.beforePickedMarkers.forEach {
-            $0.mapView = nil
-        }
+        beforePickedMarkers?.mapView = nil
     }
     
     lazy var naverMapView: NMFMapView = {

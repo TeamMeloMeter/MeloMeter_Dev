@@ -160,7 +160,7 @@
 		60453EA72DB883770053859F /* SharedDataRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60453EA62DB8836C0053859F /* SharedDataRepo.swift */; };
 		60697AC82D2A5B4C00693990 /* CustomChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60697AC72D2A5B4600693990 /* CustomChatModel.swift */; };
 		6076C9572DE5EFF90068E676 /* CouplePlaceDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076C9562DE5EFF90068E676 /* CouplePlaceDto.swift */; };
-		6076C95A2DE5F2B90068E676 /* UploadPlaceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076C9592DE5F2B00068E676 /* UploadPlaceUseCase.swift */; };
+		6076C95A2DE5F2B90068E676 /* PlaceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076C9592DE5F2B00068E676 /* PlaceUseCase.swift */; };
 		6076C95C2DE5F38E0068E676 /* UploadPlaceRepoP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076C95B2DE5F3860068E676 /* UploadPlaceRepoP.swift */; };
 		6076C95E2DE5F41B0068E676 /* UploadPlaceRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076C95D2DE5F41B0068E676 /* UploadPlaceRepo.swift */; };
 		6076C9602DE5F5230068E676 /* CouplePlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076C95F2DE5F5230068E676 /* CouplePlaceModel.swift */; };
@@ -367,7 +367,7 @@
 		60453EAC2DB8A1A30053859F /* MelometerWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MelometerWidgetExtension.entitlements; sourceTree = "<group>"; };
 		60697AC72D2A5B4600693990 /* CustomChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomChatModel.swift; sourceTree = "<group>"; };
 		6076C9562DE5EFF90068E676 /* CouplePlaceDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplePlaceDto.swift; sourceTree = "<group>"; };
-		6076C9592DE5F2B00068E676 /* UploadPlaceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPlaceUseCase.swift; sourceTree = "<group>"; };
+		6076C9592DE5F2B00068E676 /* PlaceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceUseCase.swift; sourceTree = "<group>"; };
 		6076C95B2DE5F3860068E676 /* UploadPlaceRepoP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPlaceRepoP.swift; sourceTree = "<group>"; };
 		6076C95D2DE5F41B0068E676 /* UploadPlaceRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPlaceRepo.swift; sourceTree = "<group>"; };
 		6076C95F2DE5F5230068E676 /* CouplePlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplePlaceModel.swift; sourceTree = "<group>"; };
@@ -1152,7 +1152,7 @@
 		6076C9582DE5F29F0068E676 /* Upload */ = {
 			isa = PBXGroup;
 			children = (
-				6076C9592DE5F2B00068E676 /* UploadPlaceUseCase.swift */,
+				6076C9592DE5F2B00068E676 /* PlaceUseCase.swift */,
 			);
 			path = Upload;
 			sourceTree = "<group>";
@@ -1529,7 +1529,7 @@
 				524138302A62F943002AADA6 /* StartVM.swift in Sources */,
 				60453EA72DB883770053859F /* SharedDataRepo.swift in Sources */,
 				527547F42A6D23E400313EFC /* KakaoService.swift in Sources */,
-				6076C95A2DE5F2B90068E676 /* UploadPlaceUseCase.swift in Sources */,
+				6076C95A2DE5F2B90068E676 /* PlaceUseCase.swift in Sources */,
 				603F49FD2DE06AA300B89E6A /* Reactive+.swift in Sources */,
 				52F305302A168CE900112A04 /* DisconnectVC.swift in Sources */,
 				521D41EC2A801D1200E5CCDA /* CoupleModel.swift in Sources */,

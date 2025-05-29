@@ -29,7 +29,5 @@ public protocol FirebaseService {
     
     //MARK: SubCollection
     func createDocToSubcollection(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String ,values: Any) -> Completable
-    
     func getDocFromSubCollection(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String) -> Single<[FirebaseData]>
-
 }

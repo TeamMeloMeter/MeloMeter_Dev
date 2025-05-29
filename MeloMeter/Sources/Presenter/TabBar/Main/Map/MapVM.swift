@@ -15,12 +15,13 @@ class MapVM {
 
     weak var coordinator: MainCoordinator?
     private var mainUseCase: MainUseCase
-    private var uploadPlaceUseCase: UploadPlaceUseCase
+    private var placeUseCase: PlaceUseCase
     
     //MARK: Observable
     var pickedModel = BehaviorRelay<SearchedModel?>(value: nil)
     var couplePlaceModel = BehaviorRelay<CouplePlaceModel?>(value: nil)
     var bottomSheetDisappear = PublishSubject<Void>()
+    var alreadyPlacesMarkers = PublishSubject<[CouplePlaceModel]>()
 
     //MARK: StaticDatas
     let categoryLists = ["전체","맛집","전시회","공원","기타"]
@@ -53,7 +54,7 @@ class MapVM {
             values in
             guard let pickedModel = self.pickedModel.value else {return false}
             
-            let model = CouplePlaceModel(category: self.categoryLists[values.2.firstIndex(of: true) ?? 0], name: values.1, description: values.0, mapX: pickedModel.mapx, mapY: pickedModel.mapy, images: values.3, roadAddress: pickedModel.roadAddress, address: pickedModel.address)
+            let model = CouplePlaceModel(category: self.categoryLists[values.2.firstIndex(of: true) ?? 0], name: values.1, description: values.0, mapX: pickedModel.mapx, mapY: pickedModel.mapy, roadAddress: pickedModel.roadAddress, address: pickedModel.address, imagesDatas: values.3)
             self.couplePlaceModel.accept(model)
             
             return (!values.0.isEmpty && !values.1.isEmpty && values.2.contains(true) )
@@ -82,28 +83,24 @@ class MapVM {
         
         input.viewWillDisappear.map{ self.pickedModel.accept(nil); return () }.bind(to: bottomSheetDisappear).disposed(by: disposeBag)
         
-        
-        
-        
         input.largeSaveBtnTapped
             .flatMap { [weak self] _ -> Observable<Void> in
                 guard let self, let model = self.couplePlaceModel.value else {
                     return Observable.error(NSError(domain: "", code: -1))
                 }
-                return uploadPlaceUseCase.execute(model: model).andThen(Observable.just(()))
+                return placeUseCase.upload(model: model).andThen(Observable.just(()))
             }.subscribe(onNext: { [weak self] in
                 guard let self else {return}
+                placeUseCase.fetchAll().subscribe(onSuccess: { places in
+                    self.alreadyPlacesMarkers.onNext(places)
+                }).disposed(by: disposeBag)
+                
                 self.dissmissBottomSheet()
             }, onError: { err in
                 print(err)
                 //TODO: 에러처리
             }).disposed(by: disposeBag)
-        
       
-    
-        
-        
-    
         return output
     }
     
@@ -114,9 +111,7 @@ class MapVM {
         let searchBtnTapEvent: Observable<Void>
         let endTriggerAlertTapEvent: Observable<Void>
         let dissmissBottomSheet: Observable<Void>
-        
     }
-    
     struct Output {
         var daySince = PublishSubject<String?>()
         var myProfileImage = PublishSubject<UIImage?>()
@@ -128,37 +123,45 @@ class MapVM {
         var currentOtherLocation = PublishSubject<CLLocation?>()
         var endTrigger = PublishSubject<Bool>()
         var getBottomBannerAd = BehaviorSubject<BannerView?>(value: nil)
-        var pickerLocations = PublishSubject<[SearchedModel]>()
+        var pickerLocations = PublishSubject<SearchedModel>()
         var cameraUpdate = PublishSubject<CLLocation>()
         var setUpBottomSheet = PublishSubject<SearchedModel>()
         var deletePickedMarkers = PublishSubject<Void>()
+        var alreadyPlacesMarkers = PublishSubject<[CouplePlaceModel]>()
     }
     
     
-    init(coordinator: MainCoordinator, mainUseCase: MainUseCase, uploadPlaceUseCase: UploadPlaceUseCase) {
+    init(coordinator: MainCoordinator, mainUseCase: MainUseCase, uploadPlaceUseCase: PlaceUseCase) {
         self.coordinator = coordinator
         self.mainUseCase = mainUseCase
-        self.uploadPlaceUseCase = uploadPlaceUseCase
+        self.placeUseCase = uploadPlaceUseCase
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
-        let output = Output()
+        let output = Output(alreadyPlacesMarkers: alreadyPlacesMarkers)
         
+        self.bottomSheetDisappear.bind(to: output.deletePickedMarkers).disposed(by: disposeBag)
+
         if #available(iOS 16.0, *) {
-            
-            self.bottomSheetDisappear.bind(to: output.deletePickedMarkers ).disposed(by: disposeBag)
-            
             input.viewWillAppear
                 .subscribe(onNext: { [weak self] _ in
                     guard let self else {return}
-                    // 장소 검색 시 잠깐 동안 뜨는 용도의 피커 지움
-      
                     
+                    // 장소 검색 시 잠깐 동안 뜨는 용도의 피커 지움
                     if let pickedModel = pickedModel.value {
                         //TODO: 추후 이미 생성된 데이터 마커
-                        output.pickerLocations.onNext([pickedModel])
+                        output.pickerLocations.onNext(pickedModel)
                         coordinator?.setupSheet(pickedModel: pickedModel)
                     }
+                    placeUseCase.fetchAll().subscribe({ single in
+                        switch single {
+                        case .success(let places):
+                            output.alreadyPlacesMarkers.onNext(places)
+                        case .failure(let err): break
+                            //TODO: Error Alert
+                        }
+                    }).disposed(by: disposeBag)
+                    
                     output.getBottomBannerAd.onNext(mainUseCase.getBottomBannerAd())
                     
                     self.mainUseCase.disconnectionObserver()
@@ -233,7 +236,6 @@ class MapVM {
                     } else {
                         output.cameraUpdate.onNext(location)
                     }
-       
                 } else {
                     coordinator?.finish()
                     output.currentLocation.onNext(CLLocation(latitude: 0, longitude: 0))
@@ -290,8 +292,6 @@ class MapVM {
                                 UserDefaults.standard.set(otherUserModel.fcmToken, forKey: "otherFcmToken")
                                 UserDefaults.standard.set(userInfo.coupleID, forKey: "coupleID")
                                 
-                                
-                                
                                 output.otherStateMessage.onNext(otherUserModel.stateMessage ?? nil)
                             })
                             .disposed(by: disposeBag)
@@ -304,7 +304,6 @@ class MapVM {
                     
                     self.mainUseCase.getSinceFirstDay(coupleID: userInfo.coupleID ?? "")
                         .subscribe(onSuccess: { date in
-                            
                             output.daySince.onNext("D+\(date)")
                         })
                         .disposed(by: disposeBag)
