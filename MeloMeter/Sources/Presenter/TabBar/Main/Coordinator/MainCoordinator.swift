@@ -106,7 +106,7 @@ extension MainCoordinator {
                 // sheet로 present된 viewController내부를 scroll하면 sheet가 움직이지 않고 내부 컨텐츠를 스크롤되도록 설정
                 sheet.prefersScrollingExpandsWhenScrolledToEdge = false
                 // grabber바 보이도록 설정
-                sheet.prefersGrabberVisible = true
+                sheet.prefersGrabberVisible = false
                 // corner 값 설정
                 sheet.preferredCornerRadius = 16
             } else {

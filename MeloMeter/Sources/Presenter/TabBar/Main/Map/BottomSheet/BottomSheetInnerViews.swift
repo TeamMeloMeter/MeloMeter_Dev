@@ -48,7 +48,6 @@ class innerPictureView: UIView {
         self.layer.borderWidth = 1
         self.layer.borderColor = UIColor.lightGray.cgColor
         
-        
         self.snp.makeConstraints {
             $0.width.height.equalTo(64)
         }
@@ -119,14 +118,26 @@ class BottomSheetSmallView: UIView {
         $0.font = FontManager.shared.medium(ofSize: 16)
         $0.textColor = .lightGray
     }
+    let dropPickerView = DropPickerView().then {
+        $0.isHidden = true
+    }
+    
     func setUI() {
         self.addSubview(locationNameLabel)
         self.addSubview(locationLabel)
         self.addSubview(rightBtn)
-        
+        self.addSubview(dropPickerView)
+
         self.addSubview(catrgoryLabel)
         self.addSubview(dateLabel)
         self.addSubview(descriptionLabel)
+        
+        dropPickerView.layer.shadowColor = UIColor.gray1.cgColor
+        dropPickerView.layer.shadowOpacity = 0.4
+        dropPickerView.layer.shadowRadius = 10
+        dropPickerView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        dropPickerView.layer.shadowPath = nil
+        
         
         locationNameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(26)
@@ -155,7 +166,15 @@ class BottomSheetSmallView: UIView {
             $0.centerY.equalTo(catrgoryLabel)
             $0.leading.equalTo(catrgoryLabel.snp.trailing).offset(13)
         }
+        dropPickerView.snp.makeConstraints {
+            $0.trailing.equalTo(rightBtn)
+            $0.width.equalTo(68)
+            $0.height.equalTo(94)
+            $0.top.equalTo(rightBtn.snp.bottom).offset(4)
+        }
     }
+    
+    
 }
 
 class BottomSheetLargeView: UIView {
@@ -372,7 +391,31 @@ class BottomSheetinformView: UIView, UIScrollViewDelegate {
             $0.bottom.equalTo(scrollView.snp.bottom).inset(6)
             $0.centerX.equalToSuperview()
         }
-        
-      
     }
+}
+class DropPickerView: UIView {
+    
+    let edit = UILabel().then { $0.text = "수정"; $0.font = FontManager.shared.medium(ofSize: 15)}
+    let delete = UILabel().then { $0.text = "삭제";  $0.font = FontManager.shared.medium(ofSize: 15)}
+    lazy var stackView = UIStackView(arrangedSubviews: [ edit, delete ]).then {
+        $0.axis = .vertical
+        $0.distribution = .fillEqually
+        $0.spacing = 0
+        $0.alignment = .center
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = .white
+        self.layer.cornerRadius = 10
+        
+        self.addSubview(stackView)
+        stackView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview()
+        }
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 }

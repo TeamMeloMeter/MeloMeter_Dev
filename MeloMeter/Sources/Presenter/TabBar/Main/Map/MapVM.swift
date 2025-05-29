@@ -40,6 +40,9 @@ class MapVM {
         let memoTFtexts: Observable<String>
         let viewWillDisappear: Observable<Void>
         let largeSaveBtnTapped: Observable<Void>
+        let editBtnTapped: Observable<Void>
+        let deleteBtnTapped: Observable<Void>
+        
     }
     struct BottomSheetOutput {
         var categoryIsSelected = BehaviorRelay<[Bool]>(value: [false, false, false, false, false])
@@ -49,6 +52,14 @@ class MapVM {
     func transform(input: BottomSheetInput, disposeBag: DisposeBag) -> BottomSheetOutput {
         
         let output = BottomSheetOutput()
+        //TODO: 버튼 관련
+        input.editBtnTapped.subscribe({ _ in
+            
+        }).disposed(by: disposeBag)
+        
+        input.deleteBtnTapped.subscribe({ _ in
+            
+        }).disposed(by: disposeBag)
         
         Observable.combineLatest(input.loactionTFtexts, input.memoTFtexts, output.categoryIsSelected ,output.pictureValues).map {
             values in

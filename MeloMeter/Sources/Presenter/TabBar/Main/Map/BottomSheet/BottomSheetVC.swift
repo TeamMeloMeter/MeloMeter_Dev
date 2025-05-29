@@ -42,25 +42,36 @@ class BottomSheetVC: UIViewController {
     let largeView = BottomSheetLargeView().then {
         $0.isHidden = true
     }
-    
+    let grabbar = UIImageView(image: UIImage(named: "grabbar"))
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        //TODO: cycle 보면서 smallView 로드시에만 로드시키게.
         setLargeView()
+        
         setBindings()
+        setGrabbar()
 
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+    }
+    
+    func setGrabbar() {
+        view.addSubview(grabbar)
+        grabbar.snp.makeConstraints {
+            $0.top.equalTo(10)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(3)
+            $0.width.equalTo(46)
+        }
     }
     
     func setSmallView(pickedModel: SearchedModel) {
-        
         smallView.configurePickedModel(pickedModel: pickedModel)
         view.addSubview(smallView)
-        
         smallView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
@@ -69,13 +80,11 @@ class BottomSheetVC: UIViewController {
     
     func setLargeView() {
         view.addSubview(largeView)
-        
         largeView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.top.equalToSuperview()
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
-        
         let innerCategoryTexts = ["전체", "맛집", "전시회", "공원", "기타"]
         
         for i in 0 ..< innerCategoryTexts.count {
@@ -108,7 +117,9 @@ class BottomSheetVC: UIViewController {
         informView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
+        view.bringSubviewToFront(grabbar)
         
+       
     }
     
     func setBindings() {
@@ -123,7 +134,7 @@ class BottomSheetVC: UIViewController {
         
         let output = viewModel.transform(input: MapVM.BottomSheetInput(dismissBottomSheet: largeView.xButton.rx.tap.asObservable(), categoryTapped: categoryTapped, pictureTapped:
                                                                         pictureTapped, loactionTFtexts: largeView.largeLocationTF.rx.textOrEmpty.asObservable(), memoTFtexts: largeView.largeMemoTF.rx.textOrEmpty.asObservable(), viewWillDisappear: self.rx.methodInvoked(#selector(viewWillDisappear(_:))).map { _ in }.asObservable(), largeSaveBtnTapped: largeView.largeSaveBtn.rx.tap.map { _ in }.asObservable()
-                                                                      ), disposeBag: disposeBag)
+                                                                       ,editBtnTapped:  informView.informSmallView.dropPickerView.delete.rx.tapGesture().when(.recognized).map { _ in }.asObservable(), deleteBtnTapped: informView.informSmallView.dropPickerView.delete.rx.tapGesture().when(.recognized).map { _ in }.asObservable()), disposeBag: disposeBag)
         
         output.btnEnabled.bind(onNext: { [weak self] val in
             guard let self else {return}
