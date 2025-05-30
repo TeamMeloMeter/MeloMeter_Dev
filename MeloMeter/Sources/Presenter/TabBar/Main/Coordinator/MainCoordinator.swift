@@ -25,7 +25,7 @@ final class MainCoordinator: Coordinator {
         self.navigationController = navigationController
         self.childCoordinators = []
         self.sharedDataRepo = sharedDataRepo
-        self.uploadPlaceUseCase = PlaceUseCaseImpl(repository: UploadPlaceRepo(firebaseService: self.firebaseService))
+        self.uploadPlaceUseCase = PlaceUseCaseImpl(repository: CouplePlaceRepo(firebaseService: self.firebaseService))
     }
     
     func start() {

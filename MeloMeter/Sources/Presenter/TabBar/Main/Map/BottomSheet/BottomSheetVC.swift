@@ -25,25 +25,19 @@ class BottomSheetVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private var deletePicker = PublishSubject<Void>()
     private var categoryTapped = PublishSubject<Int?>()
-    
     private var selectedImage = BehaviorRelay<Data?>(value: nil)
-    
     private var selectedImageTag = BehaviorRelay<Int?>(value: nil)
-    
     private var disposeBag = DisposeBag()
-    
     private var viewModel: MapVM
-    
     let informView = BottomSheetinformView()
-    
     let smallView = BottomSheetSmallView()
-    
     let largeView = BottomSheetLargeView().then {
         $0.isHidden = true
     }
     let grabbar = UIImageView(image: UIImage(named: "grabbar"))
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -52,7 +46,7 @@ class BottomSheetVC: UIViewController {
         
         setBindings()
         setGrabbar()
-
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -75,8 +69,8 @@ class BottomSheetVC: UIViewController {
         smallView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
+        
     }
-  
     
     func setLargeView() {
         view.addSubview(largeView)
@@ -110,7 +104,6 @@ class BottomSheetVC: UIViewController {
         }
     }
     
- 
     func setInformView(placeModel: CouplePlaceModel, imageExist: Bool) {
         informView.configure(placeModel: placeModel, imageExist: imageExist)
         view.addSubview(informView)
@@ -118,23 +111,25 @@ class BottomSheetVC: UIViewController {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
         view.bringSubviewToFront(grabbar)
-        
-       
     }
     
     func setBindings() {
-        self.rx
-              .methodInvoked(#selector(UIView.touchesBegan(_:with:)))
-              .subscribe(onNext: { [weak self] _ in
-                self?.view.endEditing(true)
-              })
-              .disposed(by: disposeBag)
+        
+        
+        
         
         let pictureTapped = Observable.zip(selectedImageTag.asObservable(), selectedImage.asObservable())
         
-        let output = viewModel.transform(input: MapVM.BottomSheetInput(dismissBottomSheet: largeView.xButton.rx.tap.asObservable(), categoryTapped: categoryTapped, pictureTapped:
-                                                                        pictureTapped, loactionTFtexts: largeView.largeLocationTF.rx.textOrEmpty.asObservable(), memoTFtexts: largeView.largeMemoTF.rx.textOrEmpty.asObservable(), viewWillDisappear: self.rx.methodInvoked(#selector(viewWillDisappear(_:))).map { _ in }.asObservable(), largeSaveBtnTapped: largeView.largeSaveBtn.rx.tap.map { _ in }.asObservable()
-                                                                       ,editBtnTapped:  informView.informSmallView.dropPickerView.delete.rx.tapGesture().when(.recognized).map { _ in }.asObservable(), deleteBtnTapped: informView.informSmallView.dropPickerView.delete.rx.tapGesture().when(.recognized).map { _ in }.asObservable()), disposeBag: disposeBag)
+        let output = viewModel.transform(input: MapVM.BottomSheetInput(
+            dismissBottomSheet: largeView.xButton.rx.tap.asObservable(),categoryTapped: categoryTapped, pictureTapped: pictureTapped, loactionTFtexts: largeView.largeLocationTF.rx.textOrEmpty.asObservable(), memoTFtexts: largeView.largeMemoTF.rx.textOrEmpty.asObservable(), viewWillDisappear: self.rx.methodInvoked(#selector(viewWillDisappear(_:))).map { _ in }.asObservable(),
+            largeSaveBtnTapped: largeView.largeSaveBtn.rx.tap.asObservable(),
+            editBtnTapped:  informView.informSmallView.dropPickerView.edit.rx.tapGesture().when(.recognized).map { _ in }.asObservable(),
+            deleteBtnTapped: informView.informSmallView.dropPickerView.delete.rx.tapGesture().when(.recognized).map { event in
+            }.asObservable(), threeDoutTapped: informView.informSmallView.rightBtn.rx.tapGesture().when(.recognized).map { _ in }.asObservable(), informViewTapped: self.rx
+                .methodInvoked(#selector(UIView.touchesBegan(_:with:)))
+                .flatMap { _ in self.view.endEditing(true)
+                    return Observable.just(()) }.asObservable(), deletePicker: self.deletePicker),
+                                         disposeBag: disposeBag)
         
         output.btnEnabled.bind(onNext: { [weak self] val in
             guard let self else {return}
@@ -143,7 +138,7 @@ class BottomSheetVC: UIViewController {
                 largeView.largeSaveBtn.backgroundColor = .primary1
             } else {
                 largeView.largeSaveBtn.backgroundColor = .gray4
-
+                
             }
             
         }).disposed(by: disposeBag)
@@ -181,6 +176,15 @@ class BottomSheetVC: UIViewController {
             }
         }).disposed(by: disposeBag)
         
+        output.dropPickerIsHidden.bind(to: informView.informSmallView.dropPickerView.rx.isHidden).disposed(by: disposeBag)
+        output.alert.flatMap { title, message in
+            return AlertManager(viewController: self)
+                .setTitle(title)
+                .setMessage(
+                    message
+                )
+                .showYNAlert()
+        }.bind(to: deletePicker).disposed(by: disposeBag)
         
         if #available(iOS 16.0, *) {
             smallView.rightBtn.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
@@ -191,12 +195,9 @@ class BottomSheetVC: UIViewController {
                 sheet.animateChanges {
                     sheet.detents = [largeDetent]
                     sheet.selectedDetentIdentifier = .init("large")
-                    
                     self.smallView.isHidden = true
                     self.largeView.isHidden = false
-                    
                 }
-                
             }).disposed(by: disposeBag)
         } else {
             // Fallback on earlier versions
@@ -204,29 +205,29 @@ class BottomSheetVC: UIViewController {
     }
 }
 extension BottomSheetVC :PHPickerViewControllerDelegate {
-   func presentImagePicker() {
-       var config = PHPickerConfiguration()
-       config.selectionLimit = 1
-       config.filter = .images
-       let picker = PHPickerViewController(configuration: config)
-       picker.delegate = self
-       present(picker, animated: true)
-   }
-
-   func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-       picker.dismiss(animated: true)
-
-       guard let itemProvider = results.first?.itemProvider,
-             itemProvider.canLoadObject(ofClass: UIImage.self) else { return }
-
-       itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
-           guard let self ,let uiImage = image as? UIImage else { return }
-           DispatchQueue.main.async {
-               if let jpegData = uiImage.jpegData(compressionQuality: 0.6) {
-                   self.selectedImage.accept(jpegData)
-               }
-           }
-       }
-   }
+    func presentImagePicker() {
+        var config = PHPickerConfiguration()
+        config.selectionLimit = 1
+        config.filter = .images
+        let picker = PHPickerViewController(configuration: config)
+        picker.delegate = self
+        present(picker, animated: true)
+    }
+    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        
+        guard let itemProvider = results.first?.itemProvider,
+              itemProvider.canLoadObject(ofClass: UIImage.self) else { return }
+        
+        itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+            guard let self ,let uiImage = image as? UIImage else { return }
+            DispatchQueue.main.async {
+                if let jpegData = uiImage.jpegData(compressionQuality: 0.6) {
+                    self.selectedImage.accept(jpegData)
+                }
+            }
+        }
+    }
 }
 

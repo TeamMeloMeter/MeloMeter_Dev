@@ -22,6 +22,7 @@ class MapVM {
     var couplePlaceModel = BehaviorRelay<CouplePlaceModel?>(value: nil)
     var bottomSheetDisappear = PublishSubject<Void>()
     var alreadyPlacesMarkers = PublishSubject<[CouplePlaceModel]>()
+    var lastPickedPicker = BehaviorRelay<CouplePlaceModel?>(value: nil)
 
     //MARK: StaticDatas
     let categoryLists = ["전체","맛집","전시회","공원","기타"]
@@ -42,24 +43,47 @@ class MapVM {
         let largeSaveBtnTapped: Observable<Void>
         let editBtnTapped: Observable<Void>
         let deleteBtnTapped: Observable<Void>
+        let threeDoutTapped: Observable<Void>
+        let informViewTapped: Observable<Void>
+        let deletePicker: Observable<Void>
         
     }
     struct BottomSheetOutput {
         var categoryIsSelected = BehaviorRelay<[Bool]>(value: [false, false, false, false, false])
         var pictureValues = BehaviorRelay<[Data]>(value: [])
         var btnEnabled = BehaviorRelay<Bool>(value: false)
+        var dropPickerIsHidden = BehaviorRelay<Bool>(value: true)
+        var alert = BehaviorRelay<(String, String)>(value: ("",""))
     }
     func transform(input: BottomSheetInput, disposeBag: DisposeBag) -> BottomSheetOutput {
         
         let output = BottomSheetOutput()
+        input.threeDoutTapped.subscribe(onNext: { [weak self] in
+            guard let self else {return}
+            output.dropPickerIsHidden.accept(false)
+        }).disposed(by: disposeBag)
+        input.informViewTapped.subscribe(onNext: { [weak self] in
+            guard let self else {return}
+            output.dropPickerIsHidden.accept(true)
+        }).disposed(by: disposeBag)
         //TODO: 버튼 관련
         input.editBtnTapped.subscribe({ _ in
             
         }).disposed(by: disposeBag)
         
-        input.deleteBtnTapped.subscribe({ _ in
-            
+        input.deleteBtnTapped.bind(onNext: { [weak self] in
+            guard let self else {return}
+            output.alert.accept(("삭제하시겠습니까?","삭제한 마커는 되돌릴 수 없어요!"))
         }).disposed(by: disposeBag)
+        
+        input.deletePicker.flatMap {
+            return self.lastPickedPicker
+        }.flatMap { model in
+            guard let model else {return Observable<Void>.error(NSError(domain: "deletePickerErr", code: -1))}
+            return self.placeUseCase.delPlace(model: model)
+                .andThen(Observable.just(()))}.subscribe(onNext: {
+                    self.dissmissBottomSheet()
+            }).disposed(by: disposeBag)
         
         Observable.combineLatest(input.loactionTFtexts, input.memoTFtexts, output.categoryIsSelected ,output.pictureValues).map {
             values in
@@ -152,7 +176,9 @@ class MapVM {
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output(alreadyPlacesMarkers: alreadyPlacesMarkers)
         
-        input.markerTapped.subscribe(onNext: { model in
+        input.markerTapped.subscribe(onNext: { [weak self] model in
+            guard let self else {return}
+            self.lastPickedPicker.accept(model)
             self.coordinator?.setupSheet(pickedModel: nil, placeModel: model, type: "inform")
         }).disposed(by: disposeBag)
         

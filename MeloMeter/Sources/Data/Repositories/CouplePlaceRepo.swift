@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-final class UploadPlaceRepo: UploadPlaceRepoP {
+final class CouplePlaceRepo: CouplePlaceRepoP {
     
     let firebaseService: FirebaseService
     var disposeBag: DisposeBag
@@ -38,8 +38,13 @@ final class UploadPlaceRepo: UploadPlaceRepoP {
             
         }
     }
+    
+    func delPlace(uuid: String) -> Completable {
+        guard let coupleDocumentID = UserDefaults.standard.string(forKey: "coupleID") else {return Completable.error(NSError(domain: "not", code: 404))}
+        return firebaseService.deleteDocument(firstCollection: .Couples, subCollection: .DatePlaces, document: coupleDocumentID, uuid: uuid)
+    }
 }
-extension UploadPlaceRepo {
+extension CouplePlaceRepo {
     func uploadMultipleImages(datas: [Data], filePath: String) -> Single<[String]> {
         let uploadSingles = datas.map { firebaseService.uploadImage(filePath: "\(filePath)/\(UUID().uuidString)", data: $0) }
         return Single.zip(uploadSingles)

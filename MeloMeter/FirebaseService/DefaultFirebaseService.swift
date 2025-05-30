@@ -17,7 +17,8 @@ public enum FireStoreError: Error, LocalizedError {
 }
 
 public final class DefaultFirebaseService: FirebaseService {
-
+    
+    
     private let database: Firestore
     private var disposeBag = DisposeBag()
     public init(
@@ -321,4 +322,18 @@ extension DefaultFirebaseService {
             return Disposables.create()
         }
     }
+    
+    public func deleteDocument(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String, uuid: String) -> Completable {
+        Completable.create { [weak self] com in
+            guard let self else { return Disposables.create() }
+            self.database.collection(firstCollection.rawValue)
+                .document(document).collection(subCollection.rawValue).document(uuid)
+                .delete { error in
+                    if let error = error { com(.error(error)) }
+                    com(.completed)
+                }
+            return Disposables.create()
+        }
+    }
+    
 }

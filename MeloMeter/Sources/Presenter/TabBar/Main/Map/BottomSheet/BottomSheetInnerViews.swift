@@ -31,7 +31,7 @@ class CategoryView: UIView {
     }
 }
 class innerPictureView: UIView {
-    private let addImg = UIImageView().then {
+    private let addImg = UIImageView(image: UIImage(named: "addIcon")).then {
         $0.contentMode = .scaleAspectFill
         $0.tintColor = .gray2
     }
@@ -51,7 +51,6 @@ class innerPictureView: UIView {
         self.snp.makeConstraints {
             $0.width.height.equalTo(64)
         }
-        
         addImg.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.height.width.equalTo(24)
@@ -66,9 +65,25 @@ class innerPictureView: UIView {
 }
 class BottomSheetSmallView: UIView {
     
+    private var disposeBag = DisposeBag()
+    
+    var smallViewTapped = PublishSubject<Void>()
+    
+    func setbinding() {
+        let tapGesture = UITapGestureRecognizer()
+        tapGesture.cancelsTouchesInView = false // 버튼 등 터치 허용
+        self.addGestureRecognizer(tapGesture)
+        
+        tapGesture.rx.event
+            .map { _ in }.bind(to: smallViewTapped).disposed(by: disposeBag)
+        
+        
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
+        setbinding()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -109,7 +124,7 @@ class BottomSheetSmallView: UIView {
     }
     let rightBtn = UIImageView().then {
         $0.tintColor = .black
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleAspectFill
     }
     let locationNameLabel = UILabel().then {
         $0.font = FontManager.shared.bold(ofSize: 18)
@@ -117,6 +132,7 @@ class BottomSheetSmallView: UIView {
     let locationLabel = UILabel().then {
         $0.font = FontManager.shared.medium(ofSize: 16)
         $0.textColor = .lightGray
+        $0.numberOfLines = 2
     }
     let dropPickerView = DropPickerView().then {
         $0.isHidden = true
@@ -125,12 +141,13 @@ class BottomSheetSmallView: UIView {
     func setUI() {
         self.addSubview(locationNameLabel)
         self.addSubview(locationLabel)
+        self.addSubview(descriptionLabel)
+        
         self.addSubview(rightBtn)
         self.addSubview(dropPickerView)
-
+        
         self.addSubview(catrgoryLabel)
         self.addSubview(dateLabel)
-        self.addSubview(descriptionLabel)
         
         dropPickerView.layer.shadowColor = UIColor.gray1.cgColor
         dropPickerView.layer.shadowOpacity = 0.4
@@ -140,9 +157,9 @@ class BottomSheetSmallView: UIView {
         
         
         locationNameLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(26)
+            $0.top.equalToSuperview().inset(40)
             $0.leading.equalToSuperview().inset(18)
-            $0.width.lessThanOrEqualTo(180)
+            $0.width.lessThanOrEqualTo(170)
         }
         locationLabel.snp.makeConstraints {
             $0.top.equalTo(locationNameLabel.snp.bottom).offset(10)
@@ -150,11 +167,11 @@ class BottomSheetSmallView: UIView {
         }
         descriptionLabel.snp.makeConstraints {
             $0.top.equalTo(locationLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().inset(18)
+            $0.leading.trailing.equalToSuperview().inset(18)
         }
         
         rightBtn.snp.makeConstraints {
-            $0.width.height.equalTo(17)
+            $0.width.height.equalTo(44)
             $0.centerY.equalTo(locationNameLabel).offset(-4)
             $0.trailing.equalToSuperview().inset(18)
         }
@@ -167,10 +184,10 @@ class BottomSheetSmallView: UIView {
             $0.leading.equalTo(catrgoryLabel.snp.trailing).offset(13)
         }
         dropPickerView.snp.makeConstraints {
-            $0.trailing.equalTo(rightBtn)
+            $0.trailing.equalTo(rightBtn).inset(10)
             $0.width.equalTo(68)
             $0.height.equalTo(94)
-            $0.top.equalTo(rightBtn.snp.bottom).offset(4)
+            $0.top.equalTo(rightBtn.snp.bottom).offset(-12)
         }
     }
     
@@ -309,12 +326,12 @@ class BottomSheetLargeView: UIView {
 class BottomSheetinformView: UIView, UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-           let page = round(scrollView.contentOffset.x / scrollView.frame.size.width)
-           pageControl.currentPage = Int(page)
-       }
+        let page = round(scrollView.contentOffset.x / scrollView.frame.size.width)
+        pageControl.currentPage = Int(page)
+    }
     
     var disposeBag = DisposeBag()
-        
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -332,7 +349,7 @@ class BottomSheetinformView: UIView, UIScrollViewDelegate {
         $0.distribution = .fillEqually
     }
     private let pageControl = UIPageControl()
-
+    
     let informSmallView = BottomSheetSmallView()
     
     func configure(placeModel: CouplePlaceModel, imageExist: Bool) {
@@ -366,7 +383,7 @@ class BottomSheetinformView: UIView, UIScrollViewDelegate {
         setupPageControl()
         
         
-       
+        
     }
     private func setupPages(imageUrls: [URL]) {
         for i in imageUrls {
