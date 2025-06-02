@@ -66,24 +66,11 @@ class innerPictureView: UIView {
 class BottomSheetSmallView: UIView {
     
     private var disposeBag = DisposeBag()
-    
-    var smallViewTapped = PublishSubject<Void>()
-    
-    func setbinding() {
-        let tapGesture = UITapGestureRecognizer()
-        tapGesture.cancelsTouchesInView = false // 버튼 등 터치 허용
-        self.addGestureRecognizer(tapGesture)
-        
-        tapGesture.rx.event
-            .map { _ in }.bind(to: smallViewTapped).disposed(by: disposeBag)
-        
-        
-    }
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
-        setbinding()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

@@ -17,18 +17,18 @@ class MapVM {
     private var mainUseCase: MainUseCase
     private var placeUseCase: PlaceUseCase
     
-    //MARK: Observable
-    var pickedModel = BehaviorRelay<SearchedModel?>(value: nil)
-    var couplePlaceModel = BehaviorRelay<CouplePlaceModel?>(value: nil)
-    var bottomSheetDisappear = PublishSubject<Void>()
     var alreadyPlacesMarkers = PublishSubject<[CouplePlaceModel]>()
     var lastPickedPicker = BehaviorRelay<CouplePlaceModel?>(value: nil)
+    var pickedModel = BehaviorRelay<SearchedModel?>(value: nil)
+    var bottomSheetDisappear = PublishSubject<Void>()
+
 
     //MARK: StaticDatas
     let categoryLists = ["전체","맛집","전시회","공원","기타"]
     
     func dissmissBottomSheet() {
         pickedModel.accept(nil)
+//        lastPickedPicker = BehaviorRelay<CouplePlaceModel?>(value: nil)
         coordinator?.dismissViewController()
     }
     
@@ -53,10 +53,11 @@ class MapVM {
         var pictureValues = BehaviorRelay<[Data]>(value: [])
         var btnEnabled = BehaviorRelay<Bool>(value: false)
         var dropPickerIsHidden = BehaviorRelay<Bool>(value: true)
-        var alert = BehaviorRelay<(String, String)>(value: ("",""))
+        var alert = PublishRelay<(String, String)>()
     }
     func transform(input: BottomSheetInput, disposeBag: DisposeBag) -> BottomSheetOutput {
-        
+        //MARK: Observable
+        var couplePlaceModel = BehaviorRelay<CouplePlaceModel?>(value: nil)
         let output = BottomSheetOutput()
         input.threeDoutTapped.subscribe(onNext: { [weak self] in
             guard let self else {return}
@@ -66,45 +67,55 @@ class MapVM {
             guard let self else {return}
             output.dropPickerIsHidden.accept(true)
         }).disposed(by: disposeBag)
+        
         //TODO: 버튼 관련
-        input.editBtnTapped.subscribe({ _ in
-            
+        input.editBtnTapped.subscribe({ [weak self] _ in
+            guard let self else {return}
         }).disposed(by: disposeBag)
         
         input.deleteBtnTapped.bind(onNext: { [weak self] in
             guard let self else {return}
-            output.alert.accept(("삭제하시겠습니까?","삭제한 마커는 되돌릴 수 없어요!"))
+            output.alert.accept(("삭제하기","삭제한 마커는 되돌릴 수 없어요!"))
         }).disposed(by: disposeBag)
         
-        input.deletePicker.flatMap {
-            return self.lastPickedPicker
-        }.flatMap { model in
-            guard let model else {return Observable<Void>.error(NSError(domain: "deletePickerErr", code: -1))}
-            return self.placeUseCase.delPlace(model: model)
-                .andThen(Observable.just(()))}.subscribe(onNext: {
-                    self.dissmissBottomSheet()
-            }).disposed(by: disposeBag)
+        input.deletePicker
+            .withLatestFrom(lastPickedPicker)
+            .compactMap { $0 } // nil 제거
+            .flatMap { [weak self] model -> Observable<Void> in
+                guard let self else { return .empty() }
+                return self.placeUseCase.delPlace(model: model)
+                    .andThen(Observable.just(()))
+            }.flatMap { [weak self] _ -> Observable<[CouplePlaceModel]> in
+                guard let self else {return Observable.empty()}
+                return self.placeUseCase.fetchAll().asObservable()
+            }
+            .subscribe(onNext: { [weak self] places in
+                guard let self else {return}
+                alreadyPlacesMarkers.onNext(places)
+                self.dissmissBottomSheet()
+            })
+            .disposed(by: disposeBag)
         
-        Observable.combineLatest(input.loactionTFtexts, input.memoTFtexts, output.categoryIsSelected ,output.pictureValues).map {
+        Observable.combineLatest(input.loactionTFtexts, input.memoTFtexts, output.categoryIsSelected ,output.pictureValues).map { [weak self]
             values in
-            guard let pickedModel = self.pickedModel.value else {return false}
+            guard let self, let pickedModel = pickedModel.value else {return false}
             
             let model = CouplePlaceModel(category: self.categoryLists[values.2.firstIndex(of: true) ?? 0], name: values.1, description: values.0, mapX: pickedModel.mapx, mapY: pickedModel.mapy, roadAddress: pickedModel.roadAddress, address: pickedModel.address, imagesDatas: values.3)
-            self.couplePlaceModel.accept(model)
+            couplePlaceModel.accept(model)
             
             return (!values.0.isEmpty && !values.1.isEmpty && values.2.contains(true) )
         }.bind(to: output.btnEnabled).disposed(by: disposeBag)
         
-        input.categoryTapped.map({ num in
-            guard let num else {return []}
+        input.categoryTapped.map({ [weak self] num in
+            guard let self, let num else {return []}
             var arr = [false, false, false, false, false]
             arr[num] = true
             return arr
         }).bind(to: output.categoryIsSelected).disposed(by: disposeBag)
         
-        input.pictureTapped.subscribe(onNext: { (idx, data) in
+        input.pictureTapped.subscribe(onNext: { [weak self] (idx, data) in
             var beforePictures = output.pictureValues.value
-            guard let data else {return}
+            guard let self, let data else {return}
             if let idx ,beforePictures.count > idx {
                 beforePictures[idx] = data
             } else {
@@ -114,20 +125,23 @@ class MapVM {
             
         }).disposed(by: disposeBag)
         
-        input.dismissBottomSheet.bind(onNext: self.dissmissBottomSheet).disposed(by: disposeBag)
+        input.dismissBottomSheet.bind(onNext: { [weak self] in
+            guard let self else {return}
+            self.dissmissBottomSheet()}).disposed(by: disposeBag)
         
-        input.viewWillDisappear.map{ self.pickedModel.accept(nil); return () }.bind(to: bottomSheetDisappear).disposed(by: disposeBag)
+        input.viewWillDisappear.map {  [weak self] in guard let self else {return}; pickedModel.accept(nil); return () }.bind(to: bottomSheetDisappear).disposed(by: disposeBag)
         
         input.largeSaveBtnTapped
             .flatMap { [weak self] _ -> Observable<Void> in
-                guard let self, let model = self.couplePlaceModel.value else {
+                guard let self, let model = couplePlaceModel.value else {
                     return Observable.error(NSError(domain: "", code: -1))
                 }
                 return placeUseCase.upload(model: model).andThen(Observable.just(()))
             }.subscribe(onNext: { [weak self] in
                 guard let self else {return}
-                placeUseCase.fetchAll().subscribe(onSuccess: { places in
-                    self.alreadyPlacesMarkers.onNext(places)
+                placeUseCase.fetchAll().subscribe(onSuccess: { [weak self] places in
+                    guard let self else {return}
+                    alreadyPlacesMarkers.onNext(places)
                 }).disposed(by: disposeBag)
                 
                 self.dissmissBottomSheet()
@@ -178,11 +192,15 @@ class MapVM {
         
         input.markerTapped.subscribe(onNext: { [weak self] model in
             guard let self else {return}
-            self.lastPickedPicker.accept(model)
+            lastPickedPicker.accept(model)
+            print("markerTapped \(lastPickedPicker.value)")
             self.coordinator?.setupSheet(pickedModel: nil, placeModel: model, type: "inform")
         }).disposed(by: disposeBag)
         
-        self.bottomSheetDisappear.bind(to: output.deletePickedMarkers).disposed(by: disposeBag)
+        self.bottomSheetDisappear.subscribe(onNext: { [weak self] in
+            guard let self else {return}
+            output.deletePickedMarkers.onNext(())
+        }).disposed(by: disposeBag)
 
         if #available(iOS 16.0, *) {
             input.viewWillAppear
@@ -192,7 +210,8 @@ class MapVM {
                     if let pickedModel = pickedModel.value {
                         output.searchedMarker.onNext(pickedModel)
                         coordinator?.setupSheet(pickedModel: pickedModel, placeModel: nil, type: "small")                    }
-                    placeUseCase.fetchAll().subscribe({ single in
+                    placeUseCase.fetchAll().subscribe({ [weak self] single in
+                        guard let self else {return}
                         switch single {
                         case .success(let places):
                             output.alreadyPlacesMarkers.onNext(places)

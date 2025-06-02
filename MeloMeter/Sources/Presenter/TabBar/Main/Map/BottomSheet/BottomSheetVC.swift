@@ -15,8 +15,11 @@ import RxRelay
 
 class BottomSheetVC: UIViewController {
     
-    init(disposeBag: DisposeBag = DisposeBag(), viewModel: MapVM) {
-        self.disposeBag = disposeBag
+    deinit {
+        print("💀 BottomSheetVC 해제됨")
+    }
+    
+    init(viewModel: MapVM) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -46,11 +49,11 @@ class BottomSheetVC: UIViewController {
         
         setBindings()
         setGrabbar()
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        disposeBag = DisposeBag()
     }
     
     func setGrabbar() {
@@ -64,6 +67,8 @@ class BottomSheetVC: UIViewController {
     }
     
     func setSmallView(pickedModel: SearchedModel) {
+        self.largeView.isHidden = true
+        self.informView.isHidden = true
         smallView.configurePickedModel(pickedModel: pickedModel)
         view.addSubview(smallView)
         smallView.snp.makeConstraints {
@@ -87,7 +92,9 @@ class BottomSheetVC: UIViewController {
             categoryView.tag = i
             categoryView.rx.tapGesture().when(.recognized).map{
                 $0.view?.tag
-            }.bind(to: categoryTapped).disposed(by: disposeBag)
+            }.bind(onNext: { [weak self] tapped in
+                guard let self else {return}
+                categoryTapped.onNext(tapped)}).disposed(by: disposeBag)
             largeView.largeCategoryStack.addArrangedSubview(categoryView)
         }
         for i in 0 ..< 4 {
@@ -96,7 +103,10 @@ class BottomSheetVC: UIViewController {
             innerPicture.rx.tapGesture().when(.recognized).map {
                 self.presentImagePicker()
                 return $0.view?.tag
-            }.bind(to: selectedImageTag).disposed(by: disposeBag)
+            }.bind(onNext: { [weak self] tag in
+                guard let self else {return}
+                selectedImageTag.accept(tag)
+            } ).disposed(by: disposeBag)
             largeView.largePictureStack.addArrangedSubview(innerPicture)
             innerPicture.snp.makeConstraints {
                 $0.width.equalTo(64)
@@ -105,6 +115,8 @@ class BottomSheetVC: UIViewController {
     }
     
     func setInformView(placeModel: CouplePlaceModel, imageExist: Bool) {
+        self.largeView.isHidden = true
+        self.smallView.isHidden = true
         informView.configure(placeModel: placeModel, imageExist: imageExist)
         view.addSubview(informView)
         informView.snp.makeConstraints {
@@ -115,20 +127,18 @@ class BottomSheetVC: UIViewController {
     
     func setBindings() {
         
-        
-        
-        
         let pictureTapped = Observable.zip(selectedImageTag.asObservable(), selectedImage.asObservable())
         
         let output = viewModel.transform(input: MapVM.BottomSheetInput(
             dismissBottomSheet: largeView.xButton.rx.tap.asObservable(),categoryTapped: categoryTapped, pictureTapped: pictureTapped, loactionTFtexts: largeView.largeLocationTF.rx.textOrEmpty.asObservable(), memoTFtexts: largeView.largeMemoTF.rx.textOrEmpty.asObservable(), viewWillDisappear: self.rx.methodInvoked(#selector(viewWillDisappear(_:))).map { _ in }.asObservable(),
             largeSaveBtnTapped: largeView.largeSaveBtn.rx.tap.asObservable(),
             editBtnTapped:  informView.informSmallView.dropPickerView.edit.rx.tapGesture().when(.recognized).map { _ in }.asObservable(),
-            deleteBtnTapped: informView.informSmallView.dropPickerView.delete.rx.tapGesture().when(.recognized).map { event in
+            deleteBtnTapped: informView.informSmallView.dropPickerView.delete.rx.tapGesture().when(.recognized).map { [weak self] event in
+                return ()
             }.asObservable(), threeDoutTapped: informView.informSmallView.rightBtn.rx.tapGesture().when(.recognized).map { _ in }.asObservable(), informViewTapped: self.rx
                 .methodInvoked(#selector(UIView.touchesBegan(_:with:)))
                 .flatMap { _ in self.view.endEditing(true)
-                    return Observable.just(()) }.asObservable(), deletePicker: self.deletePicker),
+                    return Observable.just(()) }.asObservable(), deletePicker: self.deletePicker.asObservable()),
                                          disposeBag: disposeBag)
         
         output.btnEnabled.bind(onNext: { [weak self] val in
@@ -160,7 +170,7 @@ class BottomSheetVC: UIViewController {
         
         output.pictureValues.subscribe(onNext: { [weak self] datas in
             guard let self else {return}
-            print(datas)
+
             for idx in 0 ..< 4 {
                 let view = largeView.largePictureStack.arrangedSubviews[idx] as! innerPictureView
                 if idx < datas.count {
@@ -176,15 +186,21 @@ class BottomSheetVC: UIViewController {
             }
         }).disposed(by: disposeBag)
         
-        output.dropPickerIsHidden.bind(to: informView.informSmallView.dropPickerView.rx.isHidden).disposed(by: disposeBag)
-        output.alert.flatMap { title, message in
-            return AlertManager(viewController: self)
+        output.dropPickerIsHidden.bind(onNext: { [weak self] hidden in
+            guard let self else {return}
+            informView.informSmallView.dropPickerView.isHidden = hidden
+        } ).disposed(by: disposeBag)
+        
+        output.alert
+            .flatMap { [weak self] title, message in
+                print("message \(title) \(message)")
+            return AlertManager(viewController: self!)
                 .setTitle(title)
-                .setMessage(
-                    message
-                )
+                .setMessage(message)
                 .showYNAlert()
-        }.bind(to: deletePicker).disposed(by: disposeBag)
+        }.subscribe(onNext: { [weak self] in
+            guard let self else {return}
+            self.deletePicker.onNext(())}).disposed(by: disposeBag)
         
         if #available(iOS 16.0, *) {
             smallView.rightBtn.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in

@@ -150,7 +150,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         output.authorizationAlertShouldShow
             .asDriver(onErrorJustReturn: false)
             .drive(onNext: { [weak self] shouldShowAlert in
-                guard let self = self else{ return }
+                guard let self else{ return }
                 if shouldShowAlert {
                     AlertManager(viewController: self)
                         .setLocationAlert()

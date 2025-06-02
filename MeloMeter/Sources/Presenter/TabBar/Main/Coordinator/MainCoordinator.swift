@@ -75,6 +75,7 @@ extension MainCoordinator {
     
     
     func setupSheet(pickedModel: SearchedModel?, placeModel: CouplePlaceModel?, type:String) {
+        self.bottomSheet = nil
         self.bottomSheet = BottomSheetVC(viewModel: mapVM!)
         guard let bottomSheet else {return}
         var startingHeight = 0.0
