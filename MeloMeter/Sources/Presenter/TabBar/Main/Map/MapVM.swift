@@ -11,6 +11,7 @@ import RxRelay
 import CoreLocation
 import RxCocoa
 import GoogleMobileAds
+import Kingfisher
 class MapVM {
 
     weak var coordinator: MainCoordinator?
@@ -36,7 +37,6 @@ class MapVM {
         let dismissBottomSheet: Observable<Void>
         let categoryTapped: Observable<Int?>
         let pictureTapped: Observable<(Int?, Data?)>
-        
         let loactionTFtexts: Observable<String>
         let memoTFtexts: Observable<String>
         let viewWillDisappear: Observable<Void>
@@ -54,9 +54,9 @@ class MapVM {
         var btnEnabled = BehaviorRelay<Bool>(value: false)
         var dropPickerIsHidden = BehaviorRelay<Bool>(value: true)
         var alert = PublishRelay<(String, String)>()
+        var changeEditStyle = PublishRelay<CouplePlaceModel>()
     }
     func transform(input: BottomSheetInput, disposeBag: DisposeBag) -> BottomSheetOutput {
-        //MARK: Observable
         var couplePlaceModel = BehaviorRelay<CouplePlaceModel?>(value: nil)
         let output = BottomSheetOutput()
         input.threeDoutTapped.subscribe(onNext: { [weak self] in
@@ -69,8 +69,26 @@ class MapVM {
         }).disposed(by: disposeBag)
         
         //TODO: 버튼 관련
-        input.editBtnTapped.subscribe({ [weak self] _ in
-            guard let self else {return}
+        input.editBtnTapped.subscribe(onNext: { [weak self] event in
+            guard let self, let model = lastPickedPicker.value else {return}
+            var datas: [Data] = []
+            model.imageURLs?.forEach { url in
+                let group = DispatchGroup()
+                
+                group.enter()
+                self.getDataFromURL(url: URL(string: url)!) { data in
+                    if let data = data {
+                        datas.append(data)
+                    }
+                    group.leave()
+                }
+                group.notify(queue: .main) {
+                    output.pictureValues.accept(datas)
+                }
+            }
+           
+            
+            output.changeEditStyle.accept(model)
         }).disposed(by: disposeBag)
         
         input.deleteBtnTapped.bind(onNext: { [weak self] in
@@ -162,6 +180,7 @@ class MapVM {
         let dissmissBottomSheet: Observable<Void>
         let markerTapped: Observable<CouplePlaceModel>
     }
+    
     struct Output {
         var daySince = PublishSubject<String?>()
         var myProfileImage = PublishSubject<UIImage?>()
@@ -193,7 +212,6 @@ class MapVM {
         input.markerTapped.subscribe(onNext: { [weak self] model in
             guard let self else {return}
             lastPickedPicker.accept(model)
-            print("markerTapped \(lastPickedPicker.value)")
             self.coordinator?.setupSheet(pickedModel: nil, placeModel: model, type: "inform")
         }).disposed(by: disposeBag)
         
@@ -234,11 +252,9 @@ class MapVM {
                     self.mainUseCase.checkAuthorization()
                     self.mainUseCase.requestLocation()
                     self.mainUseCase.requestOtherLocation()
-                    
                     //잔여 알림 가져오기
                     UNUserNotificationCenter.current().getDeliveredNotifications { notifications in
                         DispatchQueue.main.sync {
-                            
                             for item in notifications {
 //                                print("읽지않은 노티 : ",item.request.content.body)
                                 let userInfo = item.request.content.userInfo
@@ -249,7 +265,6 @@ class MapVM {
                             }
                         }
                     }
-      
                     //잔여 알림목록 초기화
                     UNUserNotificationCenter.current().removeAllDeliveredNotifications()
                     UNUserNotificationCenter.current().setBadgeCount(0)
@@ -376,4 +391,16 @@ class MapVM {
     }
     
     
+}
+extension MapVM {
+    func getDataFromURL(url: URL, completion: @escaping (Data?) -> Void) {
+        ImageDownloader.default.downloadImage(with: url, completionHandler:  { result in
+            switch result {
+            case .success(let response):
+                completion(response.originalData)
+            case .failure(let error):
+                break
+            }
+        })
+    }
 }

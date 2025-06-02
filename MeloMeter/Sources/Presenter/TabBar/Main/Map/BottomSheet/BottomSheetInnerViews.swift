@@ -211,7 +211,7 @@ class BottomSheetLargeView: UIView {
         $0.axis = .horizontal
         $0.alignment = .fill
     }
-    let largePictureStack = UIStackView().then {
+    var largePictureStack = UIStackView().then {
         $0.alignment = .center
         $0.spacing = 14
         $0.axis = .horizontal
@@ -306,6 +306,19 @@ class BottomSheetLargeView: UIView {
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(self.safeAreaLayoutGuide)
             $0.height.equalTo(52)
+        }
+    }
+    
+    func setupPages(imageUrls: [URL]) {
+        for (index, i) in imageUrls.enumerated() {
+            (largePictureStack.arrangedSubviews[index] as! UIImageView).kf.setImage(
+                with: i,  // 이미지 불러올 url
+                options: [
+                    .scaleFactor(UIScreen.main.scale),
+                    .transition(.none),
+                    .cacheOriginalImage
+                ])
+            
         }
     }
     

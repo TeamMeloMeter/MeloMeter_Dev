@@ -15,9 +15,6 @@ import RxRelay
 
 class BottomSheetVC: UIViewController {
     
-    deinit {
-        print("💀 BottomSheetVC 해제됨")
-    }
     
     init(viewModel: MapVM) {
         self.viewModel = viewModel
@@ -133,9 +130,7 @@ class BottomSheetVC: UIViewController {
             dismissBottomSheet: largeView.xButton.rx.tap.asObservable(),categoryTapped: categoryTapped, pictureTapped: pictureTapped, loactionTFtexts: largeView.largeLocationTF.rx.textOrEmpty.asObservable(), memoTFtexts: largeView.largeMemoTF.rx.textOrEmpty.asObservable(), viewWillDisappear: self.rx.methodInvoked(#selector(viewWillDisappear(_:))).map { _ in }.asObservable(),
             largeSaveBtnTapped: largeView.largeSaveBtn.rx.tap.asObservable(),
             editBtnTapped:  informView.informSmallView.dropPickerView.edit.rx.tapGesture().when(.recognized).map { _ in }.asObservable(),
-            deleteBtnTapped: informView.informSmallView.dropPickerView.delete.rx.tapGesture().when(.recognized).map { [weak self] event in
-                return ()
-            }.asObservable(), threeDoutTapped: informView.informSmallView.rightBtn.rx.tapGesture().when(.recognized).map { _ in }.asObservable(), informViewTapped: self.rx
+            deleteBtnTapped: informView.informSmallView.dropPickerView.delete.rx.tapGesture().when(.recognized).map { _ in }.asObservable(), threeDoutTapped: informView.informSmallView.rightBtn.rx.tapGesture().when(.recognized).map { _ in }.asObservable(), informViewTapped: self.rx
                 .methodInvoked(#selector(UIView.touchesBegan(_:with:)))
                 .flatMap { _ in self.view.endEditing(true)
                     return Observable.just(()) }.asObservable(), deletePicker: self.deletePicker.asObservable()),
@@ -170,7 +165,7 @@ class BottomSheetVC: UIViewController {
         
         output.pictureValues.subscribe(onNext: { [weak self] datas in
             guard let self else {return}
-
+            
             for idx in 0 ..< 4 {
                 let view = largeView.largePictureStack.arrangedSubviews[idx] as! innerPictureView
                 if idx < datas.count {
@@ -194,29 +189,43 @@ class BottomSheetVC: UIViewController {
         output.alert
             .flatMap { [weak self] title, message in
                 print("message \(title) \(message)")
-            return AlertManager(viewController: self!)
-                .setTitle(title)
-                .setMessage(message)
-                .showYNAlert()
-        }.subscribe(onNext: { [weak self] in
-            guard let self else {return}
-            self.deletePicker.onNext(())}).disposed(by: disposeBag)
+                return AlertManager(viewController: self!)
+                    .setTitle(title)
+                    .setMessage(message)
+                    .showYNAlert()
+            }.subscribe(onNext: { [weak self] in
+                guard let self else {return}
+                self.deletePicker.onNext(())}).disposed(by: disposeBag)
+        
         
         if #available(iOS 16.0, *) {
             smallView.rightBtn.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
-                guard let self, let sheet = self.sheetPresentationController else {return}
-                let largeDetent = UISheetPresentationController.Detent.custom(identifier: .init("large")) { context in
-                    return 560 // 확장 높이
-                }
-                sheet.animateChanges {
-                    sheet.detents = [largeDetent]
-                    sheet.selectedDetentIdentifier = .init("large")
-                    self.smallView.isHidden = true
-                    self.largeView.isHidden = false
-                }
+                guard let self else {return}
+                setLargeBottomSheet()
             }).disposed(by: disposeBag)
         } else {
             // Fallback on earlier versions
+        }
+        
+        output.changeEditStyle.subscribe(onNext: { [weak self] model in
+            guard let self else {return}
+           
+            
+            
+            self.setLargeBottomSheet()
+        }).disposed(by: disposeBag)
+    }
+    func setLargeBottomSheet() {
+        guard let sheet = self.sheetPresentationController else {return}
+        let largeDetent = UISheetPresentationController.Detent.custom(identifier: .init("large")) { context in
+            return 560 // 확장 높이
+        }
+        sheet.animateChanges {
+            sheet.detents = [largeDetent]
+            sheet.selectedDetentIdentifier = .init("large")
+            self.smallView.isHidden = true
+            self.informView.isHidden = true
+            self.largeView.isHidden = false
         }
     }
 }
