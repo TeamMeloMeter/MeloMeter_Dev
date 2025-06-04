@@ -7,39 +7,32 @@
 
 import UIKit
 class ProgressDialogView: UIView {
-    let activityIndictor: UIActivityIndicatorView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
-    init() {
-        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        self.setup()
-        
-    }
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.setup()
-        
-    }
-    func setup() {
-        self.addSubview(activityIndictor)
-        activityIndictor.startAnimating()
-        
-    }
-    override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        if let superview = self.superview {
-            let width = superview.frame.size.width
-            let height = superview.frame.size.height
-            self.frame = CGRect(x: 0, y: 0, width: width, height: height)
-            self.backgroundColor = UIColor.init(white: 0.0, alpha: 0.5)
-            let activityIndicatorSize: CGFloat = 40
-            activityIndictor.frame = CGRect(x: width / 2 - activityIndicatorSize / 2, y: height / 2 - activityIndicatorSize / 2, width: activityIndicatorSize, height: activityIndicatorSize)
-            layer.masksToBounds = true
-        }
-    }
+    static let shared = ProgressDialogView()
+    
+    private var overlayView: UIView?
+    
     func show() {
-        self.isHidden = false
+        guard overlayView == nil else { return }
+        
+        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+        
+        let overlay = UIView(frame: window?.bounds ?? .zero)
+        overlay.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+        
+        let activityIndicator = UIActivityIndicatorView(style: .medium )
+        let activityIndicatorSize: CGFloat = 40
+        activityIndicator.center = overlay.center
+        
+        activityIndicator.startAnimating()
+        overlay.addSubview(activityIndicator)
+        
+        window?.addSubview(overlay)
+        overlayView = overlay
     }
+    
     func hide() {
-        self.isHidden = true
+        overlayView?.removeFromSuperview()
+        overlayView = nil
     }
 }
 

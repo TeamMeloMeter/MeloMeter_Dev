@@ -14,12 +14,13 @@ import GoogleMobileAds
 
 //메인 지도 화면
 class MapVC: UIViewController, UIGestureRecognizerDelegate{
-    
-    var beforePickedMarkers: NMFMarker?
-    var beforeAlreadyPlaceMarkers: [NMFMarker] = []
-    let infoWindow1 = NMFInfoWindow()
-    let infoWindow2 = NMFInfoWindow()
+
+    private var beforePickedMarkers: NMFMarker?
+    private var beforeAlreadyPlaceMarkers: [NMFMarker] = []
+    private let infoWindow1 = NMFInfoWindow()
+    private let infoWindow2 = NMFInfoWindow()
     private var bannerView: BannerView?
+  
     
     //MARK: Rx
     var endTriggerAlertEvent = PublishSubject<Void>()
@@ -68,7 +69,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             searchBtnTapEvent: self.searchBtn.rx.tap.map ({ _ in }).asObservable(),
             endTriggerAlertTapEvent: self.endTriggerAlertEvent
                 .asObserver(),
-            dissmissBottomSheet: self.naverMapView.rx.tap.throttle(.seconds(1), scheduler: MainScheduler.instance).map { _ in print("naverMapView.rx.tap") }.asObservable(),
+            dissmissBottomSheet: self.naverMapView.rx.tap.throttle(.seconds(1), scheduler: MainScheduler.instance).map { _ in }.asObservable(),
             markerTapped: markerTapped
             
         )
@@ -205,6 +206,9 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
         output.deletePickedMarkers.bind(onNext: self.deletePickedMarkers).disposed(by: disposeBag)
         
         output.alreadyPlacesMarkers.bind(onNext: updatePlaceMarkers).disposed(by: disposeBag)
+        
+        
+        
     }
     
     // MARK: Map
@@ -224,7 +228,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
             let marker = NMFMarker()
             marker.iconImage = NMFOverlayImage(image: UIImage(named: "couplePlaceIcon")!)
             marker.position = NMGLatLng(lat: model.mapY, lng: model.mapX)
-            marker.captionText = model.name
+//            marker.captionText = model.name
             marker.mapView = self.naverMapView
             marker.touchHandler = { [weak self] overlay in
                 guard let tappedMarker = overlay as? NMFMarker, let self else {
@@ -245,6 +249,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate{
     
     // MARK: Configure
     func configure() {
+        
         [naverMapView,
          currentLocationButton,
          dDayButton,

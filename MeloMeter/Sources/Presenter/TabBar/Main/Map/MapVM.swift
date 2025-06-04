@@ -22,12 +22,14 @@ class MapVM {
     var lastPickedPicker = BehaviorRelay<CouplePlaceModel?>(value: nil)
     var pickedModel = BehaviorRelay<SearchedModel?>(value: nil)
     var bottomSheetDisappear = PublishSubject<Void>()
+    var progressControl = PublishRelay<Bool>()
 
 
     //MARK: StaticDatas
     let categoryLists = ["전체","맛집","전시회","공원","기타"]
     
     func dissmissBottomSheet() {
+        self.progressControl.accept(false)
         pickedModel.accept(nil)
 //        lastPickedPicker = BehaviorRelay<CouplePlaceModel?>(value: nil)
         coordinator?.dismissViewController()
@@ -41,7 +43,7 @@ class MapVM {
         let memoTFtexts: Observable<String>
         let viewWillDisappear: Observable<Void>
         let largeSaveBtnTapped: Observable<Void>
-        let editBtnTapped: Observable<Void>
+        let editBtnTapped: Observable<[Data]>
         let deleteBtnTapped: Observable<Void>
         let threeDoutTapped: Observable<Void>
         let informViewTapped: Observable<Void>
@@ -55,10 +57,15 @@ class MapVM {
         var dropPickerIsHidden = BehaviorRelay<Bool>(value: true)
         var alert = PublishRelay<(String, String)>()
         var changeEditStyle = PublishRelay<CouplePlaceModel>()
+        var progressControl = PublishRelay<Bool>()
+
     }
     func transform(input: BottomSheetInput, disposeBag: DisposeBag) -> BottomSheetOutput {
-        var couplePlaceModel = BehaviorRelay<CouplePlaceModel?>(value: nil)
+        let couplePlaceModel = BehaviorRelay<CouplePlaceModel?>(value: nil)
         let output = BottomSheetOutput()
+        
+        self.progressControl.bind(to: output.progressControl).disposed(by: disposeBag)
+
         input.threeDoutTapped.subscribe(onNext: { [weak self] in
             guard let self else {return}
             output.dropPickerIsHidden.accept(false)
@@ -69,30 +76,13 @@ class MapVM {
         }).disposed(by: disposeBag)
         
         //TODO: 버튼 관련
-        input.editBtnTapped.subscribe(onNext: { [weak self] event in
+        input.editBtnTapped.subscribe(onNext: { [weak self] datas in
             guard let self, let model = lastPickedPicker.value else {return}
-            var datas: [Data] = []
-            model.imageURLs?.forEach { url in
-                let group = DispatchGroup()
-                
-                group.enter()
-                self.getDataFromURL(url: URL(string: url)!) { data in
-                    if let data = data {
-                        datas.append(data)
-                    }
-                    group.leave()
-                }
-                group.notify(queue: .main) {
-                    output.pictureValues.accept(datas)
-                }
-            }
-           
-            
+            output.pictureValues.accept(datas)
             output.changeEditStyle.accept(model)
         }).disposed(by: disposeBag)
         
         input.deleteBtnTapped.bind(onNext: { [weak self] in
-            guard let self else {return}
             output.alert.accept(("삭제하기","삭제한 마커는 되돌릴 수 없어요!"))
         }).disposed(by: disposeBag)
         
@@ -116,10 +106,15 @@ class MapVM {
         
         Observable.combineLatest(input.loactionTFtexts, input.memoTFtexts, output.categoryIsSelected ,output.pictureValues).map { [weak self]
             values in
-            guard let self, let pickedModel = pickedModel.value else {return false}
+            guard let self else {return false}
             
-            let model = CouplePlaceModel(category: self.categoryLists[values.2.firstIndex(of: true) ?? 0], name: values.1, description: values.0, mapX: pickedModel.mapx, mapY: pickedModel.mapy, roadAddress: pickedModel.roadAddress, address: pickedModel.address, imagesDatas: values.3)
-            couplePlaceModel.accept(model)
+            if let lastPickedPicker = lastPickedPicker.value {
+                let model = CouplePlaceModel(category: self.categoryLists[values.2.firstIndex(of: true) ?? 0], name: values.1, description: values.0, mapX: lastPickedPicker.mapX, mapY: lastPickedPicker.mapY, roadAddress: lastPickedPicker.roadAddress, address: lastPickedPicker.address, imagesDatas: values.3)
+                couplePlaceModel.accept(model)
+            } else if let pickedModel = pickedModel.value {
+                let model = CouplePlaceModel(category: self.categoryLists[values.2.firstIndex(of: true) ?? 0], name: values.1, description: values.0, mapX: pickedModel.mapx, mapY: pickedModel.mapy, roadAddress: pickedModel.roadAddress, address: pickedModel.address, imagesDatas: values.3)
+                couplePlaceModel.accept(model)
+            } else {return false}
             
             return (!values.0.isEmpty && !values.1.isEmpty && values.2.contains(true) )
         }.bind(to: output.btnEnabled).disposed(by: disposeBag)
@@ -147,13 +142,16 @@ class MapVM {
             guard let self else {return}
             self.dissmissBottomSheet()}).disposed(by: disposeBag)
         
-        input.viewWillDisappear.map {  [weak self] in guard let self else {return}; pickedModel.accept(nil); return () }.bind(to: bottomSheetDisappear).disposed(by: disposeBag)
+        input.viewWillDisappear.map {  [weak self] in
+            guard let self else {return}
+            pickedModel.accept(nil)
+            return () }.bind(to: bottomSheetDisappear).disposed(by: disposeBag)
         
-        input.largeSaveBtnTapped
-            .flatMap { [weak self] _ -> Observable<Void> in
+        input.largeSaveBtnTapped.flatMap { [weak self] _ -> Observable<Void> in
                 guard let self, let model = couplePlaceModel.value else {
                     return Observable.error(NSError(domain: "", code: -1))
                 }
+            self.progressControl.accept(true)
                 return placeUseCase.upload(model: model).andThen(Observable.just(()))
             }.subscribe(onNext: { [weak self] in
                 guard let self else {return}
@@ -165,6 +163,8 @@ class MapVM {
                 self.dissmissBottomSheet()
             }, onError: { err in
                 print(err)
+                self.progressControl.accept(false)
+
                 //TODO: 에러처리
             }).disposed(by: disposeBag)
       
@@ -209,8 +209,10 @@ class MapVM {
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output(alreadyPlacesMarkers: alreadyPlacesMarkers)
         
+        
         input.markerTapped.subscribe(onNext: { [weak self] model in
             guard let self else {return}
+            output.cameraUpdate.onNext(CLLocation( latitude: model.mapY, longitude: model.mapX))
             lastPickedPicker.accept(model)
             self.coordinator?.setupSheet(pickedModel: nil, placeModel: model, type: "inform")
         }).disposed(by: disposeBag)

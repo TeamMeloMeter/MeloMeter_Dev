@@ -183,16 +183,16 @@ class BottomSheetSmallView: UIView {
 
 class BottomSheetLargeView: UIView {
     
-    let largeLocationLabel = UILabel().then {
+    private let largeLocationLabel = UILabel().then {
         $0.text = "장소"
     }
-    let largeMemoLabel = UILabel().then {
+    private let largeMemoLabel = UILabel().then {
         $0.text = "메모"
     }
-    let largeCategoryLabel = UILabel().then {
+    private let largeCategoryLabel = UILabel().then {
         $0.text = "카테고리"
     }
-    let largePictureLabel = UILabel().then {
+    private let largePictureLabel = UILabel().then {
         $0.text = "사진"
     }
     let largeLocationTF = UITextField().then  {
@@ -309,29 +309,11 @@ class BottomSheetLargeView: UIView {
         }
     }
     
-    func setupPages(imageUrls: [URL]) {
-        for (index, i) in imageUrls.enumerated() {
-            (largePictureStack.arrangedSubviews[index] as! UIImageView).kf.setImage(
-                with: i,  // 이미지 불러올 url
-                options: [
-                    .scaleFactor(UIScreen.main.scale),
-                    .transition(.none),
-                    .cacheOriginalImage
-                ])
-            
-        }
-    }
-    
 }
-class BottomSheetinformView: UIView, UIScrollViewDelegate {
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let page = round(scrollView.contentOffset.x / scrollView.frame.size.width)
-        pageControl.currentPage = Int(page)
-    }
+class BottomSheetinformView: UIView {
     
     var disposeBag = DisposeBag()
-    
+ 
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -344,7 +326,7 @@ class BottomSheetinformView: UIView, UIScrollViewDelegate {
         $0.isPagingEnabled = true
         $0.showsHorizontalScrollIndicator = false
     }
-    private let stackView = UIStackView().then {
+    let stackView = UIStackView().then {
         $0.axis = .horizontal
         $0.distribution = .fillEqually
     }
@@ -370,7 +352,6 @@ class BottomSheetinformView: UIView, UIScrollViewDelegate {
         stackView.snp.makeConstraints {
             $0.top.bottom.leading.trailing.height.equalToSuperview()
             $0.width.equalToSuperview().multipliedBy(pageCount)
-            
         }
         informSmallView.snp.makeConstraints {
             $0.top.equalTo(scrollView.snp.bottom)
@@ -388,6 +369,7 @@ class BottomSheetinformView: UIView, UIScrollViewDelegate {
     private func setupPages(imageUrls: [URL]) {
         for i in imageUrls {
             let page = UIImageView()
+            page.contentMode = .scaleAspectFill
             page.kf.indicatorType = .activity  // indicator 활성화
             page.kf.setImage(
                 with: i,  // 이미지 불러올 url
@@ -396,6 +378,7 @@ class BottomSheetinformView: UIView, UIScrollViewDelegate {
                     .transition(.none),
                     .cacheOriginalImage
                 ])
+            
             stackView.addArrangedSubview(page)
         }
     }
@@ -409,6 +392,15 @@ class BottomSheetinformView: UIView, UIScrollViewDelegate {
             $0.centerX.equalToSuperview()
         }
     }
+}
+extension BottomSheetinformView: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let page = round(scrollView.contentOffset.x / scrollView.frame.size.width)
+        pageControl.currentPage = Int(page)
+    }
+    
+    
 }
 class DropPickerView: UIView {
     

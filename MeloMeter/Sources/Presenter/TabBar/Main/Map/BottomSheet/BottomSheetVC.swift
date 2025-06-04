@@ -13,6 +13,8 @@ import PhotosUI
 import RxRelay
 
 
+fileprivate let categoryIndex = ["전체":0, "맛집":1, "전시회": 2, "공원": 3, "기타" : 4]
+
 class BottomSheetVC: UIViewController {
     
     
@@ -38,6 +40,8 @@ class BottomSheetVC: UIViewController {
     }
     let grabbar = UIImageView(image: UIImage(named: "grabbar"))
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -50,7 +54,6 @@ class BottomSheetVC: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        disposeBag = DisposeBag()
     }
     
     func setGrabbar() {
@@ -129,7 +132,16 @@ class BottomSheetVC: UIViewController {
         let output = viewModel.transform(input: MapVM.BottomSheetInput(
             dismissBottomSheet: largeView.xButton.rx.tap.asObservable(),categoryTapped: categoryTapped, pictureTapped: pictureTapped, loactionTFtexts: largeView.largeLocationTF.rx.textOrEmpty.asObservable(), memoTFtexts: largeView.largeMemoTF.rx.textOrEmpty.asObservable(), viewWillDisappear: self.rx.methodInvoked(#selector(viewWillDisappear(_:))).map { _ in }.asObservable(),
             largeSaveBtnTapped: largeView.largeSaveBtn.rx.tap.asObservable(),
-            editBtnTapped:  informView.informSmallView.dropPickerView.edit.rx.tapGesture().when(.recognized).map { _ in }.asObservable(),
+            editBtnTapped:  informView.informSmallView.dropPickerView.edit.rx.tapGesture().when(.recognized).map { _ in
+                var datas: [Data] = []
+                let views = (self.informView.stackView.arrangedSubviews as? [UIImageView]) ?? []
+                for view in views {
+                    if let img = view.image {
+                        datas.append(img.jpegData(compressionQuality: 1)!)
+                    }
+                }
+                return datas
+            }.asObservable(),
             deleteBtnTapped: informView.informSmallView.dropPickerView.delete.rx.tapGesture().when(.recognized).map { _ in }.asObservable(), threeDoutTapped: informView.informSmallView.rightBtn.rx.tapGesture().when(.recognized).map { _ in }.asObservable(), informViewTapped: self.rx
                 .methodInvoked(#selector(UIView.touchesBegan(_:with:)))
                 .flatMap { _ in self.view.endEditing(true)
@@ -149,8 +161,9 @@ class BottomSheetVC: UIViewController {
         }).disposed(by: disposeBag)
         
         output.categoryIsSelected.subscribe(onNext: { [weak self] array in
+            guard let self else {return}
             for i in 0 ..< array.count {
-                let categoryView = self?.largeView.largeCategoryStack.arrangedSubviews[i] as! CategoryView
+                let categoryView = self.largeView.largeCategoryStack.arrangedSubviews[i] as! CategoryView
                 if array[i] {
                     categoryView.backgroundColor = .primary1
                     categoryView.layer.borderColor = UIColor.primary1.cgColor
@@ -209,11 +222,24 @@ class BottomSheetVC: UIViewController {
         
         output.changeEditStyle.subscribe(onNext: { [weak self] model in
             guard let self else {return}
-           
-            
-            
+            largeView.largeMemoTF.rx.text.onNext(model.description)
+            largeView.largeLocationTF.rx.text.onNext(model.name)
+            largeView.largeMemoTF.sendActions(for: .editingChanged)
+            largeView.largeLocationTF.sendActions(for: .editingChanged)
+            categoryTapped.onNext(categoryIndex[model.category])
             self.setLargeBottomSheet()
         }).disposed(by: disposeBag)
+        
+        output.progressControl.subscribe(onNext: { [weak self] control in
+            guard let self else {return}
+            if control {
+                ProgressDialogView.shared.show()
+            } else {
+                ProgressDialogView.shared.hide()
+
+            }
+        }).disposed(by: disposeBag)
+        
     }
     func setLargeBottomSheet() {
         guard let sheet = self.sheetPresentationController else {return}
