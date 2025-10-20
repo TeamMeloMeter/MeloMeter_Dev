@@ -11,8 +11,6 @@ import RxSwift
 import Kingfisher
 import PhotosUI
 import RxRelay
-
-
 fileprivate let categoryIndex = ["전체":0, "맛집":1, "전시회": 2, "공원": 3, "기타" : 4]
 
 class BottomSheetVC: UIViewController {
@@ -211,15 +209,11 @@ class BottomSheetVC: UIViewController {
                 self.deletePicker.onNext(())}).disposed(by: disposeBag)
         
         
-        if #available(iOS 16.0, *) {
-            smallView.rightBtn.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
-                guard let self else {return}
-                setLargeBottomSheet()
-            }).disposed(by: disposeBag)
-        } else {
-            // Fallback on earlier versions
-        }
-        
+      smallView.rightBtn.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+          guard let self else {return}
+          setLargeBottomSheet()
+      }).disposed(by: disposeBag)
+      
         output.changeEditStyle.subscribe(onNext: { [weak self] model in
             guard let self else {return}
             largeView.largeMemoTF.rx.text.onNext(model.description)

@@ -101,7 +101,10 @@ public final class DefaultFirebaseService: FirebaseService {
                     .document(document)
             }
             newDocument.setData(values, merge: true) { error in
-                if let error = error { single(.failure(error)) }
+              if let error = error {
+                single(.failure(error))
+                return
+              }
                 single(.success(()))
             }
             
