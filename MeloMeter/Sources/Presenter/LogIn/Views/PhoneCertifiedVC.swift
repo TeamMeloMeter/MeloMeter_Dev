@@ -16,7 +16,6 @@ final class PhoneCertifiedVC: UIViewController {
     
     let viewModel: LogInVM
     let disposeBag = DisposeBag()
-    let progressDialog:ProgressDialogView = ProgressDialogView()
     let tapGesture = UITapGestureRecognizer()
     
     init(viewModel: LogInVM) {
@@ -47,7 +46,6 @@ final class PhoneCertifiedVC: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        hideProgressDialog()
     }
     
     // MARK: - Binding
@@ -64,8 +62,7 @@ final class PhoneCertifiedVC: UIViewController {
             .subscribe(onNext: { [weak self] in
                 guard let self else{ return }
                 self.view.endEditing(true)
-                self.view.addSubview(progressDialog)
-                showProgressDialog()
+                ProgressDialogView.shared.show()
                 self.viewModel.phoneNumberInput.onNext(self.phoneNumTF.text)
             })
             .disposed(by: disposeBag)
@@ -80,7 +77,7 @@ final class PhoneCertifiedVC: UIViewController {
                         self.cancelBtn.isHidden = true
                         self.nextBtnEnabledF()
                         self.lineColorChangedF()
-                        self.hideProgressDialog()
+                        ProgressDialogView.shared.hide()
                         self.phoneNumTF.becomeFirstResponder()
                     }).disposed(by: disposeBag)
             }
@@ -92,13 +89,7 @@ final class PhoneCertifiedVC: UIViewController {
                 cancelBtnTapped()
             }).disposed(by: disposeBag)
     }
-    
-    func showProgressDialog() {
-        self.progressDialog.show()
-    }
-    func hideProgressDialog() {
-        self.progressDialog.hide()
-    }
+
     
     // MARK: - Event
     // x버튼 입력한 번호 지우기

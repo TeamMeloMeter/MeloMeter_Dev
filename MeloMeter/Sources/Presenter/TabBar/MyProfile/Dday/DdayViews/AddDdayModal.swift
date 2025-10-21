@@ -14,7 +14,6 @@ class AddDdayModal: UIViewController, UITextFieldDelegate {
     
     var viewModel: DdayVM?
     private let disposeBag = DisposeBag()
-    let progressDialog: ProgressDialogView = ProgressDialogView()
     
     init(viewModel: DdayVM) {
         self.viewModel = viewModel
@@ -32,7 +31,7 @@ class AddDdayModal: UIViewController, UITextFieldDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.hideProgressDialog()
+        ProgressDialogView.shared.hide()
     }
     // MARK: Bindings
     func setBindings() {
@@ -48,14 +47,14 @@ class AddDdayModal: UIViewController, UITextFieldDelegate {
                 .asObservable(),
             addDday: saveButton.rx.tap
                 .map({ _ in
-                    self.showProgressDialog()
+                    ProgressDialogView.shared.show()
                     self.dateTextField.endEditing(true)
                     if let title = self.titleTextView.text, let date = self.dateTextField.text {
                         guard title != "" && date != "" else{
                             self.inputError()
                             return []
                         }
-                        self.hideProgressDialog()
+                        ProgressDialogView.shared.hide()
                         return [title, date]
                     }
                     return []
@@ -92,16 +91,9 @@ class AddDdayModal: UIViewController, UITextFieldDelegate {
                               action: { self.titleTextView.becomeFirstResponder() }
             )
             .showCustomAlert()
-        hideProgressDialog()
+        ProgressDialogView.shared.hide()
     }
-    
-    func showProgressDialog() {
-        self.view.addSubview(self.progressDialog)
-        self.progressDialog.show()
-    }
-    func hideProgressDialog() {
-        self.progressDialog.hide()
-    }
+
     
     
     // MARK: UI

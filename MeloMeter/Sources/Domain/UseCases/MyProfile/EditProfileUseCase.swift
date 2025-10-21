@@ -36,8 +36,8 @@ class EditProfileUseCase {
         return self.userRepository.downloadImage(url: url)
     }
     
-    func editProfileImage(image: UIImage) -> Single<Void> {
-        return self.userRepository.updateProfileImage(image: image)
+    func editProfileImage(data: Data) -> Single<Void> {
+        return self.userRepository.updateProfileImage(imageData: data)
     }
 
 }

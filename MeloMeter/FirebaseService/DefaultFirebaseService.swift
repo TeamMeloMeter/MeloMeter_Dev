@@ -66,25 +66,25 @@ public final class DefaultFirebaseService: FirebaseService {
     
     public func getDocument(collection: FireStoreCollection, field: String, values: [Any]) -> Single<[FirebaseData]> {
         return Single.create { [weak self] single in
-                    guard let self = self else { return Disposables.create() }
+            guard let self = self else { return Disposables.create() }
+            
+            var queries = values
+            if queries.isEmpty { queries.append("") }
+            
+            self.database.collection(collection.name)
+                .whereField(field, in: queries)
+                .getDocuments { snapshot, error in
+                    if let error = error { single(.failure(error)) }
                     
-                    var queries = values
-                    if queries.isEmpty { queries.append("") }
-                    
-                    self.database.collection(collection.name)
-                        .whereField(field, in: queries)
-                        .getDocuments { snapshot, error in
-                            if let error = error { single(.failure(error)) }
-                            
-                            guard let snapshot = snapshot else {
-                                single(.failure(FireStoreError.unknown))
-                                return
-                            }
-                            let data = snapshot.documents.map { $0.data() }
-                            single(.success(data))
-                        }
-                    return Disposables.create()
+                    guard let snapshot = snapshot else {
+                        single(.failure(FireStoreError.unknown))
+                        return
+                    }
+                    let data = snapshot.documents.map { $0.data() }
+                    single(.success(data))
                 }
+            return Disposables.create()
+        }
     }
     
     public func createDocument(collection: FireStoreCollection, document: String, values: FirebaseData) -> Single<Void> {
@@ -96,15 +96,18 @@ public final class DefaultFirebaseService: FirebaseService {
                 newDocument = self.database.collection(collection.name)
                     .document()
                 UserDefaults.standard.set(newDocument.documentID, forKey: "coupleID")
-            }else { //문서ID 지정생성
+            } else { //문서ID 지정생성
                 newDocument = self.database.collection(collection.name)
                     .document(document)
             }
             newDocument.setData(values, merge: true) { error in
-                if let error = error { single(.failure(error)) }
+              if let error = error {
+                single(.failure(error))
+                return
+              }
                 single(.success(()))
             }
-
+            
             return Disposables.create()
         }
     }
@@ -116,7 +119,7 @@ public final class DefaultFirebaseService: FirebaseService {
                 .document(document)
                 .updateData(values) { error in
                     if let error = error { single(.failure(error)) }
-
+                    
                     single(.success(()))
                 }
             return Disposables.create()
@@ -188,33 +191,31 @@ public extension DefaultFirebaseService {
 
 //MARK: ImageUpload
 extension DefaultFirebaseService {
-    public func uploadImage(filePath: String, image: UIImage) -> Single<String> {
+    public func uploadImage(filePath: String, data: Data) -> Single<String> {
         return Single.create { single in
-           
-            guard let imageData = image.normalizedImage()?.jpegData(compressionQuality: 0.4) else {
-                return Disposables.create() }
+            
             let metaData = StorageMetadata()
             metaData.contentType = "image/jpeg"
             
             let imageName = filePath
             let firebaseReference = Storage.storage().reference().child("\(imageName)")
             
-            firebaseReference.putData(imageData, metadata: metaData) { _, error in
+            firebaseReference.putData(data, metadata: metaData) { _, error in
                 if let error = error { single(.failure(error)) }
                 
                 firebaseReference.downloadURL { url, _ in
-                    guard let url = url else {
-                        single(.failure(FireStoreError.unknown))
-                        return
-                    }
+                    guard let url = url else { single(.failure(FireStoreError.unknown)); return }
                     let cachedKey = NSString(string: url.absoluteString)
-                    ImageCacheManager.shared.setObject(UIImage(data: imageData)!, forKey: cachedKey)
+                    ImageCacheManager.shared.setObject(UIImage(data: data)!, forKey: cachedKey)
                     single(.success(url.absoluteString))
                 }
             }
             return Disposables.create()
         }
     }
+    
+    
+    
     
     public func downloadImage(urlString: String) -> Single<UIImage?> {
         return Single.create { single in
@@ -269,7 +270,6 @@ extension DefaultFirebaseService {
                 return Disposables.create()
             }
             var resultCount = 0
-
             for path in filePath {
                 self.deleteImageFromProfileStorage(imageURL: path)
                     .subscribe(onSuccess: { _ in
@@ -281,12 +281,62 @@ extension DefaultFirebaseService {
                     }, onFailure: { error in
                         single(.failure(error))
                         return
-                    })
-                    .disposed(by: self.disposeBag)
+                    }).disposed(by: self.disposeBag)
             }
             return Disposables.create()
         }
+        
+    }
+    
+}
 
+//MARK: SubCollection
+extension DefaultFirebaseService {
+    public func createDocToSubcollection(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String, values: Any) -> Completable {
+        return Completable.create { [weak self] com in
+            guard let self else {return Disposables.create() }
+            var newDocument: DocumentReference
+            if subCollection == .DatePlaces {
+                let values = values as! CouplePlaceDto
+                newDocument = self.database.collection(firstCollection.rawValue).document(document).collection(subCollection.rawValue).document("\(values.uuid)")
+                newDocument.setData( values.toDictionary(), merge: true) { error in
+                    if let error = error { com(.error(error)) }
+                    com(.completed)
+                }
+            } else {
+                //다른 쪽에서도 서브 컬렉션이 필요할때 사용
+            }
+            return Disposables.create()
+        }
+    }
+    
+    public func getDocFromSubCollection(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String) -> Single<[FirebaseData]> {
+        return Single.create { [weak self] single in
+            guard let self else { return Disposables.create() }
+            self.database.collection(firstCollection.rawValue).document(document).collection(subCollection.rawValue).getDocuments { snapshot, err in
+                if let err {
+                    single(.failure(err))
+                } else {
+                    guard let snapshot = snapshot else { single(.failure(FireStoreError.unknown)); return }
+                    let data = snapshot.documents.map { $0.data() }
+                    single(.success(data))
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
+    public func deleteDocument(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String, uuid: String) -> Completable {
+        Completable.create { [weak self] com in
+            guard let self else { return Disposables.create() }
+            self.database.collection(firstCollection.rawValue)
+                .document(document).collection(subCollection.rawValue).document(uuid)
+                .delete { error in
+                    if let error = error { com(.error(error)) }
+                    com(.completed)
+                }
+            return Disposables.create()
+        }
     }
     
 }

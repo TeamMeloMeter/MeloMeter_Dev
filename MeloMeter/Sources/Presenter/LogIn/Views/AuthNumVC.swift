@@ -16,7 +16,6 @@ final class AuthNumVC: UIViewController {
  
     let viewModel: LogInVM
     let disposeBag = DisposeBag()
-    let progressDialog: ProgressDialogView = ProgressDialogView()
     let tapGesture = UITapGestureRecognizer()
     
     init(viewModel: LogInVM) {
@@ -45,7 +44,7 @@ final class AuthNumVC: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         viewModel.stopTimer() // 타이머 해제
-        hideProgressDialog()
+        ProgressDialogView.shared.hide()
     }
     
     // MARK: - Binding
@@ -63,8 +62,7 @@ final class AuthNumVC: UIViewController {
             .bind(onNext: { [weak self] in
                 guard let self = self else{ return }
                 self.view.endEditing(true)
-                self.view.addSubview(progressDialog)
-                showProgressDialog()
+
                 self.viewModel.verificationCode.onNext(self.authNumTF.text)
             })
             .disposed(by: disposeBag)
@@ -78,7 +76,7 @@ final class AuthNumVC: UIViewController {
         viewModel.logInRequest.bind(onNext: { [weak self] result in
             guard let self = self else{ return }
             if result == false {
-                hideProgressDialog()
+                ProgressDialogView.shared.hide()
                 AlertManager(viewController: self)
                 .showNomalAlert(title: "인증실패", message: "인증번호가 일치하지 않습니다")
                 .subscribe(onSuccess: {
@@ -114,13 +112,7 @@ final class AuthNumVC: UIViewController {
             }).disposed(by: disposeBag)
     }
     
-    // MARK: - Event
-    func showProgressDialog() {
-        self.progressDialog.show()
-    }
-    func hideProgressDialog() {
-        self.progressDialog.hide()
-    }
+
     
     // MARK: - configure
     private func configure() {

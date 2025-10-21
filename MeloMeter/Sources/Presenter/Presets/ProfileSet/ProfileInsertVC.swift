@@ -15,7 +15,6 @@ final class ProfileInsertVC: UIViewController {
     
     private let viewModel: ProfileInsertVM
     let disposeBag = DisposeBag()
-    let progressDialog: ProgressDialogView = ProgressDialogView()
     
     //텍스트필드 유효입력 확인
     var checkTextField : [Bool] = Array(repeating: false, count: 3)
@@ -55,8 +54,7 @@ final class ProfileInsertVC: UIViewController {
             .bind(onNext: { [weak self] in
                 guard let self = self else{ return }
                 self.view.endEditing(true)
-                self.view.addSubview(progressDialog)
-                showProgressDialog()
+                ProgressDialogView.shared.show()
                 self.viewModel.checkFormat(info: [self.nameTF.text, self.birthTF.text, self.firstDayTF.text])
                     .subscribe(onSuccess: { check in
                         if check {
@@ -141,7 +139,7 @@ final class ProfileInsertVC: UIViewController {
             .setMessage("날짜형식이 일치하지 않습니다\n 올바른 형식의 날짜를\n 입력해주세요")
             .addActionConfirm("확인")
             .showCustomAlert()
-        hideProgressDialog()
+        ProgressDialogView.shared.hide()
     }
     func insertError() {
         AlertManager(viewController: self)
@@ -149,15 +147,9 @@ final class ProfileInsertVC: UIViewController {
             .setMessage("서버와 통신에 실패했습니다\n 잠시후 다시\n 시도해주세요")
             .addActionConfirm("확인")
             .showCustomAlert()
-        hideProgressDialog()
+        ProgressDialogView.shared.hide()
     }
-    
-    func showProgressDialog() {
-        self.progressDialog.show()
-    }
-    func hideProgressDialog() {
-        self.progressDialog.hide()
-    }
+ 
     
     // MARK: - configure
     func configure() {

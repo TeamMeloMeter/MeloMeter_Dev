@@ -21,10 +21,15 @@ public protocol FirebaseService {
     func deleteDocuments(collections: [(FireStoreCollection, String)]) -> Single<Void>
     func observer(collection: FireStoreCollection, document: String) -> Observable<FirebaseData>
     
-    func uploadImage(filePath: String, image: UIImage) -> Single<String>
+    func uploadImage(filePath: String, data: Data) -> Single<String>
     func downloadImage(urlString: String) -> Single<UIImage?>
     func deleteImageFromProfileStorage(imageURL: String) -> Single<Void>
     func deleteImageFromChatStorage(filePath: [String]) -> Single<Void>
     func setAccessLevel(_ level: AccessLevel) -> Single<Void>
+    
+    //MARK: SubCollection
+    func createDocToSubcollection(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String ,values: Any) -> Completable
+    func getDocFromSubCollection(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String) -> Single<[FirebaseData]>
+    func deleteDocument(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String, uuid: String) -> Completable
 
 }

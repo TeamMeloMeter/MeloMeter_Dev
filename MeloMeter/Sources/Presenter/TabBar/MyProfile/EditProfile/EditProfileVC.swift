@@ -64,7 +64,7 @@ class EditProfileVC: UIViewController {
             backBtnTapEvent: self.backBarButton.rx.tap
                 .map({ _ in })
                 .asObservable(),
-            changedProfileImage: self.selectImage
+            changedProfileImage: self.selectImage.map { $0.jpegData(compressionQuality: 1)! }
                 .asObservable(),
             nameTapEvent: self.nameView.rx.tapGesture().when(.ended)
                 .map({ _ in })
@@ -86,7 +86,7 @@ class EditProfileVC: UIViewController {
                 .map({ _ in })
                 .asObservable(),
             logoutEvent: self.logoutLabel.rx.tapGesture().when(.ended)
-                        .flatMap{[weak self] _ in
+                        .flatMap{ [weak self] _ in
                             guard let self = self else{ return Single.just(()) }
                             return AlertManager(viewController: self)
                                 .setTitle("로그아웃")

@@ -42,9 +42,10 @@ class ChatRepository: ChatRepositoryP {
     func addImageMessage(chatModel: ChatModel, coupleID: String) -> Single<Void> {
         switch chatModel.kind {
         case .photo(let photo):
-            guard let image = photo.image else{ return Single.error(FireStoreError.unknown)}
+            guard let imageData = photo.image?.jpegData(compressionQuality: 0.6) else{ return Single.error(FireStoreError.unknown)}
+            
             let uuidData = UUID().uuidString
-            return self.firebaseService.uploadImage(filePath: "chat/"+coupleID+"/"+uuidData, image: image)
+            return self.firebaseService.uploadImage(filePath: "chat/"+coupleID+"/"+uuidData, data: imageData)
                 .flatMap{ url in
                     let dto = chatModel.toDTO(url: url)
                     let values = dto.asDictionary ?? [:]

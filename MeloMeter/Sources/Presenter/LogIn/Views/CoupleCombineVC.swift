@@ -15,7 +15,6 @@ final class CoupleCombineVC: UIViewController {
    
     private let viewModel: LogInVM
     let disposeBag = DisposeBag()
-    let progressDialog: ProgressDialogView = ProgressDialogView()
     
     init(viewModel: LogInVM, inviteCode: String, otherInviteCode: String? = nil) {
         self.viewModel = viewModel
@@ -48,7 +47,7 @@ final class CoupleCombineVC: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         viewModel.stopTimer() // 타이머 해제
-        hideProgressDialog()
+        ProgressDialogView.shared.hide()
     }
     
     // MARK: - Binding
@@ -66,8 +65,7 @@ final class CoupleCombineVC: UIViewController {
             .bind(onNext: { [weak self] in
                 guard let self = self else{ return }
                 self.view.endEditing(true)
-                self.view.addSubview(progressDialog)
-                showProgressDialog()
+                ProgressDialogView.shared.show()
                 self.viewModel.inviteCodeInput.onNext(self.codeTF.text)
             })
             .disposed(by: disposeBag)
@@ -105,7 +103,7 @@ final class CoupleCombineVC: UIViewController {
             .setMessage("초대코드가 일치하지 않습니다\n 올바른 상대방의 초대코드를\n 입력해주세요")
             .addActionConfirm("확인", action: { self.codeTF.becomeFirstResponder() })
             .showCustomAlert()
-        hideProgressDialog()
+        ProgressDialogView.shared.hide()
     }
     func timeOut() {
         AlertManager(viewController: self)
@@ -115,15 +113,10 @@ final class CoupleCombineVC: UIViewController {
             .showCustomAlert()
         self.codeTF.text = ""
         nextBtnEnabledF()
-        hideProgressDialog()
+        ProgressDialogView.shared.hide()
+
     }
-    
-    func showProgressDialog() {
-        self.progressDialog.show()
-    }
-    func hideProgressDialog() {
-        self.progressDialog.hide()
-    }
+
     
     
     // MARK: - configure
