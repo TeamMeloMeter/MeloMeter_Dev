@@ -14,3 +14,6 @@ MeloMeter.xcworkspace/xcuserdata/lts.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkp
 MeloMeter.xcworkspace/xcuserdata/lts.xcuserdatad/xcschemes/xcschememanagement.plist
 MeloMeter.xcworkspace/xcuserdata/lts.xcuserdatad/UserInterfaceState.xcuserstate
 .DS_Store
+
+*.xcuserstate
+xcuserdata/
