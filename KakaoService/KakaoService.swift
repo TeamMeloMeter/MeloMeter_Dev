@@ -10,6 +10,7 @@ import KakaoSDKCommon
 import KakaoSDKTalk
 import KakaoSDKAuth
 import KakaoSDKTemplate
+import UIKit
 
 // MARK: Kakao 공유 Service 싱글톤 클래스
 final class KakaoService {

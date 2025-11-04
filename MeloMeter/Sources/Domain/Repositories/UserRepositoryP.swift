@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import UIKit
 
 protocol UserRepositoryP {
     var accessLevelCheck: PublishSubject<AccessLevel> {get set}

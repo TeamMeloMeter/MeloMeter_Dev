@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxRelay
+import UIKit
 
 protocol ChatRepositoryP {
     var recieveChatMessage: PublishSubject<[ChatDTO]?> { get set }

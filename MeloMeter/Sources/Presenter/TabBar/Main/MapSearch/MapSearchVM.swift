@@ -8,6 +8,7 @@
 import RxSwift
 import RxRelay
 import RxCocoa
+import UIKit
 
 struct ResultModel {
     let name: String

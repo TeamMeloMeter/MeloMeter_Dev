@@ -152,12 +152,26 @@
 		52F739532A94DE7800D46FBB /* HundredQARepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F739522A94DE7800D46FBB /* HundredQARepositoryP.swift */; };
 		52F739552A94E6DB00D46FBB /* HundredQAModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F739542A94E6DB00D46FBB /* HundredQAModel.swift */; };
 		52F739572A94E71500D46FBB /* HundredQADTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F739562A94E71500D46FBB /* HundredQADTO.swift */; };
-		5E96546393FD50C9C5E5E5EF /* Pods_MeloMeter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A9432E8BBDB9FBE10412467 /* Pods_MeloMeter.framework */; };
 		603F49362DDD9CE400B89E6A /* MapSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F49352DDD9CE400B89E6A /* MapSearchCell.swift */; };
 		603F49382DDDABA600B89E6A /* BottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F49372DDDAB9B00B89E6A /* BottomSheetVC.swift */; };
 		603F49FD2DE06AA300B89E6A /* Reactive+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F49FC2DE06AA300B89E6A /* Reactive+.swift */; };
 		60453EA52DB882B40053859F /* SharedDataRepoP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60453EA42DB882AC0053859F /* SharedDataRepoP.swift */; };
 		60453EA72DB883770053859F /* SharedDataRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60453EA62DB8836C0053859F /* SharedDataRepo.swift */; };
+		605E58922EBA365400386260 /* Project.swift in Resources */ = {isa = PBXBuildFile; fileRef = 605E58912EBA365400386260 /* Project.swift */; };
+		605E58B62EBA390A00386260 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 605E58B52EBA390A00386260 /* Alamofire */; };
+		605E58B92EBA391E00386260 /* AnyFormatKit in Frameworks */ = {isa = PBXBuildFile; productRef = 605E58B82EBA391E00386260 /* AnyFormatKit */; };
+		605E58BC2EBA393600386260 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 605E58BB2EBA393600386260 /* GoogleMobileAds */; };
+		605E58BF2EBA394100386260 /* GoogleUserMessagingPlatform in Frameworks */ = {isa = PBXBuildFile; productRef = 605E58BE2EBA394100386260 /* GoogleUserMessagingPlatform */; };
+		605E58C22EBA396900386260 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 605E58C12EBA396900386260 /* KakaoSDK */; };
+		605E58C42EBA396900386260 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 605E58C32EBA396900386260 /* KakaoSDKAuth */; };
+		605E58C62EBA396900386260 /* KakaoSDKCert in Frameworks */ = {isa = PBXBuildFile; productRef = 605E58C52EBA396900386260 /* KakaoSDKCert */; };
+		605E58C92EBA397900386260 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 605E58C82EBA397900386260 /* Kingfisher */; };
+		605E58CC2EBA398E00386260 /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = 605E58CB2EBA398E00386260 /* NMapsMap */; };
+		605E58CF2EBA39BB00386260 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 605E58CE2EBA39BB00386260 /* RxCocoa */; };
+		605E58D22EBA39D200386260 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 605E58D12EBA39D200386260 /* SnapKit */; };
+		605E58D52EBA39EA00386260 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = 605E58D42EBA39EA00386260 /* RxGesture */; };
+		605E58D82EBA39FB00386260 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 605E58D72EBA39FB00386260 /* Then */; };
+		605E58DA2EBA3A0B00386260 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 605E58D92EBA3A0B00386260 /* RxSwift */; };
 		60697AC82D2A5B4C00693990 /* CustomChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60697AC72D2A5B4600693990 /* CustomChatModel.swift */; };
 		6076C9572DE5EFF90068E676 /* CouplePlaceDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076C9562DE5EFF90068E676 /* CouplePlaceDto.swift */; };
 		6076C95A2DE5F2B90068E676 /* PlaceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076C9592DE5F2B00068E676 /* PlaceUseCase.swift */; };
@@ -183,7 +197,6 @@
 		60E9F8172D98189B00201201 /* VersionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9F8162D98189200201201 /* VersionRepository.swift */; };
 		60F7DEB82DA5701100EB0279 /* UserDefaultsRepoP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F7DEB72DA5700800EB0279 /* UserDefaultsRepoP.swift */; };
 		60F7DEBA2DA5704100EB0279 /* UserDefaultsRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F7DEB92DA5703E00EB0279 /* UserDefaultsRepo.swift */; };
-		A1A09EE6F75F34CF5776C85D /* Pods_MeloMeterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13D1B0A4DD104367DA0E817D /* Pods_MeloMeterTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -218,8 +231,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1208ADFA108AB451A3A77C67 /* Pods-MeloMeterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeterTests.release.xcconfig"; path = "Target Support Files/Pods-MeloMeterTests/Pods-MeloMeterTests.release.xcconfig"; sourceTree = "<group>"; };
-		13D1B0A4DD104367DA0E817D /* Pods_MeloMeterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeloMeterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		210369092AA772BA00A5EEB5 /* CalendarNotificationTriggerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarNotificationTriggerUseCase.swift; sourceTree = "<group>"; };
 		2108F0402A6EC1F0002EED7A /* ProfileInsertUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInsertUseCase.swift; sourceTree = "<group>"; };
 		2108F0462A6EC48B002EED7A /* UserDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
@@ -242,8 +253,6 @@
 		21C3821E2A87F7B1003638E1 /* ChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRepository.swift; sourceTree = "<group>"; };
 		21C382212A87F812003638E1 /* ChatUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUseCase.swift; sourceTree = "<group>"; };
 		21C382232A87F85F003638E1 /* ChatDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDTO.swift; sourceTree = "<group>"; };
-		21E06114C18475D99DA03069 /* Pods-MeloMeter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.debug.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.debug.xcconfig"; sourceTree = "<group>"; };
-		4A9432E8BBDB9FBE10412467 /* Pods_MeloMeter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeloMeter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		521D41E42A7FFAD200E5CCDA /* DdayVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayVM.swift; sourceTree = "<group>"; };
 		521D41E62A7FFD5F00E5CCDA /* DdayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayUseCase.swift; sourceTree = "<group>"; };
 		521D41EB2A801D1200E5CCDA /* CoupleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleModel.swift; sourceTree = "<group>"; };
@@ -366,6 +375,7 @@
 		60453EA42DB882AC0053859F /* SharedDataRepoP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataRepoP.swift; sourceTree = "<group>"; };
 		60453EA62DB8836C0053859F /* SharedDataRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataRepo.swift; sourceTree = "<group>"; };
 		60453EAC2DB8A1A30053859F /* MelometerWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MelometerWidgetExtension.entitlements; sourceTree = "<group>"; };
+		605E58912EBA365400386260 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		60697AC72D2A5B4600693990 /* CustomChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomChatModel.swift; sourceTree = "<group>"; };
 		6076C9562DE5EFF90068E676 /* CouplePlaceDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplePlaceDto.swift; sourceTree = "<group>"; };
 		6076C9592DE5F2B00068E676 /* PlaceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceUseCase.swift; sourceTree = "<group>"; };
@@ -392,9 +402,7 @@
 		60E9F8162D98189200201201 /* VersionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionRepository.swift; sourceTree = "<group>"; };
 		60F7DEB72DA5700800EB0279 /* UserDefaultsRepoP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRepoP.swift; sourceTree = "<group>"; };
 		60F7DEB92DA5703E00EB0279 /* UserDefaultsRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRepo.swift; sourceTree = "<group>"; };
-		A9E69982DC824C86B28E4115 /* Pods-MeloMeterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeterTests.debug.xcconfig"; path = "Target Support Files/Pods-MeloMeterTests/Pods-MeloMeterTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B61B0F5A29F7A5F500E25EEF /* MeloMeter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeloMeter.entitlements; sourceTree = "<group>"; };
-		D6C8C150060E7CCA73BAD48D /* Pods-MeloMeter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloMeter.release.xcconfig"; path = "Target Support Files/Pods-MeloMeter/Pods-MeloMeter.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -425,16 +433,29 @@
 			files = (
 				5290BF912A6D3AFA00D734EE /* FirebaseRemoteConfig in Frameworks */,
 				5290BF8F2A6D3AFA00D734EE /* FirebaseMessaging in Frameworks */,
+				605E58CF2EBA39BB00386260 /* RxCocoa in Frameworks */,
 				5290BF892A6D3AFA00D734EE /* FirebaseDatabase in Frameworks */,
 				2185C4E12A83F31900F99795 /* MessageKit in Frameworks */,
+				605E58D22EBA39D200386260 /* SnapKit in Frameworks */,
+				605E58DA2EBA3A0B00386260 /* RxSwift in Frameworks */,
+				605E58C92EBA397900386260 /* Kingfisher in Frameworks */,
 				5290BF932A6D3AFA00D734EE /* FirebaseStorage in Frameworks */,
 				5290BF872A6D3AFA00D734EE /* FirebaseAppCheck in Frameworks */,
 				5290BF8D2A6D3AFA00D734EE /* FirebaseFirestoreSwift in Frameworks */,
+				605E58D52EBA39EA00386260 /* RxGesture in Frameworks */,
+				605E58C22EBA396900386260 /* KakaoSDK in Frameworks */,
+				605E58B92EBA391E00386260 /* AnyFormatKit in Frameworks */,
+				605E58CC2EBA398E00386260 /* NMapsMap in Frameworks */,
 				5290BF832A6D3AC000D734EE /* FirebaseAuth in Frameworks */,
+				605E58D82EBA39FB00386260 /* Then in Frameworks */,
 				5290BF852A6D3AFA00D734EE /* FirebaseAnalytics in Frameworks */,
+				605E58BF2EBA394100386260 /* GoogleUserMessagingPlatform in Frameworks */,
 				524448C42C496E5900A02863 /* FirebaseCrashlytics in Frameworks */,
 				5290BF8B2A6D3AFA00D734EE /* FirebaseFirestore in Frameworks */,
-				5E96546393FD50C9C5E5E5EF /* Pods_MeloMeter.framework in Frameworks */,
+				605E58BC2EBA393600386260 /* GoogleMobileAds in Frameworks */,
+				605E58B62EBA390A00386260 /* Alamofire in Frameworks */,
+				605E58C62EBA396900386260 /* KakaoSDKCert in Frameworks */,
+				605E58C42EBA396900386260 /* KakaoSDKAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,7 +463,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1A09EE6F75F34CF5776C85D /* Pods_MeloMeterTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -784,7 +804,6 @@
 				52E2B5E32AE580F00037FBB3 /* MeloMeterTests */,
 				6084BC9D2DB7610F005F9B2C /* MelometerWidget */,
 				52697B7029EEB7B2002BDD04 /* Products */,
-				F436958110A740287E251D09 /* Pods */,
 				E0A6B633DFC36A6F26FCC1E8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -802,6 +821,7 @@
 		52697B7129EEB7B2002BDD04 /* MeloMeter */ = {
 			isa = PBXGroup;
 			children = (
+				605E58912EBA365400386260 /* Project.swift */,
 				5271D41A2A58429D00FC7606 /* FirebaseService */,
 				60E0EE332D95724200E6E2A2 /* MeloMeterDebug.entitlements */,
 				B61B0F5A29F7A5F500E25EEF /* MeloMeter.entitlements */,
@@ -1208,23 +1228,10 @@
 		E0A6B633DFC36A6F26FCC1E8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4A9432E8BBDB9FBE10412467 /* Pods_MeloMeter.framework */,
-				13D1B0A4DD104367DA0E817D /* Pods_MeloMeterTests.framework */,
 				6084BC992DB7610F005F9B2C /* WidgetKit.framework */,
 				6084BC9B2DB7610F005F9B2C /* SwiftUI.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		F436958110A740287E251D09 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				21E06114C18475D99DA03069 /* Pods-MeloMeter.debug.xcconfig */,
-				D6C8C150060E7CCA73BAD48D /* Pods-MeloMeter.release.xcconfig */,
-				A9E69982DC824C86B28E4115 /* Pods-MeloMeterTests.debug.xcconfig */,
-				1208ADFA108AB451A3A77C67 /* Pods-MeloMeterTests.release.xcconfig */,
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1234,14 +1241,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 52697B8329EEB7B3002BDD04 /* Build configuration list for PBXNativeTarget "MeloMeter" */;
 			buildPhases = (
-				A7E4A2A93C19CD9A67CF3759 /* [CP] Check Pods Manifest.lock */,
 				52697B6B29EEB7B2002BDD04 /* Sources */,
 				52697B6C29EEB7B2002BDD04 /* Frameworks */,
 				52697B6D29EEB7B2002BDD04 /* Resources */,
 				6084BCA82DB76110005F9B2C /* Embed Foundation Extensions */,
 				5270EC192A49D0AA007FF444 /* ShellScript */,
-				E365C59633B1CAEA4BA0C355 /* [CP] Embed Pods Frameworks */,
-				1DE6CA72A9AEA166B216BBB0 /* [CP] Copy Pods Resources */,
 				524448C22C49694D00A02863 /* ShellScript */,
 			);
 			buildRules = (
@@ -1262,6 +1266,20 @@
 				5290BF922A6D3AFA00D734EE /* FirebaseStorage */,
 				2185C4E02A83F31900F99795 /* MessageKit */,
 				524448C32C496E5900A02863 /* FirebaseCrashlytics */,
+				605E58B52EBA390A00386260 /* Alamofire */,
+				605E58B82EBA391E00386260 /* AnyFormatKit */,
+				605E58BB2EBA393600386260 /* GoogleMobileAds */,
+				605E58BE2EBA394100386260 /* GoogleUserMessagingPlatform */,
+				605E58C12EBA396900386260 /* KakaoSDK */,
+				605E58C32EBA396900386260 /* KakaoSDKAuth */,
+				605E58C52EBA396900386260 /* KakaoSDKCert */,
+				605E58C82EBA397900386260 /* Kingfisher */,
+				605E58CB2EBA398E00386260 /* NMapsMap */,
+				605E58CE2EBA39BB00386260 /* RxCocoa */,
+				605E58D12EBA39D200386260 /* SnapKit */,
+				605E58D42EBA39EA00386260 /* RxGesture */,
+				605E58D72EBA39FB00386260 /* Then */,
+				605E58D92EBA3A0B00386260 /* RxSwift */,
 			);
 			productName = MeloMeter;
 			productReference = 52697B6F29EEB7B2002BDD04 /* MeloMeter.app */;
@@ -1271,7 +1289,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 52E2B5E82AE580F00037FBB3 /* Build configuration list for PBXNativeTarget "MeloMeterTests" */;
 			buildPhases = (
-				DA3AE684182CABFF16C43304 /* [CP] Check Pods Manifest.lock */,
 				52E2B5DE2AE580F00037FBB3 /* Sources */,
 				52E2B5DF2AE580F00037FBB3 /* Frameworks */,
 				52E2B5E02AE580F00037FBB3 /* Resources */,
@@ -1302,8 +1319,6 @@
 				6084BC9D2DB7610F005F9B2C /* MelometerWidget */,
 			);
 			name = MelometerWidgetExtension;
-			packageProductDependencies = (
-			);
 			productName = MelometerWidgetExtension;
 			productReference = 6084BC982DB7610F005F9B2C /* MelometerWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -1341,6 +1356,17 @@
 			packageReferences = (
 				B61B0F4929F7A44700E25EEF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				2185C4DF2A83F31900F99795 /* XCRemoteSwiftPackageReference "MessageKit" */,
+				605E58B42EBA390A00386260 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				605E58B72EBA391E00386260 /* XCRemoteSwiftPackageReference "AnyFormatKit" */,
+				605E58BA2EBA393600386260 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				605E58BD2EBA394100386260 /* XCRemoteSwiftPackageReference "swift-package-manager-google-user-messaging-platform" */,
+				605E58C02EBA396900386260 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				605E58C72EBA397900386260 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				605E58CA2EBA398E00386260 /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */,
+				605E58CD2EBA39BB00386260 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				605E58D02EBA39D200386260 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				605E58D32EBA39EA00386260 /* XCRemoteSwiftPackageReference "RxGesture" */,
+				605E58D62EBA39FB00386260 /* XCRemoteSwiftPackageReference "Then" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 52697B7029EEB7B2002BDD04 /* Products */;
@@ -1360,6 +1386,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5230B2652A72859200781623 /* Pretendard-Light.otf in Resources */,
+				605E58922EBA365400386260 /* Project.swift in Resources */,
 				5230B2692A72859200781623 /* Pretendard-Black.otf in Resources */,
 				5230B26B2A72859200781623 /* Pretendard-ExtraBold.otf in Resources */,
 				5230B26D2A72859200781623 /* Pretendard-Regular.otf in Resources */,
@@ -1391,23 +1418,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1DE6CA72A9AEA166B216BBB0 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MeloMeter/Pods-MeloMeter-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MeloMeter/Pods-MeloMeter-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MeloMeter/Pods-MeloMeter-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		524448C22C49694D00A02863 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1448,67 +1458,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
-		};
-		A7E4A2A93C19CD9A67CF3759 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MeloMeter-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DA3AE684182CABFF16C43304 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MeloMeterTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E365C59633B1CAEA4BA0C355 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MeloMeter/Pods-MeloMeter-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MeloMeter/Pods-MeloMeter-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MeloMeter/Pods-MeloMeter-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1831,7 +1780,6 @@
 		};
 		52697B8429EEB7B3002BDD04 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 21E06114C18475D99DA03069 /* Pods-MeloMeter.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1877,7 +1825,6 @@
 		};
 		52697B8529EEB7B3002BDD04 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D6C8C150060E7CCA73BAD48D /* Pods-MeloMeter.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1922,7 +1869,6 @@
 		};
 		52E2B5E92AE580F00037FBB3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A9E69982DC824C86B28E4115 /* Pods-MeloMeterTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -1943,7 +1889,6 @@
 		};
 		52E2B5EA2AE580F00037FBB3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1208ADFA108AB451A3A77C67 /* Pods-MeloMeterTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -2089,6 +2034,94 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		605E58B42EBA390A00386260 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+		605E58B72EBA391E00386260 /* XCRemoteSwiftPackageReference "AnyFormatKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/luximetr/AnyFormatKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.2;
+			};
+		};
+		605E58BA2EBA393600386260 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.12.0;
+			};
+		};
+		605E58BD2EBA394100386260 /* XCRemoteSwiftPackageReference "swift-package-manager-google-user-messaging-platform" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-user-messaging-platform.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.0;
+			};
+		};
+		605E58C02EBA396900386260 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.25.0;
+			};
+		};
+		605E58C72EBA397900386260 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.6.1;
+			};
+		};
+		605E58CA2EBA398E00386260 /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/navermaps/SPM-NMapsMap.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.23.0;
+			};
+		};
+		605E58CD2EBA39BB00386260 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.9.1;
+			};
+		};
+		605E58D02EBA39D200386260 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		605E58D32EBA39EA00386260 /* XCRemoteSwiftPackageReference "RxGesture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.4;
+			};
+		};
+		605E58D62EBA39FB00386260 /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		B61B0F4929F7A44700E25EEF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -2154,6 +2187,76 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B61B0F4929F7A44700E25EEF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		605E58B52EBA390A00386260 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 605E58B42EBA390A00386260 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		605E58B82EBA391E00386260 /* AnyFormatKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 605E58B72EBA391E00386260 /* XCRemoteSwiftPackageReference "AnyFormatKit" */;
+			productName = AnyFormatKit;
+		};
+		605E58BB2EBA393600386260 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 605E58BA2EBA393600386260 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
+		605E58BE2EBA394100386260 /* GoogleUserMessagingPlatform */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 605E58BD2EBA394100386260 /* XCRemoteSwiftPackageReference "swift-package-manager-google-user-messaging-platform" */;
+			productName = GoogleUserMessagingPlatform;
+		};
+		605E58C12EBA396900386260 /* KakaoSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 605E58C02EBA396900386260 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDK;
+		};
+		605E58C32EBA396900386260 /* KakaoSDKAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 605E58C02EBA396900386260 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKAuth;
+		};
+		605E58C52EBA396900386260 /* KakaoSDKCert */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 605E58C02EBA396900386260 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKCert;
+		};
+		605E58C82EBA397900386260 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 605E58C72EBA397900386260 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		605E58CB2EBA398E00386260 /* NMapsMap */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 605E58CA2EBA398E00386260 /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */;
+			productName = NMapsMap;
+		};
+		605E58CE2EBA39BB00386260 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 605E58CD2EBA39BB00386260 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		605E58D12EBA39D200386260 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 605E58D02EBA39D200386260 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		605E58D42EBA39EA00386260 /* RxGesture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 605E58D32EBA39EA00386260 /* XCRemoteSwiftPackageReference "RxGesture" */;
+			productName = RxGesture;
+		};
+		605E58D72EBA39FB00386260 /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 605E58D62EBA39FB00386260 /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
+		};
+		605E58D92EBA3A0B00386260 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 605E58CD2EBA39BB00386260 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
