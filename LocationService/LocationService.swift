@@ -70,7 +70,7 @@ final class LocationService: NSObject {
     }
     
     func requestAuthorization() {
-        self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.requestAlwaysAuthorization()
     }
     
     func observeUpdatedAuthorization() -> Observable<CLAuthorizationStatus> {

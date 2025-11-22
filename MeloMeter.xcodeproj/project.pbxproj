@@ -157,7 +157,6 @@
 		603F49FD2DE06AA300B89E6A /* Reactive+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F49FC2DE06AA300B89E6A /* Reactive+.swift */; };
 		60453EA52DB882B40053859F /* SharedDataRepoP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60453EA42DB882AC0053859F /* SharedDataRepoP.swift */; };
 		60453EA72DB883770053859F /* SharedDataRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60453EA62DB8836C0053859F /* SharedDataRepo.swift */; };
-		605E58922EBA365400386260 /* Project.swift in Resources */ = {isa = PBXBuildFile; fileRef = 605E58912EBA365400386260 /* Project.swift */; };
 		605E58B62EBA390A00386260 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 605E58B52EBA390A00386260 /* Alamofire */; };
 		605E58B92EBA391E00386260 /* AnyFormatKit in Frameworks */ = {isa = PBXBuildFile; productRef = 605E58B82EBA391E00386260 /* AnyFormatKit */; };
 		605E58BC2EBA393600386260 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 605E58BB2EBA393600386260 /* GoogleMobileAds */; };
@@ -375,7 +374,6 @@
 		60453EA42DB882AC0053859F /* SharedDataRepoP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataRepoP.swift; sourceTree = "<group>"; };
 		60453EA62DB8836C0053859F /* SharedDataRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataRepo.swift; sourceTree = "<group>"; };
 		60453EAC2DB8A1A30053859F /* MelometerWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MelometerWidgetExtension.entitlements; sourceTree = "<group>"; };
-		605E58912EBA365400386260 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		60697AC72D2A5B4600693990 /* CustomChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomChatModel.swift; sourceTree = "<group>"; };
 		6076C9562DE5EFF90068E676 /* CouplePlaceDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplePlaceDto.swift; sourceTree = "<group>"; };
 		6076C9592DE5F2B00068E676 /* PlaceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceUseCase.swift; sourceTree = "<group>"; };
@@ -821,7 +819,6 @@
 		52697B7129EEB7B2002BDD04 /* MeloMeter */ = {
 			isa = PBXGroup;
 			children = (
-				605E58912EBA365400386260 /* Project.swift */,
 				5271D41A2A58429D00FC7606 /* FirebaseService */,
 				60E0EE332D95724200E6E2A2 /* MeloMeterDebug.entitlements */,
 				B61B0F5A29F7A5F500E25EEF /* MeloMeter.entitlements */,
@@ -1386,7 +1383,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5230B2652A72859200781623 /* Pretendard-Light.otf in Resources */,
-				605E58922EBA365400386260 /* Project.swift in Resources */,
 				5230B2692A72859200781623 /* Pretendard-Black.otf in Resources */,
 				5230B26B2A72859200781623 /* Pretendard-ExtraBold.otf in Resources */,
 				5230B26D2A72859200781623 /* Pretendard-Regular.otf in Resources */,
