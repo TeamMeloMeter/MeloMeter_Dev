@@ -37,7 +37,7 @@ let project = Project(
       ],
       resources: [
         "../../MeloMeter/Resources/**",
-        "../../MeloMeter/Resources/LaunchScreen.storyboard", // ✅ 올바른 경로로 수정
+        "../../MeloMeter/Resources/LaunchScreen/Base.lproj/LaunchScreen.storyboard",
         "../../MeloMeter/**/.xcassets",
         "../../MeloMeter/**/Base.lproj/**",
         "../../MeloMeter/**/ko.lproj/**",
