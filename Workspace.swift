@@ -1,9 +1,13 @@
-
 import ProjectDescription
 
 let workspace = Workspace(
-    name: "Melometer",
-    projects: [
-        "Projects/App"
-    ]
+  name: "MeloMeter",
+  projects: [
+    "Projects/MeloMeter",
+    "Projects/Presentation",
+    "Projects/Data",
+    "Projects/Domain",
+    "Projects/Core",
+    "Projects/Shared"
+  ]
 )

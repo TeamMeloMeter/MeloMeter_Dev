@@ -5,7 +5,22 @@
       location = "group:Projects"
       name = "Projects">
       <FileRef
-         location = "group:App/MeloMeter.xcodeproj">
+         location = "group:Core/Core.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Data/Data.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Domain/Domain.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:MeloMeter/MeloMeter.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Presentation/Presentation.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Shared/Shared.xcodeproj">
       </FileRef>
    </Group>
 </Workspace>

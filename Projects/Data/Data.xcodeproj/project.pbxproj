@@ -1,0 +1,538 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		08FD2A63B0EF8EAA84FE62E7 /* SearchRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C226314B9C58579B32CF2331 /* SearchRepo.swift */; };
+		0B945E607ECBB1EC05C15D1C /* CoupleDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963863B4F562221E01FC477 /* CoupleDTO.swift */; };
+		16ADD1C56A6575224034960B /* VersionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCF3D4DF56EF7D7AB2044AB /* VersionRepository.swift */; };
+		1F0CCC489FD10C1913273F86 /* ChatDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0A5E43C728959377C02EFC /* ChatDTO.swift */; };
+		2BED72544F34C416409BA61E /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A99AD8DD79E773B1DBF18D2 /* LocationService.swift */; };
+		2C59276EE4E58821AF34BF40 /* AdmobRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37D3A0458D5064757855942 /* AdmobRepository.swift */; };
+		3FCE1B2D117D3E953B99E606 /* CouplePlaceDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930BA05257486A849A26E344 /* CouplePlaceDto.swift */; };
+		46226E1F58868734C7C2026A /* UserDefaultsRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB1B2FC9CC6474E0FFC3212 /* UserDefaultsRepo.swift */; };
+		529CD59F3F24A01C4173C3D6 /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782928134D38558BE31C4EEE /* UserDTO.swift */; };
+		586CF03E8B6A7CA076F767AA /* LogInDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB57788A12AF714CF6A0C92 /* LogInDTO.swift */; };
+		5C85BBA634F3D26E04F1160B /* AlarmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F3E2737B50FBDEB5781A4E /* AlarmRepository.swift */; };
+		699E6FABD8FBF037D2B001AF /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD05F6275D7F7930B1385ADD /* FirebaseService.swift */; };
+		7C581A15387E2F73F5958D25 /* KakaoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0058790D736616DC8898896C /* KakaoService.swift */; };
+		89D8777586029755572386B7 /* CoupleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5EAFE4F5A90A55CD62C1C2 /* CoupleRepository.swift */; };
+		8E0608076C9D23D9A508B143 /* ChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B6101ECD6FA0A1CF4772DC /* ChatRepository.swift */; };
+		900994FD8DC39ACC8019AAF5 /* LogInRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EA520273669968B6A21D71 /* LogInRepository.swift */; };
+		901ACA7B98089AB702ADA830 /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06FAA1459D11CCE724C34195 /* Domain.framework */; };
+		994680B5F469F21F585758F0 /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973DB3F1151EAAA338B3F184 /* PushNotificationService.swift */; };
+		9C2E66FBC37262F027FDA20C /* HundredQADTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E5F0105BD3568F195D4A68 /* HundredQADTO.swift */; };
+		A8D4BF4BBD674B88FEFD3131 /* HundredQARepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59B199D307BCF40406E59B5 /* HundredQARepository.swift */; };
+		C4BFA49558D4D3943721A5DE /* WidgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474D7198C0AF69FC25AAD6D7 /* WidgetService.swift */; };
+		D71ECEE2DBC4BBDBB097793F /* CouplePlaceRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B70E6909EEDAD9517FD3CF8 /* CouplePlaceRepo.swift */; };
+		D8351B863D24D93E4002770B /* DefaultFirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F594894E88691865BF02E4 /* DefaultFirebaseService.swift */; };
+		DE40D7C4CE2AEC28B0020298 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64AE886E390D83DE7055966 /* UserRepository.swift */; };
+		E6EE4E20C6D0DDCFF34F69A7 /* SharedDataRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1156EBC6FCCD286535BBAB /* SharedDataRepo.swift */; };
+		E9E12675E08599D6CA5C983A /* FireStoreCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F409373F5AD5301EF08AA33 /* FireStoreCollection.swift */; };
+		F148039B5F91592C5380466A /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6799EBC84F4DBDEDB6C2FB0 /* Core.framework */; };
+		FBAAC6C3423B80AE96B9FC87 /* AlarmDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F857CDAFC5F6D144E5B2A /* AlarmDTO.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B14F7C84FC4E43202BF6D53F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0058790D736616DC8898896C /* KakaoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoService.swift; sourceTree = "<group>"; };
+		033B57EACF093CA22F91EAB9 /* Data-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Data-Info.plist"; sourceTree = "<group>"; };
+		06FAA1459D11CCE724C34195 /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		12E5F0105BD3568F195D4A68 /* HundredQADTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQADTO.swift; sourceTree = "<group>"; };
+		1A0A5E43C728959377C02EFC /* ChatDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDTO.swift; sourceTree = "<group>"; };
+		1D5EAFE4F5A90A55CD62C1C2 /* CoupleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleRepository.swift; sourceTree = "<group>"; };
+		2963863B4F562221E01FC477 /* CoupleDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleDTO.swift; sourceTree = "<group>"; };
+		2F409373F5AD5301EF08AA33 /* FireStoreCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreCollection.swift; sourceTree = "<group>"; };
+		474D7198C0AF69FC25AAD6D7 /* WidgetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetService.swift; sourceTree = "<group>"; };
+		4E75197C294DE74F5162FAA7 /* Data.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Data.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		53F3E2737B50FBDEB5781A4E /* AlarmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmRepository.swift; sourceTree = "<group>"; };
+		5B70E6909EEDAD9517FD3CF8 /* CouplePlaceRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplePlaceRepo.swift; sourceTree = "<group>"; };
+		68EA520273669968B6A21D71 /* LogInRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInRepository.swift; sourceTree = "<group>"; };
+		6A99AD8DD79E773B1DBF18D2 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		75F594894E88691865BF02E4 /* DefaultFirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFirebaseService.swift; sourceTree = "<group>"; };
+		782928134D38558BE31C4EEE /* UserDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
+		8B1156EBC6FCCD286535BBAB /* SharedDataRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataRepo.swift; sourceTree = "<group>"; };
+		930BA05257486A849A26E344 /* CouplePlaceDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplePlaceDto.swift; sourceTree = "<group>"; };
+		973DB3F1151EAAA338B3F184 /* PushNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationService.swift; sourceTree = "<group>"; };
+		A4B6101ECD6FA0A1CF4772DC /* ChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRepository.swift; sourceTree = "<group>"; };
+		A59B199D307BCF40406E59B5 /* HundredQARepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQARepository.swift; sourceTree = "<group>"; };
+		AEB1B2FC9CC6474E0FFC3212 /* UserDefaultsRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRepo.swift; sourceTree = "<group>"; };
+		BD05F6275D7F7930B1385ADD /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+		C226314B9C58579B32CF2331 /* SearchRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepo.swift; sourceTree = "<group>"; };
+		C37D3A0458D5064757855942 /* AdmobRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdmobRepository.swift; sourceTree = "<group>"; };
+		C64AE886E390D83DE7055966 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		DFCF3D4DF56EF7D7AB2044AB /* VersionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionRepository.swift; sourceTree = "<group>"; };
+		E6799EBC84F4DBDEDB6C2FB0 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED0F857CDAFC5F6D144E5B2A /* AlarmDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDTO.swift; sourceTree = "<group>"; };
+		EEB57788A12AF714CF6A0C92 /* LogInDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInDTO.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		818FC900AD146A9A336966D5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F148039B5F91592C5380466A /* Core.framework in Frameworks */,
+				901ACA7B98089AB702ADA830 /* Domain.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		121CF0B6A650954C95E3983D /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				C37D3A0458D5064757855942 /* AdmobRepository.swift */,
+				53F3E2737B50FBDEB5781A4E /* AlarmRepository.swift */,
+				A4B6101ECD6FA0A1CF4772DC /* ChatRepository.swift */,
+				5B70E6909EEDAD9517FD3CF8 /* CouplePlaceRepo.swift */,
+				1D5EAFE4F5A90A55CD62C1C2 /* CoupleRepository.swift */,
+				A59B199D307BCF40406E59B5 /* HundredQARepository.swift */,
+				68EA520273669968B6A21D71 /* LogInRepository.swift */,
+				C226314B9C58579B32CF2331 /* SearchRepo.swift */,
+				8B1156EBC6FCCD286535BBAB /* SharedDataRepo.swift */,
+				AEB1B2FC9CC6474E0FFC3212 /* UserDefaultsRepo.swift */,
+				C64AE886E390D83DE7055966 /* UserRepository.swift */,
+				DFCF3D4DF56EF7D7AB2044AB /* VersionRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		20629251A4CAB947CD938921 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E6799EBC84F4DBDEDB6C2FB0 /* Core.framework */,
+				4E75197C294DE74F5162FAA7 /* Data.framework */,
+				06FAA1459D11CCE724C34195 /* Domain.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2C75C352EB6948F4D052D188 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				ED0F857CDAFC5F6D144E5B2A /* AlarmDTO.swift */,
+				1A0A5E43C728959377C02EFC /* ChatDTO.swift */,
+				2963863B4F562221E01FC477 /* CoupleDTO.swift */,
+				930BA05257486A849A26E344 /* CouplePlaceDto.swift */,
+				12E5F0105BD3568F195D4A68 /* HundredQADTO.swift */,
+				EEB57788A12AF714CF6A0C92 /* LogInDTO.swift */,
+				782928134D38558BE31C4EEE /* UserDTO.swift */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		31F81E05F29326C248BE29A7 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				BAED079CB44D2A24FE72E771 /* Data */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		3FC3894358B4DC802A338823 /* MeloMeter */ = {
+			isa = PBXGroup;
+			children = (
+				B78D491CD9C2CD0AF0C09DB2 /* FirebaseService */,
+				31F81E05F29326C248BE29A7 /* Sources */,
+			);
+			name = MeloMeter;
+			path = ../../MeloMeter;
+			sourceTree = "<group>";
+		};
+		694BD9CB9246662EF4888635 /* LocationService */ = {
+			isa = PBXGroup;
+			children = (
+				6A99AD8DD79E773B1DBF18D2 /* LocationService.swift */,
+			);
+			name = LocationService;
+			path = ../../LocationService;
+			sourceTree = "<group>";
+		};
+		8A6D38DA6706D1F4DD8A055B = {
+			isa = PBXGroup;
+			children = (
+				20629251A4CAB947CD938921 /* Products */,
+				EF3121301A12FEB266E0B923 /* Project */,
+			);
+			sourceTree = "<group>";
+		};
+		AABE3A120DFAA5B30C74694C /* InfoPlists */ = {
+			isa = PBXGroup;
+			children = (
+				033B57EACF093CA22F91EAB9 /* Data-Info.plist */,
+			);
+			path = InfoPlists;
+			sourceTree = "<group>";
+		};
+		B78D491CD9C2CD0AF0C09DB2 /* FirebaseService */ = {
+			isa = PBXGroup;
+			children = (
+				75F594894E88691865BF02E4 /* DefaultFirebaseService.swift */,
+				BD05F6275D7F7930B1385ADD /* FirebaseService.swift */,
+				2F409373F5AD5301EF08AA33 /* FireStoreCollection.swift */,
+				973DB3F1151EAAA338B3F184 /* PushNotificationService.swift */,
+			);
+			path = FirebaseService;
+			sourceTree = "<group>";
+		};
+		BAED079CB44D2A24FE72E771 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				2C75C352EB6948F4D052D188 /* DTO */,
+				121CF0B6A650954C95E3983D /* Repositories */,
+				474D7198C0AF69FC25AAD6D7 /* WidgetService.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		C25E2D135BFBAC1019949D62 /* Derived */ = {
+			isa = PBXGroup;
+			children = (
+				AABE3A120DFAA5B30C74694C /* InfoPlists */,
+			);
+			path = Derived;
+			sourceTree = "<group>";
+		};
+		EF3121301A12FEB266E0B923 /* Project */ = {
+			isa = PBXGroup;
+			children = (
+				C25E2D135BFBAC1019949D62 /* Derived */,
+				F5B1DA113A01F48C778157AA /* KakaoService */,
+				694BD9CB9246662EF4888635 /* LocationService */,
+				3FC3894358B4DC802A338823 /* MeloMeter */,
+			);
+			name = Project;
+			sourceTree = "<group>";
+		};
+		F5B1DA113A01F48C778157AA /* KakaoService */ = {
+			isa = PBXGroup;
+			children = (
+				0058790D736616DC8898896C /* KakaoService.swift */,
+			);
+			name = KakaoService;
+			path = ../../KakaoService;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		372E276F143AFFAD2448C971 /* Data */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 36E6DF242C12BC0663933DC9 /* Build configuration list for PBXNativeTarget "Data" */;
+			buildPhases = (
+				3463CE952CBC37DCC5509817 /* Sources */,
+				81018B321249CDD696EA4A5D /* Resources */,
+				818FC900AD146A9A336966D5 /* Frameworks */,
+				B14F7C84FC4E43202BF6D53F /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Data;
+			packageProductDependencies = (
+			);
+			productName = Data;
+			productReference = 4E75197C294DE74F5162FAA7 /* Data.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		848E6C78DE33F20387FB92DE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = BDB112DA78B2B42275EC3A62 /* Build configuration list for PBXProject "Data" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 8A6D38DA6706D1F4DD8A055B;
+			productRefGroup = 20629251A4CAB947CD938921 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				372E276F143AFFAD2448C971 /* Data */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		81018B321249CDD696EA4A5D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3463CE952CBC37DCC5509817 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7C581A15387E2F73F5958D25 /* KakaoService.swift in Sources */,
+				2BED72544F34C416409BA61E /* LocationService.swift in Sources */,
+				D8351B863D24D93E4002770B /* DefaultFirebaseService.swift in Sources */,
+				E9E12675E08599D6CA5C983A /* FireStoreCollection.swift in Sources */,
+				699E6FABD8FBF037D2B001AF /* FirebaseService.swift in Sources */,
+				994680B5F469F21F585758F0 /* PushNotificationService.swift in Sources */,
+				FBAAC6C3423B80AE96B9FC87 /* AlarmDTO.swift in Sources */,
+				1F0CCC489FD10C1913273F86 /* ChatDTO.swift in Sources */,
+				0B945E607ECBB1EC05C15D1C /* CoupleDTO.swift in Sources */,
+				3FCE1B2D117D3E953B99E606 /* CouplePlaceDto.swift in Sources */,
+				9C2E66FBC37262F027FDA20C /* HundredQADTO.swift in Sources */,
+				586CF03E8B6A7CA076F767AA /* LogInDTO.swift in Sources */,
+				529CD59F3F24A01C4173C3D6 /* UserDTO.swift in Sources */,
+				2C59276EE4E58821AF34BF40 /* AdmobRepository.swift in Sources */,
+				5C85BBA634F3D26E04F1160B /* AlarmRepository.swift in Sources */,
+				8E0608076C9D23D9A508B143 /* ChatRepository.swift in Sources */,
+				D71ECEE2DBC4BBDBB097793F /* CouplePlaceRepo.swift in Sources */,
+				89D8777586029755572386B7 /* CoupleRepository.swift in Sources */,
+				A8D4BF4BBD674B88FEFD3131 /* HundredQARepository.swift in Sources */,
+				900994FD8DC39ACC8019AAF5 /* LogInRepository.swift in Sources */,
+				08FD2A63B0EF8EAA84FE62E7 /* SearchRepo.swift in Sources */,
+				E6EE4E20C6D0DDCFF34F69A7 /* SharedDataRepo.swift in Sources */,
+				46226E1F58868734C7C2026A /* UserDefaultsRepo.swift in Sources */,
+				DE40D7C4CE2AEC28B0020298 /* UserRepository.swift in Sources */,
+				16ADD1C56A6575224034960B /* VersionRepository.swift in Sources */,
+				C4BFA49558D4D3943721A5DE /* WidgetService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		73ECBCF97D70914F62AFFE08 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Derived/InfoPlists/Data-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.teamMeloMeter.data;
+				PRODUCT_NAME = Data;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
+					"$(inherited)",
+					DEBUG,
+				);
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		7A8C7E63B3E331C68A2D29C0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Derived/InfoPlists/Data-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.teamMeloMeter.data;
+				PRODUCT_NAME = Data;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		A6D14005D5289DA5234BA3FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		EE93D398734E8DACE27A1FFB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		36E6DF242C12BC0663933DC9 /* Build configuration list for PBXNativeTarget "Data" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73ECBCF97D70914F62AFFE08 /* Debug */,
+				7A8C7E63B3E331C68A2D29C0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BDB112DA78B2B42275EC3A62 /* Build configuration list for PBXProject "Data" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6D14005D5289DA5234BA3FE /* Debug */,
+				EE93D398734E8DACE27A1FFB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 848E6C78DE33F20387FB92DE /* Project object */;
+}
