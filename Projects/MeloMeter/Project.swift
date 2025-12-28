@@ -70,6 +70,10 @@ let project = Project(
         .project(target: "Shared", path: "../Shared")
       ],
       settings: .settings(base: [
+        "MARKETING_VERSION": "1.2.1",
+        "CURRENT_PROJECT_VERSION": "20251021",
+        "DEVELOPMENT_TEAM": "YH4A87H8M4",
+        "TARGETED_DEVICE_FAMILY": "1",
         "SWIFT_ENABLE_EXPLICIT_MODULES": "NO",
         "CLANG_ENABLE_EXPLICIT_MODULES": "NO"
       ])
