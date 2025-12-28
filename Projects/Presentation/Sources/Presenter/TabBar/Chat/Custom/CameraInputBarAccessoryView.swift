@@ -8,7 +8,6 @@
 import InputBarAccessoryView
 import UIKit
 import Domain
-import Data
 import Core
 
 // MARK: - CameraInputBarAccessoryViewDelegate

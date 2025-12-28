@@ -10,7 +10,6 @@ import RxRelay
 import RxCocoa
 import UIKit
 import Domain
-import Data
 import Core
 
 public struct ResultModel {

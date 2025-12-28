@@ -7,7 +7,6 @@
 
 import UIKit
 import Domain
-import Data
 import Core
 //커플등록 뷰
 public class CoupleConnectView: UIView {

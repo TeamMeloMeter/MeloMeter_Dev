@@ -7,7 +7,6 @@
 
 import UIKit
 import Domain
-import Data
 import Core
 
 // 마이페이지의 공지사항, 자주묻는 질문, 정보 란 TableView에 들어갈 Cell

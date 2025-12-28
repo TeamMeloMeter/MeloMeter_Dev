@@ -42,7 +42,6 @@ let project = Project(
         ExternalDependencies.rxGesture,
 
         .project(target: "Domain", path: "../Domain"),
-        .project(target: "Data", path: "../Data"),
         .project(target: "Core", path: "../Core"),
         .project(target: "Shared", path: "../Shared")
       ],

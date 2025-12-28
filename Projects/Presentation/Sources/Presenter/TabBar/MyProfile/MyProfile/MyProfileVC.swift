@@ -11,7 +11,6 @@ import RxSwift
 import RxGesture
 import GoogleMobileAds
 import Domain
-import Data
 import Core
 
 public class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
@@ -163,7 +162,7 @@ public class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: Event
     public func showInfoAlert() {
-        let deviceVersion = VersionService.shared.getDeviceVersion()
+        let deviceVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0"
         AlertManager(viewController: self)
             .setTitle("정보")
             .setMessage("버전 정보: \(deviceVersion)\nTeamMelometer")

@@ -12,7 +12,6 @@ import UIKit
 import RxSwift
 import RxGesture
 import Domain
-import Data
 import Core
 // MARK: - BasicExampleViewController
 

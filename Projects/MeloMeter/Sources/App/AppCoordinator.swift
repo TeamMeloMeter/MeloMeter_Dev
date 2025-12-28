@@ -17,18 +17,14 @@ final class AppCoordinator: Coordinator {
     weak var delegate: CoordinatorDelegate?
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
-    var firebaseService: FirebaseService
+    private let dependencies: PresentationDependencyProviding
     var disposeBag = DisposeBag()
     var accessLevel: AccessLevel = .none
-    
-    private var sharedDataRepo: SharedDataRepoP
     // MARK: - Initializers
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
         self.childCoordinators = []
-        self.firebaseService = DefaultFirebaseService()
-        
-        self.sharedDataRepo = SharedDataRepo()
+        self.dependencies = AppDependencies()
     }
     
     // MARK: - Methods
@@ -54,9 +50,9 @@ private extension AppCoordinator {
     }
     
     func routeUsingFirestoreState() {
-        firebaseService.getCurrentUser()
+        dependencies.firebaseService.getCurrentUser()
             .flatMap { [unowned self] user in
-                self.firebaseService.getDocument(collection: .Users, document: user.uid)
+                self.dependencies.firebaseService.getDocument(collection: .Users, document: user.uid)
             }
             .subscribe(onSuccess: { [weak self] data in
                 guard let self else { return }
@@ -77,12 +73,11 @@ private extension AppCoordinator {
 extension AppCoordinator {
     
     func showSplashVC() {
-        let firebaseService = self.firebaseService
+        let firebaseService = self.dependencies.firebaseService
         let splashVC = SplashVC(
             viewModel: SplashVM(coordinator: self,
                                 firebaseService: firebaseService,
-                                userRepository: UserRepository(firebaseService: firebaseService,
-                                                               chatRepository: ChatRepository(firebaseService: firebaseService)), adMobRepo: AdmobRepository()
+                                userRepository: dependencies.makeUserRepository(), adMobRepo: AdmobRepository()
                                )
         )
         navigationController.setNavigationBarHidden(true, animated: false)
@@ -91,7 +86,7 @@ extension AppCoordinator {
     
     func connectLogInFlow(accessLevel: Bool = false) {
         self.navigationController.viewControllers.removeAll()
-        let logInCoordinator = LogInCoordinator(self.navigationController)
+        let logInCoordinator = LogInCoordinator(self.navigationController, dependencies: dependencies)
         logInCoordinator.delegate = self
         logInCoordinator.isLogin = accessLevel
         self.childCoordinators.append(logInCoordinator)
@@ -100,14 +95,14 @@ extension AppCoordinator {
 
     func connectPresetFlow() {
         self.navigationController.viewControllers.removeAll()
-        let presetCoordinator = PresetCoordinator(self.navigationController, sharedDataRepo: self.sharedDataRepo)
+        let presetCoordinator = PresetCoordinator(self.navigationController, dependencies: dependencies)
         presetCoordinator.delegate = self
         presetCoordinator.start()
         self.childCoordinators.append(presetCoordinator)
     }
     
     func connectTabBarFlow() {
-        let tabBarCoordinator = TabBarCoordinator(self.navigationController, sharedDataRepo: self.sharedDataRepo)
+        let tabBarCoordinator = TabBarCoordinator(self.navigationController, dependencies: dependencies)
         tabBarCoordinator.delegate = self
         tabBarCoordinator.start()
         self.childCoordinators.append(tabBarCoordinator)

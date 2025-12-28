@@ -8,19 +8,19 @@
 import UIKit
 import RxSwift
 import Domain
-import Data
 import Core
 public final class LogInCoordinator: Coordinator {
     public var delegate: CoordinatorDelegate?
-    public let firebaseService = DefaultFirebaseService()
+    private let dependencies: PresentationDependencyProviding
     public var navigationController: UINavigationController
     public var childCoordinators: [Coordinator]
     public let disposeBag = DisposeBag()
     public var isLogin: Bool = false
     
-    public init(_ navigationController: UINavigationController) {
+    public init(_ navigationController: UINavigationController, dependencies: PresentationDependencyProviding) {
         self.navigationController = navigationController
         self.childCoordinators = []
+        self.dependencies = dependencies
     }
     
     public func start() {
@@ -35,16 +35,16 @@ public final class LogInCoordinator: Coordinator {
                     showCoupleCombineVC(inviteCode: code)
                 }
             } else {
-                self.firebaseService.getCurrentUser()
+                self.dependencies.firebaseService.getCurrentUser()
                     .subscribe(onSuccess: {[weak self] user in
                         guard let self = self else{ return }
-                        self.firebaseService.getDocument(collection: .Users, document: user.uid)
+                        self.dependencies.firebaseService.getDocument(collection: .Users, document: user.uid)
                             .subscribe(onSuccess: {[weak self] userInfo in
                                 guard let self else {return}
                                 
                                 if let phoneNumber = userInfo["phoneNumber"] as? String, let currentPhoneNumber = user.phoneNumber {
                                     if phoneNumber.isEmpty {
-                                        firebaseService.updateDocument(collection: .Users, document: user.uid, values: ["phoneNumber": currentPhoneNumber]).subscribe({ single in
+                                        dependencies.firebaseService.updateDocument(collection: .Users, document: user.uid, values: ["phoneNumber": currentPhoneNumber]).subscribe({ single in
                                             switch single {
                                             case .success(_):
                                                 break
@@ -88,9 +88,8 @@ extension LogInCoordinator {
         let viewController = PhoneCertifiedVC(
             viewModel: LogInVM(
                 coordinator: self,
-                logInUseCase: LogInUseCase(logInRepository: LogInRepository(firebaseService: firebaseService),
-                                           userRepository: UserRepository(firebaseService: firebaseService,
-                                                                          chatRepository: ChatRepository(firebaseService: firebaseService)))
+                logInUseCase: makeLogInUseCase(),
+                kakaoShareService: dependencies.kakaoShareService
             )
         )
         
@@ -101,10 +100,8 @@ extension LogInCoordinator {
     public func showAuthNumVC(phoneNumber: String?) {
         let viewModel = LogInVM(
             coordinator: self,
-            logInUseCase: LogInUseCase(logInRepository: LogInRepository(firebaseService: firebaseService),
-                                       userRepository: UserRepository(firebaseService: firebaseService,
-                                                                      chatRepository: ChatRepository(firebaseService: firebaseService))
-                                      )
+            logInUseCase: makeLogInUseCase(),
+            kakaoShareService: dependencies.kakaoShareService
         )
         viewModel.phoneNumber = phoneNumber
         let viewController = AuthNumVC(viewModel: viewModel)
@@ -117,10 +114,8 @@ extension LogInCoordinator {
         let viewController = CoupleCombineVC(
             viewModel: LogInVM(
                 coordinator: self,
-                logInUseCase: LogInUseCase(logInRepository: LogInRepository(firebaseService: firebaseService),
-                                           userRepository: UserRepository(firebaseService: firebaseService,
-                                                                          chatRepository: ChatRepository(firebaseService: firebaseService))
-                                          )
+                logInUseCase: makeLogInUseCase(),
+                kakaoShareService: dependencies.kakaoShareService
             ),
             inviteCode: inviteCode,
             otherInviteCode: otherInviteCode)
@@ -133,6 +128,15 @@ extension LogInCoordinator {
         self.delegate?.didFinish(childCoordinator: self)
     }
     
+}
+
+private extension LogInCoordinator {
+    func makeLogInUseCase() -> LogInUseCase {
+        return LogInUseCase(
+            logInRepository: dependencies.makeLogInRepository(),
+            userRepository: dependencies.makeUserRepository()
+        )
+    }
 }
 
 extension LogInCoordinator: CoordinatorDelegate {

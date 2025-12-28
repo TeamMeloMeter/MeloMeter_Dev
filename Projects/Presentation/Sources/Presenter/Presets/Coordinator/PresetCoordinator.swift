@@ -7,22 +7,20 @@
 
 import UIKit
 import Domain
-import Data
 import Core
 public final class PresetCoordinator: Coordinator {
     public var delegate: CoordinatorDelegate?
     
-    private let sharedDataRepo: SharedDataRepoP
+    private let dependencies: PresentationDependencyProviding
     
     public var navigationController: UINavigationController
     public var childCoordinators: [Coordinator]
-    public let firebaseService = DefaultFirebaseService()
     public let adMobRepo = AdmobRepository()
     
-    public init(_ navigationController: UINavigationController, sharedDataRepo: SharedDataRepoP) {
+    public init(_ navigationController: UINavigationController, dependencies: PresentationDependencyProviding) {
         self.navigationController = navigationController
         self.childCoordinators = []
-        self.sharedDataRepo = sharedDataRepo
+        self.dependencies = dependencies
     }
     
     public func start() {
@@ -34,13 +32,11 @@ public final class PresetCoordinator: Coordinator {
 extension PresetCoordinator {
     
     public func showProfileInsertVC() {
-        let firebaseService = self.firebaseService
         let viewController = ProfileInsertVC(
             viewModel: ProfileInsertVM(
                 coordinator: self,
                 profileInsertUseCase: ProfileInsertUseCase(
-                    userRepository: UserRepository(firebaseService: firebaseService,
-                                                   chatRepository: ChatRepository(firebaseService: firebaseService)))
+                    userRepository: dependencies.makeUserRepository())
             )
         )
         
@@ -49,21 +45,18 @@ extension PresetCoordinator {
     }
     
     public func showPermissionVC1() {
-        let firebaseService = self.firebaseService
-        let chatRepository = ChatRepository(firebaseService: firebaseService)
-        let userRepository = UserRepository(firebaseService: firebaseService, chatRepository: chatRepository)
-        let coupleRepository = CoupleRepository(firebaseService: firebaseService)
         let viewController = PermissionVC(
             viewModel: PermissionVM(
                 coordinator: self,
                 mainUseCase: MainUseCase(
-                    firebaseService: firebaseService,
-                    userRepository: userRepository,
-                    coupleRepository: coupleRepository,
+                    firebaseService: dependencies.firebaseService,
+                    userRepository: dependencies.makeUserRepository(),
+                    coupleRepository: dependencies.makeCoupleRepository(),
                     adMobRepo: self.adMobRepo,
-                    sharedDataRepo: self.sharedDataRepo,
-                    notificationService: PushNotificationService.shared
-                )
+                    sharedDataRepo: dependencies.sharedDataRepo,
+                    notificationService: dependencies.pushNotificationService
+                ),
+                pushNotificationService: dependencies.pushNotificationService
             )
         )
         
@@ -72,21 +65,18 @@ extension PresetCoordinator {
     }
     
     public func showPermissionVC2() {
-        let firebaseService = self.firebaseService
-        let chatRepository = ChatRepository(firebaseService: firebaseService)
-        let userRepository = UserRepository(firebaseService: firebaseService, chatRepository: chatRepository)
-        let coupleRepository = CoupleRepository(firebaseService: firebaseService)
         let viewController = Permission2VC(
             viewModel: PermissionVM(
                 coordinator: self,
                 mainUseCase: MainUseCase(
-                    firebaseService: firebaseService,
-                    userRepository: userRepository,
-                    coupleRepository: coupleRepository,
+                    firebaseService: dependencies.firebaseService,
+                    userRepository: dependencies.makeUserRepository(),
+                    coupleRepository: dependencies.makeCoupleRepository(),
                     adMobRepo: self.adMobRepo,
-                    sharedDataRepo: self.sharedDataRepo,
-                    notificationService: PushNotificationService.shared
-                )
+                    sharedDataRepo: dependencies.sharedDataRepo,
+                    notificationService: dependencies.pushNotificationService
+                ),
+                pushNotificationService: dependencies.pushNotificationService
             )
         )
         

@@ -7,18 +7,18 @@
 
 import UIKit
 import Domain
-import Data
 import Core
 public final class ChatCoordinator: Coordinator {
     public var delegate: CoordinatorDelegate?
     public var navigationController: UINavigationController
     public var childCoordinators: [Coordinator]
-    public let firebaseService = DefaultFirebaseService()
+    private let dependencies: PresentationDependencyProviding
     public let admobRepo = AdmobRepository()
     
-    public init(_ navigationController: UINavigationController) {
+    public init(_ navigationController: UINavigationController, dependencies: PresentationDependencyProviding) {
         self.navigationController = navigationController
         self.childCoordinators = []
+        self.dependencies = dependencies
     }
     
     public func start() {
@@ -30,17 +30,16 @@ public final class ChatCoordinator: Coordinator {
 extension ChatCoordinator {
     
     public func showChatVC() {
-        let firebaseService = self.firebaseService
-        let chatRepository = ChatRepository(firebaseService: firebaseService)
+        let chatRepository = dependencies.makeChatRepository()
         let viewController = DisplayChatVC(
             viewModel: ChatVM(coordinator: self,
                               chatUseCase: ChatUseCase(
                                 chatRepository: chatRepository,
-                                coupleRepository: CoupleRepository(firebaseService: firebaseService),
-                                userRepository: UserRepository(firebaseService: firebaseService, chatRepository: chatRepository)
+                                coupleRepository: dependencies.makeCoupleRepository(),
+                                userRepository: dependencies.makeUserRepository(chatRepository: chatRepository)
                               ),
                               hundredQAUseCase: HundredQAUseCase(hundredQARepository:
-                                                                    HundredQARepository(firebaseService: firebaseService), admobRepo: admobRepo
+                                                                    dependencies.makeHundredQARepository(), admobRepo: admobRepo
                                                                 )
                              )
         )
@@ -50,20 +49,20 @@ extension ChatCoordinator {
     }
     
     public func showHundredQAFlow() {
-        let hundredQACoordinator = HundredCoordinator(self.navigationController)
+        let hundredQACoordinator = HundredCoordinator(self.navigationController, dependencies: dependencies)
         hundredQACoordinator.delegate = self
         childCoordinators.append(hundredQACoordinator)
         hundredQACoordinator.start()
     }
     
     public func showReadAnswerVC(questionNumber: String, question: String, myAnswerInfo: AnswerModel, otherAnswerInfo: AnswerModel) {
-        let firebaseService = self.firebaseService
-        let hundredQACoordinator = HundredCoordinator(self.navigationController)
+        let hundredQACoordinator = HundredCoordinator(self.navigationController, dependencies: dependencies)
         hundredQACoordinator.delegate = self
         childCoordinators.append(hundredQACoordinator)
         let viewModel = AnswerVM(coordinator: hundredQACoordinator,
-                                 hundredQAUseCase: HundredQAUseCase(hundredQARepository: HundredQARepository(
-                                    firebaseService: firebaseService), admobRepo: admobRepo
+                                 hundredQAUseCase: HundredQAUseCase(
+                                    hundredQARepository: dependencies.makeHundredQARepository(),
+                                    admobRepo: admobRepo
                                  ),
                                  questionNumber: questionNumber,
                                  questionText: question,

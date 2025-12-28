@@ -9,7 +9,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 import Domain
-import Data
 import Core
 
 public class WithdrawalVC: UIViewController {

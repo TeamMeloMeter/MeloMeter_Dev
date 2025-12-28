@@ -9,7 +9,6 @@ import UIKit
 import RxSwift
 import RxGesture
 import Domain
-import Data
 import Core
 
 public class EditStateMessageVC: UIViewController {

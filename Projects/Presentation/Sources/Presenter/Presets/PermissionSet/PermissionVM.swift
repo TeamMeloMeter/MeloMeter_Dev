@@ -9,7 +9,6 @@ import UIKit
 import RxSwift
 import AVFoundation
 import Domain
-import Data
 import Core
 
 public class PermissionVM {
@@ -17,6 +16,7 @@ public class PermissionVM {
     weak var coordinator: PresetCoordinator?
     private let disposeBag = DisposeBag()
     private var mainUseCase: MainUseCase
+    private let pushNotificationService: PushNotificationServiceP
     
     public struct Input1 {
         let startBtnTapped1: Observable<Void>
@@ -27,10 +27,11 @@ public class PermissionVM {
         let startBtnTapped2: Observable<Void>
     }
 
-    public init(coordinator: PresetCoordinator, mainUseCase: MainUseCase) {
+    public init(coordinator: PresetCoordinator, mainUseCase: MainUseCase, pushNotificationService: PushNotificationServiceP) {
         
         self.coordinator = coordinator
         self.mainUseCase = mainUseCase
+        self.pushNotificationService = pushNotificationService
         
     }
     
@@ -47,7 +48,7 @@ public class PermissionVM {
         input.viewDidApearEvent
             .subscribe(onNext: { [weak self] _ in
                 self?.mainUseCase.requestAuthorization()
-                PushNotificationService.shared.registerForPushNotifications()
+                self?.pushNotificationService.registerForPushNotifications()
                 self?.requestCameraPermission()
             })
             .disposed(by: disposeBag)

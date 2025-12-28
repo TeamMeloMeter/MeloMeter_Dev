@@ -12,7 +12,6 @@ import CoreLocation
 import UserNotifications
 import FirebaseMessaging
 import Domain
-import Data
 import Core
 public class Permission2VC: UIViewController {
     

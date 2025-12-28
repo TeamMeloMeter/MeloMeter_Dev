@@ -10,7 +10,6 @@ import UIKit
 import Kingfisher
 import RxSwift
 import Domain
-import Data
 import Core
 public class CategoryView: UIView {
     public let label = UILabel().then {

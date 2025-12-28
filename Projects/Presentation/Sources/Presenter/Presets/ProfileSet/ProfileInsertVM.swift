@@ -8,7 +8,6 @@
 import UIKit
 import RxSwift
 import Domain
-import Data
 import Core
 
 // MARK: - LoginViewModel

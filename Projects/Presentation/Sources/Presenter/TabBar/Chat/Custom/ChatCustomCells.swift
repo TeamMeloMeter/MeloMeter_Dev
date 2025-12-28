@@ -8,7 +8,6 @@
 import UIKit
 import MessageKit
 import Domain
-import Data
 import Core
 
 // MARK: CustomMessageCell Class

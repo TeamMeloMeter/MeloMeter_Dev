@@ -11,7 +11,6 @@ import RxSwift
 import RxGesture
 import AnyFormatKit
 import Domain
-import Data
 import Core
 
 public final class ProfileInsertVC: UIViewController {

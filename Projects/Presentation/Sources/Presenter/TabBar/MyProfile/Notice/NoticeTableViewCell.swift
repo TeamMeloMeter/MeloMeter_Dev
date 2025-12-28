@@ -7,7 +7,6 @@
 
 import UIKit
 import Domain
-import Data
 import Core
 
 //공지사항 테이블뷰 셀

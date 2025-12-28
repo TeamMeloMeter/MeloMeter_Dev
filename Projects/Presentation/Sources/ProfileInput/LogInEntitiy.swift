@@ -7,7 +7,6 @@
 
 import Foundation
 import Domain
-import Data
 import Core
 
 public struct LogInEntitiy {

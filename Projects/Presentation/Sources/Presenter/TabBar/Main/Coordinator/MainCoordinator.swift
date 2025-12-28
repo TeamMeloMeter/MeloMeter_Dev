@@ -7,7 +7,6 @@
 
 import UIKit
 import Domain
-import Data
 import Core
 public final class MainCoordinator: Coordinator {
     
@@ -15,20 +14,19 @@ public final class MainCoordinator: Coordinator {
     public var navigationController: UINavigationController
     public var childCoordinators: [Coordinator]
     
-    private let firebaseService = DefaultFirebaseService()
+    private let dependencies: PresentationDependencyProviding
     private let adMobRepo = AdmobRepository()
-    private let sharedDataRepo: SharedDataRepoP
     private let uploadPlaceUseCase: PlaceUseCase
     
     private var mapSearchVM: MapSearchVM?
     private var mapVM: MapVM?
     private var bottomSheet: BottomSheetVC?
     
-    public init(_ navigationController: UINavigationController, sharedDataRepo: SharedDataRepoP) {
+    public init(_ navigationController: UINavigationController, dependencies: PresentationDependencyProviding) {
         self.navigationController = navigationController
         self.childCoordinators = []
-        self.sharedDataRepo = sharedDataRepo
-        self.uploadPlaceUseCase = PlaceUseCaseImpl(repository: CouplePlaceRepo(firebaseService: self.firebaseService))
+        self.dependencies = dependencies
+        self.uploadPlaceUseCase = PlaceUseCaseImpl(repository: dependencies.makeCouplePlaceRepository())
     }
     
     public func start() {
@@ -40,22 +38,18 @@ public final class MainCoordinator: Coordinator {
 extension MainCoordinator {
     
     public func showMapVC(pickedModel: SearchedModel?) {
-        
-        let firebaseService = self.firebaseService
-        let chatRepository = ChatRepository(firebaseService: firebaseService)
-        let userRepository = UserRepository(firebaseService: firebaseService, chatRepository: chatRepository)
-        let coupleRepository = CoupleRepository(firebaseService: firebaseService)
         let vm = MapVM(
             coordinator: self,
             mainUseCase: MainUseCase(
-                firebaseService: firebaseService,
-                userRepository: userRepository,
-                coupleRepository: coupleRepository,
+                firebaseService: dependencies.firebaseService,
+                userRepository: dependencies.makeUserRepository(),
+                coupleRepository: dependencies.makeCoupleRepository(),
                 adMobRepo: self.adMobRepo,
-                sharedDataRepo: self.sharedDataRepo,
-                notificationService: PushNotificationService.shared
+                sharedDataRepo: dependencies.sharedDataRepo,
+                notificationService: dependencies.pushNotificationService
             ),
-            uploadPlaceUseCase: uploadPlaceUseCase
+            uploadPlaceUseCase: uploadPlaceUseCase,
+            pushNotificationService: dependencies.pushNotificationService
         )
         self.mapVM = vm
         let viewController = MapVC(viewModel: vm
@@ -65,14 +59,14 @@ extension MainCoordinator {
     }
    
     public func showAlarmFlow() {
-        let alarmCoordinator = AlarmCoordinator(self.navigationController)
+        let alarmCoordinator = AlarmCoordinator(self.navigationController, dependencies: dependencies)
         childCoordinators.append(alarmCoordinator)
         alarmCoordinator.delegate = self
         alarmCoordinator.start()
     }
     
     public func showDdayFlow() {
-        let dDayCoordinator = DdayCoordinator(self.navigationController)
+        let dDayCoordinator = DdayCoordinator(self.navigationController, dependencies: dependencies)
         childCoordinators.append(dDayCoordinator)
         dDayCoordinator.delegate = self
         dDayCoordinator.start()
@@ -81,7 +75,7 @@ extension MainCoordinator {
     
     //MARK: Push funcs
     public func pushMapSearchVC() {
-        let vm = MapSearchVM(coordinator: self, searchUseCase: SearchUseCase(searchRepo: SearchRepo()))
+        let vm = MapSearchVM(coordinator: self, searchUseCase: SearchUseCase(searchRepo: dependencies.makeSearchRepository()))
         let viewController = MapSearchVC(viewModel: vm)
         vm.onLocationSelected.bind(to: self.mapVM!.pickedModel).disposed(by: viewController.disposeBag)
         self.navigationController.setNavigationBarHidden(true, animated: false)

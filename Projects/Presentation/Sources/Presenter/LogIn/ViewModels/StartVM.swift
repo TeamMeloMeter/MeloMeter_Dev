@@ -8,7 +8,6 @@
 import UIKit
 import RxSwift
 import Domain
-import Data
 import Core
 
 public class StartVM {

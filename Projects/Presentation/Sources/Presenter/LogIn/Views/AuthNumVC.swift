@@ -11,7 +11,6 @@ import Firebase
 import RxCocoa
 import RxSwift
 import Domain
-import Data
 import Core
 
 // MARK: - 인증번호 입력

@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 import Domain
-import Data
 import Core
 
 public class StartView: UIView {

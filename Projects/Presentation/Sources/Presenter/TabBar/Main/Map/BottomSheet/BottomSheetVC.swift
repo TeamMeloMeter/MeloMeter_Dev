@@ -13,7 +13,6 @@ import Kingfisher
 import PhotosUI
 import RxRelay
 import Domain
-import Data
 import Core
 fileprivate let categoryIndex = ["전체":0, "맛집":1, "전시회": 2, "공원": 3, "기타" : 4]
 

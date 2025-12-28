@@ -9,7 +9,6 @@ import UIKit
 import RxCocoa
 import RxSwift
 import Domain
-import Data
 import Core
 
 // MARK: - 시작화면

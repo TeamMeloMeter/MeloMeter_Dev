@@ -7,16 +7,15 @@
 
 import UIKit
 import Domain
-import Data
 import Core
 public final class MyProfileCoordinator: Coordinator {
     public var delegate: CoordinatorDelegate?
     
     public var navigationController: UINavigationController
     public var childCoordinators: [Coordinator]
-    public let firebaseService = DefaultFirebaseService()
+    private let dependencies: PresentationDependencyProviding
     
-    public init(_ navigationController: UINavigationController) {
+    public init(_ navigationController: UINavigationController, dependencies: PresentationDependencyProviding) {
         let appearance = UINavigationBarAppearance()
        
         appearance.configureWithOpaqueBackground()
@@ -25,6 +24,7 @@ public final class MyProfileCoordinator: Coordinator {
         navigationController.navigationBar.standardAppearance = appearance
         self.navigationController = navigationController
         self.childCoordinators = []
+        self.dependencies = dependencies
         
     }
     public func start() {
@@ -36,17 +36,17 @@ public final class MyProfileCoordinator: Coordinator {
 extension MyProfileCoordinator {
     
     public func showMyProfileVC() {
-        let firebaseService = self.firebaseService
+        let chatRepository = dependencies.makeChatRepository()
+        let userRepository = dependencies.makeUserRepository(chatRepository: chatRepository)
         let viewController = MyProfileVC(viewModel: MyProfileVM(
             coordinator: self,
             myProfileUseCase: MyProfileUseCase(
-                        userRepository: UserRepository(
-                            firebaseService: firebaseService,
-                            chatRepository: ChatRepository(firebaseService: firebaseService)
-                        ),
-                        coupleRepository: CoupleRepository(firebaseService: firebaseService),
-                        hundredQARepository: HundredQARepository(firebaseService: firebaseService), adMobRepo: AdmobRepository()
-            ), alarmUseCase: AlarmUseCase(alarmRepository: AlarmRepository(firebaseService: firebaseService))
+                        userRepository: userRepository,
+                        coupleRepository: dependencies.makeCoupleRepository(),
+                        hundredQARepository: dependencies.makeHundredQARepository(),
+                        adMobRepo: AdmobRepository()
+            ),
+            alarmUseCase: AlarmUseCase(alarmRepository: dependencies.makeAlarmRepository())
             )
         )
         
@@ -55,37 +55,34 @@ extension MyProfileCoordinator {
     }
 
     public func showAlarmFlow() {
-        let alarmCoordinator = AlarmCoordinator(self.navigationController)
+        let alarmCoordinator = AlarmCoordinator(self.navigationController, dependencies: dependencies)
         childCoordinators.append(alarmCoordinator)
         alarmCoordinator.delegate = self
         alarmCoordinator.start()
     }
     
     public func showDdayFlow() {
-        let dDayCoordinator = DdayCoordinator(self.navigationController)
+        let dDayCoordinator = DdayCoordinator(self.navigationController, dependencies: dependencies)
         childCoordinators.append(dDayCoordinator)
         dDayCoordinator.delegate = self
         dDayCoordinator.start()
     }
     
     public func showHundredQAFlow() {
-        let hundredQACoordinator = HundredCoordinator(self.navigationController)
+        let hundredQACoordinator = HundredCoordinator(self.navigationController, dependencies: dependencies)
         childCoordinators.append(hundredQACoordinator)
         hundredQACoordinator.delegate = self
         hundredQACoordinator.start()
     }
     
     public func showEditProfileVC() {
-        let firebaseService = self.firebaseService
-        let userRepository = UserRepository(
-            firebaseService: firebaseService,
-            chatRepository: ChatRepository(firebaseService: firebaseService)
-        )
+        let chatRepository = dependencies.makeChatRepository()
+        let userRepository = dependencies.makeUserRepository(chatRepository: chatRepository)
         let viewController = EditProfileVC(viewModel: EditProfileVM(
             coordinator: self,
             editProfileUseCase: EditProfileUseCase(userRepository: userRepository),
             accountsUseCase: AccountsUseCase(userRepository: userRepository,
-                                             coupleRepository: CoupleRepository(firebaseService: firebaseService))
+                                             coupleRepository: dependencies.makeCoupleRepository())
             )
         )
         viewController.hidesBottomBarWhenPushed = true
@@ -94,13 +91,9 @@ extension MyProfileCoordinator {
     }
     
     public func showEditNameVC(name: String) {
-        let firebaseService = self.firebaseService
         let viewModel = DetailEditVM(coordinator: self,
                               editProfileUseCase: EditProfileUseCase(
-                                          userRepository: UserRepository(
-                                            firebaseService: firebaseService,
-                                            chatRepository: ChatRepository(firebaseService: firebaseService)
-                                          )
+                                          userRepository: dependencies.makeUserRepository()
                                       )
                               )
         viewModel.name = name
@@ -113,13 +106,9 @@ extension MyProfileCoordinator {
     }
     
     public func showEditStateMessageVC(stateMessage: String) {
-        let firebaseService = self.firebaseService
         let viewModel = DetailEditVM(coordinator: self,
                               editProfileUseCase: EditProfileUseCase(
-                                          userRepository: UserRepository(
-                                            firebaseService: firebaseService,
-                                            chatRepository: ChatRepository(firebaseService: firebaseService)
-                                          )
+                                          userRepository: dependencies.makeUserRepository()
                                       )
                               )
         viewModel.stateMessage = stateMessage
@@ -132,13 +121,9 @@ extension MyProfileCoordinator {
     }
     
     public func showEditBirthVC(birth: String) {
-        let firebaseService = self.firebaseService
         let viewModel = DetailEditVM(coordinator: self,
                               editProfileUseCase: EditProfileUseCase(
-                                          userRepository: UserRepository(
-                                            firebaseService: firebaseService,
-                                            chatRepository: ChatRepository(firebaseService: firebaseService)
-                                          )
+                                          userRepository: dependencies.makeUserRepository()
                                       )
                               )
         viewModel.birth = birth
@@ -183,13 +168,11 @@ extension MyProfileCoordinator {
     }
     
     public func showDisconnectVC() {
-        let firebaseService = self.firebaseService
         let viewController = DisconnectVC(viewModel: AccountsVM(
             coordinator: self,
             accountsUseCase: AccountsUseCase(
-                userRepository: UserRepository(firebaseService: firebaseService,
-                                               chatRepository: ChatRepository(firebaseService: firebaseService)),
-                coupleRepository: CoupleRepository(firebaseService: firebaseService)
+                userRepository: dependencies.makeUserRepository(),
+                coupleRepository: dependencies.makeCoupleRepository()
             ))
         )
         
@@ -199,13 +182,11 @@ extension MyProfileCoordinator {
     }
     
     public func showRecoveryVC(date: (String, String), names: (String, String)) {
-        let firebaseService = self.firebaseService
         let viewController = RecoveryVC(viewModel: AccountsVM(
             coordinator: self,
             accountsUseCase: AccountsUseCase(
-                userRepository: UserRepository(firebaseService: firebaseService,
-                                               chatRepository: ChatRepository(firebaseService: firebaseService)),
-                coupleRepository: CoupleRepository(firebaseService: firebaseService)
+                userRepository: dependencies.makeUserRepository(),
+                coupleRepository: dependencies.makeCoupleRepository()
             )),
                                         date: date,
                                         names: names
@@ -218,13 +199,11 @@ extension MyProfileCoordinator {
     
     //MARK: 회원탈퇴 VC
     public func showWithdrawalVC() {
-        let firebaseService = self.firebaseService
         let viewController = WithdrawalVC(viewModel: AccountsVM(
             coordinator: self,
             accountsUseCase: AccountsUseCase(
-                userRepository: UserRepository(firebaseService: firebaseService,
-                                               chatRepository: ChatRepository(firebaseService: firebaseService)),
-                coupleRepository: CoupleRepository(firebaseService: firebaseService)
+                userRepository: dependencies.makeUserRepository(),
+                coupleRepository: dependencies.makeCoupleRepository()
             ))
         )
         

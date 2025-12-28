@@ -11,7 +11,6 @@ import RxRelay
 import RxCocoa
 import GoogleMobileAds
 import Domain
-import Data
 import Core
 
 public class AnswerVM: NSObject, FullScreenContentDelegate {

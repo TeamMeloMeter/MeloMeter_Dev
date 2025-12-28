@@ -9,7 +9,6 @@ import UIKit
 import RxSwift
 import RxRelay
 import Domain
-import Data
 import Core
 
 public enum CameraAlert {

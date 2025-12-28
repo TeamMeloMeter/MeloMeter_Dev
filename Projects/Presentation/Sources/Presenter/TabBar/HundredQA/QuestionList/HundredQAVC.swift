@@ -10,7 +10,6 @@ import RxCocoa
 import RxSwift
 import RxRelay
 import Domain
-import Data
 import Core
 
 public class HundredQAVC: UIViewController {

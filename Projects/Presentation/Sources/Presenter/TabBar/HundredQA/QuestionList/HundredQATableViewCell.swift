@@ -7,7 +7,6 @@
 
 import UIKit
 import Domain
-import Data
 import Core
 
 public class HundredQATableViewCell: UITableViewCell {

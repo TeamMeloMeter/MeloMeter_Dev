@@ -13,12 +13,12 @@ import RxCocoa
 import GoogleMobileAds
 import Kingfisher
 import Domain
-import Data
 public class MapVM {
 
     weak var coordinator: MainCoordinator?
     private var mainUseCase: MainUseCase
     private var placeUseCase: PlaceUseCase
+    private let pushNotificationService: PushNotificationServiceP
     
     public var alreadyPlacesMarkers = PublishSubject<[CouplePlaceModel]>()
     public var lastPickedPicker = BehaviorRelay<CouplePlaceModel?>(value: nil)
@@ -202,10 +202,16 @@ public class MapVM {
     }
     
     
-    public init(coordinator: MainCoordinator, mainUseCase: MainUseCase, uploadPlaceUseCase: PlaceUseCase) {
+    public init(
+        coordinator: MainCoordinator,
+        mainUseCase: MainUseCase,
+        uploadPlaceUseCase: PlaceUseCase,
+        pushNotificationService: PushNotificationServiceP
+    ) {
         self.coordinator = coordinator
         self.mainUseCase = mainUseCase
         self.placeUseCase = uploadPlaceUseCase
+        self.pushNotificationService = pushNotificationService
     }
     
     public func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -264,7 +270,12 @@ public class MapVM {
                                 let userInfo = item.request.content.userInfo
                                 let date = Date().toString(type: .yearToDay)
                                 let text = item.request.content.body
-                                if let type = userInfo["type"] { PushNotificationService.shared.addAlarm(text: text, date: date, type: type as! String )
+                                if let type = userInfo["type"] {
+                                    self.pushNotificationService.addAlarm(
+                                        text: text,
+                                        date: date,
+                                        type: type as? String ?? ""
+                                    )
                                 }
                             }
                         }

@@ -10,7 +10,6 @@ import RxSwift
 import RxCocoa
 import RxGesture
 import Domain
-import Data
 import Core
 
 public class AddDdayModal: UIViewController, UITextFieldDelegate {

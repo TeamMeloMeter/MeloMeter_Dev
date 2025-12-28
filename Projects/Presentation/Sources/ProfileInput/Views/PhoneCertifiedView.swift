@@ -7,7 +7,6 @@
 
 import UIKit
 import Domain
-import Data
 import Core
 //전화번호 입력 뷰
 public class PhoneCertifiedView: UIView {

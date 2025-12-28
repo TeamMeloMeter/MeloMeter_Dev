@@ -10,7 +10,6 @@ import RxSwift
 import RxRelay
 import RxCocoa
 import Domain
-import Data
 import Core
 
 public class NoticeVM {

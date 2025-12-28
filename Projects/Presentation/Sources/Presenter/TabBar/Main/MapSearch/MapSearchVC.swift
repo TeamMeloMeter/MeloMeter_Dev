@@ -12,7 +12,6 @@ import RxSwift
 import CoreLocation
 import GoogleMobileAds
 import Domain
-import Data
 import Core
 
 //장소 검색 화면

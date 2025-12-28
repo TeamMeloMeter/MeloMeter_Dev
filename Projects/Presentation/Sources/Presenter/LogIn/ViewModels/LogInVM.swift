@@ -9,12 +9,12 @@ import UIKit
 import RxSwift
 import RxRelay
 import Domain
-import Data
 import Core
 // MARK: - LoginViewModel
 public class LogInVM {
     
     private let logInUseCase: LogInUseCase
+    private let kakaoShareService: KakaoShareService
     public let disposeBag = DisposeBag()
     private var timerSubscription: Disposable?
     weak var coordinator: LogInCoordinator?
@@ -37,9 +37,10 @@ public class LogInVM {
     public var timerDisposed = PublishSubject<Bool>()
     
     // MARK: - Init
-    public init(coordinator: LogInCoordinator, logInUseCase: LogInUseCase) {
+    public init(coordinator: LogInCoordinator, logInUseCase: LogInUseCase, kakaoShareService: KakaoShareService) {
         self.coordinator = coordinator
         self.logInUseCase = logInUseCase
+        self.kakaoShareService = kakaoShareService
         
         //전화번호 입력 -> 인증 요청 -> 응답
         phoneNumberInput.subscribe(onNext: { [weak self] text in
@@ -169,7 +170,7 @@ public class LogInVM {
     }
     
     public func shareKakao(inviteCode: String) {
-        KakaoService.shared.shareWithKakaoTalk(inviteCode: inviteCode)
+        kakaoShareService.share(inviteCode: inviteCode)
     }
 
 }

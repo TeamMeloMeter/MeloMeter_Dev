@@ -7,7 +7,6 @@
 
 import UIKit
 import Domain
-import Data
 import Core
 
 public final class HundredCoordinator: Coordinator {
@@ -15,12 +14,13 @@ public final class HundredCoordinator: Coordinator {
     
     public var navigationController: UINavigationController
     public var childCoordinators: [Coordinator]
-    public let firebaseService = DefaultFirebaseService()
+    private let dependencies: PresentationDependencyProviding
     public let admobRepo = AdmobRepository()
     
-    public init(_ navigationController: UINavigationController) {
+    public init(_ navigationController: UINavigationController, dependencies: PresentationDependencyProviding) {
         self.navigationController = navigationController
         self.childCoordinators = []
+        self.dependencies = dependencies
     }
     
     public func start() {
@@ -32,10 +32,10 @@ public final class HundredCoordinator: Coordinator {
 extension HundredCoordinator {
     
     public func showHundredQAVC() {
-        let firebaseService = self.firebaseService
         let viewController = HundredQAVC(viewModel: HundredQAVM(coordinator: self,
-                                                                hundredQAUseCase: HundredQAUseCase(hundredQARepository: HundredQARepository(
-                                                                    firebaseService: firebaseService), admobRepo: admobRepo
+                                                                hundredQAUseCase: HundredQAUseCase(
+                                                                    hundredQARepository: dependencies.makeHundredQARepository(),
+                                                                    admobRepo: admobRepo
                                                                 ))
         )
                                                         
@@ -46,10 +46,10 @@ extension HundredCoordinator {
     }
     
     public func showReadAnswerVC(questionNumber: String, question: String, myAnswerInfo: AnswerModel, otherAnswerInfo: AnswerModel) {
-        let firebaseService = self.firebaseService
         let viewModel = AnswerVM(coordinator: self,
-                                 hundredQAUseCase: HundredQAUseCase(hundredQARepository: HundredQARepository(
-                                    firebaseService: firebaseService), admobRepo: admobRepo
+                                 hundredQAUseCase: HundredQAUseCase(
+                                    hundredQARepository: dependencies.makeHundredQARepository(),
+                                    admobRepo: admobRepo
                                  ),
                                  questionNumber: questionNumber,
                                  questionText: question,

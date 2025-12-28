@@ -28,6 +28,7 @@
 		45F6879BF3BA3B38F420B6F3 /* TuistFonts+MeloMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E07C740C9F516F914D7B75 /* TuistFonts+MeloMeter.swift */; };
 		4BD05171BAA254BFEDE2CFCF /* Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED0F3A870FF04D0644701D4 /* Data.framework */; };
 		4C64362C962F7E493DA28B53 /* AnyFormatKit in Frameworks */ = {isa = PBXBuildFile; productRef = CEEC0F85D0095A6243F6C80B /* AnyFormatKit */; };
+		53A7E11A791374DDD9FCF021 /* KakaoShareService+KakaoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C727EA8A94AEC342A0FF4A9 /* KakaoShareService+KakaoService.swift */; };
 		56229CAA56755730086F96BD /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D9E574E06B4D61131CA22374 /* RxSwift */; };
 		58362C06AA44114F9D47E26B /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D47AA6FFE43A17ADB6D8CB74 /* Core.framework */; };
 		5A4D6413E032F5B4EF125A6F /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = B9738E7CADFB55F88C8C5F74 /* Pretendard-Light.otf */; };
@@ -51,6 +52,7 @@
 		9A29B3EFD51BB2DDE3492D8F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B24A162E6A1E46411F2740CA /* FirebaseAuth */; };
 		A38A4E196CF9FBB6B370CCB4 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 0FB91D80C522F37D2DF7488E /* FirebaseMessaging */; };
 		A54539746CF6E345C96DB6E1 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBF1081E3FAC89F42CC28DB6 /* Pretendard-SemiBold.otf */; };
+		A7D4DAD59F7A3DABC123AE28 /* AppDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD666629D036696A41934CDC /* AppDependencies.swift */; };
 		B28B6CD69B8E5E0CF0889629 /* GoogleUserMessagingPlatform in Frameworks */ = {isa = PBXBuildFile; productRef = 2C380E467731BF3AC14850F0 /* GoogleUserMessagingPlatform */; };
 		B5AD0F31919DA8E324C00970 /* Presentation_Presentation.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 23B52BAD50B943111EC6B43D /* Presentation_Presentation.bundle */; };
 		B9D1D9847FA041F1050B57C2 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 1EF9D192669DACAB9CD3F35C /* KakaoSDKCommon */; };
@@ -107,6 +109,7 @@
 		46A8F30603AD0CDC6B843E9D /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		47452973E57280AD2D6480C0 /* MeloMeter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeloMeter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4904CAE445BB3C05B57E8A0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4C727EA8A94AEC342A0FF4A9 /* KakaoShareService+KakaoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KakaoShareService+KakaoService.swift"; sourceTree = "<group>"; };
 		54219782A7247F9F32478A0A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		71ADE7CD739B2F906A40A312 /* TuistBundle+MeloMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistBundle+MeloMeter.swift"; sourceTree = "<group>"; };
 		73AF3BDF85CFFA0CD7D610B7 /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,6 +132,7 @@
 		F3391669DE565E3FBE6B5222 /* TuistPlists+MeloMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistPlists+MeloMeter.swift"; sourceTree = "<group>"; };
 		F7D5337F97976B86FB2263DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FBF1081E3FAC89F42CC28DB6 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		FD666629D036696A41934CDC /* AppDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencies.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,10 +219,20 @@
 			path = Supporting;
 			sourceTree = "<group>";
 		};
+		34B4FA60C2DD4DEFB111F2F3 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				FD666629D036696A41934CDC /* AppDependencies.swift */,
+				4C727EA8A94AEC342A0FF4A9 /* KakaoShareService+KakaoService.swift */,
+			);
+			path = Dependencies;
+			sourceTree = "<group>";
+		};
 		3A75C2F0937F04BACAC98840 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				F1455BE3713FF8664FA8420E /* App */,
+				34B4FA60C2DD4DEFB111F2F3 /* Dependencies */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -444,6 +458,8 @@
 				38FDDE0BABAE40CFB668F155 /* SceneDelegate.swift in Sources */,
 				99B6EF006E1C2CBF8C056445 /* SplashVC.swift in Sources */,
 				E692E717CE9920DC38DB16EF /* SplashVM.swift in Sources */,
+				A7D4DAD59F7A3DABC123AE28 /* AppDependencies.swift in Sources */,
+				53A7E11A791374DDD9FCF021 /* KakaoShareService+KakaoService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

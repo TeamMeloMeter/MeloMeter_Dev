@@ -11,7 +11,6 @@ import Firebase
 import RxSwift
 import RxCocoa
 import Domain
-import Data
 import Core
 
 // MARK: - 전화번호입력

@@ -10,7 +10,6 @@ import RxSwift
 import RxRelay
 import RxGesture
 import Domain
-import Data
 import Core
 
 public class EditProfileVC: UIViewController {

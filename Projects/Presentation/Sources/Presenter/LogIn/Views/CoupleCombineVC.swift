@@ -11,7 +11,6 @@ import RxSwift
 import AnyFormatKit //입력 형식 라이브러리
 import Firebase
 import Domain
-import Data
 import Core
 // MARK: - 커플 등록
 public final class CoupleCombineVC: UIViewController {

@@ -7,7 +7,6 @@
 
 import UIKit
 import Domain
-import Data
 import Core
 
 public final class TabBarCoordinator: Coordinator {
@@ -15,17 +14,16 @@ public final class TabBarCoordinator: Coordinator {
     public var tabBarController: UITabBarController
     public var navigationController: UINavigationController
     public var childCoordinators: [Coordinator]
-    private var sharedDataRepo: SharedDataRepoP
+    private let dependencies: PresentationDependencyProviding
     
  
     
     
-    public init(_ navigationController: UINavigationController, sharedDataRepo: SharedDataRepoP) {
+    public init(_ navigationController: UINavigationController, dependencies: PresentationDependencyProviding) {
         self.navigationController = navigationController
         self.tabBarController = UITabBarController()
         self.childCoordinators = []
-        
-        self.sharedDataRepo = sharedDataRepo
+        self.dependencies = dependencies
     }
     
     public func start() {
@@ -81,21 +79,21 @@ extension TabBarCoordinator {
     }
     
     public func connectMainFlow(to tabNavigationController: UINavigationController) {
-        let mainCoordinator = MainCoordinator(tabNavigationController, sharedDataRepo: self.sharedDataRepo)
+        let mainCoordinator = MainCoordinator(tabNavigationController, dependencies: dependencies)
         mainCoordinator.delegate = self
         mainCoordinator.start()
         childCoordinators.append(mainCoordinator)
     }
     
     public func connectMyProfileFlow(to tabNavigationController: UINavigationController) {
-        let myProfileCoordinator = MyProfileCoordinator(tabNavigationController)
+        let myProfileCoordinator = MyProfileCoordinator(tabNavigationController, dependencies: dependencies)
         myProfileCoordinator.delegate = self
         myProfileCoordinator.start()
         childCoordinators.append(myProfileCoordinator)
     }
     
     public func connectChatFlow(to tabNavigationController: UINavigationController) {
-        let chatCoordinator = ChatCoordinator(tabNavigationController)
+        let chatCoordinator = ChatCoordinator(tabNavigationController, dependencies: dependencies)
         chatCoordinator.delegate = self
         chatCoordinator.start()
         childCoordinators.append(chatCoordinator)

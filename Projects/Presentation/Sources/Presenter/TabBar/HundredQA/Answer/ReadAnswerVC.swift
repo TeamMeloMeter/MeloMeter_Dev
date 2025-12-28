@@ -10,7 +10,6 @@ import RxSwift
 import RxCocoa
 import CoreImage
 import Domain
-import Data
 import Core
 public class ReadAnswerVC: UIViewController {
 

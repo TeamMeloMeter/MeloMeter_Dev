@@ -10,7 +10,6 @@ import RxSwift
 import RxCocoa
 import GoogleMobileAds
 import Domain
-import Data
 import Core
 
 public class WriteAnswerVC: UIViewController {
