@@ -7,9 +7,25 @@
 
 import UIKit
 import RxSwift
-import Data
-import Domain
-import Presentation
+
+public enum AccessLevel: String {
+    case none, start, authenticated, coupleCombined, complete
+    
+    var toString: String {
+        switch self {
+        case .start:
+            return "start"
+        case .authenticated:
+            return "authenticated"
+        case .coupleCombined:
+            return "coupleCombined"
+        case .complete:
+            return "complete"
+        default:
+            return "none"
+        }
+    }
+}
 
 final class AppCoordinator: Coordinator {
     
@@ -27,7 +43,6 @@ final class AppCoordinator: Coordinator {
         self.navigationController = navigationController
         self.childCoordinators = []
         self.firebaseService = DefaultFirebaseService()
-        LocationService.shared.configure(firebaseService: self.firebaseService)
         
         self.sharedDataRepo = SharedDataRepo()
     }
@@ -90,19 +105,11 @@ extension AppCoordinator: CoordinatorDelegate {
         self.navigationController.viewControllers.removeAll()
         if childCoordinator is LogInCoordinator {
             //TODO: UserDefaults로 하면안될듯
-            if let accessLevelString = UserDefaults.standard.string(forKey: "accessLevel"),
-               let accessLevel = AccessLevel(rawValue: accessLevelString) {
-                if accessLevel == .complete {
-                    self.connectTabBarFlow()
-                } else {
-                    self.connectPresetFlow()
-                }
-                return
-            }
-
+            
+            
             if UserDefaults.standard.string(forKey: "name") != nil {
                 self.connectTabBarFlow()
-            } else {
+            }else {
                 self.connectPresetFlow()
             }
         } else if childCoordinator is PresetCoordinator {

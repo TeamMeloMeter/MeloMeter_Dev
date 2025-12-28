@@ -9,37 +9,26 @@ import Foundation
 import Firebase
 import RxSwift
 import FirebaseFirestore
-import Domain
-public class LogInRepository: LogInRepositoryP {
+class LogInRepository: LogInRepositoryP {
     
     private let firebaseService: FirebaseService
     private var logInStatus: LogInStatus = .none
     private let disposeBag = DisposeBag()
     
-    public init(firebaseService: FirebaseService) {
+    init(firebaseService: FirebaseService) {
         self.firebaseService = firebaseService
     }
     
     //전화번호 전송, 인증ID 저장
-    public func sendNumber(phoneNumber: String?) -> Single<LogInStatus> {
+    func sendNumber(phoneNumber: String?) -> Single<LogInStatus> {
         return Single.create { single in
             
             guard let number = phoneNumber else { return Disposables.create() }
-            let digits = number.filter { $0.isNumber }
-            let authPhoneNumber: String
-            if digits.hasPrefix("82") {
-                authPhoneNumber = "+\(digits)"
-            } else {
-                let trimmed = digits.hasPrefix("0") ? String(digits.dropFirst()) : digits
-                authPhoneNumber = "+82\(trimmed)"
-            }
+            let authPhoneNumber = "+82 \(number.components(separatedBy: "-").joined())"
 
             PhoneAuthProvider.provider()
                 .verifyPhoneNumber(authPhoneNumber, uiDelegate: nil) { (verificationID, error) in
                     if let error {
-                        #if DEBUG
-                        UserDefaults.standard.set("verifyPhoneNumber error: \(error.localizedDescription)", forKey: "loginError")
-                        #endif
                         if let error = error as NSError? {
                                 if error.code == AuthErrorCode.tooManyRequests.rawValue {
                                     print("요청이 너무 많습니다. 잠시 후 다시 시도하세요.")
@@ -65,7 +54,7 @@ public class LogInRepository: LogInRepositoryP {
     }
     
     //인증번호 입력 -> 로그인
-    public func inputVerificationCode(verificationCode: String?) -> Single<String?> {
+    func inputVerificationCode(verificationCode: String?) -> Single<String?> {
         return Single.create { [weak self] single in
             guard let self = self else { return Disposables.create() }
             guard let code = verificationCode else { return Disposables.create() }
@@ -106,7 +95,7 @@ public class LogInRepository: LogInRepositoryP {
     }
 
     //로그인된 사용자의 uid, phoneNumber 받아서 storeUserInFirestore 호출
-    public func userInFirestore() -> Single<(AccessLevel, String?)> {
+    func userInFirestore() -> Single<(AccessLevel, String?)> {
         return Single.create { [weak self] single in
             guard let self = self else{ return Disposables.create() }
             var uid = ""
@@ -132,9 +121,16 @@ public class LogInRepository: LogInRepositoryP {
                                        stateMessage: "")
                     
                     self.firebaseService.getDocument(collection: .Users, document: uid)
-                        .subscribe(onSuccess: { user in
-                            let accessLevel = UserDefaultsRepo.shared.persistent(document: user)
-                            single(.success((accessLevel, nil)))
+                        .subscribe(onSuccess: { [weak self] user in
+                            guard let self, let userModel = user.toObject(UserDTO.self)?.toModel() else { return single(.success((AccessLevel.none, nil)))}
+                            if let name = userModel.name {
+                                
+                                UserDefaults.standard.set(name, forKey: "name")
+                                single(.success((AccessLevel.complete, nil)))
+                            } else if let coupleID = userModel.coupleID {
+                                UserDefaults.standard.set(coupleID, forKey: "coupleID")
+                                single(.success((AccessLevel.coupleCombined, nil)))
+                            }
                         },onFailure: {[weak self] error in
                             guard let values = dto.asDictionary, let self else { return }
                             
@@ -163,7 +159,7 @@ public class LogInRepository: LogInRepositoryP {
     
     
     // 내 usersCollection 문서 get
-    public func getUserLoginInfo() -> Single<LogInModel?> {
+    func getUserLoginInfo() -> Single<LogInModel?> {
         return firebaseService.getCurrentUser()
             .flatMap { user -> Single<LogInModel?> in
                 let documentID = user.uid
@@ -174,7 +170,7 @@ public class LogInRepository: LogInRepositoryP {
 
 
     //커플 등록 로직
-    public func combineCouple(code: String) -> Single<Void> {
+    func combineCouple(code: String) -> Single<Void> {
         return Single.create{ [weak self] single in
             guard let self = self else { return Disposables.create() }
             let inviteCode = code.components(separatedBy: " ").joined()

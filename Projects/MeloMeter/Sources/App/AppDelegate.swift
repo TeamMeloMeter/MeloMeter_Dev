@@ -14,8 +14,6 @@ import UserNotifications
 import FirebaseAppCheck
 import KakaoSDKCommon
 import GoogleMobileAds
-import Data
-import Domain
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
     
@@ -36,9 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         //KakaoSDK
         KakaoSDK.initSDK(appKey: "63ff1c816c3c2dd940969416c8e2ce35")
         // 파이어베이스 연동, 알림설정
-        #if DEBUG
-        AppCheck.setAppCheckProviderFactory(AppCheckDebugProviderFactory())
-        #endif
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
