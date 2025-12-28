@@ -1,15 +1,5 @@
 {
-  "originHash" : "1b705d05a502985df8eec0f6f8c5e777f64931ea495e6deba9f8f49c07da18cd",
   "pins" : [
-    {
-      "identity" : "abseil-cpp-binary",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/google/abseil-cpp-binary.git",
-      "state" : {
-        "revision" : "194a6706acbd25e4ef639bcaddea16e8758a3e27",
-        "version" : "1.2024011602.0"
-      }
-    },
     {
       "identity" : "alamofire",
       "kind" : "remoteSourceControl",
@@ -42,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/firebase-ios-sdk.git",
       "state" : {
-        "revision" : "eca84fd638116dd6adb633b5a3f31cc7befcbb7d",
-        "version" : "10.29.0"
+        "revision" : "03189348b7798fe94b892a35883f1dc745814fe0",
+        "version" : "10.28.0"
       }
     },
     {
@@ -245,5 +235,5 @@
       }
     }
   ],
-  "version" : 3
+  "version" : 2
 }

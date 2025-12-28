@@ -1,20 +1,27 @@
 import ProjectDescription
+import ProjectDescriptionHelpers
 
 let project = Project(
   name: "Core",
+  packages: ProjectPackages.all,
   targets: [
     .target(
       name: "Core",
       destinations: .iOS,
-      product: .framework,
+      product: .staticFramework,
       bundleId: "com.teamMeloMeter.core",
       deploymentTargets: .iOS("16.0"),
-      sources: ["../../MeloMeter/Sources/Utils/**"],
+      sources: ["Sources/**"],
       resources: [],
       dependencies: [
-          .package(product: "RxSwift"),
-          .package(product: "RxCocoa")
-      ]
+          ExternalDependencies.rxSwift,
+          ExternalDependencies.rxCocoa,
+          ExternalDependencies.nMapsMap
+      ],
+      settings: .settings(base: [
+        "SWIFT_ENABLE_EXPLICIT_MODULES": "NO",
+        "CLANG_ENABLE_EXPLICIT_MODULES": "NO"
+      ])
     )
   ]
 )

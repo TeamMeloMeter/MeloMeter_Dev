@@ -6,12 +6,16 @@ let project = Project(
     .target(
       name: "Shared",
       destinations: .iOS,
-      product: .framework,
+      product: .staticFramework,
       bundleId: "com.teamMeloMeter.shared",
       deploymentTargets: .iOS("16.0"),
-      sources: [],
-      resources: ["../../MeloMeter/Resources/**"],
-      dependencies: []
+      sources: ["Sources/**"],
+      resources: ["../MeloMeter/Resources/**"],
+      dependencies: [],
+      settings: .settings(base: [
+        "SWIFT_ENABLE_EXPLICIT_MODULES": "NO",
+        "CLANG_ENABLE_EXPLICIT_MODULES": "NO"
+      ])
     )
   ]
 )

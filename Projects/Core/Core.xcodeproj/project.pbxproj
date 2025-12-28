@@ -7,24 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		088872DCEA7CD37D6B842CB6 /* ProgressDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A8B21123F3EDBBB9B930BF /* ProgressDialogView.swift */; };
-		2AF4884CC87A8979997D4BE7 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE268F76E6D95A807B79292 /* FontManager.swift */; };
-		2B6D8B34D107CBCAB380E4FC /* Dictionary+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB76C36E27810713C69F9FA /* Dictionary+.swift */; };
-		3FB2F66A7E82F8F1DEEBE601 /* Label+.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED85E1A11DA5B187EB1C031B /* Label+.swift */; };
-		4F96DAC925FF20EDD3A3EA6B /* RxNMFMapViewTouchDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF37D61CFB7979E591D463E /* RxNMFMapViewTouchDelegateProxy.swift */; };
-		506CA5BEC07CABCF37FEB3B6 /* CustomAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65B3EBA8508DFDFF1752658 /* CustomAlertVC.swift */; };
+		25C534647B7B805047B8E0C3 /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = 70FCE2DFE1FFBCB63A6B5C5E /* NMapsMap */; };
+		48D86BE2BFA651781F1958FF /* Reactive+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513653181FB8C720393284CD /* Reactive+.swift */; };
+		51433EF39B4065534A575B80 /* Label+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAB873CEE697BA1A40F01B5 /* Label+.swift */; };
 		51B1D4ED7ECB508C4A97445F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 08580353599BAAE5BB0650E3 /* RxCocoa */; };
-		64CD947E344D2F912FBFA275 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D84FA559FB13E374AA9B1 /* UIImage+.swift */; };
-		6D5B8E19B690EB237162EF49 /* KeyboardStatusDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCDFBE27F8DEE306BA4270A /* KeyboardStatusDetector.swift */; };
-		82AF69E57842F365F68EF04A /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3BCD00B5504E80EDF0F461 /* Date+.swift */; };
-		A3AE1B49B79EC4A1412364C9 /* Reactive+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C08FA8326C2889F278330B7 /* Reactive+.swift */; };
-		B92572159F26C7B0A89895CA /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03106E65C93BF930F608DFB0 /* AlertManager.swift */; };
-		C7D5E0250E4F201490905D50 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3064F093833900A773EC677 /* Constants.swift */; };
-		D17511C1C8458231D7F7B0EC /* TextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251E28FAF5493E7680429548 /* TextField+.swift */; };
-		D6C3DF68EF05F89A692B4C43 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4336FFB45BB98B765AA4139 /* ImageCacheManager.swift */; };
-		D7D2D760DD860CC382A1633D /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BF8AD6BE90105271D998EF /* Encodable+.swift */; };
+		526DFCB82B863F52069DAE10 /* ColorAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACDF09DB6DCDE8960119CC1 /* ColorAssets.swift */; };
+		82C6C4A8EE89EFA9F61EDE5B /* RxNMFMapViewTouchDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E0B20A6F54F9C4C20B27E2 /* RxNMFMapViewTouchDelegateProxy.swift */; };
+		982CB14D7CB8261E95648EB4 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32224202A6E9A06E255CE766 /* FontManager.swift */; };
+		9DC456AA43334DC5F6560256 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACB8AE721DC4B3D78BED46D /* Constants.swift */; };
+		BA103D00820C8096D4EC1E1E /* ProgressDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443A7FB091B01197CE42CF20 /* ProgressDialogView.swift */; };
+		D746F7D731F4BCD868415304 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA40DA6F7240F5A9285574C /* UIImage+.swift */; };
 		E7494D59CF3A2D7FFFEE3DA2 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0E67EBE19FBB76F3244BB928 /* RxSwift */; };
-		EB63C742733BED545D6E2FD6 /* ColorAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647145CFC1BB9BDF09B47795 /* ColorAssets.swift */; };
+		F1BA31E44F1C4F1B1FC25A14 /* TextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F67F733351E8EF7F436503 /* TextField+.swift */; };
+		FEE964490379B67D815F0846 /* KeyboardStatusDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19219E427A3C222FCAB4748 /* KeyboardStatusDetector.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,24 +36,19 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		03106E65C93BF930F608DFB0 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
-		251E28FAF5493E7680429548 /* TextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextField+.swift"; sourceTree = "<group>"; };
+		1CAB873CEE697BA1A40F01B5 /* Label+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Label+.swift"; sourceTree = "<group>"; };
 		26BDD2D3E7FED8CDE9A52F46 /* Core-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Core-Info.plist"; sourceTree = "<group>"; };
+		2ACDF09DB6DCDE8960119CC1 /* ColorAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAssets.swift; sourceTree = "<group>"; };
 		2B0FA7F85F3573FB522F9478 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4AB76C36E27810713C69F9FA /* Dictionary+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+.swift"; sourceTree = "<group>"; };
-		647145CFC1BB9BDF09B47795 /* ColorAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAssets.swift; sourceTree = "<group>"; };
-		6BCDFBE27F8DEE306BA4270A /* KeyboardStatusDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardStatusDetector.swift; sourceTree = "<group>"; };
-		7C08FA8326C2889F278330B7 /* Reactive+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+.swift"; sourceTree = "<group>"; };
-		87BF8AD6BE90105271D998EF /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
-		AC6D84FA559FB13E374AA9B1 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
-		B65B3EBA8508DFDFF1752658 /* CustomAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertVC.swift; sourceTree = "<group>"; };
-		B7A8B21123F3EDBBB9B930BF /* ProgressDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDialogView.swift; sourceTree = "<group>"; };
-		CB3BCD00B5504E80EDF0F461 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
-		DBF37D61CFB7979E591D463E /* RxNMFMapViewTouchDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxNMFMapViewTouchDelegateProxy.swift; sourceTree = "<group>"; };
-		E3064F093833900A773EC677 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		E4336FFB45BB98B765AA4139 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
-		ED85E1A11DA5B187EB1C031B /* Label+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Label+.swift"; sourceTree = "<group>"; };
-		FAE268F76E6D95A807B79292 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
+		32224202A6E9A06E255CE766 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
+		443A7FB091B01197CE42CF20 /* ProgressDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDialogView.swift; sourceTree = "<group>"; };
+		49E0B20A6F54F9C4C20B27E2 /* RxNMFMapViewTouchDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxNMFMapViewTouchDelegateProxy.swift; sourceTree = "<group>"; };
+		4EA40DA6F7240F5A9285574C /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
+		513653181FB8C720393284CD /* Reactive+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+.swift"; sourceTree = "<group>"; };
+		AFA90FFE58036714C82C3459 /* abseil-cpp-binary */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "abseil-cpp-binary"; path = "../../Packages/abseil-cpp-binary"; sourceTree = "<group>"; };
+		E19219E427A3C222FCAB4748 /* KeyboardStatusDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardStatusDetector.swift; sourceTree = "<group>"; };
+		E2F67F733351E8EF7F436503 /* TextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextField+.swift"; sourceTree = "<group>"; };
+		FACB8AE721DC4B3D78BED46D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,39 +58,20 @@
 			files = (
 				E7494D59CF3A2D7FFFEE3DA2 /* RxSwift in Frameworks */,
 				51B1D4ED7ECB508C4A97445F /* RxCocoa in Frameworks */,
+				25C534647B7B805047B8E0C3 /* NMapsMap in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0473B2C30DCD406AB03FE5CF /* Sources */ = {
+		05244D783BE1E986358FFD52 /* Rx */ = {
 			isa = PBXGroup;
 			children = (
-				149E0285C8C0033538CAC0D3 /* Utils */,
+				513653181FB8C720393284CD /* Reactive+.swift */,
+				49E0B20A6F54F9C4C20B27E2 /* RxNMFMapViewTouchDelegateProxy.swift */,
 			);
-			path = Sources;
-			sourceTree = "<group>";
-		};
-		149E0285C8C0033538CAC0D3 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				6506393018D4B8E79D66D9DC /* Alert */,
-				3FC9C04CEB61BAE19B2A3D6D /* Rx */,
-				647145CFC1BB9BDF09B47795 /* ColorAssets.swift */,
-				E3064F093833900A773EC677 /* Constants.swift */,
-				CB3BCD00B5504E80EDF0F461 /* Date+.swift */,
-				4AB76C36E27810713C69F9FA /* Dictionary+.swift */,
-				87BF8AD6BE90105271D998EF /* Encodable+.swift */,
-				FAE268F76E6D95A807B79292 /* FontManager.swift */,
-				E4336FFB45BB98B765AA4139 /* ImageCacheManager.swift */,
-				6BCDFBE27F8DEE306BA4270A /* KeyboardStatusDetector.swift */,
-				ED85E1A11DA5B187EB1C031B /* Label+.swift */,
-				B7A8B21123F3EDBBB9B930BF /* ProgressDialogView.swift */,
-				251E28FAF5493E7680429548 /* TextField+.swift */,
-				AC6D84FA559FB13E374AA9B1 /* UIImage+.swift */,
-			);
-			path = Utils;
+			path = Rx;
 			sourceTree = "<group>";
 		};
 		250C62EE12DB56ECEBB473C3 /* Products */ = {
@@ -111,13 +82,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3FC9C04CEB61BAE19B2A3D6D /* Rx */ = {
+		3F61976426EC155D82252D42 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				7C08FA8326C2889F278330B7 /* Reactive+.swift */,
-				DBF37D61CFB7979E591D463E /* RxNMFMapViewTouchDelegateProxy.swift */,
+				AFA90FFE58036714C82C3459 /* abseil-cpp-binary */,
 			);
-			path = Rx;
+			name = Packages;
 			sourceTree = "<group>";
 		};
 		4B97075397CA6D3C7DEE06A1 /* InfoPlists */ = {
@@ -133,32 +103,31 @@
 			children = (
 				250C62EE12DB56ECEBB473C3 /* Products */,
 				E12816BA35F79D21E0D77318 /* Project */,
+				3F61976426EC155D82252D42 /* Packages */,
 			);
 			sourceTree = "<group>";
 		};
-		6506393018D4B8E79D66D9DC /* Alert */ = {
+		81104ECEC5CD1B0F5111557B /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				03106E65C93BF930F608DFB0 /* AlertManager.swift */,
-				B65B3EBA8508DFDFF1752658 /* CustomAlertVC.swift */,
+				05244D783BE1E986358FFD52 /* Rx */,
+				2ACDF09DB6DCDE8960119CC1 /* ColorAssets.swift */,
+				FACB8AE721DC4B3D78BED46D /* Constants.swift */,
+				32224202A6E9A06E255CE766 /* FontManager.swift */,
+				E19219E427A3C222FCAB4748 /* KeyboardStatusDetector.swift */,
+				1CAB873CEE697BA1A40F01B5 /* Label+.swift */,
+				443A7FB091B01197CE42CF20 /* ProgressDialogView.swift */,
+				E2F67F733351E8EF7F436503 /* TextField+.swift */,
+				4EA40DA6F7240F5A9285574C /* UIImage+.swift */,
 			);
-			path = Alert;
-			sourceTree = "<group>";
-		};
-		A8780F1739128B3D1BD5A8C7 /* MeloMeter */ = {
-			isa = PBXGroup;
-			children = (
-				0473B2C30DCD406AB03FE5CF /* Sources */,
-			);
-			name = MeloMeter;
-			path = ../../MeloMeter;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		E12816BA35F79D21E0D77318 /* Project */ = {
 			isa = PBXGroup;
 			children = (
 				F631B3543A0C26BDC2DE72DD /* Derived */,
-				A8780F1739128B3D1BD5A8C7 /* MeloMeter */,
+				81104ECEC5CD1B0F5111557B /* Sources */,
 			);
 			name = Project;
 			sourceTree = "<group>";
@@ -191,6 +160,7 @@
 			packageProductDependencies = (
 				0E67EBE19FBB76F3244BB928 /* RxSwift */,
 				08580353599BAAE5BB0650E3 /* RxCocoa */,
+				70FCE2DFE1FFBCB63A6B5C5E /* NMapsMap */,
 			);
 			productName = Core;
 			productReference = 2B0FA7F85F3573FB522F9478 /* Core.framework */;
@@ -215,6 +185,22 @@
 				en,
 			);
 			mainGroup = 62824534F75515F48E8114A7;
+			packageReferences = (
+				D209A5A60A3A04C015BD4A93 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				8DE7BEA930C01377036D0DC0 /* XCRemoteSwiftPackageReference "MessageKit" */,
+				80F1B359AC0D7FBB81295BD5 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				DCBFE85597866DF600EDA948 /* XCRemoteSwiftPackageReference "RxGesture" */,
+				A5398178DFA0016A1524FD41 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				AFDCAC3537EE029DBBE3B1DA /* XCRemoteSwiftPackageReference "Then" */,
+				D95A39C88D10AF99B0B57637 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				71EFCEE9416DB62FA928A5C4 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				544607BAE6929595EFBBDCAE /* XCRemoteSwiftPackageReference "swift-package-manager-google-user-messaging-platform" */,
+				9DD81220D3480A35CE964A46 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				CE6DD3F53B935DC262462102 /* XCRemoteSwiftPackageReference "AnyFormatKit" */,
+				0FBCF3827BFFB931004A1A16 /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */,
+				03615036072DFB590B3BC58C /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				5085BC3BC8F4C7904B734DCA /* XCLocalSwiftPackageReference "../../Packages/abseil-cpp-binary" */,
+			);
 			productRefGroup = 250C62EE12DB56ECEBB473C3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -239,22 +225,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B92572159F26C7B0A89895CA /* AlertManager.swift in Sources */,
-				506CA5BEC07CABCF37FEB3B6 /* CustomAlertVC.swift in Sources */,
-				EB63C742733BED545D6E2FD6 /* ColorAssets.swift in Sources */,
-				C7D5E0250E4F201490905D50 /* Constants.swift in Sources */,
-				82AF69E57842F365F68EF04A /* Date+.swift in Sources */,
-				2B6D8B34D107CBCAB380E4FC /* Dictionary+.swift in Sources */,
-				D7D2D760DD860CC382A1633D /* Encodable+.swift in Sources */,
-				2AF4884CC87A8979997D4BE7 /* FontManager.swift in Sources */,
-				D6C3DF68EF05F89A692B4C43 /* ImageCacheManager.swift in Sources */,
-				6D5B8E19B690EB237162EF49 /* KeyboardStatusDetector.swift in Sources */,
-				3FB2F66A7E82F8F1DEEBE601 /* Label+.swift in Sources */,
-				088872DCEA7CD37D6B842CB6 /* ProgressDialogView.swift in Sources */,
-				A3AE1B49B79EC4A1412364C9 /* Reactive+.swift in Sources */,
-				4F96DAC925FF20EDD3A3EA6B /* RxNMFMapViewTouchDelegateProxy.swift in Sources */,
-				D17511C1C8458231D7F7B0EC /* TextField+.swift in Sources */,
-				64CD947E344D2F912FBFA275 /* UIImage+.swift in Sources */,
+				526DFCB82B863F52069DAE10 /* ColorAssets.swift in Sources */,
+				9DC456AA43334DC5F6560256 /* Constants.swift in Sources */,
+				982CB14D7CB8261E95648EB4 /* FontManager.swift in Sources */,
+				FEE964490379B67D815F0846 /* KeyboardStatusDetector.swift in Sources */,
+				51433EF39B4065534A575B80 /* Label+.swift in Sources */,
+				BA103D00820C8096D4EC1E1E /* ProgressDialogView.swift in Sources */,
+				48D86BE2BFA651781F1958FF /* Reactive+.swift in Sources */,
+				82C6C4A8EE89EFA9F61EDE5B /* RxNMFMapViewTouchDelegateProxy.swift in Sources */,
+				F1BA31E44F1C4F1B1FC25A14 /* TextField+.swift in Sources */,
+				D746F7D731F4BCD868415304 /* UIImage+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,6 +356,7 @@
 		C6F0DD24793DC9075B33338B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_EXPLICIT_MODULES = NO;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -390,6 +371,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACH_O_TYPE = staticlib;
 				PRODUCT_BUNDLE_IDENTIFIER = com.teamMeloMeter.core;
 				PRODUCT_NAME = Core;
 				SDKROOT = iphoneos;
@@ -402,6 +384,7 @@
 					DEBUG,
 				);
 				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -413,6 +396,7 @@
 		F2BF94242B2654F7A820405E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_EXPLICIT_MODULES = NO;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -427,6 +411,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACH_O_TYPE = staticlib;
 				PRODUCT_BUNDLE_IDENTIFIER = com.teamMeloMeter.core;
 				PRODUCT_NAME = Core;
 				SDKROOT = iphoneos;
@@ -435,6 +420,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -466,6 +452,120 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		5085BC3BC8F4C7904B734DCA /* XCLocalSwiftPackageReference "../../Packages/abseil-cpp-binary" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../Packages/abseil-cpp-binary";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		03615036072DFB590B3BC58C /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.6.1;
+			};
+		};
+		0FBCF3827BFFB931004A1A16 /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/navermaps/SPM-NMapsMap.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.23.0;
+			};
+		};
+		544607BAE6929595EFBBDCAE /* XCRemoteSwiftPackageReference "swift-package-manager-google-user-messaging-platform" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-user-messaging-platform.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.0;
+			};
+		};
+		71EFCEE9416DB62FA928A5C4 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.12.0;
+			};
+		};
+		80F1B359AC0D7FBB81295BD5 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.9.1;
+			};
+		};
+		8DE7BEA930C01377036D0DC0 /* XCRemoteSwiftPackageReference "MessageKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MessageKit/MessageKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+		9DD81220D3480A35CE964A46 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.25.0;
+			};
+		};
+		A5398178DFA0016A1524FD41 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		AFDCAC3537EE029DBBE3B1DA /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+		CE6DD3F53B935DC262462102 /* XCRemoteSwiftPackageReference "AnyFormatKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/luximetr/AnyFormatKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.2;
+			};
+		};
+		D209A5A60A3A04C015BD4A93 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+		D95A39C88D10AF99B0B57637 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.28.0;
+			};
+		};
+		DCBFE85597866DF600EDA948 /* XCRemoteSwiftPackageReference "RxGesture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		08580353599BAAE5BB0650E3 /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -474,6 +574,10 @@
 		0E67EBE19FBB76F3244BB928 /* RxSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RxSwift;
+		};
+		70FCE2DFE1FFBCB63A6B5C5E /* NMapsMap */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NMapsMap;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -1,17 +1,38 @@
 import ProjectDescription
+import ProjectDescriptionHelpers
 
 let project = Project(
   name: "Domain",
+  packages: ProjectPackages.all,
   targets: [
     .target(
       name: "Domain",
       destinations: .iOS,
-      product: .framework,
+      product: .staticFramework,
       bundleId: "com.teamMeloMeter.domain",
       deploymentTargets: .iOS("16.0"),
-      sources: ["../../MeloMeter/Sources/Domain/**"],
+      sources: ["Sources/**"],
       resources: [],
-      dependencies: []
+      dependencies: [
+        // Firebase
+        ExternalDependencies.firebaseAnalytics,
+        ExternalDependencies.firebaseAuth,
+
+        // Google Ads
+        ExternalDependencies.googleMobileAds,
+
+        // Utility & UI
+        ExternalDependencies.messageKit,
+
+        // Rx
+        ExternalDependencies.rxSwift,
+        ExternalDependencies.rxCocoa,
+        ExternalDependencies.rxRelay
+      ],
+      settings: .settings(base: [
+        "SWIFT_ENABLE_EXPLICIT_MODULES": "NO",
+        "CLANG_ENABLE_EXPLICIT_MODULES": "NO"
+      ])
     )
   ]
 )

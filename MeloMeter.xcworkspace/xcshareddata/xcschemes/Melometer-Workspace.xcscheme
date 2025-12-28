@@ -84,9 +84,37 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "77CAB1885910A1DF357B27D5"
+               BuildableName = "Presentation_Presentation.bundle"
+               BlueprintName = "Presentation_Presentation"
+               ReferencedContainer = "container:Projects/Presentation/Presentation.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "3F5E725EB25BB5E4543E24FA"
                BuildableName = "Shared.framework"
                BlueprintName = "Shared"
+               ReferencedContainer = "container:Projects/Shared/Shared.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "580E145F94C3566C454D982F"
+               BuildableName = "Shared_Shared.bundle"
+               BlueprintName = "Shared_Shared"
                ReferencedContainer = "container:Projects/Shared/Shared.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
