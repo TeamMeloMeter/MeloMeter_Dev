@@ -8,18 +8,15 @@
 import Foundation
 import RxSwift
 import RxRelay
-import UIKit
 
 public protocol ChatRepositoryP {
-    var recieveChatMessage: PublishSubject<[ChatDTO]?> { get set }
-    
-    func addChatMessage(message: ChatModel, coupleID: String) -> Single<Void>
-    func addImageMessage(chatModel: ChatModel, coupleID: String) -> Single<Void>
+    var recieveChatMessage: PublishSubject<[ChatMessage]?> { get set }
+
+    func addChatMessage(message: ChatMessage, coupleID: String) -> Single<Void>
+    func addImageMessage(chatMessage: ChatMessage, coupleID: String) -> Single<Void>
     func getRealTimeChat(coupleID: String)
-    func getChatMessage(coupleID: String) -> Observable<[ChatDTO]>
-    func getMoreChatMessage(num: Int, coupleID: String, searchText: String?) -> Observable<[ChatDTO]>
-    func downloadImage(url: String) -> Single<UIImage?>
-    func convertToChatDTOArray(from dictionaries: [[String: Any]]) -> [ChatDTO]
+    func getChatMessage(coupleID: String) -> Observable<[ChatMessage]>
+    func getMoreChatMessage(num: Int, coupleID: String, searchText: String?) -> Observable<[ChatMessage]>
     func getChatImagesURL(coupleID: String) -> Single<[String]>
-    func getMessageSearch(coupleID: String, searchGText: String, num: Int) -> Observable<([ChatDTO],String)>
+    func getMessageSearch(coupleID: String, searchGText: String, num: Int) -> Observable<([ChatMessage],String)>
 }

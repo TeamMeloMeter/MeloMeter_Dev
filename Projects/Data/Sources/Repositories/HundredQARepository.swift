@@ -40,14 +40,14 @@ public class HundredQARepository: HundredQARepositoryP {
         }
     }
     
-    public func getAnswerList(coupleID: String) -> Single<[AnswerInfoDTO]> {
+    public func getAnswerList(coupleID: String) -> Single<[AnswerInfoModel]> {
         return self.firebaseService.getDocument(collection: .Couples, document: coupleID)
-            .flatMap { documentSnapshot -> Single<[AnswerInfoDTO]> in
+            .flatMap { documentSnapshot -> Single<[AnswerInfoModel]> in
                 
                 if let answersList = documentSnapshot["answersList"] as? [String: Any], !answersList.isEmpty{
 
                     return self.getQusestionList()
-                        .flatMap { questionList -> Single<[AnswerInfoDTO]> in
+                        .flatMap { questionList -> Single<[AnswerInfoModel]> in
 
                             var resultDTO: [AnswerInfoDTO] = []
                             for questionNumber in 0...answersList.count {
@@ -74,17 +74,18 @@ public class HundredQARepository: HundredQARepositoryP {
                                 )
                                 resultDTO.append(answerInfoDTO)
                             }
-                            return Single.just(resultDTO)
+                            let resultModel = resultDTO.map { $0.toModel() }
+                            return Single.just(resultModel)
                         }
                 } else {
                     return self.getQusestionList()
-                        .flatMap { questionList in
+                        .flatMap { questionList -> Single<[AnswerInfoModel]> in
                             let answerInfoDTO = AnswerInfoDTO(
                                 answerInfo: [AnswerDTO(userId: "", answerText: "", userName: "")],
                                 questionText: questionList[0],
                                 date: ""
                             )
-                            return Single.just([answerInfoDTO])
+                            return Single.just([answerInfoDTO.toModel()])
                         }
                     
                 }

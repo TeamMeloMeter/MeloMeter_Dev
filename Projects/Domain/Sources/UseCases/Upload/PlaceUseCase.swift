@@ -5,6 +5,7 @@
 //  Created by 양승완 on 5/27/25.
 //
 
+import Foundation
 import RxSwift
 
 public protocol PlaceUseCase {

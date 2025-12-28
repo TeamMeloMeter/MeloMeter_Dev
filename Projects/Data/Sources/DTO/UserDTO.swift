@@ -6,14 +6,7 @@
 //
 
 import Foundation
-
-public enum EditUserInfo: String {
-    case profileImage, name, birth, stateMessage, gender
-    
-    public var field: String {
-        return self.rawValue
-    }
-}
+import Domain
 
 public struct UserDTO: Codable {
     

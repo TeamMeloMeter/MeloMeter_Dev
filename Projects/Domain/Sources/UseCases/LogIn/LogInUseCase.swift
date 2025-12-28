@@ -5,7 +5,7 @@
 //  Created by 오현택 on 2023/07/06.
 //
 
-import UIKit
+import Foundation
 import RxSwift
 import RxRelay
 

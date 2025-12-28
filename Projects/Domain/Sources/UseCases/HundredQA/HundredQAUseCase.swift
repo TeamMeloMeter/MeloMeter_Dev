@@ -5,7 +5,7 @@
 //  Created by 오현택 on 2023/08/22.
 //
 
-import UIKit
+import Foundation
 import RxSwift
 import RxRelay
 import GoogleMobileAds
@@ -28,8 +28,7 @@ public class HundredQAUseCase {
             self.hundredQARepository.getCoupleID().subscribe(onSuccess: { coupleID in
                 self.hundredQARepository.getAnswerList(coupleID: coupleID)
                     .subscribe(onSuccess: { list in
-                        let result = list.map{ $0.toModel() }
-                        single(.success(result))
+                        single(.success(list))
                     },onFailure: { error in
                         single(.failure(error))
                     }).disposed(by: self.disposeBag)

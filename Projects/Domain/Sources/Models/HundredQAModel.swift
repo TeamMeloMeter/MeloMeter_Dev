@@ -33,15 +33,6 @@ public struct AnswerModel {
         self.answerText = answerText
         self.userName = userName
     }
-    
-    // MARK: - Methods
-    public func toDTO() -> AnswerDTO {
-        return AnswerDTO(
-            userId: userId.toUid,
-            answerText: answerText,
-            userName: userName
-        )
-    }
 }
 
 public struct AnswerInfoModel {
@@ -55,16 +46,5 @@ public struct AnswerInfoModel {
         self.answerInfo = answerInfo
         self.questionText = questionText
         self.date = date
-    }
-    
-    // MARK: - Methods
-    public func toDTO() -> AnswerInfoDTO {
-        return AnswerInfoDTO(
-            answerInfo: answerInfo.map{ answer in
-                return answer.toDTO()
-            },
-            questionText: questionText,
-            date: date.toString(type: .yearToHour)
-        )
     }
 }

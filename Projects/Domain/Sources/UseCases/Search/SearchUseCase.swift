@@ -5,7 +5,7 @@
 //  Created by LTS on 2023/10/01.
 //
 
-import UIKit
+import Foundation
 import RxSwift
 import RxRelay
 

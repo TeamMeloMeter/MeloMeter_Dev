@@ -21,9 +21,6 @@ let project = Project(
         // Google Ads
         ExternalDependencies.googleMobileAds,
 
-        // Utility & UI
-        ExternalDependencies.messageKit,
-
         // Rx
         ExternalDependencies.rxSwift,
         ExternalDependencies.rxCocoa,

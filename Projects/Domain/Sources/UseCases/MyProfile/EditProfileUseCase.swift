@@ -5,7 +5,7 @@
 //  Created by 오현택 on 2023/08/11.
 //
 
-import UIKit
+import Foundation
 import RxSwift
 import RxRelay
 
@@ -32,7 +32,7 @@ public class EditProfileUseCase {
         return self.userRepository.updateUserInfo(value: [field.rawValue: value])
     }
     
-    public func getProfileImage(url: String) -> Single<UIImage?> {
+    public func getProfileImage(url: String) -> Single<Data?> {
         return self.userRepository.downloadImage(url: url)
     }
     

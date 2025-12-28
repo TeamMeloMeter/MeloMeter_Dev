@@ -36,14 +36,4 @@ public struct CoupleModel {
         self.init(firstDay: firstDay, anniversaries: anniversaries, disconnectedDate: nil)
     }
 
-    
-    // MARK: - Methods
-    public func toDTO() -> CoupleDTO {
-        return CoupleDTO(
-            firstDay: firstDay.toString(type: .yearToDay),
-            anniName: anniversaries.map{ $0.dateName },
-            anniDate: anniversaries.map{ $0.date.toString(type: .yearToDay) },
-            disconnectedDate: (disconnectedDate?.toString(type: .timeStamp)) ?? nil
-        )
-    }
 }

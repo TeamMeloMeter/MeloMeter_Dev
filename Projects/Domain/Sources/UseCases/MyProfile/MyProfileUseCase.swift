@@ -5,7 +5,7 @@
 //  Created by 오현택 on 2023/08/04.
 //
 
-import UIKit
+import Foundation
 import RxSwift
 import RxRelay
 import GoogleMobileAds
@@ -39,7 +39,7 @@ public class MyProfileUseCase {
     }
     
     public func getDdayInfo(otherUid: String) -> Single<[String]>{
-        self.coupleRepository.getCoupleDocument()
+        return self.coupleRepository.getCoupleDocument()
             .flatMap{ coupleData -> Single<[String]> in
                 let currentDate = Date.fromStringOrNow(Date().toString(type: .yearToDay), .yearToDay)
                 let sinceDay = (Calendar.current.dateComponents([.day], from: coupleData.firstDay, to: currentDate).day ?? 0) + 1
@@ -51,7 +51,7 @@ public class MyProfileUseCase {
             }
     }
     
-    public func getProfileImage(url: String) -> Single<UIImage?> {
+    public func getProfileImage(url: String) -> Single<Data?> {
         return self.userRepository.downloadImage(url: url)
     }
     
@@ -62,8 +62,7 @@ public class MyProfileUseCase {
             self.hundredQARepository.getCoupleID().subscribe(onSuccess: { coupleID in
                 self.hundredQARepository.getAnswerList(coupleID: coupleID)
                     .subscribe(onSuccess: { list in
-                        let result = list.map{ $0.toModel() }
-                        single(.success(result.count-2))
+                        single(.success(list.count - 2))
                     },onFailure: { error in
                         single(.failure(error))
                     }).disposed(by: self.disposeBag)

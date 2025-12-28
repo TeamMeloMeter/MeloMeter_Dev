@@ -7,10 +7,8 @@
 
 import UIKit
 import RxSwift
-import MessageKit
 import RxCocoa
 import Domain
-import Data
 import Core
 
 // MARK: - LoginViewModel
@@ -98,10 +96,15 @@ public class ChatVM {
         input.mySendTextMessage
             .subscribe(onNext: {[weak self] myMessage in
                 guard let self = self else{ return }
-                self.chatUseCase.sendMessageService(chatModel: myMessage, chatType: .text)
+                guard let message = myMessage.toChatMessage(),
+                      let chatType = myMessage.toChatType() else {
+                    output.sendSuccess.onNext(false)
+                    return
+                }
+                self.chatUseCase.sendMessageService(chatMessage: message, chatType: chatType)
                     .subscribe(onSuccess: {
                         output.sendSuccess.onNext(true)
-                    },onFailure: { error in
+                    },onFailure: { _ in
                         output.sendSuccess.onNext(false)
                     }).disposed(by: disposeBag)
             }).disposed(by: disposeBag)
@@ -110,10 +113,15 @@ public class ChatVM {
         input.mySendImageMessage
             .subscribe(onNext: {[weak self] myMessage in
                 guard let self = self else{ return }
-                self.chatUseCase.sendMessageService(chatModel: myMessage, chatType: .image)
+                guard let message = myMessage.toChatMessage(),
+                      let chatType = myMessage.toChatType() else {
+                    output.sendSuccess.onNext(false)
+                    return
+                }
+                self.chatUseCase.sendMessageService(chatMessage: message, chatType: chatType)
                     .subscribe(onSuccess: {
                         output.sendSuccess.onNext(true)
-                    },onFailure: { error in
+                    },onFailure: { _ in
                         output.sendSuccess.onNext(false)
                     }).disposed(by: disposeBag)
             })
@@ -122,8 +130,9 @@ public class ChatVM {
         self.chatUseCase.recieveChatMessageService
             .subscribe(onNext: { [weak self] chatMessageList in
                 guard let self else {return}
-                output.getMessage.onNext(chatMessageList ?? [])
-                self.nowChatList = chatMessageList ?? []
+                let models = (chatMessageList ?? []).map { $0.toChatModel() }
+                output.getMessage.onNext(models)
+                self.nowChatList = models
                 
                 
             })
@@ -132,8 +141,9 @@ public class ChatVM {
         
         self.chatUseCase.recieveMoreChatMessageService
             .subscribe(onNext: { chatMessageList in
-                output.getMoreMessage.onNext(chatMessageList ?? [])
-                self.nowChatList += chatMessageList ?? []
+                let models = (chatMessageList ?? []).map { $0.toChatModel() }
+                output.getMoreMessage.onNext(models)
+                self.nowChatList += models
                 
             }).disposed(by: disposeBag)
         
@@ -141,8 +151,8 @@ public class ChatVM {
         
         self.chatUseCase.recieveRealTimeMessageService
             .subscribe(onNext: { chatMessageList in
-             
-                output.getRealTimeMessage.onNext(chatMessageList ?? [])
+                let models = (chatMessageList ?? []).map { $0.toChatModel() }
+                output.getRealTimeMessage.onNext(models)
             }).disposed(by: disposeBag)
         
         input.backBtnTapEvent
@@ -158,10 +168,11 @@ public class ChatVM {
             .subscribe(onNext: { chatMessageList, messageId in
                 
                 
-                if let chatMessageList, !chatMessageList.isEmpty {
-                    output.getMoreMessage.onNext(chatMessageList)
+                let models = (chatMessageList ?? []).map { $0.toChatModel() }
+                if !models.isEmpty {
+                    output.getMoreMessage.onNext(models)
                     
-                    let searchedModel = chatMessageList.filter {
+                    let searchedModel = models.filter {
                         $0.messageId == messageId
                     }.first
                     
@@ -174,7 +185,7 @@ public class ChatVM {
                         self.searchingIndex = self.alreadySearchedModel.count - 1
                     }
                     
-                    self.nowChatList += chatMessageList
+                    self.nowChatList += models
                 } else {
                     output.notExistAlert.onNext(())
                 }
@@ -261,7 +272,10 @@ public class ChatVM {
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.chatUseCase.getProfileImage()
-                    .subscribe(onSuccess: { image in
+                    .subscribe(onSuccess: { data in
+                        let image = data.flatMap { UIImage(data: $0) }
+                            ?? UIImage(named: "defaultProfileImage")
+                            ?? UIImage()
                         output.otherProfileImage.onNext(image)
                     })
                     .disposed(by: disposeBag)
@@ -337,4 +351,3 @@ public class ChatVM {
         return components1.year == components2.year && components1.month == components2.month && components1.day == components2.day
     }
 }
-

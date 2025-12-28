@@ -236,32 +236,41 @@ extension DefaultFirebaseService {
     
     
     
-    public func downloadImage(urlString: String) -> Single<UIImage?> {
+    public func downloadImage(urlString: String) -> Single<Data?> {
         return Single.create { single in
             guard !urlString.isEmpty else {
                 single(.success(nil))
                 return Disposables.create()
             }
             let cachedKey = NSString(string: urlString)
-            
+
             if let cachedImage = ImageCacheManager.shared.object(forKey: cachedKey) {
-                single(.success(cachedImage))
+                single(.success(self.imageData(from: cachedImage)))
                 return Disposables.create()
             }
-            
+
             let storageReference = Storage.storage().reference(forURL: urlString)
             let megaByte = Int64(1 * 1024 * 1024)
-            
-            storageReference.getData(maxSize: megaByte) { data, error in
+
+            storageReference.getData(maxSize: megaByte) { data, _ in
                 guard let imageData = data else {
                     single(.success(nil))
                     return
                 }
-                ImageCacheManager.shared.setObject(UIImage(data: imageData)!, forKey: cachedKey)
-                single(.success(UIImage(data: imageData)))
+                if let image = UIImage(data: imageData) {
+                    ImageCacheManager.shared.setObject(image, forKey: cachedKey)
+                }
+                single(.success(imageData))
             }
             return Disposables.create()
         }
+    }
+
+    private func imageData(from image: UIImage) -> Data? {
+        if let data = image.pngData() {
+            return data
+        }
+        return image.jpegData(compressionQuality: 1.0)
     }
     
     public func deleteImageFromProfileStorage(imageURL: String) -> Single<Void> {

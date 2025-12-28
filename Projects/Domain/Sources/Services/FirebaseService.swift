@@ -7,7 +7,6 @@
 
 import CoreLocation
 import Foundation
-import UIKit
 import RxSwift
 import FirebaseAuth
 
@@ -26,7 +25,7 @@ public protocol FirebaseService {
     func observeLocation(document: String) -> Observable<CLLocation?>
     
     func uploadImage(filePath: String, data: Data) -> Single<String>
-    func downloadImage(urlString: String) -> Single<UIImage?>
+    func downloadImage(urlString: String) -> Single<Data?>
     func deleteImageFromProfileStorage(imageURL: String) -> Single<Void>
     func deleteImageFromChatStorage(filePath: [String]) -> Single<Void>
     func setAccessLevel(_ level: AccessLevel) -> Single<Void>

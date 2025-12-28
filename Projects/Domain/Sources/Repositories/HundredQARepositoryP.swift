@@ -10,7 +10,7 @@ import RxSwift
 
 public protocol HundredQARepositoryP {
     func getCoupleID() -> Single<String>
-    func getAnswerList(coupleID: String) -> Single<[AnswerInfoDTO]>
+    func getAnswerList(coupleID: String) -> Single<[AnswerInfoModel]>
     func getQusestionList() -> Single<[String]>
     func setAnswerList(questionNumber: String, answerData: AnswerModel?, coupleID: String) -> Single<Void>
     func answerListObserver()

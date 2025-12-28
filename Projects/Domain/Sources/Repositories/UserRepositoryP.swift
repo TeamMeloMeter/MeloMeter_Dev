@@ -7,7 +7,6 @@
 
 import Foundation
 import RxSwift
-import UIKit
 
 public protocol UserRepositoryP {
     var accessLevelCheck: PublishSubject<AccessLevel> {get set}
@@ -16,7 +15,7 @@ public protocol UserRepositoryP {
     func getUserInfo(_ uid: String) -> Observable<UserModel>
     func updateUserInfo(value: [String: String]) -> Single<Void>
     func updateProfileImage(imageData: Data) -> Single<Void>
-    func downloadImage(url: String) -> Single<UIImage?>
+    func downloadImage(url: String) -> Single<Data?>
     func userAccessLevelObserver()
     func signOut() -> Single<Void>
     func dropOut() -> Single<Void>

@@ -11,6 +11,7 @@
 		094BDFA06B7A29F54451D602 /* KakaoSDKShare in Frameworks */ = {isa = PBXBuildFile; productRef = FA5248C9200CC44E5A51660E /* KakaoSDKShare */; };
 		09EEC441253261EA93B44C9B /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = A6487016179045C3C6AD5B3F /* RxCocoa */; };
 		1360B1AF6D79E829CF037504 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AA23FEF28CD4A37B77F7A628 /* KakaoSDKAuth */; };
+		1A8F9F64261E11F287D71FEB /* DomainDTOMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFA086523CF76150B125DBF /* DomainDTOMapper.swift */; };
 		2041A5280C802566DBD514B4 /* ChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F410D930534C893189A7F547 /* ChatRepository.swift */; };
 		2B42F951551CB15DF498940F /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 6288C1BD8E0685067A37F9DB /* KakaoSDKCommon */; };
 		2CB3D35BB4CDF015DB479B0D /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FA8912DE3AC2278C3DBF723A /* RxSwift */; };
@@ -21,24 +22,31 @@
 		3E436C3F6D4DF64272134D61 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F85F6B16E9CD7E55593FC1 /* ImageCacheManager.swift */; };
 		4196AC73C8ABBF529103C4C2 /* Domain.framework in Dependencies */ = {isa = PBXBuildFile; fileRef = 06FAA1459D11CCE724C34195 /* Domain.framework */; };
 		48C4852832BF80E742B810AD /* SharedDataRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC618E602EB3676CBF82F5EB /* SharedDataRepo.swift */; };
+		5BA848227ABF14CE5C7D7A4E /* CouplePlaceDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3961B56280A2CA95DD7730 /* CouplePlaceDto.swift */; };
+		5E04DBA836AEFD95E86EA015 /* HundredQADTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E475EC326D671E1CCE11C2 /* HundredQADTO.swift */; };
 		5F3BB4D2199A2FB0D06F775E /* UserDefaultsRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DBD7FEC99FDAD04063C786 /* UserDefaultsRepo.swift */; };
+		608B30ECCABFF06FC69B6F1A /* CoupleDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380B50803AF2ACDB488A28ED /* CoupleDTO.swift */; };
 		65A5AB9CA7E736850B0FA0C2 /* KakaoSDKTalk in Frameworks */ = {isa = PBXBuildFile; productRef = F9A2B5D7D880074BC3B510E3 /* KakaoSDKTalk */; };
 		7CEF9A6E1AC03CEE9EF9289E /* SearchRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309A1626A40FDDB0A26ABD29 /* SearchRepo.swift */; };
 		7DA5B8FD00C3BDBDD5E6529C /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E2A39772D99934546E229524 /* FirebaseAnalytics */; };
+		811E132B6F39024EB106B257 /* LogInDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236624AC5E8597B137B48CF /* LogInDTO.swift */; };
 		8DFE900C833C28DFE0DF209A /* CouplePlaceRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CF645DC5E43B3F2D21342 /* CouplePlaceRepo.swift */; };
 		9305EDEDF5B8DFD29ABDB964 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DE1670186B713F30B6F61EC0 /* FirebaseFirestoreSwift */; };
 		9B6EA889E48C4918F9214C9B /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 4E35089267AB3928E145EC0C /* FirebaseFirestore */; };
 		9E98AA6626B3F82724C67891 /* WidgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DD44680288A01B01D3FAB8 /* WidgetService.swift */; };
+		A16EDCF5F877AA99881BB0B9 /* AlarmDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD86A229A2B729A25F46D6 /* AlarmDTO.swift */; };
 		A93FE73C523015314ABAB8D1 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = CE7514A0B48CD7A97E5D6C31 /* RxRelay */; };
 		B64B8CE6B404B84C52C6E746 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 246EE100D7B98EB6C3DCCD1D /* FirebaseAuth */; };
 		B7A091CF76F97ACE5416EA6D /* HundredQARepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD8DACA6105C2798C0CACE7 /* HundredQARepository.swift */; };
 		C12C80A83590E7E29BEE9EDA /* AlarmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9933441B2DC3F6CF85217C /* AlarmRepository.swift */; };
 		C90CE1E0DCD7A07D5B3AD27E /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = C00F20CC70D27DC69DB9FFB2 /* MessageKit */; };
+		D2CAF4AE7659F3DFBBD5416F /* ChatDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C094301076C60A09743CF1 /* ChatDTO.swift */; };
 		D961D4BDA2148CBA05D65202 /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92ADC9FD19D0FA63438622A /* PushNotificationService.swift */; };
 		DEC230844B61C68C3793982D /* KakaoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B438889E116E115396F3F2 /* KakaoService.swift */; };
 		E249268D587A3C72FCF1EC61 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 44C112822347644E2516969B /* FirebaseStorage */; };
 		E6AA50DDCD7B951CB1E4F3F7 /* KakaoSDKTemplate in Frameworks */ = {isa = PBXBuildFile; productRef = E3C3C64D045D495C9F61A62E /* KakaoSDKTemplate */; };
 		E7A6F9F4DAA622863EE0AE20 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = DE301C104C6F8CA9DD316DFD /* Alamofire */; };
+		F94A245293316813B9043311 /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BFE3B58E11FAC056C5FFC6 /* UserDTO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -67,23 +75,31 @@
 /* Begin PBXFileReference section */
 		033B57EACF093CA22F91EAB9 /* Data-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Data-Info.plist"; sourceTree = "<group>"; };
 		06FAA1459D11CCE724C34195 /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		13BFE3B58E11FAC056C5FFC6 /* UserDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
 		189A0824731A8B4C50FB9403 /* CoupleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleRepository.swift; sourceTree = "<group>"; };
 		1A9CF645DC5E43B3F2D21342 /* CouplePlaceRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplePlaceRepo.swift; sourceTree = "<group>"; };
 		20DBD7FEC99FDAD04063C786 /* UserDefaultsRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRepo.swift; sourceTree = "<group>"; };
 		25DD44680288A01B01D3FAB8 /* WidgetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetService.swift; sourceTree = "<group>"; };
 		303B67BED3F21FAE1A64E92B /* DefaultFirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFirebaseService.swift; sourceTree = "<group>"; };
 		309A1626A40FDDB0A26ABD29 /* SearchRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepo.swift; sourceTree = "<group>"; };
+		380B50803AF2ACDB488A28ED /* CoupleDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleDTO.swift; sourceTree = "<group>"; };
+		3E3961B56280A2CA95DD7730 /* CouplePlaceDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplePlaceDto.swift; sourceTree = "<group>"; };
 		41A7F6D0879455286DA97A82 /* VersionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionRepository.swift; sourceTree = "<group>"; };
+		44E475EC326D671E1CCE11C2 /* HundredQADTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQADTO.swift; sourceTree = "<group>"; };
 		4CD8DACA6105C2798C0CACE7 /* HundredQARepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQARepository.swift; sourceTree = "<group>"; };
 		4E75197C294DE74F5162FAA7 /* Data.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Data.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		69F85F6B16E9CD7E55593FC1 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		80FAB108F097512C0F76D710 /* LogInRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInRepository.swift; sourceTree = "<group>"; };
+		9EAD86A229A2B729A25F46D6 /* AlarmDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDTO.swift; sourceTree = "<group>"; };
 		A92ADC9FD19D0FA63438622A /* PushNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationService.swift; sourceTree = "<group>"; };
 		AE9933441B2DC3F6CF85217C /* AlarmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmRepository.swift; sourceTree = "<group>"; };
 		B66E022CC204029EA0F97D3C /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		BBFA086523CF76150B125DBF /* DomainDTOMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainDTOMapper.swift; sourceTree = "<group>"; };
 		BC618E602EB3676CBF82F5EB /* SharedDataRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataRepo.swift; sourceTree = "<group>"; };
 		C2B438889E116E115396F3F2 /* KakaoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoService.swift; sourceTree = "<group>"; };
+		C3C094301076C60A09743CF1 /* ChatDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDTO.swift; sourceTree = "<group>"; };
 		E388C3A16AC7FFA361F8CC71 /* abseil-cpp-binary */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "abseil-cpp-binary"; path = "../../Packages/abseil-cpp-binary"; sourceTree = "<group>"; };
+		F236624AC5E8597B137B48CF /* LogInDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInDTO.swift; sourceTree = "<group>"; };
 		F410D930534C893189A7F547 /* ChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,6 +138,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		427A51FE78DA24F2EE468914 /* Mappers */ = {
+			isa = PBXGroup;
+			children = (
+				BBFA086523CF76150B125DBF /* DomainDTOMapper.swift */,
+			);
+			path = Mappers;
+			sourceTree = "<group>";
+		};
 		42C5091027043DE1BCA7B438 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +180,20 @@
 				41A7F6D0879455286DA97A82 /* VersionRepository.swift */,
 			);
 			path = Repositories;
+			sourceTree = "<group>";
+		};
+		647255CD65221C9CD4A43DED /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				9EAD86A229A2B729A25F46D6 /* AlarmDTO.swift */,
+				C3C094301076C60A09743CF1 /* ChatDTO.swift */,
+				380B50803AF2ACDB488A28ED /* CoupleDTO.swift */,
+				3E3961B56280A2CA95DD7730 /* CouplePlaceDto.swift */,
+				44E475EC326D671E1CCE11C2 /* HundredQADTO.swift */,
+				F236624AC5E8597B137B48CF /* LogInDTO.swift */,
+				13BFE3B58E11FAC056C5FFC6 /* UserDTO.swift */,
+			);
+			path = DTO;
 			sourceTree = "<group>";
 		};
 		8A6D38DA6706D1F4DD8A055B = {
@@ -194,8 +232,10 @@
 		C590795A2658F92D49B27E8D /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				647255CD65221C9CD4A43DED /* DTO */,
 				4D60DCB2AEB4CB8E66AAFAE6 /* FirebaseService */,
 				9C0DF78EC7FDE87A9D6F34BE /* KakaoService */,
+				427A51FE78DA24F2EE468914 /* Mappers */,
 				53C06246A9E4472B0D3E594C /* Repositories */,
 				25DD44680288A01B01D3FAB8 /* WidgetService.swift */,
 			);
@@ -309,10 +349,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A16EDCF5F877AA99881BB0B9 /* AlarmDTO.swift in Sources */,
+				D2CAF4AE7659F3DFBBD5416F /* ChatDTO.swift in Sources */,
+				608B30ECCABFF06FC69B6F1A /* CoupleDTO.swift in Sources */,
+				5BA848227ABF14CE5C7D7A4E /* CouplePlaceDto.swift in Sources */,
+				5E04DBA836AEFD95E86EA015 /* HundredQADTO.swift in Sources */,
+				811E132B6F39024EB106B257 /* LogInDTO.swift in Sources */,
+				F94A245293316813B9043311 /* UserDTO.swift in Sources */,
 				307EFC2B5A57BCAE7AE02B03 /* DefaultFirebaseService.swift in Sources */,
 				3E436C3F6D4DF64272134D61 /* ImageCacheManager.swift in Sources */,
 				D961D4BDA2148CBA05D65202 /* PushNotificationService.swift in Sources */,
 				DEC230844B61C68C3793982D /* KakaoService.swift in Sources */,
+				1A8F9F64261E11F287D71FEB /* DomainDTOMapper.swift in Sources */,
 				C12C80A83590E7E29BEE9EDA /* AlarmRepository.swift in Sources */,
 				2041A5280C802566DBD514B4 /* ChatRepository.swift in Sources */,
 				8DFE900C833C28DFE0DF209A /* CouplePlaceRepo.swift in Sources */,

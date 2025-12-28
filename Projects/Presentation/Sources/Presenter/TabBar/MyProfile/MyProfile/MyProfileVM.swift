@@ -11,7 +11,6 @@ import RxRelay
 import RxCocoa
 import GoogleMobileAds
 import Domain
-import Data
 import Core
 
 public class MyProfileVM {
@@ -62,7 +61,8 @@ public class MyProfileVM {
                 self.myProfileUseCase.getUserInfo()
                     .subscribe(onNext: { user in
                         self.myProfileUseCase.getProfileImage(url: user.profileImage ?? "")
-                            .subscribe(onSuccess: { image in
+                            .subscribe(onSuccess: { data in
+                                let image = data.flatMap { UIImage(data: $0) }
                                 output.profileImage.accept(image)
                             })
                             .disposed(by: disposeBag)

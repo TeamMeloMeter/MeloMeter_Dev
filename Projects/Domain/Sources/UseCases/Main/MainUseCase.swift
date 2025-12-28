@@ -5,7 +5,7 @@
 //  Created by 오현택 on 2023/07/31.
 //
 
-import UIKit
+import Foundation
 import RxSwift
 import RxRelay
 import CoreLocation
@@ -109,27 +109,20 @@ public class MainUseCase {
 extension MainUseCase {
     public func getSinceFirstDay(coupleID: String) -> Single<String> {
         let calendar = Calendar.current
-        return self.firebaseService.getDocument(collection: .Couples, document: coupleID)
-            .flatMap{ source in
-                
-                guard let dto = source.toObject(CoupleDTO.self) else  {return Single.just("")}
-                
-                self.sharedDataRepo.saveStartDate(startDate: dto.firstDay)
+        return self.coupleRepository.getCoupleDocument()
+            .map { coupleModel in
+                self.sharedDataRepo.saveStartDate(startDate: coupleModel.firstDay.toString(type: .yearToDay))
 
-                
-                guard let coupleModel = source.toObject(CoupleDTO.self)?.toModel() else{ return Single.just("")}
-                
-                
-                
-                //주기적 알림 등록
+                // 주기적 알림 등록
                 self.notificationService.addRepeatAlarm(coupleModel.anniversaries, coupleModel.firstDay)
-                //fcm토큰 업데이트
-                guard let fcmToken = UserDefaults.standard.string(forKey: "fcmToken") else{ return Single.just("") }
-                self.userRepository.updateFcmToken(fcmToken: fcmToken)
+                // fcm토큰 업데이트
+                if let fcmToken = UserDefaults.standard.string(forKey: "fcmToken") {
+                    self.userRepository.updateFcmToken(fcmToken: fcmToken)
+                }
 
                 let currentDate = Date.fromStringOrNow(Date().toString(type: .yearToDay), .yearToDay)
-                let sinceDay = ( calendar.dateComponents([.day], from: currentDate, to: coupleModel.firstDay).day ?? 0 ) - 1
-                return Single.just(String(abs(sinceDay)))
+                let sinceDay = (calendar.dateComponents([.day], from: currentDate, to: coupleModel.firstDay).day ?? 0) - 1
+                return String(abs(sinceDay))
             }
             .catchAndReturn("")
     }
@@ -156,11 +149,11 @@ extension MainUseCase {
         
     }
     
-    public func getMyProfileImage(url: String) -> Single<UIImage?> {
+    public func getMyProfileImage(url: String) -> Single<Data?> {
         return self.userRepository.downloadImage(url: url)
     }
     
-    public func getOtherProfileImage(otherUid: String) -> Single<UIImage?> {
+    public func getOtherProfileImage(otherUid: String) -> Single<Data?> {
         return self.userRepository.getUserInfo(otherUid)
             .asSingle()
             .flatMap{ otherUser in

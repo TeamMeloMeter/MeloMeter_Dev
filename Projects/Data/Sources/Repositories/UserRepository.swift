@@ -171,7 +171,7 @@ public class UserRepository: UserRepositoryP {
             }
     }
     
-    public func downloadImage(url: String) -> Single<UIImage?> {
+    public func downloadImage(url: String) -> Single<Data?> {
         return self.firebaseService.downloadImage(urlString: url)
     }
     

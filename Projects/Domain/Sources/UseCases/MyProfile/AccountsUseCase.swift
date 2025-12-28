@@ -5,7 +5,7 @@
 //  Created by 오현택 on 2023/08/18.
 //
 
-import UIKit
+import Foundation
 import RxSwift
 
 public class AccountsUseCase {

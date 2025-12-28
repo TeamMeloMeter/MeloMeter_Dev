@@ -18,7 +18,7 @@ public enum ChatMessageError: Error {
 public class ChatRepository: ChatRepositoryP {
     
     public var lastSearchedMessageID: String?
-    public var recieveChatMessage = PublishSubject<[ChatDTO]?>()
+    public var recieveChatMessage = PublishSubject<[ChatMessage]?>()
     public var firebaseService: FirebaseService
     public var disposeBag: DisposeBag
     
@@ -27,8 +27,11 @@ public class ChatRepository: ChatRepositoryP {
         self.disposeBag = DisposeBag()
     }
     
-    // ChatModel타입을 인자로 받아서 fireBase에 insert하는 함수 / 리턴 t/f
-    public func addChatMessage(message: ChatModel, coupleID: String) -> Single<Void> {
+    // ChatMessage를 인자로 받아서 fireBase에 insert하는 함수
+    public func addChatMessage(message: ChatMessage, coupleID: String) -> Single<Void> {
+        guard case .text = message.content else {
+            return Single.error(FireStoreError.unknown)
+        }
         let dto = message.toDTO()
         let values = chatValues(from: dto)
         // 왜 dic 으로 바꾸는거..
@@ -40,15 +43,13 @@ public class ChatRepository: ChatRepositoryP {
     }
     
     // 이미지 메세지 처리
-    public func addImageMessage(chatModel: ChatModel, coupleID: String) -> Single<Void> {
-        switch chatModel.kind {
-        case .photo(let photo):
-            guard let imageData = photo.image?.jpegData(compressionQuality: 0.6) else{ return Single.error(FireStoreError.unknown)}
-            
+    public func addImageMessage(chatMessage: ChatMessage, coupleID: String) -> Single<Void> {
+        switch chatMessage.content {
+        case .imageData(let imageData):
             let uuidData = UUID().uuidString
             return self.firebaseService.uploadImage(filePath: "chat/"+coupleID+"/"+uuidData, data: imageData)
                 .flatMap{ url in
-                    let dto = chatModel.toDTO(url: url)
+                    let dto = chatMessage.toDTO(url: url)
                     let values = self.chatValues(from: dto)
                     let userName = UserDefaults.standard.string(forKey: "name") ?? "상대방"
                     //푸시노티
@@ -86,7 +87,7 @@ public class ChatRepository: ChatRepositoryP {
                     else {
                         let numberOfMessagesToRetrieve = 1
                         let recentChatFields = Array(sortedChatFields.suffix(numberOfMessagesToRetrieve))
-                        self.recieveChatMessage.onNext(self.convertToChatDTOArray(from: recentChatFields))
+                        self.recieveChatMessage.onNext(self.convertToChatMessageArray(from: recentChatFields))
                     }
                 } else {
                     self.recieveChatMessage.onNext([])
@@ -98,7 +99,7 @@ public class ChatRepository: ChatRepositoryP {
     }
     
     //최근 30개 가져오기
-    public func getChatMessage(coupleID: String) -> Observable<[ChatDTO]> {
+    public func getChatMessage(coupleID: String) -> Observable<[ChatMessage]> {
         return self.firebaseService.getDocument(collection: .Chat, document: coupleID)
             .compactMap { documentSnapshot in
                 if let chatFields = documentSnapshot["chatField"] as? [[String: Any]],  !chatFields.isEmpty{
@@ -114,8 +115,8 @@ public class ChatRepository: ChatRepositoryP {
                     let numberOfMessagesToRetrieve = min(sortedChatFields.count, 30)
                     let recentChatFields = Array(sortedChatFields.suffix(numberOfMessagesToRetrieve))
                     
-                    // DTO타입으로 형변환
-                    return self.convertToChatDTOArray(from: recentChatFields)
+                    // 모델 타입으로 변환
+                    return self.convertToChatMessageArray(from: recentChatFields)
                 } else {
                     return []
                 }
@@ -124,7 +125,7 @@ public class ChatRepository: ChatRepositoryP {
     }
     
     //추가 30개 가져오기
-    public func getMoreChatMessage(num: Int, coupleID: String, searchText searchGText: String?) -> Observable<[ChatDTO]> {
+    public func getMoreChatMessage(num: Int, coupleID: String, searchText searchGText: String?) -> Observable<[ChatMessage]> {
         return self.firebaseService.getDocument(collection: .Chat, document: coupleID)
             .compactMap { documentSnapshot in
                 if let chatFields = documentSnapshot["chatField"] as? [[String: Any]], !chatFields.isEmpty{
@@ -155,8 +156,8 @@ public class ChatRepository: ChatRepositoryP {
                     let recentChatFields = sortedChatFields[start ..< end]
                     
                     
-                    // DTO타입으로 형변환
-                    return self.convertToChatDTOArray(from: Array(recentChatFields))
+                    // 모델 타입으로 변환
+                    return self.convertToChatMessageArray(from: Array(recentChatFields))
                 } else {
                     return []
                 }
@@ -165,7 +166,7 @@ public class ChatRepository: ChatRepositoryP {
     }
     
     // MARK: by seungwan
-    public func getMessageSearch(coupleID: String, searchGText: String, num: Int) -> Observable<([ChatDTO],String)> {
+    public func getMessageSearch(coupleID: String, searchGText: String, num: Int) -> Observable<([ChatMessage],String)> {
         return self.firebaseService.getDocument(collection: .Chat, document: coupleID)
             .compactMap { documentSnapshot in
                 var findChatFields: [ChatDTO] = []
@@ -209,18 +210,18 @@ public class ChatRepository: ChatRepositoryP {
                 
                     
                 }
-                return (findChatFields, self.lastSearchedMessageID ?? "")
+                return (self.convertToChatMessageArray(from: findChatFields), self.lastSearchedMessageID ?? "")
 
             }
             .asObservable()
     }
     
-    public func downloadImage(url: String) -> Single<UIImage?> {
+    public func downloadImage(url: String) -> Single<Data?> {
         return self.firebaseService.downloadImage(urlString: url)
     }
     
-    //딕셔너리로 가져온 데이터 [DTO] 로 변환
-    public func convertToChatDTOArray(from dictionaries: [[String: Any]]) -> [ChatDTO] {
+    // 딕셔너리로 가져온 데이터 [DTO] 로 변환
+    private func convertToChatDTOArray(from dictionaries: [[String: Any]]) -> [ChatDTO] {
         var chatDTOArray: [ChatDTO] = []
         
         for dictionary in dictionaries {
@@ -236,6 +237,17 @@ public class ChatRepository: ChatRepositoryP {
             chatDTOArray.append(chatDTO)
         }
         return chatDTOArray
+    }
+    
+    private func convertToChatMessageArray(from dictionaries: [[String: Any]]) -> [ChatMessage] {
+        return convertToChatMessageArray(from: convertToChatDTOArray(from: dictionaries))
+    }
+    
+    private func convertToChatMessageArray(from dtos: [ChatDTO]) -> [ChatMessage] {
+        let messages = dtos.map { dto -> ChatMessage in
+            return dto.toMessage()
+        }
+        return messages.sorted(by: { $0.sentDate < $1.sentDate })
     }
     
     public func getChatImagesURL(coupleID: String) -> Single<[String]> {

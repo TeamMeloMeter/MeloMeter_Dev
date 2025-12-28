@@ -352,7 +352,8 @@ public class MapVM {
                     guard let userInfo else{ return }
                     output.myStateMessage.onNext(userInfo.stateMessage ?? nil)
                     self.mainUseCase.getMyProfileImage(url: userInfo.profileImage ?? "")
-                        .subscribe(onSuccess: { image in
+                        .subscribe(onSuccess: { data in
+                            let image = data.flatMap { UIImage(data: $0) }
                             output.myProfileImage.onNext(image)
                         })
                         .disposed(by: disposeBag)
@@ -373,7 +374,8 @@ public class MapVM {
                             })
                             .disposed(by: disposeBag)
                         self.mainUseCase.getOtherProfileImage(otherUid: otherUid)
-                            .subscribe(onSuccess: { image in
+                            .subscribe(onSuccess: { data in
+                                let image = data.flatMap { UIImage(data: $0) }
                                 output.otherProfileImage.onNext(image)
                             })
                             .disposed(by: disposeBag)

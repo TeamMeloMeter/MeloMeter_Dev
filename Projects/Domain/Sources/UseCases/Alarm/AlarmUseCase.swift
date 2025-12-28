@@ -5,7 +5,7 @@
 //  Created by LTS on 2023/10/01.
 //
 
-import UIKit
+import Foundation
 import RxSwift
 import RxRelay
 
@@ -24,9 +24,6 @@ public class AlarmUseCase {
     //   MARK: - Methods
     public func getAlarmService() -> Observable<[AlarmModel]>{
         return self.alarmRepository.getAlarm()
-            .map { alarmDTOList in
-                return alarmDTOList.map { $0.toModel() }
-            }
     }
   
 }

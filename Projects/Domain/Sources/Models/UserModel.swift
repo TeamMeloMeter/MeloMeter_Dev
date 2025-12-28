@@ -61,20 +61,4 @@ public struct UserModel: Equatable, Hashable {
         self.init(fcmToken: nil, uid: nil, otherUid: nil, coupleID: nil, phoneNumber: nil, profileImage: nil, name: name, birth: birth, stateMessage: stateMessage, gender: gender, createdAt: nil)
     }
 
-    // MARK: - Methods
-    public func toProfileInsertDTO(uid: String, phoneNumber: String) -> UserDTO {
-        return UserDTO(
-            fcmToken: fcmToken,
-            uid: uid,
-            otherUid: otherUid,
-            coupleID: coupleID,
-            phoneNumber: phoneNumber,
-            profileImagePath: profileImage,
-            name: name ?? "",
-            birth: birth?.toString(type: .yearToDay) ?? "",
-            stateMessage: stateMessage, 
-            gender: gender?.stringType,
-            createdAt: createdAt?.toString(type: .timeStamp)
-        )
-    }
 }

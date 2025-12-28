@@ -12,15 +12,14 @@
 		0CE385EC16A29F0AC21BAE44 /* ChatRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C53842CDB1211073E221C2 /* ChatRepositoryP.swift */; };
 		0F0D2237289595FA93F828E9 /* AccessLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC45EC21660413E8190B387A /* AccessLevel.swift */; };
 		0F4CEA01E416FC44D812A8BF /* PushNotificationServiceP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942646E1A7F8AC576DACC7C6 /* PushNotificationServiceP.swift */; };
-		153B67B770585E8DCD619385 /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF24345773BF8333D02503B /* UserDTO.swift */; };
 		2CF4BDD6038EBB236065174A /* UserDefaultsRepoP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917C2113DA79F6C86BD38294 /* UserDefaultsRepoP.swift */; };
-		2E760A155CAD0B0D7FD0B9AC /* ChatUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EDBC236EE9A03355E34FF2 /* ChatUserModel.swift */; };
 		2FF00399F6A58C7C85D06394 /* Dictionary+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1779A915C86E9DA541285E /* Dictionary+.swift */; };
 		3866935CB3E3CF6C78BC3A23 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442E4A4F05E97408C37BE61 /* LocationService.swift */; };
+		3EC8180FE9C5161122FBFC2F /* ChatType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE64D3EE2112556EBCAE75E9 /* ChatType.swift */; };
 		3F6E4C4DD91796C9967CD487 /* CoupleRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E4EC454366DB76C28E4DC5 /* CoupleRepositoryP.swift */; };
 		42F19E778DC160FB499CB706 /* SearchedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F55A18298BC7DC4D46B5F59 /* SearchedModel.swift */; };
 		47112474843C53E6BEA14C68 /* DdayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57FD038A13BFE1815480705 /* DdayUseCase.swift */; };
-		48E998D65A2D4F29922D9336 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = C10513CF89F744E9EC2E3052 /* RxCocoa */; };
+		48E998D65A2D4F29922D9336 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 97C192DF0D9B27D2C40FDAC2 /* RxRelay */; };
 		4CE2C85401D6CA07872DBB0B /* SearchRepoP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894B83AFC46C58DAB2BA68D7 /* SearchRepoP.swift */; };
 		4F91D614990644644BB610C8 /* CouplePlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E23027AF64511FE98C4DC3 /* CouplePlaceModel.swift */; };
 		50134CF812BBDC36F90B4F75 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6AA51DB3244F38D6B3DD2B /* Date+.swift */; };
@@ -29,8 +28,8 @@
 		62EE1F817CD171BC14D7170F /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = A33583148125E616F2ED3E70 /* GoogleMobileAds */; };
 		64A7E4C293C7423C0542616D /* AlarmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910EC4181380CC5B42B0F9E6 /* AlarmModel.swift */; };
 		65E05F69D714332549674BE3 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 8F5A5FE6DE73C14201D2576F /* FirebaseAuth */; };
-		68F20F54535E9867ACDE3E2E /* LogInDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B599F966AB704EE7FB0FFCBF /* LogInDTO.swift */; };
 		74BE3E28F701912744EBEF84 /* LogInRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EF6CCF21DD5D987634CEED /* LogInRepositoryP.swift */; };
+		77B9687EDBE0C491CA99D269 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9745210BB0F63EFC6D83D47 /* ChatMessage.swift */; };
 		79ECF1D636DAAABDDE7707A5 /* CoupleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924760E9D85F97B4DF4FE598 /* CoupleModel.swift */; };
 		8DCF0A6D8E2E828CF818A042 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B751AAF3920D8F422D324EAB /* FirebaseAnalytics */; };
 		963D84E044D2AA725F00064D /* AlarmRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34F5885A2BFFEB1E4FE56DE /* AlarmRepositoryP.swift */; };
@@ -40,30 +39,23 @@
 		A0200588D1EF9A2299CA57A4 /* HundredQAModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196BD8E2FE942D028D0E9F02 /* HundredQAModel.swift */; };
 		A26D4E974D61255DAD8B5B49 /* PlaceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DD13A08C2BDFA2B2399281 /* PlaceUseCase.swift */; };
 		A69393942330FD6F9F1CE76C /* LogInUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0A081B42A3B29A14F4E3C2 /* LogInUseCase.swift */; };
-		A7DD15EA4D9DE406B9B59863 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5331D1920D86BD758C6F7C4B /* RxSwift */; };
+		A7DD15EA4D9DE406B9B59863 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = C10513CF89F744E9EC2E3052 /* RxCocoa */; };
 		AC961C0387469704D7EBB82C /* AccountsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E635BFE4F553045820E3F302 /* AccountsUseCase.swift */; };
 		AE45713F2D1589990054DD46 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA322BE4C45A4E9DA709289 /* UserModel.swift */; };
-		B03CC6CB5EF2A6C29B750758 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA2E1207BAF012CA4F9C80F /* ChatModel.swift */; };
 		B16514726990710BEDF01C54 /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2C06C7503C8C78F70FD5A1 /* Encodable+.swift */; };
 		B7D1A8E890A40BB1404EF948 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E863A14942F244F46373202 /* FirebaseService.swift */; };
 		B7EF9F8BE765E0FE3C7F4CE4 /* AlarmType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE07D5AF3B40AA42EA86B9B /* AlarmType.swift */; };
-		B88F17E1A04410619D7AA8CF /* CouplePlaceDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8287CCDBCA6DC6CDA03FAC /* CouplePlaceDto.swift */; };
 		B9E6CAA11AD02E4D4E279E75 /* LogInModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8655E9D07D4DB136CEA6E0 /* LogInModel.swift */; };
 		BB6F91ED1B6DBCF7BCBC9B71 /* FireStoreCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C63C39B669AF87E0CB94264 /* FireStoreCollection.swift */; };
 		C6AB7C8C9B77FBBF222649B9 /* ProfileInsertUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B1472E3A5DF10739B699C1 /* ProfileInsertUseCase.swift */; };
-		C950378E8F6F687B5DB95918 /* CameraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CEC6B95F0CA585A3D760CD /* CameraModel.swift */; };
 		CA3D828DB1C1FA7C29256EC3 /* MyProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B1DB43E4D8D8473A6A26E6 /* MyProfileUseCase.swift */; };
-		CB54210C1B83B0A75F039FCF /* CoupleDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFEA0F53A9A4683637C75C8 /* CoupleDTO.swift */; };
-		CCB8EC084C27BCC55AEDA359 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 97C192DF0D9B27D2C40FDAC2 /* RxRelay */; };
 		CCC68EF94B2DC2F2AC5E92A1 /* SearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7558F81D1FF6123ED05A9E5 /* SearchUseCase.swift */; };
-		D1703C6BA9FCD3A5A504C4AD /* HundredQADTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B30A0AB05347FA5E5DAAAAC /* HundredQADTO.swift */; };
-		D45252FEBAB2A546D6030DFA /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1E72A186D7F9F2F5E5F73CFD /* MessageKit */; };
+		D45252FEBAB2A546D6030DFA /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5331D1920D86BD758C6F7C4B /* RxSwift */; };
 		D59A80613D1B166539AA5715 /* SharedDataRepoP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C7065E3DF378E2161AB8AB /* SharedDataRepoP.swift */; };
 		E406B61C20FD973A98CFE82B /* AlarmUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7726B98B6FBED4D36FEE864E /* AlarmUseCase.swift */; };
 		ED5CD3CFEC479FDE0D61D10F /* AdmobRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4613421B4C8DC90672E113F /* AdmobRepositoryP.swift */; };
 		EE0362C2953C71ED85C38BDE /* HundredQAUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001AD65A06EB000443FF6F29 /* HundredQAUseCase.swift */; };
-		F74B4A9FA9DCFF00C16320E2 /* AlarmDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7E5AABF5EFAE139D0E85AF /* AlarmDTO.swift */; };
-		FA29193EA14872510D7EA2BE /* ChatDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C86A824162FA4369863B82 /* ChatDTO.swift */; };
+		F2F75167503BAB2B47635748 /* EditUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFDD885F426CEA20FEE7DF5 /* EditUserInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -83,24 +75,16 @@
 		001AD65A06EB000443FF6F29 /* HundredQAUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQAUseCase.swift; sourceTree = "<group>"; };
 		040CC1A5E98C7C8BF4140123 /* ChatUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUseCase.swift; sourceTree = "<group>"; };
 		0A9F194CEB72F3048B515A33 /* abseil-cpp-binary */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "abseil-cpp-binary"; path = "../../Packages/abseil-cpp-binary"; sourceTree = "<group>"; };
-		0B30A0AB05347FA5E5DAAAAC /* HundredQADTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQADTO.swift; sourceTree = "<group>"; };
 		0C63C39B669AF87E0CB94264 /* FireStoreCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreCollection.swift; sourceTree = "<group>"; };
-		0DF24345773BF8333D02503B /* UserDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
 		196BD8E2FE942D028D0E9F02 /* HundredQAModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQAModel.swift; sourceTree = "<group>"; };
-		1DA2E1207BAF012CA4F9C80F /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		27EF6CCF21DD5D987634CEED /* LogInRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInRepositoryP.swift; sourceTree = "<group>"; };
-		2B8287CCDBCA6DC6CDA03FAC /* CouplePlaceDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplePlaceDto.swift; sourceTree = "<group>"; };
-		2D7E5AABF5EFAE139D0E85AF /* AlarmDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDTO.swift; sourceTree = "<group>"; };
 		2E0A081B42A3B29A14F4E3C2 /* LogInUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInUseCase.swift; sourceTree = "<group>"; };
 		35325580E2FEA2295E143FB0 /* MainUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUseCase.swift; sourceTree = "<group>"; };
 		4A4B36762C65FBE2B7BB9767 /* UserRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryP.swift; sourceTree = "<group>"; };
-		57EDBC236EE9A03355E34FF2 /* ChatUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUserModel.swift; sourceTree = "<group>"; };
 		5E863A14942F244F46373202 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
-		5FFEA0F53A9A4683637C75C8 /* CoupleDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleDTO.swift; sourceTree = "<group>"; };
 		61C7065E3DF378E2161AB8AB /* SharedDataRepoP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataRepoP.swift; sourceTree = "<group>"; };
 		7726B98B6FBED4D36FEE864E /* AlarmUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmUseCase.swift; sourceTree = "<group>"; };
 		7F55A18298BC7DC4D46B5F59 /* SearchedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedModel.swift; sourceTree = "<group>"; };
-		82CEC6B95F0CA585A3D760CD /* CameraModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModel.swift; sourceTree = "<group>"; };
 		8442E4A4F05E97408C37BE61 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		894B83AFC46C58DAB2BA68D7 /* SearchRepoP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepoP.swift; sourceTree = "<group>"; };
 		89B1472E3A5DF10739B699C1 /* ProfileInsertUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInsertUseCase.swift; sourceTree = "<group>"; };
@@ -115,17 +99,18 @@
 		A7E4EC454366DB76C28E4DC5 /* CoupleRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleRepositoryP.swift; sourceTree = "<group>"; };
 		AB2C06C7503C8C78F70FD5A1 /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
 		ACAACC3C2CB0022C32BD9043 /* HundredQARepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQARepositoryP.swift; sourceTree = "<group>"; };
-		B599F966AB704EE7FB0FFCBF /* LogInDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInDTO.swift; sourceTree = "<group>"; };
 		BD15A37E85BAE3A36B2CE72C /* Domain-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Domain-Info.plist"; sourceTree = "<group>"; };
 		C9C53842CDB1211073E221C2 /* ChatRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRepositoryP.swift; sourceTree = "<group>"; };
 		CBFE3A2C84D83D79D1919CB7 /* CouplePlaceRepoP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplePlaceRepoP.swift; sourceTree = "<group>"; };
 		D0B1DB43E4D8D8473A6A26E6 /* MyProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileUseCase.swift; sourceTree = "<group>"; };
 		D4613421B4C8DC90672E113F /* AdmobRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdmobRepositoryP.swift; sourceTree = "<group>"; };
+		D9745210BB0F63EFC6D83D47 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		DFE07D5AF3B40AA42EA86B9B /* AlarmType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmType.swift; sourceTree = "<group>"; };
 		E14787D5AD61FE0CE24046A4 /* EditProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileUseCase.swift; sourceTree = "<group>"; };
 		E34F5885A2BFFEB1E4FE56DE /* AlarmRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmRepositoryP.swift; sourceTree = "<group>"; };
-		E5C86A824162FA4369863B82 /* ChatDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDTO.swift; sourceTree = "<group>"; };
 		E635BFE4F553045820E3F302 /* AccountsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsUseCase.swift; sourceTree = "<group>"; };
+		EBFDD885F426CEA20FEE7DF5 /* EditUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserInfo.swift; sourceTree = "<group>"; };
+		EE64D3EE2112556EBCAE75E9 /* ChatType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatType.swift; sourceTree = "<group>"; };
 		F056F2FD34103E301F1DF2A9 /* CalendarNotificationTriggerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarNotificationTriggerUseCase.swift; sourceTree = "<group>"; };
 		F57FD038A13BFE1815480705 /* DdayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayUseCase.swift; sourceTree = "<group>"; };
 		FAA322BE4C45A4E9DA709289 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
@@ -143,10 +128,9 @@
 				8DCF0A6D8E2E828CF818A042 /* FirebaseAnalytics in Frameworks */,
 				65E05F69D714332549674BE3 /* FirebaseAuth in Frameworks */,
 				62EE1F817CD171BC14D7170F /* GoogleMobileAds in Frameworks */,
-				D45252FEBAB2A546D6030DFA /* MessageKit in Frameworks */,
-				A7DD15EA4D9DE406B9B59863 /* RxSwift in Frameworks */,
-				48E998D65A2D4F29922D9336 /* RxCocoa in Frameworks */,
-				CCB8EC084C27BCC55AEDA359 /* RxRelay in Frameworks */,
+				D45252FEBAB2A546D6030DFA /* RxSwift in Frameworks */,
+				A7DD15EA4D9DE406B9B59863 /* RxCocoa in Frameworks */,
+				48E998D65A2D4F29922D9336 /* RxRelay in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,7 +184,6 @@
 		28B694539E22431DAF52B883 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				952F853329DDCF43AB801024 /* DTO */,
 				6ADC24127FCE61A6B21C43CE /* Extensions */,
 				2A6141DAFE12BBE340098C93 /* Models */,
 				7A428C2905DBE3D70DC3A34C /* Repositories */,
@@ -216,11 +199,11 @@
 				FC45EC21660413E8190B387A /* AccessLevel.swift */,
 				910EC4181380CC5B42B0F9E6 /* AlarmModel.swift */,
 				DFE07D5AF3B40AA42EA86B9B /* AlarmType.swift */,
-				82CEC6B95F0CA585A3D760CD /* CameraModel.swift */,
-				1DA2E1207BAF012CA4F9C80F /* ChatModel.swift */,
-				57EDBC236EE9A03355E34FF2 /* ChatUserModel.swift */,
+				D9745210BB0F63EFC6D83D47 /* ChatMessage.swift */,
+				EE64D3EE2112556EBCAE75E9 /* ChatType.swift */,
 				924760E9D85F97B4DF4FE598 /* CoupleModel.swift */,
 				95E23027AF64511FE98C4DC3 /* CouplePlaceModel.swift */,
+				EBFDD885F426CEA20FEE7DF5 /* EditUserInfo.swift */,
 				196BD8E2FE942D028D0E9F02 /* HundredQAModel.swift */,
 				FB8655E9D07D4DB136CEA6E0 /* LogInModel.swift */,
 				7F55A18298BC7DC4D46B5F59 /* SearchedModel.swift */,
@@ -324,20 +307,6 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
-		952F853329DDCF43AB801024 /* DTO */ = {
-			isa = PBXGroup;
-			children = (
-				2D7E5AABF5EFAE139D0E85AF /* AlarmDTO.swift */,
-				E5C86A824162FA4369863B82 /* ChatDTO.swift */,
-				5FFEA0F53A9A4683637C75C8 /* CoupleDTO.swift */,
-				2B8287CCDBCA6DC6CDA03FAC /* CouplePlaceDto.swift */,
-				0B30A0AB05347FA5E5DAAAAC /* HundredQADTO.swift */,
-				B599F966AB704EE7FB0FFCBF /* LogInDTO.swift */,
-				0DF24345773BF8333D02503B /* UserDTO.swift */,
-			);
-			path = DTO;
-			sourceTree = "<group>";
-		};
 		A7824B835096F8ABAADE4A33 /* LogIn */ = {
 			isa = PBXGroup;
 			children = (
@@ -409,7 +378,6 @@
 				B751AAF3920D8F422D324EAB /* FirebaseAnalytics */,
 				8F5A5FE6DE73C14201D2576F /* FirebaseAuth */,
 				A33583148125E616F2ED3E70 /* GoogleMobileAds */,
-				1E72A186D7F9F2F5E5F73CFD /* MessageKit */,
 				5331D1920D86BD758C6F7C4B /* RxSwift */,
 				C10513CF89F744E9EC2E3052 /* RxCocoa */,
 				97C192DF0D9B27D2C40FDAC2 /* RxRelay */,
@@ -477,24 +445,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F74B4A9FA9DCFF00C16320E2 /* AlarmDTO.swift in Sources */,
-				FA29193EA14872510D7EA2BE /* ChatDTO.swift in Sources */,
-				CB54210C1B83B0A75F039FCF /* CoupleDTO.swift in Sources */,
-				B88F17E1A04410619D7AA8CF /* CouplePlaceDto.swift in Sources */,
-				D1703C6BA9FCD3A5A504C4AD /* HundredQADTO.swift in Sources */,
-				68F20F54535E9867ACDE3E2E /* LogInDTO.swift in Sources */,
-				153B67B770585E8DCD619385 /* UserDTO.swift in Sources */,
 				50134CF812BBDC36F90B4F75 /* Date+.swift in Sources */,
 				2FF00399F6A58C7C85D06394 /* Dictionary+.swift in Sources */,
 				B16514726990710BEDF01C54 /* Encodable+.swift in Sources */,
 				0F0D2237289595FA93F828E9 /* AccessLevel.swift in Sources */,
 				64A7E4C293C7423C0542616D /* AlarmModel.swift in Sources */,
 				B7EF9F8BE765E0FE3C7F4CE4 /* AlarmType.swift in Sources */,
-				C950378E8F6F687B5DB95918 /* CameraModel.swift in Sources */,
-				B03CC6CB5EF2A6C29B750758 /* ChatModel.swift in Sources */,
-				2E760A155CAD0B0D7FD0B9AC /* ChatUserModel.swift in Sources */,
+				77B9687EDBE0C491CA99D269 /* ChatMessage.swift in Sources */,
+				3EC8180FE9C5161122FBFC2F /* ChatType.swift in Sources */,
 				79ECF1D636DAAABDDE7707A5 /* CoupleModel.swift in Sources */,
 				4F91D614990644644BB610C8 /* CouplePlaceModel.swift in Sources */,
+				F2F75167503BAB2B47635748 /* EditUserInfo.swift in Sources */,
 				A0200588D1EF9A2299CA57A4 /* HundredQAModel.swift in Sources */,
 				B9E6CAA11AD02E4D4E279E75 /* LogInModel.swift in Sources */,
 				42F19E778DC160FB499CB706 /* SearchedModel.swift in Sources */,
@@ -859,10 +820,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1E72A186D7F9F2F5E5F73CFD /* MessageKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MessageKit;
-		};
 		5331D1920D86BD758C6F7C4B /* RxSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RxSwift;

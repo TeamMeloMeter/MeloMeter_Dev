@@ -2,7 +2,7 @@
 //  ChatModel.swift
 //  MeloMeter
 //
-//  Created by LTS on 2023/08/07.
+//  Created by Codex on 2025/12/28.
 //
 
 import AVFoundation
@@ -18,13 +18,13 @@ private struct ImageMediaItem: MediaItem {
     var image: UIImage?
     var placeholderImage: UIImage
     var size: CGSize
-    
+
     init(image: UIImage) {
         self.image = image
         size = CGSize(width: 240, height: 240)
         placeholderImage = UIImage()
     }
-    
+
     init(imageURL: URL) {
         url = imageURL
         size = CGSize(width: 240, height: 240)
@@ -35,67 +35,39 @@ private struct ImageMediaItem: MediaItem {
 // MARK: - ChatModel
 
 public struct ChatModel: MessageType {
-    
+
     // MARK: Lifecycle
-    
+
     private init(kind: MessageKind, user: ChatUserModel, messageId: String, date: Date) {
         self.kind = kind
         self.user = user
         self.messageId = messageId
         sentDate = date
     }
-    
+
     public init(text: String, user: ChatUserModel, messageId: String, date: Date) {
         self.init(kind: .text(text), user: user, messageId: messageId, date: date)
     }
-    
+
     public init(image: UIImage, user: ChatUserModel, messageId: String, date: Date) {
         let mediaItem = ImageMediaItem(image: image)
         self.init(kind: .photo(mediaItem), user: user, messageId: messageId, date: date)
     }
-    
+
+    public init(imageURL: URL, user: ChatUserModel, messageId: String, date: Date) {
+        let mediaItem = ImageMediaItem(imageURL: imageURL)
+        self.init(kind: .photo(mediaItem), user: user, messageId: messageId, date: date)
+    }
+
     // MARK: Internal
-    
+
     public var messageId: String
     public var sentDate: Date
     public var kind: MessageKind
-    
-    public var targetText: String?
+
     public var user: ChatUserModel
-    
+
     public var sender: SenderType {
         user
-    }
-    
-    public func toDTO() -> ChatDTO {
-        switch self.kind {
-        case .text(let text):
-            return ChatDTO(
-                chatType: ChatType.text.stringType,
-                contents: text,
-                userId: self.user.senderId,
-                messageId: self.messageId,
-                date: self.sentDate
-            )
-        default:
-            break
-        }
-        return ChatDTO(chatType: ChatType.text.stringType, contents: "", userId: "", messageId: "", date: self.sentDate)
-    }
-    
-    public func toDTO(url: String) -> ChatDTO {
-        switch self.kind {
-        case .photo(_):
-            return ChatDTO(
-                chatType: ChatType.image.stringType,
-                contents: url,
-                userId: self.user.senderId,
-                messageId: self.messageId,
-                date: self.sentDate
-            )
-        default:
-            break
-        }
-        return ChatDTO(chatType: ChatType.image.stringType, contents: "", userId: "", messageId: "", date: self.sentDate)
     }
 }

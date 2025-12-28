@@ -5,7 +5,7 @@
 //  Created by LTS on 2023/08/13.
 //
 
-import UIKit
+import Foundation
 import RxSwift
 import RxRelay
 
@@ -21,13 +21,13 @@ public class ChatUseCase {
     private let userRepository: UserRepositoryP
     private let disposeBag = DisposeBag()
 
-    public var recieveChatMessageService = PublishRelay<[ChatModel]?>()
-    public var recieveMoreChatMessageService = PublishRelay<[ChatModel]?>()
-    public var recieveRealTimeMessageService = PublishRelay<[ChatModel]?>()
+    public var recieveChatMessageService = PublishRelay<[ChatMessage]?>()
+    public var recieveMoreChatMessageService = PublishRelay<[ChatMessage]?>()
+    public var recieveRealTimeMessageService = PublishRelay<[ChatMessage]?>()
     public var recieveMessageId = PublishRelay<String>()
     
     //by seungwan
-    public var recieveChatForSearch = PublishRelay<[ChatModel]?>()
+    public var recieveChatForSearch = PublishRelay<[ChatMessage]?>()
     
     // MARK: Initializers
     public init(chatRepository: ChatRepositoryP,
@@ -41,13 +41,13 @@ public class ChatUseCase {
     
     // MARK: - Methods
     //메세지 전송 서비스
-    public func sendMessageService(chatModel: ChatModel, chatType: ChatType) -> Single<Void> {
+    public func sendMessageService(chatMessage: ChatMessage, chatType: ChatType) -> Single<Void> {
         return Single<Void>.create { [weak self] single in
             guard let self = self else{ return Disposables.create() }
             self.coupleRepository.getCoupleID().subscribe(onSuccess: { coupleID in
                 switch chatType{
                 case .text:
-                    self.chatRepository.addChatMessage(message: chatModel, coupleID: coupleID)
+                    self.chatRepository.addChatMessage(message: chatMessage, coupleID: coupleID)
                         .subscribe(onSuccess: {
                             single(.success(()))
                         },onFailure: { error in
@@ -56,7 +56,7 @@ public class ChatUseCase {
                         }).disposed(by: self.disposeBag)
                 case .image:
                     //레파지토리로 넘기기
-                    self.chatRepository.addImageMessage(chatModel: chatModel, coupleID: coupleID)
+                    self.chatRepository.addImageMessage(chatMessage: chatMessage, coupleID: coupleID)
                         .subscribe(onSuccess: {
                             //데이터베이스 입력성공
                             single(.success(()))
@@ -75,9 +75,6 @@ public class ChatUseCase {
     public func getChatMessageService() {
         self.coupleRepository.getCoupleID().subscribe(onSuccess: { coupleID in
             self.chatRepository.getChatMessage(coupleID: coupleID)
-                .flatMap { DTOArr -> Single<[ChatModel]> in
-                    return self.downloadChatImages(DTOArray: DTOArr)
-                }
                 .bind(to: self.recieveChatMessageService)
                 .disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
@@ -87,9 +84,6 @@ public class ChatUseCase {
     public func getMoreChatMessageService(num: Int) {
         self.coupleRepository.getCoupleID().subscribe(onSuccess: { coupleID in
             self.chatRepository.getMoreChatMessage(num : num, coupleID: coupleID, searchText: nil)
-                .flatMap { DTOArr -> Single<[ChatModel]> in
-                    return self.downloadChatImages(DTOArray: DTOArr)
-                }
                 .bind(to: self.recieveMoreChatMessageService)
                 .disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
@@ -103,51 +97,16 @@ public class ChatUseCase {
             self.coupleRepository.getCoupleID().subscribe(onSuccess: { coupleID in
                 
                 self.chatRepository.getMessageSearch(coupleID: coupleID, searchGText: searchText, num: num)
-                    .flatMap { DTOArr, messageId -> Single<[ChatModel]> in
-                      
-                        self.recieveMessageId.accept(messageId)
-                        return self.downloadChatImages(DTOArray: DTOArr)
-                    }
-                    .bind(to: self.recieveChatForSearch)
+                    .subscribe(onNext: { [weak self] messageArray, messageId in
+                        self?.recieveMessageId.accept(messageId)
+                        self?.recieveChatForSearch.accept(messageArray)
+                    })
                     .disposed(by: self.disposeBag)
                 
                 
             }).disposed(by: disposeBag)
         }
     
-    }
-    
-    
-    
-    public func downloadChatImages(DTOArray: [ChatDTO]) -> Single<[ChatModel]> {
-        return Single.create{ single in
-            var resultChatModelArray: [ChatModel] = []
-            let textTypeArray = DTOArray.filter{ $0.chatType == "text" }.map{ $0.toModel() }
-            resultChatModelArray = textTypeArray
-            let imageTypeArray = DTOArray.filter{ $0.chatType == "image" }
-            if imageTypeArray.isEmpty {
-                single(.success(resultChatModelArray))
-            }
-            for dto in imageTypeArray {
-                self.chatRepository.downloadImage(url: dto.contents ?? "")
-                    .subscribe(onSuccess: { getimage in
-                        guard let getimage = getimage else{ return }
-                        let imageMessageModel = dto.toModel(image: getimage)
-                        resultChatModelArray.append(imageMessageModel)
-                        if resultChatModelArray.count == DTOArray.count {
-                            let result = resultChatModelArray.sorted(by: { $0.sentDate < $1.sentDate })
-                            single(.success(result))
-                            return
-                        }
-                    }, onFailure: { error in
-                        single(.failure(error))
-                        return
-                    })
-                    .disposed(by: self.disposeBag)
-            }
-            
-            return Disposables.create()
-        }
     }
     // 메시지 가져오는 기능 시작
     public func startRealTimeChatMessage() {
@@ -157,30 +116,23 @@ public class ChatUseCase {
                 //실시간 메세지 감시 시작
                 self.chatRepository.getRealTimeChat(coupleID: coupleID)
                 //변경된 값 받아오기
-                self.chatRepository.recieveChatMessage.subscribe(onNext: { [weak self] dtoArr in
-                    guard let dtoArr, let self else{ return }
-                    self.downloadChatImages(DTOArray: dtoArr)
-                        .subscribe(onSuccess: { messageArray in
-                            self.recieveRealTimeMessageService.accept(messageArray)
-                        })
-                        .disposed(by: self.disposeBag)
-                }).disposed(by: self.disposeBag)
+                self.chatRepository.recieveChatMessage
+                    .subscribe(onNext: { [weak self] messageArray in
+                        guard let messageArray else { return }
+                        self?.recieveRealTimeMessageService.accept(messageArray)
+                    })
+                    .disposed(by: self.disposeBag)
             }).disposed(by: disposeBag)
     }
     
-    public func getProfileImage() -> Single<UIImage> {
-        guard let uid = UserDefaults.standard.string(forKey: "otherUid") else{ return Single.just(UIImage(named: "defaultProfileImage")!)}
-            return userRepository.getUserInfo(uid)
+    public func getProfileImage() -> Single<Data?> {
+        guard let uid = UserDefaults.standard.string(forKey: "otherUid") else {
+            return Single.just(nil)
+        }
+        return userRepository.getUserInfo(uid)
             .asSingle()
-            .flatMap{ userInfo -> Single<UIImage> in
-                return self.chatRepository.downloadImage(url: userInfo.profileImage ?? "")
-                    .map{ image in
-                        if let image = image {
-                            return image
-                        } else {
-                            return UIImage(named: "defaultProfileImage")!
-                        }
-                    }
+            .flatMap { userInfo in
+                return self.userRepository.downloadImage(url: userInfo.profileImage ?? "")
             }
     }
     

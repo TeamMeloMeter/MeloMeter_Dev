@@ -9,6 +9,5 @@ import Foundation
 import RxSwift
 
 public protocol AlarmRepositoryP {
-    func getAlarm() -> Observable<[AlarmDTO]>
-    func convertToAlarmDTOArray(from dictionaries: [[String: Any]]) -> [AlarmDTO]
+    func getAlarm() -> Observable<[AlarmModel]>
 }

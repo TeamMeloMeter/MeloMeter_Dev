@@ -9,7 +9,6 @@ import UIKit
 import RxSwift
 import RxRelay
 import Domain
-import Data
 import Core
 
 public class EditProfileVM {
@@ -67,6 +66,9 @@ public class EditProfileVM {
             .subscribe(onNext: { userData in
                 self.editProfileUseCase.getProfileImage(url: userData.profileImage ?? "")
                     .asObservable()
+                    .map { data in
+                        return data.flatMap { UIImage(data: $0) }
+                    }
                     .take(1)
                     .bind(to: output.profileImage)
                     .disposed(by: disposeBag)

@@ -22,9 +22,9 @@ public class AlarmRepository: AlarmRepositoryP {
     }
     
     //실시간으로 추가된 알림 목록 가져오기
-    public func getAlarm() -> Observable<[AlarmDTO]> {
+    public func getAlarm() -> Observable<[AlarmModel]> {
         return self.firebaseService.observer(collection: .Alarm, document: UserDefaults.standard.string(forKey: "uid") ?? "")
-            .map { documentSnapshot -> [AlarmDTO] in
+            .map { documentSnapshot -> [AlarmModel] in
                 
                 if let alarmList = documentSnapshot["alarmList"] as? [[String: Any]],  !alarmList.isEmpty{
                     
@@ -35,16 +35,16 @@ public class AlarmRepository: AlarmRepositoryP {
                             .subscribe(onSuccess: {})
                             .disposed(by: self.disposeBag)
                     }
-                    return self.convertToAlarmDTOArray(from: alarmList)
+                    return self.convertToAlarmModelArray(from: alarmList)
                 } else {
                     return []
                 }
             }
     }
     
-    //딕셔너리로 가져온 데이터 [DTO] 로 변환
-    public func convertToAlarmDTOArray(from dictionaries: [[String: Any]]) -> [AlarmDTO] {
-        var alarmDTOArray: [AlarmDTO] = []
+    // 딕셔너리로 가져온 데이터 [Model] 로 변환
+    private func convertToAlarmModelArray(from dictionaries: [[String: Any]]) -> [AlarmModel] {
+        var alarmModelArray: [AlarmModel] = []
         
         for dictionary in dictionaries {
             if let text = dictionary["text"] as? String,
@@ -52,9 +52,9 @@ public class AlarmRepository: AlarmRepositoryP {
                let type = dictionary["type"] as? String
             {
                 let alarmDTO = AlarmDTO(text: text, date: date, type: type)
-                alarmDTOArray.append(alarmDTO)
+                alarmModelArray.append(alarmDTO.toModel())
             }
         }
-        return alarmDTOArray
+        return alarmModelArray
     }
 }
