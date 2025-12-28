@@ -151,7 +151,9 @@ public class UserRepository: UserRepositoryP {
                         return .none
                     }
                     .asObservable()
-                    .bind(to: self.accessLevelCheck)
+                    .subscribe(onNext: { [weak self] level in
+                        self?.accessLevelCheck.onNext(level)
+                    })
                     .disposed(by: self.disposeBag)
             })
             .disposed(by: self.disposeBag)

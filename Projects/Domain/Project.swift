@@ -23,7 +23,6 @@ let project = Project(
 
         // Rx
         ExternalDependencies.rxSwift,
-        ExternalDependencies.rxCocoa,
         ExternalDependencies.rxRelay
       ],
       settings: .settings(base: [

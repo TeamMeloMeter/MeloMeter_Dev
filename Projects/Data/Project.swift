@@ -23,6 +23,9 @@ let project = Project(
         ExternalDependencies.firebaseFirestoreSwift,
         ExternalDependencies.firebaseStorage,
 
+        // Google Ads
+        ExternalDependencies.googleMobileAds,
+
         // Kakao SDK
         ExternalDependencies.kakaoSDKCommon,
         ExternalDependencies.kakaoSDKAuth,

@@ -7,19 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		25C534647B7B805047B8E0C3 /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = 70FCE2DFE1FFBCB63A6B5C5E /* NMapsMap */; };
-		48D86BE2BFA651781F1958FF /* Reactive+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513653181FB8C720393284CD /* Reactive+.swift */; };
 		51433EF39B4065534A575B80 /* Label+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAB873CEE697BA1A40F01B5 /* Label+.swift */; };
-		51B1D4ED7ECB508C4A97445F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 08580353599BAAE5BB0650E3 /* RxCocoa */; };
 		526DFCB82B863F52069DAE10 /* ColorAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACDF09DB6DCDE8960119CC1 /* ColorAssets.swift */; };
-		82C6C4A8EE89EFA9F61EDE5B /* RxNMFMapViewTouchDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E0B20A6F54F9C4C20B27E2 /* RxNMFMapViewTouchDelegateProxy.swift */; };
 		982CB14D7CB8261E95648EB4 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32224202A6E9A06E255CE766 /* FontManager.swift */; };
 		9DC456AA43334DC5F6560256 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACB8AE721DC4B3D78BED46D /* Constants.swift */; };
 		BA103D00820C8096D4EC1E1E /* ProgressDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443A7FB091B01197CE42CF20 /* ProgressDialogView.swift */; };
 		D746F7D731F4BCD868415304 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA40DA6F7240F5A9285574C /* UIImage+.swift */; };
-		E7494D59CF3A2D7FFFEE3DA2 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0E67EBE19FBB76F3244BB928 /* RxSwift */; };
 		F1BA31E44F1C4F1B1FC25A14 /* TextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F67F733351E8EF7F436503 /* TextField+.swift */; };
-		FEE964490379B67D815F0846 /* KeyboardStatusDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19219E427A3C222FCAB4748 /* KeyboardStatusDetector.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,11 +36,8 @@
 		2B0FA7F85F3573FB522F9478 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32224202A6E9A06E255CE766 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		443A7FB091B01197CE42CF20 /* ProgressDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDialogView.swift; sourceTree = "<group>"; };
-		49E0B20A6F54F9C4C20B27E2 /* RxNMFMapViewTouchDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxNMFMapViewTouchDelegateProxy.swift; sourceTree = "<group>"; };
 		4EA40DA6F7240F5A9285574C /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
-		513653181FB8C720393284CD /* Reactive+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+.swift"; sourceTree = "<group>"; };
 		AFA90FFE58036714C82C3459 /* abseil-cpp-binary */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "abseil-cpp-binary"; path = "../../Packages/abseil-cpp-binary"; sourceTree = "<group>"; };
-		E19219E427A3C222FCAB4748 /* KeyboardStatusDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardStatusDetector.swift; sourceTree = "<group>"; };
 		E2F67F733351E8EF7F436503 /* TextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextField+.swift"; sourceTree = "<group>"; };
 		FACB8AE721DC4B3D78BED46D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -56,24 +47,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7494D59CF3A2D7FFFEE3DA2 /* RxSwift in Frameworks */,
-				51B1D4ED7ECB508C4A97445F /* RxCocoa in Frameworks */,
-				25C534647B7B805047B8E0C3 /* NMapsMap in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		05244D783BE1E986358FFD52 /* Rx */ = {
-			isa = PBXGroup;
-			children = (
-				513653181FB8C720393284CD /* Reactive+.swift */,
-				49E0B20A6F54F9C4C20B27E2 /* RxNMFMapViewTouchDelegateProxy.swift */,
-			);
-			path = Rx;
-			sourceTree = "<group>";
-		};
 		250C62EE12DB56ECEBB473C3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -110,11 +89,9 @@
 		81104ECEC5CD1B0F5111557B /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				05244D783BE1E986358FFD52 /* Rx */,
 				2ACDF09DB6DCDE8960119CC1 /* ColorAssets.swift */,
 				FACB8AE721DC4B3D78BED46D /* Constants.swift */,
 				32224202A6E9A06E255CE766 /* FontManager.swift */,
-				E19219E427A3C222FCAB4748 /* KeyboardStatusDetector.swift */,
 				1CAB873CEE697BA1A40F01B5 /* Label+.swift */,
 				443A7FB091B01197CE42CF20 /* ProgressDialogView.swift */,
 				E2F67F733351E8EF7F436503 /* TextField+.swift */,
@@ -158,9 +135,6 @@
 			);
 			name = Core;
 			packageProductDependencies = (
-				0E67EBE19FBB76F3244BB928 /* RxSwift */,
-				08580353599BAAE5BB0650E3 /* RxCocoa */,
-				70FCE2DFE1FFBCB63A6B5C5E /* NMapsMap */,
 			);
 			productName = Core;
 			productReference = 2B0FA7F85F3573FB522F9478 /* Core.framework */;
@@ -228,11 +202,8 @@
 				526DFCB82B863F52069DAE10 /* ColorAssets.swift in Sources */,
 				9DC456AA43334DC5F6560256 /* Constants.swift in Sources */,
 				982CB14D7CB8261E95648EB4 /* FontManager.swift in Sources */,
-				FEE964490379B67D815F0846 /* KeyboardStatusDetector.swift in Sources */,
 				51433EF39B4065534A575B80 /* Label+.swift in Sources */,
 				BA103D00820C8096D4EC1E1E /* ProgressDialogView.swift in Sources */,
-				48D86BE2BFA651781F1958FF /* Reactive+.swift in Sources */,
-				82C6C4A8EE89EFA9F61EDE5B /* RxNMFMapViewTouchDelegateProxy.swift in Sources */,
 				F1BA31E44F1C4F1B1FC25A14 /* TextField+.swift in Sources */,
 				D746F7D731F4BCD868415304 /* UIImage+.swift in Sources */,
 			);
@@ -565,21 +536,6 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		08580353599BAAE5BB0650E3 /* RxCocoa */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RxCocoa;
-		};
-		0E67EBE19FBB76F3244BB928 /* RxSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RxSwift;
-		};
-		70FCE2DFE1FFBCB63A6B5C5E /* NMapsMap */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = NMapsMap;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 83ADD9484DDC11E75E9F182F /* Project object */;
 }

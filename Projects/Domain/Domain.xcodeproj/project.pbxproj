@@ -19,7 +19,6 @@
 		3F6E4C4DD91796C9967CD487 /* CoupleRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E4EC454366DB76C28E4DC5 /* CoupleRepositoryP.swift */; };
 		42F19E778DC160FB499CB706 /* SearchedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F55A18298BC7DC4D46B5F59 /* SearchedModel.swift */; };
 		47112474843C53E6BEA14C68 /* DdayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57FD038A13BFE1815480705 /* DdayUseCase.swift */; };
-		48E998D65A2D4F29922D9336 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 97C192DF0D9B27D2C40FDAC2 /* RxRelay */; };
 		4CE2C85401D6CA07872DBB0B /* SearchRepoP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894B83AFC46C58DAB2BA68D7 /* SearchRepoP.swift */; };
 		4F91D614990644644BB610C8 /* CouplePlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E23027AF64511FE98C4DC3 /* CouplePlaceModel.swift */; };
 		50134CF812BBDC36F90B4F75 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6AA51DB3244F38D6B3DD2B /* Date+.swift */; };
@@ -30,6 +29,7 @@
 		65E05F69D714332549674BE3 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 8F5A5FE6DE73C14201D2576F /* FirebaseAuth */; };
 		74BE3E28F701912744EBEF84 /* LogInRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EF6CCF21DD5D987634CEED /* LogInRepositoryP.swift */; };
 		77B9687EDBE0C491CA99D269 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9745210BB0F63EFC6D83D47 /* ChatMessage.swift */; };
+		78B9CA664A973F742D29EFFF /* AuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8813D0B211B54BD090BC52D /* AuthUser.swift */; };
 		79ECF1D636DAAABDDE7707A5 /* CoupleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924760E9D85F97B4DF4FE598 /* CoupleModel.swift */; };
 		8DCF0A6D8E2E828CF818A042 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B751AAF3920D8F422D324EAB /* FirebaseAnalytics */; };
 		963D84E044D2AA725F00064D /* AlarmRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34F5885A2BFFEB1E4FE56DE /* AlarmRepositoryP.swift */; };
@@ -39,7 +39,7 @@
 		A0200588D1EF9A2299CA57A4 /* HundredQAModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196BD8E2FE942D028D0E9F02 /* HundredQAModel.swift */; };
 		A26D4E974D61255DAD8B5B49 /* PlaceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DD13A08C2BDFA2B2399281 /* PlaceUseCase.swift */; };
 		A69393942330FD6F9F1CE76C /* LogInUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0A081B42A3B29A14F4E3C2 /* LogInUseCase.swift */; };
-		A7DD15EA4D9DE406B9B59863 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = C10513CF89F744E9EC2E3052 /* RxCocoa */; };
+		A7DD15EA4D9DE406B9B59863 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 97C192DF0D9B27D2C40FDAC2 /* RxRelay */; };
 		AC961C0387469704D7EBB82C /* AccountsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E635BFE4F553045820E3F302 /* AccountsUseCase.swift */; };
 		AE45713F2D1589990054DD46 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA322BE4C45A4E9DA709289 /* UserModel.swift */; };
 		B16514726990710BEDF01C54 /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2C06C7503C8C78F70FD5A1 /* Encodable+.swift */; };
@@ -109,6 +109,7 @@
 		E14787D5AD61FE0CE24046A4 /* EditProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileUseCase.swift; sourceTree = "<group>"; };
 		E34F5885A2BFFEB1E4FE56DE /* AlarmRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmRepositoryP.swift; sourceTree = "<group>"; };
 		E635BFE4F553045820E3F302 /* AccountsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsUseCase.swift; sourceTree = "<group>"; };
+		E8813D0B211B54BD090BC52D /* AuthUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUser.swift; sourceTree = "<group>"; };
 		EBFDD885F426CEA20FEE7DF5 /* EditUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserInfo.swift; sourceTree = "<group>"; };
 		EE64D3EE2112556EBCAE75E9 /* ChatType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatType.swift; sourceTree = "<group>"; };
 		F056F2FD34103E301F1DF2A9 /* CalendarNotificationTriggerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarNotificationTriggerUseCase.swift; sourceTree = "<group>"; };
@@ -129,8 +130,7 @@
 				65E05F69D714332549674BE3 /* FirebaseAuth in Frameworks */,
 				62EE1F817CD171BC14D7170F /* GoogleMobileAds in Frameworks */,
 				D45252FEBAB2A546D6030DFA /* RxSwift in Frameworks */,
-				A7DD15EA4D9DE406B9B59863 /* RxCocoa in Frameworks */,
-				48E998D65A2D4F29922D9336 /* RxRelay in Frameworks */,
+				A7DD15EA4D9DE406B9B59863 /* RxRelay in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,6 +199,7 @@
 				FC45EC21660413E8190B387A /* AccessLevel.swift */,
 				910EC4181380CC5B42B0F9E6 /* AlarmModel.swift */,
 				DFE07D5AF3B40AA42EA86B9B /* AlarmType.swift */,
+				E8813D0B211B54BD090BC52D /* AuthUser.swift */,
 				D9745210BB0F63EFC6D83D47 /* ChatMessage.swift */,
 				EE64D3EE2112556EBCAE75E9 /* ChatType.swift */,
 				924760E9D85F97B4DF4FE598 /* CoupleModel.swift */,
@@ -379,7 +380,6 @@
 				8F5A5FE6DE73C14201D2576F /* FirebaseAuth */,
 				A33583148125E616F2ED3E70 /* GoogleMobileAds */,
 				5331D1920D86BD758C6F7C4B /* RxSwift */,
-				C10513CF89F744E9EC2E3052 /* RxCocoa */,
 				97C192DF0D9B27D2C40FDAC2 /* RxRelay */,
 			);
 			productName = Domain;
@@ -451,6 +451,7 @@
 				0F0D2237289595FA93F828E9 /* AccessLevel.swift in Sources */,
 				64A7E4C293C7423C0542616D /* AlarmModel.swift in Sources */,
 				B7EF9F8BE765E0FE3C7F4CE4 /* AlarmType.swift in Sources */,
+				78B9CA664A973F742D29EFFF /* AuthUser.swift in Sources */,
 				77B9687EDBE0C491CA99D269 /* ChatMessage.swift in Sources */,
 				3EC8180FE9C5161122FBFC2F /* ChatType.swift in Sources */,
 				79ECF1D636DAAABDDE7707A5 /* CoupleModel.swift in Sources */,
@@ -839,10 +840,6 @@
 		B751AAF3920D8F422D324EAB /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FirebaseAnalytics;
-		};
-		C10513CF89F744E9EC2E3052 /* RxCocoa */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RxCocoa;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

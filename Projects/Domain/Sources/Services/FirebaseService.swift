@@ -8,13 +8,12 @@
 import CoreLocation
 import Foundation
 import RxSwift
-import FirebaseAuth
 
 public protocol FirebaseService {
     
     typealias FirebaseData = [String: Any]
     
-    func getCurrentUser() -> Single<User> //로그인된 사용자 정보 get
+    func getCurrentUser() -> Single<AuthUser> //로그인된 사용자 정보 get
     func getDocument(collection: FireStoreCollection, document: String) -> Single<FirebaseData>
     func getDocument(collection: FireStoreCollection, field: String, values: [Any]) -> Single<[FirebaseData]> //필드:값 일치 문서 찾기
     func createDocument(collection: FireStoreCollection, document: String, values: FirebaseData) -> Single<Void> //FireStore 추가

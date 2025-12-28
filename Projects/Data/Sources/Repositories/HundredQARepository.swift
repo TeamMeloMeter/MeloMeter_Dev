@@ -143,7 +143,9 @@ public class HundredQARepository: HundredQARepositoryP {
                 self.firebaseService.observer(collection: .Couples, document: coupleID)
                     .map{ $0.toObject(CoupleDTO.self)?.toModel() ?? CoupleModel(firstDay: Date(), anniversaries: []) }
                     .asObservable()
-                    .bind(to: self.coupleModel)
+                    .subscribe(onNext: { [weak self] model in
+                        self?.coupleModel.onNext(model)
+                    })
                     .disposed(by: self.disposeBag)
             })
             .disposed(by: disposeBag)

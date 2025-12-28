@@ -37,13 +37,13 @@ public final class DefaultFirebaseService: FirebaseService {
         self.database = firestore
     }
     
-    public func getCurrentUser() -> Single<User> {
+    public func getCurrentUser() -> Single<AuthUser> {
         return Single.create { single in
             guard let currentUser = Auth.auth().currentUser else{
                 single(.failure(FireStoreError.unknown))
                 return Disposables.create()
             }
-            single(.success(currentUser))
+            single(.success(AuthUser(uid: currentUser.uid, phoneNumber: currentUser.phoneNumber)))
             
             return Disposables.create()
         }

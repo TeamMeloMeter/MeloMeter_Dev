@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		01E3FC534B55D42F74310E23 /* VersionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A7F6D0879455286DA97A82 /* VersionRepository.swift */; };
-		094BDFA06B7A29F54451D602 /* KakaoSDKShare in Frameworks */ = {isa = PBXBuildFile; productRef = FA5248C9200CC44E5A51660E /* KakaoSDKShare */; };
-		09EEC441253261EA93B44C9B /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = A6487016179045C3C6AD5B3F /* RxCocoa */; };
-		1360B1AF6D79E829CF037504 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AA23FEF28CD4A37B77F7A628 /* KakaoSDKAuth */; };
+		094BDFA06B7A29F54451D602 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AA23FEF28CD4A37B77F7A628 /* KakaoSDKAuth */; };
+		09EEC441253261EA93B44C9B /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FA8912DE3AC2278C3DBF723A /* RxSwift */; };
+		1360B1AF6D79E829CF037504 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 6288C1BD8E0685067A37F9DB /* KakaoSDKCommon */; };
 		1A8F9F64261E11F287D71FEB /* DomainDTOMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFA086523CF76150B125DBF /* DomainDTOMapper.swift */; };
 		2041A5280C802566DBD514B4 /* ChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F410D930534C893189A7F547 /* ChatRepository.swift */; };
-		2B42F951551CB15DF498940F /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 6288C1BD8E0685067A37F9DB /* KakaoSDKCommon */; };
-		2CB3D35BB4CDF015DB479B0D /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FA8912DE3AC2278C3DBF723A /* RxSwift */; };
+		2B42F951551CB15DF498940F /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 1C4A4080174487F240EDDB55 /* GoogleMobileAds */; };
+		2CB3D35BB4CDF015DB479B0D /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = C00F20CC70D27DC69DB9FFB2 /* MessageKit */; };
 		2DE3B8E814BE3C974D79153F /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66E022CC204029EA0F97D3C /* UserRepository.swift */; };
 		2E07A865D4E68029C64E8627 /* LogInRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FAB108F097512C0F76D710 /* LogInRepository.swift */; };
 		307EFC2B5A57BCAE7AE02B03 /* DefaultFirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303B67BED3F21FAE1A64E92B /* DefaultFirebaseService.swift */; };
@@ -26,7 +26,7 @@
 		5E04DBA836AEFD95E86EA015 /* HundredQADTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E475EC326D671E1CCE11C2 /* HundredQADTO.swift */; };
 		5F3BB4D2199A2FB0D06F775E /* UserDefaultsRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DBD7FEC99FDAD04063C786 /* UserDefaultsRepo.swift */; };
 		608B30ECCABFF06FC69B6F1A /* CoupleDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380B50803AF2ACDB488A28ED /* CoupleDTO.swift */; };
-		65A5AB9CA7E736850B0FA0C2 /* KakaoSDKTalk in Frameworks */ = {isa = PBXBuildFile; productRef = F9A2B5D7D880074BC3B510E3 /* KakaoSDKTalk */; };
+		65A5AB9CA7E736850B0FA0C2 /* KakaoSDKTemplate in Frameworks */ = {isa = PBXBuildFile; productRef = E3C3C64D045D495C9F61A62E /* KakaoSDKTemplate */; };
 		7CEF9A6E1AC03CEE9EF9289E /* SearchRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309A1626A40FDDB0A26ABD29 /* SearchRepo.swift */; };
 		7DA5B8FD00C3BDBDD5E6529C /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E2A39772D99934546E229524 /* FirebaseAnalytics */; };
 		811E132B6F39024EB106B257 /* LogInDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236624AC5E8597B137B48CF /* LogInDTO.swift */; };
@@ -35,17 +35,18 @@
 		9B6EA889E48C4918F9214C9B /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 4E35089267AB3928E145EC0C /* FirebaseFirestore */; };
 		9E98AA6626B3F82724C67891 /* WidgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DD44680288A01B01D3FAB8 /* WidgetService.swift */; };
 		A16EDCF5F877AA99881BB0B9 /* AlarmDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD86A229A2B729A25F46D6 /* AlarmDTO.swift */; };
-		A93FE73C523015314ABAB8D1 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = CE7514A0B48CD7A97E5D6C31 /* RxRelay */; };
+		A93FE73C523015314ABAB8D1 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = A6487016179045C3C6AD5B3F /* RxCocoa */; };
 		B64B8CE6B404B84C52C6E746 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 246EE100D7B98EB6C3DCCD1D /* FirebaseAuth */; };
 		B7A091CF76F97ACE5416EA6D /* HundredQARepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD8DACA6105C2798C0CACE7 /* HundredQARepository.swift */; };
 		C12C80A83590E7E29BEE9EDA /* AlarmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9933441B2DC3F6CF85217C /* AlarmRepository.swift */; };
-		C90CE1E0DCD7A07D5B3AD27E /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = C00F20CC70D27DC69DB9FFB2 /* MessageKit */; };
+		C90CE1E0DCD7A07D5B3AD27E /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = DE301C104C6F8CA9DD316DFD /* Alamofire */; };
+		CBE4EF4145C2480877ED0D42 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = CE7514A0B48CD7A97E5D6C31 /* RxRelay */; };
 		D2CAF4AE7659F3DFBBD5416F /* ChatDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C094301076C60A09743CF1 /* ChatDTO.swift */; };
 		D961D4BDA2148CBA05D65202 /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92ADC9FD19D0FA63438622A /* PushNotificationService.swift */; };
 		DEC230844B61C68C3793982D /* KakaoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B438889E116E115396F3F2 /* KakaoService.swift */; };
 		E249268D587A3C72FCF1EC61 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 44C112822347644E2516969B /* FirebaseStorage */; };
-		E6AA50DDCD7B951CB1E4F3F7 /* KakaoSDKTemplate in Frameworks */ = {isa = PBXBuildFile; productRef = E3C3C64D045D495C9F61A62E /* KakaoSDKTemplate */; };
-		E7A6F9F4DAA622863EE0AE20 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = DE301C104C6F8CA9DD316DFD /* Alamofire */; };
+		E6AA50DDCD7B951CB1E4F3F7 /* KakaoSDKShare in Frameworks */ = {isa = PBXBuildFile; productRef = FA5248C9200CC44E5A51660E /* KakaoSDKShare */; };
+		E7A6F9F4DAA622863EE0AE20 /* KakaoSDKTalk in Frameworks */ = {isa = PBXBuildFile; productRef = F9A2B5D7D880074BC3B510E3 /* KakaoSDKTalk */; };
 		F94A245293316813B9043311 /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BFE3B58E11FAC056C5FFC6 /* UserDTO.swift */; };
 /* End PBXBuildFile section */
 
@@ -113,16 +114,17 @@
 				9B6EA889E48C4918F9214C9B /* FirebaseFirestore in Frameworks */,
 				9305EDEDF5B8DFD29ABDB964 /* FirebaseFirestoreSwift in Frameworks */,
 				E249268D587A3C72FCF1EC61 /* FirebaseStorage in Frameworks */,
-				2B42F951551CB15DF498940F /* KakaoSDKCommon in Frameworks */,
-				1360B1AF6D79E829CF037504 /* KakaoSDKAuth in Frameworks */,
-				094BDFA06B7A29F54451D602 /* KakaoSDKShare in Frameworks */,
-				E6AA50DDCD7B951CB1E4F3F7 /* KakaoSDKTemplate in Frameworks */,
-				65A5AB9CA7E736850B0FA0C2 /* KakaoSDKTalk in Frameworks */,
-				E7A6F9F4DAA622863EE0AE20 /* Alamofire in Frameworks */,
-				C90CE1E0DCD7A07D5B3AD27E /* MessageKit in Frameworks */,
-				2CB3D35BB4CDF015DB479B0D /* RxSwift in Frameworks */,
-				09EEC441253261EA93B44C9B /* RxCocoa in Frameworks */,
-				A93FE73C523015314ABAB8D1 /* RxRelay in Frameworks */,
+				2B42F951551CB15DF498940F /* GoogleMobileAds in Frameworks */,
+				1360B1AF6D79E829CF037504 /* KakaoSDKCommon in Frameworks */,
+				094BDFA06B7A29F54451D602 /* KakaoSDKAuth in Frameworks */,
+				E6AA50DDCD7B951CB1E4F3F7 /* KakaoSDKShare in Frameworks */,
+				65A5AB9CA7E736850B0FA0C2 /* KakaoSDKTemplate in Frameworks */,
+				E7A6F9F4DAA622863EE0AE20 /* KakaoSDKTalk in Frameworks */,
+				C90CE1E0DCD7A07D5B3AD27E /* Alamofire in Frameworks */,
+				2CB3D35BB4CDF015DB479B0D /* MessageKit in Frameworks */,
+				09EEC441253261EA93B44C9B /* RxSwift in Frameworks */,
+				A93FE73C523015314ABAB8D1 /* RxCocoa in Frameworks */,
+				CBE4EF4145C2480877ED0D42 /* RxRelay in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +277,7 @@
 				4E35089267AB3928E145EC0C /* FirebaseFirestore */,
 				DE1670186B713F30B6F61EC0 /* FirebaseFirestoreSwift */,
 				44C112822347644E2516969B /* FirebaseStorage */,
+				1C4A4080174487F240EDDB55 /* GoogleMobileAds */,
 				6288C1BD8E0685067A37F9DB /* KakaoSDKCommon */,
 				AA23FEF28CD4A37B77F7A628 /* KakaoSDKAuth */,
 				FA5248C9200CC44E5A51660E /* KakaoSDKShare */,
@@ -705,6 +708,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1C4A4080174487F240EDDB55 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GoogleMobileAds;
+		};
 		246EE100D7B98EB6C3DCCD1D /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FirebaseAuth;

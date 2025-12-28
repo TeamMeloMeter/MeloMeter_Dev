@@ -8,7 +8,6 @@
 import Foundation
 import RxSwift
 import RxRelay
-import RxCocoa
 
 public class DdayUseCase {
     
@@ -53,9 +52,10 @@ public class DdayUseCase {
                 
                 return self.createDdayList(dataArray, firstDay)
             }
-            .asObservable()
-            .asDriver(onErrorJustReturn: [])
-            .drive(self.dDayCellArray)
+            .catchAndReturn([])
+            .subscribe(onNext: { [weak self] list in
+                self?.dDayCellArray.onNext(list)
+            })
             .disposed(by: disposeBag)
     }
     

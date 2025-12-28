@@ -13,11 +13,7 @@ let project = Project(
       deploymentTargets: .iOS("16.0"),
       sources: ["Sources/**"],
       resources: [],
-      dependencies: [
-          ExternalDependencies.rxSwift,
-          ExternalDependencies.rxCocoa,
-          ExternalDependencies.nMapsMap
-      ],
+      dependencies: [],
       settings: .settings(base: [
         "SWIFT_ENABLE_EXPLICIT_MODULES": "NO",
         "CLANG_ENABLE_EXPLICIT_MODULES": "NO"
