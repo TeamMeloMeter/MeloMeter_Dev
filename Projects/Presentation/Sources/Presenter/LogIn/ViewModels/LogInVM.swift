@@ -49,6 +49,7 @@ public class LogInVM {
                 .subscribe(onSuccess: {
                     self.coordinator?.showAuthNumVC(phoneNumber: text)
                 }, onFailure: { error in
+                  print("::: sendNumberService \(error)")
                     self.sendNumRequest.onNext(false)
                 }).disposed(by: disposeBag)
         }).disposed(by: disposeBag)

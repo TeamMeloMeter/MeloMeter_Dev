@@ -7,25 +7,9 @@
 
 import UIKit
 import RxSwift
-
-public enum AccessLevel: String {
-    case none, start, authenticated, coupleCombined, complete
-    
-    var toString: String {
-        switch self {
-        case .start:
-            return "start"
-        case .authenticated:
-            return "authenticated"
-        case .coupleCombined:
-            return "coupleCombined"
-        case .complete:
-            return "complete"
-        default:
-            return "none"
-        }
-    }
-}
+import Data
+import Domain
+import Presentation
 
 final class AppCoordinator: Coordinator {
     
@@ -52,6 +36,41 @@ final class AppCoordinator: Coordinator {
         self.showSplashVC()
     }
     
+}
+
+// MARK: - Flow Routing
+private extension AppCoordinator {
+    func route(for accessLevel: AccessLevel) {
+        switch accessLevel {
+        case .none, .start:
+            connectLogInFlow(accessLevel: false)
+        case .authenticated:
+            connectLogInFlow(accessLevel: true)
+        case .coupleCombined:
+            connectPresetFlow()
+        case .complete:
+            connectTabBarFlow()
+        }
+    }
+    
+    func routeUsingFirestoreState() {
+        firebaseService.getCurrentUser()
+            .flatMap { [unowned self] user in
+                self.firebaseService.getDocument(collection: .Users, document: user.uid)
+            }
+            .subscribe(onSuccess: { [weak self] data in
+                guard let self else { return }
+                let accessLevel = UserDefaultsRepo.shared.persistent(document: data)
+                DispatchQueue.main.async {
+                    self.route(for: accessLevel)
+                }
+            }, onFailure: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.connectLogInFlow(accessLevel: true)
+                }
+            })
+            .disposed(by: disposeBag)
+    }
 }
 
 // MARK: - connectFlow Methods
@@ -104,14 +123,7 @@ extension AppCoordinator: CoordinatorDelegate {
         self.childCoordinators = []
         self.navigationController.viewControllers.removeAll()
         if childCoordinator is LogInCoordinator {
-            //TODO: UserDefaults로 하면안될듯
-            
-            
-            if UserDefaults.standard.string(forKey: "name") != nil {
-                self.connectTabBarFlow()
-            }else {
-                self.connectPresetFlow()
-            }
+            routeUsingFirestoreState()
         } else if childCoordinator is PresetCoordinator {
             self.connectTabBarFlow()
         } else if childCoordinator is TabBarCoordinator {

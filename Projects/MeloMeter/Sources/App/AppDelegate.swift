@@ -14,6 +14,7 @@ import UserNotifications
 import FirebaseAppCheck
 import KakaoSDKCommon
 import GoogleMobileAds
+import Data
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
     

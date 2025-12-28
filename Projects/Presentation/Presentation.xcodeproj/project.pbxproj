@@ -25,7 +25,6 @@
 		220E0E9F2B0B0C00A7FD392C /* DetailNoticeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9231AF7AEDB62316984A3D02 /* DetailNoticeVC.swift */; };
 		23456711C972286C55E6A884 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA0C3406F0DAABDB2FB0F8EF /* LaunchScreen.storyboard */; };
 		2A7987DC195D41CA69D6AA5E /* DetailQnAVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCC9B05567FBE0F5793229A /* DetailQnAVC.swift */; };
-		2DA7DD9536D34B90114B6BBC /* ProfileInsertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCD183DB48CFEF5C1A7A7F6 /* ProfileInsertView.swift */; };
 		2F0272B5BD0AEF33E73B8716 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 0B0361055809E4B5F306DDC1 /* Kingfisher */; };
 		3851D7855DE5B7F0E18E7420 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = BAAA72C054A716CC82A892A4 /* FirebaseAuth */; };
 		39331B2B19AC797CF571FC18 /* DetailEditVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFE41A4B20827CDC200C05 /* DetailEditVM.swift */; };
@@ -220,7 +219,6 @@
 		50A175E60C20F4E55598C869 /* TuistPlists+Presentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistPlists+Presentation.swift"; sourceTree = "<group>"; };
 		517497D2D118F2B9B1C5404F /* HundredQAVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQAVM.swift; sourceTree = "<group>"; };
 		540A3D59BBACE1029F9CECC6 /* ProfileInsertVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInsertVM.swift; sourceTree = "<group>"; };
-		5BCD183DB48CFEF5C1A7A7F6 /* ProfileInsertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInsertView.swift; sourceTree = "<group>"; };
 		5C4E069CE73AB605C95DF6E8 /* CoupleCombineVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleCombineVC.swift; sourceTree = "<group>"; };
 		624B76147C3003E973CE02F6 /* StartVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartVM.swift; sourceTree = "<group>"; };
 		68A35EB01610FC67FFB282C0 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -614,7 +612,6 @@
 				4707EA170AC37D8A03665280 /* AuthNumView.swift */,
 				D072F4A23F3F423C7FC577E7 /* CoupleConnectView.swift */,
 				C5D1D4FEEB35596EDE6046B5 /* PhoneCertifiedView.swift */,
-				5BCD183DB48CFEF5C1A7A7F6 /* ProfileInsertView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1097,7 +1094,6 @@
 				B86B9DCA2B74A9676BDFC68E /* AuthNumView.swift in Sources */,
 				4F77CFAF322A2133E7FE5042 /* CoupleConnectView.swift in Sources */,
 				69DF1860C515EEAB54BD62D8 /* PhoneCertifiedView.swift in Sources */,
-				2DA7DD9536D34B90114B6BBC /* ProfileInsertView.swift in Sources */,
 				951DA54A4684DA9B1D23B97A /* AdmobRepository.swift in Sources */,
 				92BC67B4D0EAC405CDAB5B17 /* MyProfileTableViewCell.swift in Sources */,
 				175217F8EC3F662C9EB21230 /* StartView.swift in Sources */,

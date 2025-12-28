@@ -6,16 +6,17 @@
 //
 
 import Foundation
+import Domain
 
-class UserDefaultsRepo {
-    static let shared = UserDefaultsRepo()
+public class UserDefaultsRepo {
+    public static let shared = UserDefaultsRepo()
 
     private init() {}
     
     
     private let userDefaultsStrings = ["fcmToken", "otherUid", "uid", "phoneNumber","name","coupleID","inviteCode","otherFcmToken","accessLevel","createdAt","birth", "name"]
     
-    func resetAllUserDefaults() {
+    public func resetAllUserDefaults() {
         
         userDefaultsStrings.forEach {
             UserDefaults.standard.set(nil, forKey: $0)
@@ -27,7 +28,7 @@ class UserDefaultsRepo {
     
 
     
-    func persistent(document: [String: Any?]) -> AccessLevel {
+    public func persistent(document: [String: Any?]) -> AccessLevel {
         let userDefaults = UserDefaults.standard
 
             let authenticatedKeys = [
