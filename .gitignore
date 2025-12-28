@@ -5,8 +5,8 @@ private/
 Pods/
 
 # 앱 정보 관련 파일 제외
-MeloMeter/Info.plist
-MeloMeter/GoogleService-Info.plist
+Projects/MeloMeter/Supporting/Info.plist
+Projects/MeloMeter/Resources/GoogleService-Info.plist
 
 # 빌드 관련 캐시 파일 제외
 MeloMeter.xcodeproj/xcuserdata/lts.xcuserdatad/xcschemes/xcschememanagement.plist
@@ -14,3 +14,6 @@ MeloMeter.xcworkspace/xcuserdata/lts.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkp
 MeloMeter.xcworkspace/xcuserdata/lts.xcuserdatad/xcschemes/xcschememanagement.plist
 MeloMeter.xcworkspace/xcuserdata/lts.xcuserdatad/UserInterfaceState.xcuserstate
 .DS_Store
+
+*.xcuserstate
+xcuserdata/

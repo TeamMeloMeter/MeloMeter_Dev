@@ -1,0 +1,76 @@
+//
+//  Date.swift
+//  MeloMeter
+//
+//  Created by 오현택 on 2023/07/14.
+//
+
+import Foundation
+
+extension Date {
+    
+    public enum Format: String {
+        case yearToDay = "yyyy.MM.dd"
+        case yearToHour = "yyyy.MM.dd.hh"
+        case yearToDayHipen = "yyyy-MM-dd"
+        case yearToSecond = "yyyy-MM-dd HH:mm:ss"
+        case timeStamp = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        case hourAndMinute = "HH:mm"
+        case monthAndDate = "M월 d일"
+        case monthAndDate2 = "MM/dd"
+        case chatDate = "a hh:mm"
+        case yearAndMonthAndDate = "YYYY년 M월 d일"
+        case yearAndMonth = "YYYY년 M월"
+    }
+    
+    // MARK: Methods
+    public func toString(type: Format) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone(abbreviation: "KST")
+        formatter.dateFormat = type.rawValue
+        
+        return formatter.string(from: self)
+    }
+    
+    public func toString(format: String) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone(abbreviation: "KST")
+        formatter.dateFormat = format
+
+        return formatter.string(from: self)
+    }
+
+    public static func stringToDate(dateString: String, type: Format) -> Date? {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone(abbreviation: "KST")
+        formatter.dateFormat = type.rawValue
+
+        return formatter.date(from: dateString)
+    }
+    
+    public static func stringToDate(dateString: String, format: String) -> Date? {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone(abbreviation: "KST")
+        formatter.dateFormat = format
+        
+        return formatter.date(from: dateString)
+    }
+}
+
+extension Date {
+    
+    public static func fromStringOrNow(_ string: String, _ type: Format) -> Date {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone(abbreviation: "KST")
+        formatter.dateFormat = type.rawValue
+        if formatter.date(from: string) == nil {
+        }
+        
+        return formatter.date(from: string) ?? Date()
+    }
+}

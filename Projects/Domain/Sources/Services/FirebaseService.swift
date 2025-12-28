@@ -1,0 +1,37 @@
+//
+//  FirestoreService.swift
+//  MeloMeter
+//
+//  Created by 오현택 on 2023/07/07.
+//
+
+import CoreLocation
+import Foundation
+import RxSwift
+
+public protocol FirebaseService {
+    
+    typealias FirebaseData = [String: Any]
+    
+    func getCurrentUser() -> Single<AuthUser> //로그인된 사용자 정보 get
+    func getDocument(collection: FireStoreCollection, document: String) -> Single<FirebaseData>
+    func getDocument(collection: FireStoreCollection, field: String, values: [Any]) -> Single<[FirebaseData]> //필드:값 일치 문서 찾기
+    func createDocument(collection: FireStoreCollection, document: String, values: FirebaseData) -> Single<Void> //FireStore 추가
+    func updateDocument(collection: FireStoreCollection, document: String, values: FirebaseData) -> Single<Void>
+    func updateLocation(document: String, location: CLLocation) -> Single<Void>
+    func deleteDocuments(collections: [(FireStoreCollection, String)]) -> Single<Void>
+    func observer(collection: FireStoreCollection, document: String) -> Observable<FirebaseData>
+    func observeLocation(document: String) -> Observable<CLLocation?>
+    
+    func uploadImage(filePath: String, data: Data) -> Single<String>
+    func downloadImage(urlString: String) -> Single<Data?>
+    func deleteImageFromProfileStorage(imageURL: String) -> Single<Void>
+    func deleteImageFromChatStorage(filePath: [String]) -> Single<Void>
+    func setAccessLevel(_ level: AccessLevel) -> Single<Void>
+    
+    //MARK: SubCollection
+    func createDocToSubcollection(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String ,values: Any) -> Completable
+    func getDocFromSubCollection(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String) -> Single<[FirebaseData]>
+    func deleteDocument(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String, uuid: String) -> Completable
+
+}

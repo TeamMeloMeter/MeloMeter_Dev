@@ -1,0 +1,918 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0365D43FFC0E701AA8850E31 /* TuistStrings+MeloMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADB399EF93F8873769EA3D9 /* TuistStrings+MeloMeter.swift */; };
+		0B67EB144759B05C8612328B /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 9A8EE6877FCA6E2304C7E382 /* FirebaseFirestore */; };
+		1D40594406E3BDFBE6EB064B /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = 9FB635C25E59785B59F3D639 /* RxGesture */; };
+		209277757A1F1DC61D51D154 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 96D0E7E079F7085FC6BB62B9 /* FirebaseRemoteConfig */; };
+		216A360FA9ECFD70AFED45FA /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 9E729E07BF3BDBD4162C09D3 /* RxRelay */; };
+		269FAD295AC0928A2B077957 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DFC4FC88C7ED15A43AD6D68 /* LaunchScreen.storyboard */; };
+		2A597C6EE4D7807519985322 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A433E660365B2D68AE49133C /* AppCoordinator.swift */; };
+		2BA790F22D8BBCA1CA45D00F /* Presentation_Presentation.bundle in Dependencies */ = {isa = PBXBuildFile; fileRef = 23B52BAD50B943111EC6B43D /* Presentation_Presentation.bundle */; };
+		2E572A517BF03228C36A590C /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 825186DCCF36F52EF56B3075 /* RxCocoa */; };
+		2EAD1D9A30E65C5D2234D36B /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AF3BDF85CFFA0CD7D610B7 /* Domain.framework */; };
+		352B588106465037EB871843 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4904CAE445BB3C05B57E8A0B /* AppDelegate.swift */; };
+		37D10686522CF7442639199C /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 336AC2E0AAB2A29FEA086B23 /* Pretendard-ExtraBold.otf */; };
+		387FCF8D096F26E5409BA09C /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 44C606EB827390B09F0EC55D /* Pretendard-Regular.otf */; };
+		38FDDE0BABAE40CFB668F155 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54219782A7247F9F32478A0A /* SceneDelegate.swift */; };
+		3BBC7567A8456758C4AB8429 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9DA7138FA13A66023876CA33 /* Pretendard-Black.otf */; };
+		3D6E27F12FAED5092919F961 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = CA2223C7F299F5D71F541D65 /* FirebaseAnalytics */; };
+		3E71E1E5198D2890E7B22B7A /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = AD5FB18A04D2BA6B46B35065 /* Pretendard-Thin.otf */; };
+		426C3FB59F5AB3EF05F1A0D2 /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BB814EEEF168A068C7E6B56 /* MessageKit */; };
+		45F6879BF3BA3B38F420B6F3 /* TuistFonts+MeloMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E07C740C9F516F914D7B75 /* TuistFonts+MeloMeter.swift */; };
+		4BD05171BAA254BFEDE2CFCF /* Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED0F3A870FF04D0644701D4 /* Data.framework */; };
+		4C64362C962F7E493DA28B53 /* AnyFormatKit in Frameworks */ = {isa = PBXBuildFile; productRef = CEEC0F85D0095A6243F6C80B /* AnyFormatKit */; };
+		53A7E11A791374DDD9FCF021 /* KakaoShareService+KakaoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C727EA8A94AEC342A0FF4A9 /* KakaoShareService+KakaoService.swift */; };
+		56229CAA56755730086F96BD /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D9E574E06B4D61131CA22374 /* RxSwift */; };
+		58362C06AA44114F9D47E26B /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D47AA6FFE43A17ADB6D8CB74 /* Core.framework */; };
+		5A4D6413E032F5B4EF125A6F /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = B9738E7CADFB55F88C8C5F74 /* Pretendard-Light.otf */; };
+		655452E1FD595170D3C7030F /* Shared_Shared.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C07B457D7A2ADFBCD7BC3D7C /* Shared_Shared.bundle */; };
+		65E1A39E434FCF3EE52CD6AB /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 8853AA41EF4DBD41C7219BFC /* Then */; };
+		663233D0D08A8FD3462AB710 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC8A83CC6CB087DADCDC1C56 /* Assets.xcassets */; };
+		6660C57D423155995D26F017 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4D4ABCB3C86C41BED80A15C4 /* FirebaseFirestoreSwift */; };
+		6B58DBC9D3E720C0D072A06E /* KakaoSDKTalk in Frameworks */ = {isa = PBXBuildFile; productRef = 3EC907420061D01611585024 /* KakaoSDKTalk */; };
+		6C8F7E9561BDACC8C982C178 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2E21C7E8DDE2A8BB872EF5D6 /* GoogleService-Info.plist */; };
+		74AC3494ACD038EA79C2148E /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2D8AF163D835AF6766C2A39E /* Pretendard-Bold.otf */; };
+		753841E6A6D7B16FF26EC7DB /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = BFE335108AF964411C4C2F24 /* KakaoSDKUser */; };
+		7BE6E9F6563976CCDD7C3545 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 3848940DEF1A8CBF036DADD9 /* GoogleMobileAds */; };
+		7C9C87067DEB5FBF260D6B36 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 23CD50008381B86F19F94C92 /* KakaoSDKAuth */; };
+		7CF143F3ADCA9393DBA4CAEE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = DC390F53FF5D75DBD55520FF /* Alamofire */; };
+		8264C5711A9A49698BFE4E9B /* Presentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C1287E0EAAB136D7C41480C /* Presentation.framework */; };
+		82978F3F97CF8970B466D8B8 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 585C06E99AE571FE15746559 /* FirebaseStorage */; };
+		8BC7E7AF90D97E3644536DB1 /* TuistAssets+MeloMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A2885D03996E8478B0BB23 /* TuistAssets+MeloMeter.swift */; };
+		8CEA388B129D13BBF73402B8 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = F5589159BDB994DE0D04D04C /* FirebaseAppCheck */; };
+		923225B04FBAE93DC404BE9D /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 4940AF920E4293AE3B3A96BC /* FirebaseCrashlytics */; };
+		99B6EF006E1C2CBF8C056445 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29119AD529F43F7E658FA023 /* SplashVC.swift */; };
+		9A29B3EFD51BB2DDE3492D8F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B24A162E6A1E46411F2740CA /* FirebaseAuth */; };
+		A38A4E196CF9FBB6B370CCB4 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 0FB91D80C522F37D2DF7488E /* FirebaseMessaging */; };
+		A54539746CF6E345C96DB6E1 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBF1081E3FAC89F42CC28DB6 /* Pretendard-SemiBold.otf */; };
+		A7D4DAD59F7A3DABC123AE28 /* AppDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD666629D036696A41934CDC /* AppDependencies.swift */; };
+		B28B6CD69B8E5E0CF0889629 /* GoogleUserMessagingPlatform in Frameworks */ = {isa = PBXBuildFile; productRef = 2C380E467731BF3AC14850F0 /* GoogleUserMessagingPlatform */; };
+		B5AD0F31919DA8E324C00970 /* Presentation_Presentation.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 23B52BAD50B943111EC6B43D /* Presentation_Presentation.bundle */; };
+		B9D1D9847FA041F1050B57C2 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 1EF9D192669DACAB9CD3F35C /* KakaoSDKCommon */; };
+		BBDC233BA30079B7205B0476 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 93C4D6EFF4E159D3E20E2C1E /* Pretendard-ExtraLight.otf */; };
+		C20B64826C10006D3505D9A7 /* KakaoSDKTemplate in Frameworks */ = {isa = PBXBuildFile; productRef = 2F9A4788959D80C294725DEB /* KakaoSDKTemplate */; };
+		C4FE668FE5FAC8B35E2C213B /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = F2046257DF5511B1C4494C94 /* FirebaseDatabase */; };
+		C7766A2E6B53698286F12D3D /* KakaoSDKCert in Frameworks */ = {isa = PBXBuildFile; productRef = 95F7DB6A7041DA1E7A3FB211 /* KakaoSDKCert */; };
+		CC621DB3C760423EEAF27069 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4298CF4F76A99BFEFF5A4892 /* SnapKit */; };
+		CC6B7B3228A41548FB7A5DFD /* TuistBundle+MeloMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71ADE7CD739B2F906A40A312 /* TuistBundle+MeloMeter.swift */; };
+		CFAD1465800371F044B651FF /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = BB01657B0189FEBEE6BD0121 /* Kingfisher */; };
+		DC2EB98B6671511DF5CE27AE /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = D76C51007429CDFDB0E0A273 /* KakaoSDK */; };
+		E1655A318033A6D321D66590 /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = 607BC2125C7A39852B613D98 /* NMapsMap */; };
+		E27724625EEBD75CB1FA5DA9 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = E82F3010FB1FBE1A5AC488F6 /* Pretendard-Medium.otf */; };
+		E692E717CE9920DC38DB16EF /* SplashVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378C38260BBB51FDE14ECD4D /* SplashVM.swift */; };
+		ED5679AF967B9AA0B1369357 /* Shared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05EAE23B51C59AB87E9F1B83 /* Shared.framework */; };
+		EE25D619ACCC7DA91B865E86 /* Shared_Shared.bundle in Dependencies */ = {isa = PBXBuildFile; fileRef = C07B457D7A2ADFBCD7BC3D7C /* Shared_Shared.bundle */; };
+		F0A1AE90E31B8FB4844B9C0A /* TuistPlists+MeloMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3391669DE565E3FBE6B5222 /* TuistPlists+MeloMeter.swift */; };
+		FE9A020B16FDCBC2391B62DB /* KakaoSDKShare in Frameworks */ = {isa = PBXBuildFile; productRef = 88BF902421970DAE201852C5 /* KakaoSDKShare */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		12ED8E2C28FCB8D219055503 /* Dependencies */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstSubfolderSpec = 16;
+			files = (
+				2BA790F22D8BBCA1CA45D00F /* Presentation_Presentation.bundle in Dependencies */,
+				EE25D619ACCC7DA91B865E86 /* Shared_Shared.bundle in Dependencies */,
+			);
+			name = Dependencies;
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		364C06214899276919B123E0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		05EAE23B51C59AB87E9F1B83 /* Shared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Shared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		23B52BAD50B943111EC6B43D /* Presentation_Presentation.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Presentation_Presentation.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		29119AD529F43F7E658FA023 /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
+		2D8AF163D835AF6766C2A39E /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		2E21C7E8DDE2A8BB872EF5D6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		336AC2E0AAB2A29FEA086B23 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		378C38260BBB51FDE14ECD4D /* SplashVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVM.swift; sourceTree = "<group>"; };
+		44C606EB827390B09F0EC55D /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		46A8F30603AD0CDC6B843E9D /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		47452973E57280AD2D6480C0 /* MeloMeter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeloMeter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4904CAE445BB3C05B57E8A0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4C727EA8A94AEC342A0FF4A9 /* KakaoShareService+KakaoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KakaoShareService+KakaoService.swift"; sourceTree = "<group>"; };
+		54219782A7247F9F32478A0A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		71ADE7CD739B2F906A40A312 /* TuistBundle+MeloMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistBundle+MeloMeter.swift"; sourceTree = "<group>"; };
+		73AF3BDF85CFFA0CD7D610B7 /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C1287E0EAAB136D7C41480C /* Presentation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Presentation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C23E7BDAFF1C01DA058FEAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		93C4D6EFF4E159D3E20E2C1E /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		9DA7138FA13A66023876CA33 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
+		A433E660365B2D68AE49133C /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		AD5FB18A04D2BA6B46B35065 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		B9738E7CADFB55F88C8C5F74 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
+		BED0F3A870FF04D0644701D4 /* Data.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Data.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C07B457D7A2ADFBCD7BC3D7C /* Shared_Shared.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Shared_Shared.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7E07C740C9F516F914D7B75 /* TuistFonts+MeloMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistFonts+MeloMeter.swift"; sourceTree = "<group>"; };
+		CC8A83CC6CB087DADCDC1C56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CF39174AD11D80C2070481D1 /* abseil-cpp-binary */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "abseil-cpp-binary"; path = "../../Packages/abseil-cpp-binary"; sourceTree = "<group>"; };
+		D47AA6FFE43A17ADB6D8CB74 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8A2885D03996E8478B0BB23 /* TuistAssets+MeloMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistAssets+MeloMeter.swift"; sourceTree = "<group>"; };
+		DADB399EF93F8873769EA3D9 /* TuistStrings+MeloMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistStrings+MeloMeter.swift"; sourceTree = "<group>"; };
+		E82F3010FB1FBE1A5AC488F6 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		F3391669DE565E3FBE6B5222 /* TuistPlists+MeloMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistPlists+MeloMeter.swift"; sourceTree = "<group>"; };
+		F7D5337F97976B86FB2263DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		FBF1081E3FAC89F42CC28DB6 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		FD666629D036696A41934CDC /* AppDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencies.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		32ADC50792B239861B11B6B8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58362C06AA44114F9D47E26B /* Core.framework in Frameworks */,
+				4BD05171BAA254BFEDE2CFCF /* Data.framework in Frameworks */,
+				2EAD1D9A30E65C5D2234D36B /* Domain.framework in Frameworks */,
+				8264C5711A9A49698BFE4E9B /* Presentation.framework in Frameworks */,
+				ED5679AF967B9AA0B1369357 /* Shared.framework in Frameworks */,
+				3D6E27F12FAED5092919F961 /* FirebaseAnalytics in Frameworks */,
+				9A29B3EFD51BB2DDE3492D8F /* FirebaseAuth in Frameworks */,
+				923225B04FBAE93DC404BE9D /* FirebaseCrashlytics in Frameworks */,
+				8CEA388B129D13BBF73402B8 /* FirebaseAppCheck in Frameworks */,
+				C4FE668FE5FAC8B35E2C213B /* FirebaseDatabase in Frameworks */,
+				0B67EB144759B05C8612328B /* FirebaseFirestore in Frameworks */,
+				6660C57D423155995D26F017 /* FirebaseFirestoreSwift in Frameworks */,
+				A38A4E196CF9FBB6B370CCB4 /* FirebaseMessaging in Frameworks */,
+				209277757A1F1DC61D51D154 /* FirebaseRemoteConfig in Frameworks */,
+				82978F3F97CF8970B466D8B8 /* FirebaseStorage in Frameworks */,
+				7BE6E9F6563976CCDD7C3545 /* GoogleMobileAds in Frameworks */,
+				B28B6CD69B8E5E0CF0889629 /* GoogleUserMessagingPlatform in Frameworks */,
+				DC2EB98B6671511DF5CE27AE /* KakaoSDK in Frameworks */,
+				B9D1D9847FA041F1050B57C2 /* KakaoSDKCommon in Frameworks */,
+				7C9C87067DEB5FBF260D6B36 /* KakaoSDKAuth in Frameworks */,
+				753841E6A6D7B16FF26EC7DB /* KakaoSDKUser in Frameworks */,
+				FE9A020B16FDCBC2391B62DB /* KakaoSDKShare in Frameworks */,
+				C20B64826C10006D3505D9A7 /* KakaoSDKTemplate in Frameworks */,
+				C7766A2E6B53698286F12D3D /* KakaoSDKCert in Frameworks */,
+				6B58DBC9D3E720C0D072A06E /* KakaoSDKTalk in Frameworks */,
+				7CF143F3ADCA9393DBA4CAEE /* Alamofire in Frameworks */,
+				CFAD1465800371F044B651FF /* Kingfisher in Frameworks */,
+				CC621DB3C760423EEAF27069 /* SnapKit in Frameworks */,
+				4C64362C962F7E493DA28B53 /* AnyFormatKit in Frameworks */,
+				426C3FB59F5AB3EF05F1A0D2 /* MessageKit in Frameworks */,
+				E1655A318033A6D321D66590 /* NMapsMap in Frameworks */,
+				65E1A39E434FCF3EE52CD6AB /* Then in Frameworks */,
+				56229CAA56755730086F96BD /* RxSwift in Frameworks */,
+				2E572A517BF03228C36A590C /* RxCocoa in Frameworks */,
+				216A360FA9ECFD70AFED45FA /* RxRelay in Frameworks */,
+				1D40594406E3BDFBE6EB064B /* RxGesture in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0190B249BBF2504BEAFA34B0 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				D8A2885D03996E8478B0BB23 /* TuistAssets+MeloMeter.swift */,
+				71ADE7CD739B2F906A40A312 /* TuistBundle+MeloMeter.swift */,
+				C7E07C740C9F516F914D7B75 /* TuistFonts+MeloMeter.swift */,
+				F3391669DE565E3FBE6B5222 /* TuistPlists+MeloMeter.swift */,
+				DADB399EF93F8873769EA3D9 /* TuistStrings+MeloMeter.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		0E4D3D0AD9927765FC4FBDCE /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				CF39174AD11D80C2070481D1 /* abseil-cpp-binary */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		29786E9FE33F7BD132802C18 = {
+			isa = PBXGroup;
+			children = (
+				E8FF7D01CF3873E5BE3F905E /* Products */,
+				F27AE61561B06CD2373BDEFC /* Project */,
+				0E4D3D0AD9927765FC4FBDCE /* Packages */,
+			);
+			sourceTree = "<group>";
+		};
+		34515FFF42BDD4F10ABA307D /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				F7D5337F97976B86FB2263DB /* Info.plist */,
+			);
+			path = Supporting;
+			sourceTree = "<group>";
+		};
+		34B4FA60C2DD4DEFB111F2F3 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				FD666629D036696A41934CDC /* AppDependencies.swift */,
+				4C727EA8A94AEC342A0FF4A9 /* KakaoShareService+KakaoService.swift */,
+			);
+			path = Dependencies;
+			sourceTree = "<group>";
+		};
+		3A75C2F0937F04BACAC98840 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				F1455BE3713FF8664FA8420E /* App */,
+				34B4FA60C2DD4DEFB111F2F3 /* Dependencies */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		6772820C43213165E296573C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				960CB19F251D89091FF68AA3 /* Font */,
+				9DFC4FC88C7ED15A43AD6D68 /* LaunchScreen.storyboard */,
+				CC8A83CC6CB087DADCDC1C56 /* Assets.xcassets */,
+				2E21C7E8DDE2A8BB872EF5D6 /* GoogleService-Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		960CB19F251D89091FF68AA3 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				9DA7138FA13A66023876CA33 /* Pretendard-Black.otf */,
+				2D8AF163D835AF6766C2A39E /* Pretendard-Bold.otf */,
+				336AC2E0AAB2A29FEA086B23 /* Pretendard-ExtraBold.otf */,
+				93C4D6EFF4E159D3E20E2C1E /* Pretendard-ExtraLight.otf */,
+				B9738E7CADFB55F88C8C5F74 /* Pretendard-Light.otf */,
+				E82F3010FB1FBE1A5AC488F6 /* Pretendard-Medium.otf */,
+				44C606EB827390B09F0EC55D /* Pretendard-Regular.otf */,
+				FBF1081E3FAC89F42CC28DB6 /* Pretendard-SemiBold.otf */,
+				AD5FB18A04D2BA6B46B35065 /* Pretendard-Thin.otf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		D31C0B2DDE7378CBE8284D37 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				29119AD529F43F7E658FA023 /* SplashVC.swift */,
+				378C38260BBB51FDE14ECD4D /* SplashVM.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
+		E8FF7D01CF3873E5BE3F905E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D47AA6FFE43A17ADB6D8CB74 /* Core.framework */,
+				BED0F3A870FF04D0644701D4 /* Data.framework */,
+				73AF3BDF85CFFA0CD7D610B7 /* Domain.framework */,
+				47452973E57280AD2D6480C0 /* MeloMeter.app */,
+				23B52BAD50B943111EC6B43D /* Presentation_Presentation.bundle */,
+				8C1287E0EAAB136D7C41480C /* Presentation.framework */,
+				C07B457D7A2ADFBCD7BC3D7C /* Shared_Shared.bundle */,
+				05EAE23B51C59AB87E9F1B83 /* Shared.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F1455BE3713FF8664FA8420E /* App */ = {
+			isa = PBXGroup;
+			children = (
+				D31C0B2DDE7378CBE8284D37 /* Splash */,
+				A433E660365B2D68AE49133C /* AppCoordinator.swift */,
+				4904CAE445BB3C05B57E8A0B /* AppDelegate.swift */,
+				54219782A7247F9F32478A0A /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		F27AE61561B06CD2373BDEFC /* Project */ = {
+			isa = PBXGroup;
+			children = (
+				FBFFAB949370EE736FD70CE5 /* Derived */,
+				6772820C43213165E296573C /* Resources */,
+				3A75C2F0937F04BACAC98840 /* Sources */,
+				34515FFF42BDD4F10ABA307D /* Supporting */,
+			);
+			name = Project;
+			sourceTree = "<group>";
+		};
+		FBFFAB949370EE736FD70CE5 /* Derived */ = {
+			isa = PBXGroup;
+			children = (
+				0190B249BBF2504BEAFA34B0 /* Sources */,
+			);
+			path = Derived;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7820115E42A62BEF090EA75A /* MeloMeter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D0A1EC9F09D98A5682D907D /* Build configuration list for PBXNativeTarget "MeloMeter" */;
+			buildPhases = (
+				277A6D7BC066FD3E2190D011 /* Sources */,
+				DD5E668A7DAB99FB11AD1488 /* Resources */,
+				32ADC50792B239861B11B6B8 /* Frameworks */,
+				364C06214899276919B123E0 /* Embed Frameworks */,
+				12ED8E2C28FCB8D219055503 /* Dependencies */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MeloMeter;
+			packageProductDependencies = (
+				CA2223C7F299F5D71F541D65 /* FirebaseAnalytics */,
+				B24A162E6A1E46411F2740CA /* FirebaseAuth */,
+				4940AF920E4293AE3B3A96BC /* FirebaseCrashlytics */,
+				F5589159BDB994DE0D04D04C /* FirebaseAppCheck */,
+				F2046257DF5511B1C4494C94 /* FirebaseDatabase */,
+				9A8EE6877FCA6E2304C7E382 /* FirebaseFirestore */,
+				4D4ABCB3C86C41BED80A15C4 /* FirebaseFirestoreSwift */,
+				0FB91D80C522F37D2DF7488E /* FirebaseMessaging */,
+				96D0E7E079F7085FC6BB62B9 /* FirebaseRemoteConfig */,
+				585C06E99AE571FE15746559 /* FirebaseStorage */,
+				3848940DEF1A8CBF036DADD9 /* GoogleMobileAds */,
+				2C380E467731BF3AC14850F0 /* GoogleUserMessagingPlatform */,
+				D76C51007429CDFDB0E0A273 /* KakaoSDK */,
+				1EF9D192669DACAB9CD3F35C /* KakaoSDKCommon */,
+				23CD50008381B86F19F94C92 /* KakaoSDKAuth */,
+				BFE335108AF964411C4C2F24 /* KakaoSDKUser */,
+				88BF902421970DAE201852C5 /* KakaoSDKShare */,
+				2F9A4788959D80C294725DEB /* KakaoSDKTemplate */,
+				95F7DB6A7041DA1E7A3FB211 /* KakaoSDKCert */,
+				3EC907420061D01611585024 /* KakaoSDKTalk */,
+				DC390F53FF5D75DBD55520FF /* Alamofire */,
+				BB01657B0189FEBEE6BD0121 /* Kingfisher */,
+				4298CF4F76A99BFEFF5A4892 /* SnapKit */,
+				CEEC0F85D0095A6243F6C80B /* AnyFormatKit */,
+				6BB814EEEF168A068C7E6B56 /* MessageKit */,
+				607BC2125C7A39852B613D98 /* NMapsMap */,
+				8853AA41EF4DBD41C7219BFC /* Then */,
+				D9E574E06B4D61131CA22374 /* RxSwift */,
+				825186DCCF36F52EF56B3075 /* RxCocoa */,
+				9E729E07BF3BDBD4162C09D3 /* RxRelay */,
+				9FB635C25E59785B59F3D639 /* RxGesture */,
+			);
+			productName = MeloMeter;
+			productReference = 47452973E57280AD2D6480C0 /* MeloMeter.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		28E19227BFE686C09E75EC8C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				ORGANIZATIONNAME = com.teamMeloMeter;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 1E61F67EC61F493A6B608769 /* Build configuration list for PBXProject "MeloMeter" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+				ko,
+			);
+			mainGroup = 29786E9FE33F7BD132802C18;
+			packageReferences = (
+				FEBAD9DE2E447335FAAE35CA /* XCRemoteSwiftPackageReference "Alamofire" */,
+				568CAFA4A40D8BCCC2D56364 /* XCRemoteSwiftPackageReference "MessageKit" */,
+				85CDE938C1D7DBBCA502187A /* XCRemoteSwiftPackageReference "RxSwift" */,
+				544BEF674EDAD1B134A5BAA1 /* XCRemoteSwiftPackageReference "RxGesture" */,
+				74D2B7CA8FA617582DBA370F /* XCRemoteSwiftPackageReference "SnapKit" */,
+				8EAD0745933875AEA69B7AF1 /* XCRemoteSwiftPackageReference "Then" */,
+				022CBAF3007B2C3CBBCEC1EB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				0B809F956FDAFE4E93A7644F /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				B5A39F9CA20317C8AB9DEA04 /* XCRemoteSwiftPackageReference "swift-package-manager-google-user-messaging-platform" */,
+				EE260503ACD7633221E32F6F /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				7DE442EBBDE1BC675052E528 /* XCRemoteSwiftPackageReference "AnyFormatKit" */,
+				2499D7B9E897AED2A6D9CFD8 /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */,
+				BA7769EFF4BB486745BBE5D6 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				B2A89FE580AD08BFBB8BC2E7 /* XCLocalSwiftPackageReference "../../Packages/abseil-cpp-binary" */,
+			);
+			productRefGroup = E8FF7D01CF3873E5BE3F905E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7820115E42A62BEF090EA75A /* MeloMeter */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DD5E668A7DAB99FB11AD1488 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				663233D0D08A8FD3462AB710 /* Assets.xcassets in Resources */,
+				269FAD295AC0928A2B077957 /* LaunchScreen.storyboard in Resources */,
+				3BBC7567A8456758C4AB8429 /* Pretendard-Black.otf in Resources */,
+				74AC3494ACD038EA79C2148E /* Pretendard-Bold.otf in Resources */,
+				37D10686522CF7442639199C /* Pretendard-ExtraBold.otf in Resources */,
+				BBDC233BA30079B7205B0476 /* Pretendard-ExtraLight.otf in Resources */,
+				5A4D6413E032F5B4EF125A6F /* Pretendard-Light.otf in Resources */,
+				E27724625EEBD75CB1FA5DA9 /* Pretendard-Medium.otf in Resources */,
+				387FCF8D096F26E5409BA09C /* Pretendard-Regular.otf in Resources */,
+				A54539746CF6E345C96DB6E1 /* Pretendard-SemiBold.otf in Resources */,
+				3E71E1E5198D2890E7B22B7A /* Pretendard-Thin.otf in Resources */,
+				6C8F7E9561BDACC8C982C178 /* GoogleService-Info.plist in Resources */,
+				B5AD0F31919DA8E324C00970 /* Presentation_Presentation.bundle in Resources */,
+				655452E1FD595170D3C7030F /* Shared_Shared.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		277A6D7BC066FD3E2190D011 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BC7E7AF90D97E3644536DB1 /* TuistAssets+MeloMeter.swift in Sources */,
+				CC6B7B3228A41548FB7A5DFD /* TuistBundle+MeloMeter.swift in Sources */,
+				45F6879BF3BA3B38F420B6F3 /* TuistFonts+MeloMeter.swift in Sources */,
+				F0A1AE90E31B8FB4844B9C0A /* TuistPlists+MeloMeter.swift in Sources */,
+				0365D43FFC0E701AA8850E31 /* TuistStrings+MeloMeter.swift in Sources */,
+				2A597C6EE4D7807519985322 /* AppCoordinator.swift in Sources */,
+				352B588106465037EB871843 /* AppDelegate.swift in Sources */,
+				38FDDE0BABAE40CFB668F155 /* SceneDelegate.swift in Sources */,
+				99B6EF006E1C2CBF8C056445 /* SplashVC.swift in Sources */,
+				E692E717CE9920DC38DB16EF /* SplashVM.swift in Sources */,
+				A7D4DAD59F7A3DABC123AE28 /* AppDependencies.swift in Sources */,
+				53A7E11A791374DDD9FCF021 /* KakaoShareService+KakaoService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		9DFC4FC88C7ED15A43AD6D68 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8C23E7BDAFF1C01DA058FEAA /* Base */,
+				46A8F30603AD0CDC6B843E9D /* ko */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0512488425BB09827902944E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3379E13FC040CF7DD5DE370F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_EXPLICIT_MODULES = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Supporting/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.teamMeloMeter.-";
+				PRODUCT_NAME = MeloMeter;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		7CF87D951990CF62984DACBE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AF746811DAB9214B831D48D1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_EXPLICIT_MODULES = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Supporting/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.teamMeloMeter.-";
+				PRODUCT_NAME = MeloMeter;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
+					"$(inherited)",
+					DEBUG,
+				);
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1E61F67EC61F493A6B608769 /* Build configuration list for PBXProject "MeloMeter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CF87D951990CF62984DACBE /* Debug */,
+				0512488425BB09827902944E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5D0A1EC9F09D98A5682D907D /* Build configuration list for PBXNativeTarget "MeloMeter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF746811DAB9214B831D48D1 /* Debug */,
+				3379E13FC040CF7DD5DE370F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		B2A89FE580AD08BFBB8BC2E7 /* XCLocalSwiftPackageReference "../../Packages/abseil-cpp-binary" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../Packages/abseil-cpp-binary";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		022CBAF3007B2C3CBBCEC1EB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.28.0;
+			};
+		};
+		0B809F956FDAFE4E93A7644F /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.12.0;
+			};
+		};
+		2499D7B9E897AED2A6D9CFD8 /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/navermaps/SPM-NMapsMap.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.23.0;
+			};
+		};
+		544BEF674EDAD1B134A5BAA1 /* XCRemoteSwiftPackageReference "RxGesture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.4;
+			};
+		};
+		568CAFA4A40D8BCCC2D56364 /* XCRemoteSwiftPackageReference "MessageKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MessageKit/MessageKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+		74D2B7CA8FA617582DBA370F /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		7DE442EBBDE1BC675052E528 /* XCRemoteSwiftPackageReference "AnyFormatKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/luximetr/AnyFormatKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.2;
+			};
+		};
+		85CDE938C1D7DBBCA502187A /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.9.1;
+			};
+		};
+		8EAD0745933875AEA69B7AF1 /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+		B5A39F9CA20317C8AB9DEA04 /* XCRemoteSwiftPackageReference "swift-package-manager-google-user-messaging-platform" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-user-messaging-platform.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.0;
+			};
+		};
+		BA7769EFF4BB486745BBE5D6 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.6.1;
+			};
+		};
+		EE260503ACD7633221E32F6F /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.25.0;
+			};
+		};
+		FEBAD9DE2E447335FAAE35CA /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0FB91D80C522F37D2DF7488E /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseMessaging;
+		};
+		1EF9D192669DACAB9CD3F35C /* KakaoSDKCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KakaoSDKCommon;
+		};
+		23CD50008381B86F19F94C92 /* KakaoSDKAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KakaoSDKAuth;
+		};
+		2C380E467731BF3AC14850F0 /* GoogleUserMessagingPlatform */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GoogleUserMessagingPlatform;
+		};
+		2F9A4788959D80C294725DEB /* KakaoSDKTemplate */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KakaoSDKTemplate;
+		};
+		3848940DEF1A8CBF036DADD9 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GoogleMobileAds;
+		};
+		3EC907420061D01611585024 /* KakaoSDKTalk */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KakaoSDKTalk;
+		};
+		4298CF4F76A99BFEFF5A4892 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SnapKit;
+		};
+		4940AF920E4293AE3B3A96BC /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseCrashlytics;
+		};
+		4D4ABCB3C86C41BED80A15C4 /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseFirestoreSwift;
+		};
+		585C06E99AE571FE15746559 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseStorage;
+		};
+		607BC2125C7A39852B613D98 /* NMapsMap */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NMapsMap;
+		};
+		6BB814EEEF168A068C7E6B56 /* MessageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MessageKit;
+		};
+		825186DCCF36F52EF56B3075 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RxCocoa;
+		};
+		8853AA41EF4DBD41C7219BFC /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Then;
+		};
+		88BF902421970DAE201852C5 /* KakaoSDKShare */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KakaoSDKShare;
+		};
+		95F7DB6A7041DA1E7A3FB211 /* KakaoSDKCert */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KakaoSDKCert;
+		};
+		96D0E7E079F7085FC6BB62B9 /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseRemoteConfig;
+		};
+		9A8EE6877FCA6E2304C7E382 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseFirestore;
+		};
+		9E729E07BF3BDBD4162C09D3 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RxRelay;
+		};
+		9FB635C25E59785B59F3D639 /* RxGesture */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RxGesture;
+		};
+		B24A162E6A1E46411F2740CA /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseAuth;
+		};
+		BB01657B0189FEBEE6BD0121 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Kingfisher;
+		};
+		BFE335108AF964411C4C2F24 /* KakaoSDKUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KakaoSDKUser;
+		};
+		CA2223C7F299F5D71F541D65 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseAnalytics;
+		};
+		CEEC0F85D0095A6243F6C80B /* AnyFormatKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AnyFormatKit;
+		};
+		D76C51007429CDFDB0E0A273 /* KakaoSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KakaoSDK;
+		};
+		D9E574E06B4D61131CA22374 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RxSwift;
+		};
+		DC390F53FF5D75DBD55520FF /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Alamofire;
+		};
+		F2046257DF5511B1C4494C94 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseDatabase;
+		};
+		F5589159BDB994DE0D04D04C /* FirebaseAppCheck */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseAppCheck;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 28E19227BFE686C09E75EC8C /* Project object */;
+}
