@@ -48,8 +48,11 @@ public class EditProfileVC: UIViewController {
                         case .get:
                             self.showAlbum()
                         case .delete:
-                            self.profileImageView.image = UIImage(named: "defaultProfileImage")
-                            self.selectImage.accept(UIImage(named: "defaultProfileImage")!)
+                            let defaultImage = UIImage(named: "defaultProfileImage")
+                            self.profileImageView.image = defaultImage
+                            if let defaultImage = defaultImage {
+                                self.selectImage.accept(defaultImage)
+                            }
                         case .cancel:
                             break
                         }
@@ -66,7 +69,10 @@ public class EditProfileVC: UIViewController {
             backBtnTapEvent: self.backBarButton.rx.tap
                 .map({ _ in })
                 .asObservable(),
-            changedProfileImage: self.selectImage.map { $0.jpegData(compressionQuality: 1)! }
+            changedProfileImage: self.selectImage
+                .compactMap { image in
+                    image.jpegData(compressionQuality: 1) ?? image.pngData()
+                }
                 .asObservable(),
             nameTapEvent: self.nameView.rx.tapGesture().when(.ended)
                 .map({ _ in })
