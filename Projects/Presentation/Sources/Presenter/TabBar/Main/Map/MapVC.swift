@@ -1253,12 +1253,13 @@ final class CalendarSheetVC: UIViewController, UICalendarSelectionSingleDateDele
         configureCloseButton()
         view.addSubview(closeButton)
         NSLayoutConstraint.activate([
-            closeButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12),
+            closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+            closeButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            closeButton.heightAnchor.constraint(equalToConstant: 34),
 
             calendarView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             calendarView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            calendarView.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 8),
+            calendarView.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 4),
             calendarView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])
         calendarView.selectionBehavior = UICalendarSelectionSingleDate(delegate: self)
