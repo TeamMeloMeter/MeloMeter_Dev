@@ -32,7 +32,7 @@ public class LogInVM {
     public var sendNumRequest = PublishSubject<Bool>()
     public var logInRequest = PublishSubject<Bool>()
     public var myCode = PublishSubject<String>()
-    public var combineRequest = PublishSubject<Bool>()
+    public var combineRequest = PublishSubject<String>()
     public var timerString = PublishSubject<String>()
     public var timerDisposed = PublishSubject<Bool>()
     
@@ -111,7 +111,8 @@ public class LogInVM {
                 .subscribe(onSuccess: {
                     self.coordinator?.finish()
                 }, onFailure: { error in
-                    self.combineRequest.onNext(false)
+                    let message = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+                    self.combineRequest.onNext(message)
                 }).disposed(by: disposeBag)
         }).disposed(by: disposeBag)
         

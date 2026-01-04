@@ -20,9 +20,11 @@ public final class LocationService: NSObject {
     
     private var authorizationStatus: BehaviorRelay<CLAuthorizationStatus>
     private var currentLocation = PublishSubject<CLLocation>()
+    private let uploadInterval: TimeInterval = 600
+    private var lastUploadAt: Date?
     
     private override init() {
-        self.locationManager.distanceFilter = CLLocationDistance(1)
+        self.locationManager.distanceFilter = CLLocationDistance(3)
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.allowsBackgroundLocationUpdates = true
         self.locationManager.requestAlwaysAuthorization()
@@ -91,6 +93,11 @@ extension LocationService: CLLocationManagerDelegate {
         
         self.currentLocation.onNext(lastLocation)
         guard let firebaseService else { return }
+        let now = Date()
+        if let lastUploadAt, now.timeIntervalSince(lastUploadAt) < uploadInterval {
+            return
+        }
+        lastUploadAt = now
         if let uid = UserDefaults.standard.string(forKey: "uid") {
             firebaseService.updateLocation(document: uid, location: lastLocation)
             .subscribe(onSuccess: {

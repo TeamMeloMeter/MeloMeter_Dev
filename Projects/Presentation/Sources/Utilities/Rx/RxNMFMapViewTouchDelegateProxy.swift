@@ -25,22 +25,37 @@ final class RxNMFMapViewTouchDelegateProxy:
     }
 
     private let tapSubject = PublishSubject<NMGLatLng>()
+    private let longTapSubject = PublishSubject<NMGLatLng>()
 
-    func mapView(_ mapView: NMFMapView, didTap mapPoint: NMGLatLng) {
-        tapSubject.onNext(mapPoint)
+    func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+        tapSubject.onNext(latlng)
+    }
+
+    func mapView(_ mapView: NMFMapView, didLongTapMap latlng: NMGLatLng, point: CGPoint) {
+        longTapSubject.onNext(latlng)
     }
 
     var tapEvent: Observable<NMGLatLng> {
         return tapSubject.asObservable()
     }
 
+    var longTapEvent: Observable<NMGLatLng> {
+        return longTapSubject.asObservable()
+    }
+
     deinit {
         tapSubject.onCompleted()
+        longTapSubject.onCompleted()
     }
 }
 public extension Reactive where Base: NMFMapView {
     public var tap: Observable<NMGLatLng> {
         let proxy = RxNMFMapViewTouchDelegateProxy.proxy(for: base)
         return proxy.tapEvent
+    }
+
+    public var longTap: Observable<NMGLatLng> {
+        let proxy = RxNMFMapViewTouchDelegateProxy.proxy(for: base)
+        return proxy.longTapEvent
     }
 }

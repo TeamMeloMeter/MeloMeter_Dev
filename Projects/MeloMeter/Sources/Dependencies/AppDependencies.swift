@@ -55,4 +55,8 @@ final class AppDependencies: PresentationDependencyProviding {
     func makeCouplePlaceRepository() -> CouplePlaceRepoP {
         return CouplePlaceRepo(firebaseService: firebaseService)
     }
+
+    func makeDatePlanRepository() -> DatePlanRepoP {
+        return DatePlanRepo(firebaseService: firebaseService)
+    }
 }

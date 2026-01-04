@@ -93,7 +93,7 @@ public class MainUseCase {
             .subscribe(onNext: { [weak self] userInfo in
                 guard let self else {return}
                 guard let userInfo, let otherUid = userInfo.otherUid else {
-                    self.updatedLocation.accept(nil)
+                    self.updatedOtherLocation.accept(nil)
                     return }
                 self.firebaseService.observeLocation(document: otherUid)
                     .catchAndReturn(nil)

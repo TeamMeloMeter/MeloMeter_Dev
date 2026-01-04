@@ -34,3 +34,40 @@ public final class PlaceUseCaseImpl: PlaceUseCase {
     
     
 }
+
+public protocol DatePlanUseCase {
+    func fetchAll() -> Single<[DatePlanModel]>
+    func observePlans() -> Observable<[DatePlanModel]>
+    func savePlan(model: DatePlanModel) -> Completable
+    func deletePlan(uuid: String) -> Completable
+}
+
+public final class DatePlanUseCaseImpl: DatePlanUseCase {
+    private let repository: DatePlanRepoP
+
+    public init(repository: DatePlanRepoP) {
+        self.repository = repository
+    }
+
+    public func fetchAll() -> Single<[DatePlanModel]> {
+        return repository.fetchAllPlans()
+            .map { optionalModels in
+                optionalModels.compactMap { $0 }
+            }
+    }
+
+    public func observePlans() -> Observable<[DatePlanModel]> {
+        return repository.observePlans()
+            .map { optionalModels in
+                optionalModels.compactMap { $0 }
+            }
+    }
+
+    public func savePlan(model: DatePlanModel) -> Completable {
+        return repository.savePlan(model: model)
+    }
+
+    public func deletePlan(uuid: String) -> Completable {
+        return repository.deletePlan(uuid: uuid)
+    }
+}

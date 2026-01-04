@@ -18,10 +18,31 @@ public final class MyProfileCoordinator: Coordinator {
     public init(_ navigationController: UINavigationController, dependencies: PresentationDependencyProviding) {
         let appearance = UINavigationBarAppearance()
        
-        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .white
+        appearance.shadowColor = .clear
+        if let backImage = UIImage(named: "backIcon")?.withRenderingMode(.alwaysOriginal) {
+            appearance.setBackIndicatorImage(backImage, transitionMaskImage: backImage)
+            let backButtonAppearance = UIBarButtonItemAppearance()
+            backButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.clear]
+            backButtonAppearance.highlighted.titleTextAttributes = [.foregroundColor: UIColor.clear]
+            backButtonAppearance.focused.titleTextAttributes = [.foregroundColor: UIColor.clear]
+            backButtonAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.clear]
+            appearance.backButtonAppearance = backButtonAppearance
+        }
         appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: FontManager.shared.medium(ofSize: 18)]
         
         navigationController.navigationBar.standardAppearance = appearance
+        navigationController.navigationBar.scrollEdgeAppearance = appearance
+        navigationController.navigationBar.compactAppearance = appearance
+        if #available(iOS 16.0, *) {
+            navigationController.navigationBar.compactScrollEdgeAppearance = appearance
+        }
+        navigationController.navigationBar.isTranslucent = false
+        if let backImage = UIImage(named: "backIcon")?.withRenderingMode(.alwaysOriginal) {
+            navigationController.navigationBar.backIndicatorImage = backImage
+            navigationController.navigationBar.backIndicatorTransitionMaskImage = backImage
+        }
+        navigationController.navigationBar.tintColor = .gray1
         self.navigationController = navigationController
         self.childCoordinators = []
         self.dependencies = dependencies

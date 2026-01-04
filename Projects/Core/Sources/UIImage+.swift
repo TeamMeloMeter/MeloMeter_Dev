@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UIImage {
+public extension UIImage {
     func normalizedImage() -> UIImage? {
         let format = UIGraphicsImageRendererFormat()
         format.scale = self.scale
@@ -18,5 +18,16 @@ extension UIImage {
             self.draw(in: CGRect(origin: .zero, size: self.size))
         }
         return renderedImage
+    }
+
+    func grayscaleImage() -> UIImage? {
+        guard let ciImage = CIImage(image: self) else { return nil }
+        guard let filter = CIFilter(name: "CIColorControls") else { return nil }
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(0.0, forKey: kCIInputSaturationKey)
+        guard let outputImage = filter.outputImage else { return nil }
+        let context = CIContext()
+        guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else { return nil }
+        return UIImage(cgImage: cgImage, scale: scale, orientation: imageOrientation)
     }
 }

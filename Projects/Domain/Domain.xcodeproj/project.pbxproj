@@ -33,6 +33,7 @@
 		79ECF1D636DAAABDDE7707A5 /* CoupleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924760E9D85F97B4DF4FE598 /* CoupleModel.swift */; };
 		8DCF0A6D8E2E828CF818A042 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B751AAF3920D8F422D324EAB /* FirebaseAnalytics */; };
 		963D84E044D2AA725F00064D /* AlarmRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34F5885A2BFFEB1E4FE56DE /* AlarmRepositoryP.swift */; };
+		9BB9C919E68BB84168E2C040 /* CombineCoupleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1BF81E173AA1E4851650BD /* CombineCoupleError.swift */; };
 		9D8F4A645248AA09FD044589 /* UserRepositoryP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4B36762C65FBE2B7BB9767 /* UserRepositoryP.swift */; };
 		9E2B55377F1BE6DFCBFCFEF9 /* EditProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14787D5AD61FE0CE24046A4 /* EditProfileUseCase.swift */; };
 		9ECC9A25329ED9498478F6B4 /* MainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35325580E2FEA2295E143FB0 /* MainUseCase.swift */; };
@@ -75,6 +76,7 @@
 		001AD65A06EB000443FF6F29 /* HundredQAUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQAUseCase.swift; sourceTree = "<group>"; };
 		040CC1A5E98C7C8BF4140123 /* ChatUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUseCase.swift; sourceTree = "<group>"; };
 		0A9F194CEB72F3048B515A33 /* abseil-cpp-binary */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "abseil-cpp-binary"; path = "../../Packages/abseil-cpp-binary"; sourceTree = "<group>"; };
+		0C1BF81E173AA1E4851650BD /* CombineCoupleError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineCoupleError.swift; sourceTree = "<group>"; };
 		0C63C39B669AF87E0CB94264 /* FireStoreCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreCollection.swift; sourceTree = "<group>"; };
 		196BD8E2FE942D028D0E9F02 /* HundredQAModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQAModel.swift; sourceTree = "<group>"; };
 		27EF6CCF21DD5D987634CEED /* LogInRepositoryP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInRepositoryP.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 		A7824B835096F8ABAADE4A33 /* LogIn */ = {
 			isa = PBXGroup;
 			children = (
+				0C1BF81E173AA1E4851650BD /* CombineCoupleError.swift */,
 				2E0A081B42A3B29A14F4E3C2 /* LogInUseCase.swift */,
 			);
 			path = LogIn;
@@ -480,6 +483,7 @@
 				5442587ACBF81F0DEEB8138F /* CalendarNotificationTriggerUseCase.swift in Sources */,
 				0C26926EEEC145E0F8E62A59 /* ChatUseCase.swift in Sources */,
 				EE0362C2953C71ED85C38BDE /* HundredQAUseCase.swift in Sources */,
+				9BB9C919E68BB84168E2C040 /* CombineCoupleError.swift in Sources */,
 				A69393942330FD6F9F1CE76C /* LogInUseCase.swift in Sources */,
 				9ECC9A25329ED9498478F6B4 /* MainUseCase.swift in Sources */,
 				AC961C0387469704D7EBB82C /* AccountsUseCase.swift in Sources */,

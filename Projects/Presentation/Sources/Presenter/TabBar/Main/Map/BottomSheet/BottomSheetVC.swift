@@ -125,6 +125,16 @@ public class BottomSheetVC: UIViewController {
         }
         view.bringSubviewToFront(grabbar)
     }
+
+    public func setRecordCreationView(pickedModel: SearchedModel, memo: String) {
+        viewModel.pickedModel.accept(pickedModel)
+        largeView.largeLocationTF.rx.text.onNext(pickedModel.title)
+        largeView.largeMemoTF.rx.text.onNext(memo)
+        largeView.largeMemoTF.sendActions(for: .editingChanged)
+        largeView.largeLocationTF.sendActions(for: .editingChanged)
+        categoryTapped.onNext(categoryIndex["기타"])
+        setLargeBottomSheet()
+    }
     
     public func setBindings() {
         

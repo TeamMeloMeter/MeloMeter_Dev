@@ -11,3 +11,10 @@ public protocol CouplePlaceRepoP {
     func getAllPlaces() -> Single<[CouplePlaceModel?]>
     func delPlace(uuid: String) -> Completable
 }
+
+public protocol DatePlanRepoP {
+    func fetchAllPlans() -> Single<[DatePlanModel?]>
+    func observePlans() -> Observable<[DatePlanModel?]>
+    func savePlan(model: DatePlanModel) -> Completable
+    func deletePlan(uuid: String) -> Completable
+}

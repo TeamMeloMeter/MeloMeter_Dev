@@ -1789,6 +1789,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "멜로미터";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSCameraUsageDescription = "프로필 사진 촬영";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Bluetooth is used to match nearby couples.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Bluetooth is used to match nearby couples.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 정보를 항상 수집합니다. 앱을 원활하게 이용하기 위해서 위치 권한을 '항상 허용'으로 설정해주세요.";
 				INFOPLIST_KEY_NSLocationUsageDescription = "위치 정보를 수집하기 위해 권한이 필요합니다. 위치 정보는 커플 위치 공유 기능을 이용하는데 필요하며, 더욱 정확한 위치 정보를 제공할 수 있습니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "앱을 사용하는 동안 위치 정보를 수집합니다. 위치 정보는 커플 위치 공유 기능을 이용하는데 필요하며, 더욱 정확한 위치 정보를 제공할 수 있습니다.";
@@ -1834,6 +1836,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "멜로미터";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSCameraUsageDescription = "프로필 사진 촬영";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Bluetooth is used to match nearby couples.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Bluetooth is used to match nearby couples.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 정보를 항상 수집합니다. 앱을 원활하게 이용하기 위해서 위치 권한을 '항상 허용'으로 설정해주세요.";
 				INFOPLIST_KEY_NSLocationUsageDescription = "위치 정보를 수집하기 위해 권한이 필요합니다. 위치 정보는 커플 위치 공유 기능을 이용하는데 필요하며, 더욱 정확한 위치 정보를 제공할 수 있습니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "앱을 사용하는 동안 위치 정보를 수집합니다. 위치 정보는 커플 위치 공유 기능을 이용하는데 필요하며, 더욱 정확한 위치 정보를 제공할 수 있습니다.";

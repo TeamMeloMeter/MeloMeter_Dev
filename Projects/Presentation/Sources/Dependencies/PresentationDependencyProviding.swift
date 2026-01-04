@@ -26,6 +26,7 @@ public protocol PresentationDependencyProviding {
     func makeAlarmRepository() -> AlarmRepositoryP
     func makeSearchRepository() -> SearchRepoP
     func makeCouplePlaceRepository() -> CouplePlaceRepoP
+    func makeDatePlanRepository() -> DatePlanRepoP
 }
 
 public extension PresentationDependencyProviding {

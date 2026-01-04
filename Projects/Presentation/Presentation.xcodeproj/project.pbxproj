@@ -26,6 +26,7 @@
 		211DAFDB199DE287F7305477 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = C29FC63DCCBC8C30449720D5 /* RxRelay */; };
 		220E0E9F2B0B0C00A7FD392C /* DetailNoticeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9231AF7AEDB62316984A3D02 /* DetailNoticeVC.swift */; };
 		23456711C972286C55E6A884 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA0C3406F0DAABDB2FB0F8EF /* LaunchScreen.storyboard */; };
+		26B41F80C45AA2D9298D4ECE /* BLECouplePairingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D8EBA9A43AF34896A5F8D9 /* BLECouplePairingService.swift */; };
 		2A7987DC195D41CA69D6AA5E /* DetailQnAVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCC9B05567FBE0F5793229A /* DetailQnAVC.swift */; };
 		2F0272B5BD0AEF33E73B8716 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 0B0361055809E4B5F306DDC1 /* Kingfisher */; };
 		363C19ACC5654848F7A00A05 /* PresentationDependencyProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E746005ADFEEC02F425ABC63 /* PresentationDependencyProviding.swift */; };
@@ -281,6 +282,7 @@
 		EC77C2AD29B4EBB3D869C6FD /* AuthNumVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNumVC.swift; sourceTree = "<group>"; };
 		EF2C8BF8F6E4D89452235C07 /* HundredQAVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HundredQAVC.swift; sourceTree = "<group>"; };
 		F256A6587EE5F82BC07DEF5E /* LogInEntitiy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInEntitiy.swift; sourceTree = "<group>"; };
+		F2D8EBA9A43AF34896A5F8D9 /* BLECouplePairingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLECouplePairingService.swift; sourceTree = "<group>"; };
 		F504E46CA70FE4EBDB7FFE31 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		F789ECC35AE62AC3BC6B38FE /* StartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartVC.swift; sourceTree = "<group>"; };
 		F95093D9D1B9E2FB9E5ECCCC /* Presentation_Presentation-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Presentation_Presentation-Info.plist"; sourceTree = "<group>"; };
@@ -747,6 +749,7 @@
 				209B7965F4D06659A83EF046 /* Coordinator */,
 				9C761B44C8BE267FC5101CAA /* ViewModels */,
 				3A8660C8672C9D459E86DA68 /* Views */,
+				F2D8EBA9A43AF34896A5F8D9 /* BLECouplePairingService.swift */,
 			);
 			path = LogIn;
 			sourceTree = "<group>";
@@ -1072,6 +1075,7 @@
 				7F489F4BE438355539FABF66 /* CustomAlertVC.swift in Sources */,
 				363C19ACC5654848F7A00A05 /* PresentationDependencyProviding.swift in Sources */,
 				B264DF6248FCF631038251D9 /* Coordinator.swift in Sources */,
+				26B41F80C45AA2D9298D4ECE /* BLECouplePairingService.swift in Sources */,
 				F3986BB568075B2534F1364A /* LogInCoordinator.swift in Sources */,
 				ED42407A855C7851CF6CBF33 /* LogInVM.swift in Sources */,
 				98A441C60483234213D45E8C /* StartVM.swift in Sources */,

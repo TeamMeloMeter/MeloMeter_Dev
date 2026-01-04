@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C731AED7DD793636744C443 /* BLEConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC85A2B1621A66F4867ED3A1 /* BLEConfiguration.swift */; };
 		51433EF39B4065534A575B80 /* Label+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAB873CEE697BA1A40F01B5 /* Label+.swift */; };
 		526DFCB82B863F52069DAE10 /* ColorAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACDF09DB6DCDE8960119CC1 /* ColorAssets.swift */; };
 		982CB14D7CB8261E95648EB4 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32224202A6E9A06E255CE766 /* FontManager.swift */; };
@@ -40,6 +41,7 @@
 		AFA90FFE58036714C82C3459 /* abseil-cpp-binary */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "abseil-cpp-binary"; path = "../../Packages/abseil-cpp-binary"; sourceTree = "<group>"; };
 		E2F67F733351E8EF7F436503 /* TextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextField+.swift"; sourceTree = "<group>"; };
 		FACB8AE721DC4B3D78BED46D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		FC85A2B1621A66F4867ED3A1 /* BLEConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BLEConfiguration.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +54,15 @@
 		};
 /* End PBXFrameworksBuildPhase section */
 
-/* Begin PBXGroup section */
+	/* Begin PBXGroup section */
+		24ECBF1D47A8C55B2F75D8B1 /* BLE */ = {
+			isa = PBXGroup;
+			children = (
+				FC85A2B1621A66F4867ED3A1 /* BLEConfiguration.swift */,
+			);
+			path = BLE;
+			sourceTree = "<group>";
+		};
 		250C62EE12DB56ECEBB473C3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -89,6 +99,7 @@
 		81104ECEC5CD1B0F5111557B /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				24ECBF1D47A8C55B2F75D8B1 /* BLE */,
 				2ACDF09DB6DCDE8960119CC1 /* ColorAssets.swift */,
 				FACB8AE721DC4B3D78BED46D /* Constants.swift */,
 				32224202A6E9A06E255CE766 /* FontManager.swift */,
@@ -199,6 +210,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C731AED7DD793636744C443 /* BLEConfiguration.swift in Sources */,
 				526DFCB82B863F52069DAE10 /* ColorAssets.swift in Sources */,
 				9DC456AA43334DC5F6560256 /* Constants.swift in Sources */,
 				982CB14D7CB8261E95648EB4 /* FontManager.swift in Sources */,

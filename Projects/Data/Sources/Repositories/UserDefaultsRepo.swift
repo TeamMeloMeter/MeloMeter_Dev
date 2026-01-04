@@ -14,7 +14,7 @@ public class UserDefaultsRepo {
     private init() {}
     
     
-    private let userDefaultsStrings = ["fcmToken", "otherUid", "uid", "phoneNumber","name","coupleID","inviteCode","otherFcmToken","accessLevel","createdAt","birth", "name"]
+    private let userDefaultsStrings = ["otherUid", "uid", "phoneNumber", "name", "coupleID", "inviteCode", "otherFcmToken", "accessLevel", "createdAt", "birth", "name"]
     
     public func resetAllUserDefaults() {
         

@@ -109,7 +109,7 @@ public class LogInRepository: LogInRepositoryP {
                     guard let self, let number = user.phoneNumber else { return single(.success((AccessLevel.none, nil))) }
                     phoneNumber = number
                     
-                    guard let fcmToken = UserDefaults.standard.string(forKey: "fcmToken") else { return single(.success((AccessLevel.none, nil)))}
+                    let fcmToken = UserDefaults.standard.string(forKey: "fcmToken")
                     let createdAt = Date()
                     let inviteCode = "\(phoneNumber.suffix(4) + createdAt.toString(type: Date.Format.timeStamp).filter{ $0.isNumber }.map{ String($0) }.suffix(4).joined())"
                     
@@ -124,14 +124,32 @@ public class LogInRepository: LogInRepositoryP {
                     
                     self.firebaseService.getDocument(collection: .Users, document: uid)
                         .subscribe(onSuccess: { [weak self] user in
-                            guard let self, let userModel = user.toObject(UserDTO.self)?.toModel() else { return single(.success((AccessLevel.none, nil)))}
-                            if let name = userModel.name {
-                                
+                            guard let self else { return }
+                            if let localFcmToken = UserDefaults.standard.string(forKey: "fcmToken") {
+                                let storedFcmToken = user["fcmToken"] as? String
+                                if storedFcmToken == nil || storedFcmToken?.isEmpty == true {
+                                    self.firebaseService.updateDocument(collection: .Users, document: uid, values: ["fcmToken": localFcmToken])
+                                        .subscribe(onSuccess: {}, onFailure: { _ in })
+                                        .disposed(by: self.disposeBag)
+                                }
+                            }
+                            if let name = user["name"] as? String, !name.isEmpty {
                                 UserDefaults.standard.set(name, forKey: "name")
                                 single(.success((AccessLevel.complete, nil)))
-                            } else if let coupleID = userModel.coupleID {
+                                return
+                            }
+                            if let coupleID = user["coupleID"] as? String, !coupleID.isEmpty {
                                 UserDefaults.standard.set(coupleID, forKey: "coupleID")
                                 single(.success((AccessLevel.coupleCombined, nil)))
+                                return
+                            }
+                            let storedInviteCode = user["inviteCode"] as? String
+                            let resolvedInviteCode = (storedInviteCode?.isEmpty == false) ? storedInviteCode : inviteCode
+                            if let resolvedInviteCode {
+                                UserDefaults.standard.set(resolvedInviteCode, forKey: "inviteCode")
+                                single(.success((.authenticated, resolvedInviteCode)))
+                            } else {
+                                single(.success((AccessLevel.none, nil)))
                             }
                         },onFailure: {[weak self] error in
                             guard let values = dto.asDictionary, let self else { return }
@@ -184,12 +202,12 @@ public class LogInRepository: LogInRepositoryP {
                     
                     return self.firebaseService.getDocument(collection: .Users, field: "inviteCode", values: [inviteCode])
                         .flatMap{ [weak self] data -> Single<Void> in
-                            guard !data.isEmpty else{ return Single.error(FireStoreError.unknown) }
-                            guard let self,let otherUid = data.last?["uid"] as? String else{ return Single.error(FireStoreError.unknown) }
-                            if otherUid == user.uid { return Single.error(FireStoreError.unknown) }
-                            guard let otherFcmToken = data.last?["fcmToken"] as? String else{ return Single.error(FireStoreError.unknown) }
+                            guard !data.isEmpty else{ return Single.error(CombineCoupleError.inviteCodeNotFound) }
+                            guard let self, let otherUid = data.last?["uid"] as? String else{ return Single.error(CombineCoupleError.invalidData) }
+                            if otherUid == user.uid { return Single.error(CombineCoupleError.sameAccount) }
+                            guard let otherFcmToken = data.last?["fcmToken"] as? String else{ return Single.error(CombineCoupleError.otherFcmTokenMissing) }
                             UserDefaults.standard.set("\(otherUid)", forKey: "otherUid")
-                            guard let myFcmToken = UserDefaults.standard.string(forKey: "fcmToken") else{ return Single.error(FireStoreError.unknown) }
+                            guard let myFcmToken = UserDefaults.standard.string(forKey: "fcmToken") else{ return Single.error(CombineCoupleError.myFcmTokenMissing) }
                             let updateMyDB = self.firebaseService.updateDocument(collection: .Users, document: user.uid, values: ["otherFcmToken": otherFcmToken, "otherUid": otherUid])
                             let updateOtherDB = self.firebaseService.updateDocument(collection: .Users, document: otherUid, values: ["otherFcmToken": myFcmToken, "otherUid": user.uid])
                             

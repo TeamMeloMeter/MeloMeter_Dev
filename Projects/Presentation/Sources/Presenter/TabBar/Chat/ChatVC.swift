@@ -24,6 +24,16 @@ public class ChatVC: MessagesViewController, MessagesDataSource {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground() // 불투명하게 설정
         appearance.backgroundColor = .white        // 원하는 배경색 지정
+        appearance.shadowColor = .clear
+        if let backImage = UIImage(named: "backIcon")?.withRenderingMode(.alwaysOriginal) {
+            appearance.setBackIndicatorImage(backImage, transitionMaskImage: backImage)
+            let backButtonAppearance = UIBarButtonItemAppearance()
+            backButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.clear]
+            backButtonAppearance.highlighted.titleTextAttributes = [.foregroundColor: UIColor.clear]
+            backButtonAppearance.focused.titleTextAttributes = [.foregroundColor: UIColor.clear]
+            backButtonAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.clear]
+            appearance.backButtonAppearance = backButtonAppearance
+        }
 
         // 타이틀 텍스트 색상 (선택 사항)
         appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
@@ -32,6 +42,15 @@ public class ChatVC: MessagesViewController, MessagesDataSource {
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
+        if #available(iOS 16.0, *) {
+            navigationController?.navigationBar.compactScrollEdgeAppearance = appearance
+        }
+        navigationController?.navigationBar.isTranslucent = false
+        if let backImage = UIImage(named: "backIcon")?.withRenderingMode(.alwaysOriginal) {
+            navigationController?.navigationBar.backIndicatorImage = backImage
+            navigationController?.navigationBar.backIndicatorTransitionMaskImage = backImage
+        }
+        navigationController?.navigationBar.tintColor = .gray1
     }
     
     private let viewModel: ChatVM?

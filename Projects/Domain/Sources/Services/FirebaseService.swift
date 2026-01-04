@@ -32,6 +32,7 @@ public protocol FirebaseService {
     //MARK: SubCollection
     func createDocToSubcollection(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String ,values: Any) -> Completable
     func getDocFromSubCollection(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String) -> Single<[FirebaseData]>
+    func observeSubCollection(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String) -> Observable<[FirebaseData]>
     func deleteDocument(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String, uuid: String) -> Completable
 
 }

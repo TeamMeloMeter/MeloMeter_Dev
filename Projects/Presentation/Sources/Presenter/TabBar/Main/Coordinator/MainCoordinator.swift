@@ -49,6 +49,7 @@ extension MainCoordinator {
                 notificationService: dependencies.pushNotificationService
             ),
             uploadPlaceUseCase: uploadPlaceUseCase,
+            datePlanUseCase: DatePlanUseCaseImpl(repository: dependencies.makeDatePlanRepository()),
             pushNotificationService: dependencies.pushNotificationService
         )
         self.mapVM = vm
@@ -126,6 +127,19 @@ extension MainCoordinator {
         }
         self.navigationController.present(bottomSheet, animated: false, completion: nil)
         
+    }
+
+    public func presentRecordCreation(pickedModel: SearchedModel, memo: String) {
+        self.bottomSheet = nil
+        self.bottomSheet = BottomSheetVC(viewModel: mapVM!)
+        guard let bottomSheet else { return }
+
+        bottomSheet.modalPresentationStyle = .pageSheet
+        bottomSheet.isModalInPresentation = false
+        bottomSheet.loadViewIfNeeded()
+        self.navigationController.present(bottomSheet, animated: false) {
+            bottomSheet.setRecordCreationView(pickedModel: pickedModel, memo: memo)
+        }
     }
     
     public func finish() {

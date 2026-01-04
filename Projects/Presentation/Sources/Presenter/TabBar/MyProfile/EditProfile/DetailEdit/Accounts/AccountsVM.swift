@@ -98,10 +98,16 @@ public class AccountsVM {
                             .disposed(by: disposeBag)
                         
                     case .withdrawal:
-                        self.accountsUseCase.excuteChangeAccessLevel()
+                        self.accountsUseCase.excuteWithdrawal()
                             .subscribe(onSuccess: { result in
                                 if result {
-                                    self.coordinator?.finish()
+                                    self.accountsUseCase.excuteLogout()
+                                        .subscribe(onSuccess: {
+                                            self.coordinator?.finish()
+                                        }, onFailure: { _ in
+                                            output.withdrawalFailed.onNext(true)
+                                        })
+                                        .disposed(by: disposeBag)
                                 } else {
                                     output.withdrawalFailed.onNext(true)
                                 }

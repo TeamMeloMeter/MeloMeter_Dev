@@ -13,12 +13,44 @@ import RxCocoa
 import GoogleMobileAds
 import Kingfisher
 import Domain
+
+public enum MapMode {
+    case record
+    case reservation
+}
+
+public struct DatePlanDraft {
+    public let name: String
+    public let memo: String
+    public let mapX: Double
+    public let mapY: Double
+    public let roadAddress: String
+    public let address: String
+    public let scheduledAt: Date
+    public let notifyEnabled: Bool
+}
+
+public struct CheckInResult {
+    public let planId: String
+    public let shouldShowRoulette: Bool
+}
 public class MapVM {
 
     weak var coordinator: MainCoordinator?
     private var mainUseCase: MainUseCase
     private var placeUseCase: PlaceUseCase
+    private var datePlanUseCase: DatePlanUseCase
     private let pushNotificationService: PushNotificationServiceP
+    private var currentDatePlans: [DatePlanModel] = []
+    private var lastKnownLocation: CLLocation?
+    private let arrivalPlanSave = PublishSubject<DatePlanModel>()
+    private let defaultPlanRadiusMeters: Double = {
+#if DEBUG
+        return 1000
+#else
+        return 300
+#endif
+    }()
     
     public var alreadyPlacesMarkers = PublishSubject<[CouplePlaceModel]>()
     public var lastPickedPicker = BehaviorRelay<CouplePlaceModel?>(value: nil)
@@ -35,6 +67,74 @@ public class MapVM {
         pickedModel.accept(nil)
 //        lastPickedPicker = BehaviorRelay<CouplePlaceModel?>(value: nil)
         coordinator?.dismissViewController()
+    }
+
+    private func evaluateArrivalIfNeeded(location: CLLocation) {
+        guard let uid = UserDefaults.standard.string(forKey: "uid"), uid.isEmpty == false else { return }
+        let now = Date()
+
+        for plan in currentDatePlans where plan.isCompleted != true {
+            guard let scheduledDate = Date.stringToDate(dateString: plan.scheduledAt, type: .yearToSecond) else { continue }
+            if Calendar.current.isDate(now, inSameDayAs: scheduledDate) == false {
+                continue
+            }
+            if plan.arrivalRecords[uid] != nil {
+                continue
+            }
+            let target = CLLocation(latitude: plan.mapY, longitude: plan.mapX)
+            let distance = location.distance(from: target)
+            if distance <= effectiveRadiusMeters(for: plan) {
+                saveArrival(plan: plan, uid: uid, arrivedAt: now)
+            }
+        }
+    }
+
+    private func effectiveRadiusMeters(for plan: DatePlanModel) -> Double {
+#if DEBUG
+        return max(plan.radiusMeters, defaultPlanRadiusMeters)
+#else
+        return plan.radiusMeters
+#endif
+    }
+
+    private func saveArrival(plan: DatePlanModel, uid: String, arrivedAt: Date) {
+        var updatedPlan = plan
+        let arrivedString = arrivedAt.toString(type: .yearToSecond)
+        updatedPlan.arrivalRecords[uid] = arrivedString
+        updatedPlan.checkIns[uid] = arrivedString
+        if let isOnTime = resolveOnTimeIfPossible(plan: updatedPlan) {
+            updatedPlan.isOnTime = isOnTime
+        }
+        if updatedPlan.arrivalRecords.count >= 2 {
+            updatedPlan.isCompleted = true
+        }
+        if let index = currentDatePlans.firstIndex(where: { $0.uuid == plan.uuid }) {
+            currentDatePlans[index] = updatedPlan
+        }
+        arrivalPlanSave.onNext(updatedPlan)
+    }
+
+    private func resolveOnTimeIfPossible(plan: DatePlanModel) -> Bool? {
+        let scheduledDate = Date.stringToDate(dateString: plan.scheduledAt, type: .yearToSecond) ?? Date()
+
+        guard let uid = UserDefaults.standard.string(forKey: "uid"),
+              uid.isEmpty == false else { return nil }
+        if let otherUid = UserDefaults.standard.string(forKey: "otherUid"),
+           let myArrival = plan.arrivalRecords[uid],
+           let otherArrival = plan.arrivalRecords[otherUid],
+           let myDate = Date.stringToDate(dateString: myArrival, type: .yearToSecond),
+           let otherDate = Date.stringToDate(dateString: otherArrival, type: .yearToSecond) {
+            return myDate <= scheduledDate && otherDate <= scheduledDate
+        }
+
+        if plan.arrivalRecords.count >= 2 {
+            let arrivals = plan.arrivalRecords.values.compactMap {
+                Date.stringToDate(dateString: $0, type: .yearToSecond)
+            }
+            guard arrivals.count >= 2 else { return nil }
+            return arrivals.allSatisfy { $0 <= scheduledDate }
+        }
+        return nil
     }
     
     public struct BottomSheetInput {
@@ -178,6 +278,11 @@ public class MapVM {
         let dDayBtnTapEvent: Observable<Void>
         let alarmBtnTapEvent: Observable<Void>
         let searchBtnTapEvent: Observable<Void>
+        let modeChanged: Observable<MapMode>
+        let savePlan: Observable<DatePlanDraft>
+        let checkInPlan: Observable<DatePlanModel>
+        let updatePlan: Observable<DatePlanModel>
+        let deletePlan: Observable<String>
         let endTriggerAlertTapEvent: Observable<Void>
         let dissmissBottomSheet: Observable<Void>
         let markerTapped: Observable<CouplePlaceModel>
@@ -199,6 +304,9 @@ public class MapVM {
         var setUpBottomSheet = PublishSubject<SearchedModel>()
         var deletePickedMarkers = PublishSubject<Void>()
         var alreadyPlacesMarkers = PublishSubject<[CouplePlaceModel]>()
+        var datePlans = PublishSubject<[DatePlanModel]>()
+        var presentDatePlanSheet = PublishSubject<SearchedModel>()
+        var checkInResult = PublishSubject<CheckInResult>()
     }
     
     
@@ -206,16 +314,19 @@ public class MapVM {
         coordinator: MainCoordinator,
         mainUseCase: MainUseCase,
         uploadPlaceUseCase: PlaceUseCase,
+        datePlanUseCase: DatePlanUseCase,
         pushNotificationService: PushNotificationServiceP
     ) {
         self.coordinator = coordinator
         self.mainUseCase = mainUseCase
         self.placeUseCase = uploadPlaceUseCase
+        self.datePlanUseCase = datePlanUseCase
         self.pushNotificationService = pushNotificationService
     }
     
     public func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output(alreadyPlacesMarkers: alreadyPlacesMarkers)
+        let currentMode = BehaviorRelay<MapMode>(value: .record)
         
         
         input.markerTapped.subscribe(onNext: { [weak self] model in
@@ -230,6 +341,17 @@ public class MapVM {
             output.deletePickedMarkers.onNext(())
         }).disposed(by: disposeBag)
 
+        self.datePlanUseCase.observePlans()
+            .subscribe(onNext: { [weak self] plans in
+                guard let self else { return }
+                self.currentDatePlans = plans
+                output.datePlans.onNext(plans)
+                if let location = self.lastKnownLocation {
+                    self.evaluateArrivalIfNeeded(location: location)
+                }
+            })
+            .disposed(by: disposeBag)
+
         if #available(iOS 16.0, *) {
             input.viewWillAppear
                 .subscribe(onNext: { [weak self] _ in
@@ -237,7 +359,13 @@ public class MapVM {
                     // 장소 검색 시 잠깐 동안 뜨는 용도의 피커 지움
                     if let pickedModel = pickedModel.value {
                         output.searchedMarker.onNext(pickedModel)
-                        coordinator?.setupSheet(pickedModel: pickedModel, placeModel: nil, type: "small")                    }
+                        if currentMode.value == .record {
+                            coordinator?.setupSheet(pickedModel: pickedModel, placeModel: nil, type: "small")
+                        } else {
+                            output.presentDatePlanSheet.onNext(pickedModel)
+                        }
+                        self.pickedModel.accept(nil)
+                    }
                     placeUseCase.fetchAll().subscribe({ [weak self] single in
                         guard let self else {return}
                         switch single {
@@ -307,6 +435,126 @@ public class MapVM {
             self.coordinator?.pushMapSearchVC()
             
         }).disposed(by: disposeBag)
+
+        input.modeChanged
+            .bind(to: currentMode)
+            .disposed(by: disposeBag)
+
+        input.savePlan
+            .subscribe(onNext: { [weak self] draft in
+                guard let self else { return }
+                guard let uid = UserDefaults.standard.string(forKey: "uid"), uid.isEmpty == false else { return }
+                let model = DatePlanModel(uuid: UUID().uuidString,
+                                          name: draft.name,
+                                          memo: draft.memo,
+                                          mapX: draft.mapX,
+                                          mapY: draft.mapY,
+                                          roadAddress: draft.roadAddress,
+                                          address: draft.address,
+                                          scheduledAt: draft.scheduledAt.toString(type: .yearToSecond),
+                                          createdAt: Date().toString(type: .yearToSecond),
+                                          createdBy: uid,
+                                          notifyEnabled: draft.notifyEnabled,
+                                          radiusMeters: defaultPlanRadiusMeters,
+                                          dwellSeconds: 180,
+                                          checkIns: [:],
+                                          arrivalRecords: [:],
+                                          isOnTime: nil)
+                self.datePlanUseCase.savePlan(model: model)
+                    .andThen(self.datePlanUseCase.fetchAll())
+                    .subscribe(onSuccess: { plans in
+                        output.datePlans.onNext(plans)
+                    })
+                    .disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
+
+        input.updatePlan
+            .flatMap { [weak self] plan -> Observable<Void> in
+                guard let self else { return .empty() }
+                return self.datePlanUseCase.savePlan(model: plan)
+                    .andThen(Observable.just(()))
+            }
+            .subscribe()
+            .disposed(by: disposeBag)
+
+        arrivalPlanSave
+            .flatMap { [weak self] plan -> Observable<Void> in
+                guard let self else { return .empty() }
+                return self.datePlanUseCase.savePlan(model: plan)
+                    .andThen(Observable.just(()))
+            }
+            .subscribe()
+            .disposed(by: disposeBag)
+
+        input.deletePlan
+            .flatMap { [weak self] planId -> Observable<Void> in
+                guard let self else { return .empty() }
+                return self.datePlanUseCase.deletePlan(uuid: planId)
+                    .andThen(Observable.just(()))
+            }
+            .subscribe()
+            .disposed(by: disposeBag)
+
+        input.checkInPlan
+            .flatMap { [weak self] plan -> Observable<(DatePlanModel, Bool)> in
+                guard let self else { return .empty() }
+                guard let uid = UserDefaults.standard.string(forKey: "uid"), uid.isEmpty == false else { return .empty() }
+                let now = Date()
+                let nowString = now.toString(type: .yearToSecond)
+                let otherUid = UserDefaults.standard.string(forKey: "otherUid")
+
+                return self.datePlanUseCase.fetchAll()
+                    .asObservable()
+                    .compactMap { plans in
+                        plans.first(where: { $0.uuid == plan.uuid })
+                    }
+                    .map { latestPlan in
+                        var updatedPlan = latestPlan
+                        var mergedCheckIns = latestPlan.checkIns
+                        mergedCheckIns[uid] = nowString
+                        updatedPlan.checkIns = mergedCheckIns
+
+                        let hasOtherCheckIn = mergedCheckIns.count >= 2
+                        updatedPlan.isCompleted = hasOtherCheckIn ? true : nil
+
+                        var shouldShowRoulette = false
+                        if let resolved = self.resolveOnTimeIfPossible(plan: updatedPlan) {
+                            updatedPlan.isOnTime = resolved
+                        }
+                        let scheduledDate = Date.stringToDate(dateString: latestPlan.scheduledAt, type: .yearToSecond) ?? now
+                        let myArrivalDate = updatedPlan.arrivalRecords[uid]
+                            .flatMap { Date.stringToDate(dateString: $0, type: .yearToSecond) }
+                        let otherArrivalDate: Date? = {
+                            if let otherUid,
+                               let arrival = updatedPlan.arrivalRecords[otherUid] {
+                                return Date.stringToDate(dateString: arrival, type: .yearToSecond)
+                            }
+                            if let entry = updatedPlan.arrivalRecords.first(where: { $0.key != uid }) {
+                                return Date.stringToDate(dateString: entry.value, type: .yearToSecond)
+                            }
+                            return nil
+                        }()
+                        let myLate = myArrivalDate.map { $0 > scheduledDate }
+                        let otherLate = otherArrivalDate.map { $0 > scheduledDate }
+                        if let myLate, let otherLate {
+                            shouldShowRoulette = myLate && otherLate == false
+                        }
+                        return (updatedPlan, shouldShowRoulette)
+                    }
+            }
+            .flatMap { [weak self] updatedPlan, shouldShowRoulette -> Observable<(String, Bool, [DatePlanModel])> in
+                guard let self else { return .empty() }
+                return self.datePlanUseCase.savePlan(model: updatedPlan)
+                    .andThen(self.datePlanUseCase.fetchAll())
+                    .map { plans in (updatedPlan.uuid, shouldShowRoulette, plans) }
+                    .asObservable()
+            }
+            .subscribe(onNext: { planId, shouldShowRoulette, plans in
+                output.datePlans.onNext(plans)
+                output.checkInResult.onNext(CheckInResult(planId: planId, shouldShowRoulette: shouldShowRoulette))
+            })
+            .disposed(by: disposeBag)
         
         self.mainUseCase.authorizationStatus
             .map({ $0 == .halfallowed || $0 == .disallowed || $0 == .notDetermined})
@@ -318,7 +566,9 @@ public class MapVM {
                 guard let self else {return}
                 
                 if let location = location {
+                    self.lastKnownLocation = location
                     output.currentLocation.onNext(location)
+                    self.evaluateArrivalIfNeeded(location: location)
                     if let model = pickedModel.value {
                         output.cameraUpdate.onNext(CLLocation(latitude: model.mapy, longitude: model.mapx))
                     } else {

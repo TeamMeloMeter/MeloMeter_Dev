@@ -10,15 +10,20 @@ import NMapsMap
 import Firebase
 import FirebaseCore
 import FirebaseMessaging
+import FirebaseRemoteConfig
 import UserNotifications
-import FirebaseAppCheck
 import KakaoSDKCommon
 import GoogleMobileAds
 import Data
+import Domain
+import Core
+import RxSwift
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
     
     var window: UIWindow?
+    private lazy var firebaseService = DefaultFirebaseService()
+    private let disposeBag = DisposeBag()
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         UIApplication.shared.applicationIconBadgeNumber = 0
@@ -26,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UserDefaultsRepo.shared.resetAllUserDefaults()
+        configureGlobalAppearance()
         // 구글 애드모
         MobileAds.shared.start(completionHandler: nil)
         
@@ -36,9 +42,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         KakaoSDK.initSDK(appKey: "63ff1c816c3c2dd940969416c8e2ce35")
         // 파이어베이스 연동, 알림설정
         FirebaseApp.configure()
+        configureBleRemoteConfig()
+        LocationService.shared.configure(firebaseService: firebaseService)
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
         Messaging.messaging().isAutoInitEnabled = true
+        Messaging.messaging().token { [weak self] token, error in
+            if let error = error {
+                print("🟢 fcmToken fetch failed: \(error)")
+                return
+            }
+            self?.persistFcmToken(token)
+        }
         
         // device token 요청.
         application.registerForRemoteNotifications()
@@ -60,11 +75,101 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         
         return true
     }
+
+    private func configureBleRemoteConfig() {
+        let remoteConfig = RemoteConfig.remoteConfig()
+        let settings = RemoteConfigSettings()
+        settings.minimumFetchInterval = 0
+        remoteConfig.configSettings = settings
+        remoteConfig.setDefaults([
+            "ble_service_uuid": BLEConfiguration.defaultServiceUUIDString as NSObject,
+            "ble_characteristic_uuid": BLEConfiguration.defaultCharacteristicUUIDString as NSObject
+        ])
+
+        remoteConfig.fetchAndActivate { _, error in
+            let serviceString = remoteConfig.configValue(forKey: "ble_service_uuid").stringValue
+            let characteristicString = remoteConfig.configValue(forKey: "ble_characteristic_uuid").stringValue
+            print("[Remote] fetched service(\(serviceString)) characteristic(\(characteristicString))")
+            if BLEConfiguration.shared.updateServiceUUID(with: serviceString) {
+                print("[Remote] service UUID updated")
+            }
+            if BLEConfiguration.shared.updateCharacteristicUUID(with: characteristicString) {
+                print("[Remote] characteristic UUID updated")
+            }
+            if let error = error {
+                print("[Remote] fetch error: \(error)")
+            }
+        }
+    }
+
+    private func configureGlobalAppearance() {
+        if #available(iOS 15.0, *) {
+            let navAppearance = UINavigationBarAppearance()
+            navAppearance.configureWithOpaqueBackground()
+            navAppearance.backgroundColor = .white
+            navAppearance.shadowColor = .clear
+            if let backImage = UIImage(named: "backIcon")?.withRenderingMode(.alwaysOriginal) {
+                navAppearance.setBackIndicatorImage(backImage, transitionMaskImage: backImage)
+                let backButtonAppearance = UIBarButtonItemAppearance()
+                backButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.clear]
+                backButtonAppearance.highlighted.titleTextAttributes = [.foregroundColor: UIColor.clear]
+                backButtonAppearance.focused.titleTextAttributes = [.foregroundColor: UIColor.clear]
+                backButtonAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.clear]
+                navAppearance.backButtonAppearance = backButtonAppearance
+            }
+            let navBar = UINavigationBar.appearance()
+            navBar.standardAppearance = navAppearance
+            navBar.scrollEdgeAppearance = navAppearance
+            navBar.compactAppearance = navAppearance
+            if #available(iOS 16.0, *) {
+                navBar.compactScrollEdgeAppearance = navAppearance
+            }
+            navBar.isTranslucent = false
+            if let backImage = UIImage(named: "backIcon")?.withRenderingMode(.alwaysOriginal) {
+                navBar.backIndicatorImage = backImage
+                navBar.backIndicatorTransitionMaskImage = backImage
+            }
+            navBar.tintColor = .gray1
+            UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffset(horizontal: -1000, vertical: 0), for: .default)
+
+            let tabAppearance = UITabBarAppearance()
+            tabAppearance.configureWithOpaqueBackground()
+            tabAppearance.backgroundColor = .white
+            tabAppearance.shadowColor = .clear
+            let tabBar = UITabBar.appearance()
+            tabBar.standardAppearance = tabAppearance
+            tabBar.scrollEdgeAppearance = tabAppearance
+            tabBar.isTranslucent = false
+
+            let toolbarAppearance = UIToolbarAppearance()
+            toolbarAppearance.configureWithOpaqueBackground()
+            toolbarAppearance.backgroundColor = .white
+            toolbarAppearance.shadowColor = .clear
+            let toolbar = UIToolbar.appearance()
+            toolbar.standardAppearance = toolbarAppearance
+            toolbar.scrollEdgeAppearance = toolbarAppearance
+            toolbar.compactAppearance = toolbarAppearance
+            if #available(iOS 16.0, *) {
+                toolbar.compactScrollEdgeAppearance = toolbarAppearance
+            }
+            toolbar.isTranslucent = false
+        }
+
+        let searchBar = UISearchBar.appearance()
+        searchBar.searchBarStyle = .minimal
+        searchBar.backgroundImage = UIImage()
+        searchBar.isTranslucent = false
+        searchBar.tintColor = .gray1
+
+        let searchTextField = UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self])
+        searchTextField.backgroundColor = .gray5
+        searchTextField.textColor = .gray1
+    }
     
     // FCMToken 업데이트시
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         print("🟢 fcmToken : ", #function, fcmToken ?? "")
-        UserDefaults.standard.set(fcmToken, forKey: "fcmToken")
+        persistFcmToken(fcmToken)
     }
     
     // 스위즐링 NO시, APNs등록, 토큰값가져옴
@@ -100,6 +205,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
 //        }
         
      }
+
+    private func persistFcmToken(_ token: String?) {
+        guard let token, token.isEmpty == false else { return }
+        UserDefaults.standard.set(token, forKey: "fcmToken")
+        updateFcmTokenInFirestore(token)
+    }
+
+    private func updateFcmTokenInFirestore(_ token: String) {
+        guard FirebaseApp.app() != nil,
+              let uid = UserDefaults.standard.string(forKey: "uid"),
+              uid.isEmpty == false else { return }
+        firebaseService.updateDocument(collection: .Users, document: uid, values: ["fcmToken": token])
+            .subscribe(onSuccess: {}, onFailure: { error in
+                print("🟢 fcmToken update failed: \(error)")
+            })
+            .disposed(by: disposeBag)
+
+        if let otherUid = UserDefaults.standard.string(forKey: "otherUid"),
+           otherUid.isEmpty == false {
+            firebaseService.updateDocument(collection: .Users, document: otherUid, values: ["otherFcmToken": token])
+                .subscribe(onSuccess: {}, onFailure: { error in
+                    print("🟢 otherFcmToken update failed: \(error)")
+                })
+                .disposed(by: disposeBag)
+        }
+    }
     
     // 푸시클릭이벤트
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {

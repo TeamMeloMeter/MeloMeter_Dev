@@ -331,6 +331,13 @@ extension DefaultFirebaseService {
                     if let error = error { com(.error(error)) }
                     com(.completed)
                 }
+            } else if subCollection == .DatePlans {
+                let values = values as! DatePlanDto
+                newDocument = self.database.collection(firstCollection.rawValue).document(document).collection(subCollection.rawValue).document("\(values.uuid)")
+                newDocument.setData(values.toDictionary(), merge: true) { error in
+                    if let error = error { com(.error(error)) }
+                    com(.completed)
+                }
             } else {
                 //다른 쪽에서도 서브 컬렉션이 필요할때 사용
             }
@@ -351,6 +358,29 @@ extension DefaultFirebaseService {
                 }
             }
             return Disposables.create()
+        }
+    }
+
+    public func observeSubCollection(firstCollection: FireStoreCollection, subCollection: FireStoreCollection, document: String) -> Observable<[FirebaseData]> {
+        return Observable.create { [weak self] observer in
+            guard let self else {
+                observer.onCompleted()
+                return Disposables.create()
+            }
+            let listener = self.database.collection(firstCollection.rawValue)
+                .document(document)
+                .collection(subCollection.rawValue)
+                .addSnapshotListener { snapshot, error in
+                    if let error {
+                        observer.onError(error)
+                        return
+                    }
+                    let data = snapshot?.documents.map { $0.data() } ?? []
+                    observer.onNext(data)
+                }
+            return Disposables.create {
+                listener.remove()
+            }
         }
     }
     

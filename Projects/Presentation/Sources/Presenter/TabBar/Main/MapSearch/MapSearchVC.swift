@@ -49,7 +49,12 @@ public class MapSearchVC: UIViewController, UIGestureRecognizerDelegate {
         $0.placeholder = "장소 주소 검색"
         $0.setImage(UIImage(), for: .search, state: .normal)
         $0.backgroundImage = UIImage()
-        $0.searchTextField.backgroundColor = .clear
+        $0.searchTextField.backgroundColor = .gray5
+        $0.searchTextField.textColor = .gray1
+        $0.searchTextField.font = FontManager.shared.regular(ofSize: 14)
+        $0.searchTextField.layer.cornerRadius = 8
+        $0.searchTextField.clipsToBounds = true
+        $0.isTranslucent = false
         
     }
     public let backIconView =  UIImageView(image: UIImage(named: "backIcon")).then {

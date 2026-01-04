@@ -16,10 +16,13 @@ import Core
 public final class CoupleCombineVC: UIViewController {
    
     private let viewModel: LogInVM
+    private let blePairingService: BLECouplePairingService
+    private var didAutoCombine = false
     public let disposeBag = DisposeBag()
     
     public init(viewModel: LogInVM, inviteCode: String, otherInviteCode: String? = nil) {
         self.viewModel = viewModel
+        self.blePairingService = BLECouplePairingService(inviteCode: inviteCode)
         self.myCodeLabel.text = inviteCode
         super.init(nibName: nil, bundle: nil)
         if let code = otherInviteCode {
@@ -38,17 +41,20 @@ public final class CoupleCombineVC: UIViewController {
         configure()
         setAutoLayout()
         setBindings()
+        configureBLE()
     }
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
     }
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        blePairingService.start()
         codeTF.becomeFirstResponder()
     }
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         viewModel.stopTimer() // 타이머 해제
+        blePairingService.stop()
         ProgressDialogView.shared.hide()
     }
     
@@ -62,6 +68,11 @@ public final class CoupleCombineVC: UIViewController {
         viewModel.myCode
             .bind(to: self.myCodeLabel.rx.text)
             .disposed(by: disposeBag)
+        viewModel.myCode
+            .subscribe(onNext: { [weak self] code in
+                self?.blePairingService.updateInviteCode(code)
+            })
+            .disposed(by: disposeBag)
         
         nextBtn.rx.tap
             .bind(onNext: { [weak self] in
@@ -73,11 +84,9 @@ public final class CoupleCombineVC: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.combineRequest
-            .bind(onNext: {[weak self] result in
+            .bind(onNext: {[weak self] message in
                 guard let self = self else{ return }
-                if result == false {
-                    combineError()
-                }
+                combineError(message)
             }).disposed(by: disposeBag)
         
         viewModel.inviteCodeTimer()
@@ -97,12 +106,25 @@ public final class CoupleCombineVC: UIViewController {
                 self.viewModel.shareKakao(inviteCode: inviteCode)
             }).disposed(by: disposeBag)
     }
-    
+
+    private func configureBLE() {
+        blePairingService.onInviteCodeReceived = { [weak self] inviteCode in
+            guard let self = self, self.didAutoCombine == false else { return }
+            self.didAutoCombine = true
+            self.codeTF.text = inviteCode
+            self.lineColorChangedT()
+            self.nextBtnEnabledT()
+            self.view.endEditing(true)
+            ProgressDialogView.shared.show()
+            self.viewModel.inviteCodeInput.onNext(inviteCode)
+        }
+    }
+
     //MARK: Event
-    public func combineError() {
+    public func combineError(_ message: String) {
         AlertManager(viewController: self)
-            .setTitle("잘못된 코드")
-            .setMessage("초대코드가 일치하지 않습니다\n 올바른 상대방의 초대코드를\n 입력해주세요")
+            .setTitle("커플 연결 실패")
+            .setMessage(message)
             .addActionConfirm("확인", action: { self.codeTF.becomeFirstResponder() })
             .showCustomAlert()
         ProgressDialogView.shared.hide()
