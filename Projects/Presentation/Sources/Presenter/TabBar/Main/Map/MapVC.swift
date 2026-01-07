@@ -9,7 +9,6 @@ import UIKit
 import NMapsMap
 import RxCocoa
 import RxSwift
-import CoreBluetooth
 import CoreLocation
 import GoogleMobileAds
 import UserNotifications
@@ -24,7 +23,7 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
     private let infoWindow1 = NMFInfoWindow()
     private let infoWindow2 = NMFInfoWindow()
     private var bannerView: BannerView?
-    private let proximityService = BLEProximityService()
+    private let proximityMonitor = BLEProximityMonitor.shared
     private var lastKnownLocation: CLLocation?
     private var currentMode: MapMode = .record
     private var datePlans: [DatePlanModel] = []
@@ -46,8 +45,10 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
     private var didPromptBleEnded = false
     private var bleMonitorTimer: Timer?
     private var bleMonitoringStarted = false
+    private var bleHeartbeatObserver: NSObjectProtocol?
+    private var bleDetectedObserver: NSObjectProtocol?
     private let bleCheckInterval: TimeInterval = 600
-    private let bleMissingThreshold: TimeInterval = 3600
+    private let bleMissingThreshold: TimeInterval = BLEProximityMonitor.meetingMissingThreshold
   
     
     //MARK: Rx
@@ -471,15 +472,26 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
         guard bleMonitoringStarted == false else { return }
         bleMonitoringStarted = true
 
-        proximityService.onProximityDetected = { [weak self] in
-            self?.handleProximityDetected()
-        }
-        proximityService.onProximityHeartbeat = { [weak self] date in
+        let center = NotificationCenter.default
+        bleHeartbeatObserver = center.addObserver(
+            forName: BLEProximityMonitor.proximityHeartbeatNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            guard let date = notification.userInfo?["date"] as? Date else { return }
             self?.updateBleHeartbeat(at: date)
         }
+        bleDetectedObserver = center.addObserver(
+            forName: BLEProximityMonitor.proximityDetectedNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            let date = notification.userInfo?["date"] as? Date ?? Date()
+            self?.handleProximityDetected(at: date)
+        }
         let coupleId = UserDefaults.standard.string(forKey: "coupleID")
-        proximityService.configure(coupleId: coupleId)
-        proximityService.start()
+        proximityMonitor.configure(coupleId: coupleId)
+        proximityMonitor.start()
 
         bleMonitorTimer?.invalidate()
         bleMonitorTimer = Timer.scheduledTimer(withTimeInterval: bleCheckInterval, repeats: true) { [weak self] _ in
@@ -490,7 +502,14 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
     private func stopBleMonitoring() {
         bleMonitorTimer?.invalidate()
         bleMonitorTimer = nil
-        proximityService.stop()
+        if let observer = bleHeartbeatObserver {
+            NotificationCenter.default.removeObserver(observer)
+            bleHeartbeatObserver = nil
+        }
+        if let observer = bleDetectedObserver {
+            NotificationCenter.default.removeObserver(observer)
+            bleDetectedObserver = nil
+        }
         bleMonitoringStarted = false
     }
 
@@ -793,20 +812,19 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
     }
 
 
-    private func handleProximityDetected() {
-        let now = Date()
-        updateBleHeartbeat(at: now)
+    private func handleProximityDetected(at date: Date) {
+        updateBleHeartbeat(at: date)
         let coupleId = UserDefaults.standard.string(forKey: "coupleID")
-        let todayComponents = Calendar.current.dateComponents([.year, .month, .day], from: now)
+        let todayComponents = Calendar.current.dateComponents([.year, .month, .day], from: date)
         let hasMeetingStamp = MeetingStampStore.shared.hasStamp(on: todayComponents, coupleId: coupleId)
         if hasMeetingStamp == false {
             if UIApplication.shared.applicationState == .active {
-                MeetingStampStore.shared.addStamp(date: now, location: lastKnownLocation, coupleId: coupleId)
+                MeetingStampStore.shared.addStamp(date: date, location: lastKnownLocation, coupleId: coupleId)
             } else {
-                MeetingStampStore.shared.setPending(date: now, location: lastKnownLocation, coupleId: coupleId)
+                MeetingStampStore.shared.setPending(date: date, location: lastKnownLocation, coupleId: coupleId)
             }
         }
-        if UIApplication.shared.applicationState == .active {
+        if UIApplication.shared.applicationState == .active, view.window != nil {
             presentBleMeetingPrompt()
         } else {
             sendLocalNotification(
@@ -834,7 +852,7 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
 
 
     private func presentDateEndPrompt() {
-        if UIApplication.shared.applicationState == .active {
+        if UIApplication.shared.applicationState == .active, view.window != nil {
             guard isPresentingDateEndPrompt == false else { return }
             isPresentingDateEndPrompt = true
             let alertController = UIAlertController(
@@ -1535,274 +1553,5 @@ final class DatePlanTimeEditSheetVC: UIViewController {
                                         isCompleted: resetCheckIns ? nil : plan.isCompleted)
         onSave(updatedPlan)
         dismiss(animated: true)
-    }
-}
-
-final class MeetingStampStore {
-    static let shared = MeetingStampStore()
-    static let didUpdateNotification = Notification.Name("MeetingStampStoreDidUpdate")
-
-    struct Stamp: Codable {
-        let dateString: String
-        let latitude: Double?
-        let longitude: Double?
-    }
-
-    private let stampsKey = "meetingStamps"
-    private let pendingKey = "meetingStampPending"
-
-    func stamps(coupleId: String?) -> [Stamp] {
-        loadStamps(coupleId: coupleId)
-    }
-
-    func pendingStamp(coupleId: String?) -> Stamp? {
-        loadPending(coupleId: coupleId)
-    }
-
-    func setPending(date: Date, location: CLLocation?, coupleId: String? = nil) {
-        let stamp = Stamp(
-            dateString: date.toString(type: .yearToDayHipen),
-            latitude: location?.coordinate.latitude,
-            longitude: location?.coordinate.longitude
-        )
-        savePending(stamp, coupleId: coupleId)
-    }
-
-    func clearPending(coupleId: String? = nil) {
-        UserDefaults.standard.removeObject(forKey: key(base: pendingKey, coupleId: coupleId))
-    }
-
-    func savePendingStamp(coupleId: String? = nil) -> Bool {
-        guard let pending = pendingStamp(coupleId: coupleId) else { return false }
-        clearPending(coupleId: coupleId)
-        return addStamp(pending, coupleId: coupleId)
-    }
-
-    func hasStamp(on components: DateComponents, coupleId: String? = nil) -> Bool {
-        guard let date = Calendar.current.date(from: components) else { return false }
-        let dateString = date.toString(type: .yearToDayHipen)
-        return loadStamps(coupleId: coupleId).contains(where: { $0.dateString == dateString })
-    }
-
-    func stampedDateComponents(coupleId: String? = nil) -> [DateComponents] {
-        loadStamps(coupleId: coupleId)
-            .compactMap { Date.stringToDate(dateString: $0.dateString, type: .yearToDayHipen) }
-            .map { Calendar.current.dateComponents([.year, .month, .day], from: $0) }
-    }
-
-    func addStamp(date: Date, location: CLLocation?, coupleId: String? = nil) -> Bool {
-        let stamp = Stamp(
-            dateString: date.toString(type: .yearToDayHipen),
-            latitude: location?.coordinate.latitude,
-            longitude: location?.coordinate.longitude
-        )
-        return addStamp(stamp, coupleId: coupleId)
-    }
-
-    private func addStamp(_ stamp: Stamp, coupleId: String? = nil) -> Bool {
-        var stamps = loadStamps(coupleId: coupleId)
-        guard stamps.contains(where: { $0.dateString == stamp.dateString }) == false else { return false }
-        stamps.append(stamp)
-        saveStamps(stamps, coupleId: coupleId)
-        NotificationCenter.default.post(name: MeetingStampStore.didUpdateNotification, object: nil)
-        return true
-    }
-
-    private func loadStamps(coupleId: String? = nil) -> [Stamp] {
-        let key = key(base: stampsKey, coupleId: coupleId)
-        guard let data = UserDefaults.standard.data(forKey: key) else { return [] }
-        return (try? JSONDecoder().decode([Stamp].self, from: data)) ?? []
-    }
-
-    private func saveStamps(_ stamps: [Stamp], coupleId: String? = nil) {
-        guard let data = try? JSONEncoder().encode(stamps) else { return }
-        let key = key(base: stampsKey, coupleId: coupleId)
-        UserDefaults.standard.set(data, forKey: key)
-    }
-
-    private func loadPending(coupleId: String? = nil) -> Stamp? {
-        let key = key(base: pendingKey, coupleId: coupleId)
-        guard let data = UserDefaults.standard.data(forKey: key) else { return nil }
-        return try? JSONDecoder().decode(Stamp.self, from: data)
-    }
-
-    private func savePending(_ stamp: Stamp, coupleId: String? = nil) {
-        guard let data = try? JSONEncoder().encode(stamp) else { return }
-        let key = key(base: pendingKey, coupleId: coupleId)
-        UserDefaults.standard.set(data, forKey: key)
-    }
-
-    private func key(base: String, coupleId: String?) -> String {
-        guard let coupleId, coupleId.isEmpty == false else { return base }
-        return "\(base)-\(coupleId)"
-    }
-}
-
-final class BLEProximityService: NSObject {
-    private enum Constants {
-        static var serviceUUID: CBUUID { BLEConfiguration.shared.serviceUUID }
-        static let localNamePrefix = BLEConfiguration.shared.localNamePrefix
-        static let advertisedIdLength = BLEConfiguration.shared.advertisedIdLength
-        static let proximityRssiThreshold = BLEConfiguration.shared.proximityRssiThreshold
-        static let cooldownSeconds: TimeInterval = BLEConfiguration.shared.cooldownSeconds
-        static let centralRestoreIdentifier = BLEConfiguration.shared.centralRestoreIdentifier
-        static let peripheralRestoreIdentifier = BLEConfiguration.shared.peripheralRestoreIdentifier
-    }
-
-    var onProximityDetected: (() -> Void)?
-    var onProximityHeartbeat: ((Date) -> Void)?
-
-    private var centralManager: CBCentralManager?
-    private var peripheralManager: CBPeripheralManager?
-    private var lastTriggerDate: Date?
-    private var didAddService = false
-    private var coupleId: String?
-    private var serviceObserver: NSObjectProtocol?
-
-    func configure(coupleId: String?) {
-        if let coupleId, coupleId.isEmpty == false {
-            self.coupleId = coupleId
-        } else {
-            self.coupleId = nil
-        }
-    }
-
-    override init() {
-        super.init()
-        serviceObserver = NotificationCenter.default.addObserver(
-            forName: BLEConfiguration.serviceUUIDUpdatedNotification,
-            object: nil,
-            queue: .main
-        ) { [weak self] _ in
-            self?.handleServiceUUIDUpdate()
-        }
-    }
-
-    deinit {
-        if let observer = serviceObserver {
-            NotificationCenter.default.removeObserver(observer)
-        }
-    }
-
-    func start() {
-        if centralManager == nil {
-            centralManager = CBCentralManager(delegate: self,
-                                             queue: .main,
-                                             options: [
-                                                CBCentralManagerOptionShowPowerAlertKey: true,
-                                                CBCentralManagerOptionRestoreIdentifierKey: Constants.centralRestoreIdentifier
-                                             ])
-        } else if centralManager?.state == .poweredOn {
-            startScanning()
-        }
-
-        if peripheralManager == nil {
-            peripheralManager = CBPeripheralManager(delegate: self,
-                                                    queue: .main,
-                                                    options: [
-                                                        CBPeripheralManagerOptionRestoreIdentifierKey: Constants.peripheralRestoreIdentifier
-                                                    ])
-        } else if peripheralManager?.state == .poweredOn {
-            setupServiceIfNeeded()
-            startAdvertising()
-        }
-    }
-
-    private func handleServiceUUIDUpdate() {
-        guard centralManager != nil || peripheralManager != nil else { return }
-        stop()
-        start()
-    }
-
-    func stop() {
-        centralManager?.stopScan()
-        peripheralManager?.stopAdvertising()
-        peripheralManager?.removeAllServices()
-        didAddService = false
-    }
-
-    private func startScanning() {
-        centralManager?.scanForPeripherals(
-            withServices: [Constants.serviceUUID],
-            options: [CBCentralManagerScanOptionAllowDuplicatesKey: true]
-        )
-    }
-
-    private func setupServiceIfNeeded() {
-        guard didAddService == false else { return }
-        let service = CBMutableService(type: Constants.serviceUUID, primary: true)
-        peripheralManager?.add(service)
-        didAddService = true
-    }
-
-    private func startAdvertising() {
-        let name = advertisedLocalName()
-        peripheralManager?.startAdvertising([
-            CBAdvertisementDataServiceUUIDsKey: [Constants.serviceUUID],
-            CBAdvertisementDataLocalNameKey: name
-        ])
-    }
-
-    private func handleProximity(rssi: NSNumber) {
-        if rssi.intValue == 127 { return }
-        guard rssi.intValue >= Constants.proximityRssiThreshold else { return }
-        onProximityHeartbeat?(Date())
-        let now = Date()
-        if let lastTriggerDate, now.timeIntervalSince(lastTriggerDate) < Constants.cooldownSeconds {
-            return
-        }
-        lastTriggerDate = now
-        onProximityDetected?()
-    }
-
-    private func advertisedLocalName() -> String {
-        guard let coupleId, coupleId.isEmpty == false else { return Constants.localNamePrefix }
-        let shortId = String(coupleId.prefix(Constants.advertisedIdLength))
-        return "\(Constants.localNamePrefix):\(shortId)"
-    }
-}
-
-extension BLEProximityService: CBCentralManagerDelegate {
-    func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        guard central.state == .poweredOn else { return }
-        startScanning()
-    }
-
-    func centralManager(_ central: CBCentralManager,
-                        didDiscover peripheral: CBPeripheral,
-                        advertisementData: [String: Any],
-                        rssi RSSI: NSNumber) {
-        guard let localName = advertisementData[CBAdvertisementDataLocalNameKey] as? String else { return }
-        guard localName.hasPrefix(Constants.localNamePrefix) else { return }
-        if let coupleId, coupleId.isEmpty == false {
-            let shortId = String(coupleId.prefix(Constants.advertisedIdLength))
-            let expected = "\(Constants.localNamePrefix):\(shortId)"
-            guard localName == expected else { return }
-        }
-      
-        handleProximity(rssi: RSSI)
-    }
-
-    func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
-        startScanning()
-    }
-}
-
-extension BLEProximityService: CBPeripheralManagerDelegate {
-    func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
-        guard peripheral.state == .poweredOn else { return }
-        setupServiceIfNeeded()
-        startAdvertising()
-    }
-
-    func peripheralManager(_ peripheral: CBPeripheralManager, didAdd service: CBService, error: Error?) {
-        if error == nil {
-            startAdvertising()
-        }
-    }
-
-    func peripheralManager(_ peripheral: CBPeripheralManager, willRestoreState dict: [String : Any]) {
-        setupServiceIfNeeded()
-        startAdvertising()
     }
 }

@@ -1,4 +1,5 @@
 import CoreBluetooth
+import CryptoKit
 
 public final class BLEConfiguration {
     public static let shared = BLEConfiguration()
@@ -40,5 +41,21 @@ public final class BLEConfiguration {
         guard candidate != characteristicUUID else { return false }
         characteristicUUID = candidate
         return true
+    }
+
+    public func proximityServiceUUID(for coupleId: String?) -> CBUUID {
+        guard let coupleId, coupleId.isEmpty == false else { return serviceUUID }
+        let seed = "\(serviceUUID.uuidString)|\(coupleId)"
+        let derived = Self.makeDeterministicUUID(seed: seed)
+        return CBUUID(string: derived.uuidString)
+    }
+
+    private static func makeDeterministicUUID(seed: String) -> UUID {
+        let digest = SHA256.hash(data: Data(seed.utf8))
+        var uuidBytes = uuid_t()
+        withUnsafeMutableBytes(of: &uuidBytes) { bytes in
+            bytes.copyBytes(from: digest.prefix(16))
+        }
+        return UUID(uuid: uuidBytes)
     }
 }

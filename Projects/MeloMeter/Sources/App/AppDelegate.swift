@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         UIApplication.shared.applicationIconBadgeNumber = 0
+        BLEProximityMonitor.shared.refreshSessionState()
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -43,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         // 파이어베이스 연동, 알림설정
         FirebaseApp.configure()
         configureBleRemoteConfig()
+        BLEProximityMonitor.shared.start(coupleId: UserDefaults.standard.string(forKey: "coupleID"))
         LocationService.shared.configure(firebaseService: firebaseService)
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
