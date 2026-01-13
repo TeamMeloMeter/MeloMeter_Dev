@@ -206,11 +206,18 @@ extension AlertManager {
         title: String?,
         message: String?,
         actions: [UIAlertAction] = [UIAlertAction(title: "Ok", style: .cancel, handler: nil)],
+        popoverSourceView: UIView? = nil,
         completion: (() -> Swift.Void)? = nil)
     {
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
         for action in actions {
             alert.addAction(action)
+        }
+        
+        if let popoverController = alert.popoverPresentationController,
+           let sourceView = popoverSourceView {
+            popoverController.sourceView = sourceView
+            popoverController.sourceRect = sourceView.bounds
         }
         
         self.getTopViewController()?.present(alert, animated: true, completion: completion)

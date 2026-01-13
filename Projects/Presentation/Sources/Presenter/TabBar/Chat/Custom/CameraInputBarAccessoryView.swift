@@ -22,6 +22,7 @@ public protocol CameraInputBarAccessoryViewDelegate: InputBarAccessoryViewDelega
 
 public class CameraInputBarAccessoryView: InputBarAccessoryView {
     private var imageSourceType: Bool = false
+    private var cameraButton: InputBarButtonItem?
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,6 +43,7 @@ public class CameraInputBarAccessoryView: InputBarAccessoryView {
     
     public func configure() {
         let camera = makeButton(named: "chatCamera")
+        self.cameraButton = camera
         camera.tintColor = .white
         camera.onTouchUpInside { [weak self] _ in
             self?.showImagePickerControllerActionSheet()
@@ -103,6 +105,7 @@ extension CameraInputBarAccessoryView: UIImagePickerControllerDelegate, UINaviga
             title: "사진",
             message: nil,
             actions: [cameraAction, photoLibraryAction, cancelAction],
+            popoverSourceView: self.cameraButton,
             completion: nil)
     }
     
