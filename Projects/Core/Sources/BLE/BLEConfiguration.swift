@@ -52,9 +52,10 @@ public final class BLEConfiguration {
 
     private static func makeDeterministicUUID(seed: String) -> UUID {
         let digest = SHA256.hash(data: Data(seed.utf8))
-        var uuidBytes = uuid_t()
+        var uuidBytes: uuid_t = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
         withUnsafeMutableBytes(of: &uuidBytes) { bytes in
-            bytes.copyBytes(from: digest.prefix(16))
+            let prefix = Array(digest.prefix(16))
+            bytes.copyBytes(from: prefix)
         }
         return UUID(uuid: uuidBytes)
     }

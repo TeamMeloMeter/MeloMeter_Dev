@@ -12,8 +12,11 @@
 		526DFCB82B863F52069DAE10 /* ColorAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACDF09DB6DCDE8960119CC1 /* ColorAssets.swift */; };
 		982CB14D7CB8261E95648EB4 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32224202A6E9A06E255CE766 /* FontManager.swift */; };
 		9DC456AA43334DC5F6560256 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACB8AE721DC4B3D78BED46D /* Constants.swift */; };
+		AED2782B9D812817622C1CDC /* MeetingStampStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B0B7456BFB4B8C20DDEB3A /* MeetingStampStore.swift */; };
 		BA103D00820C8096D4EC1E1E /* ProgressDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443A7FB091B01197CE42CF20 /* ProgressDialogView.swift */; };
 		D746F7D731F4BCD868415304 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA40DA6F7240F5A9285574C /* UIImage+.swift */; };
+		D85C789157E2E1FBBFA12345 /* BLEProximityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4EA6D71F57E05D4552516 /* BLEProximityMonitor.swift */; };
+		F149F2CDEF75FE8F4B213D11 /* TogetherTimeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CAC948DBA9526898B77C2C /* TogetherTimeStore.swift */; };
 		F1BA31E44F1C4F1B1FC25A14 /* TextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F67F733351E8EF7F436503 /* TextField+.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,10 +41,13 @@
 		32224202A6E9A06E255CE766 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		443A7FB091B01197CE42CF20 /* ProgressDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDialogView.swift; sourceTree = "<group>"; };
 		4EA40DA6F7240F5A9285574C /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
+		72CAC948DBA9526898B77C2C /* TogetherTimeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TogetherTimeStore.swift; sourceTree = "<group>"; };
+		7BC4EA6D71F57E05D4552516 /* BLEProximityMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEProximityMonitor.swift; sourceTree = "<group>"; };
 		AFA90FFE58036714C82C3459 /* abseil-cpp-binary */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "abseil-cpp-binary"; path = "../../Packages/abseil-cpp-binary"; sourceTree = "<group>"; };
+		D1B0B7456BFB4B8C20DDEB3A /* MeetingStampStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingStampStore.swift; sourceTree = "<group>"; };
 		E2F67F733351E8EF7F436503 /* TextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextField+.swift"; sourceTree = "<group>"; };
 		FACB8AE721DC4B3D78BED46D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		FC85A2B1621A66F4867ED3A1 /* BLEConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BLEConfiguration.swift"; sourceTree = "<group>"; };
+		FC85A2B1621A66F4867ED3A1 /* BLEConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,11 +60,13 @@
 		};
 /* End PBXFrameworksBuildPhase section */
 
-	/* Begin PBXGroup section */
+/* Begin PBXGroup section */
 		24ECBF1D47A8C55B2F75D8B1 /* BLE */ = {
 			isa = PBXGroup;
 			children = (
 				FC85A2B1621A66F4867ED3A1 /* BLEConfiguration.swift */,
+				7BC4EA6D71F57E05D4552516 /* BLEProximityMonitor.swift */,
+				72CAC948DBA9526898B77C2C /* TogetherTimeStore.swift */,
 			);
 			path = BLE;
 			sourceTree = "<group>";
@@ -87,6 +95,14 @@
 			path = InfoPlists;
 			sourceTree = "<group>";
 		};
+		59AE66E079F43707BE90A63F /* Meeting */ = {
+			isa = PBXGroup;
+			children = (
+				D1B0B7456BFB4B8C20DDEB3A /* MeetingStampStore.swift */,
+			);
+			path = Meeting;
+			sourceTree = "<group>";
+		};
 		62824534F75515F48E8114A7 = {
 			isa = PBXGroup;
 			children = (
@@ -100,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				24ECBF1D47A8C55B2F75D8B1 /* BLE */,
+				59AE66E079F43707BE90A63F /* Meeting */,
 				2ACDF09DB6DCDE8960119CC1 /* ColorAssets.swift */,
 				FACB8AE721DC4B3D78BED46D /* Constants.swift */,
 				32224202A6E9A06E255CE766 /* FontManager.swift */,
@@ -211,10 +228,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C731AED7DD793636744C443 /* BLEConfiguration.swift in Sources */,
+				D85C789157E2E1FBBFA12345 /* BLEProximityMonitor.swift in Sources */,
+				F149F2CDEF75FE8F4B213D11 /* TogetherTimeStore.swift in Sources */,
 				526DFCB82B863F52069DAE10 /* ColorAssets.swift in Sources */,
 				9DC456AA43334DC5F6560256 /* Constants.swift in Sources */,
 				982CB14D7CB8261E95648EB4 /* FontManager.swift in Sources */,
 				51433EF39B4065534A575B80 /* Label+.swift in Sources */,
+				AED2782B9D812817622C1CDC /* MeetingStampStore.swift in Sources */,
 				BA103D00820C8096D4EC1E1E /* ProgressDialogView.swift in Sources */,
 				F1BA31E44F1C4F1B1FC25A14 /* TextField+.swift in Sources */,
 				D746F7D731F4BCD868415304 /* UIImage+.swift in Sources */,

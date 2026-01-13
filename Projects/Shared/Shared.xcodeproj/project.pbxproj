@@ -19,6 +19,7 @@
 		679341D71DDE3AC546BC2A19 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = A7C33E1D981335B628B80ACE /* Pretendard-Thin.otf */; };
 		8CD5CDED0E13867118F10083 /* TuistAssets+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF38E7CFC5349E6817462B2 /* TuistAssets+Shared.swift */; };
 		8E2C5AC084234370BD006AE9 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2A26D91F8BAFF0B270C60CF6 /* Pretendard-Medium.otf */; };
+		923B95B054EAA8EA90DD631C /* Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95451D7F7EE977C220118D0A /* Placeholder.swift */; };
 		92968C4286CDAF7275C76E55 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 01E1FCF015FA5EC3DB1E7947 /* Pretendard-Bold.otf */; };
 		9669432A859E43E3E293B661 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 25D0A47D8B4EABE0285BA593 /* Pretendard-ExtraBold.otf */; };
 		9AF0BCA6E59E61C9CB692EBC /* TuistStrings+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEFC903A48FC50BBB8C2F18 /* TuistStrings+Shared.swift */; };
@@ -74,6 +75,7 @@
 		8553E51E0AFA6D7C4FE25F1D /* Shared_Shared-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Shared_Shared-Info.plist"; sourceTree = "<group>"; };
 		8D7044A4EF53E98FFB6F3550 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		933E27E99B04041124931A1C /* TuistPlists+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistPlists+Shared.swift"; sourceTree = "<group>"; };
+		95451D7F7EE977C220118D0A /* Placeholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Placeholder.swift; sourceTree = "<group>"; };
 		A7C33E1D981335B628B80ACE /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
 		BD253C82F800FDB8E8167C3F /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
 		C229F58EFCCEC88A10F10A6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 			children = (
 				3C54C1673B7334EF19C38BB2 /* Derived */,
 				3BDFE20D590E23798B017FB0 /* MeloMeter */,
+				8DBC6BAA6C2105D09B097177 /* Sources */,
 			);
 			name = Project;
 			sourceTree = "<group>";
@@ -163,6 +166,14 @@
 				8D7044A4EF53E98FFB6F3550 /* GoogleService-Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		8DBC6BAA6C2105D09B097177 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				95451D7F7EE977C220118D0A /* Placeholder.swift */,
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		CCE12D42A69525F4979C8A35 /* Sources */ = {
@@ -307,6 +318,7 @@
 				4BFA5B6143DC9A3AD37EFA80 /* TuistFonts+Shared.swift in Sources */,
 				184D867B4D843534F0E2795C /* TuistPlists+Shared.swift in Sources */,
 				9AF0BCA6E59E61C9CB692EBC /* TuistStrings+Shared.swift in Sources */,
+				923B95B054EAA8EA90DD631C /* Placeholder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
