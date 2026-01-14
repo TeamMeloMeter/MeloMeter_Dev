@@ -115,7 +115,7 @@ public final class AlertManager {
         
         let getAuthAction: UIAlertAction
         getAuthAction = UIAlertAction(
-            title: "항상 허용 설정하기",
+            title: "설정으로 이동",
             style: .default,
             handler: { _ in
                 if let appSettings = URL(string: UIApplication.openSettingsURLString) {
@@ -123,8 +123,10 @@ public final class AlertManager {
                 }
             }
         )
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         
         authAlertController.addAction(getAuthAction)
+        authAlertController.addAction(cancelAction)
         self.baseViewController.present(authAlertController, animated: true, completion: nil)
     }
     
@@ -141,6 +143,13 @@ public final class AlertManager {
             alertController.addAction(male)
             alertController.addAction(female)
             alertController.addAction(cancel)
+            
+            if let popoverController = alertController.popoverPresentationController {
+                popoverController.sourceView = self.baseViewController.view
+                popoverController.sourceRect = CGRect(x: self.baseViewController.view.bounds.midX, y: self.baseViewController.view.bounds.midY, width: 0, height: 0)
+                popoverController.permittedArrowDirections = []
+            }
+            
             self.baseViewController.present(alertController, animated: true, completion: nil)
             return Disposables.create {
                 alertController.dismiss(animated: true, completion: nil)
@@ -165,6 +174,12 @@ public final class AlertManager {
             alertController.addAction(get)
             alertController.addAction(delete)
             alertController.addAction(cancel)
+            
+            if let popoverController = alertController.popoverPresentationController {
+                popoverController.sourceView = self.baseViewController.view
+                popoverController.sourceRect = CGRect(x: self.baseViewController.view.bounds.midX, y: self.baseViewController.view.bounds.midY, width: 0, height: 0)
+                popoverController.permittedArrowDirections = []
+            }
         
             self.baseViewController.present(alertController, animated: true, completion: nil)
             return Disposables.create {

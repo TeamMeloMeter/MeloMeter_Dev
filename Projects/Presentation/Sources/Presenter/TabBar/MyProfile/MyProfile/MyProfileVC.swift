@@ -748,18 +748,25 @@ public class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
     private func bottomStackViewConstraints() {
         bottomStackView.translatesAutoresizingMaskIntoConstraints = false
         lineView1.translatesAutoresizingMaskIntoConstraints = false
+        lineView2.translatesAutoresizingMaskIntoConstraints = false
+        
+        noticeStackView.translatesAutoresizingMaskIntoConstraints = false
+        qnAStackView.translatesAutoresizingMaskIntoConstraints = false
+        infoStackView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             bottomStackView.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 29),
             bottomStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -10),
             bottomStackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             bottomStackView.widthAnchor.constraint(equalToConstant: 343),
-            bottomStackView.heightAnchor.constraint(equalToConstant: 168),
             
-            lineView1.topAnchor.constraint(equalTo: bottomStackView.topAnchor, constant: 56),
+            noticeStackView.heightAnchor.constraint(equalToConstant: 56),
+            qnAStackView.heightAnchor.constraint(equalToConstant: 56),
+            infoStackView.heightAnchor.constraint(equalToConstant: 56),
+            
             lineView1.widthAnchor.constraint(equalTo: bottomStackView.widthAnchor),
             lineView1.heightAnchor.constraint(equalToConstant: 1),
             
-            lineView2.topAnchor.constraint(equalTo: bottomStackView.bottomAnchor, constant: -56),
             lineView2.widthAnchor.constraint(equalTo: bottomStackView.widthAnchor),
             lineView2.heightAnchor.constraint(equalToConstant: 1)
 
