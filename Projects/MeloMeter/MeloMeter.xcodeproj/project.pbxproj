@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -381,8 +381,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				ORGANIZATIONNAME = com.teamMeloMeter;
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = 1E61F67EC61F493A6B608769 /* Build configuration list for PBXProject "MeloMeter" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -538,7 +536,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_EXPLICIT_MODULES = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 20260113;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = YH4A87H8M4;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Supporting/Info.plist;
@@ -628,7 +626,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_EXPLICIT_MODULES = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 20260113;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = YH4A87H8M4;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Supporting/Info.plist;
@@ -644,10 +642,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
-					"$(inherited)",
-					DEBUG,
-				);
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
