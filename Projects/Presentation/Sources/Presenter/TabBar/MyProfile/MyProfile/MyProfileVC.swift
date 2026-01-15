@@ -17,6 +17,8 @@ public class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
     
     private let viewModel: MyProfileVM?
     public let disposeBag = DisposeBag()
+    private var bannerView: BannerView?
+    private var scrollViewBottomConstraint: NSLayoutConstraint?
     
     public init(viewModel: MyProfileVM) {
         self.viewModel = viewModel
@@ -536,11 +538,13 @@ public class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
     
     private func scrollViewConstraint() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        let bottomConstraint = scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+        scrollViewBottomConstraint = bottomConstraint
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            bottomConstraint,
         ])
     }
     
@@ -788,6 +792,17 @@ public class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             $0.centerX.equalTo(view.snp.centerX)
         }
+        
+        self.bannerView = bannerView
+        updateScrollViewConstraintsForBanner()
 
+    }
+    
+    private func updateScrollViewConstraintsForBanner() {
+        guard let bannerView = bannerView,
+              let bottomConstraint = scrollViewBottomConstraint else { return }
+        
+        bottomConstraint.isActive = false
+        scrollView.bottomAnchor.constraint(equalTo: bannerView.topAnchor).isActive = true
     }
 }

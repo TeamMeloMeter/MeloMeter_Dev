@@ -118,6 +118,7 @@ extension CameraInputBarAccessoryView: UIImagePickerControllerDelegate, UINaviga
         }else {
             self.imageSourceType = false
         }
+        imgPicker.modalPresentationStyle = .fullScreen
         imgPicker.sourceType = sourceType
         imgPicker.presentationController?.delegate = self
         inputAccessoryView?.isHidden = true

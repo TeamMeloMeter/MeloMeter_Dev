@@ -37,7 +37,7 @@ public class EditProfileVC: UIViewController {
     
     public func setBindings() {
         
-        self.cameraButton.rx.tap
+        self.profileImageView.rx.tapGesture().when(.ended)
             .subscribe(onNext: {[weak self] _ in
                 guard let self = self else{ return }
                 self.showCameraAlert()
@@ -221,6 +221,7 @@ public class EditProfileVC: UIViewController {
         imageView.layer.borderColor = UIColor.clear.cgColor
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 59
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -548,6 +549,7 @@ extension EditProfileVC: UIImagePickerControllerDelegate & UINavigationControlle
         camera.delegate = self
         camera.sourceType = .camera
         camera.allowsEditing = true
+        camera.modalPresentationStyle = .fullScreen
         present(camera, animated: true, completion: nil)
     }
     
@@ -556,6 +558,7 @@ extension EditProfileVC: UIImagePickerControllerDelegate & UINavigationControlle
         album.delegate = self
         album.sourceType = .photoLibrary
         album.allowsEditing = true
+        album.modalPresentationStyle = .fullScreen
         present(album, animated: true, completion: nil)
     }
     
