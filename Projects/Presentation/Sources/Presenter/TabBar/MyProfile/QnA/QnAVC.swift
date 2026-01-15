@@ -174,7 +174,7 @@ public class QnAVC: UIViewController {
     
     public let radioBtn3: UIButton = {
         let button = UIButton()
-        button.setTitle("탈퇴", for: .normal)
+        button.setTitle("계정 삭제", for: .normal)
         button.setTitleColor(.gray2, for: .normal)
         button.titleLabel?.font = FontManager.shared.medium(ofSize: 14)
         button.setTitleColor(.white, for: .selected)
@@ -230,7 +230,7 @@ public class QnAVC: UIViewController {
             
             radioBtn3.leadingAnchor.constraint(equalTo: radioBtn2.trailingAnchor, constant: 10),
             radioBtn3.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 26),
-            radioBtn3.widthAnchor.constraint(equalToConstant: 57),
+            radioBtn3.widthAnchor.constraint(equalToConstant: 86),
             radioBtn3.heightAnchor.constraint(equalToConstant: 37),
 
         ])

@@ -42,8 +42,8 @@ public class WithdrawalVC: UIViewController {
             .subscribe(onNext: {[weak self] _ in
                 if let self = self {
                     AlertManager(viewController: self)
-                        .setTitle("탈퇴하기")
-                        .setMessage("정말 탈퇴하시겠습니까? \n상대방과의 연결과 모든 정보가 삭제됩니다🥲")
+                        .setTitle("계정 삭제")
+                        .setMessage("정말 계정을 삭제하시겠습니까?\n상대방과의 연결과 모든 정보가 삭제됩니다🥲")
                         .showYNAlert()
                         .subscribe(onSuccess: { _ in
                             
@@ -88,13 +88,13 @@ public class WithdrawalVC: UIViewController {
     // MARK: Event
     public func withdrawalAlert() -> Single<Void> {
         return AlertManager(viewController: self)
-            .setTitle("탈퇴하기")
-            .setMessage("정말 탈퇴하시겠습니까?/n상대방과의 연결과 모든 정보가 삭제됩니다🥲")
+            .setTitle("계정 삭제")
+            .setMessage("정말 계정을 삭제하시겠습니까?\n상대방과의 연결과 모든 정보가 삭제됩니다🥲")
             .showYNAlert()
     }
     public func withdrawalErrorAlert() {
         AlertManager(viewController: self)
-            .setTitle("탈퇴 오류")
+            .setTitle("계정 삭제 오류")
             .setMessage(
             """
             서버와 통신에 실패했습니다.
@@ -106,7 +106,7 @@ public class WithdrawalVC: UIViewController {
     }
     // MARK: NavigationBar
     private func setNavigationBar() {
-        navigationItem.title = "연결 끊기"
+        navigationItem.title = "계정 삭제"
         navigationItem.leftBarButtonItem = backBarButton
         navigationItem.leftBarButtonItem?.tintColor = .black
     }
@@ -130,7 +130,7 @@ public class WithdrawalVC: UIViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "멜로미터 탈퇴 전 확인해주세요"
+        label.text = "계정 삭제 전 확인해주세요"
         label.font = FontManager.shared.semiBold(ofSize: 18)
         label.textColor = .gray1
         return label
@@ -187,7 +187,7 @@ public class WithdrawalVC: UIViewController {
     public let withdrawalBtn: UIButton = {
         let button = UIButton()
         button.backgroundColor = .white
-        button.setTitle("멜로미터 탈퇴하기", for: .normal)
+        button.setTitle("계정 삭제하기", for: .normal)
         button.setTitleColor(.primary1, for: .normal)
         button.titleLabel?.font = FontManager.shared.semiBold(ofSize: 18)
         button.layer.cornerRadius = 25

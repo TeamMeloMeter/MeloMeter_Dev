@@ -110,6 +110,9 @@ public class CoupleRepository: CoupleRepositoryP {
     }
     
     public func withdrawalAlarm(otherUid: String) -> Single<Void> {
+        guard !otherUid.isEmpty else {
+            return Single.just(())
+        }
         return self.firebaseService.updateDocument(collection: .Users,
                                             document: otherUid,
                                             values: ["coupleID": "",

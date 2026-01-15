@@ -274,6 +274,9 @@ extension DefaultFirebaseService {
     }
     
     public func deleteImageFromProfileStorage(imageURL: String) -> Single<Void> {
+        guard !imageURL.isEmpty else {
+            return Single.just(())
+        }
         return Single.create { single in
             let storage = Storage.storage()
             let storageReference = storage.reference(forURL: imageURL)

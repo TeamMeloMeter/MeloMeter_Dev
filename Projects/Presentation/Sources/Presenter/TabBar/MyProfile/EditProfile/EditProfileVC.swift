@@ -377,7 +377,7 @@ public class EditProfileVC: UIViewController {
     
     public let withdrawalLabel: UILabel = {
         let label = UILabel()
-        label.text = "회원탈퇴"
+        label.text = "계정 삭제"
         label.font = FontManager.shared.medium(ofSize: 14)
         label.textColor = .gray1
         return label
