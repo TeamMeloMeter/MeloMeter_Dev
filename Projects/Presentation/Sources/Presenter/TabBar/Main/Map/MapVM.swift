@@ -64,9 +64,11 @@ public class MapVM {
     
     public func dissmissBottomSheet() {
         self.progressControl.accept(false)
-        pickedModel.accept(nil)
-//        lastPickedPicker = BehaviorRelay<CouplePlaceModel?>(value: nil)
-        coordinator?.dismissViewController()
+        self.coordinator?.dismissSheet()
+    }
+    
+    public func pushSharedCalendar() {
+        self.coordinator?.pushSharedCalendar()
     }
 
     private func evaluateArrivalIfNeeded(location: CLLocation) {

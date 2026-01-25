@@ -22,42 +22,50 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
     private var beforeAlreadyPlaceMarkers: [NMFMarker] = []
     private let infoWindow1 = NMFInfoWindow()
     private let infoWindow2 = NMFInfoWindow()
-    private var bannerView: BannerView?
-    private let proximityMonitor = BLEProximityMonitor.shared
+    
+    // MARK: - Properties
+    private let disposeBag = DisposeBag()
+    private var datePlans: [DatePlanModel] = []
     private var lastKnownLocation: CLLocation?
     private var currentMode: MapMode = .record
-    private var datePlans: [DatePlanModel] = []
-    private var planMarkers: [NMFMarker] = []
-    private var handledCompletedPlanIds: Set<String> = []
-    private var didInitializePlans = false
+    
+    // Subjects
     private let savePlanSubject = PublishSubject<DatePlanDraft>()
     private let checkInPlanSubject = PublishSubject<DatePlanModel>()
     private let updatePlanSubject = PublishSubject<DatePlanModel>()
     private let deletePlanSubject = PublishSubject<String>()
-    private var notifiedPlanIds: Set<String> = []
+    private let endTriggerAlertEvent = PublishSubject<Void>()
+    private let markerTapped = PublishSubject<CouplePlaceModel>()
+    
+    // UI - Removed duplicates (defined lazily at bottom)
+    private var bannerView: BannerView?
+    
+    // Flags & State
+    private var bleMonitoringStarted = false
+    private var isBleMeetingActive = false
+    private var didPromptBleEnded = false
+    private var didInitializePlans = false
     private var isPresentingMeetingPrompt = false
-    private var toastHideWorkItem: DispatchWorkItem?
     private var isPresentingDateEndPrompt = false
+    
     private var bleLastSeenAt: Date?
     private var bleMissingSince: Date?
     private var bleEndedAt: Date?
-    private var isBleMeetingActive = false
-    private var didPromptBleEnded = false
     private var bleMonitorTimer: Timer?
-    private var bleMonitoringStarted = false
     private var bleHeartbeatObserver: NSObjectProtocol?
     private var bleDetectedObserver: NSObjectProtocol?
-    private let bleCheckInterval: TimeInterval = 600
-    private let bleMissingThreshold: TimeInterval = BLEProximityMonitor.meetingMissingThreshold
-  
+    private var toastHideWorkItem: DispatchWorkItem?
     
-    //MARK: Rx
-    public var endTriggerAlertEvent = PublishSubject<Void>()
-    public var markerTapped = PublishSubject<CouplePlaceModel>()
+    private var notifiedPlanIds: Set<String> = []
+    private var handledCompletedPlanIds: Set<String> = []
     
+    // private let proximityMonitor = ProximityMonitor() // Type missing?
+    private let bleCheckInterval: TimeInterval = 60
+    private let bleMissingThreshold: TimeInterval = 300
     
-    private var viewModel: MapVM?
-    public let disposeBag = DisposeBag()
+    private var planMarkers: [NMFMarker] = []
+    
+    private let viewModel: MapVM?
     
     public init(viewModel: MapVM) {
         self.viewModel = viewModel
@@ -172,7 +180,7 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
         
         output.myStateMessage
             .asDriver(onErrorJustReturn: nil)
-            .drive(onNext: {[weak self] text in
+            .drive(onNext: {[weak self] (text: String?) in
                 guard let self = self else { return }
                 self.infoWindow1.close()
                 guard let message = text, message.isEmpty == false else { return }
@@ -182,7 +190,7 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
         
         output.otherStateMessage
             .asDriver(onErrorJustReturn: nil)
-            .drive(onNext: {[weak self] text in
+            .drive(onNext: {[weak self] (text: String?) in
                 guard let self = self else { return }
                 self.infoWindow2.close()
                 guard let message = text, message.isEmpty == false else { return }
@@ -192,7 +200,7 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
         
         output.authorizationAlertShouldShow
             .asDriver(onErrorJustReturn: false)
-            .drive(onNext: { [weak self] shouldShowAlert in
+            .drive(onNext: { [weak self] (shouldShowAlert: Bool) in
                 guard let self else{ return }
                 if shouldShowAlert {
                     AlertManager(viewController: self)
@@ -200,14 +208,17 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
                 }
             })
             .disposed(by: disposeBag)
+        
 
+        
         output.currentLocation
             .asDriver(onErrorJustReturn: CLLocation(latitude: 0, longitude: 0))
-            .drive(onNext: { [weak self] current in
-                guard let self else {return}
-                self.updateMyMarker(current ?? CLLocation(latitude: 0, longitude: 0))
+            .drive(onNext: { [weak self] (current: CLLocation?) in
+                self?.updateMyMarker(current ?? CLLocation(latitude: 0, longitude: 0))
             })
             .disposed(by: disposeBag)
+
+
         //        output.currentLocation
         //            .take(1)
         //            .asDriver(onErrorJustReturn: CLLocation(latitude: 37.541, longitude: 126.986))
@@ -220,7 +231,7 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
         
         output.currentOtherLocation
             .asDriver(onErrorJustReturn: CLLocation(latitude: 0, longitude: 0))
-            .drive(onNext: { [weak self] current in
+            .drive(onNext: { [weak self] (current: CLLocation?) in
                 self?.updateOtherMarker(current ?? CLLocation(latitude: 0, longitude: 0))
             })
             .disposed(by: disposeBag)
@@ -247,14 +258,17 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
         
         output.deletePickedMarkers.bind(onNext: self.deletePickedMarkers).disposed(by: disposeBag)
         
-        output.alreadyPlacesMarkers.bind(onNext: updatePlaceMarkers).disposed(by: disposeBag)
+        output.alreadyPlacesMarkers
+            .subscribe(onNext: { [weak self] (places: [CouplePlaceModel]) in
+                self?.updatePlaceMarkers(models: places)
+            })
+            .disposed(by: disposeBag)
 
         output.datePlans
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] plans in
+            .subscribe(onNext: { [weak self] (plans: [DatePlanModel]) in
                 self?.datePlans = plans
                 self?.updatePlanMarkers()
-                DatePlanCalendarStore.shared.update(plans: plans)
                 if let location = self?.lastKnownLocation {
                     self?.evaluatePlanProximity(with: location)
                 }
@@ -270,7 +284,7 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
         
         calendarButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
-                self?.showCalendar()
+                self?.viewModel?.pushSharedCalendar()
             })
             .disposed(by: disposeBag)
 
@@ -490,8 +504,8 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
             self?.handleProximityDetected(at: date)
         }
         let coupleId = UserDefaults.standard.string(forKey: "coupleID")
-        proximityMonitor.configure(coupleId: coupleId)
-        proximityMonitor.start()
+        // proximityMonitor.configure(coupleId: coupleId)
+        // proximityMonitor.start()
 
         bleMonitorTimer?.invalidate()
         bleMonitorTimer = Timer.scheduledTimer(withTimeInterval: bleCheckInterval, repeats: true) { [weak self] _ in
@@ -780,12 +794,6 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
                                         mapy: mapPoint.lat)
         pickedMarker(model: pickedModel)
         presentDatePlanSheet(pickedModel: pickedModel)
-    }
-
-    private func showCalendar() {
-        let viewController = CalendarSheetVC()
-        viewController.modalPresentationStyle = .fullScreen
-        present(viewController, animated: true)
     }
 
     private func presentDatePlanSheet(pickedModel: SearchedModel) {
@@ -1243,120 +1251,9 @@ public class CustomInfoViewDataSource: NSObject, NMFOverlayImageDataSource {
     
 }
 
-final class CalendarSheetVC: UIViewController, UICalendarSelectionSingleDateDelegate, UICalendarViewDelegate {
-  func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
-    //
-  }
-  
-    private let calendarView = UICalendarView()
-    private let closeButton = UIButton(type: .system)
-    private let meetingStore = MeetingStampStore.shared
-    private lazy var heartDecorationImage: UIImage? = {
-        guard let image = UIImage(named: "heartIcon") else { return nil }
-        let targetSize = CGSize(width: 16, height: 16)
-        return UIGraphicsImageRenderer(size: targetSize).image { _ in
-            image.draw(in: CGRect(origin: .zero, size: targetSize))
-        }
-    }()
 
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        calendarView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(calendarView)
-        configureCloseButton()
-        view.addSubview(closeButton)
-        NSLayoutConstraint.activate([
-            closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
-            closeButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            closeButton.heightAnchor.constraint(equalToConstant: 34),
 
-            calendarView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            calendarView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            calendarView.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 4),
-            calendarView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
-        ])
-        calendarView.selectionBehavior = UICalendarSelectionSingleDate(delegate: self)
-        calendarView.delegate = self
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(plansDidUpdate),
-                                               name: MeetingStampStore.didUpdateNotification,
-                                               object: nil)
-        plansDidUpdate()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        plansDidUpdate()
-    }
-
-    func calendarView(_ calendarView: UICalendarView,
-                      decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
-        let coupleId = UserDefaults.standard.string(forKey: "coupleID")
-        let hasMeeting = meetingStore.hasStamp(on: dateComponents, coupleId: coupleId)
-#if DEBUG
-        let dateText = Calendar.current.date(from: dateComponents)?.toString(type: .yearToDayHipen) ?? "nil"
-        print("[Calendar] decorationFor date=\(dateText), meeting=\(hasMeeting)")
-#endif
-        guard hasMeeting, let heart = heartDecorationImage else { return nil }
-        return .image(heart)
-    }
-
-    @objc private func plansDidUpdate() {
-        let coupleId = UserDefaults.standard.string(forKey: "coupleID")
-        let components = meetingStore.stampedDateComponents(coupleId: coupleId)
-#if DEBUG
-        print("[Calendar] reload decorations count=\(components.count)")
-#endif
-        calendarView.reloadDecorations(forDateComponents: components, animated: true)
-    }
-
-    private func configureCloseButton() {
-        closeButton.setTitle("닫기", for: .normal)
-        closeButton.setTitleColor(.gray1, for: .normal)
-        closeButton.titleLabel?.font = FontManager.shared.medium(ofSize: 14)
-        closeButton.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-    }
-
-    @objc private func closeTapped() {
-        dismiss(animated: true)
-    }
-}
-
-final class DatePlanCalendarStore {
-    static let shared = DatePlanCalendarStore()
-    static let didUpdateNotification = Notification.Name("DatePlanCalendarStoreDidUpdate")
-
-    private var plans: [DatePlanModel] = []
-
-    private init() {}
-
-    func update(plans: [DatePlanModel]) {
-        self.plans = plans
-        NotificationCenter.default.post(name: DatePlanCalendarStore.didUpdateNotification, object: nil)
-    }
-
-    func plans(on dateComponents: DateComponents) -> [DatePlanModel] {
-        guard let date = Calendar.current.date(from: dateComponents) else { return [] }
-        let target = date.toString(type: .yearToDayHipen)
-        return plans.filter { plan in
-            guard let planDate = Date.stringToDate(dateString: plan.scheduledAt, type: .yearToSecond) else { return false }
-            return planDate.toString(type: .yearToDayHipen) == target
-        }
-    }
-
-    var planDateComponents: [DateComponents] {
-        plans.compactMap { plan in
-            guard let date = Date.stringToDate(dateString: plan.scheduledAt, type: .yearToSecond) else { return nil }
-            return Calendar.current.dateComponents([.year, .month, .day], from: date)
-        }
-    }
-}
 
 final class DatePlanSheetVC: UIViewController {
     private let pickedModel: SearchedModel

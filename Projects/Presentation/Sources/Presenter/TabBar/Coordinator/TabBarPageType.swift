@@ -10,7 +10,7 @@ import Domain
 import Core
 
 public enum TabBarPageType: Int, CaseIterable {
-    case chat, main = 1, myPage
+    case chat, main = 1, calendar, myPage
     
     public var tabBarItem: UITabBarItem {
         switch self {
@@ -25,6 +25,12 @@ public enum TabBarPageType: Int, CaseIterable {
                 title: "",
                 image: UIImage(named: "mapIcon"),
                 selectedImage: UIImage(named: "mapIconSelect")
+            )
+        case .calendar:
+            return UITabBarItem(
+                title: "",
+                image: UIImage(systemName: "calendar"),
+                selectedImage: UIImage(systemName: "calendar")
             )
         case .myPage:
             return UITabBarItem(

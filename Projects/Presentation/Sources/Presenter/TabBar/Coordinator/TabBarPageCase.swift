@@ -10,7 +10,7 @@ import Domain
 import Core
 
 public enum TabBarPageCase: Int, CaseIterable {
-    case chat, main = 1, myPage
+    case chat, main = 1, calendar, myPage
 
     // MARK: - Properties
     public var pageOrderNumber: Int {
@@ -24,6 +24,8 @@ public enum TabBarPageCase: Int, CaseIterable {
             return UIImage(named: "chatIcon")!
         case .main:
             return UIImage(named: "mapIcon")!
+        case .calendar:
+            return UIImage(systemName: "calendar")!
         case .myPage:
             return UIImage(named: "myPageIcon")!
         }
@@ -35,6 +37,8 @@ public enum TabBarPageCase: Int, CaseIterable {
             return UIImage(named: "chatIconSelect")!
         case .main:
             return UIImage(named: "mapIconSelect")!
+        case .calendar:
+            return UIImage(systemName: "calendar")! // 선택된 아이콘도 일단 동일하게
         case .myPage:
             return UIImage(named: "myPageIconSelect")!
         }

@@ -129,6 +129,10 @@ extension MainCoordinator {
         
     }
 
+    public func dismissSheet() {
+        self.navigationController.dismiss(animated: true)
+    }
+    
     public func presentRecordCreation(pickedModel: SearchedModel, memo: String) {
         self.bottomSheet = nil
         self.bottomSheet = BottomSheetVC(viewModel: mapVM!)
@@ -140,6 +144,16 @@ extension MainCoordinator {
         self.navigationController.present(bottomSheet, animated: false) {
             bottomSheet.setRecordCreationView(pickedModel: pickedModel, memo: memo)
         }
+    }
+    
+    public func pushSharedCalendar() {
+        let useCase = DatePlanUseCaseImpl(repository: dependencies.makeDatePlanRepository())
+        let vm = SharedCalendarVM(useCase: useCase)
+        let vc = SharedCalendarVC(viewModel: vm)
+        vc.hidesBottomBarWhenPushed = true
+        
+        self.navigationController.setNavigationBarHidden(false, animated: true)
+        self.navigationController.pushViewController(vc, animated: true)
     }
     
     public func finish() {

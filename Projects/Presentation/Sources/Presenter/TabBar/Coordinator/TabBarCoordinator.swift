@@ -69,12 +69,14 @@ extension TabBarCoordinator {
     return tabNavigationController
   }
   
-  public func connectTabCoordinator(of page: TabBarPageType, to tabNavigationController: UINavigationController) {
+    public func connectTabCoordinator(of page: TabBarPageType, to tabNavigationController: UINavigationController) {
     switch page {
     case .main:
       self.connectMainFlow(to: tabNavigationController)
     case .chat:
       self.connectChatFlow(to: tabNavigationController)
+    case .calendar:
+      self.connectCalendarFlow(to: tabNavigationController)
     case .myPage:
       self.connectMyProfileFlow(to: tabNavigationController)
     }
@@ -99,6 +101,14 @@ extension TabBarCoordinator {
     chatCoordinator.delegate = self
     chatCoordinator.start()
     childCoordinators.append(chatCoordinator)
+  }
+  
+  public func connectCalendarFlow(to tabNavigationController: UINavigationController) {
+      let repo = dependencies.makeDatePlanRepository()
+      let useCase = DatePlanUseCaseImpl(repository: repo)
+      let vm = SharedCalendarVM(useCase: useCase)
+      let vc = SharedCalendarVC(viewModel: vm)
+      tabNavigationController.pushViewController(vc, animated: false)
   }
   
   public func finish() {

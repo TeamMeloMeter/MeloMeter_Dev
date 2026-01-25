@@ -31,20 +31,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        UserDefaultsRepo.shared.resetAllUserDefaults()
+        
+        // 파이어베이스 연동, 알림설정 (필수 - 메인스레드)
+        FirebaseApp.configure()
+        
+        // UI 설정 (필수 - 메인스레드)
         configureGlobalAppearance()
+        
+        // 동기 초기화로 복구 (스플래시 멈춤 해결 시도)
+        // 네이버 지도 초기화
+        NMFAuthManager.shared().clientId = "qf06vqg44t"
+        
+        // KakaoSDK
+        KakaoSDK.initSDK(appKey: "63ff1c816c3c2dd940969416c8e2ce35")
+        
         // 구글 애드모
         MobileAds.shared.start(completionHandler: nil)
         
-        // Override point for customization after application launch.
-        // 네이버 지도 초기화
-        NMFAuthManager.shared().clientId = "qf06vqg44t"
-        //KakaoSDK
-        KakaoSDK.initSDK(appKey: "63ff1c816c3c2dd940969416c8e2ce35")
-        // 파이어베이스 연동, 알림설정
-        FirebaseApp.configure()
-        configureBleRemoteConfig()
+        // BLE & Location
+        self.configureBleRemoteConfig()
         BLEProximityMonitor.shared.start(coupleId: UserDefaults.standard.string(forKey: "coupleID"))
+        
         LocationService.shared.configure(firebaseService: firebaseService)
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self

@@ -61,6 +61,11 @@ final class SplashVM : NSObject, FullScreenContentDelegate {
             }
         }
 
+        // 긴급 수정: 버전 체크 우회하고 바로 Flow 진입 (스플래시 멈춤 해결용)
+        PushNotificationService.shared.setupAppStateNotifications()
+        self.flowPick()
+        
+        /*
         VersionService.shared.getAppStoreVersion(completion: { [weak self] appStoreVer in
             guard let self else {return}
             if let appStoreVer, Float(VersionService.shared.getDeviceVersion()) ?? -0.0 < Float(appStoreVer) ?? 0.0 {
@@ -90,7 +95,7 @@ final class SplashVM : NSObject, FullScreenContentDelegate {
             
             
         })
-        
+        */
      
     }
     func getAccessLevel() -> Single<AccessLevel> {
