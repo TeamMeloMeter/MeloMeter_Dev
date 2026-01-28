@@ -9,8 +9,7 @@ import UIKit
 import GoogleMobileAds
 import RxSwift
 import RxCocoa
-import Domain
-public class AdmobRepository: AdmobRepositoryP {
+public class AdmobRepository {
     
     private let bannerDebug = "ca-app-pub-3940256099942544/2934735716"
     private let bannerRelease = "ca-app-pub-5763713982294456/4052448154"

@@ -33,10 +33,9 @@ extension HundredCoordinator {
     
     public func showHundredQAVC() {
         let viewController = HundredQAVC(viewModel: HundredQAVM(coordinator: self,
-                                                                hundredQAUseCase: HundredQAUseCase(
-                                                                    hundredQARepository: dependencies.makeHundredQARepository(),
-                                                                    admobRepo: admobRepo
-                                                                ))
+                                                                 hundredQAUseCase: HundredQAUseCase(
+                                                                    hundredQARepository: dependencies.makeHundredQARepository()
+                                                                 ))
         )
                                                         
         
@@ -48,9 +47,9 @@ extension HundredCoordinator {
     public func showReadAnswerVC(questionNumber: String, question: String, myAnswerInfo: AnswerModel, otherAnswerInfo: AnswerModel) {
         let viewModel = AnswerVM(coordinator: self,
                                  hundredQAUseCase: HundredQAUseCase(
-                                    hundredQARepository: dependencies.makeHundredQARepository(),
-                                    admobRepo: admobRepo
+                                    hundredQARepository: dependencies.makeHundredQARepository()
                                  ),
+                                 adMobRepo: admobRepo,
                                  questionNumber: questionNumber,
                                  questionText: question,
                                  myAnswerInfo: myAnswerInfo,

@@ -8,19 +8,17 @@
 import Foundation
 import RxSwift
 import RxRelay
-import GoogleMobileAds
 
 public class MyProfileUseCase {
     private let userRepository: UserRepositoryP
     private let coupleRepository: CoupleRepositoryP
     private let hundredQARepository: HundredQARepositoryP
-    private var adMobRepo: AdmobRepositoryP
     private var disposeBag: DisposeBag
     private var uid: String = ""
     
     public required init(userRepository: UserRepositoryP,
                   coupleRepository: CoupleRepositoryP,
-                  hundredQARepository: HundredQARepositoryP, adMobRepo: AdmobRepositoryP)
+                  hundredQARepository: HundredQARepositoryP)
     {
         self.userRepository = userRepository
         self.coupleRepository = coupleRepository
@@ -29,8 +27,6 @@ public class MyProfileUseCase {
         if let id = UserDefaults.standard.string(forKey: "uid") {
             self.uid = id
         }
-        
-        self.adMobRepo = adMobRepo
 
     }
     
@@ -71,14 +67,6 @@ public class MyProfileUseCase {
             return Disposables.create()
         }
     
-    }
-    
-}
-//MARK: AdMob
-extension MyProfileUseCase {
-    
-    public func getBottomBannerAd() -> BannerView {
-        return adMobRepo.loadBottomBanner()
     }
     
 }

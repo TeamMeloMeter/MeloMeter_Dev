@@ -21,6 +21,7 @@ let project = Project(
         ExternalDependencies.firebaseAuth,
         ExternalDependencies.firebaseFirestore,
         ExternalDependencies.firebaseFirestoreSwift,
+        ExternalDependencies.firebaseMessaging,
         ExternalDependencies.firebaseStorage,
 
         // Google Ads

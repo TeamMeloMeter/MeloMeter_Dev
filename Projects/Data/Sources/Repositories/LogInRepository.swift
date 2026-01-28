@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 import RxSwift
 import FirebaseFirestore
+import FirebaseMessaging
 import Domain
 
 public class LogInRepository: LogInRepositoryP {
@@ -207,19 +208,21 @@ public class LogInRepository: LogInRepositoryP {
                             if otherUid == user.uid { return Single.error(CombineCoupleError.sameAccount) }
                             guard let otherFcmToken = data.last?["fcmToken"] as? String else{ return Single.error(CombineCoupleError.otherFcmTokenMissing) }
                             UserDefaults.standard.set("\(otherUid)", forKey: "otherUid")
-                            guard let myFcmToken = UserDefaults.standard.string(forKey: "fcmToken") else{ return Single.error(CombineCoupleError.myFcmTokenMissing) }
-                            let updateMyDB = self.firebaseService.updateDocument(collection: .Users, document: user.uid, values: ["otherFcmToken": otherFcmToken, "otherUid": otherUid])
-                            let updateOtherDB = self.firebaseService.updateDocument(collection: .Users, document: otherUid, values: ["otherFcmToken": myFcmToken, "otherUid": user.uid])
                             
-                            return Single.zip(updateMyDB, updateOtherDB)
-                                .flatMap({ _,_ -> Single<Void> in
-                                    return self.firebaseService.createDocument(collection: .Couples,
-                                                                               document: "",
-                                                                               values: ["disconnectedDate" : "",
-                                                                                        "answersList": ["0": [["date": currentDate]]]
-                                                                                       ]
-                                                                                )
-                                })
+                            return self.ensureFCMToken().flatMap { myFcmToken in
+                                let updateMyDB = self.firebaseService.updateDocument(collection: .Users, document: user.uid, values: ["otherFcmToken": otherFcmToken, "otherUid": otherUid])
+                                let updateOtherDB = self.firebaseService.updateDocument(collection: .Users, document: otherUid, values: ["otherFcmToken": myFcmToken, "otherUid": user.uid])
+                                
+                                return Single.zip(updateMyDB, updateOtherDB)
+                                    .flatMap({ _,_ -> Single<Void> in
+                                        return self.firebaseService.createDocument(collection: .Couples,
+                                                                                   document: "",
+                                                                                   values: ["disconnectedDate" : "",
+                                                                                            "answersList": ["0": [["date": currentDate]]]
+                                                                                           ]
+                                                                                    )
+                                    })
+                            }
                             
                         }
                 }
@@ -262,6 +265,32 @@ public class LogInRepository: LogInRepositoryP {
                     single(.failure(error))
                 })
                 .disposed(by: disposeBag)
+            return Disposables.create()
+        }
+    }
+    
+    private func ensureFCMToken() -> Single<String> {
+        if let token = UserDefaults.standard.string(forKey: "fcmToken"), !token.isEmpty {
+            return Single.just(token)
+        } else {
+            return fetchFCMToken()
+        }
+    }
+    
+    private func fetchFCMToken() -> Single<String> {
+        return Single.create { single in
+            Messaging.messaging().token { token, error in
+                if let error = error {
+                    print("🟢 FCM token fetch failed: \(error)")
+                    single(.failure(CombineCoupleError.myFcmTokenMissing))
+                } else if let token = token, !token.isEmpty {
+                    UserDefaults.standard.set(token, forKey: "fcmToken")
+                    print("🟢 FCM token fetched successfully: \(token)")
+                    single(.success(token))
+                } else {
+                    single(.failure(CombineCoupleError.myFcmTokenMissing))
+                }
+            }
             return Disposables.create()
         }
     }

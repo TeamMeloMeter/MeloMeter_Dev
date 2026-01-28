@@ -44,10 +44,10 @@ extension MainCoordinator {
                 firebaseService: dependencies.firebaseService,
                 userRepository: dependencies.makeUserRepository(),
                 coupleRepository: dependencies.makeCoupleRepository(),
-                adMobRepo: self.adMobRepo,
                 sharedDataRepo: dependencies.sharedDataRepo,
                 notificationService: dependencies.pushNotificationService
             ),
+            adMobRepo: self.adMobRepo,
             uploadPlaceUseCase: uploadPlaceUseCase,
             datePlanUseCase: DatePlanUseCaseImpl(repository: dependencies.makeDatePlanRepository()),
             pushNotificationService: dependencies.pushNotificationService

@@ -16,14 +16,6 @@ let project = Project(
       ],
       resources: ["../MeloMeter/Resources/**"],
       dependencies: [
-        // Firebase
-        ExternalDependencies.firebaseAnalytics,
-        ExternalDependencies.firebaseAuth,
-        ExternalDependencies.firebaseFirestore,
-        ExternalDependencies.firebaseFirestoreSwift,
-        ExternalDependencies.firebaseMessaging,
-        ExternalDependencies.firebaseStorage,
-
         // Google Ads
         ExternalDependencies.googleMobileAds,
 

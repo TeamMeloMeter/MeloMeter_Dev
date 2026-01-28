@@ -18,6 +18,7 @@ public class MyProfileVM {
     weak var coordinator: MyProfileCoordinator?
     private var myProfileUseCase: MyProfileUseCase
     private var alarmUseCase: AlarmUseCase
+    private let adMobRepo: AdmobRepository
     
     public struct Input {
         let viewWillApearEvent: Observable<Void>
@@ -44,10 +45,16 @@ public class MyProfileVM {
     }
     
     
-    public init(coordinator: MyProfileCoordinator, myProfileUseCase: MyProfileUseCase, alarmUseCase: AlarmUseCase) {
+    public init(
+        coordinator: MyProfileCoordinator,
+        myProfileUseCase: MyProfileUseCase,
+        alarmUseCase: AlarmUseCase,
+        adMobRepo: AdmobRepository
+    ) {
         self.coordinator = coordinator
         self.myProfileUseCase = myProfileUseCase
         self.alarmUseCase = alarmUseCase
+        self.adMobRepo = adMobRepo
     }
     
     public func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -56,7 +63,7 @@ public class MyProfileVM {
             .subscribe(onNext: { [weak self] _ in
                 guard let self else{ return }
                 
-                output.getBottomBannerAd.onNext(self.myProfileUseCase.getBottomBannerAd())
+                output.getBottomBannerAd.onNext(self.adMobRepo.loadBottomBanner())
                 
                 self.myProfileUseCase.getUserInfo()
                     .subscribe(onNext: { user in

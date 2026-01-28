@@ -10,7 +10,6 @@ import RxCocoa
 import RxSwift
 import CoreLocation
 import UserNotifications
-import FirebaseMessaging
 import Domain
 import Core
 public class Permission2VC: UIViewController {
@@ -144,4 +143,3 @@ public class Permission2VC: UIViewController {
         ])
     }
 }
-

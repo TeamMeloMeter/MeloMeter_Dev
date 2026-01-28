@@ -8,17 +8,14 @@
 import Foundation
 import RxSwift
 import RxRelay
-import GoogleMobileAds
 public class HundredQAUseCase {
     
     private var disposeBag: DisposeBag
     private var hundredQARepository: HundredQARepositoryP
-    private var admobRepo: AdmobRepositoryP
     
-    public init(hundredQARepository: HundredQARepositoryP, admobRepo: AdmobRepositoryP) {
+    public init(hundredQARepository: HundredQARepositoryP) {
         self.hundredQARepository = hundredQARepository
         self.disposeBag = DisposeBag()
-        self.admobRepo = admobRepo
     }
     
     public func getAnswerList() -> Single<[AnswerInfoModel]> {
@@ -64,11 +61,4 @@ public class HundredQAUseCase {
         }).disposed(by: disposeBag)
 
     }
-}
-
-extension HundredQAUseCase {
-    public func loadInterstitial() -> Single<InterstitialAd> {
-        return admobRepo.loadInterstitial()
-    }
-    
 }

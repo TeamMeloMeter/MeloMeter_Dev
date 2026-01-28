@@ -38,6 +38,7 @@ public class MapVM {
 
     weak var coordinator: MainCoordinator?
     private var mainUseCase: MainUseCase
+    private let adMobRepo: AdmobRepository
     private var placeUseCase: PlaceUseCase
     private var datePlanUseCase: DatePlanUseCase
     private let pushNotificationService: PushNotificationServiceP
@@ -315,12 +316,14 @@ public class MapVM {
     public init(
         coordinator: MainCoordinator,
         mainUseCase: MainUseCase,
+        adMobRepo: AdmobRepository,
         uploadPlaceUseCase: PlaceUseCase,
         datePlanUseCase: DatePlanUseCase,
         pushNotificationService: PushNotificationServiceP
     ) {
         self.coordinator = coordinator
         self.mainUseCase = mainUseCase
+        self.adMobRepo = adMobRepo
         self.placeUseCase = uploadPlaceUseCase
         self.datePlanUseCase = datePlanUseCase
         self.pushNotificationService = pushNotificationService
@@ -378,7 +381,7 @@ public class MapVM {
                         }
                     }).disposed(by: disposeBag)
                     
-                    output.getBottomBannerAd.onNext(mainUseCase.getBottomBannerAd())
+                    output.getBottomBannerAd.onNext(adMobRepo.loadBottomBanner())
                     
                     self.mainUseCase.disconnectionObserver()
                         .subscribe(onSuccess: { result in

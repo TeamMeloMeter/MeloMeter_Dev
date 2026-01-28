@@ -39,7 +39,7 @@ extension ChatCoordinator {
                                 userRepository: dependencies.makeUserRepository(chatRepository: chatRepository)
                               ),
                               hundredQAUseCase: HundredQAUseCase(hundredQARepository:
-                                                                    dependencies.makeHundredQARepository(), admobRepo: admobRepo
+                                                                    dependencies.makeHundredQARepository()
                                                                 )
                              )
         )
@@ -61,9 +61,9 @@ extension ChatCoordinator {
         childCoordinators.append(hundredQACoordinator)
         let viewModel = AnswerVM(coordinator: hundredQACoordinator,
                                  hundredQAUseCase: HundredQAUseCase(
-                                    hundredQARepository: dependencies.makeHundredQARepository(),
-                                    admobRepo: admobRepo
+                                    hundredQARepository: dependencies.makeHundredQARepository()
                                  ),
+                                 adMobRepo: admobRepo,
                                  questionNumber: questionNumber,
                                  questionText: question,
                                  myAnswerInfo: myAnswerInfo,

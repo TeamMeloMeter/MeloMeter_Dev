@@ -59,15 +59,16 @@ extension MyProfileCoordinator {
     public func showMyProfileVC() {
         let chatRepository = dependencies.makeChatRepository()
         let userRepository = dependencies.makeUserRepository(chatRepository: chatRepository)
+        let adMobRepo = AdmobRepository()
         let viewController = MyProfileVC(viewModel: MyProfileVM(
             coordinator: self,
             myProfileUseCase: MyProfileUseCase(
                         userRepository: userRepository,
                         coupleRepository: dependencies.makeCoupleRepository(),
-                        hundredQARepository: dependencies.makeHundredQARepository(),
-                        adMobRepo: AdmobRepository()
+                        hundredQARepository: dependencies.makeHundredQARepository()
             ),
-            alarmUseCase: AlarmUseCase(alarmRepository: dependencies.makeAlarmRepository())
+            alarmUseCase: AlarmUseCase(alarmRepository: dependencies.makeAlarmRepository()),
+            adMobRepo: adMobRepo
             )
         )
         

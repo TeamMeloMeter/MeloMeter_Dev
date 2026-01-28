@@ -7,7 +7,6 @@
 
 import UIKit
 import AnyFormatKit //번호 입력 형식 라이브러리
-import Firebase
 import RxCocoa
 import RxSwift
 import Domain

@@ -14,13 +14,6 @@ let project = Project(
       sources: ["Sources/**"],
       resources: [],
       dependencies: [
-        // Firebase
-        ExternalDependencies.firebaseAnalytics,
-        ExternalDependencies.firebaseAuth,
-
-        // Google Ads
-        ExternalDependencies.googleMobileAds,
-
         // Rx
         ExternalDependencies.rxSwift,
         ExternalDependencies.rxRelay

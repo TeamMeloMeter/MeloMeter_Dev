@@ -17,6 +17,7 @@ public class AnswerVM: NSObject, FullScreenContentDelegate {
 
     weak var coordinator: HundredCoordinator?
     private var hundredQAUseCase: HundredQAUseCase
+    private let adMobRepo: AdmobRepository
     
     public var questionNumber: String
     public var questionText: String
@@ -48,6 +49,7 @@ public class AnswerVM: NSObject, FullScreenContentDelegate {
     
     public init(coordinator: HundredCoordinator,
          hundredQAUseCase: HundredQAUseCase,
+         adMobRepo: AdmobRepository,
          questionNumber: String,
          questionText: String,
          myAnswerInfo: AnswerModel,
@@ -55,6 +57,7 @@ public class AnswerVM: NSObject, FullScreenContentDelegate {
     ) {
         self.coordinator = coordinator
         self.hundredQAUseCase = hundredQAUseCase
+        self.adMobRepo = adMobRepo
         self.questionNumber = questionNumber
         self.questionText = questionText
         self.myAnswerInfo = myAnswerInfo
@@ -147,7 +150,7 @@ public class AnswerVM: NSObject, FullScreenContentDelegate {
                 self.hundredQAUseCase.addAnswer(questionNumber: self.questionNumber, answerInfo: answerInfo)
                     .subscribe(onSuccess: {
                         
-                        self.hundredQAUseCase.loadInterstitial().subscribe ({ [weak self] single in
+                        self.adMobRepo.loadInterstitial().subscribe ({ [weak self] single in
                             guard let self else {return}
                             switch single {
                             case .success(let interstitialAd):

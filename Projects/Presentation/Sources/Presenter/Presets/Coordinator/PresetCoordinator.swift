@@ -52,7 +52,6 @@ extension PresetCoordinator {
                     firebaseService: dependencies.firebaseService,
                     userRepository: dependencies.makeUserRepository(),
                     coupleRepository: dependencies.makeCoupleRepository(),
-                    adMobRepo: self.adMobRepo,
                     sharedDataRepo: dependencies.sharedDataRepo,
                     notificationService: dependencies.pushNotificationService
                 ),
@@ -72,7 +71,6 @@ extension PresetCoordinator {
                     firebaseService: dependencies.firebaseService,
                     userRepository: dependencies.makeUserRepository(),
                     coupleRepository: dependencies.makeCoupleRepository(),
-                    adMobRepo: self.adMobRepo,
                     sharedDataRepo: dependencies.sharedDataRepo,
                     notificationService: dependencies.pushNotificationService
                 ),
