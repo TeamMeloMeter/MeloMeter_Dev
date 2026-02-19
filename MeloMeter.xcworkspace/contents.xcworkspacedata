@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
-   <FileRef
-      location = "group:MeloMeter.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Pods/Pods.xcodeproj">
-   </FileRef>
+   <Group
+      location = "group:Projects"
+      name = "Projects">
+      <FileRef
+         location = "group:Core/Core.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Data/Data.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Domain/Domain.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:MeloMeter/MeloMeter.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Presentation/Presentation.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Shared/Shared.xcodeproj">
+      </FileRef>
+   </Group>
 </Workspace>

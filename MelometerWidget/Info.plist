@@ -7,5 +7,10 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.widgetkit-extension</string>
 	</dict>
+    <key>UIAppFonts</key>
+    <array>
+        <string>Pretendard-Medium.otf</string>
+    
+    </array>
 </dict>
 </plist>

@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "hart-loding 1.png",
+      "filename" : "widgetHeart.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "hart-loding 1@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "hart-loding 1@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
