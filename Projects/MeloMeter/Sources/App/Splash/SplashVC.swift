@@ -8,7 +8,9 @@
 import UIKit
 import RxSwift
 import GoogleMobileAds
+#if canImport(Presentation)
 import Presentation
+#endif
 import SnapKit
 final class SplashVC: UIViewController {
     private let viewModel: SplashVM

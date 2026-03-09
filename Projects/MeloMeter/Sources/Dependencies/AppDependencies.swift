@@ -6,9 +6,15 @@
 //
 
 import Foundation
+#if canImport(Data)
 import Data
+#endif
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Presentation)
 import Presentation
+#endif
 
 final class AppDependencies: PresentationDependencyProviding {
     let firebaseService: FirebaseService

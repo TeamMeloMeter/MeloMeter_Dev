@@ -7,8 +7,12 @@
 
 import UIKit
 import RxSwift
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 public final class LogInCoordinator: Coordinator {
     public var delegate: CoordinatorDelegate?
     private let dependencies: PresentationDependencyProviding

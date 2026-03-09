@@ -11,8 +11,12 @@ import RxCocoa
 import RxSwift
 import CoreLocation
 import GoogleMobileAds
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 //장소 검색 화면
 public class MapSearchVC: UIViewController, UIGestureRecognizerDelegate {

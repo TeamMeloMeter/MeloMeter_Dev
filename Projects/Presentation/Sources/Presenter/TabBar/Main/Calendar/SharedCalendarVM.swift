@@ -8,7 +8,9 @@
 import Foundation
 import RxSwift
 import RxCocoa
+#if canImport(Domain)
 import Domain
+#endif
 
 public final class SharedCalendarVM {
     public struct Input {
@@ -16,6 +18,8 @@ public final class SharedCalendarVM {
         let dateSelected: Observable<DateComponents>
         let addBtnTap: Observable<Void>
         let savePlan: Observable<DatePlanModel>
+        let updatePlan: Observable<DatePlanModel>
+        let deletePlan: Observable<String>
     }
     
     public struct Output {
@@ -23,6 +27,8 @@ public final class SharedCalendarVM {
         let currentDayPlans: Driver<[DatePlanModel]>
         let navigateToAdd: Signal<DateComponents>
         let planSaved: Signal<Void>
+        let planUpdated: Signal<Void>
+        let planDeleted: Signal<Void>
     }
     
     private let useCase: DatePlanUseCase
@@ -79,12 +85,32 @@ public final class SharedCalendarVM {
                     }
             }
             .asSignal(onErrorSignalWith: .empty())
-        
+
+        let planUpdated = input.updatePlan
+            .flatMap { [weak self] plan -> Observable<Void> in
+                guard let self = self else { return Observable.empty() }
+                return self.useCase.savePlan(model: plan)
+                    .andThen(Observable.just(()))
+                    .catch { _ in Observable.empty() }
+            }
+            .asSignal(onErrorSignalWith: .empty())
+
+        let planDeleted = input.deletePlan
+            .flatMap { [weak self] uuid -> Observable<Void> in
+                guard let self = self else { return Observable.empty() }
+                return self.useCase.deletePlan(uuid: uuid)
+                    .andThen(Observable.just(()))
+                    .catch { _ in Observable.empty() }
+            }
+            .asSignal(onErrorSignalWith: .empty())
+
         return Output(
             allPlans: allPlansRelay.asDriver(),
             currentDayPlans: currentDayPlans,
             navigateToAdd: navigateToAdd,
-            planSaved: planSaved
+            planSaved: planSaved,
+            planUpdated: planUpdated,
+            planDeleted: planDeleted
         )
     }
 }

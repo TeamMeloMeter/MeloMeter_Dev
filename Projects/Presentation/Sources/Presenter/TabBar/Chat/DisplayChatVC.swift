@@ -11,8 +11,12 @@ import MessageKit
 import UIKit
 import RxSwift
 import RxGesture
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 // MARK: - BasicExampleViewController
 
 public final class DisplayChatVC: ChatVC {

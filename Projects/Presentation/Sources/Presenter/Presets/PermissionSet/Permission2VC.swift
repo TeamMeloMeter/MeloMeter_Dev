@@ -10,8 +10,12 @@ import RxCocoa
 import RxSwift
 import CoreLocation
 import UserNotifications
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 public class Permission2VC: UIViewController {
     
     private let viewModel: PermissionVM?

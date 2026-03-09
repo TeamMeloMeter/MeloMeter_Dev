@@ -7,8 +7,12 @@
 
 import UIKit
 import RxSwift
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 public class RecoveryVC: UIViewController {
     

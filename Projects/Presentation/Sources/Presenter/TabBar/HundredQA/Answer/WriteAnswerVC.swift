@@ -9,8 +9,12 @@ import UIKit
 import RxSwift
 import RxCocoa
 import GoogleMobileAds
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 public class WriteAnswerVC: UIViewController {
     

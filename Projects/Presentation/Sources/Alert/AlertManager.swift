@@ -7,7 +7,11 @@
 
 import UIKit
 import RxSwift
+#if canImport(Domain)
+#if canImport(Domain)
 import Domain
+#endif
+#endif
 
 struct AddAction {
   var text: String?

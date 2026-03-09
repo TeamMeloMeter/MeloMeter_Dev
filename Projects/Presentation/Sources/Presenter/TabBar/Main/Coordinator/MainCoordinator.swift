@@ -6,8 +6,12 @@
 //
 
 import UIKit
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 public final class MainCoordinator: Coordinator {
     
     public var delegate: CoordinatorDelegate?
@@ -133,7 +137,7 @@ extension MainCoordinator {
         self.navigationController.dismiss(animated: true)
     }
     
-    public func presentRecordCreation(pickedModel: SearchedModel, memo: String) {
+    public func presentRecordCreation(pickedModel: SearchedModel, memo: String, plan: DatePlanModel? = nil) {
         self.bottomSheet = nil
         self.bottomSheet = BottomSheetVC(viewModel: mapVM!)
         guard let bottomSheet else { return }
@@ -142,7 +146,7 @@ extension MainCoordinator {
         bottomSheet.isModalInPresentation = false
         bottomSheet.loadViewIfNeeded()
         self.navigationController.present(bottomSheet, animated: false) {
-            bottomSheet.setRecordCreationView(pickedModel: pickedModel, memo: memo)
+            bottomSheet.setRecordCreationView(pickedModel: pickedModel, memo: memo, plan: plan)
         }
     }
     

@@ -8,7 +8,9 @@
 import Foundation
 import Alamofire
 import RxSwift
+#if canImport(Domain)
 import Domain
+#endif
 
 // MARK: - SearchedModel
 public struct SearchedDto: Codable {

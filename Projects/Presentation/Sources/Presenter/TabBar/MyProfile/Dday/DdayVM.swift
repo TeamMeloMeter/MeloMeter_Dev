@@ -9,8 +9,12 @@ import UIKit
 import RxSwift
 import RxRelay
 import RxCocoa
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 public struct DdayCell {
     public var dateName: String

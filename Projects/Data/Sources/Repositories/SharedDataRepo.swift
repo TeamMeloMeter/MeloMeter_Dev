@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(Domain)
 import Domain
+#endif
 
 public class SharedDataRepo: SharedDataRepoP {
 

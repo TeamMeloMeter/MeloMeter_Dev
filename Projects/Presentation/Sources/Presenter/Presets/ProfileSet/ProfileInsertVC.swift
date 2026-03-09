@@ -10,8 +10,12 @@ import RxCocoa
 import RxSwift
 import RxGesture
 import AnyFormatKit
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 public final class ProfileInsertVC: UIViewController {
     

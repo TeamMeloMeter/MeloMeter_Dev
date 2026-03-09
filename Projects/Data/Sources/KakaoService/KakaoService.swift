@@ -11,7 +11,9 @@ import KakaoSDKTalk
 import KakaoSDKAuth
 import KakaoSDKTemplate
 import UIKit
+#if canImport(Domain)
 import Domain
+#endif
 
 // MARK: Kakao 공유 Service 싱글톤 클래스
 public final class KakaoService {

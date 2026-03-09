@@ -7,7 +7,9 @@
 
 import Foundation
 import WidgetKit
+#if canImport(Domain)
 import Domain
+#endif
 
 
 public final class WidgetService {

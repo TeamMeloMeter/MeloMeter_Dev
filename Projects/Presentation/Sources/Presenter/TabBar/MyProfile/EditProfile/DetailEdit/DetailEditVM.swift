@@ -8,8 +8,12 @@
 import UIKit
 import RxSwift
 import RxRelay
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 public enum CameraAlert {
     case take, get, delete, cancel

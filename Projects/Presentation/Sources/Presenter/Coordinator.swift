@@ -6,8 +6,12 @@
 //
 
 import UIKit
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 public protocol CoordinatorDelegate: AnyObject {
     func didFinish(childCoordinator: Coordinator)

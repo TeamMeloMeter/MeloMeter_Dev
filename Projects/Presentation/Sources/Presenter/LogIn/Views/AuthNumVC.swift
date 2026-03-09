@@ -9,8 +9,12 @@ import UIKit
 import AnyFormatKit //번호 입력 형식 라이브러리
 import RxCocoa
 import RxSwift
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 // MARK: - 인증번호 입력
 public final class AuthNumVC: UIViewController {

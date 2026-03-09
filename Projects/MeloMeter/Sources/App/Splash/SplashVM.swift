@@ -11,9 +11,15 @@ import RxCocoa
 import RxRelay
 import RxSwift
 import GoogleMobileAds
+#if canImport(Data)
 import Data
+#endif
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Presentation)
 import Presentation
+#endif
 
 final class SplashVM : NSObject, FullScreenContentDelegate {
     

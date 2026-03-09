@@ -10,8 +10,12 @@ import RxCocoa
 import RxSwift
 import RxGesture
 import GoogleMobileAds
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 public class MyProfileVC: UIViewController, UIGestureRecognizerDelegate {
     

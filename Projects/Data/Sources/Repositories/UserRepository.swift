@@ -10,7 +10,9 @@ import Firebase
 import RxSwift
 import RxRelay
 import FirebaseFirestore
+#if canImport(Domain)
 import Domain
+#endif
 
 public class UserRepository: UserRepositoryP {
     

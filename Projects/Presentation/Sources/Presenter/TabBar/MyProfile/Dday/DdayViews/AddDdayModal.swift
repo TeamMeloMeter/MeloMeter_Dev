@@ -9,8 +9,12 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxGesture
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 public class AddDdayModal: UIViewController, UITextFieldDelegate {
     

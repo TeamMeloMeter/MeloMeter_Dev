@@ -8,8 +8,12 @@
 import UIKit
 import RxSwift
 import RxGesture
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 public class EditStateMessageVC: UIViewController {
     

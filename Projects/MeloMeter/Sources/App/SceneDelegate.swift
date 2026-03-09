@@ -7,7 +7,9 @@
 
 import UIKit
 import CoreLocation
+#if canImport(Data)
 import Data
+#endif
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
 

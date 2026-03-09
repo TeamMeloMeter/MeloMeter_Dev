@@ -7,7 +7,9 @@
 
 import Foundation
 import CoreBluetooth
+#if canImport(Core)
 import Core
+#endif
 
 final class BLECouplePairingService: NSObject {
     private enum Constants {

@@ -6,8 +6,12 @@
 //
 
 import UIKit
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 public final class TabBarCoordinator: Coordinator {
   public var delegate: CoordinatorDelegate?

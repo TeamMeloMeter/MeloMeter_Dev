@@ -7,7 +7,9 @@
 
 import Foundation
 import RxSwift
+#if canImport(Domain)
 import Domain
+#endif
 
 public final class CouplePlaceRepo: CouplePlaceRepoP {
     

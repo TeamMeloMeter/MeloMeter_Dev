@@ -8,8 +8,12 @@
 import UIKit
 import RxSwift
 import AVFoundation
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 public class PermissionVM {
 

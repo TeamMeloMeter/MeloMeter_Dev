@@ -6,8 +6,12 @@
 //
 
 import UIKit
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 //공지사항 테이블뷰 셀
 public class NoticeTableViewCell: UITableViewCell {

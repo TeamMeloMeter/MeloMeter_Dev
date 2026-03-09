@@ -6,8 +6,12 @@
 //
 
 import UIKit
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 public enum TabBarPageType: Int, CaseIterable {
     case chat, main = 1, calendar, myPage

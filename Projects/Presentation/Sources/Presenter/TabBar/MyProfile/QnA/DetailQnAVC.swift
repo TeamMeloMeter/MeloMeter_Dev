@@ -9,8 +9,12 @@ import UIKit
 import RxSwift
 import RxRelay
 import RxGesture
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 public class DetailQnAVC: UIViewController {
     

@@ -12,11 +12,19 @@ import RxCocoa
 import Kingfisher
 import PhotosUI
 import RxRelay
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 fileprivate let categoryIndex = ["전체":0, "맛집":1, "전시회": 2, "공원": 3, "기타" : 4]
 
 public class BottomSheetVC: UIViewController {
+    private enum SaveMode {
+        case place
+        case dateRecord(DatePlanModel)
+    }
     
     
     public init(viewModel: MapVM) {
@@ -32,6 +40,8 @@ public class BottomSheetVC: UIViewController {
     private var categoryTapped = PublishSubject<Int?>()
     private var selectedImage = BehaviorRelay<Data?>(value: nil)
     private var selectedImageTag = BehaviorRelay<Int?>(value: nil)
+    private var recordImageDatas = BehaviorRelay<[Data]>(value: [])
+    private var saveMode = BehaviorRelay<SaveMode>(value: .place)
     private var disposeBag = DisposeBag()
     private var viewModel: MapVM
     public let informView = BottomSheetinformView()
@@ -126,23 +136,55 @@ public class BottomSheetVC: UIViewController {
         view.bringSubviewToFront(grabbar)
     }
 
-    public func setRecordCreationView(pickedModel: SearchedModel, memo: String) {
+    public func setRecordCreationView(pickedModel: SearchedModel, memo: String, plan: DatePlanModel?) {
         viewModel.pickedModel.accept(pickedModel)
-        largeView.largeLocationTF.rx.text.onNext(pickedModel.title)
-        largeView.largeMemoTF.rx.text.onNext(memo)
+        let storedRecord = plan.flatMap {
+            DateRecordStore.shared.item(planUUID: $0.uuid, coupleId: UserDefaults.standard.string(forKey: "coupleID"))
+        }
+        largeView.largeLocationTF.rx.text.onNext(storedRecord?.locationName ?? pickedModel.title)
+        largeView.largeMemoTF.rx.text.onNext(storedRecord?.memo ?? memo)
         largeView.largeMemoTF.sendActions(for: .editingChanged)
         largeView.largeLocationTF.sendActions(for: .editingChanged)
-        categoryTapped.onNext(categoryIndex["기타"])
+        outputStoredImages(storedRecord?.imageDatas ?? [])
+        categoryTapped.onNext(categoryIndex[storedRecord?.category ?? "기타"])
+        if let plan {
+            saveMode.accept(.dateRecord(plan))
+            largeView.setRecordMode(true)
+            largeView.recordMoodControl.selectedSegmentIndex = max(0, min(2, (storedRecord?.satisfaction ?? 2) - 1))
+            largeView.recordFavoriteSwitch.isOn = storedRecord?.isFavorite ?? true
+        } else {
+            saveMode.accept(.place)
+            largeView.setRecordMode(false)
+        }
         setLargeBottomSheet()
+    }
+
+    private func outputStoredImages(_ imageDatas: [Data]) {
+        recordImageDatas.accept(imageDatas)
+        for idx in 0 ..< 4 {
+            let view = largeView.largePictureStack.arrangedSubviews[idx] as! innerPictureView
+            if idx < imageDatas.count {
+                view.imageView.image = UIImage(data: imageDatas[idx])
+                view.isHidden = false
+            } else {
+                view.imageView.image = nil
+                view.isHidden = idx != imageDatas.count
+            }
+        }
+        selectedImage.accept(nil)
+        selectedImageTag.accept(nil)
     }
     
     public func setBindings() {
-        
+        let largeSaveTapped = largeView.largeSaveBtn.rx.tap.share()
         let pictureTapped = Observable.zip(selectedImageTag.asObservable(), selectedImage.asObservable())
         
         let output = viewModel.transform(input: MapVM.BottomSheetInput(
             dismissBottomSheet: largeView.xButton.rx.tap.asObservable(),categoryTapped: categoryTapped, pictureTapped: pictureTapped, loactionTFtexts: largeView.largeLocationTF.rx.textOrEmpty.asObservable(), memoTFtexts: largeView.largeMemoTF.rx.textOrEmpty.asObservable(), viewWillDisappear: self.rx.methodInvoked(#selector(viewWillDisappear(_:))).map { _ in }.asObservable(),
-            largeSaveBtnTapped: largeView.largeSaveBtn.rx.tap.asObservable(),
+            largeSaveBtnTapped: largeSaveTapped.withLatestFrom(saveMode.asObservable()).compactMap { mode in
+                if case .place = mode { return () }
+                return nil
+            },
             editBtnTapped:  informView.informSmallView.dropPickerView.edit.rx.tapGesture().when(.recognized).map { _ in
                 var datas: [Data] = []
                 let views = (self.informView.stackView.arrangedSubviews as? [UIImageView]) ?? []
@@ -158,6 +200,40 @@ public class BottomSheetVC: UIViewController {
                 .flatMap { _ in self.view.endEditing(true)
                     return Observable.just(()) }.asObservable(), deletePicker: self.deletePicker.asObservable()),
                                          disposeBag: disposeBag)
+
+        Observable.combineLatest(
+            largeSaveTapped,
+            saveMode.asObservable(),
+            largeView.largeLocationTF.rx.textOrEmpty.asObservable(),
+            largeView.largeMemoTF.rx.textOrEmpty.asObservable(),
+            output.categoryIsSelected.asObservable()
+        )
+        .compactMap { [weak self] _, mode, location, memo, selectedCategories -> DateRecordItem? in
+            guard let self else { return nil }
+            guard case let .dateRecord(plan) = mode else { return nil }
+            let categoryIndex = selectedCategories.firstIndex(of: true) ?? 4
+            let category = self.viewModel.categoryLists[categoryIndex]
+            let coupleId = UserDefaults.standard.string(forKey: "coupleID")
+            let imageDatas = self.recordImageDatas.value
+            let item = DateRecordItem(
+                planUUID: plan.uuid,
+                title: plan.name,
+                locationName: location,
+                category: category,
+                memo: memo,
+                satisfaction: self.largeView.recordMoodControl.selectedSegmentIndex + 1,
+                isFavorite: self.largeView.recordFavoriteSwitch.isOn,
+                imageDatas: imageDatas,
+                createdAt: Date().toString(type: .yearToSecond)
+            )
+            DateRecordStore.shared.save(item, coupleId: coupleId)
+            return item
+        }
+        .subscribe(onNext: { [weak self] _ in
+            guard let self else { return }
+            self.dismiss(animated: true)
+        })
+        .disposed(by: disposeBag)
         
         output.btnEnabled.bind(onNext: { [weak self] val in
             guard let self else {return}
@@ -189,6 +265,7 @@ public class BottomSheetVC: UIViewController {
         
         output.pictureValues.subscribe(onNext: { [weak self] datas in
             guard let self else {return}
+            self.recordImageDatas.accept(datas)
             
             for idx in 0 ..< 4 {
                 let view = largeView.largePictureStack.arrangedSubviews[idx] as! innerPictureView
@@ -251,7 +328,7 @@ public class BottomSheetVC: UIViewController {
     public func setLargeBottomSheet() {
         guard let sheet = self.sheetPresentationController else {return}
         let largeDetent = UISheetPresentationController.Detent.custom(identifier: .init("large")) { context in
-            return 560 // 확장 높이
+            return 660 // 확장 높이
         }
         sheet.animateChanges {
             sheet.detents = [largeDetent]

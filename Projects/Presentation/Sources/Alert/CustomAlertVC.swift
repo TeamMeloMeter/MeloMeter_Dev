@@ -6,7 +6,11 @@
 //
 
 import UIKit
+#if canImport(Core)
+#if canImport(Core)
 import Core
+#endif
+#endif
 
 class CustomAlertVC: UIViewController {
     var alertTitle: String?

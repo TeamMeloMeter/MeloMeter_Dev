@@ -6,8 +6,12 @@
 //
 
 import UIKit
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 //전화번호 입력 뷰
 public class PhoneCertifiedView: UIView {
    

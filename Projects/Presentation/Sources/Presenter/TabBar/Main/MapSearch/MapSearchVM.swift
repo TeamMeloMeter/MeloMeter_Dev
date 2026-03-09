@@ -9,8 +9,12 @@ import RxSwift
 import RxRelay
 import RxCocoa
 import UIKit
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 public struct ResultModel {
     public let name: String

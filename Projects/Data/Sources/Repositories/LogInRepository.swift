@@ -10,7 +10,9 @@ import Firebase
 import RxSwift
 import FirebaseFirestore
 import FirebaseMessaging
+#if canImport(Domain)
 import Domain
+#endif
 
 public class LogInRepository: LogInRepositoryP {
     

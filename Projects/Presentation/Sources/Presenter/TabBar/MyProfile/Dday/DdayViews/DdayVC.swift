@@ -9,8 +9,12 @@ import UIKit
 import RxCocoa
 import RxSwift
 import RxRelay
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 public class DdayVC: UIViewController {
 

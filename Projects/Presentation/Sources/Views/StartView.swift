@@ -7,8 +7,12 @@
 
 import Foundation
 import UIKit
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 public class StartView: UIView {
    

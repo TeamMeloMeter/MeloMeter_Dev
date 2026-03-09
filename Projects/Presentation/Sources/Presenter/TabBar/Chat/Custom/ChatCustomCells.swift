@@ -7,8 +7,12 @@
 
 import UIKit
 import MessageKit
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 // MARK: CustomMessageCell Class
 public class CustomMessageCell: TextMessageCell {

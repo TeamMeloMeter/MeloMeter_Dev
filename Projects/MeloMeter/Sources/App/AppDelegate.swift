@@ -14,9 +14,15 @@ import FirebaseRemoteConfig
 import UserNotifications
 import KakaoSDKCommon
 import GoogleMobileAds
+#if canImport(Data)
 import Data
+#endif
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 import RxSwift
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {

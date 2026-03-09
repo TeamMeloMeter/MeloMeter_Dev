@@ -9,8 +9,12 @@ import UIKit
 import RxCocoa
 import RxSwift
 import AnyFormatKit //입력 형식 라이브러리
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 // MARK: - 커플 등록
 public final class CoupleCombineVC: UIViewController {
    

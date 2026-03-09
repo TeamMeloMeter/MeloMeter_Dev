@@ -6,8 +6,12 @@
 //
 
 import Foundation
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 public struct LogInEntitiy {
     

@@ -9,8 +9,12 @@ import Foundation
 import UIKit
 import Kingfisher
 import RxSwift
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 public class CategoryView: UIView {
     public let label = UILabel().then {
         $0.font = FontManager.shared.regular(ofSize: 16)
@@ -232,6 +236,29 @@ public class BottomSheetLargeView: UIView {
         $0.contentHorizontalAlignment = .center
         $0.contentVerticalAlignment = .center
     }
+    public let recordExtraContainer = UIView().then {
+        $0.isHidden = true
+    }
+    public let recordMoodLabel = UILabel().then {
+        $0.text = "만족도"
+        $0.font = FontManager.shared.semiBold(ofSize: 15)
+        $0.textColor = .gray1
+    }
+    public let recordMoodControl = UISegmentedControl(items: ["아쉬움", "좋음", "최고"]).then {
+        $0.selectedSegmentIndex = 1
+        $0.selectedSegmentTintColor = .primary1
+        $0.setTitleTextAttributes([.foregroundColor: UIColor.gray1, .font: FontManager.shared.medium(ofSize: 12)], for: .normal)
+        $0.setTitleTextAttributes([.foregroundColor: UIColor.white, .font: FontManager.shared.semiBold(ofSize: 12)], for: .selected)
+    }
+    public let recordFavoriteLabel = UILabel().then {
+        $0.text = "다시 가고 싶어요"
+        $0.font = FontManager.shared.medium(ofSize: 14)
+        $0.textColor = .gray1
+    }
+    public let recordFavoriteSwitch = UISwitch().then {
+        $0.onTintColor = .primary1
+        $0.isOn = true
+    }
     override init(frame:CGRect) {
         super.init(frame: frame)
         setUI()
@@ -245,7 +272,7 @@ public class BottomSheetLargeView: UIView {
             self.addSubview($0)
             $0.font = FontManager.shared.semiBold(ofSize: 15)
         }
-        [xButton, largePictureStack,largeCategoryStack,largeSaveBtn].forEach {
+        [xButton, largePictureStack,largeCategoryStack,largeSaveBtn, recordExtraContainer].forEach {
             self.addSubview($0)
         }
         [largeMemoTF,largeLocationTF].forEach {
@@ -257,6 +284,9 @@ public class BottomSheetLargeView: UIView {
             let rightPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 0))
             $0.rightView = rightPaddingView
             $0.rightViewMode = .always
+        }
+        [recordMoodLabel, recordMoodControl, recordFavoriteLabel, recordFavoriteSwitch].forEach {
+            recordExtraContainer.addSubview($0)
         }
         xButton.snp.makeConstraints {
             $0.centerY.equalTo(largeLocationLabel).offset(-6)
@@ -304,11 +334,37 @@ public class BottomSheetLargeView: UIView {
             $0.leading.equalToSuperview()
             $0.height.equalTo(64)
         }
+        recordExtraContainer.snp.makeConstraints {
+            $0.top.equalTo(largePictureStack.snp.bottom).offset(16)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(92)
+        }
+        recordMoodLabel.snp.makeConstraints {
+            $0.top.leading.equalToSuperview()
+        }
+        recordMoodControl.snp.makeConstraints {
+            $0.top.equalTo(recordMoodLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(34)
+        }
+        recordFavoriteLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
+        recordFavoriteSwitch.snp.makeConstraints {
+            $0.centerY.equalTo(recordFavoriteLabel)
+            $0.trailing.equalToSuperview()
+        }
         largeSaveBtn.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(self.safeAreaLayoutGuide)
             $0.height.equalTo(52)
         }
+    }
+
+    public func setRecordMode(_ isRecordMode: Bool) {
+        recordExtraContainer.isHidden = isRecordMode == false
+        largeSaveBtn.setTitle(isRecordMode ? "기록 저장하기" : "저장하기", for: .normal)
     }
     
 }

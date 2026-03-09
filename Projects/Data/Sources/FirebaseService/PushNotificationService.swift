@@ -10,7 +10,9 @@ import FirebaseFirestore
 import UIKit
 import RxSwift
 import UserNotifications
+#if canImport(Domain)
 import Domain
+#endif
 
 public final class PushNotificationService: PushNotificationServiceP {
     public static let shared = PushNotificationService()

@@ -9,12 +9,17 @@ import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 public class AddScheduleVC: UIViewController {
     
     private let disposeBag = DisposeBag()
+    private let initialDate: Date?
     public var onSave: ((DatePlanModel) -> Void)?
     
     // UI Components
@@ -51,11 +56,23 @@ public class AddScheduleVC: UIViewController {
         return button
     }()
     
+    public init(initialDate: Date? = nil) {
+        self.initialDate = initialDate
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         bind()
         setupKeyboardDismiss()
+        if let initialDate {
+            datePicker.date = initialDate
+        }
     }
     
     private func setupKeyboardDismiss() {

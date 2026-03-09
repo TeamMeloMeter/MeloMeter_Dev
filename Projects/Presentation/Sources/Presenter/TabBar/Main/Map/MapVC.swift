@@ -12,8 +12,14 @@ import RxSwift
 import CoreLocation
 import GoogleMobileAds
 import UserNotifications
+import SnapKit
+import Then
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 //메인 지도 화면
 public class MapVC: UIViewController, UIGestureRecognizerDelegate{
@@ -54,6 +60,7 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
     private var bleMonitorTimer: Timer?
     private var bleHeartbeatObserver: NSObjectProtocol?
     private var bleDetectedObserver: NSObjectProtocol?
+    private var calendarPlanSelectionObserver: NSObjectProtocol?
     private var toastHideWorkItem: DispatchWorkItem?
     
     private var notifiedPlanIds: Set<String> = []
@@ -82,6 +89,7 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
         setAutoLayout()
         setBindings()
         setNavigationBar()
+        bindCalendarSelectionFocus()
     }
     
     public override func viewWillAppear(_ animated: Bool) {
@@ -100,6 +108,9 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
 
     deinit {
         stopBleMonitoring()
+        if let calendarPlanSelectionObserver {
+            NotificationCenter.default.removeObserver(calendarPlanSelectionObserver)
+        }
     }
     
     // MARK: Binding
@@ -269,6 +280,8 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
             .subscribe(onNext: { [weak self] (plans: [DatePlanModel]) in
                 self?.datePlans = plans
                 self?.updatePlanMarkers()
+                self?.updateTodayPlanCard()
+                self?.updateCalendarBadge()
                 if let location = self?.lastKnownLocation {
                     self?.evaluatePlanProximity(with: location)
                 }
@@ -593,6 +606,121 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
 #endif
     }
 
+    private func bindCalendarSelectionFocus() {
+        calendarPlanSelectionObserver = NotificationCenter.default.addObserver(
+            forName: .datePlanSelectedFromCalendar,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            guard let self,
+                  let uuid = notification.userInfo?["uuid"] as? String else { return }
+            let action = (notification.userInfo?["action"] as? String)
+                .flatMap(DatePlanMapAction.init(rawValue:)) ?? .focus
+            self.handleCalendarPlanSelection(uuid: uuid, action: action)
+        }
+    }
+
+    private func handleCalendarPlanSelection(uuid: String, action: DatePlanMapAction) {
+        guard let plan = datePlans.first(where: { $0.uuid == uuid }) else { return }
+        currentMode = .reservation
+        modeSegmentedControl.selectedSegmentIndex = 1
+        applyMapMode()
+        updateTodayPlanCard(plan)
+        if plan.mapX != 0 || plan.mapY != 0 {
+            let location = CLLocation(latitude: plan.mapY, longitude: plan.mapX)
+            updateCamera(location)
+        }
+        switch action {
+        case .focus:
+            handlePlanMarkerTapped(plan)
+        case .record:
+            navigateToRecordCreation(plan)
+        }
+    }
+
+    private func updateCalendarBadge() {
+        let todayPlans = datePlans.filter { plan in
+            guard let date = plan.scheduledDateValue() else { return false }
+            return Calendar.current.isDateInToday(date)
+        }
+        let count = todayPlans.count
+        calendarBadgeLabel.isHidden = count == 0
+        calendarBadgeLabel.text = count > 9 ? "9+" : "\(count)"
+    }
+
+    private func updateTodayPlanCard(_ focusedPlan: DatePlanModel? = nil) {
+        guard let plan = focusedPlan ?? primaryPlanForCard() else {
+            todayPlanCardView.isHidden = true
+            return
+        }
+        let status = plan.displayStatus()
+        let isToday = plan.scheduledDateValue().map { Calendar.current.isDateInToday($0) } ?? false
+        let subtitle = isToday ? "오늘의 데이트" : "다음 데이트"
+        let detail: String
+        if plan.address.isEmpty == false {
+            detail = plan.address
+        } else if plan.memo.isEmpty == false {
+            detail = plan.memo
+        } else {
+            detail = "장소 정보를 등록해보세요"
+        }
+
+        let actionTitle: String
+        let actionHandler: (() -> Void)
+        if plan.isCompleted == true {
+            let hasRecord = DateRecordStore.shared.hasItem(planUUID: plan.uuid, coupleId: UserDefaults.standard.string(forKey: "coupleID"))
+            actionTitle = hasRecord ? "기록 수정" : "기록 만들기"
+            actionHandler = { [weak self] in
+                self?.navigateToRecordCreation(plan)
+            }
+        } else if status == .today && canCheckIn(plan: plan) {
+            actionTitle = "도착 체크인"
+            actionHandler = { [weak self] in
+                self?.checkInPlanSubject.onNext(plan)
+            }
+        } else {
+            actionTitle = isToday ? "상세 보기" : "미리 보기"
+            actionHandler = { [weak self] in
+                self?.handleCalendarPlanSelection(uuid: plan.uuid, action: .focus)
+            }
+        }
+
+        todayPlanCardView.configure(
+            title: plan.name,
+            subtitle: subtitle,
+            time: plan.timeText(),
+            detail: detail,
+            status: status.title,
+            statusColor: status.tintColor,
+            statusBackgroundColor: status.backgroundColor,
+            actionTitle: actionTitle
+        )
+        todayPlanCardView.isHidden = false
+        todayPlanCardView.onTapAction = actionHandler
+        todayPlanCardView.onSecondaryAction = { [weak self] in
+            self?.viewModel?.pushSharedCalendar()
+        }
+    }
+
+    private func primaryPlanForCard() -> DatePlanModel? {
+        let now = Date()
+        let sortedPlans = datePlans
+            .filter { $0.isCompleted != true }
+            .sorted { ($0.scheduledDateValue() ?? .distantFuture) < ($1.scheduledDateValue() ?? .distantFuture) }
+
+        if let todayPlan = sortedPlans.first(where: {
+            guard let scheduledDate = $0.scheduledDateValue() else { return false }
+            return Calendar.current.isDateInToday(scheduledDate)
+        }) {
+            return todayPlan
+        }
+
+        return sortedPlans.first(where: {
+            guard let scheduledDate = $0.scheduledDateValue() else { return false }
+            return scheduledDate >= now
+        })
+    }
+
     private func handleCompletedPlansIfNeeded(_ plans: [DatePlanModel]) {
         let completedPlans = plans.filter { plan in
             plan.isCompleted == true && plan.arrivalRecords.count >= 2
@@ -635,7 +763,7 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
                                           mapx: plan.mapX,
                                           mapy: plan.mapY)
         pickedMarker(model: searchedModel)
-        viewModel?.coordinator?.presentRecordCreation(pickedModel: searchedModel, memo: plan.memo)
+        viewModel?.coordinator?.presentRecordCreation(pickedModel: searchedModel, memo: plan.memo, plan: plan)
     }
     
     public func updateCamera(_ location: CLLocation) {
@@ -652,6 +780,8 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
          dDayButton,
          alarmButton,
          calendarButton,
+         calendarBadgeLabel,
+         todayPlanCardView,
          modeSegmentedControl,
          searchBtn,
          toastContainerView].forEach { view.addSubview($0) }
@@ -1066,6 +1196,24 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
         return button
     }()
 
+    private let calendarBadgeLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .primary2
+        label.textColor = .white
+        label.font = FontManager.shared.bold(ofSize: 10)
+        label.textAlignment = .center
+        label.layer.cornerRadius = 9
+        label.layer.masksToBounds = true
+        label.isHidden = true
+        return label
+    }()
+
+    private let todayPlanCardView: TodayPlanCardView = {
+        let view = TodayPlanCardView()
+        view.isHidden = true
+        return view
+    }()
+
     
     public let currentLocationButton: UIButton = {
         let button = UIButton()
@@ -1198,7 +1346,9 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
         dDayLabel.translatesAutoresizingMaskIntoConstraints = false
         alarmButton.translatesAutoresizingMaskIntoConstraints = false
         calendarButton.translatesAutoresizingMaskIntoConstraints = false
+        calendarBadgeLabel.translatesAutoresizingMaskIntoConstraints = false
         modeSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        todayPlanCardView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             dDayButton.leadingAnchor.constraint(equalTo: dDayLabel.leadingAnchor, constant: -20),
             dDayButton.trailingAnchor.constraint(equalTo: dDayLabel.trailingAnchor, constant: 20),
@@ -1218,13 +1368,20 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
             calendarButton.widthAnchor.constraint(equalToConstant: 48),
             calendarButton.heightAnchor.constraint(equalToConstant: 48),
 
+            calendarBadgeLabel.centerXAnchor.constraint(equalTo: calendarButton.trailingAnchor, constant: -2),
+            calendarBadgeLabel.centerYAnchor.constraint(equalTo: calendarButton.topAnchor, constant: 2),
+            calendarBadgeLabel.heightAnchor.constraint(equalToConstant: 18),
+            calendarBadgeLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 18),
+
             modeSegmentedControl.centerXAnchor.constraint(equalTo: naverMapView.centerXAnchor),
             modeSegmentedControl.topAnchor.constraint(equalTo: dDayButton.bottomAnchor, constant: 8),
             modeSegmentedControl.widthAnchor.constraint(equalToConstant: 180),
             modeSegmentedControl.heightAnchor.constraint(equalToConstant: 32),
-            
-            
-            
+
+            todayPlanCardView.topAnchor.constraint(equalTo: modeSegmentedControl.bottomAnchor, constant: 12),
+            todayPlanCardView.leadingAnchor.constraint(equalTo: naverMapView.leadingAnchor, constant: 16),
+            todayPlanCardView.trailingAnchor.constraint(equalTo: naverMapView.trailingAnchor, constant: -16),
+            todayPlanCardView.heightAnchor.constraint(equalToConstant: 126)
         ])
         
         
@@ -1238,6 +1395,168 @@ public class MapVC: UIViewController, UIGestureRecognizerDelegate{
 }
 
 // MARK: Custom Marker InfoView
+private final class TodayPlanCardView: UIView {
+    var onTapAction: (() -> Void)?
+    var onSecondaryAction: (() -> Void)?
+
+    private let subtitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = FontManager.shared.medium(ofSize: 12)
+        label.textColor = .gray2
+        return label
+    }()
+
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = FontManager.shared.semiBold(ofSize: 20)
+        label.textColor = .gray1
+        return label
+    }()
+
+    private let timeLabel: UILabel = {
+        let label = UILabel()
+        label.font = FontManager.shared.medium(ofSize: 13)
+        label.textColor = .gray2
+        return label
+    }()
+
+    private let detailLabel: UILabel = {
+        let label = UILabel()
+        label.font = FontManager.shared.regular(ofSize: 13)
+        label.textColor = .gray2
+        label.numberOfLines = 2
+        return label
+    }()
+
+    private let statusLabel = PaddingBadgeLabel(insets: UIEdgeInsets(top: 6, left: 10, bottom: 6, right: 10))
+
+    private let actionButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.titleLabel?.font = FontManager.shared.semiBold(ofSize: 13)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .primary2
+        button.layer.cornerRadius = 18
+        return button
+    }()
+
+    private let secondaryButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("캘린더", for: .normal)
+        button.titleLabel?.font = FontManager.shared.semiBold(ofSize: 13)
+        button.setTitleColor(.gray1, for: .normal)
+        button.backgroundColor = .gray5
+        button.layer.cornerRadius = 18
+        return button
+    }()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .white
+        layer.cornerRadius = 24
+        layer.applyShadow(color: .gray1, alpha: 0.12, x: 0, y: 10, blur: 24)
+
+        statusLabel.font = FontManager.shared.semiBold(ofSize: 11)
+        statusLabel.layer.cornerRadius = 12
+        statusLabel.layer.masksToBounds = true
+        statusLabel.textAlignment = .center
+
+        [subtitleLabel, titleLabel, timeLabel, detailLabel, statusLabel, actionButton, secondaryButton].forEach(addSubview)
+
+        subtitleLabel.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview().inset(16)
+        }
+
+        statusLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(subtitleLabel)
+            make.trailing.equalToSuperview().inset(16)
+        }
+
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(subtitleLabel.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview().inset(16)
+        }
+
+        timeLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(8)
+            make.leading.equalTo(titleLabel)
+        }
+
+        detailLabel.snp.makeConstraints { make in
+            make.top.equalTo(timeLabel.snp.bottom).offset(6)
+            make.leading.trailing.equalToSuperview().inset(16)
+        }
+
+        actionButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview().inset(16)
+            make.height.equalTo(36)
+            make.width.equalTo(92)
+        }
+
+        secondaryButton.snp.makeConstraints { make in
+            make.leading.equalTo(actionButton.snp.trailing).offset(8)
+            make.centerY.equalTo(actionButton)
+            make.height.equalTo(36)
+            make.width.equalTo(78)
+        }
+
+        actionButton.addTarget(self, action: #selector(didTapActionButton), for: .touchUpInside)
+        secondaryButton.addTarget(self, action: #selector(didTapSecondaryButton), for: .touchUpInside)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func configure(title: String,
+                   subtitle: String,
+                   time: String,
+                   detail: String,
+                   status: String,
+                   statusColor: UIColor,
+                   statusBackgroundColor: UIColor,
+                   actionTitle: String) {
+        titleLabel.text = title
+        subtitleLabel.text = subtitle
+        timeLabel.text = time
+        detailLabel.text = detail
+        statusLabel.text = status
+        statusLabel.textColor = statusColor
+        statusLabel.backgroundColor = statusBackgroundColor
+        actionButton.setTitle(actionTitle, for: .normal)
+    }
+
+    @objc private func didTapActionButton() {
+        onTapAction?()
+    }
+
+    @objc private func didTapSecondaryButton() {
+        onSecondaryAction?()
+    }
+}
+
+private final class PaddingBadgeLabel: UILabel {
+    private let insets: UIEdgeInsets
+
+    init(insets: UIEdgeInsets) {
+        self.insets = insets
+        super.init(frame: .zero)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func drawText(in rect: CGRect) {
+        super.drawText(in: rect.inset(by: insets))
+    }
+
+    override var intrinsicContentSize: CGSize {
+        let size = super.intrinsicContentSize
+        return CGSize(width: size.width + insets.left + insets.right, height: size.height + insets.top + insets.bottom)
+    }
+}
+
 public class CustomInfoViewDataSource: NSObject, NMFOverlayImageDataSource {
     public func view(with overlay: NMFOverlay) -> UIView {
         return customView

@@ -1,0 +1,1 @@
+/Users/bagbeomjin/seungwan/MeloMeter_Dev/Projects/Presentation/Sources/Presenter/TabBar/Chat/Models/ChatUserModel.swift

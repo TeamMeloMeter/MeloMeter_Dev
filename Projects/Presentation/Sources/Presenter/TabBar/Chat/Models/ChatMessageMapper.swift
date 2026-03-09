@@ -7,7 +7,9 @@
 
 import Foundation
 import UIKit
+#if canImport(Domain)
 import Domain
+#endif
 import MessageKit
 
 extension ChatMessage {

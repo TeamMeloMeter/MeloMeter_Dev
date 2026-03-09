@@ -10,8 +10,12 @@ import RxSwift
 import RxRelay
 import RxCocoa
 import GoogleMobileAds
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 public class AnswerVM: NSObject, FullScreenContentDelegate {
 

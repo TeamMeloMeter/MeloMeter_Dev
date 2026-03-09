@@ -8,8 +8,12 @@
 import UIKit
 import RxCocoa
 import RxSwift
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 public class PermissionVC: UIViewController {
     

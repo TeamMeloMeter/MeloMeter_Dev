@@ -13,8 +13,12 @@ import RxSwift
 import RxGesture
 import SnapKit
 import Then
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 // MARK: - ChatViewController
 
 /// A base class for the example controllers

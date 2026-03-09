@@ -12,7 +12,9 @@ import Firebase
 import FirebaseFirestore
 import FirebaseStorage
 import RxSwift
+#if canImport(Domain)
 import Domain
+#endif
 
 public enum FireStoreError: Error, LocalizedError {
     case unknown

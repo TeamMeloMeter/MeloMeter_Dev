@@ -7,8 +7,12 @@
 
 import InputBarAccessoryView
 import UIKit
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Core)
 import Core
+#endif
 
 // MARK: - CameraInputBarAccessoryViewDelegate
 

@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(Domain)
 import Domain
+#endif
 
 public protocol KakaoShareService {
     func share(inviteCode: String)

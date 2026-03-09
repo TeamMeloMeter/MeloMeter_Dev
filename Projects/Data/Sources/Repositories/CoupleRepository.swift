@@ -9,7 +9,9 @@ import Foundation
 import FirebaseFirestore
 import RxSwift
 import RxRelay
+#if canImport(Domain)
 import Domain
+#endif
 
 public class CoupleRepository: CoupleRepositoryP {
     

@@ -7,9 +7,15 @@
 
 import UIKit
 import RxSwift
+#if canImport(Data)
 import Data
+#endif
+#if canImport(Domain)
 import Domain
+#endif
+#if canImport(Presentation)
 import Presentation
+#endif
 
 final class AppCoordinator: Coordinator {
     

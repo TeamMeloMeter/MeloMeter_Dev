@@ -12,7 +12,9 @@ import CoreLocation
 import RxCocoa
 import GoogleMobileAds
 import Kingfisher
+#if canImport(Domain)
 import Domain
+#endif
 
 public enum MapMode {
     case record
